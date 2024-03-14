@@ -9,6 +9,7 @@
         "inertiajs/inertia-laravel": "^1.0",
         "laravel/framework": "^11.0",
         "laravel/jetstream": "^5.0",
+        "laravel/pulse": "^1.0@beta",
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.9",
         "tightenco/ziggy": "^2.0"
@@ -71,6 +72,12 @@
             "php-http/discovery": true
         }
     },
-    "minimum-stability": "stable",
-    "prefer-stable": true
+    "minimum-stability": "beta",
+    "prefer-stable": true,
+    "repositories": {
+        "craftable-pro": {
+            "type": "composer",
+            "url": "https://packages.craftable.pro/"
+        }
+    }
 }

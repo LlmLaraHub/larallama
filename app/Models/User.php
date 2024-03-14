@@ -11,6 +11,9 @@ use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Jetstream\HasTeams;
 use Laravel\Sanctum\HasApiTokens;
 
+/**
+ * @property bool $is_admin
+ */
 class User extends Authenticatable
 {
     use HasApiTokens;
@@ -19,6 +22,10 @@ class User extends Authenticatable
     use HasTeams;
     use Notifiable;
     use TwoFactorAuthenticatable;
+
+    protected $casts = [
+        'is_admin' => 'boolean',
+    ];
 
     /**
      * The attributes that are mass assignable.
@@ -63,5 +70,10 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->is_admin;
     }
 }

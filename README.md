@@ -36,3 +36,17 @@ and
 ### ENV Production
 Using the Laravel docs [https://laravel.com/docs/10.x/configuration#encryption](https://laravel.com/docs/10.x/configuration#encryption)
 
+
+## Local Setup
+This is your typical Laravel install [https://laravel.com/docs/10.x/installation](https://laravel.com/docs/10.x/installation)
+Since it uses Inertia you need to run `npm install` and then `npm dev` when working.
+
+
+If you want to seed admin see `database/seeders/AdminSeeder`
+
+```bash
+php artisan db:seed --class=AdminSeeder
+```
+
+## Admin Dash
+It is using [https://docs.craftable.pro/](https://docs.craftable.pro/)
