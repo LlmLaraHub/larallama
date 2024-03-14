@@ -102,3 +102,6 @@ And some info on it [https://alfrednutile.info/using-laravel-pennant-in-inertia]
 
 This example uses OpenAI but we can use any that we want by just swapping out the client.
 
+
+## Example Message Model for Chating with LLM
+

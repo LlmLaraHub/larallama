@@ -1,5 +1,5 @@
 <script setup>
-import AppLayout from '@/Layouts/AppLayout.vue';
+import AppLayout from '@/Layouts/DynamicLayout.vue';
 
 // This is ApexChart Demo Data
 const generateData = (count, yrange) => {
