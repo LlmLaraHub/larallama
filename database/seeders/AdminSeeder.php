@@ -19,7 +19,7 @@ class AdminSeeder extends Seeder
             'is_admin' => true,
             'password' => bcrypt(env('ADMIN_PASSWORD'))]);
 
-        $team = (new CreateTeam)->create($user, [
+        (new CreateTeam)->create($user, [
             'name' => 'Admin Team',
         ]);
     }

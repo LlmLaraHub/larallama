@@ -57,3 +57,5 @@ It is using [https://docs.craftable.pro/](https://docs.craftable.pro/)
 ## System Level info Pulse
 `/pulse` you must be an admin user (more on that shortly)
 
+![](docs/images/pulse.png)
+
