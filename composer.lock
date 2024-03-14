@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a9e388fa5ce5fbf61974f25d832b5698",
+    "content-hash": "58081a22aa6f58fa8a1089af64fd2a73",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -1688,6 +1688,82 @@
                 "source": "https://github.com/laravel/jetstream"
             },
             "time": "2024-03-12T14:03:48+00:00"
+        },
+        {
+            "name": "laravel/pennant",
+            "version": "v1.7.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laravel/pennant.git",
+                "reference": "401e9051a3a600296c81c3733b52949c60750f02"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laravel/pennant/zipball/401e9051a3a600296c81c3733b52949c60750f02",
+                "reference": "401e9051a3a600296c81c3733b52949c60750f02",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/console": "^10.0|^11.0",
+                "illuminate/container": "^10.0|^11.0",
+                "illuminate/contracts": "^10.0|^11.0",
+                "illuminate/database": "^10.0|^11.0",
+                "illuminate/queue": "^10.0|^11.0",
+                "illuminate/support": "^10.0|^11.0",
+                "php": "^8.1",
+                "symfony/finder": "^6.0|^7.0"
+            },
+            "require-dev": {
+                "laravel/octane": "^1.4|^2.0",
+                "orchestra/testbench": "^8.0|^9.0",
+                "phpstan/phpstan": "^1.10",
+                "phpunit/phpunit": "^9.0|^10.4"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.x-dev"
+                },
+                "laravel": {
+                    "providers": [
+                        "Laravel\\Pennant\\PennantServiceProvider"
+                    ],
+                    "aliases": {
+                        "Feature": "Laravel\\Pennant\\Feature"
+                    }
+                }
+            },
+            "autoload": {
+                "files": [
+                    "src/helpers.php"
+                ],
+                "psr-4": {
+                    "Laravel\\Pennant\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Taylor Otwell",
+                    "email": "taylor@laravel.com"
+                }
+            ],
+            "description": "A simple, lightweight library for managing feature flags.",
+            "homepage": "https://github.com/laravel/pennant",
+            "keywords": [
+                "feature",
+                "flags",
+                "laravel",
+                "pennant"
+            ],
+            "support": {
+                "issues": "https://github.com/laravel/pennant/issues",
+                "source": "https://github.com/laravel/pennant"
+            },
+            "time": "2024-03-04T22:18:21+00:00"
         },
         {
             "name": "laravel/prompts",

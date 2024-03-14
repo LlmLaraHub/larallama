@@ -70,3 +70,25 @@ It is using [https://docs.craftable.pro/](https://docs.craftable.pro/)
 All of this is in Forge so we do not need to SSH or access the server
 
 ![](docs/images/forge.png)
+
+
+## Single Branch workflow
+
+There is a lot to say here. I will link you to a few sources of information:
+
+[https://www.youtube.com/watch?v=ASOSEiJCyEM&t=6s](https://www.youtube.com/watch?v=ASOSEiJCyEM&t=6s)
+
+The research that backs a lot of this up: 
+
+Books and papers linked in article below
+[https://alfrednutile.info/ongoing-links-and-notes-about-devops-transformation-using-the-accelerate-data-and-strategies](https://alfrednutile.info/ongoing-links-and-notes-about-devops-transformation-using-the-accelerate-data-and-strategies)
+
+Older Article that refrerences some good sources
+[https://alfrednutile.info/feature-flags-in-laravel](https://alfrednutile.info/feature-flags-in-laravel)
+
+
+### Feature Flag Library 
+[https://laravel.com/docs/11.x/pennant](https://laravel.com/docs/11.x/pennant)
+
+And some info on it [https://alfrednutile.info/using-laravel-pennant-in-inertia](https://alfrednutile.info/using-laravel-pennant-in-inertia)
+
