@@ -23,9 +23,7 @@ Route::middleware([
         return Inertia::render('Dashboard');
     })->name('dashboard');
 
-
-
 });
 Route::controller(ExampleController::class)->group(function () {
-    Route::get('/examples/charts', 'charts')->name("example.charts");
+    Route::get('/examples/charts', 'charts')->name('example.charts');
 });
