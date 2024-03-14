@@ -1,7 +1,7 @@
-<?php 
+<?php
 
 return [
     'llm' => [
-        'driver' => env("LLM_DRIVER", 'openai')
-    ]
+        'driver' => env('LLM_DRIVER', 'openai'),
+    ],
 ];

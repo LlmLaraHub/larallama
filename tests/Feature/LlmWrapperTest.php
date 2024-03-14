@@ -4,8 +4,6 @@ namespace Tests\Feature;
 
 use App\Domains\Llms\DriverContract;
 use App\Domains\Llms\LlmWrapper;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class LlmWrapperTest extends TestCase
@@ -15,8 +13,8 @@ class LlmWrapperTest extends TestCase
      */
     public function test_builds_open_ai_wrapper(): void
     {
-       $llm = LlmWrapper::make();
+        $llm = LlmWrapper::make();
 
-       $this->assertInstanceOf(DriverContract::class, $llm);
+        $this->assertInstanceOf(DriverContract::class, $llm);
     }
 }
