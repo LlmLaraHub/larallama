@@ -5,6 +5,8 @@
 
 This will get any POC going quickly. It has the features needed for a solid proof of concept.
 
+![](docs/images/welcome.png)
+
 ## What
 
 ### Deploy quickly and automatically

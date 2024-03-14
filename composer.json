@@ -8,6 +8,7 @@
         "php": "^8.2",
         "inertiajs/inertia-laravel": "^1.0",
         "laravel/framework": "^11.0",
+        "laravel/horizon": "^5.23",
         "laravel/jetstream": "^5.0",
         "laravel/pulse": "^1.0@beta",
         "laravel/sanctum": "^4.0",
