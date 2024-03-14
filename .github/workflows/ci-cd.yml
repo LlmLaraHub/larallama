@@ -12,6 +12,8 @@ jobs:
       DB_PASSWORD: password
       APP_ENV: testing
       BROADCAST_DRIVER: log
+      COMPOSER_AUTH: {"http-basic":{"packages.craftable.pro":{"username":"'$CRAFTABLE_PRO_EMAIL'","password":"'$CRAFTABLE_PRO_LICENCE_KEY'"}}}
+
     services:
       mysql:
         image: mysql:8.0
@@ -55,7 +57,8 @@ jobs:
 
       - name: Install Composer dependencies
         run: |
-          COMPOSER_AUTH: '{"http-basic":{"packages.craftable.pro":{"username":"'$CRAFTABLE_PRO_EMAIL'","password":"'$CRAFTABLE_PRO_LICENCE_KEY'"}}}' composer install --no-interaction --prefer-dist          
+          composer install --no-interaction --prefer-dist
+          
 
       - name: Prepare the application
         run: |
