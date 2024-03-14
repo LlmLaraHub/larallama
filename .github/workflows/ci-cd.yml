@@ -57,7 +57,7 @@ jobs:
 
       - name: Install Composer dependencies
         run: |
-          composer config http-basic.packages.craftable.pro "${$CRAFTABLE_PRO_EMAIL}" "${$CRAFTABLE_PRO_LICENCE_KEY}"
+          composer config http-basic.packages.craftable.pro "${{ secrets.CRAFTABLE_PRO_EMAIL }}" "${{ secrets.CRAFTABLE_PRO_LICENCE_KEY }}"
           composer install --no-interaction --prefer-dist
 
       - name: Prepare the application
