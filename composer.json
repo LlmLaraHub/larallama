@@ -14,6 +14,7 @@
         "laravel/pulse": "^1.0@beta",
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.9",
+        "spatie/laravel-data": "^4.4",
         "tightenco/ziggy": "^2.0"
     },
     "require-dev": {

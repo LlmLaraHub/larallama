@@ -50,6 +50,12 @@ If you want to seed admin see `database/seeders/AdminSeeder`
 php artisan db:seed --class=AdminSeeder
 ```
 
+## DataObjects
+
+[https://spatie.be/docs/laravel-data/v4/installation-setup](https://spatie.be/docs/laravel-data/v4/installation-setup)
+
+Great pattern to use for data in and out of Classes to keep your code easy to plug classes together and test.
+
 ## Admin Dash
 It is using [https://docs.craftable.pro/](https://docs.craftable.pro/)
 
@@ -91,4 +97,8 @@ Older Article that refrerences some good sources
 [https://laravel.com/docs/11.x/pennant](https://laravel.com/docs/11.x/pennant)
 
 And some info on it [https://alfrednutile.info/using-laravel-pennant-in-inertia](https://alfrednutile.info/using-laravel-pennant-in-inertia)
+
+## LLM Integration
+
+This example uses OpenAI but we can use any that we want by just swapping out the client.
 
