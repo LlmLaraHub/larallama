@@ -514,8 +514,8 @@ const chartOptons8 = {
 
             <div class="grid sm:grid-cols-3 grid-cols-1 gap-2">
                 <div class="sm:col-span-3 col-span-1 bg-white shadow-sm px-2 text-sm text-gray-600">
-                    Using ApexCharts <a class="underline" href="https://apexcharts.com/docs/vue-charts/"
-                        target="_blank">https://apexcharts.com/docs/vue-charts/</a>
+                    Using ApexCharts <a class="underline" href="https://apexcharts.com/vue-chart-demos/"
+                        target="_blank">https://apexcharts.com/vue-chart-demos/</a>
                 </div>
 
                 <!-- sparkline -->
