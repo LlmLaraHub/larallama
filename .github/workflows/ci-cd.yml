@@ -12,8 +12,6 @@ jobs:
       DB_PASSWORD: password
       APP_ENV: testing
       BROADCAST_DRIVER: log
-      COMPOSER_AUTH: '{"http-basic":{"packages.craftable.pro":{"username":"'$CRAFTABLE_PRO_EMAIL'","password":"'$CRAFTABLE_PRO_LICENCE_KEY'"}}}' composer install --no-interaction --prefer-dist
-
     services:
       mysql:
         image: mysql:8.0
@@ -52,13 +50,15 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
+          # Use composer.json for key, if composer.lock is not committed.
+          # key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
           restore-keys: ${{ runner.os }}-composer-
 
-      - name: Install dependencies
-        uses: php-actions/composer@v6
-        env:
-          COMPOSER_AUTH: {"http-basic":{"packages.craftable.pro":{"username":"'$CRAFTABLE_PRO_EMAIL'","password":"'$CRAFTABLE_PRO_LICENCE_KEY'"}}}
+      - name: Install Composer dependencies
+        run: |
+          composer config http-basic.packages.craftable.pro "${$CRAFTABLE_PRO_EMAIL}" "${$CRAFTABLE_PRO_LICENCE_KEY}"
+          composer install --no-interaction --prefer-dist
 
       - name: Prepare the application
         run: |
