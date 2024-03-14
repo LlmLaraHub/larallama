@@ -57,5 +57,16 @@ It is using [https://docs.craftable.pro/](https://docs.craftable.pro/)
 ## System Level info Pulse
 `/pulse` you must be an admin user (more on that shortly)
 
+[https://pulse.laravel.com/](https://pulse.laravel.com/)
+
+
 ![](docs/images/pulse.png)
 
+## Queue System Horizon
+
+
+## Forge on AWS
+
+All of this is in Forge so we do not need to SSH or access the server
+
+![](docs/images/forge.png)

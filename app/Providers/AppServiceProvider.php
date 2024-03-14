@@ -25,8 +25,5 @@ class AppServiceProvider extends ServiceProvider
             return $user->isAdmin();
         });
 
-        Gate::define('viewHorizon', function (User $user) {
-            return $user->isAdmin();
-        });
     }
 }
