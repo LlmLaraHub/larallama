@@ -3,8 +3,6 @@
 namespace Tests\Feature\Http\Controllers;
 
 use App\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use OpenAI\Laravel\Facades\OpenAI;
 use OpenAI\Responses\Chat\CreateResponse;
 use Tests\TestCase;
@@ -22,7 +20,7 @@ class ExampleChatBotControllerTest extends TestCase
             CreateResponse::fake([
                 'choices' => [
                     [
-                       'text' => "Mocked Reply"
+                        'text' => 'Mocked Reply',
                     ],
                 ],
             ]),
@@ -30,7 +28,7 @@ class ExampleChatBotControllerTest extends TestCase
 
         $this->actingAs($user)
             ->put(route('example.chatbot.chat'), [
-                'message' => "Foobar"
+                'message' => 'Foobar',
             ])
             ->assertStatus(200)->dd();
 

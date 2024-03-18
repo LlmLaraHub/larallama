@@ -1,9 +1,6 @@
 <?php
 
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Str;
-
 
 if (! function_exists('put_fixture')) {
     function put_fixture($file_name, $content = [], $json = true)

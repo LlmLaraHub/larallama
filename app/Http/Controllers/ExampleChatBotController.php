@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Domains\Examples\ExampleChartData;
-use Illuminate\Http\Request;
 use OpenAI\Laravel\Facades\OpenAI;
 
 class ExampleChatBotController extends Controller
@@ -11,14 +10,16 @@ class ExampleChatBotController extends Controller
     public function show()
     {
         $exampleData = ExampleChartData::get();
+
         return inertia('Examples/ChatBot', [
-            'example_data' => $exampleData
+            'example_data' => $exampleData,
         ]);
     }
 
-    public function chat() {
+    public function chat()
+    {
         $validated = request()->validate([
-            'message' => 'required'
+            'message' => 'required',
         ]);
 
         $mockedData = ExampleChartData::asJson();
@@ -26,20 +27,20 @@ class ExampleChatBotController extends Controller
         The data is about compaings so the user might compare campaigns or just askin info about one campaign.
         Here is the mock data to help: $mockedData
         ";
-        
+
         $response = OpenAI::chat()->create([
             'model' => 'gpt-4-turbo-preview',
             'messages' => [
                 [
-                    'role' => 'system', 'content' => $prompt
+                    'role' => 'system', 'content' => $prompt,
                 ],
                 [
-                    'role' => 'user', 'content' => $validated['message']
+                    'role' => 'user', 'content' => $validated['message'],
                 ],
             ],
         ]);
 
-        put_fixture("chat_response.json", $response->choices);
+        put_fixture('chat_response.json', $response->choices);
 
         return response()->json($response);
     }

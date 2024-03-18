@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Domains\Examples;
 
@@ -22,7 +22,8 @@ class ExampleChartData
         ];
     }
 
-    public static function asJson() : string {
+    public static function asJson(): string
+    {
         return json_encode(self::get());
     }
 }
