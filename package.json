@@ -21,6 +21,7 @@
     "dependencies": {
         "apexcharts": "^3.47.0",
         "vue-apexcharts": "^1.6.2",
+        "vue-toastification": "^2.0.0-rc.5",
         "vue3-apexcharts": "^1.5.2"
     }
 }

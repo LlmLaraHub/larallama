@@ -6,6 +6,7 @@ import Banner from '@/Components/Banner.vue';
 import Dropdown from '@/Components/Dropdown.vue';
 import DropdownLink from '@/Components/DropdownLink.vue';
 import NavLink from '@/Components/NavLink.vue';
+import ChatWidget from '@/Components/ChatWidget.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 
 defineProps({
@@ -284,6 +285,11 @@ const logout = () => {
             <main>
                 <slot />
             </main>
+
+            <ChatWidget
+                v-if="$page.props.features.chat_widget"
+
+                :user="$page.props.auth"></ChatWidget>
         </div>
     </div>
 </template>
