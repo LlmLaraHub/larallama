@@ -30,7 +30,7 @@ class ExampleChatBotControllerTest extends TestCase
             ->put(route('example.chatbot.chat'), [
                 'message' => 'Foobar',
             ])
-            ->assertStatus(200)->dd();
+            ->assertStatus(200);
 
     }
 }
