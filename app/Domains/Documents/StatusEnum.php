@@ -12,5 +12,6 @@ enum StatusEnum: string
     case Running = 'running';
     case SummaryBuilding = 'summary_building';
     case Complete = 'complete';
+    case Cancelled = 'Cancelled';
     case Failed = 'failed';
 }

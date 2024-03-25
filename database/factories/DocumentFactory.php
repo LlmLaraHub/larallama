@@ -24,6 +24,7 @@ class DocumentFactory extends Factory
             'status' => StatusEnum::random(),
             'summary' => $this->faker->text(),
             'file_path' => $this->faker->url(),
+            'document_chunk_count' => $this->faker->numberBetween(1, 10),
             'collection_id' => Collection::factory(),
         ];
     }
