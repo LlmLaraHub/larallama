@@ -4,18 +4,16 @@ namespace App\Domains\Documents\Transformers;
 
 use App\Models\Document;
 use App\Models\DocumentChunk;
-use App\Models\Transformer;
-use App\Transformer\BaseTransformer;
 use Smalot\PdfParser\Parser;
 
-class PdfTransformer 
+class PdfTransformer
 {
     protected Document $document;
 
     public function handle(Document $document): Document
     {
         $this->document = $document;
-        
+
         $filePath = $this->document->pathToFile();
 
         $parser = new Parser();
@@ -28,12 +26,12 @@ class PdfTransformer
             $guid = md5($pageContent);
             DocumentChunk::updateOrCreate(
                 [
-                    'guid' => $guid, 
-                    'document_id' => $this->document->id
+                    'guid' => $guid,
+                    'document_id' => $this->document->id,
                 ],
                 [
                     'content' => $pageContent,
-                    'sort_order' => $page_number
+                    'sort_order' => $page_number,
                 ]
             );
         }

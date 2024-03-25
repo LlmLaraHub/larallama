@@ -19,6 +19,13 @@ trait SharedSetupForPdfFile
         $from = base_path('tests/fixtures/example.pdf');
 
         if (! File::exists($document->pathToFile())) {
+            if(!File::exists($document->mkdirPathToFile())) {
+                File::makeDirectory(
+                    $document->mkdirPathToFile(),
+                    0755,
+                    true
+                );
+            }
             File::copy(
                 $from,
                 $document->pathToFile()

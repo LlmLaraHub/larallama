@@ -76,8 +76,6 @@ jobs:
         run: |
           npm install && npm run build
           XDEBUG_MODE=coverage php artisan test --coverage --min=50
-        env:
-          DB_PORT: ${{ job.services.postgres.ports['5432'] }}
 
   cd:
     runs-on: ubuntu-latest

@@ -41,7 +41,7 @@ class Document extends Model
         return $this->hasMany(DocumentChunk::class);
     }
 
-    public function pathToFile(): string|null
+    public function pathToFile(): ?string
     {
         return sprintf(
             storage_path('app/collections/%d/%s'),
@@ -49,7 +49,7 @@ class Document extends Model
             $this->file_path);
     }
 
-    public function mkdirPathToFile(): string|null
+    public function mkdirPathToFile(): ?string
     {
         return sprintf(
             storage_path('app/collections/%d'),
