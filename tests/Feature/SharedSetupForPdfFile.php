@@ -3,7 +3,6 @@
 namespace Tests\Feature;
 
 use App\Models\Document;
-use App\Models\Source;
 use Illuminate\Support\Facades\File;
 
 trait SharedSetupForPdfFile
@@ -19,7 +18,7 @@ trait SharedSetupForPdfFile
         $from = base_path('tests/fixtures/example.pdf');
 
         if (! File::exists($document->pathToFile())) {
-            if(!File::exists($document->mkdirPathToFile())) {
+            if (! File::exists($document->mkdirPathToFile())) {
                 File::makeDirectory(
                     $document->mkdirPathToFile(),
                     0755,
