@@ -27,4 +27,14 @@ class DocumentFactory extends Factory
             'collection_id' => Collection::factory(),
         ];
     }
+
+    public function pdf(): Factory
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'type' => TypesEnum::PDF,
+            ];
+        });
+    }
+    
 }

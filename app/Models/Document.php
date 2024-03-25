@@ -40,4 +40,19 @@ class Document extends Model
     {
         return $this->hasMany(DocumentChunk::class);
     }
+
+    public function pathToFile(): string|null
+    {
+        return sprintf(
+            storage_path('app/collections/%d/%s'),
+            $this->collection_id,
+            $this->file_path);
+    }
+
+    public function mkdirPathToFile(): string|null
+    {
+        return sprintf(
+            storage_path('app/collections/%d'),
+            $this->collection_id);
+    }
 }

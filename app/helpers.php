@@ -21,6 +21,15 @@ if (! function_exists('put_fixture')) {
     }
 }
 
+
+if (! function_exists('remove_ascii')) {
+    function remove_ascii($string): string
+    {
+        return preg_replace('/[^\x00-\x7F]+/', '', $string);
+    }
+}
+
+
 if (! function_exists('get_fixture')) {
     function get_fixture($file_name, $decode = true)
     {
