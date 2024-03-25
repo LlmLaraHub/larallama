@@ -12,6 +12,7 @@
         "@vitejs/plugin-vue": "^5.0.0",
         "autoprefixer": "^10.4.16",
         "axios": "^1.6.4",
+        "chokidar": "^3.6.0",
         "laravel-vite-plugin": "^1.0",
         "postcss": "^8.4.32",
         "tailwindcss": "^3.4.0",
@@ -24,6 +25,8 @@
         "apexcharts": "^3.47.0",
         "vue-apexcharts": "^1.6.2",
         "vue-toastification": "^2.0.0-rc.5",
-        "vue3-apexcharts": "^1.5.2"
+        "vue-upload-component": "^3.1.15",
+        "vue3-apexcharts": "^1.5.2",
+        "vue3-dropzone": "^2.2.1"
     }
 }

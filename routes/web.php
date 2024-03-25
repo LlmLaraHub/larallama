@@ -35,6 +35,7 @@ Route::middleware([
         Route::get('/collections', 'index')->name('collections.index');
         Route::post('/collections', 'store')->name('collections.store');
         Route::get('/collections/{collection}', 'show')->name('collections.show');
+        Route::any('/collections/{collection}/upload', 'filesUpload')->name('collections.upload');
     });
 
 });
