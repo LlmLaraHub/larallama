@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\Http\Controllers;
 
-use App\Jobs\ParsePdfFileJob;
 use App\Jobs\ProcessFileJob;
 use App\Models\Collection;
 use App\Models\User;

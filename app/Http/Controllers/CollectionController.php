@@ -5,11 +5,9 @@ namespace App\Http\Controllers;
 use App\Domains\Documents\TypesEnum;
 use App\Http\Resources\CollectionResource;
 use App\Http\Resources\DocumentResource;
-use App\Jobs\ParsePdfFileJob;
 use App\Jobs\ProcessFileJob;
 use App\Models\Collection;
 use App\Models\Document;
-use Illuminate\Support\Facades\Log;
 
 class CollectionController extends Controller
 {
