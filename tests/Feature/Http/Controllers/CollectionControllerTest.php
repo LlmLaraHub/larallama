@@ -48,7 +48,8 @@ class CollectionControllerTest extends TestCase
 
     }
 
-    public function test_file_upload() {
+    public function test_file_upload()
+    {
         Queue::fake();
         Storage::fake('collections');
         $user = $this->createUserWithCurrentTeam();
@@ -59,14 +60,14 @@ class CollectionControllerTest extends TestCase
         /**
          * @TODO Policy in place by now
          */
-        $response = $this->post(route("collections.upload", $collection), [
+        $response = $this->post(route('collections.upload', $collection), [
             'files' => [
                 UploadedFile::fake()->create('exaple1.pdf', 1024, 'application/pdf'),
                 UploadedFile::fake()->create('exaple1.pdf', 1024, 'application/pdf'),
             ],
         ]);
 
-        Storage::disk("collections")->assertExists("{$collection->id}/exaple1.pdf");
+        Storage::disk('collections')->assertExists("{$collection->id}/exaple1.pdf");
 
         Queue::assertPushed(ParsePdfFileJob::class, 2);
 

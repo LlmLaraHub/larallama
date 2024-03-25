@@ -48,18 +48,19 @@ class CollectionController extends Controller
             'collection' => new CollectionResource($collection),
             'documents' => DocumentResource::collection(Document::query()
                 ->where('collection_id', $collection->id)
-                ->latest("id")
+                ->latest('id')
                 ->get()),
         ]);
     }
 
-    public function filesUpload(Collection $collection) {
+    public function filesUpload(Collection $collection)
+    {
         $validated = request()->validate([
             'files' => 'required',
         ]);
 
-        foreach($validated['files'] as $file) {
-            Log::info("file info", [
+        foreach ($validated['files'] as $file) {
+            Log::info('file info', [
                 'name' => $file->getClientOriginalName(),
                 'mimetype' => $file->getMimeType(),
             ]);
@@ -67,7 +68,7 @@ class CollectionController extends Controller
             $document = Document::create([
                 'collection_id' => $collection->id,
                 'file_path' => $file->getClientOriginalName(),
-                'type' => TypesEnum::PDF
+                'type' => TypesEnum::PDF,
             ]);
 
             $file->storeAs(
