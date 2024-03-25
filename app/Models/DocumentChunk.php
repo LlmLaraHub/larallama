@@ -21,7 +21,7 @@ class DocumentChunk extends Model
         return $this->belongsTo(Document::class);
     }
 
-     /**
+    /**
      * The "booted" method of the model.
      *
      * @return void
