@@ -3,12 +3,9 @@
 namespace Tests\Feature\Http\Controllers;
 
 use App\Models\Collection;
-use App\Models\Team;
 use App\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Tests\TestCase;
 use Inertia\Testing\AssertableInertia as Assert;
+use Tests\TestCase;
 
 class CollectionControllerTest extends TestCase
 {
@@ -25,7 +22,7 @@ class CollectionControllerTest extends TestCase
 
         Collection::factory()->create();
 
-        $response = $this->get(route("collections.index"))
+        $response = $this->get(route('collections.index'))
             ->assertStatus(200)
             ->assertInertia(fn (Assert $page) => $page
                 ->component('Collection/Index')
@@ -39,12 +36,11 @@ class CollectionControllerTest extends TestCase
         $this->actingAs($user);
 
         $this->assertDatabaseCount('collections', 0);
-        $response = $this->post(route("collections.store"), [
-            'name' => "Test",
+        $response = $this->post(route('collections.store'), [
+            'name' => 'Test',
             'description' => 'Test Description',
         ])->assertStatus(302);
         $this->assertDatabaseCount('collections', 1);
-
 
     }
 }

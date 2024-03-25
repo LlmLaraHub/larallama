@@ -11,8 +11,8 @@ abstract class TestCase extends BaseTestCase
 {
     use LazilyRefreshDatabase;
 
-
-    public function createUserWithCurrentTeam() {
+    public function createUserWithCurrentTeam()
+    {
         $user = User::factory()->withPersonalTeam()->create();
         $user->current_team_id = Team::first()->id;
         $user->save();

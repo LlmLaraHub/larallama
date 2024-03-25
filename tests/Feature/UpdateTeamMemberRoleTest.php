@@ -19,11 +19,11 @@ class UpdateTeamMemberRoleTest extends TestCase
         );
 
         $response = $this->put('/teams/'.$user->currentTeam->id.'/members/'.$otherUser->id, [
-            'role' => 'editor',
+            'role' => 'member',
         ]);
 
         $this->assertTrue($otherUser->fresh()->hasTeamRole(
-            $user->currentTeam->fresh(), 'editor'
+            $user->currentTeam->fresh(), 'member'
         ));
     }
 
@@ -38,7 +38,7 @@ class UpdateTeamMemberRoleTest extends TestCase
         $this->actingAs($otherUser);
 
         $response = $this->put('/teams/'.$user->currentTeam->id.'/members/'.$otherUser->id, [
-            'role' => 'editor',
+            'role' => 'member',
         ]);
 
         $this->assertTrue($otherUser->fresh()->hasTeamRole(

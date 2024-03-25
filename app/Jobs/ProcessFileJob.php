@@ -52,10 +52,10 @@ class ProcessFileJob implements ShouldQueue
             ->name('OptOutRequests')
             ->finally(function (Batch $batch) {
                 /**
-             * @TODO
-             * make a job that does that and also
-             * closes up the batch on the run watcher
-             */
+                 * @TODO
+                 * make a job that does that and also
+                 * closes up the batch on the run watcher
+                 */
                 CollectionStatusEvent::dispatch(
                     $this->document->collection,
                     CollectionStatusEnum::PROCESSED);
