@@ -8,5 +8,9 @@ enum ApiKeyTypeEnum: string
 {
     use Values;
 
-    case OPENAI = 'openai';
+    case Openai = 'openai';
+    case OpenAi_Azure = 'openai_azure';
+    case Ollama = 'ollama';
+    case Claude = 'claude';
+    case Gemini = 'gemini';
 }

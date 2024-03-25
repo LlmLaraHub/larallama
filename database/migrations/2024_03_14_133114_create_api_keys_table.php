@@ -18,6 +18,7 @@ return new class extends Migration
 
             $table->string('key')->unique();
             $table->string('name');
+            $table->json('settings');
 
             $table->boolean('is_active')->default(false);
 

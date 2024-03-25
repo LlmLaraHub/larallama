@@ -11,6 +11,11 @@ class ApiKey extends Model
 
     public $guarded = [];
 
+    protected $casts = [
+        'is_active' => 'boolean',
+        'settings' => 'encrypted:json',
+    ];
+
     public function isActive()
     {
         return $this->is_active;
