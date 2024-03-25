@@ -2,7 +2,9 @@
 
 namespace App\Jobs;
 
+use App\Domains\Collections\CollectionStatusEnum;
 use App\Domains\Documents\StatusEnum;
+use App\Events\CollectionStatusEvent;
 use App\Models\Document;
 use Illuminate\Bus\Batch;
 use Illuminate\Bus\Batchable;
@@ -19,7 +21,7 @@ class DocumentProcessingCompleteJob implements ShouldQueue
     /**
      * Create a new job instance.
      */
-    public function __construct(public Document $document, public Batch $batch)
+    public function __construct(public Document $document, public ?Batch $batch)
     {
         //
     }
@@ -29,10 +31,10 @@ class DocumentProcessingCompleteJob implements ShouldQueue
      */
     public function handle(): void
     {
-        $this->batchId = $this->batch->id;
+        $this->batchId = optional($this->batch)->id;
 
         $count = $this->document->document_chunks()->count();
-        if ($this->batch()->cancelled()) {
+        if (optional($this->batch())->cancelled()) {
             // Determine if the batch has been cancelled...
             $this->document->update([
                 'status' => StatusEnum::Cancelled,
@@ -46,6 +48,10 @@ class DocumentProcessingCompleteJob implements ShouldQueue
             'status' => StatusEnum::Complete,
             'document_chunk_count' => $count,
         ]);
+
+        CollectionStatusEvent::dispatch(
+            $this->document->collection,
+            CollectionStatusEnum::PROCESSED);
 
     }
 }

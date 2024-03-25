@@ -26,7 +26,7 @@ class Document extends Model
 
     protected $guarded = [];
 
-    protected $cast = [
+    protected $casts = [
         'type' => TypesEnum::class,
         'status' => StatusEnum::class,
     ];
