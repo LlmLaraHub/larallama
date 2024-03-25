@@ -21,7 +21,7 @@ class DocumentProcessingCompleteJob implements ShouldQueue
     /**
      * Create a new job instance.
      */
-    public function __construct(public Document $document, public ?Batch $batch)
+    public function __construct(public Document $document)
     {
         //
     }
@@ -31,18 +31,10 @@ class DocumentProcessingCompleteJob implements ShouldQueue
      */
     public function handle(): void
     {
-        $this->batchId = optional($this->batch)->id;
+       
 
         $count = $this->document->document_chunks()->count();
-        if (optional($this->batch())->cancelled()) {
-            // Determine if the batch has been cancelled...
-            $this->document->update([
-                'status' => StatusEnum::Cancelled,
-                'document_chunk_count' => $count,
-            ]);
-
-            return;
-        }
+      
 
         $this->document->update([
             'status' => StatusEnum::Complete,

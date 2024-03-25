@@ -57,9 +57,7 @@ class ProcessFileJob implements ShouldQueue
                  * make a job that does that and also
                  * closes up the batch on the run watcher
                  */
-                CollectionStatusEvent::dispatch(
-                    $document->collection,
-                    CollectionStatusEnum::PROCESSED);
+                DocumentProcessingCompleteJob::dispatch($document);
             })
             ->allowFailures()
             ->dispatch();
