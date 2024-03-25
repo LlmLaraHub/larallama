@@ -2,8 +2,6 @@
 
 namespace App\Jobs;
 
-use App\Domains\Collections\CollectionStatusEnum;
-use App\Events\CollectionStatusEvent;
 use App\Models\Document;
 use Illuminate\Bus\Batch;
 use Illuminate\Bus\Queueable;
