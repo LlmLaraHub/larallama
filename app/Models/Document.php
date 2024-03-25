@@ -28,7 +28,6 @@ class Document extends Model
     protected $cast = [
         'type' => TypesEnum::class,
         'status' => StatusEnum::class,
-        'status' => 'string',
     ];
 
     public function collection(): BelongsTo
