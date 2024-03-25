@@ -20,6 +20,9 @@ class ApiKeyFactory extends Factory
             'key' => $this->faker->uuid,
             'name' => $this->faker->word,
             'type' => 'openai',
+            'settings' => [
+                'organization_key' => 'testing',
+            ],
         ];
     }
 }
