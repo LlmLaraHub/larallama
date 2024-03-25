@@ -22,7 +22,7 @@ if (! function_exists('put_fixture')) {
 }
 
 if (! function_exists('get_fixture')) {
-    function get_fixture_v2($file_name, $decode = true)
+    function get_fixture($file_name, $decode = true)
     {
         $results = File::get(base_path(sprintf(
             'tests/fixtures/%s',
