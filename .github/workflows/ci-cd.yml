@@ -72,12 +72,6 @@ jobs:
         run: |
           composer stan
 
-      - name: Enable PostgreSQL Extensions
-        run: |
-          PGPASSWORD=$DB_PASSWORD psql -h localhost -U $DB_USERNAME -d $DB_DATABASE -c "CREATE EXTENSION IF NOT EXISTS vector;"
-        env:
-          DB_PORT: ${{ job.services.postgres.ports['5432'] }}
-
       - name: Test with phpunit
         run: |
           npm install && npm run build
