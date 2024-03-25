@@ -1,6 +1,6 @@
 name: CI-CD
 
-on: [ push ]
+on: [push]
 
 jobs:
   ci:
@@ -13,29 +13,25 @@ jobs:
       APP_ENV: testing
       BROADCAST_DRIVER: log
     services:
-      postgres:
-        image: postgres:latest
-        env:
-          POSTGRES_PASSWORD: password
-          POSTGRES_DB: testing
-        ports:
-          - 5432/tcp
-        options: --health-cmd="pg_isready -U postgres" --health-interval=10s --health-timeout=5s --health-retries=5
-
+          database:
+            image: ankane/pgvector:latest
+            env:
+              POSTGRES_PASSWORD: password
+              POSTGRES_USER: root
+              POSTGRES_DB: testing
+            ports:
+              - 5432:5432
+            options: >-
+              --health-cmd pg_isready
+              --health-interval 10s
+              --health-timeout 5s
+              --health-retries 5
     strategy:
       fail-fast: false
       matrix:
-        php-versions: [ "8.2" ]
+        php-versions: ["8.2"]
     steps:
       - uses: actions/checkout@v4
-
-      - name: Create the PostgreSQL database
-        run: |
-          sudo service postgresql start
-          PGPASSWORD=$POSTGRES_PASSWORD psql -h localhost -U $POSTGRES_USER -tc "SELECT 1 FROM pg_database WHERE datname = 'testing'" | grep -q 1 || PGPASSWORD=$POSTGRES_PASSWORD psql -h localhost -U $POSTGRES_USER -c "CREATE DATABASE testing"
-        env:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: password      
 
       - name: Setup PHP, with composer and extensions
         uses: shivammathur/setup-php@v2
@@ -45,17 +41,26 @@ jobs:
           extensions: mbstring, dom, fileinfo, pgsql, grpc, :psr
           coverage: xdebug
 
+      - name: PHP Code Style (phpcs)
+        run: |
+          composer fix
+          
+      - name: PHP Code Style (phpcs)
+        run: |
+          composer stan
+
       - name: Enable PostgreSQL Extensions
         run: |
-          sudo service postgresql start
-          sudo -u postgres psql -c "CREATE EXTENSION IF NOT EXISTS vector;" -d testing
+          PGPASSWORD=$DB_PASSWORD psql -h localhost -U $DB_USERNAME -d $DB_DATABASE -c "CREATE EXTENSION IF NOT EXISTS vector;"
+        env:
+          DB_PORT: ${{ job.services.postgres.ports['5432'] }}
 
       - name: Test with phpunit
         run: |
           npm install && npm run build
-          XDEBUG_MODE=coverage php artisan test --coverage  --min=50
+          XDEBUG_MODE=coverage php artisan test --coverage --min=50
         env:
-          DB_PORT: ${{ job.services.mysql.ports['3306'] }}
+          DB_PORT: ${{ job.services.postgres.ports['5432'] }}
 
   cd:
     runs-on: ubuntu-latest

@@ -21,7 +21,7 @@ class CollectionFactory extends Factory
             'name' => $this->faker->sentence,
             'description' => $this->faker->paragraph,
             'active' => $this->faker->boolean,
-            'team_id' => Team::factory()
+            'team_id' => Team::factory(),
         ];
     }
 }
