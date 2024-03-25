@@ -6,6 +6,7 @@ use App\Domains\Documents\TypesEnum;
 use App\Http\Resources\CollectionResource;
 use App\Http\Resources\DocumentResource;
 use App\Jobs\ParsePdfFileJob;
+use App\Jobs\ProcessFileJob;
 use App\Models\Collection;
 use App\Models\Document;
 use Illuminate\Support\Facades\Log;
@@ -60,11 +61,6 @@ class CollectionController extends Controller
         ]);
 
         foreach ($validated['files'] as $file) {
-            Log::info('file info', [
-                'name' => $file->getClientOriginalName(),
-                'mimetype' => $file->getMimeType(),
-            ]);
-
             $document = Document::create([
                 'collection_id' => $collection->id,
                 'file_path' => $file->getClientOriginalName(),
@@ -77,7 +73,7 @@ class CollectionController extends Controller
                 options: ['disk' => 'collections']
             );
 
-            ParsePdfFileJob::dispatch($document);
+            ProcessFileJob::dispatch($document);
         }
 
         request()->session()->flash('flash.banner', 'Files uploaded successfully!');

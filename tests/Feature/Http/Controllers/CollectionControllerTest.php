@@ -3,6 +3,7 @@
 namespace Tests\Feature\Http\Controllers;
 
 use App\Jobs\ParsePdfFileJob;
+use App\Jobs\ProcessFileJob;
 use App\Models\Collection;
 use App\Models\User;
 use Illuminate\Http\UploadedFile;
@@ -69,7 +70,7 @@ class CollectionControllerTest extends TestCase
 
         Storage::disk('collections')->assertExists("{$collection->id}/exaple1.pdf");
 
-        Queue::assertPushed(ParsePdfFileJob::class, 2);
+        Queue::assertPushed(ProcessFileJob::class, 2);
 
     }
 }

@@ -41,6 +41,7 @@ class ProcessFileJob implements ShouldQueue
         //2) vectorize the data
         //3) Summarize the data
         //4) Tag the data
+        $document = $this->document;
 
         $batch = Bus::batch([
             new ParsePdfFileJob($this->document),
@@ -50,14 +51,14 @@ class ProcessFileJob implements ShouldQueue
             //then mark it all as done and notify the ui
         ])
             ->name('OptOutRequests')
-            ->finally(function (Batch $batch) {
+            ->finally(function (Batch $batch) use ($document) {
                 /**
                  * @TODO
                  * make a job that does that and also
                  * closes up the batch on the run watcher
                  */
                 CollectionStatusEvent::dispatch(
-                    $this->document->collection,
+                    $document->collection,
                     CollectionStatusEnum::PROCESSED);
             })
             ->allowFailures()
