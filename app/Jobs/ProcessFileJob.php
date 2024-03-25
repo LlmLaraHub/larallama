@@ -30,6 +30,11 @@ class ProcessFileJob implements ShouldQueue
      */
     public function handle(): void
     {
+        /**
+         * @TODO
+         * Make a test. I am keeping this simple to just run the batch
+         * but if it does more needs a test
+         */
         //This will trigger a batch job chain that will do the following for all the document pages
         //  it will save this on a Collections Watchers so we can see it in the UI.
         //1) Chunk up the data
