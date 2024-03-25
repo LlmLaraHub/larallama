@@ -6,10 +6,6 @@ jobs:
   ci:
     runs-on: ubuntu-latest
     env:
-      DB_CONNECTION: pgsql
-      DB_DATABASE: testing
-      DB_USERNAME: postgres
-      DB_PASSWORD: password
       APP_ENV: testing
       BROADCAST_DRIVER: log
     services:
