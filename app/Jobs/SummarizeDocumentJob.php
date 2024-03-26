@@ -7,6 +7,7 @@ use App\Domains\Documents\StatusEnum;
 use App\Events\CollectionStatusEvent;
 use App\LlmDriver\Helpers\TrimText;
 use App\LlmDriver\LlmDriverFacade;
+use App\LlmDriver\Responses\CompletionResponse;
 use App\Models\Document;
 use Illuminate\Bus\Batchable;
 use Illuminate\Bus\Queueable;
@@ -14,7 +15,6 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use App\LlmDriver\Responses\CompletionResponse;
 
 class SummarizeDocumentJob implements ShouldQueue
 {
