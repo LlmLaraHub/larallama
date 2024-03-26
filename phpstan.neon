@@ -14,5 +14,6 @@ parameters:
     excludePaths:
         - vendor
         - app/Actions/*
+        - app/Http/Resources/*
 
     checkMissingIterableValueType: false

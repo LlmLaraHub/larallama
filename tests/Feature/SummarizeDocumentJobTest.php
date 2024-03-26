@@ -5,8 +5,6 @@ namespace Tests\Feature;
 use App\Jobs\SummarizeDocumentJob;
 use App\LlmDriver\LlmDriverFacade;
 use App\Models\Document;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class SummarizeDocumentJobTest extends TestCase
@@ -16,7 +14,7 @@ class SummarizeDocumentJobTest extends TestCase
      */
     public function test_summary_job(): void
     {
-       
+
         $data = 'Foo bar';
         $dto = new \App\LlmDriver\Responses\CompletionResponse($data);
 
