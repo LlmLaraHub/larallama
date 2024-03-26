@@ -2,8 +2,14 @@
 
 namespace App\Domains\Documents\Transformers;
 
+use App\Domains\Collections\CollectionStatusEnum;
+use App\Events\CollectionStatusEvent;
+use App\Jobs\VectorlizeDataJob;
+use App\Models\Collection;
 use App\Models\Document;
 use App\Models\DocumentChunk;
+use Illuminate\Bus\Batch;
+use Illuminate\Support\Facades\Bus;
 use Smalot\PdfParser\Parser;
 
 class PdfTransformer
@@ -19,12 +25,12 @@ class PdfTransformer
         $parser = new Parser();
         $pdf = $parser->parseFile($filePath);
         $pages = $pdf->getPages();
-
+        $chunks = [];
         foreach ($pages as $page_number => $page) {
             $page_number = $page_number + 1;
             $pageContent = $page->getText();
             $guid = md5($pageContent);
-            DocumentChunk::updateOrCreate(
+            $DocumentChunk = DocumentChunk::updateOrCreate(
                 [
                     'guid' => $guid,
                     'document_id' => $this->document->id,
@@ -34,7 +40,25 @@ class PdfTransformer
                     'sort_order' => $page_number,
                 ]
             );
+            /**
+             * Soon taggings 
+             * And Summary
+             */
+            $chunks[] = [
+                new VectorlizeDataJob($DocumentChunk)
+            ];
         }
+
+        $batch = Bus::batch($chunks)
+        ->name("Chunking Document - {$this->document->id}")
+        ->finally(function (Batch $batch) use ($document) {
+            CollectionStatusEvent::dispatch(
+                $document->collection,
+                CollectionStatusEnum::PROCESSED
+            );
+        })
+        ->allowFailures()
+        ->dispatch();
 
         return $this->document;
     }

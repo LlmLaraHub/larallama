@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Domains\Documents\StatusEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Pgvector\Laravel\Vector;
@@ -12,6 +13,9 @@ class DocumentChunk extends Model
 
     protected $casts = [
         'embedding' => Vector::class,
+        'status_embeddings' => StatusEnum::class,
+        'status_tagging' => StatusEnum::class,
+        'status_summary' => StatusEnum::class,
     ];
 
     protected $guarded = [];

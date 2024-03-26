@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Domains\Documents\StatusEnum;
 use App\Models\Document;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -22,6 +23,9 @@ class DocumentChunkFactory extends Factory
         return [
             'guid' => fake()->uuid(),
             'content' => fake()->sentence(10),
+            'status_embeddings' => StatusEnum::random(),
+            'status_tagging' => StatusEnum::random(),
+            'status_summary' => StatusEnum::random(),
             'original_content' => fake()->sentence(10),
             'document_id' => Document::factory(),
             'embedding' => data_get($embeddings, 'data.0.embedding'),

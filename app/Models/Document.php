@@ -16,9 +16,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property int $collection_id
  * @property string|null $summary
  * @property string|null $file_path
- * @property TypesEnum $type
- * @property StatusEnum $status
- * @property Collection $collection
+
  */
 class Document extends Model
 {
@@ -46,13 +44,15 @@ class Document extends Model
         return sprintf(
             storage_path('app/collections/%d/%s'),
             $this->collection_id,
-            $this->file_path);
+            $this->file_path
+        );
     }
 
     public function mkdirPathToFile(): ?string
     {
         return sprintf(
             storage_path('app/collections/%d'),
-            $this->collection_id);
+            $this->collection_id
+        );
     }
 }
