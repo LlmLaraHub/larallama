@@ -4,6 +4,7 @@ namespace App\Domains\Documents\Transformers;
 
 use App\Domains\Collections\CollectionStatusEnum;
 use App\Events\CollectionStatusEvent;
+use App\Jobs\SummarizeDataJob;
 use App\Jobs\VectorlizeDataJob;
 use App\Models\Collection;
 use App\Models\Document;
@@ -45,7 +46,8 @@ class PdfTransformer
              * And Summary
              */
             $chunks[] = [
-                new VectorlizeDataJob($DocumentChunk)
+                new VectorlizeDataJob($DocumentChunk),
+                new SummarizeDataJob($DocumentChunk)
             ];
         }
 

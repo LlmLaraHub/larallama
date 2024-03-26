@@ -3,6 +3,7 @@
 namespace Tests\Feature\Jobs;
 
 use App\Jobs\VectorlizeDataJob;
+use App\LlmDriver\LlmDriverFacade;
 use App\Models\DocumentChunk;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -15,6 +16,17 @@ class VectorlizeDataJobTest extends TestCase
      */
     public function test_gets_data(): void
     {
+        $embedding = get_fixture('embedding_response.json');
+        
+        $dto = new \App\LlmDriver\Responses\EmbeddingsResponseDto(
+            data_get($embedding, 'data.0.embedding'),
+            1000
+        );
+
+        LlmDriverFacade::shouldReceive('embedData')
+            ->once()
+            ->andReturn($dto);
+
         $documentChunk = DocumentChunk::factory()->create([
             'embedding' => null
         ]);

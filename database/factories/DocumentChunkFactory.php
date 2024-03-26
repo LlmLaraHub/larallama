@@ -27,6 +27,7 @@ class DocumentChunkFactory extends Factory
             'status_tagging' => StatusEnum::random(),
             'status_summary' => StatusEnum::random(),
             'original_content' => fake()->sentence(10),
+            'summary' => fake()->sentence(5),
             'document_id' => Document::factory(),
             'embedding' => data_get($embeddings, 'data.0.embedding'),
         ];

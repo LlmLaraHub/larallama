@@ -2,22 +2,24 @@
 
 namespace App\LlmDriver;
 
+use App\LlmDriver\Responses\CompletionResponse;
 use App\LlmDriver\Responses\EmbeddingsResponseDto;
 use Illuminate\Support\Facades\Log;
 use OpenAI\Resources\Embeddings;
 
 class MockClient extends BaseClient {
     
-
-    public function embedData(string $data) : EmbeddingsResponseDto {
-
-        Log::info("LlmDriver::MockClient::embedData");
+    
+    public function completion(string $prompt) : CompletionResponse {
+        Log::info("LlmDriver::MockClient::completion");
         
-        $data = get_fixture('embedding_response.json');
+        $data = <<<EOD
+        Voluptate irure cillum dolor anim officia reprehenderit dolor. Eiusmod veniam nostrud consectetur incididunt proident id. Anim adipisicing pariatur amet duis Lorem sunt veniam veniam est. Deserunt ea aliquip cillum pariatur consectetur. Dolor in reprehenderit adipisicing consectetur cupidatat ad cupidatat reprehenderit. Nostrud mollit voluptate aliqua anim pariatur excepteur eiusmod velit quis exercitation tempor quis excepteur.        
+EOD;
 
-        return new EmbeddingsResponseDto(
-            data_get($data, 'data.0.embedding'),
-            1000,
-        );
+        return new CompletionResponse($data);
     }
+
+
+
 }

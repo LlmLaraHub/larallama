@@ -48,7 +48,7 @@ class ProcessFileJob implements ShouldQueue
             //new TagDataJob($this->document),
             //then mark it all as done and notify the ui
         ])
-            ->name('OptOutRequests')
+            ->name('Process PDF Document - ' . $document->id)
             ->finally(function (Batch $batch) use ($document) {
                 /**
                  * @TODO

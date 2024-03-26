@@ -3,18 +3,17 @@
 namespace App\Jobs;
 
 use App\Domains\Documents\StatusEnum;
-use App\LlmDriver\LlmDriverClient;
 use App\LlmDriver\LlmDriverFacade;
 use App\Models\DocumentChunk;
+use Illuminate\Bus\Batchable;
+use App\LlmDriver\Responses\CompletionResponse;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use App\LlmDriver\Responses\EmbeddingsResponseDto;
-use Illuminate\Bus\Batchable;
 
-class VectorlizeDataJob implements ShouldQueue
+class SummarizeDataJob implements ShouldQueue
 {
     use Batchable, Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -31,23 +30,21 @@ class VectorlizeDataJob implements ShouldQueue
      */
     public function handle(): void
     {
-
-        if ($this->batch()->cancelled()) {
+        if (optional($this->batch())->cancelled()) {
             // Determine if the batch has been cancelled...
             $this->documentChunk->update([
-                'status_embeddings' => StatusEnum::Cancelled,
+                'status_summary' => StatusEnum::Cancelled,
             ]);
             return;
         }
-
         $content = $this->documentChunk->content;
 
-        /** @var EmbeddingsResponseDto $results */
-        $results = LlmDriverFacade::embedData($content);
+        /** @var CompletionResponse $results */
+        $results = LlmDriverFacade::completion($content);
 
         $this->documentChunk->update([
-            'embedding' => $results->embedding,
-            'status_embeddings' => StatusEnum::Complete,
+            'summary' => $results->content,
+            'status_summary' => StatusEnum::Complete,
         ]);
     }
 }
