@@ -16,7 +16,6 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property int $collection_id
  * @property string|null $summary
  * @property string|null $file_path
-
  */
 class Document extends Model
 {

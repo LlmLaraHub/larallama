@@ -26,12 +26,9 @@ class AppServiceProvider extends ServiceProvider
             return $user->isAdmin();
         });
 
-
-        $this->app->bind('llm_driver', function() {
+        $this->app->bind('llm_driver', function () {
             return LlmDriverClient::make();
         });
-
-        
 
     }
 }

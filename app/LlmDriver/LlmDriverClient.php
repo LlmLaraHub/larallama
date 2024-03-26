@@ -1,10 +1,8 @@
-<?php 
+<?php
 
 namespace App\LlmDriver;
 
-use Mockery\Mock;
-
-class LlmDriverClient 
+class LlmDriverClient
 {
     protected $config = [];
 
@@ -19,10 +17,11 @@ class LlmDriverClient
 
         $config = config("llmdriver.drivers.{$driver}");
 
-        if(!method_exists(static::class, $driver)) {
+        if (! method_exists(static::class, $driver)) {
             throw new \Exception("Driver {$driver} not found");
         }
 
+        /** @phpstan-ignore-next-line */
         return (new static($config))->$driver();
     }
 
@@ -30,5 +29,4 @@ class LlmDriverClient
     {
         return new MockClient();
     }
-    
 }

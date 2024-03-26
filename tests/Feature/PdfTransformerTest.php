@@ -29,7 +29,7 @@ class PdfTransformerTest extends TestCase
         $transformer = new PdfTransformer();
         $transformer->handle($this->document);
         $this->assertDatabaseCount('document_chunks', 10);
-        
+
         Bus::assertBatchCount(1);
 
     }

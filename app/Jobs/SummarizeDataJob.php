@@ -4,9 +4,9 @@ namespace App\Jobs;
 
 use App\Domains\Documents\StatusEnum;
 use App\LlmDriver\LlmDriverFacade;
+use App\LlmDriver\Responses\CompletionResponse;
 use App\Models\DocumentChunk;
 use Illuminate\Bus\Batchable;
-use App\LlmDriver\Responses\CompletionResponse;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -35,6 +35,7 @@ class SummarizeDataJob implements ShouldQueue
             $this->documentChunk->update([
                 'status_summary' => StatusEnum::Cancelled,
             ]);
+
             return;
         }
         $content = $this->documentChunk->content;

@@ -3,16 +3,15 @@
 namespace App\Jobs;
 
 use App\Domains\Documents\StatusEnum;
-use App\LlmDriver\LlmDriverClient;
 use App\LlmDriver\LlmDriverFacade;
+use App\LlmDriver\Responses\EmbeddingsResponseDto;
 use App\Models\DocumentChunk;
+use Illuminate\Bus\Batchable;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use App\LlmDriver\Responses\EmbeddingsResponseDto;
-use Illuminate\Bus\Batchable;
 
 class VectorlizeDataJob implements ShouldQueue
 {
@@ -37,6 +36,7 @@ class VectorlizeDataJob implements ShouldQueue
             $this->documentChunk->update([
                 'status_embeddings' => StatusEnum::Cancelled,
             ]);
+
             return;
         }
 

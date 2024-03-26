@@ -6,7 +6,6 @@ use App\Domains\Collections\CollectionStatusEnum;
 use App\Events\CollectionStatusEvent;
 use App\Jobs\SummarizeDataJob;
 use App\Jobs\VectorlizeDataJob;
-use App\Models\Collection;
 use App\Models\Document;
 use App\Models\DocumentChunk;
 use Illuminate\Bus\Batch;
@@ -42,25 +41,25 @@ class PdfTransformer
                 ]
             );
             /**
-             * Soon taggings 
+             * Soon taggings
              * And Summary
              */
             $chunks[] = [
                 new VectorlizeDataJob($DocumentChunk),
-                new SummarizeDataJob($DocumentChunk)
+                new SummarizeDataJob($DocumentChunk),
             ];
         }
 
         $batch = Bus::batch($chunks)
-        ->name("Chunking Document - {$this->document->id}")
-        ->finally(function (Batch $batch) use ($document) {
-            CollectionStatusEvent::dispatch(
-                $document->collection,
-                CollectionStatusEnum::PROCESSED
-            );
-        })
-        ->allowFailures()
-        ->dispatch();
+            ->name("Chunking Document - {$this->document->id}")
+            ->finally(function (Batch $batch) use ($document) {
+                CollectionStatusEvent::dispatch(
+                    $document->collection,
+                    CollectionStatusEnum::PROCESSED
+                );
+            })
+            ->allowFailures()
+            ->dispatch();
 
         return $this->document;
     }

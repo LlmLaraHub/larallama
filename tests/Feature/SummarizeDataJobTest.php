@@ -3,11 +3,9 @@
 namespace Tests\Feature;
 
 use App\Jobs\SummarizeDataJob;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Tests\TestCase;
 use App\LlmDriver\LlmDriverFacade;
 use App\Models\DocumentChunk;
+use Tests\TestCase;
 
 class SummarizeDataJobTest extends TestCase
 {
@@ -16,8 +14,8 @@ class SummarizeDataJobTest extends TestCase
      */
     public function test_gets_data(): void
     {
-        
-        $data = "Foo bar";
+
+        $data = 'Foo bar';
         $dto = new \App\LlmDriver\Responses\CompletionResponse($data);
 
         LlmDriverFacade::shouldReceive('completion')
@@ -25,12 +23,12 @@ class SummarizeDataJobTest extends TestCase
             ->andReturn($dto);
 
         $documentChunk = DocumentChunk::factory()->create([
-            'summary' => null
+            'summary' => null,
         ]);
 
         $job = new SummarizeDataJob($documentChunk);
         $job->handle();
 
-        $this->assertEquals("Foo bar", $documentChunk->refresh()->summary);
+        $this->assertEquals('Foo bar', $documentChunk->refresh()->summary);
     }
 }
