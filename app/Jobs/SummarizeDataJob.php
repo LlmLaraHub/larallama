@@ -39,9 +39,17 @@ class SummarizeDataJob implements ShouldQueue
             return;
         }
         $content = $this->documentChunk->content;
+        $prompt = <<<EOD
+The following content is part of a larger document. I would like you to summarize it so 
+I can show a summary view of all the other pages and this ones related to the same document.
+Just return the summary not extra surrounding text.
+The content to summarize follows:
+
+{$content}
+EOD;        
 
         /** @var CompletionResponse $results */
-        $results = LlmDriverFacade::completion($content);
+        $results = LlmDriverFacade::completion($prompt);
 
         $this->documentChunk->update([
             'summary' => $results->content,
