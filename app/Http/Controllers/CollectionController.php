@@ -16,6 +16,7 @@ class CollectionController extends Controller
 
         return inertia('Collection/Index', [
             'collections' => CollectionResource::collection(Collection::query()
+                ->withCount('documents')
                 ->where('team_id', auth()->user()->current_team_id)
                 ->get()),
 

@@ -2,9 +2,10 @@
 import AppLayout from '@/Layouts/AppLayout.vue';
 import Welcome from '@/Components/Welcome.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
+import SecondaryButton from '@/Components/SecondaryButton.vue';
 import CreateCollection from './Create.vue';
 import { ref } from 'vue';
-import PrimaryButtonLink from '../../Components/PrimaryButtonLink.vue';
+import PrimaryButtonLink from '@/Components/PrimaryButtonLink.vue';
 
 
 const props = defineProps({
@@ -34,6 +35,11 @@ const closeCreateCollectionSlideOut = () => {
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
+                    <div class="flex justify-end mt-2 mr-2 -mb-10">
+                        <SecondaryButton @click="showCreateCollection = true" v-if="collections.data.length !== 0">
+                            Add another Collection
+                        </SecondaryButton>
+                    </div>
                     <Welcome />
 
 
@@ -59,7 +65,7 @@ const closeCreateCollectionSlideOut = () => {
                                                </div>
                                                <div class="flex justify-center mt-10 gap-2">
                                                     <span class="rounded-md bg-indigo-500 text-indigo-200 px-2 py-2 ">
-                                                        Document Count: 10
+                                                        Document Count: {{ collectionItem.documents_count }}
                                                     </span>
                                                     <span class="rounded-md bg-indigo-500 text-indigo-200 px-2 py-2 ">
                                                         Tag:Test
