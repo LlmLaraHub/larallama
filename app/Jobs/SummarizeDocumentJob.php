@@ -2,10 +2,9 @@
 
 namespace App\Jobs;
 
-use App\Domains\Documents\StatusEnum;
-use App\LlmDriver\LlmDriverFacade;
-use App\LlmDriver\Responses\CompletionResponse;
-use App\Models\DocumentChunk;
+use App\Domains\Collections\CollectionStatusEnum;
+use App\Events\CollectionStatusEvent;
+use App\Models\Document;
 use Illuminate\Bus\Batchable;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -13,14 +12,14 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 
-class SummarizeDataJob implements ShouldQueue
+class SummarizeDocumentJob implements ShouldQueue
 {
     use Batchable, Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /**
      * Create a new job instance.
      */
-    public function __construct(public DocumentChunk $documentChunk)
+    public function __construct(public Document $document)
     {
         //
     }
@@ -30,15 +29,12 @@ class SummarizeDataJob implements ShouldQueue
      */
     public function handle(): void
     {
-        if (optional($this->batch())->cancelled()) {
-            // Determine if the batch has been cancelled...
-            $this->documentChunk->update([
-                'status_summary' => StatusEnum::Cancelled,
-            ]);
 
-            return;
+        $content = [];
+        foreach($this->document->document_chunks as $chunk){
+            $content[] = $chunk->content;
         }
-        $content = $this->documentChunk->content;
+
         $prompt = <<<EOD
 The following content is part of a larger document. I would like you to summarize it so 
 I can show a summary view of all the other pages and this ones related to the same document.
@@ -48,12 +44,10 @@ The content to summarize follows:
 {$content}
 EOD;
 
-        /** @var CompletionResponse $results */
-        $results = LlmDriverFacade::completion($prompt);
-
-        $this->documentChunk->update([
-            'summary' => $results->content,
-            'status_summary' => StatusEnum::Complete,
-        ]);
+        
+        CollectionStatusEvent::dispatch(
+            $this->document->collection,
+            CollectionStatusEnum::PROCESSED
+        );
     }
 }

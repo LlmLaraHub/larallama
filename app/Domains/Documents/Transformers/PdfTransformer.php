@@ -5,6 +5,7 @@ namespace App\Domains\Documents\Transformers;
 use App\Domains\Collections\CollectionStatusEnum;
 use App\Events\CollectionStatusEvent;
 use App\Jobs\SummarizeDataJob;
+use App\Jobs\SummarizeDocumentJob;
 use App\Jobs\VectorlizeDataJob;
 use App\Models\Document;
 use App\Models\DocumentChunk;
@@ -47,16 +48,14 @@ class PdfTransformer
             $chunks[] = [
                 new VectorlizeDataJob($DocumentChunk),
                 new SummarizeDataJob($DocumentChunk),
+                //Tagging
             ];
         }
 
         $batch = Bus::batch($chunks)
             ->name("Chunking Document - {$this->document->id}")
             ->finally(function (Batch $batch) use ($document) {
-                CollectionStatusEvent::dispatch(
-                    $document->collection,
-                    CollectionStatusEnum::PROCESSED
-                );
+                SummarizeDocumentJob::dispatch($document);
             })
             ->allowFailures()
             ->dispatch();

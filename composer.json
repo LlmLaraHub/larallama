@@ -21,7 +21,9 @@
         "smalot/pdfparser": "^2.9",
         "spatie/laravel-data": "^4.4",
         "spatie/laravel-markdown": "^2.3",
-        "tightenco/ziggy": "^2.0"
+        "tightenco/ziggy": "^2.0",
+        "voku/stop-words": "^2.0",
+        "wamania/php-stemmer": "^3.0"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",

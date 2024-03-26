@@ -74,9 +74,16 @@ const props = defineProps({
                                                         class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
                                                         ID
                                                     </th>
+
+                                                    <th scope="col"
+                                                        class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-3">
+                                                        Type</th>
                                                     <th scope="col"
                                                         class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-3">
                                                         Name</th>
+                                                    <th scope="col"
+                                                        class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-3">
+                                                        Pages</th>                                                        
                                                     <th scope="col"
                                                         class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
                                                         Status
@@ -92,11 +99,24 @@ const props = defineProps({
                                                     </td>
                                                     <td
                                                         class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-3">
+                                                        {{ document.type }}
+                                                    </td>
+                                                    <td
+                                                        class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-3">
                                                         {{ document.file_path }}
                                                     </td>
                                                     <td
                                                         class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-3">
-                                                        {{ document.status }}
+                                                        {{ document.document_chunks_count }}
+                                                    </td>
+                                                    <td
+                                                        class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-3">
+                                                        <span v-if="document.status === 'Complete'" class="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
+                                                            {{ document.status }}
+                                                        </span>
+                                                        <span v-else class="inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10">
+                                                            {{ document.status }}
+                                                        </span>
                                                     </td>
                                                 </tr>
                                             </tbody>
