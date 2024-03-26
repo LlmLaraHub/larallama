@@ -10,6 +10,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use App\LlmDriver\Responses\EmbeddingsResponseDto;
 
 class VectorlizeDataJob implements ShouldQueue
 {
@@ -29,10 +30,12 @@ class VectorlizeDataJob implements ShouldQueue
     public function handle(): void
     {
         $content = $this->documentChunk->content;
-        $results = LlmDriverFacade::embedDara($content);
+
+        /** @var EmbeddingsResponseDto $results */
+        $results = LlmDriverFacade::embedData($content);
 
         $this->documentChunk->update([
-            'embedding' => $results,
+            'embedding' => $results->embedding,
         ]);
     }
 }
