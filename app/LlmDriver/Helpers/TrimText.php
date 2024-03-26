@@ -8,7 +8,7 @@ use Wamania\Snowball\StemmerFactory;
 /**
  * This is ChatGPT code
  */
-class TrimText 
+class TrimText
 {
     const ARTICLES_PREPOSITIONS = [
         'english' => ['the', 'a', 'an', 'in', 'on', 'at', 'for', 'to', 'of'],
@@ -31,6 +31,7 @@ class TrimText
     public function handle(string $content): string
     {
         $this->stopWords = new StopWords();
+
         return $this->trim($content);
     }
 

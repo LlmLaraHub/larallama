@@ -3,7 +3,10 @@
 namespace App\Jobs;
 
 use App\Domains\Collections\CollectionStatusEnum;
+use App\Domains\Documents\StatusEnum;
 use App\Events\CollectionStatusEvent;
+use App\LlmDriver\Helpers\TrimText;
+use App\LlmDriver\LlmDriverFacade;
 use App\Models\Document;
 use Illuminate\Bus\Batchable;
 use Illuminate\Bus\Queueable;
@@ -31,9 +34,12 @@ class SummarizeDocumentJob implements ShouldQueue
     {
 
         $content = [];
-        foreach($this->document->document_chunks as $chunk){
-            $content[] = $chunk->content;
+
+        foreach ($this->document->document_chunks as $chunk) {
+            $content[] = (new TrimText())->handle($chunk->content);
         }
+
+        $content = implode(' ', $content);
 
         $prompt = <<<EOD
 The following content is part of a larger document. I would like you to summarize it so 
@@ -44,7 +50,14 @@ The content to summarize follows:
 {$content}
 EOD;
 
-        
+        /** @var CompletionResponse $results */
+        $results = LlmDriverFacade::completion($prompt);
+
+        $this->document->update([
+            'summary' => $results->content,
+            'status_summary' => StatusEnum::Complete,
+        ]);
+
         CollectionStatusEvent::dispatch(
             $this->document->collection,
             CollectionStatusEnum::PROCESSED

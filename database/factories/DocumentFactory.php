@@ -22,6 +22,7 @@ class DocumentFactory extends Factory
         return [
             'type' => TypesEnum::random(),
             'status' => StatusEnum::random(),
+            'status_summary' => StatusEnum::random(),
             'summary' => $this->faker->text(),
             'file_path' => $this->faker->url(),
             'document_chunk_count' => $this->faker->numberBetween(1, 10),
