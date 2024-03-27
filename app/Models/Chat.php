@@ -2,17 +2,40 @@
 
 namespace App\Models;
 
+use App\Domains\Messages\RoleEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 use OpenAI\Laravel\Facades\OpenAI;
 
+
+/**
+ * @property mixed $chatable;
+ * @package App\Models
+ */
 class Chat extends Model
 {
     use HasFactory;
 
     protected $fillable = [];
+
+    protected function createSystemMessageIfNeeded(string $systemPrompt): void
+    {
+        if ($this->messages()->count() == 0) {
+            $this->messages()->create(
+                [
+                    'body' => $systemPrompt,
+                    'in_out' => false,
+                    'role' => RoleEnum::System,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                    'chat_id' => $this->id,
+                    'is_chat_ignored' => false,
+                ]);
+        }
+    }
 
     /* -----------------------------------------------------------------
      |  Methods
@@ -21,17 +44,24 @@ class Chat extends Model
     /**
      * Save the input message of the user
      */
-    public function addInput(string $message, bool $in = true, bool $isChatIgnored = false): Message
+    public function addInput(string $message,
+        RoleEnum $role = RoleEnum::User,
+        ?string $systemPrompt = null): Message
     {
+
+        if ($systemPrompt) {
+            $this->createSystemMessageIfNeeded($systemPrompt);
+        }
 
         $message = $this->messages()->create(
             [
                 'body' => $message,
-                'in_out' => $in,
+                'role' => $role,
+                'in_out' => ($role === RoleEnum::User) ? true : false,
                 'created_at' => now(),
                 'updated_at' => now(),
                 'chat_id' => $this->id,
-                'is_chat_ignored' => $isChatIgnored,
+                'is_chat_ignored' => false,
             ]);
 
         return $message;
@@ -44,7 +74,7 @@ class Chat extends Model
     {
         $message = $this->getAiResponse($request);
 
-        return $this->addInput($message, false);
+        return $this->addInput($message, RoleEnum::Assistant);
     }
 
     /**
@@ -60,28 +90,21 @@ class Chat extends Model
             return $this->getOpenAiImage();
         }
 
-        return $this->getOpenAiChat();
+        return $this->getChatResponse();
     }
 
-    /**
-     * Get response chat from OpenAI
-     */
-    public function getOpenAiChat(int $limit = 5): string
+    public function getChatResponse(int $limit = 5): array
     {
         $latestMessages = $this->messages()->latest()->limit($limit)->get()->sortBy('id');
 
-        /**
-         * Reverse the messages to preserve the order for OpenAI
-         */
         $latestMessagesArray = [];
+
         foreach ($latestMessages as $message) {
             $latestMessagesArray[] = [
-                'role' => $message->in_out ? 'user' : 'assistant', 'content' => $message->compressed_body];
+                'role' => $message->role, 'content' => $message->compressed_body];
         }
 
-        $response = OpenAI::chat()->create(['model' => 'gpt-3.5-turbo', 'messages' => $latestMessagesArray]);
-
-        return $response->choices[0]->message->content;
+        return $latestMessagesArray;
 
     }
 
@@ -96,7 +119,7 @@ class Chat extends Model
         return '<img src="data:image/png;base64, '.$result->data[0]->b64_json.'" loading="lazy" />';
     }
 
-    public function chatable()
+    public function chatable() : MorphTo
     {
         return $this->morphTo();
     }

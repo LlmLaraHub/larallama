@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "This is a collection of data the user has imported that they will \n        ask questions about. The description they gave for this collection is: \nEt quas quis totam. Ipsum rerum et corporis. Recusandae aut omnis pariatur veritatis id."
+    },
+    {
+        "role": "user",
+        "content": "user input"
+    }
+]

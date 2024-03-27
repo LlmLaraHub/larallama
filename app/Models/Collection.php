@@ -34,6 +34,11 @@ class Collection extends Model
         return $this->belongsTo(Team::class);
     }
 
+    public function getDriver(): string
+    {
+        return $this->driver;
+    }
+
     public function documents(): HasMany
     {
         return $this->hasMany(Document::class);
@@ -42,5 +47,16 @@ class Collection extends Model
     public function chats(): MorphMany
     {
         return $this->morphMany(Chat::class, 'chatable');
+    }
+
+    public function systemPrompt(): string
+    {
+        $systemPrompt = config('llmlarahub.collection.system_prompt');
+        $prompt = <<<EOD
+{$systemPrompt}: 
+{$this->description}
+EOD;
+
+        return $prompt;
     }
 }

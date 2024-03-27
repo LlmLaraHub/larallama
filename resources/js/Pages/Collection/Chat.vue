@@ -2,23 +2,30 @@
 import AppLayout from '@/Layouts/AppLayout.vue';
 import Welcome from '@/Components/Welcome.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
-import { computed, onMounted, ref } from 'vue';
+import { computed, onMounted, provide, ref } from 'vue';
 
 import { useDropzone } from "vue3-dropzone";
 import { router, useForm } from '@inertiajs/vue3';
 import FileUploader from './Components/FileUploader.vue';
-
+import ChatUi from '@/Pages/Chat/ChatUi.vue';
 const props = defineProps({
     collection: {
         type: Object,
         required: true,
     },
+    system_prompt: {
+        type: String,
+        required: true,
+    },
     chat: {
+        type: Object,
+    },
+    messages: {
         type: Object,
     },
 });
 
-
+provide('system_prompt', props.system_prompt);
 
 
 </script>
@@ -49,7 +56,9 @@ const props = defineProps({
                         </p>
                     </div>
                     <div class="p-10">
-                        Chat widget here
+                       <ChatUi 
+                       :chat="chat" 
+                       :messages="messages"></ChatUi>
                     </div>
                 </div>
             </div>

@@ -7,11 +7,12 @@ import {computed, inject, onUnmounted, ref, watch} from "vue";
 const props = defineProps({
     loading: {
         type: Boolean,
-        default: true
+        default: false
     },
-    assistant: Object,
     chat: Object,
 })
+
+const system_prompt = inject('system_prompt')
 
 const emits = defineEmits(['chatSubmitted'])
 
@@ -24,54 +25,8 @@ const form = useForm({
 const getting_results = ref(false)
 
 
-let echoChannel = ref(null); // keep track of the Echo channel
-
-watch(() => props.chat?.id, (newVal, oldVal) => {
-    if (newVal !== undefined && newVal !== oldVal) { // check if the id has a value and it's different from the previous one
-        if(props.chat?.id) {
-            echoChannel.value = Echo.private(`chat.user.${usePage().props.user.id}`)
-                .listen('.complete', (event) => {
-                    getting_results.value = false;
-                });
-        } else {
-            console.log("No chat id yet")
-        }
-
-    }
-}, { immediate: true }); // { immediate: true } ensures that the watcher checks the initial value
-
-onUnmounted(() => {
-    if(echoChannel.value) {
-        echoChannel.value.stopListening('.stream'); // stop listening when component is unmounted
-    }
-});
-
-const starterQuestions = computed(() => {
-    if(!props.chat?.id) {
-        return usePage().props.assistants.default.starter_questions;
-    }
-
-    return usePage().props.assistants[props.chat.assistant.assistant_type]['starter_questions'];
-})
-
-
 const save = () => {
     getting_results.value = true
-    form.post(route('assistants.converse', {
-        assistant: props.assistant.id
-    }), {
-        onSuccess: (data) => {
-            console.log(data)
-            emits('chatSubmitted', form.input)
-            form.reset();
-        },
-        onError: (error) => {
-            console.log("Error")
-            console.log(error)
-            errors.value = error
-        }
-    })
-    
 }
 
 const setQuestion = (question) => {
@@ -91,19 +46,19 @@ const setQuestion = (question) => {
             </div>
 
             <input
-                :disabled="loading || getting_results"
                 type="text"
                 autofocus="true"
-                class="caret caret-rose-400 caret-opacity-50
+                class="caret caret-indigo-400 caret-opacity-50
                 disabled:opacity-40
                 bg-transparent block w-full border-0 py-1.5 ring-0 ring-inset
-                ring-rose-500 placeholder:text-gray-400 focus:ring-2
-                focus:ring-rose-500 sm:text-sm sm:leading-6"
-                v-model="form.input" placeholder=""/>
-            <span
+                ring-indigo-500 placeholder:text-gray-400 focus:ring-2
+                focus:ring-indigo-500 sm:text-sm sm:leading-6"
+                v-model="form.input" placeholder="Chat about your Collection"/>
+            
+                <span
                 v-if="loading"
                 class="loading loading-spinner loading-md"></span>
-
+            
             <button
                 v-else
                 :disabled="getting_results" type="submit"
@@ -120,11 +75,7 @@ const setQuestion = (question) => {
                 </svg>
             </button>
         </form>
-
     </div>
-        <div class="mt-2">
-            <SampleQuestions :questions="starterQuestions" @chosenQuestion="setQuestion"></SampleQuestions>
-        </div>
 </div>
 </template>
 
