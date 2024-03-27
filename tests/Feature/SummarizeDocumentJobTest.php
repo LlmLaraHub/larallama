@@ -18,7 +18,7 @@ class SummarizeDocumentJobTest extends TestCase
         $data = 'Foo bar';
         $dto = new \App\LlmDriver\Responses\CompletionResponse($data);
 
-        LlmDriverFacade::shouldReceive('completion')
+        LlmDriverFacade::shouldReceive('driver->completion')
             ->once()
             ->andReturn($dto);
 
