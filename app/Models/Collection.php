@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 /**
  * Class Project
@@ -36,5 +37,11 @@ class Collection extends Model
     public function documents(): HasMany
     {
         return $this->hasMany(Document::class);
+    }
+
+
+    public function chats(): MorphMany
+    {
+        return $this->morphMany(Chat::class, 'chatable');
     }
 }

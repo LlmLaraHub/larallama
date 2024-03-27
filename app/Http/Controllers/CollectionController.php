@@ -46,9 +46,7 @@ class CollectionController extends Controller
 
     public function show(Collection $collection)
     {
-        $chatResource = Chat::query()
-            ->where('collection_id', $collection->id)
-            ->where("user_id", auth()->user()->id)
+        $chatResource = $collection->chats()->where("user_id", auth()->user()->id)
             ->latest('id')
             ->first();
 

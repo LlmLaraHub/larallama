@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ChatController;
 use App\Http\Controllers\CollectionController;
 use App\Http\Controllers\ExampleChatBotController;
 use App\Http\Controllers\ExampleController;
@@ -36,6 +37,11 @@ Route::middleware([
         Route::post('/collections', 'store')->name('collections.store');
         Route::get('/collections/{collection}', 'show')->name('collections.show');
         Route::any('/collections/{collection}/upload', 'filesUpload')->name('collections.upload');
+    });
+
+    Route::controller(ChatController::class)->group(function () {
+        Route::post('/collections/{collection}/chats', 'storeCollectionChat')->name('chats.collection.store');
+        Route::get('/collections/{collection}/chats/{chat}', 'showCollectionChat')->name('chats.collection.show');
     });
 
 });

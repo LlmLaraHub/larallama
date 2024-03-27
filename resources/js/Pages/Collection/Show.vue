@@ -7,6 +7,7 @@ import { computed, onMounted, ref } from 'vue';
 import { useDropzone } from "vue3-dropzone";
 import { router, useForm } from '@inertiajs/vue3';
 import FileUploader from './Components/FileUploader.vue';
+import CreateChat from './Components/CreateChat.vue';
 
 const props = defineProps({
     collection: {
@@ -14,6 +15,9 @@ const props = defineProps({
         required: true,
     },
     documents: {
+        type: Object,
+    },
+    chat: {
         type: Object,
     },
 });
@@ -43,7 +47,12 @@ const props = defineProps({
                     <!-- Top area -->
 
                     <div class="border-b pb-5 px-3 py-4">
-                        <h3 class="text-base font-semibold leading-6 text-gray-900">{{ collection.data.name }}</h3>
+                        <div class="flex justify-between items-center">
+                            <h3 class="text-base font-semibold leading-6 text-gray-900">{{ collection.data.name }}</h3>
+                            <CreateChat 
+                            v-if="!chat?.data?.id"
+                            :collection="collection.data" />
+                        </div>
                         <p class="mt-2 max-w-4xl text-sm text-gray-500">
                             {{ collection.data.description }}
                         </p>
