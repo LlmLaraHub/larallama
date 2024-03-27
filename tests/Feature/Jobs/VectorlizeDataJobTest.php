@@ -21,7 +21,7 @@ class VectorlizeDataJobTest extends TestCase
             1000
         );
 
-        LlmDriverFacade::shouldReceive('embedData')
+        LlmDriverFacade::shouldReceive('driver->embedData')
             ->once()
             ->andReturn($dto);
 

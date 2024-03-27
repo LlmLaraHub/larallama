@@ -13,7 +13,7 @@ class LlmDriverFacadeTest extends TestCase
      */
     public function test_facade(): void
     {
-        $results = LlmDriverFacade::embedData('test');
+        $results = LlmDriverFacade::driver('mock')->embedData('test');
 
         $this->assertInstanceOf(
             EmbeddingsResponseDto::class,

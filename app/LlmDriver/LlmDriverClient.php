@@ -4,29 +4,38 @@ namespace App\LlmDriver;
 
 class LlmDriverClient
 {
-    protected $config = [];
+    protected $drivers = [];
 
-    public function __construct(array $config)
+    public function driver($name = null)
     {
-        $this->config = $config;
-    }
+        $name = $name ?: $this->getDefaultDriver();
 
-    public static function make(): BaseClient
-    {
-        $driver = config('llmdriver.driver');
-
-        $config = config("llmdriver.drivers.{$driver}");
-
-        if (! method_exists(static::class, $driver)) {
-            throw new \Exception("Driver {$driver} not found");
+        if (! isset($this->drivers[$name])) {
+            $this->drivers[$name] = $this->createDriver($name);
         }
 
-        /** @phpstan-ignore-next-line */
-        return (new static($config))->$driver();
+        return $this->drivers[$name];
     }
 
-    public function mock(): BaseClient
+    protected function createDriver($name)
     {
-        return new MockClient();
+        switch ($name) {
+            case 'openai':
+                return new OpenAiClient();
+            case 'mock':
+                return new MockClient();
+            default:
+                throw new \InvalidArgumentException("Driver [{$name}] is not supported.");
+        }
+    }
+
+    public static function getDrivers(): array
+    {
+        return array_keys(config('llmdriver.drivers'));
+    }
+
+    protected function getDefaultDriver()
+    {
+        return 'mock';
     }
 }

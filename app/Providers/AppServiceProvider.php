@@ -27,7 +27,7 @@ class AppServiceProvider extends ServiceProvider
         });
 
         $this->app->bind('llm_driver', function () {
-            return LlmDriverClient::make();
+            return new LlmDriverClient();
         });
 
     }

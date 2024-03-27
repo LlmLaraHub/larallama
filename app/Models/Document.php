@@ -55,4 +55,9 @@ class Document extends Model
             $this->collection_id
         );
     }
+
+    public function getDriver(): string
+    {
+        return $this->collection->driver;
+    }
 }

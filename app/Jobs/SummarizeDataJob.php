@@ -49,7 +49,9 @@ The content to summarize follows:
 EOD;
 
         /** @var CompletionResponse $results */
-        $results = LlmDriverFacade::completion($prompt);
+        $results = LlmDriverFacade::driver(
+            $this->documentChunk->getDriver()
+        )->completion($prompt);
 
         $this->documentChunk->update([
             'summary' => $results->content,

@@ -2,16 +2,13 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Tests\TestCase;
-
 use App\LlmDriver\Responses\CompletionResponse;
 use App\LlmDriver\Responses\EmbeddingsResponseDto;
-use Illuminate\Support\Facades\Log;
 use OpenAI\Laravel\Facades\OpenAI;
+use OpenAI\Responses\Chat\CreateResponse as ChatCreateResponse;
 use OpenAI\Responses\Completions\CreateResponse as CompletionsCreateResponse;
 use OpenAI\Responses\Embeddings\CreateResponse;
+use Tests\TestCase;
 
 class OpenAiClientTest extends TestCase
 {
@@ -38,10 +35,12 @@ class OpenAiClientTest extends TestCase
     public function test_completion(): void
     {
         OpenAI::fake([
-            CompletionsCreateResponse::fake([
+            ChatCreateResponse::fake([
                 'choices' => [
                     [
-                        'choice' => 'awesome!',
+                        'message' => [
+                            'content' => 'awesome!'
+                        ],
                     ],
                 ],
             ]),

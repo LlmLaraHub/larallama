@@ -31,7 +31,7 @@ class VectorlizeDataJob implements ShouldQueue
     public function handle(): void
     {
 
-        if ($this->batch()->cancelled()) {
+        if (optional($this->batch())->cancelled()) {
             // Determine if the batch has been cancelled...
             $this->documentChunk->update([
                 'status_embeddings' => StatusEnum::Cancelled,
@@ -43,7 +43,8 @@ class VectorlizeDataJob implements ShouldQueue
         $content = $this->documentChunk->content;
 
         /** @var EmbeddingsResponseDto $results */
-        $results = LlmDriverFacade::embedData($content);
+        $results = LlmDriverFacade::driver($this->documentChunk->getDriver())
+            ->embedData($content);
 
         $this->documentChunk->update([
             'embedding' => $results->embedding,

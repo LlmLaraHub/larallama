@@ -1,10 +1,9 @@
-<?php 
+<?php
 
 namespace App\LlmDriver;
 
 use App\LlmDriver\Responses\CompletionResponse;
 use App\LlmDriver\Responses\EmbeddingsResponseDto;
-use Illuminate\Support\Facades\Log;
 use OpenAI\Laravel\Facades\OpenAI;
 
 class OpenAiClient extends BaseClient
@@ -22,9 +21,7 @@ class OpenAiClient extends BaseClient
         $results = [];
 
         foreach ($response->embeddings as $embedding) {
-            $embedding->object; // 'embedding'
             $results = $embedding->embedding; // [0.018990106880664825, -0.0073809814639389515, ...]
-            $embedding->index; // 0
         }
 
         return new EmbeddingsResponseDto(
@@ -35,19 +32,19 @@ class OpenAiClient extends BaseClient
 
     public function completion(string $prompt, int $temperature = 0): CompletionResponse
     {
-        $response = OpenAI::completions()->create([
+        $response = OpenAI::chat()->create([
             'model' => $this->getConfig('openai')['completion_model'],
-            'prompt' => $prompt,
-            'temperature' => 0
+            'messages' => [
+                ['role' => 'user', 'content' => $prompt],
+            ],
         ]);
 
         $results = null;
 
         foreach ($response->choices as $result) {
-            $results = $result->text; // '\n\nThis is a test'
+            $results = $result->message->content;
         }
 
         return new CompletionResponse($results);
     }
-
 }

@@ -7,6 +7,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Pgvector\Laravel\Vector;
 
+/**
+ * @property Document $document
+ * @package App\Models
+ */
 class DocumentChunk extends Model
 {
     use HasFactory;
@@ -36,5 +40,10 @@ class DocumentChunk extends Model
             $document_chunk->original_content = $document_chunk->getOriginal('content');
             $document_chunk->saveQuietly();
         });
+    }
+
+    public function getDriver(): string
+    {
+        return $this->document->collection->driver;
     }
 }
