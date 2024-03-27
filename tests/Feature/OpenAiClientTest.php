@@ -6,7 +6,6 @@ use App\LlmDriver\Responses\CompletionResponse;
 use App\LlmDriver\Responses\EmbeddingsResponseDto;
 use OpenAI\Laravel\Facades\OpenAI;
 use OpenAI\Responses\Chat\CreateResponse as ChatCreateResponse;
-use OpenAI\Responses\Completions\CreateResponse as CompletionsCreateResponse;
 use OpenAI\Responses\Embeddings\CreateResponse;
 use Tests\TestCase;
 
@@ -39,7 +38,7 @@ class OpenAiClientTest extends TestCase
                 'choices' => [
                     [
                         'message' => [
-                            'content' => 'awesome!'
+                            'content' => 'awesome!',
                         ],
                     ],
                 ],

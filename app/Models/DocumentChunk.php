@@ -9,7 +9,6 @@ use Pgvector\Laravel\Vector;
 
 /**
  * @property Document $document
- * @package App\Models
  */
 class DocumentChunk extends Model
 {
