@@ -10,10 +10,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use OpenAI\Laravel\Facades\OpenAI;
 
-
 /**
  * @property mixed $chatable;
- * @package App\Models
  */
 class Chat extends Model
 {
@@ -120,14 +118,14 @@ class Chat extends Model
         return '<img src="data:image/png;base64, '.$result->data[0]->b64_json.'" loading="lazy" />';
     }
 
-    public function chatable() : MorphTo
+    public function chatable(): MorphTo
     {
         return $this->morphTo();
     }
 
     public function latest_messages(): HasMany
     {
-        return $this->hasMany(Message::class)->where("is_chat_ignored", false)->oldest();
+        return $this->hasMany(Message::class)->where('is_chat_ignored', false)->oldest();
     }
 
     /**

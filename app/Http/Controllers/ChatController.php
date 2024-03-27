@@ -7,9 +7,9 @@ use App\Http\Resources\ChatResource;
 use App\Http\Resources\CollectionResource;
 use App\Http\Resources\MessageResource;
 use App\LlmDriver\LlmDriverFacade;
+use App\LlmDriver\Responses\CompletionResponse;
 use App\Models\Chat;
 use App\Models\Collection;
-use App\LlmDriver\Responses\CompletionResponse;
 
 class ChatController extends Controller
 {
