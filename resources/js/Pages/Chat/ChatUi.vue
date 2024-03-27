@@ -18,14 +18,18 @@ const props = defineProps({
 </script>
 
 <template>
-    <div class="flex-1 flex flex-col bg-white shadow-sm mx-10 my-10 overflow-auto">
-        <ChatMessage
-            :chat="chat.data" :messages="messages.data">
-            </ChatMessage>
+    <div class="flex-1 flex flex-col bg-white shadow-sm mx-10 my-10 overflow-auto border">
+            <div class="mb-2">
+                <ChatMessage
+                :chat="chat.data" :messages="messages.data">
+                </ChatMessage>
+            </div>
 
-            <ChatInputThreaded
+            <div class="mt-10">
+                <ChatInputThreaded
             :chat="chat.data"
-        ></ChatInputThreaded>
+                ></ChatInputThreaded>
+            </div>
     </div>
 
 </template>

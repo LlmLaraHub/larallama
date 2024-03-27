@@ -35,7 +35,7 @@ class ChatController extends Controller
             'collection' => new CollectionResource($collection),
             'chat' => new ChatResource($chat),
             'system_prompt' => $collection->systemPrompt(),
-            'messages' => MessageResource::collection($chat->messages),
+            'messages' => MessageResource::collection($chat->latest_messages),
         ]);
     }
 

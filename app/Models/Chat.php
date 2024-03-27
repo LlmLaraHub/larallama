@@ -24,6 +24,7 @@ class Chat extends Model
     protected function createSystemMessageIfNeeded(string $systemPrompt): void
     {
         if ($this->messages()->count() == 0) {
+
             $this->messages()->create(
                 [
                     'body' => $systemPrompt,
@@ -32,7 +33,7 @@ class Chat extends Model
                     'created_at' => now(),
                     'updated_at' => now(),
                     'chat_id' => $this->id,
-                    'is_chat_ignored' => false,
+                    'is_chat_ignored' => true,
                 ]);
         }
     }
@@ -124,10 +125,10 @@ class Chat extends Model
         return $this->morphTo();
     }
 
-    /* -----------------------------------------------------------------
-     |  Relationships
-     | -----------------------------------------------------------------
-     */
+    public function latest_messages(): HasMany
+    {
+        return $this->hasMany(Message::class)->where("is_chat_ignored", false)->oldest();
+    }
 
     /**
      * Chat has many messages.

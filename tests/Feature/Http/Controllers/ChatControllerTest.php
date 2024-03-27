@@ -4,6 +4,7 @@ namespace Tests\Feature\Http\Controllers;
 
 use App\Models\Chat;
 use App\Models\Collection;
+use App\Models\Message;
 use App\Models\User;
 use Tests\TestCase;
 
@@ -43,5 +44,8 @@ class ChatControllerTest extends TestCase
                 'input' => 'user input',
             ])->assertOk();
         $this->assertDatabaseCount('messages', 3);
+
+        $this->assertTrue(Message::whereRole('system')->exists());
+        $this->assertTrue(Message::where('is_chat_ignored', true)->exists());
     }
 }

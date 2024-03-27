@@ -13,7 +13,9 @@ class Message extends Model
 
     public $fillable = [
         'body',
+        'role',
         'in_out',
+        'is_chat_ignored',
     ];
 
     protected $casts = [
@@ -26,7 +28,7 @@ class Message extends Model
      */
     public function getFromUserAttribute(): bool
     {
-        return $this->in_out == true;
+        return $this->role === RoleEnum::User;
     }
 
     /**
@@ -34,7 +36,7 @@ class Message extends Model
      */
     public function getFromAiAttribute(): bool
     {
-        return ! $this->from_user;
+        return $this->role !== RoleEnum::User;
     }
 
     /**

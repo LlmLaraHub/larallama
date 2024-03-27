@@ -1,8 +1,12 @@
 <script setup>
-import {useForm, usePage} from "@inertiajs/vue3";
+import {router, useForm, usePage} from "@inertiajs/vue3";
 import SampleQuestions from "./SampleQuestions.vue";
 import { ChevronDoubleDownIcon, ChevronRightIcon} from "@heroicons/vue/20/solid";
 import {computed, inject, onUnmounted, ref, watch} from "vue";
+import axios from "axios";
+import { useToast } from "vue-toastification";
+
+const toast = useToast();
 
 const props = defineProps({
     loading: {
@@ -11,8 +15,6 @@ const props = defineProps({
     },
     chat: Object,
 })
-
-const system_prompt = inject('system_prompt')
 
 const emits = defineEmits(['chatSubmitted'])
 
@@ -24,9 +26,23 @@ const form = useForm({
 
 const getting_results = ref(false)
 
-
 const save = () => {
     getting_results.value = true
+    axios.post(route('chats.messages.create', {
+        chat: props.chat.id
+    }), {
+        input: form.input
+    }).then(response => {
+        getting_results.value = false
+        console.log(response.data.message)
+        router.reload({
+            preserveScroll: true
+        });
+    }).catch(error => {
+        getting_results.value = false
+        toast.error('An error occurred. Please try again.')
+        console.log(error)
+    });
 }
 
 const setQuestion = (question) => {
@@ -56,24 +72,29 @@ const setQuestion = (question) => {
                 v-model="form.input" placeholder="Chat about your Collection"/>
             
                 <span
-                v-if="loading"
-                class="loading loading-spinner loading-md"></span>
+                v-if="getting_results"
+                class="mt-2">
+                    <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                </span>
             
-            <button
-                v-else
-                :disabled="getting_results" type="submit"
-                class="
+                <button
+                    v-else
+                    :disabled="getting_results" type="submit"
+                    class="
                     flex justify-start gap-3 items-center
-                    bg-gray-850 hover:text-gray-400 text-gray-500 px-2.5 rounded-r-md">
-                <span
-                    v-if="getting_results"
-                    class="loading loading-dots loading-md"></span>
-                <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"
-                     fill="currentColor">
-                    <path
-                        d="M16.1 260.2c-22.6 12.9-20.5 47.3 3.6 57.3L160 376V479.3c0 18.1 14.6 32.7 32.7 32.7c9.7 0 18.9-4.3 25.1-11.8l62-74.3 123.9 51.6c18.9 7.9 40.8-4.5 43.9-24.7l64-416c1.9-12.1-3.4-24.3-13.5-31.2s-23.3-7.5-34-1.4l-448 256zm52.1 25.5L409.7 90.6 190.1 336l1.2 1L68.2 285.7zM403.3 425.4L236.7 355.9 450.8 116.6 403.3 425.4z"/>
-                </svg>
-            </button>
+                        bg-gray-850 hover:text-gray-400 text-gray-500 px-2.5 rounded-r-md">
+                    <span
+                        v-if="getting_results"
+                        class="loading loading-dots loading-md"></span>
+                    <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"
+                        fill="currentColor">
+                        <path
+                            d="M16.1 260.2c-22.6 12.9-20.5 47.3 3.6 57.3L160 376V479.3c0 18.1 14.6 32.7 32.7 32.7c9.7 0 18.9-4.3 25.1-11.8l62-74.3 123.9 51.6c18.9 7.9 40.8-4.5 43.9-24.7l64-416c1.9-12.1-3.4-24.3-13.5-31.2s-23.3-7.5-34-1.4l-448 256zm52.1 25.5L409.7 90.6 190.1 336l1.2 1L68.2 285.7zM403.3 425.4L236.7 355.9 450.8 116.6 403.3 425.4z"/>
+                    </svg>
+                </button>
         </form>
     </div>
 </div>

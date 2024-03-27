@@ -21,7 +21,7 @@ const toast = useToast();
 
 <template>
     <div id="chat-messages"
-         class="flex-col-reverse flex flex-grow h-full overflow-y-scroll gap-y-8 max-h-[800px]
+         class="flex-col flex flex-grow h-full overflow-y-scroll gap-y-8 py-10 px-2
      ">
         <div v-if="chat?.id && messages.length === 0">
             Start: 

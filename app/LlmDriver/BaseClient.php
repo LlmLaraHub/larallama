@@ -25,6 +25,10 @@ abstract class BaseClient
 
     public function chat(array $messages): CompletionResponse
     {
+        if(!app()->environment('testing')) {
+            sleep(3);
+        }
+
         Log::info('LlmDriver::MockClient::completion');
 
         $data = <<<'EOD'
