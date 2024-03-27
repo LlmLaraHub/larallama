@@ -15,7 +15,10 @@ class ChatTest extends TestCase
      */
     public function test_factory(): void
     {
-        $model = Chat::factory()->make();
-        $this->assertIsString($model->title);
+        $model = Chat::factory()->create();
+        $this->assertNotNull($model->user_id);
+        $this->assertNotNull($model->user->id);
+        $this->assertNotNull($model->chatable_id);
+        $this->assertNotNull($model->chatable->id);
     }
 }

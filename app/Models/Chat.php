@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use OpenAI\Laravel\Facades\OpenAI;
 
@@ -11,7 +12,7 @@ class Chat extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title'];
+    protected $fillable = [];
 
     /* -----------------------------------------------------------------
      |  Methods
@@ -33,11 +34,6 @@ class Chat extends Model
                 'is_chat_ignored' => $isChatIgnored,
             ]);
 
-        // if is first message, generate title
-        if ($this->messages()->count() == 1) {
-            $this->title = $this->generateTitle();
-            $this->save();
-        }
 
         return $message;
     }
@@ -101,24 +97,10 @@ class Chat extends Model
         return '<img src="data:image/png;base64, '.$result->data[0]->b64_json.'" loading="lazy" />';
     }
 
-    /**
-     * Generate title for the chat
-     */
-    public function generateTitle(): string
+
+    public function chatable()
     {
-        $firstMessage = $this->messages()->first();
-
-        if (! $firstMessage) {
-            return '';
-        }
-
-        $result = OpenAI::completions()->create([
-            'model' => config('llm.openai.model'),
-            'prompt' => 'Create a title from the text, keep the language spoken: '.$firstMessage->body,
-        ]);
-
-        return trim($result->choices[0]->text);
-
+        return $this->morphTo();
     }
 
     /* -----------------------------------------------------------------
@@ -132,5 +114,10 @@ class Chat extends Model
     public function messages(): HasMany
     {
         return $this->hasMany(Message::class);
+    }
+
+    public function user() : BelongsTo
+    {
+        return $this->belongsTo(User::class);
     }
 }

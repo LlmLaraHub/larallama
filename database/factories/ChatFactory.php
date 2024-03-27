@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Collection;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +19,9 @@ class ChatFactory extends Factory
     public function definition(): array
     {
         return [
-            'title' => $this->faker->sentence,
+            'user_id' => User::factory(),
+            "chatable_id" => Collection::factory(),
+            "chatable_type" => Collection::class,
         ];
     }
 }

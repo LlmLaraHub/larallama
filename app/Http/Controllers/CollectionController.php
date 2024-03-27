@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Domains\Documents\TypesEnum;
+use App\Http\Resources\ChatResource;
 use App\Http\Resources\CollectionResource;
 use App\Http\Resources\DocumentResource;
 use App\Jobs\ProcessFileJob;
+use App\Models\Chat;
 use App\Models\Collection;
 use App\Models\Document;
 
@@ -44,7 +46,18 @@ class CollectionController extends Controller
 
     public function show(Collection $collection)
     {
+        $chatResource = Chat::query()
+            ->where('collection_id', $collection->id)
+            ->where("user_id", auth()->user()->id)
+            ->latest('id')
+            ->first();
+
+        if($chatResource?->id) {
+            $chatResource = new ChatResource($chatResource);
+        }
+
         return inertia('Collection/Show', [
+            'chat' => $chatResource,
             'collection' => new CollectionResource($collection),
             'documents' => DocumentResource::collection(Document::query()
                 ->where('collection_id', $collection->id)
