@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Domains\Messages\RoleEnum;
+use App\LlmDriver\Requests\MessageInDto;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -45,7 +46,8 @@ class Chat extends Model
      */
     public function addInput(string $message,
         RoleEnum $role = RoleEnum::User,
-        ?string $systemPrompt = null): Message
+        ?string $systemPrompt = null,
+        bool $show_in_thread = true): Message
     {
 
         if ($systemPrompt) {
@@ -60,7 +62,7 @@ class Chat extends Model
                 'created_at' => now(),
                 'updated_at' => now(),
                 'chat_id' => $this->id,
-                'is_chat_ignored' => false,
+                'is_chat_ignored' => !$show_in_thread,
             ]);
 
         return $message;
@@ -99,8 +101,9 @@ class Chat extends Model
         $latestMessagesArray = [];
 
         foreach ($latestMessages as $message) {
-            $latestMessagesArray[] = [
-                'role' => $message->role, 'content' => $message->compressed_body];
+            $latestMessagesArray[] = MessageInDto::from([
+                'role' => $message->role, 'content' => $message->compressed_body
+            ]);
         }
 
         return $latestMessagesArray;

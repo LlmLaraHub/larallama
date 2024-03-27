@@ -1,5 +1,6 @@
 <?php
 
+use App\LlmDriver\Helpers\TrimText;
 use Illuminate\Support\Facades\File;
 
 if (! function_exists('put_fixture')) {
@@ -43,3 +44,11 @@ if (! function_exists('get_fixture')) {
         return json_decode($results, true);
     }
 }
+
+if (! function_exists('reduce_text_size')) {
+    function reduce_text_size(string $text) : string
+    {
+        return (new TrimText())->handle($text);
+    }
+}
+

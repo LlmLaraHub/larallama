@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Domains\Messages\RoleEnum;
+use Facades\App\Domains\Messages\SearchOrSummarizeChatRepo;
 use App\Http\Resources\ChatResource;
 use App\Http\Resources\CollectionResource;
 use App\Http\Resources\MessageResource;
@@ -10,6 +11,8 @@ use App\LlmDriver\LlmDriverFacade;
 use App\LlmDriver\Responses\CompletionResponse;
 use App\Models\Chat;
 use App\Models\Collection;
+use App\Models\DocumentChunk;
+use Illuminate\Support\Facades\Log;
 
 class ChatController extends Controller
 {
@@ -45,19 +48,10 @@ class ChatController extends Controller
             'input' => 'required|string',
         ]);
 
-        $chat->addInput($validated['input'], RoleEnum::User, $chat->chatable->systemPrompt());
 
-        $latestMessagesArray = $chat->getChatResponse();
+        $response = SearchOrSummarizeChatRepo::search($chat, $validated['input']);
+        
 
-        put_fixture('chat_messages.json', $latestMessagesArray);
-
-        /** @var CompletionResponse $response */
-        $response = LlmDriverFacade::driver(
-            $chat->chatable->getDriver()
-        )->chat($latestMessagesArray);
-
-        $chat->addInput($response->content, RoleEnum::Assistant);
-
-        return response()->json(['message' => $response->content]);
+        return response()->json(['message' => $response]);
     }
 }

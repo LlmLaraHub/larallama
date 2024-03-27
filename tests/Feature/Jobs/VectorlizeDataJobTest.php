@@ -16,10 +16,10 @@ class VectorlizeDataJobTest extends TestCase
     {
         $embedding = get_fixture('embedding_response.json');
 
-        $dto = new \App\LlmDriver\Responses\EmbeddingsResponseDto(
-            data_get($embedding, 'data.0.embedding'),
-            1000
-        );
+        $dto = \App\LlmDriver\Responses\EmbeddingsResponseDto::from([
+            'embedding' => data_get($embedding, 'data.0.embedding'),
+            'token_count' => 1000
+        ]);
 
         LlmDriverFacade::shouldReceive('driver->embedData')
             ->once()

@@ -4,7 +4,9 @@ namespace App\LlmDriver;
 
 use App\LlmDriver\Responses\CompletionResponse;
 use App\LlmDriver\Responses\EmbeddingsResponseDto;
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Support\Facades\Log;
+use App\LlmDriver\Requests\MessageInDto;
 
 abstract class BaseClient
 {
@@ -12,21 +14,28 @@ abstract class BaseClient
 
     public function embedData(string $data): EmbeddingsResponseDto
     {
-
+        if (! app()->environment('testing')) {
+            sleep(2);
+        }
         Log::info('LlmDriver::MockClient::embedData');
 
         $data = get_fixture('embedding_response.json');
 
-        return new EmbeddingsResponseDto(
-            data_get($data, 'data.0.embedding'),
-            1000,
-        );
+        return EmbeddingsResponseDto::from([
+            'embedding' => data_get($data, 'data.0.embedding'),
+            'token_count' => 1000
+        ]);
     }
 
+    /**
+     * 
+     * @param MessageInDto[] $messages 
+     * @return CompletionResponse 
+     */
     public function chat(array $messages): CompletionResponse
     {
         if (! app()->environment('testing')) {
-            sleep(3);
+            sleep(2);
         }
 
         Log::info('LlmDriver::MockClient::completion');
@@ -40,6 +49,10 @@ EOD;
 
     public function completion(string $prompt): CompletionResponse
     {
+        if (! app()->environment('testing')) {
+            sleep(2);
+        }
+
         Log::info('LlmDriver::MockClient::completion');
 
         $data = <<<'EOD'
