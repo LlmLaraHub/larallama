@@ -39,7 +39,6 @@ class Collection extends Model
         return $this->hasMany(Document::class);
     }
 
-
     public function chats(): MorphMany
     {
         return $this->morphMany(Chat::class, 'chatable');

@@ -6,11 +6,11 @@ use App\Http\Resources\ChatResource;
 use App\Http\Resources\CollectionResource;
 use App\Models\Chat;
 use App\Models\Collection;
-use Illuminate\Http\Request;
 
 class ChatController extends Controller
 {
-    public function storeCollectionChat(Collection $collection) {
+    public function storeCollectionChat(Collection $collection)
+    {
         $chat = new Chat();
         $chat->chatable_id = $collection->id;
         $chat->chatable_type = Collection::class;
@@ -25,7 +25,8 @@ class ChatController extends Controller
         ]);
     }
 
-    public function showCollectionChat(Collection $collection, Chat $chat) {
+    public function showCollectionChat(Collection $collection, Chat $chat)
+    {
 
         return inertia('Collection/Chat', [
             'collection' => new CollectionResource($collection),

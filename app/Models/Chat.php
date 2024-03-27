@@ -34,7 +34,6 @@ class Chat extends Model
                 'is_chat_ignored' => $isChatIgnored,
             ]);
 
-
         return $message;
     }
 
@@ -97,7 +96,6 @@ class Chat extends Model
         return '<img src="data:image/png;base64, '.$result->data[0]->b64_json.'" loading="lazy" />';
     }
 
-
     public function chatable()
     {
         return $this->morphTo();
@@ -116,7 +114,7 @@ class Chat extends Model
         return $this->hasMany(Message::class);
     }
 
-    public function user() : BelongsTo
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }

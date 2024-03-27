@@ -7,7 +7,6 @@ use App\Http\Resources\ChatResource;
 use App\Http\Resources\CollectionResource;
 use App\Http\Resources\DocumentResource;
 use App\Jobs\ProcessFileJob;
-use App\Models\Chat;
 use App\Models\Collection;
 use App\Models\Document;
 
@@ -46,11 +45,11 @@ class CollectionController extends Controller
 
     public function show(Collection $collection)
     {
-        $chatResource = $collection->chats()->where("user_id", auth()->user()->id)
+        $chatResource = $collection->chats()->where('user_id', auth()->user()->id)
             ->latest('id')
             ->first();
 
-        if($chatResource?->id) {
+        if ($chatResource?->id) {
             $chatResource = new ChatResource($chatResource);
         }
 

@@ -4,8 +4,6 @@ namespace Tests\Feature\Http\Controllers;
 
 use App\Models\Collection;
 use App\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class ChatControllerTest extends TestCase
@@ -21,7 +19,7 @@ class ChatControllerTest extends TestCase
         $this->assertDatabaseCount('chats', 0);
         $this->actingAs($user)->post(route('chats.collection.store', [
             'collection' => $collection->id,
-            ]))->assertRedirect();
+        ]))->assertRedirect();
         $this->assertDatabaseCount('chats', 1);
     }
 }
