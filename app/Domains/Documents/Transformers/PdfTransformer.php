@@ -11,6 +11,7 @@ use App\Models\Document;
 use App\Models\DocumentChunk;
 use Illuminate\Bus\Batch;
 use Illuminate\Support\Facades\Bus;
+use Illuminate\Support\Facades\Log;
 use Smalot\PdfParser\Parser;
 
 class PdfTransformer
@@ -28,30 +29,34 @@ class PdfTransformer
         $pages = $pdf->getPages();
         $chunks = [];
         foreach ($pages as $page_number => $page) {
-            $page_number = $page_number + 1;
-            $pageContent = $page->getText();
-            $guid = md5($pageContent);
-            $DocumentChunk = DocumentChunk::updateOrCreate(
-                [
-                    'guid' => $guid,
-                    'document_id' => $this->document->id,
-                ],
-                [
-                    'content' => $pageContent,
-                    'sort_order' => $page_number,
-                ]
-            );
-            /**
-             * Soon taggings
-             * And Summary
-             */
-            $chunks[] = [
-                new VectorlizeDataJob($DocumentChunk),
-                new SummarizeDataJob($DocumentChunk),
-                //Tagging
-            ];
+            try {
+                $page_number = $page_number + 1;
+                $pageContent = $page->getText();
+                $guid = md5($pageContent);
+                $DocumentChunk = DocumentChunk::updateOrCreate(
+                    [
+                        'guid' => $guid,
+                        'document_id' => $this->document->id,
+                    ],
+                    [
+                        'content' => $pageContent,
+                        'sort_order' => $page_number,
+                    ]
+                );
+                /**
+                 * Soon taggings
+                 * And Summary
+                 */
+                $chunks[] = [
+                    new VectorlizeDataJob($DocumentChunk),
+                    new SummarizeDataJob($DocumentChunk),
+                    //Tagging
+                ];
 
-            CollectionStatusEvent::dispatch($document->collection, CollectionStatusEnum::PROCESSING);
+                CollectionStatusEvent::dispatch($document->collection, CollectionStatusEnum::PROCESSING);
+            } catch (\Exception $e) {
+                Log::error('Error parsing PDF', ['error' => $e->getMessage()]);
+            }
         }
 
         $batch = Bus::batch($chunks)
