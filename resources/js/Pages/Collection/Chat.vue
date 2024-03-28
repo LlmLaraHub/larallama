@@ -29,7 +29,15 @@ const props = defineProps({
 
 provide('system_prompt', props.system_prompt);
 
-
+onMounted(() => {
+    Echo.private(`collection.chat.${props.collection.data.id}.${props.chat.data.id}`)
+    .listen('.status', (e) => {
+        console.log(e);
+        router.reload({
+            preserveScroll: true,
+        })
+    });
+});
 </script>
 
 <template>

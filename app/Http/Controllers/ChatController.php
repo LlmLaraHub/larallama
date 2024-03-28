@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\ChatUpdatedEvent;
 use App\Http\Resources\ChatResource;
 use App\Http\Resources\CollectionResource;
 use App\Http\Resources\MessageResource;
@@ -44,6 +45,8 @@ class ChatController extends Controller
         ]);
 
         $response = SearchOrSummarizeChatRepo::search($chat, $validated['input']);
+
+        ChatUpdatedEvent::dispatch($chat->chatable, $chat);
 
         return response()->json(['message' => $response]);
     }

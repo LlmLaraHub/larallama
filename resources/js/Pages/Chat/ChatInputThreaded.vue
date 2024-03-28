@@ -28,10 +28,12 @@ const getting_results = ref(false)
 
 const save = () => {
     getting_results.value = true
+    let message = form.input
+    form.reset();
     axios.post(route('chats.messages.create', {
         chat: props.chat.id
     }), {
-        input: form.input
+        input: message
     }).then(response => {
         getting_results.value = false
         console.log(response.data.message)
