@@ -2,11 +2,10 @@
 
 namespace App\LlmDriver;
 
+use App\LlmDriver\Requests\MessageInDto;
 use App\LlmDriver\Responses\CompletionResponse;
 use App\LlmDriver\Responses\EmbeddingsResponseDto;
-use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Support\Facades\Log;
-use App\LlmDriver\Requests\MessageInDto;
 
 abstract class BaseClient
 {
@@ -23,14 +22,12 @@ abstract class BaseClient
 
         return EmbeddingsResponseDto::from([
             'embedding' => data_get($data, 'data.0.embedding'),
-            'token_count' => 1000
+            'token_count' => 1000,
         ]);
     }
 
     /**
-     * 
-     * @param MessageInDto[] $messages 
-     * @return CompletionResponse 
+     * @param  MessageInDto[]  $messages
      */
     public function chat(array $messages): CompletionResponse
     {

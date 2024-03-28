@@ -2,17 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Domains\Messages\RoleEnum;
-use Facades\App\Domains\Messages\SearchOrSummarizeChatRepo;
 use App\Http\Resources\ChatResource;
 use App\Http\Resources\CollectionResource;
 use App\Http\Resources\MessageResource;
-use App\LlmDriver\LlmDriverFacade;
-use App\LlmDriver\Responses\CompletionResponse;
 use App\Models\Chat;
 use App\Models\Collection;
-use App\Models\DocumentChunk;
-use Illuminate\Support\Facades\Log;
+use Facades\App\Domains\Messages\SearchOrSummarizeChatRepo;
 
 class ChatController extends Controller
 {
@@ -48,9 +43,7 @@ class ChatController extends Controller
             'input' => 'required|string',
         ]);
 
-
         $response = SearchOrSummarizeChatRepo::search($chat, $validated['input']);
-        
 
         return response()->json(['message' => $response]);
     }

@@ -2,22 +2,20 @@
 
 namespace App\Domains\Messages;
 
-use App\Models\Chat;
-use App\Domains\Messages\RoleEnum;
 use App\LlmDriver\LlmDriverFacade;
 use App\LlmDriver\Responses\CompletionResponse;
+use App\LlmDriver\Responses\EmbeddingsResponseDto;
+use App\Models\Chat;
 use App\Models\DocumentChunk;
 use Illuminate\Support\Facades\Log;
-use App\LlmDriver\Responses\EmbeddingsResponseDto;
 
 class SearchOrSummarizeChatRepo
 {
-
     public function search(Chat $chat, string $input): string
     {
         /**
-         * @TODO 
-         * Later using the LLM we will decide if the input is best served 
+         * @TODO
+         * Later using the LLM we will decide if the input is best served
          * by searching the data or a summary of the data.
          * For now we will search.
          */
@@ -34,7 +32,7 @@ class SearchOrSummarizeChatRepo
                 'document_chunks.embedding <-> ? as distance, document_chunks.content, document_chunks.embedding as embedding, document_chunks.id as id',
                 [$embedding->embedding]
             )
-            ->where("documents.collection_id", $chat->chatable->id)
+            ->where('documents.collection_id', $chat->chatable->id)
             ->limit(5)
             ->orderByRaw('distance')
             ->get();
@@ -47,7 +45,7 @@ class SearchOrSummarizeChatRepo
 
         $content = implode(' ', $content);
 
-        $content = "This is data from the search results when entering the users prompt please use this for context and only this: " . $content;
+        $content = 'This is data from the search results when entering the users prompt please use this for context and only this: '.$content;
 
         $chat->addInput(
             message: $content,

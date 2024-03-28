@@ -46,9 +46,8 @@ if (! function_exists('get_fixture')) {
 }
 
 if (! function_exists('reduce_text_size')) {
-    function reduce_text_size(string $text) : string
+    function reduce_text_size(string $text): string
     {
         return (new TrimText())->handle($text);
     }
 }
-

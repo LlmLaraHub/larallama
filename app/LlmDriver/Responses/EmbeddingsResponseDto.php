@@ -3,7 +3,6 @@
 namespace App\LlmDriver\Responses;
 
 use Pgvector\Laravel\Vector;
-use Spatie\LaravelData\Attributes\WithCast;
 use Spatie\LaravelData\Attributes\WithCastable;
 
 class EmbeddingsResponseDto extends \Spatie\LaravelData\Data

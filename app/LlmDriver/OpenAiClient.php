@@ -2,25 +2,17 @@
 
 namespace App\LlmDriver;
 
+use App\LlmDriver\Requests\MessageInDto;
 use App\LlmDriver\Responses\CompletionResponse;
 use App\LlmDriver\Responses\EmbeddingsResponseDto;
-use Illuminate\Contracts\Container\BindingResolutionException;
-use OpenAI\Exceptions\InvalidArgumentException;
-use OpenAI\Exceptions\ErrorException;
-use OpenAI\Exceptions\UnserializableResponse;
-use OpenAI\Exceptions\TransporterException;
 use OpenAI\Laravel\Facades\OpenAI;
-use Psr\Container\NotFoundExceptionInterface;
-use Psr\Container\ContainerExceptionInterface;
 
 class OpenAiClient extends BaseClient
 {
     protected string $driver = 'openai';
 
     /**
-     * 
-     * @param MessageInDto[] $messages 
-     * @return CompletionResponse 
+     * @param  MessageInDto[]  $messages
      */
     public function chat(array $messages): CompletionResponse
     {
@@ -28,7 +20,7 @@ class OpenAiClient extends BaseClient
             'model' => $this->getConfig('openai')['completion_model'],
             'messages' => collect($messages)->map(function ($message) {
                 return $message->toArray();
-            })->toArray()
+            })->toArray(),
         ]);
 
         $results = null;
@@ -56,7 +48,7 @@ class OpenAiClient extends BaseClient
 
         return EmbeddingsResponseDto::from([
             'embedding' => $results,
-            'token_count' => $response->usage->totalTokens
+            'token_count' => $response->usage->totalTokens,
         ]);
     }
 

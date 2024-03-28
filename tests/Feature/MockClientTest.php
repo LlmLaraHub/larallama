@@ -34,7 +34,6 @@ class MockClientTest extends TestCase
 
     }
 
-
     public function test_Chat(): void
     {
         $client = new MockClient();
@@ -42,8 +41,8 @@ class MockClientTest extends TestCase
         $results = $client->chat([
             MessageInDto::from([
                 'content' => 'test',
-                'role' => 'user'
-            ])
+                'role' => 'user',
+            ]),
         ]);
 
         $this->assertInstanceOf(CompletionResponse::class, $results);

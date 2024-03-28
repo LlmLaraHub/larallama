@@ -62,7 +62,7 @@ class Chat extends Model
                 'created_at' => now(),
                 'updated_at' => now(),
                 'chat_id' => $this->id,
-                'is_chat_ignored' => !$show_in_thread,
+                'is_chat_ignored' => ! $show_in_thread,
             ]);
 
         return $message;
@@ -102,7 +102,7 @@ class Chat extends Model
 
         foreach ($latestMessages as $message) {
             $latestMessagesArray[] = MessageInDto::from([
-                'role' => $message->role, 'content' => $message->compressed_body
+                'role' => $message->role->value, 'content' => $message->compressed_body,
             ]);
         }
 

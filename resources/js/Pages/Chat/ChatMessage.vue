@@ -24,7 +24,7 @@ const toast = useToast();
          class="flex-col flex flex-grow h-full overflow-y-scroll gap-y-8 py-10 px-2
      ">
         <div v-if="chat?.id && messages.length === 0">
-            Start: 
+            Ask a question below to get started.
         </div>
 
         <div v-for="message in messages" v-else>

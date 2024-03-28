@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\LlmDriver\Requests;
 
@@ -9,5 +9,6 @@ class MessageInDto extends Data
     public function __construct(
         public string $content,
         public string $role,
-    ) {}
+    ) {
+    }
 }

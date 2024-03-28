@@ -3,14 +3,12 @@
 namespace Tests\Feature;
 
 use App\Domains\Messages\SearchOrSummarizeChatRepo;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Tests\TestCase;
 use App\LlmDriver\LlmDriverFacade;
 use App\Models\Chat;
 use App\Models\Collection;
 use App\Models\Document;
 use App\Models\DocumentChunk;
+use Tests\TestCase;
 
 class SearchOrSummarizeChatRepoTest extends TestCase
 {
@@ -31,7 +29,7 @@ class SearchOrSummarizeChatRepoTest extends TestCase
 
         $dto = \App\LlmDriver\Responses\EmbeddingsResponseDto::from([
             'embedding' => data_get($embedding, 'data.0.embedding'),
-            'token_count' => 1000
+            'token_count' => 1000,
         ]);
 
         LlmDriverFacade::shouldReceive('driver->embedData')
@@ -56,6 +54,5 @@ class SearchOrSummarizeChatRepoTest extends TestCase
 
         $this->assertNotNull($results);
 
-        
     }
 }

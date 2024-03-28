@@ -43,7 +43,7 @@ class ChatControllerTest extends TestCase
                 'system_prompt' => 'Foo',
                 'input' => 'user input',
             ])->assertOk();
-        $this->assertDatabaseCount('messages', 3);
+        $this->assertDatabaseCount('messages', 4);
 
         $this->assertTrue(Message::whereRole('system')->exists());
         $this->assertTrue(Message::where('is_chat_ignored', true)->exists());
