@@ -7,6 +7,9 @@ import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { ZiggyVue } from '../../vendor/tightenco/ziggy';
 import VueApexCharts from "vue3-apexcharts";
 import Toast, { TYPE }  from "vue-toastification";
+import { autoAnimatePlugin } from '@formkit/auto-animate/vue'
+
+
 import "vue-toastification/dist/index.css";
 const appName = import.meta.env.VITE_APP_NAME || 'Template App';
 
@@ -17,6 +20,7 @@ createInertiaApp({
         return createApp({ render: () => h(App, props) })
             .use(plugin)
             .use(VueApexCharts)
+            .use(autoAnimatePlugin)
             .use(Toast, {})
             .use(ZiggyVue)
             .mount(el);

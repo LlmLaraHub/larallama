@@ -30,6 +30,7 @@ class CollectionController extends Controller
         $validated = request()->validate([
             'name' => 'required',
             'description' => 'required',
+            'driver' => 'required',
         ]);
 
         $validated['team_id'] = auth()->user()->current_team_id;

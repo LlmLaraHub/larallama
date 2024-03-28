@@ -14,6 +14,7 @@
         "laravel/jetstream": "^5.0",
         "laravel/pennant": "^1.7",
         "laravel/pulse": "^1.0@beta",
+        "laravel/reverb": "@beta",
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.9",
         "openai-php/laravel": "^0.8.1",

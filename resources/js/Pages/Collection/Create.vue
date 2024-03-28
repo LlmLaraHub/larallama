@@ -63,6 +63,7 @@ import { XMarkIcon } from '@heroicons/vue/24/outline'
 import { Head, Link, useForm } from '@inertiajs/vue3';
 import ResourceForm from './Components/ResourceForm.vue';
 
+
 const props = defineProps({
     collection: Object,
     open: Boolean,
@@ -76,6 +77,7 @@ const closeSlideOut = () => {
 
 const form = useForm({
   name: "",
+  driver: "mock",
   description: "Some details about your collection that will help give the ai system some context."
 })
 

@@ -12,14 +12,7 @@ const props = defineProps({
 
          :class="message.from_ai ? 'flex-row-reverse' : 'flex-row'">
         <div class="flex-shrink-0 hidden md:block">
-            <img 
-            v-if="message.role.assistant"
-            loading="lazy" class="inline-block h-10 w-10 rounded-full shadow-lg"
-                 :class="message.from_ai ? 'shadow-rose-600/30' : ''"
-                 :src="message.from_ai ? '/assets/ai-icon.svg' : '/assets/user-icon.svg'"
-                 alt="">
-
-            <span v-else class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-gray-500">
+            <span class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-gray-300">
                 <span class="text-xs font-medium leading-none text-white">
                     {{  message.initials }}
                 </span>
@@ -46,9 +39,7 @@ const props = defineProps({
             </div>
 
             <div class="message-baloon flex rounded-md relative shadow-lg"
-                 :class="message.from_ai ? 'bg-gray-500/10 rounded-tr-none border-rose-500' : 'bg-black/20 rounded-tl-none flex-row-reverse'">
-
-                <LightIndicator :primary="message.from_ai"></LightIndicator>
+                 :class="message.from_ai ? 'bg-gray-300/10 rounded-tr-none border-indigo-500' : 'bg-black/20 rounded-tl-none flex-row-reverse'">
 
                 <div
 

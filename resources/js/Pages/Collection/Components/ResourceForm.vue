@@ -11,7 +11,9 @@
             <TextArea v-model="modelValue.description" type="text" class="mt-1 block w-full" />
             <InputError :message="modelValue.errors.description" class="mt-2" />
         </div>
-
+        <div class="sm:col-span-3">
+            <LlmType @typeChosen="typeChosen" />
+        </div>
     </div>
 </template>
 
@@ -20,10 +22,16 @@ import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import TextInput from '@/Components/TextInput.vue';
 import TextArea from '@/Components/TextArea.vue';
+import LlmType from './LlmType.vue';
 const props = defineProps({
     modelValue: Object,
 });
 
+
+const typeChosen = (type) => {
+    console.log("TYPE " + type)
+    props.modelValue.driver = type;
+}
 
 
 </script>

@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\LlmDriver\Requests\MessageInDto;
 use App\LlmDriver\Responses\CompletionResponse;
 use App\LlmDriver\Responses\EmbeddingsResponseDto;
 use OpenAI\Laravel\Facades\OpenAI;
@@ -47,6 +48,34 @@ class OpenAiClientTest extends TestCase
 
         $openaiClient = new \App\LlmDriver\OpenAiClient();
         $response = $openaiClient->completion('test');
+        $this->assertInstanceOf(CompletionResponse::class, $response);
+    }
+
+    public function test_chat(): void
+    {
+        OpenAI::fake([
+            ChatCreateResponse::fake([
+                'choices' => [
+                    [
+                        'message' => [
+                            'content' => 'awesome!',
+                        ],
+                    ],
+                ],
+            ]),
+        ]);
+
+        $openaiClient = new \App\LlmDriver\OpenAiClient();
+        $response = $openaiClient->chat([
+            MessageInDto::from([
+                'content' => 'test',
+                'role' => 'system',
+            ]),
+            MessageInDto::from([
+                'content' => 'test',
+                'role' => 'user',
+            ]),
+        ]);
         $this->assertInstanceOf(CompletionResponse::class, $response);
     }
 }

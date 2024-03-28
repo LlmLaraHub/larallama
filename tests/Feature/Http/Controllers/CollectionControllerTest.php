@@ -42,6 +42,7 @@ class CollectionControllerTest extends TestCase
         $this->assertDatabaseCount('collections', 0);
         $response = $this->post(route('collections.store'), [
             'name' => 'Test',
+            'driver' => 'mock',
             'description' => 'Test Description',
         ])->assertStatus(302);
         $this->assertDatabaseCount('collections', 1);

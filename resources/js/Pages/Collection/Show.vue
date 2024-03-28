@@ -1,13 +1,15 @@
 <script setup>
 import AppLayout from '@/Layouts/AppLayout.vue';
 import Welcome from '@/Components/Welcome.vue';
+import SecondaryLink from '@/Components/SecondaryLink.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import { computed, onMounted, ref } from 'vue';
 
 import { useDropzone } from "vue3-dropzone";
-import { router, useForm } from '@inertiajs/vue3';
+import { router, useForm, Link } from '@inertiajs/vue3';
 import FileUploader from './Components/FileUploader.vue';
 import CreateChat from './Components/CreateChat.vue';
+import { ChatBubbleLeftIcon } from '@heroicons/vue/24/outline';
 
 const props = defineProps({
     collection: {
@@ -23,12 +25,18 @@ const props = defineProps({
 });
 
 
-
+onMounted(() => {
+    Echo.private(`collection.${props.collection.data.id}`)
+    .listen('.status', (e) => {
+        console.log(e.status);
+        router.reload()
+    });
+});
 
 </script>
 
 <template>
-    <AppLayout title="Dashboard">
+    <AppLayout title="Collection">
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 Collection
@@ -52,6 +60,16 @@ const props = defineProps({
                             <CreateChat 
                             v-if="!chat?.data?.id"
                             :collection="collection.data" />
+                            <div v-else>
+                                <SecondaryLink 
+                                class="flex justify-between items-center gap-4"
+                                :href="route('chats.collection.show', {
+                                    collection: collection.data.id,
+                                    chat: chat.data.id
+                                })">
+                                <ChatBubbleLeftIcon class="h-5 w-5"></ChatBubbleLeftIcon>
+                                Continue Chatting</SecondaryLink>
+                            </div>
                         </div>
                         <p class="mt-2 max-w-4xl text-sm text-gray-500">
                             {{ collection.data.description }}
@@ -67,7 +85,7 @@ const props = defineProps({
                         <p class="mt-2 text-sm text-gray-700">Thsee are a list of documents you uploaded or imported into this Collection and the status of their processing</p>
                     </div>
 
-                    <div>
+                    <div v-auto-animate>
                         <div class="px-4 sm:px-6 lg:px-8">
                             <div class="mt-8 flow-root">
                                 <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -120,11 +138,14 @@ const props = defineProps({
                                                     </td>
                                                     <td
                                                         class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-3">
-                                                        <span v-if="document.status === 'Complete'" class="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
+                                                        <span v-if="document.status !== 'Pending'" class="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
                                                             {{ document.status }}
                                                         </span>
-                                                        <span v-else class="inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10">
-                                                            {{ document.status }}
+                                                        <span v-else class="flex justify-left pl-6">
+                                                            <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                                             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                                             <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                                           </svg>
                                                         </span>
                                                     </td>
                                                 </tr>

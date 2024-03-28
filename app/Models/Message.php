@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Domains\Messages\RoleEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -12,7 +13,14 @@ class Message extends Model
 
     public $fillable = [
         'body',
+        'role',
         'in_out',
+        'is_chat_ignored',
+    ];
+
+    protected $casts = [
+        'role' => RoleEnum::class,
+        'in_out' => 'boolean',
     ];
 
     /**
@@ -20,7 +28,7 @@ class Message extends Model
      */
     public function getFromUserAttribute(): bool
     {
-        return $this->in_out == true;
+        return $this->role === RoleEnum::User;
     }
 
     /**
@@ -28,7 +36,7 @@ class Message extends Model
      */
     public function getFromAiAttribute(): bool
     {
-        return ! $this->from_user;
+        return $this->role !== RoleEnum::User;
     }
 
     /**
