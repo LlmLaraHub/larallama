@@ -1,0 +1,10 @@
+[
+    {
+        "content": "Is Claude better than ChatGPT when using their api to interact with",
+        "role": "user"
+    },
+    {
+        "content": "Help this Laravel PHP developer choose which api to use for an llm part of the application.",
+        "role": "assistant"
+    }
+]

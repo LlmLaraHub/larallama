@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Domains\Documents\StatusEnum;
+use App\LlmDriver\HasDrivers;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Pgvector\Laravel\Vector;
@@ -10,7 +11,7 @@ use Pgvector\Laravel\Vector;
 /**
  * @property Document $document
  */
-class DocumentChunk extends Model
+class DocumentChunk extends Model implements HasDrivers
 {
     use HasFactory;
 
@@ -41,8 +42,13 @@ class DocumentChunk extends Model
         });
     }
 
+    public function getEmbeddingDriver(): string
+    {
+        return $this->document->collection->embedding_driver->value;
+    }
+
     public function getDriver(): string
     {
-        return $this->document->collection->driver;
+        return $this->document->collection->driver->value;
     }
 }

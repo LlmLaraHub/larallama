@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Domains\Documents\StatusEnum;
 use App\Domains\Documents\TypesEnum;
+use App\LlmDriver\HasDrivers;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -17,7 +18,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property string|null $summary
  * @property string|null $file_path
  */
-class Document extends Model
+class Document extends Model implements HasDrivers
 {
     use HasFactory;
 
@@ -28,6 +29,7 @@ class Document extends Model
         'status' => StatusEnum::class,
         'summary_status' => StatusEnum::class,
     ];
+
 
     public function collection(): BelongsTo
     {
@@ -58,6 +60,11 @@ class Document extends Model
 
     public function getDriver(): string
     {
-        return $this->collection->driver;
+        return $this->collection->driver->value;
+    }
+
+
+    public function getEmbeddingDriver(): string { 
+        return $this->collection->embedding_driver->value;
     }
 }

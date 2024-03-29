@@ -23,7 +23,7 @@ class SearchOrSummarizeChatRepo
 
         /** @var EmbeddingsResponseDto $embedding */
         $embedding = LlmDriverFacade::driver(
-            $chat->chatable->getDriver()
+            $chat->chatable->getEmddingDriver()
         )->embedData($input);
 
         $results = DocumentChunk::query()

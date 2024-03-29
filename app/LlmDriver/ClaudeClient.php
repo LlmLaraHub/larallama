@@ -23,8 +23,6 @@ class ClaudeClient
         
         Log::info('LlmDriver::ClaudeClient::embedData');
 
-
-
         return EmbeddingsResponseDto::from([
             'embedding' => data_get($data, 'data.0.embedding'),
             'token_count' => 1000,
@@ -36,17 +34,40 @@ class ClaudeClient
      */
     public function chat(array $messages): CompletionResponse
     {
-        if (! app()->environment('testing')) {
-            sleep(2);
+        $model = $this->getConfig('claude')['models']['completion_model']; 
+        $maxTokens = $this->getConfig('claude')['max_tokens']; 
+
+        Log::info('LlmDriver::Claude::completion');
+
+        $messages = collect($messages)->map(function($item) {
+            if($item->role === 'system') {
+                $item->role = 'assistant';
+            }
+
+            return $item->toArray();
+        })->reverse()->values()->all();
+        
+        $results = $this->getClient()->post('/messages', [
+            'model' => $model,
+            "max_tokens" => $maxTokens,
+            'messages' => $messages,
+        ]);
+
+        if(!$results->ok()) {
+            $error = $results->json()['error']['type'];
+            Log::error('Claude API Error ' . $error);
+            throw new \Exception('Claude API Error ' . $error);
         }
 
-        Log::info('LlmDriver::MockClient::completion');
+        $data = null;
 
-        $data = <<<'EOD'
-        Voluptate irure cillum dolor anim officia reprehenderit dolor. Eiusmod veniam nostrud consectetur incididunt proident id. Anim adipisicing pariatur amet duis Lorem sunt veniam veniam est. Deserunt ea aliquip cillum pariatur consectetur. Dolor in reprehenderit adipisicing consectetur cupidatat ad cupidatat reprehenderit. Nostrud mollit voluptate aliqua anim pariatur excepteur eiusmod velit quis exercitation tempor quis excepteur.        
-EOD;
+        foreach($results->json()['content'] as $content) {
+            $data = $content['text'];
+        }
 
-        return new CompletionResponse($data);
+        return CompletionResponse::from([
+            'content' => $data,
+        ]);
     }
 
     public function completion(string $prompt): CompletionResponse

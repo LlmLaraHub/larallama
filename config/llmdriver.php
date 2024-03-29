@@ -19,8 +19,9 @@ return [
         ],
         'claude' => [
             'api_key' => env('CLAUDE_API_KEY'),
-            'max_tokens' => env('CLAUDE_MAX_TOKENS', 1024),
+            'max_tokens' => env('CLAUDE_MAX_TOKENS', 4000),
             'models' => [
+                //@see https://www.anthropic.com/news/claude-3-family
                 'completion_model' => env('CLAUDE_COMPLETION_MODEL', 'claude-3-opus-20240229'),
             ]
         ],

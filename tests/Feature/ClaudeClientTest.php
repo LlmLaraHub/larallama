@@ -42,11 +42,21 @@ class ClaudeClientTest extends TestCase
 
     }
 
-    public function test_Chat(): void
+    public function test_chat(): void
     {
-        $client = new MockClient();
+        $client = new ClaudeClient();
+
+        $data = get_fixture('claude_completion.json');
+
+        Http::fake([
+            'api.anthropic.com/*' => Http::response($data, 200),
+        ]);
 
         $results = $client->chat([
+            MessageInDto::from([
+                'content' => 'test',
+                'role' => 'system',
+            ]),
             MessageInDto::from([
                 'content' => 'test',
                 'role' => 'user',
@@ -54,6 +64,13 @@ class ClaudeClientTest extends TestCase
         ]);
 
         $this->assertInstanceOf(CompletionResponse::class, $results);
+
+        Http::assertSent(function ($request) {
+            $message1 = $request->data()['messages'][0]['role'];
+            $message2 = $request->data()['messages'][1]['role'];
+            return $message2 === 'assistant' &&
+                $message1 === 'user';
+        });
 
     }
 }
