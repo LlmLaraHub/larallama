@@ -30,7 +30,6 @@ class Document extends Model implements HasDrivers
         'summary_status' => StatusEnum::class,
     ];
 
-
     public function collection(): BelongsTo
     {
         return $this->belongsTo(Collection::class);
@@ -63,8 +62,8 @@ class Document extends Model implements HasDrivers
         return $this->collection->driver->value;
     }
 
-
-    public function getEmbeddingDriver(): string { 
+    public function getEmbeddingDriver(): string
+    {
         return $this->collection->embedding_driver->value;
     }
 }

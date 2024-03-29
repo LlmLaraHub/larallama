@@ -10,7 +10,6 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Testing\AssertableInertia as Assert;
-use Laravel\Pennant\Contracts\Driver;
 use Tests\TestCase;
 
 class CollectionControllerTest extends TestCase

@@ -23,7 +23,7 @@ return [
             'models' => [
                 //@see https://www.anthropic.com/news/claude-3-family
                 'completion_model' => env('CLAUDE_COMPLETION_MODEL', 'claude-3-opus-20240229'),
-            ]
+            ],
         ],
         'ollama' => [
 

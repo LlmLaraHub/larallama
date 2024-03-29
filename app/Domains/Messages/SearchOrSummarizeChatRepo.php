@@ -23,7 +23,7 @@ class SearchOrSummarizeChatRepo
 
         /** @var EmbeddingsResponseDto $embedding */
         $embedding = LlmDriverFacade::driver(
-            $chat->chatable->getEmddingDriver()
+            $chat->chatable->getEmbeddingDriver()
         )->embedData($input);
 
         $results = DocumentChunk::query()
@@ -40,12 +40,12 @@ class SearchOrSummarizeChatRepo
         $content = [];
 
         foreach ($results as $result) {
-            $content[] = reduce_text_size($result->content);
+            $content[] = remove_ascii(reduce_text_size($result->content)); //reduce_text_size seem to mess up Claude?
         }
 
         $content = implode(' ', $content);
 
-        $content = 'This is data from the search results when entering the users prompt please use this for context and only this: '.$content;
+        $content = 'This is data from the search results when entering the users prompt please use this for context and only this and return as markdown so I can render it: '.$content;
 
         $chat->addInput(
             message: $content,

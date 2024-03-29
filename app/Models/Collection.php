@@ -2,13 +2,13 @@
 
 namespace App\Models;
 
+use App\LlmDriver\DriversEnum;
+use App\LlmDriver\HasDrivers;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
-use App\LlmDriver\DriversEnum;
-use App\LlmDriver\HasDrivers;
 
 /**
  * Class Project
@@ -32,9 +32,8 @@ class Collection extends Model implements HasDrivers
     protected $casts = [
         'active' => 'boolean',
         'driver' => DriversEnum::class,
-        'embedding_driver' => DriversEnum::class
+        'embedding_driver' => DriversEnum::class,
     ];
-
 
     public function team(): BelongsTo
     {

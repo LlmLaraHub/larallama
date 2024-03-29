@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\Log;
 
 class ClaudeClient
 {
-
     protected string $baseUrl = 'https://api.anthropic.com/v1';
 
     protected string $version = '2023-06-01';
@@ -20,13 +19,7 @@ class ClaudeClient
 
     public function embedData(string $data): EmbeddingsResponseDto
     {
-        
-        Log::info('LlmDriver::ClaudeClient::embedData');
-
-        return EmbeddingsResponseDto::from([
-            'embedding' => data_get($data, 'data.0.embedding'),
-            'token_count' => 1000,
-        ]);
+        throw new \Exception('Not implemented');
     }
 
     /**
@@ -34,34 +27,58 @@ class ClaudeClient
      */
     public function chat(array $messages): CompletionResponse
     {
-        $model = $this->getConfig('claude')['models']['completion_model']; 
-        $maxTokens = $this->getConfig('claude')['max_tokens']; 
+        $model = $this->getConfig('claude')['models']['completion_model'];
+        $maxTokens = $this->getConfig('claude')['max_tokens'];
 
         Log::info('LlmDriver::Claude::completion');
 
-        $messages = collect($messages)->map(function($item) {
-            if($item->role === 'system') {
+        /**
+         * I need to iterate over each item
+         * then if there are two rows with role assistant I need to insert
+         * in betwee a user row with some copy to make it work like "And the user search results had"
+         * using the Laravel Collection library
+         */
+        $messages = collect($messages)->map(function ($item) {
+            if ($item->role === 'system') {
                 $item->role = 'assistant';
             }
 
             return $item->toArray();
-        })->reverse()->values()->all();
-        
+        })->reverse()->values();
+
+        $messages = $messages->flatMap(function ($item, $index) use ($messages) {
+            if ($index > 0 && $item['role'] === 'assistant' && optional($messages->get($index + 1))['role'] === 'assistant') {
+                return [
+                    $item,
+                    ['role' => 'user', 'content' => 'Continuation of search results'],
+                ];
+            }
+
+            return [$item];
+        })->toArray();
+
+        put_fixture('claude_messages_debug.json', $messages);
+
         $results = $this->getClient()->post('/messages', [
             'model' => $model,
-            "max_tokens" => $maxTokens,
+            'system' => 'Return a markdown response.',
+            'max_tokens' => $maxTokens,
             'messages' => $messages,
         ]);
 
-        if(!$results->ok()) {
+        if (! $results->ok()) {
             $error = $results->json()['error']['type'];
-            Log::error('Claude API Error ' . $error);
-            throw new \Exception('Claude API Error ' . $error);
+            $message = $results->json()['error']['message'];
+            Log::error('Claude API Error ', [
+                'type' => $error,
+                'message' => $message,
+            ]);
+            throw new \Exception('Claude API Error '.$message);
         }
 
         $data = null;
 
-        foreach($results->json()['content'] as $content) {
+        foreach ($results->json()['content'] as $content) {
             $data = $content['text'];
         }
 
@@ -72,32 +89,31 @@ class ClaudeClient
 
     public function completion(string $prompt): CompletionResponse
     {
-        $model = $this->getConfig('claude')['models']['completion_model']; 
-        $maxTokens = $this->getConfig('claude')['max_tokens']; 
+        $model = $this->getConfig('claude')['models']['completion_model'];
+        $maxTokens = $this->getConfig('claude')['max_tokens'];
 
         Log::info('LlmDriver::Claude::completion');
 
         $results = $this->getClient()->post('/messages', [
             'model' => $model,
-            "max_tokens" => $maxTokens,
+            'max_tokens' => $maxTokens,
             'messages' => [
                 [
-                    'role' => "user",
-                    'content' => $prompt
-                ]
+                    'role' => 'user',
+                    'content' => $prompt,
+                ],
             ],
         ]);
 
-
-        if(!$results->ok()) {
+        if (! $results->ok()) {
             $error = $results->json()['error']['type'];
-            Log::error('Claude API Error ' . $error);
-            throw new \Exception('Claude API Error ' . $error);
+            Log::error('Claude API Error '.$error);
+            throw new \Exception('Claude API Error '.$error);
         }
 
         $data = null;
 
-        foreach($results->json()['content'] as $content) {
+        foreach ($results->json()['content'] as $content) {
             $data = $content['text'];
         }
 
@@ -106,13 +122,15 @@ class ClaudeClient
         ]);
     }
 
-    protected function getError(Response $response) {
+    protected function getError(Response $response)
+    {
         return $response->json()['error']['type'];
     }
 
-    protected function getClient() {
+    protected function getClient()
+    {
         $api_token = $this->getConfig('claude')['api_key'];
-        if(!$api_token) {
+        if (! $api_token) {
             throw new \Exception('Claude API Token not found');
         }
 
