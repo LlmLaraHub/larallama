@@ -7,6 +7,7 @@ use App\LlmDriver\MockClient;
 use App\LlmDriver\Requests\MessageInDto;
 use App\LlmDriver\Responses\CompletionResponse;
 use App\LlmDriver\Responses\EmbeddingsResponseDto;
+use Illuminate\Support\Facades\Http;
 use Tests\TestCase;
 
 class ClaudeClientTest extends TestCase
@@ -27,7 +28,13 @@ class ClaudeClientTest extends TestCase
 
     public function test_completion(): void
     {
-        $client = new MockClient();
+        $client = new ClaudeClient();
+
+        $data = get_fixture('claude_completion.json');
+
+        Http::fake([
+            'api.anthropic.com/*' => Http::response($data, 200),
+        ]);
 
         $results = $client->completion('test');
 

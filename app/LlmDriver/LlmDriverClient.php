@@ -22,6 +22,8 @@ class LlmDriverClient
         switch ($name) {
             case 'openai':
                 return new OpenAiClient();
+            case 'claude':
+                return new ClaudeClient();
             case 'mock':
                 return new MockClient();
             default:
