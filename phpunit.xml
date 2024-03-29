@@ -32,5 +32,6 @@
         <env name="SESSION_DRIVER" value="array"/>
         <env name="OPENAI_MOCK" value="true"/>
         <env name="TELESCOPE_ENABLED" value="false"/>
+        <env name="CLAUDE_API_KEY" value="sk-ant-api03-Jvzj2m6ABKuC2o11jUdrT47xqvUt5Fa6RKXSAqkxGkV7hUJnQQpHQCyba4SpED9RUXauz4Zp32Ujwp1MnV9O-g-1234567890"/>
     </php>
 </phpunit>
