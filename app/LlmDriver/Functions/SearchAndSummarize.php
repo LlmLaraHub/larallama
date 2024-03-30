@@ -10,17 +10,16 @@ class SearchAndSummarize extends FunctionContract
 
     public function handle(FunctionCallDto $functionCallDto): array
     {
-
         return [];
     }
 
     /**
      * @return ParameterDto[]
      */
-    protected function getParameters(): array
+    protected function getProperties(): array
     {
         return [
-            new ParameterDto(
+            new PropertyDto(
                 name: 'prompt',
                 description: 'The prompt to search for in the database.',
                 type: 'string',

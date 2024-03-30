@@ -63,4 +63,9 @@ EOD;
     {
         return config("llmdriver.drivers.$driver");
     }
+
+
+    public function getFunctions() : array {
+        return [];
+    }
 }

@@ -16,6 +16,9 @@ class OpenAiClient extends BaseClient
      */
     public function chat(array $messages): CompletionResponse
     {
+        $functions = $this->getFunctions();
+
+
         $response = OpenAI::chat()->create([
             'model' => $this->getConfig('openai')['completion_model'],
             'messages' => collect($messages)->map(function ($message) {
@@ -68,5 +71,19 @@ class OpenAiClient extends BaseClient
         }
 
         return new CompletionResponse($results);
+    }
+
+    /**
+     * @NOTE
+     * Since this abstraction layer is based on OpenAi
+     * Not much needs to happen here
+     * but on the others I might need to do XML?
+     * @return array 
+     */
+    public function getFunctions() : array {
+        $functions = LlmDriverFacade::getFunctions();
+        return collect($functions)->map(function ($function) {
+            return $function->toArray();
+        })->toArray();
     }
 }

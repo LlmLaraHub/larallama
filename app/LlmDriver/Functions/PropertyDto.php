@@ -2,7 +2,7 @@
 
 namespace App\LlmDriver\Functions;
 
-class ParameterDto extends \Spatie\LaravelData\Data
+class PropertyDto extends \Spatie\LaravelData\Data
 {
     public function __construct(
         public string $name,

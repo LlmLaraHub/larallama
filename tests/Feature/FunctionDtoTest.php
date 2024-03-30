@@ -3,8 +3,8 @@
 namespace Tests\Feature;
 
 use App\LlmDriver\Functions\FunctionDto;
-use App\LlmDriver\Functions\ParameterDto;
 use App\LlmDriver\Functions\ParametersDto;
+use App\LlmDriver\Functions\PropertyDto;
 use Tests\TestCase;
 
 class FunctionDtoTest extends TestCase
@@ -20,7 +20,7 @@ class FunctionDtoTest extends TestCase
                 'description' => 'test',
                 'parameters' => [
                     'type' => 'object',
-                    'parameters' => [
+                    'properties' => [
                         [
                             'name' => 'test',
                             'description' => 'test',
@@ -45,9 +45,9 @@ class FunctionDtoTest extends TestCase
         $this->assertNotNull($dto->name);
         $this->assertNotNull($dto->description);
         $this->assertInstanceOf(ParametersDto::class, $dto->parameters);
-        $this->assertCount(2, $dto->parameters->parameters);
-        $parameterOne = $dto->parameters->parameters[0];
-        $this->assertInstanceOf(ParameterDto::class, $parameterOne);
+        $this->assertCount(2, $dto->parameters->properties);
+        $parameterOne = $dto->parameters->properties[0];
+        $this->assertInstanceOf(PropertyDto::class, $parameterOne);
         $this->assertEquals('test', $parameterOne->name);
         $this->assertEquals('test', $parameterOne->description);
         $this->assertEquals('string', $parameterOne->type);
@@ -55,14 +55,15 @@ class FunctionDtoTest extends TestCase
         $this->assertEquals('', $parameterOne->default);
         $this->assertFalse($parameterOne->required);
 
-        $parameterTwo = $dto->parameters->parameters[1];
-        $this->assertInstanceOf(ParameterDto::class, $parameterTwo);
+        $parameterTwo = $dto->parameters->properties[1];
+        $this->assertInstanceOf(PropertyDto::class, $parameterTwo);
         $this->assertEquals('test2', $parameterTwo->name);
         $this->assertEquals('test2', $parameterTwo->description);
         $this->assertEquals('string', $parameterTwo->type);
         $this->assertEquals(['foo', 'bar'], $parameterTwo->enum);
         $this->assertEquals('bar', $parameterTwo->default);
         $this->assertTrue($parameterTwo->required);
-
     }
+
+    
 }

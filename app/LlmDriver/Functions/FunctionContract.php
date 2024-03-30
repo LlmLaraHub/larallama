@@ -8,6 +8,8 @@ abstract class FunctionContract
 
     protected string $dscription;
 
+    protected string $type = 'object';
+
     /**
      * @param  array<string, mixed>  $data
      * @return array<string, mixed>
@@ -20,10 +22,12 @@ abstract class FunctionContract
             [
                 'name' => $this->getName(),
                 'description' => $this->getDescription(),
-                'parameters' => $this->getParameters(),
+                'parameters' => [
+                    'type' => $this->type,
+                    'properties' => $this->getProperties(),
+                ],
             ]
         );
-
     }
 
     protected function getName(): string
@@ -34,10 +38,7 @@ abstract class FunctionContract
     /**
      * @return ParameterDto[]
      */
-    protected function getParameters(): array
-    {
-        return [];
-    }
+    abstract protected function getProperties(): array;
 
     protected function getDescription(): string
     {

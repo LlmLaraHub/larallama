@@ -2,6 +2,8 @@
 
 namespace App\LlmDriver;
 
+use App\LlmDriver\Functions\SearchAndSummarize;
+
 class LlmDriverClient
 {
     protected $drivers = [];
@@ -46,4 +48,11 @@ class LlmDriverClient
     {
         return 'mock';
     }
+
+    public function getFunctions() : array {
+        return [
+            (new SearchAndSummarize())->getFunction(),
+        ];
+    }
+
 }

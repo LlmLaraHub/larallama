@@ -25,4 +25,8 @@ class LlmDriverClientTest extends TestCase
 
         $this->assertInstanceOf(OpenAiClient::class, $results);
     }
+
+    public function test_get_functions() {
+        $this->assertNotEmpty(LlmDriverFacade::getFunctions());
+    }
 }

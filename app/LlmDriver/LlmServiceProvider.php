@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Providers;
+namespace App\LlmDriver;
 
-use App\Models\User;
-use Illuminate\Support\Facades\Gate;
+use App\LlmDriver\LlmDriverClient;
 use Illuminate\Support\ServiceProvider;
 
-class AppServiceProvider extends ServiceProvider
+class LlmServiceProvider extends ServiceProvider
 {
     /**
      * Register any application services.
@@ -21,8 +20,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Gate::define('viewPulse', function (User $user) {
-            return $user->isAdmin();
+        $this->app->bind('llm_driver', function () {
+            return new LlmDriverClient();
         });
 
     }

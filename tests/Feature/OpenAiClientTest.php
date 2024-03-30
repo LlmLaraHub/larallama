@@ -12,9 +12,21 @@ use Tests\TestCase;
 
 class OpenAiClientTest extends TestCase
 {
-    /**
-     * A basic feature test example.
-     */
+
+    public function test_get_functions(): void
+    {
+        $openaiClient = new \App\LlmDriver\OpenAiClient();
+        $response = $openaiClient->getFunctions();
+        $this->assertNotEmpty($response);
+        $this->assertIsArray($response);
+        $first = $response[0];
+        $this->assertArrayHasKey('name', $first);
+        $this->assertArrayHasKey('description', $first);
+        $this->assertArrayHasKey('parameters', $first);
+
+
+    }
+
     public function test_openai_client(): void
     {
         OpenAI::fake([
