@@ -25,7 +25,7 @@ if (! function_exists('put_fixture')) {
 if (! function_exists('remove_ascii')) {
     function remove_ascii($string): string
     {
-        return preg_replace('/[^\x00-\x7F]+/', '', $string);
+        return str_replace("\u2019", ' ', preg_replace('/[^\x00-\x7F]+/', '', $string));
     }
 }
 

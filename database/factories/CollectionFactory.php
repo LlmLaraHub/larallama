@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\LlmDriver\DriversEnum;
 use App\Models\Team;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -22,6 +23,8 @@ class CollectionFactory extends Factory
             'description' => $this->faker->paragraph,
             'active' => $this->faker->boolean,
             'team_id' => Team::factory(),
+            'driver' => DriversEnum::Mock,
+            'embedding_driver' => DriversEnum::Mock,
         ];
     }
 }

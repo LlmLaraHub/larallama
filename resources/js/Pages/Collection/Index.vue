@@ -65,6 +65,12 @@ const closeCreateCollectionSlideOut = () => {
                                                </div>
                                                <div class="flex justify-center mt-10 gap-2">
                                                     <span class="rounded-md bg-indigo-500 text-indigo-200 px-2 py-2 ">
+                                                        LLm Driver: {{ collectionItem.driver }}
+                                                    </span>
+                                                    <span class="rounded-md bg-indigo-500 text-indigo-200 px-2 py-2 ">
+                                                        Embedding Driver: {{ collectionItem.driver }}
+                                                    </span>
+                                                    <span class="rounded-md bg-indigo-500 text-indigo-200 px-2 py-2 ">
                                                         Document Count: {{ collectionItem.documents_count }}
                                                     </span>
                                                     <span class="rounded-md bg-indigo-500 text-indigo-200 px-2 py-2 ">
@@ -89,9 +95,6 @@ const closeCreateCollectionSlideOut = () => {
                 </div>
             </div>
         </div>
-        <CreateCollection :open="showCreateCollection" @closing="closeCreateCollectionSlideOut" 
-        
-
-        ></CreateCollection>
+        <CreateCollection :open="showCreateCollection" @closing="closeCreateCollectionSlideOut"/>
     </AppLayout>
 </template>

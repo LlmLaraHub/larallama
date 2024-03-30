@@ -43,7 +43,7 @@ class VectorlizeDataJob implements ShouldQueue
         $content = $this->documentChunk->content;
 
         /** @var EmbeddingsResponseDto $results */
-        $results = LlmDriverFacade::driver($this->documentChunk->getDriver())
+        $results = LlmDriverFacade::driver($this->documentChunk->getEmbeddingDriver())
             ->embedData($content);
 
         $this->documentChunk->update([

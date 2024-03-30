@@ -31,6 +31,7 @@ class CollectionController extends Controller
             'name' => 'required',
             'description' => 'required',
             'driver' => 'required',
+            'embedding_driver' => 'required',
         ]);
 
         $validated['team_id'] = auth()->user()->current_team_id;

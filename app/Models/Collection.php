@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\LlmDriver\DriversEnum;
+use App\LlmDriver\HasDrivers;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -14,19 +16,23 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
  * @property int $id
  * @property string $name
  * @property string|null $description
+ * @property DriversEnum $driver
+ * @property DriversEnum $embedding_driver
  * @property bool $active
  * @property int $team_id
  * @property \Illuminate\Support\Carbon $created_at
  * @property \Illuminate\Support\Carbon $updated_at
  */
-class Collection extends Model
+class Collection extends Model implements HasDrivers
 {
     use HasFactory;
 
     protected $guarded = [];
 
-    protected $cast = [
+    protected $casts = [
         'active' => 'boolean',
+        'driver' => DriversEnum::class,
+        'embedding_driver' => DriversEnum::class,
     ];
 
     public function team(): BelongsTo
@@ -36,7 +42,12 @@ class Collection extends Model
 
     public function getDriver(): string
     {
-        return $this->driver;
+        return $this->driver->value;
+    }
+
+    public function getEmbeddingDriver(): string
+    {
+        return $this->embedding_driver->value;
     }
 
     public function documents(): HasMany

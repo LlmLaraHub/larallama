@@ -3,6 +3,7 @@
 namespace Tests\Feature\Http\Controllers;
 
 use App\Jobs\ProcessFileJob;
+use App\LlmDriver\DriversEnum;
 use App\Models\Collection;
 use App\Models\User;
 use Illuminate\Http\UploadedFile;
@@ -16,7 +17,7 @@ class CollectionControllerTest extends TestCase
     /**
      * A basic feature test example.
      */
-    public function test_example(): void
+    public function test_index(): void
     {
         $this->actingAs($user = User::factory()->withPersonalTeam()->create());
 
@@ -43,9 +44,12 @@ class CollectionControllerTest extends TestCase
         $response = $this->post(route('collections.store'), [
             'name' => 'Test',
             'driver' => 'mock',
+            'embedding_driver' => DriversEnum::Claude->value,
             'description' => 'Test Description',
         ])->assertStatus(302);
         $this->assertDatabaseCount('collections', 1);
+        $collection = Collection::first();
+        $this->assertEquals(DriversEnum::Claude, $collection->embedding_driver);
 
     }
 

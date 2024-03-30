@@ -78,6 +78,7 @@ const closeSlideOut = () => {
 const form = useForm({
   name: "",
   driver: "mock",
+  embedding_driver: "mock",
   description: "Some details about your collection that will help give the ai system some context."
 })
 
