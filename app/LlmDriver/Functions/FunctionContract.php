@@ -5,7 +5,7 @@ namespace App\LlmDriver\Functions;
 abstract class FunctionContract
 {
     protected string $name;
-    
+
     protected string $dscription;
 
     /**
@@ -31,15 +31,13 @@ abstract class FunctionContract
         return $this->name;
     }
 
-
     /**
-     * 
-     * @return ParameterDto[] 
+     * @return ParameterDto[]
      */
-    protected function getParameters(): array {
+    protected function getParameters(): array
+    {
         return [];
     }
-
 
     protected function getDescription(): string
     {

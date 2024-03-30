@@ -2,7 +2,6 @@
 
 namespace App\LlmDriver;
 
-
 use Spatie\LaravelData\Casts\Cast;
 use Spatie\LaravelData\Casts\Castable;
 use Spatie\LaravelData\Support\Creation\CreationContext;
@@ -10,8 +9,6 @@ use Spatie\LaravelData\Support\DataProperty;
 
 class ArgumentCaster implements Castable
 {
-
-
     public static function dataCastUsing(...$arguments): Cast
     {
         return new class implements Cast
