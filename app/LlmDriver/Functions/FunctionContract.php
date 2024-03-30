@@ -12,7 +12,7 @@ abstract class FunctionContract
      * @param  array<string, mixed>  $data
      * @return array<string, mixed>
      */
-    abstract public function handle(array $data): array;
+    abstract public function handle(FunctionCallDto $functionCallDto): array;
 
     public function getFunction(): FunctionDto
     {
@@ -32,6 +32,10 @@ abstract class FunctionContract
     }
 
 
+    /**
+     * 
+     * @return ParameterDto[] 
+     */
     protected function getParameters(): array {
         return [];
     }
