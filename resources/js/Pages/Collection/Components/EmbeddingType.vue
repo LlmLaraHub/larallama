@@ -51,7 +51,7 @@
     { active: true, key: "mock", title: 'Mock LLM', description: 'This will mock all the LLM features great for local development', current: true },
     { active: true, key: "openai", title: 'OpenAi', description: 'This will work with the OpenAi Api', current: false },
     { active: false, key: "mock", title: 'OpenAi Azure', description: 'This will work with the Azure OpenAi Api', current: false },
-    { active: false, key: "ollama", title: 'Ollama', description: 'This will work with the Ollam API', current: false },
+    { active: true, key: "ollama", title: 'Ollama', description: 'This will work with the Ollam API', current: false },
     { active: false, key: "mock", title: 'Gemini', description: 'This will work with the Gemini Api', current: false },
     { active: true, key: "mock", title: 'Claude using Vonage', description: 'This will work with the Claude Api', current: false },
   ]
