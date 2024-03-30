@@ -46,7 +46,7 @@ const props = defineProps({
                     v-if="message.type !== 'image'"
                     class="message-content grow shadow-inner-custom shadow-lg p-4 rounded space-y-4"
                     :class="message.from_ai ? 'rounded-tr-none' : 'rounded-tl-none'"
-                v-html="message.body"
+                v-html="message.body_markdown"
                 >
 
 

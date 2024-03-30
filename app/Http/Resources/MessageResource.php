@@ -20,6 +20,7 @@ class MessageResource extends JsonResource
             'initials' => ($this->from_ai) ? 'Ai' : 'You',
             'type' => 'text', //@TODO
             'body' => $this->body,
+            'body_markdown' => str($this->body)->markdown(),
             'diff_for_humans' => $this->created_at->diffForHumans(),
         ];
     }
