@@ -7,18 +7,15 @@ use App\LlmDriver\Responses\CompletionResponse;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
-use OpenAI;
 
 class OllamaClient extends BaseClient
 {
-
     protected string $driver = 'ollama';
 
     /**
-     * 
-     * @param MessageInDto[] $messages 
-     * @return CompletionResponse 
-     * @throws BindingResolutionException 
+     * @param  MessageInDto[]  $messages
+     *
+     * @throws BindingResolutionException
      */
     public function chat(array $messages): CompletionResponse
     {
@@ -32,11 +29,11 @@ class OllamaClient extends BaseClient
             'stream' => false,
         ]);
 
-        $results =$response->json()['message']['content'];
+        $results = $response->json()['message']['content'];
 
         return new CompletionResponse($results);
     }
-    
+
     public function completion(string $prompt): CompletionResponse
     {
         Log::info('LlmDriver::Ollama::completion');
@@ -47,12 +44,13 @@ class OllamaClient extends BaseClient
             'stream' => false,
         ]);
 
-        $results =$response->json()['response'];
+        $results = $response->json()['response'];
 
         return new CompletionResponse($results);
     }
 
-    protected function getClient() {
+    protected function getClient()
+    {
         $api_token = $this->getConfig('ollama')['api_key'];
         $baseUrl = $this->getConfig('ollama')['api_url'];
         if (! $api_token || ! $baseUrl) {

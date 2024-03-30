@@ -53,7 +53,6 @@ class OllamaClientTest extends TestCase
             '127.0.0.1:11434/*' => Http::response($data, 200),
         ]);
 
-
         $results = $client->chat([
             MessageInDto::from([
                 'content' => 'test',
@@ -74,6 +73,4 @@ class OllamaClientTest extends TestCase
         });
 
     }
-
-    
 }

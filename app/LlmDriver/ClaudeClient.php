@@ -15,7 +15,6 @@ class ClaudeClient extends BaseClient
 
     protected string $version = '2023-06-01';
 
-
     protected string $driver = 'claude';
 
     public function embedData(string $data): EmbeddingsResponseDto
@@ -141,5 +140,4 @@ class ClaudeClient extends BaseClient
             'content-type' => 'application/json',
         ])->baseUrl($this->baseUrl);
     }
-
 }
