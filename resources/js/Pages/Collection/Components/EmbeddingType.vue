@@ -55,8 +55,15 @@
     { active: false, key: "mock", title: 'Gemini', description: 'This will work with the Gemini Api', current: false },
     { active: true, key: "mock", title: 'Claude using Vonage', description: 'This will work with the Claude Api', current: false },
   ]
-  
-  const selected = ref(publishingOptions[0])
+  const props = defineProps({
+    default: {
+      type: String,
+      default: 'mock'
+    }
+  })
+
+  const selected = ref(publishingOptions
+    .find(option => option.key === props.default) || publishingOptions[0])
 
   watch(selected, (value) => {
     console.log("emit " , value)

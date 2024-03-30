@@ -4,6 +4,7 @@ import Welcome from '@/Components/Welcome.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
 import CreateCollection from './Create.vue';
+import EditCollection from './Edit.vue';
 import { ref } from 'vue';
 import PrimaryButtonLink from '@/Components/PrimaryButtonLink.vue';
 
@@ -17,8 +18,21 @@ const props = defineProps({
 
 const showCreateCollection = ref(false);
 
+const showEditCollection = ref(false);
+
+const collectionToEdit = ref({});
+
 const closeCreateCollectionSlideOut = () => {
     showCreateCollection.value = false;
+};
+
+const showEditCollectionSlideOut = (collection) => {
+    collectionToEdit.value = collection;
+    showEditCollection.value = true;
+};
+const closeEditCollectionSlideOut = () => {
+    collectionToEdit.value = {};
+    showEditCollection.value = false;
 };
 
 
@@ -55,7 +69,10 @@ const closeCreateCollectionSlideOut = () => {
                                                 </PrimaryButton>
                                             </div>
                                         </div>
-                                        <div v-else v-for="collectionItem in collections.data" :key="collectionItem.id">
+                                        <div 
+
+                                        class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg p-4 bg-white mb-4"
+                                        v-else v-for="collectionItem in collections.data" :key="collectionItem.id">
                                             <div>
                                                <div class="font-bold text-lg text-gray-500">
                                                 {{  collectionItem.name }}
@@ -81,10 +98,16 @@ const closeCreateCollectionSlideOut = () => {
                                                     </span>
                                                </div>
                                             </div>
-                                            <div class="flex justify-end">
+                                            <div class="flex justify-end gap-2 mt-4">
                                                 <PrimaryButtonLink :href="route('collections.show', {
                                                     collection: collectionItem.id
                                                 })">view</PrimaryButtonLink>
+
+                                                <SecondaryButton
+                                                type="button"
+                                                @click="showEditCollectionSlideOut(collectionItem)">
+                                                    Edit
+                                                </SecondaryButton>
                                             </div>
                                         </div>
                                     </div>
@@ -96,5 +119,8 @@ const closeCreateCollectionSlideOut = () => {
             </div>
         </div>
         <CreateCollection :open="showCreateCollection" @closing="closeCreateCollectionSlideOut"/>
+        <EditCollection v-if="collectionToEdit?.id"
+        :collection="collectionToEdit"
+        :open="showEditCollection" @closing="closeEditCollectionSlideOut"/>
     </AppLayout>
 </template>

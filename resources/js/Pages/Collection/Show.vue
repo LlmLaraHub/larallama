@@ -3,11 +3,14 @@ import AppLayout from '@/Layouts/AppLayout.vue';
 import Welcome from '@/Components/Welcome.vue';
 import SecondaryLink from '@/Components/SecondaryLink.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
+import SecondaryButton from '@/Components/SecondaryButton.vue';
 import { computed, onMounted, ref } from 'vue';
 
+import EditCollection from './Edit.vue';
 import { useDropzone } from "vue3-dropzone";
 import { router, useForm, Link } from '@inertiajs/vue3';
 import FileUploader from './Components/FileUploader.vue';
+import Label from '@/Components/Labels.vue';
 import CreateChat from './Components/CreateChat.vue';
 import { ChatBubbleLeftIcon } from '@heroicons/vue/24/outline';
 
@@ -23,6 +26,15 @@ const props = defineProps({
         type: Object,
     },
 });
+
+const showEditCollection = ref(false);
+
+const showEditCollectionSlideOut = () => {
+    showEditCollection.value = true;
+};
+const closeEditCollectionSlideOut = () => {
+    showEditCollection.value = false;
+};
 
 
 onMounted(() => {
@@ -57,7 +69,8 @@ onMounted(() => {
                     <div class="border-b pb-5 px-3 py-4">
                         <div class="flex justify-between items-center">
                             <h3 class="text-base font-semibold leading-6 text-gray-900">{{ collection.data.name }}</h3>
-                            <CreateChat 
+                            <div class="flex justify-end gap-2 items-center">
+                                <CreateChat 
                             v-if="!chat?.data?.id"
                             :collection="collection.data" />
                             <div v-else>
@@ -69,11 +82,29 @@ onMounted(() => {
                                 })">
                                 <ChatBubbleLeftIcon class="h-5 w-5"></ChatBubbleLeftIcon>
                                 Continue Chatting</SecondaryLink>
+
                             </div>
+                            <PrimaryButton type="button" @click="showEditCollectionSlideOut">Edit</PrimaryButton>
+                            </div>
+
                         </div>
                         <p class="mt-2 max-w-4xl text-sm text-gray-500">
                             {{ collection.data.description }}
                         </p>
+                        <div class="flex justify-center gap-2 items-center">
+                            <Label>
+                                <template #title>
+                                    Chat LLm 
+                                </template>
+                                {{ collection.data.driver }}
+                            </Label>
+                            <Label>
+                                <template #title>
+                                    Embedding LLm 
+                                </template>
+                                {{ collection.data.embedding_driver }}
+                            </Label>
+                        </div>
                     </div>
                     <FileUploader :collection="collection" />
 
@@ -159,5 +190,8 @@ onMounted(() => {
                 </div>
             </div>
         </div>
+        <EditCollection
+        :collection="collection.data"
+        :open="showEditCollection" @closing="closeEditCollectionSlideOut"/>
     </AppLayout>
 </template>

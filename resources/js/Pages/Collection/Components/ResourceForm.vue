@@ -13,11 +13,16 @@
         </div>
         <div class="col-span-6 sm:col-span-6">
             <div>Choose the system to Interact with the data</div>
-            <LlmType @typeChosen="typeChosen" />
+            <LlmType
+            :default="modelValue.driver"
+            @typeChosen="typeChosen" />
         </div>
         <div class="col-span-6 sm:col-span-6">
             <div>Choose the system to Embed the data</div>
-            <EmbeddingType @embeddingTypeChosen="embeddingTypeChosen" />
+            <EmbeddingType 
+            
+            :default="modelValue.embedding_driver"
+            @embeddingTypeChosen="embeddingTypeChosen" />
         </div>
     </div>
 </template>

@@ -45,6 +45,26 @@ class CollectionController extends Controller
         return to_route('collections.show', $collection);
     }
 
+    public function update(Collection $collection)
+    {
+
+        $validated = request()->validate([
+            'name' => 'required',
+            'description' => 'required',
+            'driver' => 'required',
+            'embedding_driver' => 'required',
+        ]);
+
+        $collection->update($validated);
+        /**
+         * Make and then reditect to the view page
+         */
+        request()->session()->flash('flash.banner', 'Collection updated successfully!');
+
+        return to_route('collections.show', $collection);
+    }
+
+
     public function show(Collection $collection)
     {
         $chatResource = $collection->chats()->where('user_id', auth()->user()->id)

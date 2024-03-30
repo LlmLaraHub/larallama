@@ -53,6 +53,27 @@ class CollectionControllerTest extends TestCase
 
     }
 
+    public function test_update(): void
+    {
+        $user = $this->createUserWithCurrentTeam();
+        $this->actingAs($user);
+        $collection = Collection::factory()->create([
+            'team_id' => $user->currentTeam->id,
+        ]);
+
+        $this->assertDatabaseCount('collections', 1);
+        $response = $this->put(route('collections.update', $collection), [
+            'name' => 'Test',
+            'driver' => 'mock',
+            'embedding_driver' => DriversEnum::Claude->value,
+            'description' => 'Test Description',
+        ])->assertStatus(302);
+        $this->assertDatabaseCount('collections', 1);
+        
+        $this->assertEquals(DriversEnum::Claude, $collection->refresh()->embedding_driver);
+
+    }
+
     public function test_file_upload()
     {
         Queue::fake();
