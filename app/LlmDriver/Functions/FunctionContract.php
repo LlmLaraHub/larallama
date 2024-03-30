@@ -1,29 +1,44 @@
-<?php 
+<?php
 
 namespace App\LlmDriver\Functions;
 
 abstract class FunctionContract
 {
     protected string $name;
+    
+    protected string $dscription;
 
-    public function getName(): string
+    /**
+     * @param  array<string, mixed>  $data
+     * @return array<string, mixed>
+     */
+    abstract public function handle(array $data): array;
+
+    public function getFunction(): FunctionDto
+    {
+        return FunctionDto::from(
+            [
+                'name' => $this->getName(),
+                'description' => $this->getDescription(),
+                'parameters' => $this->getParameters(),
+            ]
+        );
+
+    }
+
+    protected function getName(): string
     {
         return $this->name;
     }
 
-    public function getFunction() : FunctionDto {
-        return new FunctionDto($this->name, $this->getParameters());
-    
+
+    protected function getParameters(): array {
+        return [];
     }
 
 
-    abstract public function getParameters(): array;
-
-
-
-    /**
-     * @param array<string, mixed> $data
-     * @return array<string, mixed>
-     */
-    abstract public function handle(array $data): array;
+    protected function getDescription(): string
+    {
+        return $this->name;
+    }
 }

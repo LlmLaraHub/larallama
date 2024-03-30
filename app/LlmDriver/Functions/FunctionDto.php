@@ -2,8 +2,6 @@
 
 namespace App\LlmDriver\Functions;
 
-use Spatie\LaravelData\Attributes\WithCastable;
-
 class FunctionDto extends \Spatie\LaravelData\Data
 {
     public function __construct(

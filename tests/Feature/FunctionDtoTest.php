@@ -5,8 +5,6 @@ namespace Tests\Feature;
 use App\LlmDriver\Functions\FunctionDto;
 use App\LlmDriver\Functions\ParameterDto;
 use App\LlmDriver\Functions\ParametersDto;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class FunctionDtoTest extends TestCase
@@ -39,11 +37,10 @@ class FunctionDtoTest extends TestCase
                             'default' => 'bar',
                             'required' => true,
                         ],
-                        ],
+                    ],
                 ],
             ]
         );
-
 
         $this->assertNotNull($dto->name);
         $this->assertNotNull($dto->description);
@@ -57,7 +54,7 @@ class FunctionDtoTest extends TestCase
         $this->assertEquals([], $parameterOne->enum);
         $this->assertEquals('', $parameterOne->default);
         $this->assertFalse($parameterOne->required);
-        
+
         $parameterTwo = $dto->parameters->parameters[1];
         $this->assertInstanceOf(ParameterDto::class, $parameterTwo);
         $this->assertEquals('test2', $parameterTwo->name);
