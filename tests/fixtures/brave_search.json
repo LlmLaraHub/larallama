@@ -1,0 +1,749 @@
+{
+    "query": {
+        "original": "Laravel",
+        "show_strict_warning": false,
+        "is_navigational": true,
+        "local_decision": "drop",
+        "local_locations_idx": 0,
+        "is_news_breaking": false,
+        "spellcheck_off": true,
+        "country": "us",
+        "bad_results": false,
+        "should_fallback": false,
+        "postal_code": "",
+        "city": "",
+        "header_country": "",
+        "more_results_available": true,
+        "state": ""
+    },
+    "mixed": {
+        "type": "mixed",
+        "main": [
+            {
+                "type": "web",
+                "index": 0,
+                "all": false
+            },
+            {
+                "type": "web",
+                "index": 1,
+                "all": false
+            },
+            {
+                "type": "videos",
+                "all": true
+            },
+            {
+                "type": "web",
+                "index": 2,
+                "all": false
+            },
+            {
+                "type": "web",
+                "index": 3,
+                "all": false
+            },
+            {
+                "type": "web",
+                "index": 4,
+                "all": false
+            },
+            {
+                "type": "web",
+                "index": 5,
+                "all": false
+            },
+            {
+                "type": "web",
+                "index": 6,
+                "all": false
+            },
+            {
+                "type": "web",
+                "index": 7,
+                "all": false
+            },
+            {
+                "type": "web",
+                "index": 8,
+                "all": false
+            },
+            {
+                "type": "web",
+                "index": 9,
+                "all": false
+            },
+            {
+                "type": "web",
+                "index": 10,
+                "all": false
+            },
+            {
+                "type": "web",
+                "index": 11,
+                "all": false
+            },
+            {
+                "type": "web",
+                "index": 12,
+                "all": false
+            },
+            {
+                "type": "web",
+                "index": 13,
+                "all": false
+            },
+            {
+                "type": "web",
+                "index": 14,
+                "all": false
+            },
+            {
+                "type": "web",
+                "index": 15,
+                "all": false
+            },
+            {
+                "type": "web",
+                "index": 16,
+                "all": false
+            }
+        ],
+        "top": [],
+        "side": []
+    },
+    "type": "search",
+    "videos": {
+        "type": "videos",
+        "results": [
+            {
+                "type": "video_result",
+                "url": "https://www.youtube.com/watch?v=MYyJ4PuL4pY",
+                "title": "Laravel From Scratch 2022 | 4+ Hour Course - YouTube",
+                "description": "Learn the Laravel PHP framework from scratch by building a job listings application with Laravel 9 and MySQL.⭐ Sponsor: https://linode.com/traversy💻 Githu...",
+                "age": "April 26, 2022",
+                "page_age": "2022-04-26T13:00:19",
+                "video": {},
+                "meta_url": {
+                    "scheme": "https",
+                    "netloc": "youtube.com",
+                    "hostname": "www.youtube.com",
+                    "favicon": "https://imgs.search.brave.com/Ux4Hee4evZhvjuTKwtapBycOGjGDci2Gvn2pbSzvbC0/rs:fit:32:32:1/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvOTkyZTZiMWU3/YzU3Nzc5YjExYzUy/N2VhZTIxOWNlYjM5/ZGVjN2MyZDY4Nzdh/ZDYzMTYxNmI5N2Rk/Y2Q3N2FkNy93d3cu/eW91dHViZS5jb20v",
+                    "path": "› watch"
+                },
+                "thumbnail": {
+                    "src": "https://imgs.search.brave.com/AU-7wlI1ZPUrvehA5RF1xg_kMaTVyDYehRmPITFC2P8/rs:fit:200:200:1/g:ce/aHR0cHM6Ly9pLnl0/aW1nLmNvbS92aS9N/WXlKNFB1TDRwWS9t/YXhyZXNkZWZhdWx0/LmpwZw"
+                }
+            },
+            {
+                "type": "video_result",
+                "url": "https://www.youtube.com/watch?v=ob8is94hHJE",
+                "title": "Creating Your Own PHP Helpers in a Laravel App - YouTube",
+                "description": "Laravel provides many excellent helper functions that are convenient for working with arrays, file paths, strings, and routes, as well as the beloved dd() fu...",
+                "age": "3 days ago",
+                "page_age": "2024-03-26T16:57:55",
+                "video": {},
+                "meta_url": {
+                    "scheme": "https",
+                    "netloc": "youtube.com",
+                    "hostname": "www.youtube.com",
+                    "favicon": "https://imgs.search.brave.com/Ux4Hee4evZhvjuTKwtapBycOGjGDci2Gvn2pbSzvbC0/rs:fit:32:32:1/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvOTkyZTZiMWU3/YzU3Nzc5YjExYzUy/N2VhZTIxOWNlYjM5/ZGVjN2MyZDY4Nzdh/ZDYzMTYxNmI5N2Rk/Y2Q3N2FkNy93d3cu/eW91dHViZS5jb20v",
+                    "path": "› watch"
+                },
+                "thumbnail": {
+                    "src": "https://imgs.search.brave.com/Yky84TkWvX9gJlHw6mG2csJ2Ye1qSyyt3N4nFLjckSA/rs:fit:200:200:1/g:ce/aHR0cHM6Ly9pLnl0/aW1nLmNvbS92aS9v/Yjhpczk0aEhKRS9t/YXhyZXNkZWZhdWx0/LmpwZw"
+                }
+            },
+            {
+                "type": "video_result",
+                "url": "https://www.youtube.com/watch?v=eUNWzJUvkCA",
+                "title": "Laravel 11 Tutorial for Beginners - Laravel Crash Course (2024) ...",
+                "description": "This video is the perfect starting point if you want to get started with Laravel 11. In this crash course we will learn the most fundamental topics in Larave...",
+                "age": "2 weeks ago",
+                "page_age": "2024-03-12T14:37:29",
+                "video": {},
+                "meta_url": {
+                    "scheme": "https",
+                    "netloc": "youtube.com",
+                    "hostname": "www.youtube.com",
+                    "favicon": "https://imgs.search.brave.com/Ux4Hee4evZhvjuTKwtapBycOGjGDci2Gvn2pbSzvbC0/rs:fit:32:32:1/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvOTkyZTZiMWU3/YzU3Nzc5YjExYzUy/N2VhZTIxOWNlYjM5/ZGVjN2MyZDY4Nzdh/ZDYzMTYxNmI5N2Rk/Y2Q3N2FkNy93d3cu/eW91dHViZS5jb20v",
+                    "path": "› watch"
+                },
+                "thumbnail": {
+                    "src": "https://imgs.search.brave.com/H8czMkBggrwyyyp07vHRNNdi7ur4CWuke9JL7M_t4Js/rs:fit:200:200:1/g:ce/aHR0cHM6Ly9pLnl0/aW1nLmNvbS92aS9l/VU5XekpVdmtDQS9t/YXhyZXNkZWZhdWx0/LmpwZw"
+                }
+            },
+            {
+                "type": "video_result",
+                "url": "https://www.youtube.com/watch?v=rmMCiP-iVYM",
+                "title": "Welcome Laravel 11 - YouTube",
+                "description": "As we announced at Laracon EU, Laravel 11 introduces a minimal application structure, using SQLite by default, implementing health routing, offering per-seco...",
+                "age": "2 weeks ago",
+                "page_age": "2024-03-12T14:30:23",
+                "video": {},
+                "meta_url": {
+                    "scheme": "https",
+                    "netloc": "youtube.com",
+                    "hostname": "www.youtube.com",
+                    "favicon": "https://imgs.search.brave.com/Ux4Hee4evZhvjuTKwtapBycOGjGDci2Gvn2pbSzvbC0/rs:fit:32:32:1/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvOTkyZTZiMWU3/YzU3Nzc5YjExYzUy/N2VhZTIxOWNlYjM5/ZGVjN2MyZDY4Nzdh/ZDYzMTYxNmI5N2Rk/Y2Q3N2FkNy93d3cu/eW91dHViZS5jb20v",
+                    "path": "› watch"
+                },
+                "thumbnail": {
+                    "src": "https://imgs.search.brave.com/ExHfHC7Nkb8zlLSpBdJoQNvI1bSDFsKE4p7LNQKdDjI/rs:fit:200:200:1/g:ce/aHR0cHM6Ly9pLnl0/aW1nLmNvbS92aS9y/bU1DaVAtaVZZTS9t/YXhyZXNkZWZhdWx0/LmpwZw"
+                }
+            }
+        ],
+        "mutated_by_goggles": false
+    },
+    "web": {
+        "type": "search",
+        "results": [
+            {
+                "title": "Laravel - The PHP Framework For Web Artisans",
+                "url": "https://laravel.com/",
+                "is_source_local": false,
+                "is_source_both": false,
+                "description": "<strong>Laravel</strong> is a PHP web application framework with expressive, elegant syntax. We’ve already laid the foundation — freeing you to create without sweating the small things.",
+                "page_age": "2023-05-01T20:10:05",
+                "profile": {
+                    "name": "Laravel",
+                    "url": "https://laravel.com/",
+                    "long_name": "laravel.com",
+                    "img": "https://imgs.search.brave.com/KtiFeu8P-KWfpyeAQWTdGra1ZXFMDUxXzva1T-SygME/rs:fit:32:32:1/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvZGRhYjI4NDQw/MDFmMzAxYjY1MDBm/Njc4OTM1ZjI0YTBm/OThjOWQ2NjEyOTE3/Y2M0MTdhZWQ3OTVm/YjhkMmQxYy9sYXJh/dmVsLmNvbS8"
+                },
+                "language": "en",
+                "family_friendly": true,
+                "type": "search_result",
+                "subtype": "generic",
+                "meta_url": {
+                    "scheme": "https",
+                    "netloc": "laravel.com",
+                    "hostname": "laravel.com",
+                    "favicon": "https://imgs.search.brave.com/KtiFeu8P-KWfpyeAQWTdGra1ZXFMDUxXzva1T-SygME/rs:fit:32:32:1/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvZGRhYjI4NDQw/MDFmMzAxYjY1MDBm/Njc4OTM1ZjI0YTBm/OThjOWQ2NjEyOTE3/Y2M0MTdhZWQ3OTVm/YjhkMmQxYy9sYXJh/dmVsLmNvbS8",
+                    "path": ""
+                },
+                "thumbnail": {
+                    "src": "https://imgs.search.brave.com/ZZmCehIOZK29NFUusZ0rDvCisFHZdideTP-kb_glvqQ/rs:fit:200:200:1/g:ce/aHR0cHM6Ly9sYXJh/dmVsLmNvbS9pbWcv/b2ctaW1hZ2UuanBn",
+                    "original": "https://laravel.com/img/og-image.jpg",
+                    "logo": false
+                },
+                "age": "May 1, 2023",
+                "cluster_type": "generic",
+                "cluster": [
+                    {
+                        "title": "Installation",
+                        "url": "https://laravel.com/docs/4.2",
+                        "is_source_local": false,
+                        "is_source_both": false,
+                        "description": "<strong>Laravel</strong> is a PHP web application framework with expressive, elegant syntax. We’ve already laid the foundation — freeing you to create without sweating the small things.",
+                        "family_friendly": true
+                    },
+                    {
+                        "title": "Validation",
+                        "url": "https://laravel.com/docs/5.1/validation",
+                        "is_source_local": false,
+                        "is_source_both": false,
+                        "description": "<strong>Laravel</strong> is a PHP web application framework with expressive, elegant syntax. We’ve already laid the foundation — freeing you to create without sweating the small things.",
+                        "family_friendly": true
+                    },
+                    {
+                        "title": "Basic Task List",
+                        "url": "https://laravel.com/docs/5.1/quickstart",
+                        "is_source_local": false,
+                        "is_source_both": false,
+                        "description": "<strong>Laravel</strong> is a PHP web application framework with expressive, elegant syntax. We’ve already laid the foundation — freeing you to create without sweating the small things.",
+                        "family_friendly": true
+                    }
+                ]
+            },
+            {
+                "title": "Laravel - Wikipedia",
+                "url": "https://en.wikipedia.org/wiki/Laravel",
+                "is_source_local": false,
+                "is_source_both": false,
+                "description": "<strong>Laravel</strong> is a free and open-source PHP- based web framework for building high-end web applications. It was created by Taylor Otwell and intended for the development of web applications following the model–view–controller (MVC) architectural pattern and based on Symfony.",
+                "page_age": "2024-03-27T15:31:02",
+                "profile": {
+                    "name": "Wikipedia",
+                    "url": "https://en.wikipedia.org/wiki/Laravel",
+                    "long_name": "en.wikipedia.org",
+                    "img": "https://imgs.search.brave.com/0kxnVOiqv-faZvOJc7zpym4Zin1CTs1f1svfNZSzmfU/rs:fit:32:32:1/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvNjQwNGZhZWY0/ZTQ1YWUzYzQ3MDUw/MmMzMGY3NTQ0ZjNj/NDUwMDk5ZTI3MWRk/NWYyNTM4N2UwOTE0/NTI3ZDQzNy9lbi53/aWtpcGVkaWEub3Jn/Lw"
+                },
+                "language": "en",
+                "family_friendly": true,
+                "type": "search_result",
+                "subtype": "generic",
+                "deep_results": {
+                    "buttons": [
+                        {
+                            "type": "button_result",
+                            "title": "History",
+                            "url": "https://en.wikipedia.org/wiki/Laravel#History"
+                        },
+                        {
+                            "type": "button_result",
+                            "title": "Features",
+                            "url": "https://en.wikipedia.org/wiki/Laravel#Features"
+                        },
+                        {
+                            "type": "button_result",
+                            "title": "Conferences",
+                            "url": "https://en.wikipedia.org/wiki/Laravel#Conferences"
+                        },
+                        {
+                            "type": "button_result",
+                            "title": "Further reading",
+                            "url": "https://en.wikipedia.org/wiki/Laravel#Further_reading"
+                        }
+                    ]
+                },
+                "meta_url": {
+                    "scheme": "https",
+                    "netloc": "en.wikipedia.org",
+                    "hostname": "en.wikipedia.org",
+                    "favicon": "https://imgs.search.brave.com/0kxnVOiqv-faZvOJc7zpym4Zin1CTs1f1svfNZSzmfU/rs:fit:32:32:1/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvNjQwNGZhZWY0/ZTQ1YWUzYzQ3MDUw/MmMzMGY3NTQ0ZjNj/NDUwMDk5ZTI3MWRk/NWYyNTM4N2UwOTE0/NTI3ZDQzNy9lbi53/aWtpcGVkaWEub3Jn/Lw",
+                    "path": "› wiki  › Laravel"
+                },
+                "age": "2 days ago"
+            },
+            {
+                "title": "GitHub - laravel/laravel: Laravel is a web application framework ...",
+                "url": "https://github.com/laravel/laravel",
+                "is_source_local": false,
+                "is_source_both": false,
+                "description": "<strong>Laravel</strong> is a web application framework with expressive, elegant syntax. We’ve already laid the foundation for your next big idea — freeing you to create without sweating the small things. - <strong>laravel</strong>...",
+                "page_age": "2023-07-12T09:40:02",
+                "profile": {
+                    "name": "GitHub",
+                    "url": "https://github.com/laravel/laravel",
+                    "long_name": "github.com",
+                    "img": "https://imgs.search.brave.com/v8685zI4XInM0zxlNI2s7oE_2Sb-EL7lAy81WXbkQD8/rs:fit:32:32:1/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvYWQyNWM1NjA5/ZjZmZjNlYzI2MDNk/N2VkNmJhYjE2MzZl/MDY5ZTMxMDUzZmY1/NmU3NWIzNWVmMjk0/NTBjMjJjZi9naXRo/dWIuY29tLw"
+                },
+                "language": "en",
+                "family_friendly": true,
+                "type": "search_result",
+                "subtype": "software",
+                "meta_url": {
+                    "scheme": "https",
+                    "netloc": "github.com",
+                    "hostname": "github.com",
+                    "favicon": "https://imgs.search.brave.com/v8685zI4XInM0zxlNI2s7oE_2Sb-EL7lAy81WXbkQD8/rs:fit:32:32:1/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvYWQyNWM1NjA5/ZjZmZjNlYzI2MDNk/N2VkNmJhYjE2MzZl/MDY5ZTMxMDUzZmY1/NmU3NWIzNWVmMjk0/NTBjMjJjZi9naXRo/dWIuY29tLw",
+                    "path": "› laravel  › laravel"
+                },
+                "thumbnail": {
+                    "src": "https://imgs.search.brave.com/KlZDHhSsBsEpKjITyyJbkfSBBoN_w-ZEUcT1LuPT7V4/rs:fit:200:200:1/g:ce/aHR0cHM6Ly9vcGVu/Z3JhcGguZ2l0aHVi/YXNzZXRzLmNvbS83/OTgzNGViOTA3Mjk5/YjUzZWVhNmVmMmM2/ZDRjZGViOGIxYTMw/ODcyMGE2NDNkMzcy/NTBhNTRjNTVmZmFh/NDY1L2xhcmF2ZWwv/bGFyYXZlbA",
+                    "original": "https://opengraph.githubassets.com/79834eb907299b53eea6ef2c6d4cdeb8b1a308720a643d37250a54c55ffaa465/laravel/laravel",
+                    "logo": false
+                },
+                "age": "July 12, 2023"
+            },
+            {
+                "title": "Generate Code Coverage in Laravel With PCOV - Laravel News",
+                "url": "https://laravel-news.com/generate-code-coverage-in-laravel-with-pcov",
+                "is_source_local": false,
+                "is_source_both": false,
+                "description": "Learn how to configure PHPUnit and Pest to generate HTML code coverage reports in <strong>Laravel</strong>.",
+                "page_age": "2024-03-28T19:35:02",
+                "profile": {
+                    "name": "Laravel News",
+                    "url": "https://laravel-news.com/generate-code-coverage-in-laravel-with-pcov",
+                    "long_name": "laravel-news.com",
+                    "img": "https://imgs.search.brave.com/Do-ud-gHtFLCqMmkmsDDwd9XmljyB39iGkOgDR4vAJI/rs:fit:32:32:1/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvMzZiYjM5ODk3/ZTJiOWFjZDhjMzEx/NzQ5ODllMzIwNjI3/YzhhZTQxNGIwMjU1/ZWMxNmI3NzdiMzg1/YmE3NWJhYy9sYXJh/dmVsLW5ld3MuY29t/Lw"
+                },
+                "language": "en",
+                "family_friendly": true,
+                "type": "search_result",
+                "subtype": "generic",
+                "meta_url": {
+                    "scheme": "https",
+                    "netloc": "laravel-news.com",
+                    "hostname": "laravel-news.com",
+                    "favicon": "https://imgs.search.brave.com/Do-ud-gHtFLCqMmkmsDDwd9XmljyB39iGkOgDR4vAJI/rs:fit:32:32:1/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvMzZiYjM5ODk3/ZTJiOWFjZDhjMzEx/NzQ5ODllMzIwNjI3/YzhhZTQxNGIwMjU1/ZWMxNmI3NzdiMzg1/YmE3NWJhYy9sYXJh/dmVsLW5ld3MuY29t/Lw",
+                    "path": "› generate-code-coverage-in-laravel-with-pcov"
+                },
+                "thumbnail": {
+                    "src": "https://imgs.search.brave.com/4mVa_zhajkrEtzwZgl2xrafqUpoaLRuj0Knhxkc8WRk/rs:fit:200:200:1/g:ce/aHR0cHM6Ly9waWNw/ZXJmLmlvL2h0dHBz/Oi8vbGFyYXZlbG5l/d3MuczMuYW1hem9u/YXdzLmNvbS9mZWF0/dXJlZC1pbWFnZXMv/bGFyYXZlbC1wY292/LWZlYXR1cmVkLnBu/Zw",
+                    "original": "https://picperf.io/https://laravelnews.s3.amazonaws.com/featured-images/laravel-pcov-featured.png",
+                    "logo": false
+                },
+                "age": "1 day ago"
+            },
+            {
+                "title": "GitHub - laravel/framework: The Laravel Framework.",
+                "url": "https://github.com/laravel/framework",
+                "is_source_local": false,
+                "is_source_both": false,
+                "description": "The <strong>Laravel</strong> Framework. Contribute to <strong>laravel</strong>/framework development by creating an account on GitHub.",
+                "page_age": "2023-06-30T08:05:02",
+                "profile": {
+                    "name": "GitHub",
+                    "url": "https://github.com/laravel/framework",
+                    "long_name": "github.com",
+                    "img": "https://imgs.search.brave.com/v8685zI4XInM0zxlNI2s7oE_2Sb-EL7lAy81WXbkQD8/rs:fit:32:32:1/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvYWQyNWM1NjA5/ZjZmZjNlYzI2MDNk/N2VkNmJhYjE2MzZl/MDY5ZTMxMDUzZmY1/NmU3NWIzNWVmMjk0/NTBjMjJjZi9naXRo/dWIuY29tLw"
+                },
+                "language": "en",
+                "family_friendly": true,
+                "type": "search_result",
+                "subtype": "software",
+                "meta_url": {
+                    "scheme": "https",
+                    "netloc": "github.com",
+                    "hostname": "github.com",
+                    "favicon": "https://imgs.search.brave.com/v8685zI4XInM0zxlNI2s7oE_2Sb-EL7lAy81WXbkQD8/rs:fit:32:32:1/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvYWQyNWM1NjA5/ZjZmZjNlYzI2MDNk/N2VkNmJhYjE2MzZl/MDY5ZTMxMDUzZmY1/NmU3NWIzNWVmMjk0/NTBjMjJjZi9naXRo/dWIuY29tLw",
+                    "path": "› laravel  › framework"
+                },
+                "thumbnail": {
+                    "src": "https://imgs.search.brave.com/DJr0q5Uatkm87jBoQvfFXGGUDO3sUt6jcj7n9UiHE8c/rs:fit:200:200:1/g:ce/aHR0cHM6Ly9vcGVu/Z3JhcGguZ2l0aHVi/YXNzZXRzLmNvbS9i/OWQ4NWNlNzk0Yjg5/YzY1ZmE3OThhN2E5/MDlkNGJkYjJhOWNk/MWQyNDJhOWZjOTlm/MzBhMmFhMDVjNzc0/NjZiL2xhcmF2ZWwv/ZnJhbWV3b3Jr",
+                    "original": "https://opengraph.githubassets.com/b9d85ce794b89c65fa798a7a909d4bdb2a9cd1d242a9fc99f30a2aa05c77466b/laravel/framework",
+                    "logo": false
+                },
+                "age": "June 30, 2023"
+            },
+            {
+                "title": "Laravel - The PHP Framework For Web Artisans",
+                "url": "https://www.reddit.com/r/laravel/",
+                "is_source_local": false,
+                "is_source_both": false,
+                "description": "<strong>Laravel</strong> is a free and open-source PHP web framework created by Taylor Otwell. <strong>Laravel</strong> features expressive, elegant syntax - freeing you to create without sweating the small things.",
+                "page_age": "2023-02-10T16:40:03",
+                "profile": {
+                    "name": "Reddit",
+                    "url": "https://www.reddit.com/r/laravel/",
+                    "long_name": "reddit.com",
+                    "img": "https://imgs.search.brave.com/mAZYEK9Wi13WLDUge7XZ8YuDTwm6DP6gBjvz1GdYZVY/rs:fit:32:32:1/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvN2ZiNTU0M2Nj/MTFhZjRiYWViZDlk/MjJiMjBjMzFjMDRk/Y2IzYWI0MGI0MjVk/OGY5NzQzOGQ5NzQ5/NWJhMWI0NC93d3cu/cmVkZGl0LmNvbS8"
+                },
+                "language": "en",
+                "family_friendly": true,
+                "type": "search_result",
+                "subtype": "generic",
+                "meta_url": {
+                    "scheme": "https",
+                    "netloc": "reddit.com",
+                    "hostname": "www.reddit.com",
+                    "favicon": "https://imgs.search.brave.com/mAZYEK9Wi13WLDUge7XZ8YuDTwm6DP6gBjvz1GdYZVY/rs:fit:32:32:1/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvN2ZiNTU0M2Nj/MTFhZjRiYWViZDlk/MjJiMjBjMzFjMDRk/Y2IzYWI0MGI0MjVk/OGY5NzQzOGQ5NzQ5/NWJhMWI0NC93d3cu/cmVkZGl0LmNvbS8",
+                    "path": "› r  › laravel"
+                },
+                "thumbnail": {
+                    "src": "https://imgs.search.brave.com/XZAgc9rPg0-covYcjBgaQZebSJKvlXvIziIS6s9xZ8A/rs:fit:200:200:1/g:ce/aHR0cHM6Ly9zdHls/ZXMucmVkZGl0bWVk/aWEuY29tL3Q1XzJ1/YWt0L3N0eWxlcy9j/b21tdW5pdHlJY29u/X2ZtdHRhczJ4aXkz/NTEucG5n",
+                    "original": "https://styles.redditmedia.com/t5_2uakt/styles/communityIcon_fmttas2xiy351.png",
+                    "logo": false
+                },
+                "age": "February 10, 2023"
+            },
+            {
+                "title": "Taylor Otwell (@taylorotwell) · X",
+                "url": "https://twitter.com/taylorotwell",
+                "is_source_local": false,
+                "is_source_both": false,
+                "description": "The latest tweets from Taylor Otwell (@taylorotwell)",
+                "page_age": "2023-07-20T21:35:03",
+                "profile": {
+                    "name": "X",
+                    "url": "https://twitter.com/taylorotwell",
+                    "long_name": "twitter.com",
+                    "img": "https://imgs.search.brave.com/Zq483bGX0GnSgym-1P7iyOyEDX3PkDZSNT8m56F862A/rs:fit:32:32:1/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvN2MxOTUxNzhj/OTY1ZTQ3N2I0MjJk/MTY5NGM0MTRlYWVi/MjU1YWE2NDUwYmQ2/YTA2MDFhMDlkZDEx/NTAzZGNiNi90d2l0/dGVyLmNvbS8"
+                },
+                "language": "en",
+                "family_friendly": true,
+                "type": "search_result",
+                "subtype": "generic",
+                "meta_url": {
+                    "scheme": "https",
+                    "netloc": "twitter.com",
+                    "hostname": "twitter.com",
+                    "favicon": "https://imgs.search.brave.com/Zq483bGX0GnSgym-1P7iyOyEDX3PkDZSNT8m56F862A/rs:fit:32:32:1/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvN2MxOTUxNzhj/OTY1ZTQ3N2I0MjJk/MTY5NGM0MTRlYWVi/MjU1YWE2NDUwYmQ2/YTA2MDFhMDlkZDEx/NTAzZGNiNi90d2l0/dGVyLmNvbS8",
+                    "path": "› taylorotwell"
+                },
+                "age": "July 20, 2023"
+            },
+            {
+                "title": "Laravel - Overview",
+                "url": "https://www.tutorialspoint.com/laravel/laravel_overview.htm",
+                "is_source_local": false,
+                "is_source_both": false,
+                "description": "<strong>Laravel</strong> - Overview - <strong>Laravel</strong> is an open-source PHP framework, which is robust and easy to understand. It follows a model-view-controller design pattern. <strong>Laravel</strong> reuses the existing components of different frameworks which helps in creating a web application. The web application thus designed ...",
+                "profile": {
+                    "name": "Tutorialspoint",
+                    "url": "https://www.tutorialspoint.com/laravel/laravel_overview.htm",
+                    "long_name": "tutorialspoint.com",
+                    "img": "https://imgs.search.brave.com/Wt8BSkivPlFwcU5yBtf7YzuvTuRExyd_502cdABCS5c/rs:fit:32:32:1/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvYjcyYjAzYmVl/ODU4MzZiMjJiYTFh/MjJhZDNmNWE4YzA5/MDgyYTZhMDg3NTYw/M2NiY2NiZTUxN2I5/MjU1MWFmMS93d3cu/dHV0b3JpYWxzcG9p/bnQuY29tLw"
+                },
+                "language": "en",
+                "family_friendly": true,
+                "type": "search_result",
+                "subtype": "generic",
+                "meta_url": {
+                    "scheme": "https",
+                    "netloc": "tutorialspoint.com",
+                    "hostname": "www.tutorialspoint.com",
+                    "favicon": "https://imgs.search.brave.com/Wt8BSkivPlFwcU5yBtf7YzuvTuRExyd_502cdABCS5c/rs:fit:32:32:1/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvYjcyYjAzYmVl/ODU4MzZiMjJiYTFh/MjJhZDNmNWE4YzA5/MDgyYTZhMDg3NTYw/M2NiY2NiZTUxN2I5/MjU1MWFmMS93d3cu/dHV0b3JpYWxzcG9p/bnQuY29tLw",
+                    "path": "› laravel  › laravel_overview.htm"
+                },
+                "thumbnail": {
+                    "src": "https://imgs.search.brave.com/ddG5vyZGLVudvecEbQJPeG8tGuaZ7g3Xz6Gyjdl5WA8/rs:fit:200:200:1/g:ce/aHR0cHM6Ly93d3cu/dHV0b3JpYWxzcG9p/bnQuY29tL2ltYWdl/cy90cF9sb2dvXzQz/Ni5wbmc",
+                    "original": "https://www.tutorialspoint.com/images/tp_logo_436.png",
+                    "logo": true
+                }
+            },
+            {
+                "title": "Laracasts: Learn Laravel",
+                "url": "https://laracasts.com",
+                "is_source_local": false,
+                "is_source_both": false,
+                "description": "We cannot provide a description for this page right now",
+                "page_age": "2022-06-08T10:30:02",
+                "profile": {
+                    "name": "Laracasts",
+                    "url": "https://laracasts.com",
+                    "long_name": "laracasts.com",
+                    "img": "https://imgs.search.brave.com/GREQcYIsqP2pwKgLR00uC7P9tvnMTLtjo9-99_zCJh8/rs:fit:32:32:1/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvM2QzNWY0NWYy/Y2M0NzRiZWE1MGIw/ZDU1OGYwYjJiMTk1/Y2Y3MmFmZTY5ZDU4/ZDg4ZTcwYWIwM2M1/MWNkM2U1Mi9sYXJh/Y2FzdHMuY29tLw"
+                },
+                "language": "en",
+                "family_friendly": true,
+                "type": "search_result",
+                "subtype": "generic",
+                "meta_url": {
+                    "scheme": "https",
+                    "netloc": "laracasts.com",
+                    "hostname": "laracasts.com",
+                    "favicon": "https://imgs.search.brave.com/GREQcYIsqP2pwKgLR00uC7P9tvnMTLtjo9-99_zCJh8/rs:fit:32:32:1/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvM2QzNWY0NWYy/Y2M0NzRiZWE1MGIw/ZDU1OGYwYjJiMTk1/Y2Y3MmFmZTY5ZDU4/ZDg4ZTcwYWIwM2M1/MWNkM2U1Mi9sYXJh/Y2FzdHMuY29tLw",
+                    "path": ""
+                },
+                "age": "June 8, 2022"
+            },
+            {
+                "title": "laravel on X",
+                "url": "https://twitter.com/search?q=laravel",
+                "is_source_local": false,
+                "is_source_both": false,
+                "description": "Explore Twitter&#x27;s latest discussions on <strong>laravel</strong>",
+                "profile": {
+                    "name": "Twitter",
+                    "url": "https://twitter.com/search?q=laravel",
+                    "long_name": "twitter.com",
+                    "img": "https://imgs.search.brave.com/Zq483bGX0GnSgym-1P7iyOyEDX3PkDZSNT8m56F862A/rs:fit:32:32:1/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvN2MxOTUxNzhj/OTY1ZTQ3N2I0MjJk/MTY5NGM0MTRlYWVi/MjU1YWE2NDUwYmQ2/YTA2MDFhMDlkZDEx/NTAzZGNiNi90d2l0/dGVyLmNvbS8"
+                },
+                "language": "en",
+                "family_friendly": true,
+                "type": "search_result",
+                "subtype": "generic",
+                "meta_url": {
+                    "scheme": "https",
+                    "netloc": "twitter.com",
+                    "hostname": "twitter.com",
+                    "favicon": "https://imgs.search.brave.com/Zq483bGX0GnSgym-1P7iyOyEDX3PkDZSNT8m56F862A/rs:fit:32:32:1/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvN2MxOTUxNzhj/OTY1ZTQ3N2I0MjJk/MTY5NGM0MTRlYWVi/MjU1YWE2NDUwYmQ2/YTA2MDFhMDlkZDEx/NTAzZGNiNi90d2l0/dGVyLmNvbS8",
+                    "path": "› search"
+                }
+            },
+            {
+                "title": "Laravel",
+                "url": "https://www.youtube.com/@LaravelPHP",
+                "is_source_local": false,
+                "is_source_both": false,
+                "description": "The official YouTube channel of the <strong>Laravel</strong> PHP framework. We will update you on what&#x27;s new in the world of <strong>Laravel</strong>, from the framework to our products like Forge or Vapor.",
+                "profile": {
+                    "name": "YouTube",
+                    "url": "https://www.youtube.com/@LaravelPHP",
+                    "long_name": "youtube.com",
+                    "img": "https://imgs.search.brave.com/Ux4Hee4evZhvjuTKwtapBycOGjGDci2Gvn2pbSzvbC0/rs:fit:32:32:1/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvOTkyZTZiMWU3/YzU3Nzc5YjExYzUy/N2VhZTIxOWNlYjM5/ZGVjN2MyZDY4Nzdh/ZDYzMTYxNmI5N2Rk/Y2Q3N2FkNy93d3cu/eW91dHViZS5jb20v"
+                },
+                "language": "en",
+                "family_friendly": true,
+                "type": "search_result",
+                "subtype": "generic",
+                "meta_url": {
+                    "scheme": "https",
+                    "netloc": "youtube.com",
+                    "hostname": "www.youtube.com",
+                    "favicon": "https://imgs.search.brave.com/Ux4Hee4evZhvjuTKwtapBycOGjGDci2Gvn2pbSzvbC0/rs:fit:32:32:1/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvOTkyZTZiMWU3/YzU3Nzc5YjExYzUy/N2VhZTIxOWNlYjM5/ZGVjN2MyZDY4Nzdh/ZDYzMTYxNmI5N2Rk/Y2Q3N2FkNy93d3cu/eW91dHViZS5jb20v",
+                    "path": "  › laravel"
+                },
+                "thumbnail": {
+                    "src": "https://imgs.search.brave.com/EIUKLYppirlerKFML-jkLFT8T25CSX3fXelQyneYDZU/rs:fit:200:200:1/g:ce/aHR0cHM6Ly95dDMu/Z29vZ2xldXNlcmNv/bnRlbnQuY29tL3l0/Yy9BSWRyb19uU1Fj/a0VTMXE3eWxlTWZ4/SWN0ZGxzNzZITEpu/VlpjVkpRZEloQz1z/OTAwLWMtay1jMHgw/MGZmZmZmZi1uby1y/ag",
+                    "original": "https://yt3.googleusercontent.com/ytc/AIdro_nSQckES1q7yleMfxIctdls76HLJnVZcVJQdIhC=s900-c-k-c0x00ffffff-no-rj",
+                    "logo": false
+                }
+            },
+            {
+                "title": "Laravel.io - The Laravel Community Portal",
+                "url": "https://laravel.io/",
+                "is_source_local": false,
+                "is_source_both": false,
+                "description": "The <strong>Laravel</strong> portal for problem solving, knowledge sharing and community building.",
+                "page_age": "2023-03-07T12:00:04",
+                "profile": {
+                    "name": "Laravel",
+                    "url": "https://laravel.io/",
+                    "long_name": "laravel.io",
+                    "img": "https://imgs.search.brave.com/BTuHTrAFzBNY30dioq-FA45m5PUoRoSyegR81IvWrX8/rs:fit:32:32:1/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvN2U4ZTQ1YWIx/ZGI4YTk4MmM5OTNk/ZThmY2ZjNTQ5NGQy/OGNjZTA4Y2M2YWJh/M2JjZjNmYjMyZGEz/MTcyNThlMi9sYXJh/dmVsLmlvLw"
+                },
+                "language": "en",
+                "family_friendly": true,
+                "type": "search_result",
+                "subtype": "generic",
+                "meta_url": {
+                    "scheme": "https",
+                    "netloc": "laravel.io",
+                    "hostname": "laravel.io",
+                    "favicon": "https://imgs.search.brave.com/BTuHTrAFzBNY30dioq-FA45m5PUoRoSyegR81IvWrX8/rs:fit:32:32:1/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvN2U4ZTQ1YWIx/ZGI4YTk4MmM5OTNk/ZThmY2ZjNTQ5NGQy/OGNjZTA4Y2M2YWJh/M2JjZjNmYjMyZGEz/MTcyNThlMi9sYXJh/dmVsLmlvLw",
+                    "path": ""
+                },
+                "thumbnail": {
+                    "src": "https://imgs.search.brave.com/EpLHget900UVL9tWwMRrNFOhMc_p_ju34Px19AIK3tk/rs:fit:200:200:1/g:ce/aHR0cHM6Ly9sYXJh/dmVsLmlvL2ltYWdl/cy9sYXJhdmVsaW8t/c2hhcmUucG5n",
+                    "original": "https://laravel.io/images/laravelio-share.png",
+                    "logo": false
+                },
+                "age": "March 7, 2023"
+            },
+            {
+                "title": "Newest 'laravel' Questions - Stack Overflow",
+                "url": "https://stackoverflow.com/questions/tagged/laravel",
+                "is_source_local": false,
+                "is_source_both": false,
+                "description": "Stack Overflow | The World’s Largest Online Community for Developers",
+                "page_age": "2023-09-08T10:35:05",
+                "profile": {
+                    "name": "Stack Overflow",
+                    "url": "https://stackoverflow.com/questions/tagged/laravel",
+                    "long_name": "stackoverflow.com",
+                    "img": "https://imgs.search.brave.com/snMTn5UndzYVBcY9ljraLivTObHfHpTei9IWTdrtCj4/rs:fit:32:32:1/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvNWU3Zjg0ZjA1/YjQ3ZTlkNjQ1ODA1/MjAwODhiNjhjYWU0/OTc4MjM4ZDJlMTBi/ODExYmNiNTkzMjdh/YjM3MGExMS9zdGFj/a292ZXJmbG93LmNv/bS8"
+                },
+                "language": "en",
+                "family_friendly": true,
+                "type": "search_result",
+                "subtype": "generic",
+                "meta_url": {
+                    "scheme": "https",
+                    "netloc": "stackoverflow.com",
+                    "hostname": "stackoverflow.com",
+                    "favicon": "https://imgs.search.brave.com/snMTn5UndzYVBcY9ljraLivTObHfHpTei9IWTdrtCj4/rs:fit:32:32:1/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvNWU3Zjg0ZjA1/YjQ3ZTlkNjQ1ODA1/MjAwODhiNjhjYWU0/OTc4MjM4ZDJlMTBi/ODExYmNiNTkzMjdh/YjM3MGExMS9zdGFj/a292ZXJmbG93LmNv/bS8",
+                    "path": "› questions  › tagged  › laravel"
+                },
+                "thumbnail": {
+                    "src": "https://imgs.search.brave.com/SFWjsDHyku7dbKfNl7KQTjhBnoMD9zy7TmxD4_XHBwA/rs:fit:200:200:1/g:ce/aHR0cHM6Ly9jZG4u/c3N0YXRpYy5uZXQv/U2l0ZXMvc3RhY2tv/dmVyZmxvdy9JbWcv/YXBwbGUtdG91Y2gt/aWNvbkAyLnBuZz92/PTczZDc5YTg5YmRl/ZA",
+                    "original": "https://cdn.sstatic.net/Sites/stackoverflow/Img/apple-touch-icon@2.png?v=73d79a89bded",
+                    "logo": false
+                },
+                "age": "September 8, 2023"
+            },
+            {
+                "title": "Laravel in 100 Seconds - YouTube",
+                "url": "https://www.youtube.com/watch?v=rIfdg_Ot-LI",
+                "is_source_local": false,
+                "is_source_both": false,
+                "description": "<strong>Laravel</strong> is a popular fullstack MVC framework for building web apps with PHP. Learn the fundamentals of <strong>Laravel</strong> and find out why web developers love it. #webd...",
+                "page_age": "2022-09-28T14:15:03",
+                "profile": {
+                    "name": "YouTube",
+                    "url": "https://www.youtube.com/watch?v=rIfdg_Ot-LI",
+                    "long_name": "youtube.com",
+                    "img": "https://imgs.search.brave.com/Ux4Hee4evZhvjuTKwtapBycOGjGDci2Gvn2pbSzvbC0/rs:fit:32:32:1/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvOTkyZTZiMWU3/YzU3Nzc5YjExYzUy/N2VhZTIxOWNlYjM5/ZGVjN2MyZDY4Nzdh/ZDYzMTYxNmI5N2Rk/Y2Q3N2FkNy93d3cu/eW91dHViZS5jb20v"
+                },
+                "language": "en",
+                "family_friendly": true,
+                "type": "search_result",
+                "subtype": "video",
+                "meta_url": {
+                    "scheme": "https",
+                    "netloc": "youtube.com",
+                    "hostname": "www.youtube.com",
+                    "favicon": "https://imgs.search.brave.com/Ux4Hee4evZhvjuTKwtapBycOGjGDci2Gvn2pbSzvbC0/rs:fit:32:32:1/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvOTkyZTZiMWU3/YzU3Nzc5YjExYzUy/N2VhZTIxOWNlYjM5/ZGVjN2MyZDY4Nzdh/ZDYzMTYxNmI5N2Rk/Y2Q3N2FkNy93d3cu/eW91dHViZS5jb20v",
+                    "path": "  › fireship"
+                },
+                "thumbnail": {
+                    "src": "https://imgs.search.brave.com/-q0OgN4bSIkZ6ddWA5kpGKClmPG02BIaZ3d-ucInDzk/rs:fit:200:200:1/g:ce/aHR0cHM6Ly9pLnl0/aW1nLmNvbS92aS9y/SWZkZ19PdC1MSS9t/YXhyZXNkZWZhdWx0/LmpwZw",
+                    "original": "https://i.ytimg.com/vi/rIfdg_Ot-LI/maxresdefault.jpg",
+                    "logo": false
+                },
+                "age": "September 28, 2022"
+            },
+            {
+                "title": "Laravel PHP Framework Tutorial - Full Course for Beginners (2019) ...",
+                "url": "https://www.youtube.com/watch?v=ImtZ5yENzgE",
+                "is_source_local": false,
+                "is_source_both": false,
+                "description": "Learn <strong>Laravel</strong> 5.8 by creating an Instagram clone in this full tutorial course for beginners. <strong>Laravel</strong> is a free, open-source PHP web framework used for creati...",
+                "page_age": "2019-08-05T00:00:00",
+                "profile": {
+                    "name": "YouTube",
+                    "url": "https://www.youtube.com/watch?v=ImtZ5yENzgE",
+                    "long_name": "youtube.com",
+                    "img": "https://imgs.search.brave.com/Ux4Hee4evZhvjuTKwtapBycOGjGDci2Gvn2pbSzvbC0/rs:fit:32:32:1/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvOTkyZTZiMWU3/YzU3Nzc5YjExYzUy/N2VhZTIxOWNlYjM5/ZGVjN2MyZDY4Nzdh/ZDYzMTYxNmI5N2Rk/Y2Q3N2FkNy93d3cu/eW91dHViZS5jb20v"
+                },
+                "language": "en",
+                "family_friendly": true,
+                "type": "search_result",
+                "subtype": "video",
+                "meta_url": {
+                    "scheme": "https",
+                    "netloc": "youtube.com",
+                    "hostname": "www.youtube.com",
+                    "favicon": "https://imgs.search.brave.com/Ux4Hee4evZhvjuTKwtapBycOGjGDci2Gvn2pbSzvbC0/rs:fit:32:32:1/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvOTkyZTZiMWU3/YzU3Nzc5YjExYzUy/N2VhZTIxOWNlYjM5/ZGVjN2MyZDY4Nzdh/ZDYzMTYxNmI5N2Rk/Y2Q3N2FkNy93d3cu/eW91dHViZS5jb20v",
+                    "path": "  › freecodecamp.org"
+                },
+                "thumbnail": {
+                    "src": "https://imgs.search.brave.com/3WsmcTXoMclw3hGa49iN6qYNXbqLALPQ4NpU2HDkQ-4/rs:fit:200:200:1/g:ce/aHR0cHM6Ly9pLnl0/aW1nLmNvbS92aS9J/bXRaNXlFTnpnRS9t/YXhyZXNkZWZhdWx0/LmpwZw",
+                    "original": "https://i.ytimg.com/vi/ImtZ5yENzgE/maxresdefault.jpg",
+                    "logo": false
+                },
+                "age": "August 5, 2019"
+            },
+            {
+                "title": "Laravel Tutorial: What It is, Framework, Features - Javatpoint",
+                "url": "https://www.javatpoint.com/laravel",
+                "is_source_local": false,
+                "is_source_both": false,
+                "description": "<strong>Laravel</strong> Tutorial: What It is, Framework, Features with What is <strong>Laravel</strong>, <strong>Laravel</strong> Introduction, Features of <strong>Laravel</strong>, Advantage of <strong>Laravel</strong>, <strong>Laravel</strong> Installation, XAMPP Installation, How to Install <strong>Laravel</strong> etc.",
+                "profile": {
+                    "name": "www.javatpoint.com",
+                    "url": "https://www.javatpoint.com/laravel",
+                    "long_name": "javatpoint.com",
+                    "img": "https://imgs.search.brave.com/VCO3CU_wmtl9ifo36rjShBl9RWQ4gyco5R0pvoIvWzc/rs:fit:32:32:1/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvNGEzNWYyYTE2/YTUzYTgyNzkxNDEx/ODZiNzYwMTgyYWZl/YjU0NDQ5ZDdiNDAw/YmU3MzYyMjc1MDhl/MzJkNzljMy93d3cu/amF2YXRwb2ludC5j/b20v"
+                },
+                "language": "en",
+                "family_friendly": true,
+                "type": "search_result",
+                "subtype": "generic",
+                "meta_url": {
+                    "scheme": "https",
+                    "netloc": "javatpoint.com",
+                    "hostname": "www.javatpoint.com",
+                    "favicon": "https://imgs.search.brave.com/VCO3CU_wmtl9ifo36rjShBl9RWQ4gyco5R0pvoIvWzc/rs:fit:32:32:1/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvNGEzNWYyYTE2/YTUzYTgyNzkxNDEx/ODZiNzYwMTgyYWZl/YjU0NDQ5ZDdiNDAw/YmU3MzYyMjc1MDhl/MzJkNzljMy93d3cu/amF2YXRwb2ludC5j/b20v",
+                    "path": "› laravel"
+                }
+            },
+            {
+                "title": "What Is Laravel? (Definition, Uses, Features) | Built In",
+                "url": "https://builtin.com/software-engineering-perspectives/laravel",
+                "is_source_local": false,
+                "is_source_both": false,
+                "description": "<strong>Laravel</strong> is a free open-source PHP framework. It provides web developers tools and resources for building modern PHP web applications.",
+                "page_age": "2022-12-21T00:00:00",
+                "profile": {
+                    "name": "Built In",
+                    "url": "https://builtin.com/software-engineering-perspectives/laravel",
+                    "long_name": "builtin.com",
+                    "img": "https://imgs.search.brave.com/LSofnT3a8dnfQERlyxKCVZrpAk3rxCR0cZu85QcezH0/rs:fit:32:32:1/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvMzlhMWMxZWMw/MmY5NDE1NDk3NzFl/ZmNmYTg0ZTYxZWNk/MzcxNmEwYjY0MzZl/NzQ0NDlkYzNhMTgy/NzdlMmI1OS9idWls/dGluLmNvbS8"
+                },
+                "language": "en",
+                "family_friendly": true,
+                "type": "search_result",
+                "subtype": "article",
+                "meta_url": {
+                    "scheme": "https",
+                    "netloc": "builtin.com",
+                    "hostname": "builtin.com",
+                    "favicon": "https://imgs.search.brave.com/LSofnT3a8dnfQERlyxKCVZrpAk3rxCR0cZu85QcezH0/rs:fit:32:32:1/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvMzlhMWMxZWMw/MmY5NDE1NDk3NzFl/ZmNmYTg0ZTYxZWNk/MzcxNmEwYjY0MzZl/NzQ0NDlkYzNhMTgy/NzdlMmI1OS9idWls/dGluLmNvbS8",
+                    "path": "› software-engineering-perspectives  › laravel"
+                },
+                "thumbnail": {
+                    "src": "https://imgs.search.brave.com/6eOZpHvcxLqbAYFrJg-aboMORH9s2zEWttUvL6W8JUk/rs:fit:200:200:1/g:ce/aHR0cHM6Ly9idWls/dGluLmNvbS9zaXRl/cy93d3cuYnVpbHRp/bi5jb20vZmlsZXMv/c3R5bGVzL29nL3B1/YmxpYy8yMDIyLTEy/L0xhcmF2ZWwucG5n",
+                    "original": "https://builtin.com/sites/www.builtin.com/files/styles/og/public/2022-12/Laravel.png",
+                    "logo": false
+                },
+                "age": "December 21, 2022"
+            }
+        ],
+        "family_friendly": true
+    }
+}
