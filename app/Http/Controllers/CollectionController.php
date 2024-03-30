@@ -64,7 +64,6 @@ class CollectionController extends Controller
         return to_route('collections.show', $collection);
     }
 
-
     public function show(Collection $collection)
     {
         $chatResource = $collection->chats()->where('user_id', auth()->user()->id)

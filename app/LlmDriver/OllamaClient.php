@@ -4,6 +4,7 @@ namespace App\LlmDriver;
 
 use App\LlmDriver\Requests\MessageInDto;
 use App\LlmDriver\Responses\CompletionResponse;
+use App\LlmDriver\Responses\EmbeddingsResponseDto;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
@@ -11,6 +12,23 @@ use Illuminate\Support\Facades\Log;
 class OllamaClient extends BaseClient
 {
     protected string $driver = 'ollama';
+
+    public function embedData(string $prompt): EmbeddingsResponseDto
+    {
+        Log::info('LlmDriver::Ollama::completion');
+
+        $response = $this->getClient()->post('/embeddings', [
+            'model' => $this->getConfig('ollama')['models']['embedding_model'],
+            'prompt' => $prompt,
+        ]);
+
+        $results = $response->json();
+
+        return EmbeddingsResponseDto::from([
+            'embedding' => data_get($results, 'embedding'),
+            'token_count' => 1000,
+        ]);
+    }
 
     /**
      * @param  MessageInDto[]  $messages

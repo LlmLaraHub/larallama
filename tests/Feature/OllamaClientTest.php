@@ -2,7 +2,6 @@
 
 namespace Tests\Feature;
 
-use App\LlmDriver\ClaudeClient;
 use App\LlmDriver\OllamaClient;
 use App\LlmDriver\Requests\MessageInDto;
 use App\LlmDriver\Responses\CompletionResponse;
@@ -17,9 +16,14 @@ class OllamaClientTest extends TestCase
      */
     public function test_embeddings(): void
     {
-        $this->markTestSkipped('@TODO: Requires another server');
 
-        $client = new ClaudeClient();
+        $client = new OllamaClient();
+
+        $data = get_fixture('ollama_embedings.json');
+
+        Http::fake([
+            '127.0.0.1:11434/*' => Http::response($data, 200),
+        ]);
 
         $results = $client->embedData('test');
 

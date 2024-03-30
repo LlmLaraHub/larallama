@@ -69,7 +69,7 @@ class CollectionControllerTest extends TestCase
             'description' => 'Test Description',
         ])->assertStatus(302);
         $this->assertDatabaseCount('collections', 1);
-        
+
         $this->assertEquals(DriversEnum::Claude, $collection->refresh()->embedding_driver);
 
     }

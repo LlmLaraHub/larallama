@@ -36,7 +36,6 @@ const closeEditCollectionSlideOut = () => {
     showEditCollection.value = false;
 };
 
-
 onMounted(() => {
     Echo.private(`collection.${props.collection.data.id}`)
     .listen('.status', (e) => {

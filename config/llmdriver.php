@@ -31,6 +31,7 @@ return [
             'models' => [
                 //@see https://github.com/ollama/ollama/blob/main/docs/openai.md
                 'completion_model' => env('CLAUDE_COMPLETION_MODEL', 'llama2'),
+                'embedding_model' => env('CLAUDE_EMBEDDING_MODEL', 'llama2'),
             ],
         ],
     ],
