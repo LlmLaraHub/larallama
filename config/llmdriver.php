@@ -9,7 +9,7 @@ return [
         ],
         'openai' => [
             'api_key' => env('OPENAI_API_KEY'),
-            'api_url' => env('OPENAI_API_URL', 'https://api.openai.com/v1/engines/davinci-codex/completions'),
+            'api_url' => env('OPENAI_API_URL', 'https://api.openai.com/v1'),
             'embedding_model' => env('OPENAI_EMBEDDING_MODEL', 'text-embedding-3-large'),
             'completion_model' => env('OPENAI_COMPLETION_MODEL', 'gpt-4-turbo-preview'),
             'chat_model' => env('OPENAICHAT_MODEL', 'gpt-4-turbo-preview'),
@@ -26,7 +26,12 @@ return [
             ],
         ],
         'ollama' => [
-
+            'api_key' => 'ollama',
+            'api_url' => env('OLLAMA_API_URL', 'http://127.0.0.1:11434/api/'),
+            'models' => [
+                //@see https://github.com/ollama/ollama/blob/main/docs/openai.md
+                'completion_model' => env('CLAUDE_COMPLETION_MODEL', 'llama2'),
+            ],
         ],
     ],
 ];

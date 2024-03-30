@@ -9,11 +9,12 @@ use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
-class ClaudeClient
+class ClaudeClient extends BaseClient
 {
     protected string $baseUrl = 'https://api.anthropic.com/v1';
 
     protected string $version = '2023-06-01';
+
 
     protected string $driver = 'claude';
 
@@ -141,8 +142,4 @@ class ClaudeClient
         ])->baseUrl($this->baseUrl);
     }
 
-    protected function getConfig(string $driver): array
-    {
-        return config("llmdriver.drivers.$driver");
-    }
 }

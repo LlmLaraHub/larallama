@@ -19,9 +19,15 @@ class LlmDriverClient
 
     protected function createDriver($name)
     {
+        /**
+         * @TODO 
+         * Turn into a match statement
+         */
         switch ($name) {
             case 'openai':
                 return new OpenAiClient();
+            case 'ollama':
+                return new OllamaClient();
             case 'claude':
                 return new ClaudeClient();
             case 'mock':
