@@ -6,7 +6,6 @@ use App\Events\ChatUpdatedEvent;
 use App\Http\Resources\ChatResource;
 use App\Http\Resources\CollectionResource;
 use App\Http\Resources\MessageResource;
-use App\LlmDriver\LlmDriverFacade;
 use App\Models\Chat;
 use App\Models\Collection;
 use Facades\App\Domains\Messages\SearchOrSummarizeChatRepo;
@@ -44,16 +43,6 @@ class ChatController extends Controller
         $validated = request()->validate([
             'input' => 'required|string',
         ]);
-
-        //get all the functions we have
-
-        $response = LlmDriverFacade::driver(
-            $chat->chatable->getDriver()
-        )->chat($validated['input']);
-        //attach them the the initial request
-        //see if we get results or a function request
-        //if we get a function request, we run the function
-        //if we get results, we return the results
 
         $response = SearchOrSummarizeChatRepo::search($chat, $validated['input']);
 

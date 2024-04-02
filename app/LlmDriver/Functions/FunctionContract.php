@@ -2,8 +2,6 @@
 
 namespace App\LlmDriver\Functions;
 
-use App\LlmDriver\Functions\PropertyDto;
-
 abstract class FunctionContract
 {
     protected string $name;

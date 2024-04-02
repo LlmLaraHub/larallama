@@ -24,7 +24,6 @@ class OpenAiClientTest extends TestCase
         $expected = get_fixture('openai_client_get_functions.json');
 
         $this->assertEquals($expected, $response);
-
     }
 
     public function test_openai_client(): void
