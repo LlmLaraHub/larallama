@@ -12,7 +12,6 @@ use Tests\TestCase;
 
 class OpenAiClientTest extends TestCase
 {
-
     public function test_get_functions(): void
     {
         $openaiClient = new \App\LlmDriver\OpenAiClient();
@@ -20,10 +19,11 @@ class OpenAiClientTest extends TestCase
         $this->assertNotEmpty($response);
         $this->assertIsArray($response);
         $first = $response[0];
-        $this->assertArrayHasKey('name', $first);
-        $this->assertArrayHasKey('description', $first);
-        $this->assertArrayHasKey('parameters', $first);
+        $this->assertArrayHasKey('type', $first);
+        $this->assertArrayHasKey('function', $first);
+        $expected = get_fixture('openai_client_get_functions.json');
 
+        $this->assertEquals($expected, $response);
 
     }
 

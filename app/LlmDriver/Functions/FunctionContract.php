@@ -2,18 +2,16 @@
 
 namespace App\LlmDriver\Functions;
 
+use App\LlmDriver\Functions\PropertyDto;
+
 abstract class FunctionContract
 {
     protected string $name;
 
-    protected string $dscription;
+    protected string $description;
 
     protected string $type = 'object';
 
-    /**
-     * @param  array<string, mixed>  $data
-     * @return array<string, mixed>
-     */
     abstract public function handle(FunctionCallDto $functionCallDto): array;
 
     public function getFunction(): FunctionDto
@@ -35,13 +33,13 @@ abstract class FunctionContract
         return $this->name;
     }
 
-    /**
-     * @return ParameterDto[]
-     */
-    abstract protected function getProperties(): array;
-
     protected function getDescription(): string
     {
-        return $this->name;
+        return $this->description;
     }
+
+    /**
+     * @return PropertyDto[]
+     */
+    abstract protected function getProperties(): array;
 }

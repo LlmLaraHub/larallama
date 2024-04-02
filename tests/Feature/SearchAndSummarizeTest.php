@@ -2,11 +2,8 @@
 
 namespace Tests\Feature;
 
-use App\LlmDriver\Functions\ParameterDto;
 use App\LlmDriver\Functions\ParametersDto;
 use App\LlmDriver\Functions\PropertyDto;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class SearchAndSummarizeTest extends TestCase

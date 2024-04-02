@@ -27,6 +27,42 @@ abstract class BaseClient
     }
 
     /**
+     * This is to get functions out of the llm
+     * if none are returned your system
+     * can error out or try another way.
+     *
+     * @param  MessageInDto[]  $messages
+     */
+    public function functionPromptChat(array $messages, array $only = []): array
+    {
+        if (! app()->environment('testing')) {
+            sleep(2);
+        }
+
+        Log::info('LlmDriver::MockClient::functionPromptChat', $messages);
+
+        $data = get_fixture('openai_response_with_functions.json');
+
+        $functions = [];
+
+        foreach (data_get($data, 'choices', []) as $choice) {
+            foreach (data_get($choice, 'message.toolCalls', []) as $tool) {
+                if (data_get($tool, 'type') === 'function') {
+                    $name = data_get($tool, 'function.name', null);
+                    if (! in_array($name, $only)) {
+                        $functions[] = [
+                            'name' => $name,
+                            'arguments' => json_decode(data_get($tool, 'function.arguments', []), true),
+                        ];
+                    }
+                }
+            }
+        }
+
+        return $functions;
+    }
+
+    /**
      * @param  MessageInDto[]  $messages
      */
     public function chat(array $messages): CompletionResponse
@@ -64,8 +100,8 @@ EOD;
         return config("llmdriver.drivers.$driver");
     }
 
-
-    public function getFunctions() : array {
+    public function getFunctions(): array
+    {
         return [];
     }
 }

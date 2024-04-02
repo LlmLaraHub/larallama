@@ -1,0 +1,23 @@
+[
+    {
+        "type": "function",
+        "function": {
+            "name": "search_and_summarize",
+            "description": "Used to embed users prompt, search database and return summarized results.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "prompt": {
+                        "description": "The prompt the user is using the search for.",
+                        "type": "string",
+                        "enum": [],
+                        "default": ""
+                    }
+                }
+            },
+            "required": [
+                "prompt"
+            ]
+        }
+    }
+]

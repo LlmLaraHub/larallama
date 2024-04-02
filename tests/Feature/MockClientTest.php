@@ -10,9 +10,27 @@ use Tests\TestCase;
 
 class MockClientTest extends TestCase
 {
-    /**
-     * A basic feature test example.
-     */
+    public function test_tools(): void
+    {
+
+        $client = new MockClient();
+
+        $results = $client->functionPromptChat(['test']);
+
+        $this->assertCount(1, $results);
+
+        $this->assertEquals('search_and_summarize', $results[0]['name']);
+    }
+
+    public function test_tool_with_limit(): void
+    {
+        $client = new MockClient();
+
+        $results = $client->functionPromptChat(['test'], ['search_and_summarize']);
+
+        $this->assertCount(0, $results);
+    }
+
     public function test_embeddings(): void
     {
 

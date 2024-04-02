@@ -49,10 +49,10 @@ class LlmDriverClient
         return 'mock';
     }
 
-    public function getFunctions() : array {
+    public function getFunctions(): array
+    {
         return [
             (new SearchAndSummarize())->getFunction(),
         ];
     }
-
 }

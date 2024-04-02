@@ -64,6 +64,4 @@ class FunctionDtoTest extends TestCase
         $this->assertEquals('bar', $parameterTwo->default);
         $this->assertTrue($parameterTwo->required);
     }
-
-    
 }

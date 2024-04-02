@@ -1,26 +1,10 @@
 [
     {
-        "content": "test",
+        "content": "how does the document define 'Generative AI'",
         "role": "user"
     },
     {
-        "content": "test 1",
-        "role": "assistant"
-    },
-    {
-        "role": "user",
-        "content": "Continuation of search results"
-    },
-    {
-        "content": "test 2",
-        "role": "assistant"
-    },
-    {
-        "role": "user",
-        "content": "Continuation of search results"
-    },
-    {
-        "content": "test 3",
+        "content": "The user uploaded documents that the user will ask questions about. Please keep your answers related to the documents.",
         "role": "assistant"
     }
 ]

@@ -2,7 +2,6 @@
 
 namespace App\LlmDriver;
 
-use App\LlmDriver\LlmDriverClient;
 use Illuminate\Support\ServiceProvider;
 
 class LlmServiceProvider extends ServiceProvider

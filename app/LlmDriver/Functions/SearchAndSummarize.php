@@ -6,7 +6,7 @@ class SearchAndSummarize extends FunctionContract
 {
     protected string $name = 'search_and_summarize';
 
-    protected string $dscription = 'Used to embed users prompt, search database and return summarized results.';
+    protected string $description = 'Used to embed users prompt, search database and return summarized results.';
 
     public function handle(FunctionCallDto $functionCallDto): array
     {
@@ -14,14 +14,14 @@ class SearchAndSummarize extends FunctionContract
     }
 
     /**
-     * @return ParameterDto[]
+     * @return PropertyDto[]
      */
     protected function getProperties(): array
     {
         return [
             new PropertyDto(
                 name: 'prompt',
-                description: 'The prompt to search for in the database.',
+                description: 'The prompt the user is using the search for.',
                 type: 'string',
                 required: true,
             ),
