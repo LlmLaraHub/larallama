@@ -3,6 +3,7 @@
 namespace App\LlmDriver;
 
 use App\LlmDriver\Functions\SearchAndSummarize;
+use App\LlmDriver\Functions\SummarizeCollection;
 
 class LlmDriverClient
 {
@@ -53,6 +54,7 @@ class LlmDriverClient
     {
         return [
             (new SearchAndSummarize())->getFunction(),
+            (new SummarizeCollection())->getFunction(),
         ];
     }
 }

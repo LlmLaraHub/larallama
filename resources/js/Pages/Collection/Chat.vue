@@ -10,6 +10,9 @@ import { router, useForm } from '@inertiajs/vue3';
 import FileUploader from './Components/FileUploader.vue';
 import ChatUi from '@/Pages/Chat/ChatUi.vue';
 import { DocumentTextIcon } from '@heroicons/vue/24/outline';
+import { useToast } from 'vue-toastification';
+
+const toast = useToast();
 const props = defineProps({
     collection: {
         type: Object,
@@ -36,6 +39,11 @@ onMounted(() => {
         router.reload({
             preserveScroll: true,
         })
+    })
+    .listen('.update', (e) => {
+        console.log(e);
+        // Make a better ui for htis
+        toast.success(e.updateMessage);
     });
 });
 </script>

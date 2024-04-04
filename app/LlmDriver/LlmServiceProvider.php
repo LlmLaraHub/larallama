@@ -2,6 +2,8 @@
 
 namespace App\LlmDriver;
 
+use App\LlmDriver\Functions\SearchAndSummarize;
+use App\LlmDriver\Functions\SummarizeCollection;
 use Illuminate\Support\ServiceProvider;
 
 class LlmServiceProvider extends ServiceProvider
@@ -21,6 +23,14 @@ class LlmServiceProvider extends ServiceProvider
     {
         $this->app->bind('llm_driver', function () {
             return new LlmDriverClient();
+        });
+
+        $this->app->bind('summarize_collection', function () {
+            return new SummarizeCollection();
+        });
+
+        $this->app->bind('search_and_summarize', function() {
+            return new SearchAndSummarize();
         });
 
     }
