@@ -5,6 +5,7 @@ namespace App\LlmDriver;
 use App\LlmDriver\Requests\MessageInDto;
 use App\LlmDriver\Responses\CompletionResponse;
 use App\LlmDriver\Responses\EmbeddingsResponseDto;
+use Illuminate\Support\Facades\Log;
 use OpenAI\Laravel\Facades\OpenAI;
 
 class OpenAiClient extends BaseClient
@@ -16,15 +17,12 @@ class OpenAiClient extends BaseClient
      */
     public function chat(array $messages): CompletionResponse
     {
-        $functions = $this->getFunctions();
 
         $response = OpenAI::chat()->create([
             'model' => $this->getConfig('openai')['chat_model'],
             'messages' => collect($messages)->map(function ($message) {
                 return $message->toArray();
             })->toArray(),
-            'tool_choice' => 'auto',
-            'tools' => $functions,
         ]);
 
         $results = null;
@@ -72,6 +70,51 @@ class OpenAiClient extends BaseClient
         }
 
         return new CompletionResponse($results);
+    }
+
+    /**
+     * This is to get functions out of the llm
+     * if none are returned your system
+     * can error out or try another way.
+     *
+     * @param  MessageInDto[]  $messages
+     */
+    public function functionPromptChat(array $messages, array $only = []): array
+    {
+
+        Log::info('LlmDriver::OpenAiClient::functionPromptChat', $messages);
+
+        $functions = $this->getFunctions();
+
+        $response = OpenAI::chat()->create([
+            'model' => $this->getConfig('openai')['chat_model'],
+            'messages' => collect($messages)->map(function ($message) {
+                return $message->toArray();
+            })->toArray(),
+            'tool_choice' => 'auto',
+            'tools' => $functions,
+        ]);
+
+        $functions = [];
+        foreach ($response->choices as $result) {
+            foreach (data_get($result, 'message.toolCalls', []) as $tool) {
+                if (data_get($tool, 'type') === 'function') {
+                    $name = data_get($tool, 'function.name', null);
+                    if (! in_array($name, $only)) {
+                        $functions[] = [
+                            'name' => $name,
+                            'arguments' => json_decode(data_get($tool, 'function.arguments', []), true),
+                        ];
+                    }
+                }
+            }
+        }
+
+        /**
+         * @TODO
+         * make this a dto
+         */
+        return $functions;
     }
 
     /**

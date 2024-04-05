@@ -4,6 +4,12 @@ namespace Tests\Feature;
 
 use App\LlmDriver\Functions\ParametersDto;
 use App\LlmDriver\Functions\PropertyDto;
+use App\LlmDriver\Functions\SummarizeCollection;
+use App\LlmDriver\LlmDriverFacade;
+use App\LlmDriver\Requests\MessageInDto;
+use App\LlmDriver\Responses\CompletionResponse;
+use App\Models\Collection;
+use App\Models\DocumentChunk;
 use Tests\TestCase;
 
 class SummarizeCollectionTest extends TestCase
@@ -22,5 +28,53 @@ class SummarizeCollectionTest extends TestCase
         $this->assertInstanceOf(ParametersDto::class, $parameters);
         $this->assertIsArray($parameters->properties);
         $this->assertInstanceOf(PropertyDto::class, $parameters->properties[0]);
+    }
+
+    public function test_gathers_all_content()
+    {
+        $searchAndSummarize = new \App\LlmDriver\Functions\SummarizeCollection();
+        $messageArray = [];
+
+        $messageArray[] = MessageInDto::from([
+            'content' => 'Can you summarize all this content for me',
+            'role' => 'user',
+        ]);
+
+        $dto = CompletionResponse::from([
+            'content' => 'This is a summary of the content',
+        ]);
+        LlmDriverFacade::shouldReceive('driver->chat')
+            ->once()
+            ->andReturn($dto);
+
+        $collection = Collection::factory()->create();
+
+        $chat = \App\Models\Chat::factory()->create([
+            'chatable_type' => Collection::class,
+            'chatable_id' => $collection->id,
+        ]);
+
+        $document = \App\Models\Document::factory()->create([
+            'collection_id' => $collection->id,
+        ]);
+
+        DocumentChunk::factory(3)->create(
+            [
+                'document_id' => $document->id,
+            ]
+        );
+
+        $functionCallDto = \App\LlmDriver\Functions\FunctionCallDto::from([
+            'function_name' => 'summarize_collection',
+            'arguments' => json_encode([
+                'prompt' => 'Can you summarize all this content for me',
+            ]),
+        ]);
+
+        $results = (new SummarizeCollection())->handle($messageArray, $chat, $functionCallDto);
+
+        $this->assertInstanceOf(\App\LlmDriver\Responses\FunctionResponse::class, $results);
+
+        $this->assertNotEmpty($results->content);
     }
 }

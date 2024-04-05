@@ -2,16 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\ChatUiUpdateEvent;
+use App\Domains\Messages\RoleEnum;
 use App\Events\ChatUpdatedEvent;
 use App\Http\Resources\ChatResource;
 use App\Http\Resources\CollectionResource;
 use App\Http\Resources\MessageResource;
-use App\LlmDriver\LlmDriverFacade;
-use Facades\App\LlmDriver\Orchestrate;
 use App\LlmDriver\Requests\MessageInDto;
 use App\Models\Chat;
 use App\Models\Collection;
+use Facades\App\LlmDriver\Orchestrate;
 
 class ChatController extends Controller
 {
@@ -47,6 +46,11 @@ class ChatController extends Controller
             'input' => 'required|string',
         ]);
 
+        $chat->addInput(
+            message: $validated['input'],
+            role: RoleEnum::User,
+            show_in_thread: true);
+
         $messagesArray = [];
 
         $messagesArray[] = MessageInDto::from([
@@ -55,7 +59,6 @@ class ChatController extends Controller
         ]);
 
         $response = Orchestrate::handle($messagesArray, $chat);
-
 
         ChatUpdatedEvent::dispatch($chat->chatable, $chat);
 

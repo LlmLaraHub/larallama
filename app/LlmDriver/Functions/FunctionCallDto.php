@@ -2,7 +2,6 @@
 
 namespace App\LlmDriver\Functions;
 
-use App\LlmDriver\Functions\ArgumentCaster;
 use Spatie\LaravelData\Attributes\WithCast;
 
 class FunctionCallDto extends \Spatie\LaravelData\Data

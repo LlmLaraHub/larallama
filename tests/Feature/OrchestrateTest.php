@@ -7,17 +7,14 @@ use App\LlmDriver\Functions\SummarizeCollection;
 use App\LlmDriver\LlmDriverFacade;
 use App\LlmDriver\Orchestrate;
 use App\LlmDriver\Requests\MessageInDto;
-use App\LlmDriver\Responses\CompletionResponse;
 use App\LlmDriver\Responses\FunctionResponse;
 use App\Models\Chat;
 use App\Models\Collection;
 use App\Models\User;
 use Facades\App\Domains\Messages\SearchOrSummarizeChatRepo;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Event;
-use Tests\TestCase;
 use Mockery;
+use Tests\TestCase;
 
 class OrchestrateTest extends TestCase
 {
@@ -31,29 +28,26 @@ class OrchestrateTest extends TestCase
             [
                 'name' => 'summarize_collection',
                 'arguments' => [
-                    "TLDR it for me"
-                ]
+                    'TLDR it for me',
+                ],
             ],
         ]);
 
-        LlmDriverFacade::shouldReceive('driver->chat')->once()->andReturn(
-            CompletionResponse::from([
-                'content' => "Summarized"
-            ])
-        );
+        LlmDriverFacade::shouldReceive('driver->chat')->never();
+
         SearchOrSummarizeChatRepo::shouldReceive('search')->never();
 
         $this->instance(
-            'summarize_collection', 
-                Mockery::mock(SummarizeCollection::class, function ($mock) {
+            'summarize_collection',
+            Mockery::mock(SummarizeCollection::class, function ($mock) {
                 $mock->shouldReceive('handle')
-                ->once()
-                ->andReturn(
-                    FunctionResponse::from(['content' => 'This is the summary of the collection'])
-                );  
+                    ->once()
+                    ->andReturn(
+                        FunctionResponse::from(['content' => 'This is the summary of the collection'])
+                    );
             })
         );
-        
+
         $user = User::factory()->create();
         $collection = Collection::factory()->create();
         $chat = Chat::factory()->create([
@@ -71,7 +65,7 @@ class OrchestrateTest extends TestCase
 
         Event::assertDispatched(ChatUiUpdateEvent::class);
 
-        $this->assertEquals($results, 'Summarized');
+        $this->assertEquals($results, 'This is the summary of the collection');
 
     }
 }

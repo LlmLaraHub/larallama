@@ -43,7 +43,20 @@ onMounted(() => {
     .listen('.update', (e) => {
         console.log(e);
         // Make a better ui for htis
-        toast.success(e.updateMessage);
+        toast.success(e.updateMessage, {
+                position: "bottom-right",
+                timeout: 2000,
+                closeOnClick: true,
+                pauseOnFocusLoss: false,
+                pauseOnHover: false,
+                draggable: false,
+                draggablePercent: 0.6,
+                showCloseButtonOnHover: true,
+                hideProgressBar: true,
+                closeButton: "button",
+                icon: true,
+                rtl: false
+            });
     });
 });
 </script>

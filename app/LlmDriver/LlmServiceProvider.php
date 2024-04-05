@@ -29,7 +29,7 @@ class LlmServiceProvider extends ServiceProvider
             return new SummarizeCollection();
         });
 
-        $this->app->bind('search_and_summarize', function() {
+        $this->app->bind('search_and_summarize', function () {
             return new SearchAndSummarize();
         });
 

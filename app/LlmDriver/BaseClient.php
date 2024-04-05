@@ -41,7 +41,7 @@ abstract class BaseClient
 
         Log::info('LlmDriver::MockClient::functionPromptChat', $messages);
 
-        $data = get_fixture('openai_response_with_functions.json');
+        $data = get_fixture('openai_response_with_functions_summarize_collection.json');
 
         $functions = [];
 
@@ -60,7 +60,7 @@ abstract class BaseClient
         }
 
         /**
-         * @TODO 
+         * @TODO
          * make this a dto
          */
         return $functions;
@@ -77,9 +77,7 @@ abstract class BaseClient
 
         Log::info('LlmDriver::MockClient::completion');
 
-        $data = <<<'EOD'
-        Voluptate irure cillum dolor anim officia reprehenderit dolor. Eiusmod veniam nostrud consectetur incididunt proident id. Anim adipisicing pariatur amet duis Lorem sunt veniam veniam est. Deserunt ea aliquip cillum pariatur consectetur. Dolor in reprehenderit adipisicing consectetur cupidatat ad cupidatat reprehenderit. Nostrud mollit voluptate aliqua anim pariatur excepteur eiusmod velit quis exercitation tempor quis excepteur.        
-EOD;
+        $data = fake()->sentences(3, true);
 
         return new CompletionResponse($data);
     }

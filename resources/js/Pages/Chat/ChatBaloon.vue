@@ -38,18 +38,16 @@ const props = defineProps({
                 </span>
             </div>
 
-            <div class="message-baloon flex rounded-md relative shadow-lg"
-                 :class="message.from_ai ? 'bg-gray-300/10 rounded-tr-none border-indigo-500' : 'bg-black/20 rounded-tl-none flex-row-reverse'">
+            <div class="message-baloon flex rounded-md relative shadow-lg shadow-inner-custom  p-4 prose space-y-4l "
+                 :class="message.from_ai ? 'bg-gray-300/10 rounded-tr-none border-indigo-500' : 'flex-row-reverse'">
 
                 <div
 
                     v-if="message.type !== 'image'"
-                    class="message-content grow shadow-inner-custom shadow-lg p-4 rounded space-y-4"
+                    class="message-content grow "
                     :class="message.from_ai ? 'rounded-tr-none' : 'rounded-tl-none'"
                 v-html="message.body_markdown"
                 >
-
-
                 </div>
 
                 <div v-if="message.type === 'image'">

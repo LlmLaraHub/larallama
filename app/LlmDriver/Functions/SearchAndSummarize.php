@@ -2,9 +2,8 @@
 
 namespace App\LlmDriver\Functions;
 
-use App\Models\Chat;
-use App\LlmDriver\Requests\MessageInDto;
 use App\LlmDriver\Responses\FunctionResponse;
+use App\Models\Chat;
 
 class SearchAndSummarize extends FunctionContract
 {
@@ -19,7 +18,7 @@ class SearchAndSummarize extends FunctionContract
     {
         return FunctionResponse::from(
             [
-                'content' => ''
+                'content' => '',
             ]
         );
     }

@@ -89,4 +89,53 @@ class OpenAiClientTest extends TestCase
         ]);
         $this->assertInstanceOf(CompletionResponse::class, $response);
     }
+
+    public function test_functions_prompt(): void
+    {
+        $data = get_fixture('openai_response_with_functions_summarize_collection.json');
+
+        $response = [
+            'choices' => data_get($data, 'choices', []),
+        ];
+
+        // OpenAI::fake([
+        //     ChatCreateResponse::fake($response)
+        // ]);
+        OpenAI::fake([
+            ChatCreateResponse::fake([
+                'choices' => [
+                    [
+                        'message' => [
+                            'content' => '',
+                            'tool_calls' => [
+                                [
+                                    'id' => 'call_u3GOeiE4LaSJvOqV2uOqeXK2',
+                                    'type' => 'function',
+                                    'function' => [
+                                        'name' => 'summarize_collection',
+                                        'arguments' => "{\"prompt\":\"TLDR this collection for me'\"}",
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ]),
+        ]);
+
+        $openaiClient = new \App\LlmDriver\OpenAiClient();
+        $response = $openaiClient->functionPromptChat([
+            MessageInDto::from([
+                'content' => 'test',
+                'role' => 'system',
+            ]),
+            MessageInDto::from([
+                'content' => 'test',
+                'role' => 'user',
+            ]),
+        ]);
+
+        $this->assertIsArray($response);
+        $this->assertCount(1, $response);
+    }
 }

@@ -2,10 +2,9 @@
 
 namespace App\LlmDriver\Functions;
 
-
-use App\Models\Chat;
 use App\LlmDriver\Requests\MessageInDto;
 use App\LlmDriver\Responses\FunctionResponse;
+use App\Models\Chat;
 
 abstract class FunctionContract
 {
@@ -16,11 +15,7 @@ abstract class FunctionContract
     protected string $type = 'object';
 
     /**
-     * 
-     * @param MessageInDto[] $messageArray 
-     * @param App\LlmDriver\Functions\Chat $chat 
-     * @param FunctionCallDto $functionCallDto 
-     * @return array 
+     * @param  MessageInDto[]  $messageArray
      */
     abstract public function handle(
         array $messageArray,

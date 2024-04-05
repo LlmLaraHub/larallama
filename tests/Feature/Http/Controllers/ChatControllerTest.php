@@ -2,15 +2,11 @@
 
 namespace Tests\Feature\Http\Controllers;
 
-use App\LlmDriver\LlmDriverFacade;
-use Facades\App\LlmDriver\Orchestrate;
-use Facades\App\LlmDriver\MockClient;
-use Facades\App\Domains\Messages\SearchOrSummarizeChatRepo;
 use App\Models\Chat;
 use App\Models\Collection;
 use App\Models\Message;
 use App\Models\User;
-use Illuminate\Support\Facades\Event;
+use Facades\App\LlmDriver\Orchestrate;
 use Tests\TestCase;
 
 class ChatControllerTest extends TestCase
@@ -40,8 +36,9 @@ class ChatControllerTest extends TestCase
             'user_id' => $user->id,
         ]);
 
-        Orchestrate::shouldReceive('handle')->once()->andReturn("Yo");
-       
+        Orchestrate::shouldReceive('handle')->once()->andReturn('Yo');
+
+        $this->assertDatabaseCount('messages', 0);
         $this->actingAs($user)->post(route('chats.messages.create', [
             'chat' => $chat->id,
         ]),
@@ -49,6 +46,7 @@ class ChatControllerTest extends TestCase
                 'system_prompt' => 'Foo',
                 'input' => 'user input',
             ])->assertOk();
+        $this->assertDatabaseCount('messages', 1);
     }
 
     public function test_kick_off_chat_makes_system()
