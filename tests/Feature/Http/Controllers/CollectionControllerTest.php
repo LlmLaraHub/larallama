@@ -82,7 +82,6 @@ class CollectionControllerTest extends TestCase
         Queue::assertPushed(ProcessFileJob::class, 1);
     }
 
-
     public function test_update(): void
     {
         $user = $this->createUserWithCurrentTeam();

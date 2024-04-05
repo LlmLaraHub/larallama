@@ -53,7 +53,6 @@ class OllamaClient extends BaseClient
 
         $functions = [];
 
-
         /**
          * @TODO
          * make this a dto

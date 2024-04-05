@@ -112,15 +112,17 @@ class CollectionController extends Controller
         return back();
     }
 
-    public function resetCollectionDocument(Collection $collection, Document $document) {
+    public function resetCollectionDocument(Collection $collection, Document $document)
+    {
         $document->document_chunks()->delete();
-        $document->status  = StatusEnum::Running;
-        $document->document_chunk_count  = 0;
+        $document->status = StatusEnum::Running;
+        $document->document_chunk_count = 0;
         $document->update();
 
         ProcessFileJob::dispatch($document);
 
         request()->session()->flash('flash.banner', 'Document reset process running!');
+
         return back();
     }
 }
