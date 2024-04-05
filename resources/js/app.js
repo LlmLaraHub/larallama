@@ -21,7 +21,11 @@ createInertiaApp({
             .use(plugin)
             .use(VueApexCharts)
             .use(autoAnimatePlugin)
-            .use(Toast, {})
+            .use(Toast, {
+                transition: "Vue-Toastification__bounce",
+                maxToasts: 2,
+                newestOnTop: true
+              })
             .use(ZiggyVue)
             .mount(el);
     },

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Domains\Messages\RoleEnum;
+use App\LlmDriver\HasDrivers;
 use App\LlmDriver\Requests\MessageInDto;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -14,11 +15,22 @@ use OpenAI\Laravel\Facades\OpenAI;
 /**
  * @property mixed $chatable;
  */
-class Chat extends Model
+class Chat extends Model implements HasDrivers
 {
     use HasFactory;
 
-    protected $fillable = [];
+    protected $guarded = [];
+
+    public function getDriver(): string
+    {
+
+        return $this->chatable->getDriver();
+    }
+
+    public function getEmbeddingDriver(): string
+    {
+        return $this->chatable->getEmbeddingDriver();
+    }
 
     protected function createSystemMessageIfNeeded(string $systemPrompt): void
     {

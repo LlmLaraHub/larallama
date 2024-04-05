@@ -4,8 +4,8 @@ namespace Tests\Feature\Http\Controllers;
 
 use App\Models\Chat;
 use App\Models\Collection;
-use App\Models\Message;
 use App\Models\User;
+use Facades\App\LlmDriver\Orchestrate;
 use Tests\TestCase;
 
 class ChatControllerTest extends TestCase
@@ -23,6 +23,29 @@ class ChatControllerTest extends TestCase
             'collection' => $collection->id,
         ]))->assertRedirect();
         $this->assertDatabaseCount('chats', 1);
+    }
+
+    public function test_a_function_based_chat()
+    {
+        $user = User::factory()->create();
+        $collection = Collection::factory()->create();
+        $chat = Chat::factory()->create([
+            'chatable_id' => $collection->id,
+            'chatable_type' => Collection::class,
+            'user_id' => $user->id,
+        ]);
+
+        Orchestrate::shouldReceive('handle')->once()->andReturn('Yo');
+
+        $this->assertDatabaseCount('messages', 0);
+        $this->actingAs($user)->post(route('chats.messages.create', [
+            'chat' => $chat->id,
+        ]),
+            [
+                'system_prompt' => 'Foo',
+                'input' => 'user input',
+            ])->assertOk();
+        $this->assertDatabaseCount('messages', 1);
     }
 
     public function test_kick_off_chat_makes_system()
@@ -43,9 +66,7 @@ class ChatControllerTest extends TestCase
                 'system_prompt' => 'Foo',
                 'input' => 'user input',
             ])->assertOk();
-        $this->assertDatabaseCount('messages', 4);
+        $this->assertDatabaseCount('messages', 3);
 
-        $this->assertTrue(Message::whereRole('system')->exists());
-        $this->assertTrue(Message::where('is_chat_ignored', true)->exists());
     }
 }

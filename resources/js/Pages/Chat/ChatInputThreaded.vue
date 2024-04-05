@@ -56,7 +56,24 @@ const setQuestion = (question) => {
 
 <template>
 <div>
+    <div v-if="getting_results">
+            <div class="w-full px-10">
+                <div class="animate-pulse flex space-x-4 mb-10">
+                    <div class="flex-1 space-y-4 py-1">
+                    <div class="h-6 bg-slate-400 rounded"></div>
+                    <div class="space-y-3">
+                            <div class="grid grid-cols-3 gap-4">
+                                <div class="h-6 bg-slate-400 rounded col-span-2"></div>
+                                <div class="h-6 bg-slate-400 rounded col-span-1"></div>
+                            </div>
+                            <div class="h-6 bg-slate-400 rounded"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     <div class="w-full bg-gray-50">
+
         <form @submit.prevent="save"  autocomplete="off"
               class="relative p-4 flex max-container mx-auto w-full" v-auto-animate>
             <div v-if="errors?.input">

@@ -1,3 +1,16 @@
+# LLmDriver
+
+## Todo move this to the Laravel Module library
+
+[https://github.com/nWidart/laravel-modules](https://github.com/nWidart/laravel-modules)
+
+
+For now just taking notes of things I need to remember.
+
+
+Load Provider.
+
+```php
 <?php
 
 return [
@@ -7,3 +20,5 @@ return [
     App\Providers\JetstreamServiceProvider::class,
     App\LlmDriver\LlmServiceProvider::class,
 ];
+
+```

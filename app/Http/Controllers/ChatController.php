@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Domains\Messages\RoleEnum;
 use App\Events\ChatUpdatedEvent;
 use App\Http\Resources\ChatResource;
 use App\Http\Resources\CollectionResource;
 use App\Http\Resources\MessageResource;
+use App\LlmDriver\Requests\MessageInDto;
 use App\Models\Chat;
 use App\Models\Collection;
-use Facades\App\Domains\Messages\SearchOrSummarizeChatRepo;
+use Facades\App\LlmDriver\Orchestrate;
 
 class ChatController extends Controller
 {
@@ -44,7 +46,19 @@ class ChatController extends Controller
             'input' => 'required|string',
         ]);
 
-        $response = SearchOrSummarizeChatRepo::search($chat, $validated['input']);
+        $chat->addInput(
+            message: $validated['input'],
+            role: RoleEnum::User,
+            show_in_thread: true);
+
+        $messagesArray = [];
+
+        $messagesArray[] = MessageInDto::from([
+            'content' => $validated['input'],
+            'role' => 'user',
+        ]);
+
+        $response = Orchestrate::handle($messagesArray, $chat);
 
         ChatUpdatedEvent::dispatch($chat->chatable, $chat);
 

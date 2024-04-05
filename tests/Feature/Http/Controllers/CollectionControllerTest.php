@@ -5,6 +5,8 @@ namespace Tests\Feature\Http\Controllers;
 use App\Jobs\ProcessFileJob;
 use App\LlmDriver\DriversEnum;
 use App\Models\Collection;
+use App\Models\Document;
+use App\Models\DocumentChunk;
 use App\Models\User;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Queue;
@@ -51,6 +53,33 @@ class CollectionControllerTest extends TestCase
         $collection = Collection::first();
         $this->assertEquals(DriversEnum::Claude, $collection->embedding_driver);
 
+    }
+
+    public function test_reindex_document(): void
+    {
+        Queue::fake();
+        $user = $this->createUserWithCurrentTeam();
+        $this->actingAs($user);
+        $collection = Collection::factory()->create([
+            'team_id' => $user->currentTeam->id,
+        ]);
+        $document = Document::factory()->create([
+            'collection_id' => $collection->id,
+        ]);
+
+        DocumentChunk::factory()->create([
+            'document_id' => $document->id,
+        ]);
+
+        $this->assertCount(1, $document->refresh()->document_chunks);
+
+        $response = $this->post(route('collections.documents.reset', [
+            'collection' => $collection->id,
+            'document' => $document->id,
+        ]))
+            ->assertStatus(302);
+        $this->assertCount(0, $document->refresh()->document_chunks);
+        Queue::assertPushed(ProcessFileJob::class, 1);
     }
 
     public function test_update(): void

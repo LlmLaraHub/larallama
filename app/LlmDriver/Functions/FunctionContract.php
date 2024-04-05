@@ -2,17 +2,25 @@
 
 namespace App\LlmDriver\Functions;
 
+use App\LlmDriver\Requests\MessageInDto;
+use App\LlmDriver\Responses\FunctionResponse;
+use App\Models\Chat;
+
 abstract class FunctionContract
 {
     protected string $name;
 
-    protected string $dscription;
+    protected string $description;
+
+    protected string $type = 'object';
 
     /**
-     * @param  array<string, mixed>  $data
-     * @return array<string, mixed>
+     * @param  MessageInDto[]  $messageArray
      */
-    abstract public function handle(FunctionCallDto $functionCallDto): array;
+    abstract public function handle(
+        array $messageArray,
+        Chat $chat,
+        FunctionCallDto $functionCallDto): FunctionResponse;
 
     public function getFunction(): FunctionDto
     {
@@ -20,10 +28,12 @@ abstract class FunctionContract
             [
                 'name' => $this->getName(),
                 'description' => $this->getDescription(),
-                'parameters' => $this->getParameters(),
+                'parameters' => [
+                    'type' => $this->type,
+                    'properties' => $this->getProperties(),
+                ],
             ]
         );
-
     }
 
     protected function getName(): string
@@ -31,16 +41,13 @@ abstract class FunctionContract
         return $this->name;
     }
 
-    /**
-     * @return ParameterDto[]
-     */
-    protected function getParameters(): array
-    {
-        return [];
-    }
-
     protected function getDescription(): string
     {
-        return $this->name;
+        return $this->description;
     }
+
+    /**
+     * @return PropertyDto[]
+     */
+    abstract protected function getProperties(): array;
 }

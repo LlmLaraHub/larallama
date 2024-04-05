@@ -9,9 +9,11 @@ import { computed, onMounted, ref } from 'vue';
 import EditCollection from './Edit.vue';
 import { useDropzone } from "vue3-dropzone";
 import { router, useForm, Link } from '@inertiajs/vue3';
+import CollectionTags from './Components/CollectionTags.vue';
 import FileUploader from './Components/FileUploader.vue';
 import Label from '@/Components/Labels.vue';
 import CreateChat from './Components/CreateChat.vue';
+import DocumentReset from './Components/DocumentReset.vue';
 import { ChatBubbleLeftIcon } from '@heroicons/vue/24/outline';
 
 const props = defineProps({
@@ -40,9 +42,13 @@ onMounted(() => {
     Echo.private(`collection.${props.collection.data.id}`)
     .listen('.status', (e) => {
         console.log(e.status);
-        router.reload()
+        router.reload({only: ['documents']})
     });
 });
+
+const reset = () => {
+    router.reload();
+}
 
 </script>
 
@@ -90,20 +96,7 @@ onMounted(() => {
                         <p class="mt-2 max-w-4xl text-sm text-gray-500">
                             {{ collection.data.description }}
                         </p>
-                        <div class="flex justify-center gap-2 items-center">
-                            <Label>
-                                <template #title>
-                                    Chat LLm 
-                                </template>
-                                {{ collection.data.driver }}
-                            </Label>
-                            <Label>
-                                <template #title>
-                                    Embedding LLm 
-                                </template>
-                                {{ collection.data.embedding_driver }}
-                            </Label>
-                        </div>
+                        <CollectionTags :collection="collection"></CollectionTags>
                     </div>
                     <FileUploader :collection="collection" />
 
@@ -144,6 +137,10 @@ onMounted(() => {
                                                     <th scope="col"
                                                         class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
                                                         Status
+                                                    </th>                                                    
+                                                    <th scope="col"
+                                                        class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                                                        Actions
                                                     </th>
                                                 </tr>
                                             </thead>
@@ -177,6 +174,13 @@ onMounted(() => {
                                                              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                                                            </svg>
                                                         </span>
+                                                    </td>
+                                                    <td>
+                                                        <ul>
+                                                            <li>
+                                                                <DocumentReset :collection="collection.data" :document="document" @reset="reset"/>
+                                                            </li>
+                                                        </ul>
                                                     </td>
                                                 </tr>
                                             </tbody>

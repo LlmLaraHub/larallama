@@ -1,11 +1,9 @@
 <script setup>
 
 import ChatMessage from "./ChatMessage.vue";
-import {useToast} from "vue-toastification";
 import {computed, onMounted, provide, ref} from "vue";
 import ChatInputThreaded from "./ChatInputThreaded.vue";
 import {router, useForm, usePage} from "@inertiajs/vue3";
-const toast = useToast();
 
 const props = defineProps({
     chat: Object,
@@ -23,6 +21,8 @@ const props = defineProps({
                 <ChatMessage
                 :chat="chat.data" :messages="messages.data">
                 </ChatMessage>
+
+
             </div>
 
             <div class="mt-10">

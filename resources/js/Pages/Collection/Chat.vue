@@ -5,11 +5,15 @@ import PrimaryButton from '@/Components/PrimaryButton.vue';
 import SecondaryLink from '@/Components/SecondaryLink.vue';
 import { computed, onMounted, provide, ref } from 'vue';
 
+import CollectionTags from './Components/CollectionTags.vue';
 import { useDropzone } from "vue3-dropzone";
 import { router, useForm } from '@inertiajs/vue3';
 import FileUploader from './Components/FileUploader.vue';
 import ChatUi from '@/Pages/Chat/ChatUi.vue';
 import { DocumentTextIcon } from '@heroicons/vue/24/outline';
+import { useToast } from 'vue-toastification';
+
+const toast = useToast();
 const props = defineProps({
     collection: {
         type: Object,
@@ -36,6 +40,24 @@ onMounted(() => {
         router.reload({
             preserveScroll: true,
         })
+    })
+    .listen('.update', (e) => {
+        console.log(e);
+        // Make a better ui for htis
+        toast.success(e.updateMessage, {
+                position: "bottom-right",
+                timeout: 2000,
+                closeOnClick: true,
+                pauseOnFocusLoss: false,
+                pauseOnHover: false,
+                draggable: false,
+                draggablePercent: 0.6,
+                showCloseButtonOnHover: true,
+                hideProgressBar: true,
+                closeButton: "button",
+                icon: true,
+                rtl: false
+            });
     });
 });
 </script>
@@ -64,7 +86,9 @@ onMounted(() => {
                             <p class="mt-2 max-w-4xl text-sm text-gray-500">
                                 {{ collection.data.description }}
                             </p>
+
                         </div>
+
                         <SecondaryLink class="flex justify-between items-center gap-4" :href="route('collections.show', {
                     collection: collection.data.id,
                 })">    <DocumentTextIcon class="h-5 w-5"></DocumentTextIcon>
@@ -72,6 +96,8 @@ onMounted(() => {
                             Back to Documents
                         </SecondaryLink>
                     </div>
+                    <CollectionTags :collection="collection"></CollectionTags>
+
                     </div>
                     <div class="p-10">
                         <ChatUi :chat="chat" :messages="messages"></ChatUi>

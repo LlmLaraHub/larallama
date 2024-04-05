@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Domains\Documents\StatusEnum;
 use App\Domains\Documents\TypesEnum;
 use App\Http\Resources\ChatResource;
 use App\Http\Resources\CollectionResource;
@@ -107,6 +108,20 @@ class CollectionController extends Controller
         }
 
         request()->session()->flash('flash.banner', 'Files uploaded successfully!');
+
+        return back();
+    }
+
+    public function resetCollectionDocument(Collection $collection, Document $document)
+    {
+        $document->document_chunks()->delete();
+        $document->status = StatusEnum::Running;
+        $document->document_chunk_count = 0;
+        $document->update();
+
+        ProcessFileJob::dispatch($document);
+
+        request()->session()->flash('flash.banner', 'Document reset process running!');
 
         return back();
     }
