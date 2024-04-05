@@ -123,7 +123,7 @@ class ClaudeClient extends BaseClient
         ])->baseUrl($this->baseUrl);
     }
 
-        /**
+    /**
      * This is to get functions out of the llm
      * if none are returned your system
      * can error out or try another way.
@@ -145,7 +145,7 @@ class ClaudeClient extends BaseClient
             'system' => 'Return a markdown response.',
             'max_tokens' => $maxTokens,
             'messages' => $messages,
-            'tools' => $this->getFunctions()
+            'tools' => $this->getFunctions(),
         ]);
 
         $functions = [];
@@ -162,18 +162,17 @@ class ClaudeClient extends BaseClient
 
         $stop_reason = $results->json()['stop_reason'];
 
-        if($stop_reason === 'tool_use') {
+        if ($stop_reason === 'tool_use') {
 
             foreach ($results->json()['content'] as $content) {
-                if(data_get($content, 'type') === 'tool_use') {
+                if (data_get($content, 'type') === 'tool_use') {
                     $functions[] = [
-                        'name' => data_get($content, 'name') ,
+                        'name' => data_get($content, 'name'),
                         'arguments' => data_get($content, 'input'),
                     ];
-                } 
+                }
             }
-        } 
-
+        }
 
         /**
          * @TODO
@@ -181,7 +180,6 @@ class ClaudeClient extends BaseClient
          */
         return $functions;
     }
-
 
     /**
      * @NOTE
@@ -228,7 +226,8 @@ class ClaudeClient extends BaseClient
     /**
      * @param  MessageInDto[]  $messages
      */
-    protected function remapMessagesForClaude(array $messages) : array {
+    protected function remapMessagesForClaude(array $messages): array
+    {
         $messages = collect($messages)->map(function ($item) {
             if ($item->role === 'system') {
                 $item->role = 'assistant';

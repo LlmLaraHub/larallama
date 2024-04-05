@@ -118,7 +118,6 @@ class ClaudeClientTest extends TestCase
 
     }
 
-
     public function test_get_functions(): void
     {
         $openaiClient = new \App\LlmDriver\ClaudeClient();
