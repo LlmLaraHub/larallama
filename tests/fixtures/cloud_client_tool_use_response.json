@@ -1,0 +1,18 @@
+{
+    "id": "msg_01Aq9w938a90dw8q",
+    "model": "claude-3-opus-20240229",
+    "stop_reason": "tool_use",
+    "role": "assistant",
+    "content": [
+      {
+        "type": "text",
+        "text": "<thinking>I need to use the summarize_collection</thinking>"
+      },
+      {
+        "type": "tool_use",
+        "id": "toolu_01A09q90qw90lq917835lq9",
+        "name": "summarize_collection",
+        "input": {"prompt": "TLDR the document"}
+      }
+    ]
+  }

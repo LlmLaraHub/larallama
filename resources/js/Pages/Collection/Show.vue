@@ -9,6 +9,7 @@ import { computed, onMounted, ref } from 'vue';
 import EditCollection from './Edit.vue';
 import { useDropzone } from "vue3-dropzone";
 import { router, useForm, Link } from '@inertiajs/vue3';
+import CollectionTags from './Components/CollectionTags.vue';
 import FileUploader from './Components/FileUploader.vue';
 import Label from '@/Components/Labels.vue';
 import CreateChat from './Components/CreateChat.vue';
@@ -90,20 +91,7 @@ onMounted(() => {
                         <p class="mt-2 max-w-4xl text-sm text-gray-500">
                             {{ collection.data.description }}
                         </p>
-                        <div class="flex justify-center gap-2 items-center">
-                            <Label>
-                                <template #title>
-                                    Chat LLm 
-                                </template>
-                                {{ collection.data.driver }}
-                            </Label>
-                            <Label>
-                                <template #title>
-                                    Embedding LLm 
-                                </template>
-                                {{ collection.data.embedding_driver }}
-                            </Label>
-                        </div>
+                        <CollectionTags :collection="collection"></CollectionTags>
                     </div>
                     <FileUploader :collection="collection" />
 

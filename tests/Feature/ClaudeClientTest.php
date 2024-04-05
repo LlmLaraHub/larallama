@@ -117,4 +117,44 @@ class ClaudeClientTest extends TestCase
         });
 
     }
+
+
+    public function test_get_functions(): void
+    {
+        $openaiClient = new \App\LlmDriver\ClaudeClient();
+        $response = $openaiClient->getFunctions();
+        $this->assertNotEmpty($response);
+        $this->assertIsArray($response);
+        $first = $response[0];
+        $this->assertArrayHasKey('name', $first);
+        $this->assertArrayHasKey('input_schema', $first);
+        $expected = get_fixture('claude_client_get_functions.json');
+
+        $this->assertEquals($expected, $response);
+    }
+
+    public function test_functions_prompt(): void
+    {
+
+        $data = get_fixture('cloud_client_tool_use_response.json');
+
+        Http::fake([
+            'api.anthropic.com/*' => Http::response($data, 200),
+        ]);
+
+        $openaiClient = new \App\LlmDriver\ClaudeClient();
+        $response = $openaiClient->functionPromptChat([
+            MessageInDto::from([
+                'content' => 'test',
+                'role' => 'system',
+            ]),
+            MessageInDto::from([
+                'content' => 'test',
+                'role' => 'user',
+            ]),
+        ]);
+
+        $this->assertIsArray($response);
+        $this->assertCount(1, $response);
+    }
 }
