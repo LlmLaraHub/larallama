@@ -106,7 +106,7 @@ class Orchestrate
                 ChatUiUpdateEvent::dispatch(
                     $chat->chatable,
                     $chat,
-                    $results->content);
+                    "Functions and Agents have completed their tasks, results will appear shortly");
 
                 $this->response = $results->content;
             }

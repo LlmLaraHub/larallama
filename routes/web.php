@@ -34,6 +34,8 @@ Route::middleware([
 
     Route::controller(CollectionController::class)->group(function () {
         Route::get('/collections', 'index')->name('collections.index');
+        Route::post('/collections/{collection}/documents/{document}/reset', 'resetCollectionDocument')
+            ->name('collections.documents.reset');
         Route::post('/collections', 'store')->name('collections.store');
         Route::put('/collections/{collection}', 'update')->name('collections.update');
         Route::get('/collections/{collection}', 'show')->name('collections.show');
