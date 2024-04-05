@@ -19,7 +19,7 @@ class MockClientTest extends TestCase
 
         $this->assertCount(1, $results);
 
-        $this->assertEquals('search_and_summarize', $results[0]['name']);
+        $this->assertEquals('summarize_collection', $results[0]['name']);
     }
 
     public function test_tool_with_limit(): void
@@ -28,7 +28,7 @@ class MockClientTest extends TestCase
 
         $results = $client->functionPromptChat(['test'], ['search_and_summarize']);
 
-        $this->assertCount(0, $results);
+        $this->assertCount(1, $results);
     }
 
     public function test_embeddings(): void

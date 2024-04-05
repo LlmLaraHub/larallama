@@ -8,6 +8,25 @@
                 "type": "object",
                 "properties": {
                     "prompt": {
+                        "description": "This is the prompt the user is using to search the database and may or may not assist the results.",
+                        "type": "string",
+                        "enum": [],
+                        "default": ""
+                    }
+                }
+            },
+            "required": []
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "summarize_collection",
+            "description": "This is used when the prompt wants to summarize the entire collection of documents",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "prompt": {
                         "description": "The prompt the user is using the search for.",
                         "type": "string",
                         "enum": [],
