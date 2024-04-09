@@ -16,7 +16,7 @@ return new class extends Migration
             $table->vector('embedding_2048', 2048)->nullable();
             $table->vector('embedding_3072', 3072)->nullable();
             $table->vector('embedding_4096', 4096)->nullable();
-            $table->dropColumn("embedding");
+            $table->dropColumn('embedding');
         });
     }
 

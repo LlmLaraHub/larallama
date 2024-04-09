@@ -48,10 +48,10 @@ class DocumentChunkFactory extends Factory
             $document = Document::factory()->create([
                 'collection_id' => $collection->id,
             ]);
+
             return [
                 'document_id' => $document->id,
             ];
         });
     }
-
 }

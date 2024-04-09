@@ -4,7 +4,6 @@ namespace Tests\Feature\Jobs;
 
 use App\Jobs\VectorlizeDataJob;
 use App\LlmDriver\LlmDriverFacade;
-use App\Models\Collection;
 use App\Models\DocumentChunk;
 use Tests\TestCase;
 
@@ -27,8 +26,8 @@ class VectorlizeDataJobTest extends TestCase
             ->andReturn($dto);
 
         $documentChunk = DocumentChunk::factory()
-        ->openAi()
-        ->create();
+            ->openAi()
+            ->create();
 
         $job = new VectorlizeDataJob($documentChunk);
         $job->handle();

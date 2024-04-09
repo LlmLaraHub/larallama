@@ -14,7 +14,7 @@ return [
 
     'drivers' => [
         'mock' => [
-            'embedding_model' => "mock"
+            'embedding_model' => 'mock',
         ],
         'openai' => [
             'api_key' => env('OPENAI_API_KEY'),

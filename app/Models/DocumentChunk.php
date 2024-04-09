@@ -55,16 +55,17 @@ class DocumentChunk extends Model implements HasDrivers
         return $this->document->collection->driver->value;
     }
 
-    public function getEmbeddingColumn() : string {
+    public function getEmbeddingColumn(): string
+    {
 
         $embeddingModel = driverHelper($this->getDriver(), 'embedding_model');
 
-        $size = config('llmdriver.embedding_sizes.' . $embeddingModel);
+        $size = config('llmdriver.embedding_sizes.'.$embeddingModel);
 
-        if($size) {
-            return "embedding_" . $size;
+        if ($size) {
+            return 'embedding_'.$size;
         }
 
-        return "embeding_3072";
+        return 'embeding_3072';
     }
 }

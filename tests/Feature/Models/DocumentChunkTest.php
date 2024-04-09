@@ -35,7 +35,8 @@ class DocumentChunkTest extends TestCase
         $this->assertNotNull($model->document->document_chunks()->first()->id);
     }
 
-    public function test_embedding_dynamic() {
+    public function test_embedding_dynamic()
+    {
 
         $model = DocumentChunk::factory()->create();
 
@@ -44,8 +45,8 @@ class DocumentChunkTest extends TestCase
         $this->assertEquals('embedding_4096', $embedding_column);
 
         $model = DocumentChunk::factory()
-        ->openAi()
-        ->create();
+            ->openAi()
+            ->create();
 
         $embedding_column = $model->getEmbeddingColumn();
 
