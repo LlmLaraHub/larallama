@@ -77,4 +77,29 @@ class OllamaClientTest extends TestCase
         });
 
     }
+
+    public function test_functions_prompt(): void
+    {
+
+        $data = get_fixture('ollamas_function_response.json');
+        
+        Http::fake([
+            '127.0.0.1:11434/*' => Http::response($data, 200),
+        ]);
+
+        $openaiClient = new \App\LlmDriver\OllamaClient();
+        $response = $openaiClient->functionPromptChat([
+            MessageInDto::from([
+                'content' => 'test',
+                'role' => 'system',
+            ]),
+            MessageInDto::from([
+                'content' => 'test',
+                'role' => 'user',
+            ]),
+        ]);
+
+        $this->assertIsArray($response);
+        $this->assertCount(1, $response);
+    }
 }

@@ -13,7 +13,7 @@ class SummarizeCollection extends FunctionContract
 {
     protected string $name = 'summarize_collection';
 
-    protected string $description = 'This is used when the prompt wants to summarize the entire collection of documents';
+    protected string $description = 'NOT FOR SEARCH, This is used when the prompt wants to summarize the entire collection of documents';
 
     public function handle(
         array $messageArray,

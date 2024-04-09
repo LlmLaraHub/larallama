@@ -53,7 +53,6 @@ class LlmDriverClient
     public function getFunctions(): array
     {
         return [
-            (new SearchAndSummarize())->getFunction(),
             (new SummarizeCollection())->getFunction(),
         ];
     }

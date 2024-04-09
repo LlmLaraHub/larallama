@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\User;
+use Feature;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 
@@ -23,6 +24,10 @@ class AppServiceProvider extends ServiceProvider
     {
         Gate::define('viewPulse', function (User $user) {
             return $user->isAdmin();
+        });
+
+        Feature::define("ollama-functions", function(User $user) {
+            return config('llmdriver.drivers.ollama.feature_flags.functions'); //just not ready yet
         });
 
     }

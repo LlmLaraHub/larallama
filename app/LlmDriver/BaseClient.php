@@ -104,6 +104,40 @@ EOD;
 
     public function getFunctions(): array
     {
-        return [];
+        $functions = LlmDriverFacade::getFunctions();
+
+        return collect($functions)->map(function ($function) {
+            $function = $function->toArray();
+            $properties = [];
+            $required = [];
+
+            foreach (data_get($function, 'parameters.properties', []) as $property) {
+                $name = data_get($property, 'name');
+
+                if (data_get($property, 'required', false)) {
+                    $required[] = $name;
+                }
+
+                $properties[$name] = [
+                    'description' => data_get($property, 'description', null),
+                    'type' => data_get($property, 'type', 'string'),
+                    'enum' => data_get($property, 'enum', []),
+                    'default' => data_get($property, 'default', null),
+                ];
+            }
+
+            return [
+                'type' => 'function',
+                'function' => [
+                    'name' => data_get($function, 'name'),
+                    'description' => data_get($function, 'description'),
+                    'parameters' => [
+                        'type' => 'object',
+                        'properties' => $properties,
+                    ],
+                    'required' => $required,
+                ],
+            ];
+        })->toArray();
     }
 }

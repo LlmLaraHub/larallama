@@ -19,19 +19,22 @@ return [
         ],
         'claude' => [
             'api_key' => env('CLAUDE_API_KEY'),
-            'max_tokens' => env('CLAUDE_MAX_TOKENS', 4000),
+            'max_tokens' => env('CLAUDE_MAX_TOKENS', 4096),
             'models' => [
                 //@see https://www.anthropic.com/news/claude-3-family
-                'completion_model' => env('CLAUDE_COMPLETION_MODEL', 'claude-3-opus-20240229'),
+                'completion_model' => env('CLAUDE_COMPLETION_MODEL', 'claude-3-haiku-20240307'),
             ],
         ],
         'ollama' => [
+            'feature_flags' => [
+                'functions' => env("OLLAMA_FUNCTIONS", false),
+            ],
             'api_key' => 'ollama',
             'api_url' => env('OLLAMA_API_URL', 'http://127.0.0.1:11434/api/'),
             'models' => [
                 //@see https://github.com/ollama/ollama/blob/main/docs/openai.md
-                'completion_model' => env('CLAUDE_COMPLETION_MODEL', 'llama2'),
-                'embedding_model' => env('CLAUDE_EMBEDDING_MODEL', 'llama2'),
+                'completion_model' => env('OLLAMA_COMPLETION_MODEL', 'llama2'),
+                'embedding_model' => env('OLLAMA_EMBEDDING_MODEL', 'llama2'),
             ],
         ],
     ],

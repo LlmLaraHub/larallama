@@ -28,7 +28,9 @@ class Orchestrate
         $functions = LlmDriverFacade::driver($chat->chatable->getDriver())
             ->functionPromptChat($messagesArray);
 
-        if (! empty($functions)) {
+        put_fixture("orchestrate_functions_ollama.json", $functions);
+
+        if ($this->hasFunctions($functions)) {
             /**
              * @TODO
              * We will deal with multi functions shortly
@@ -125,5 +127,10 @@ class Orchestrate
 
             return SearchOrSummarizeChatRepo::search($chat, $message);
         }
+    }
+
+    protected function hasFunctions(array $functions): bool
+    {
+        return is_array($functions) && count($functions) > 0;
     }
 }

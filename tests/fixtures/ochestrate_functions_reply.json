@@ -1,0 +1,9 @@
+[
+    {
+        "name": "search_and_summarize",
+        "arguments": {
+            "collection_id": 1,
+            "query": ""
+        }
+    }
+]
