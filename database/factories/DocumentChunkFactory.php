@@ -3,6 +3,8 @@
 namespace Database\Factories;
 
 use App\Domains\Documents\StatusEnum;
+use App\LlmDriver\DriversEnum;
+use App\Models\Collection;
 use App\Models\Document;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -29,7 +31,27 @@ class DocumentChunkFactory extends Factory
             'original_content' => fake()->sentence(10),
             'summary' => fake()->sentence(5),
             'document_id' => Document::factory(),
-            'embedding' => data_get($embeddings, 'data.0.embedding'),
+            'embedding_3072' => data_get($embeddings, 'data.0.embedding'),
+            'embedding_1536' => null,
+            'embedding_2048' => null,
+            'embedding_4096' => null,
         ];
     }
+
+    public function openAi(): Factory
+    {
+
+        return $this->state(function (array $attributes) {
+            $collection = Collection::factory()->create([
+                'driver' => DriversEnum::OpenAi,
+            ]);
+            $document = Document::factory()->create([
+                'collection_id' => $collection->id,
+            ]);
+            return [
+                'document_id' => $document->id,
+            ];
+        });
+    }
+
 }

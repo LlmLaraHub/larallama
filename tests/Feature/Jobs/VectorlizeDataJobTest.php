@@ -4,6 +4,7 @@ namespace Tests\Feature\Jobs;
 
 use App\Jobs\VectorlizeDataJob;
 use App\LlmDriver\LlmDriverFacade;
+use App\Models\Collection;
 use App\Models\DocumentChunk;
 use Tests\TestCase;
 
@@ -25,13 +26,13 @@ class VectorlizeDataJobTest extends TestCase
             ->once()
             ->andReturn($dto);
 
-        $documentChunk = DocumentChunk::factory()->create([
-            'embedding' => null,
-        ]);
+        $documentChunk = DocumentChunk::factory()
+        ->openAi()
+        ->create();
 
         $job = new VectorlizeDataJob($documentChunk);
         $job->handle();
 
-        $this->assertNotEmpty($documentChunk->embedding);
+        $this->assertNotEmpty($documentChunk->embedding_3072);
     }
 }

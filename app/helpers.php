@@ -51,3 +51,12 @@ if (! function_exists('reduce_text_size')) {
         return (new TrimText())->handle($text);
     }
 }
+
+if (! function_exists('driverHelper')) {
+    function driverHelper(string $driver, string $key): string
+    {
+        return config("llmdriver.drivers.{$driver}.{$key}");
+    }
+}
+
+
