@@ -3,11 +3,9 @@
 namespace App\LlmDriver;
 
 use Illuminate\Support\Facades\Facade;
-use App\LlmDriver\LlmDriverClient;
 
 /**
  * @see LlmDriverClient
- * @package App\LlmDriver
  */
 class LlmDriverFacade extends Facade
 {

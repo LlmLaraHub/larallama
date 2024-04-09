@@ -26,7 +26,7 @@ class AppServiceProvider extends ServiceProvider
             return $user->isAdmin();
         });
 
-        Feature::define("ollama-functions", function(User $user) {
+        Feature::define('ollama-functions', function (User $user) {
             return config('llmdriver.drivers.ollama.feature_flags.functions'); //just not ready yet
         });
 

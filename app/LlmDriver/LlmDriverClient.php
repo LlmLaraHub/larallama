@@ -2,7 +2,6 @@
 
 namespace App\LlmDriver;
 
-use App\LlmDriver\Functions\SearchAndSummarize;
 use App\LlmDriver\Functions\SummarizeCollection;
 
 class LlmDriverClient

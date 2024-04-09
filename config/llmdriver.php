@@ -27,7 +27,7 @@ return [
         ],
         'ollama' => [
             'feature_flags' => [
-                'functions' => env("OLLAMA_FUNCTIONS", false),
+                'functions' => env('OLLAMA_FUNCTIONS', false),
             ],
             'api_key' => 'ollama',
             'api_url' => env('OLLAMA_API_URL', 'http://127.0.0.1:11434/api/'),

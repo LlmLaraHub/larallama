@@ -28,7 +28,7 @@ class Orchestrate
         $functions = LlmDriverFacade::driver($chat->chatable->getDriver())
             ->functionPromptChat($messagesArray);
 
-        put_fixture("orchestrate_functions_ollama.json", $functions);
+        put_fixture('orchestrate_functions_ollama.json', $functions);
 
         if ($this->hasFunctions($functions)) {
             /**

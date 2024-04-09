@@ -7,6 +7,7 @@ use App\LlmDriver\Requests\MessageInDto;
 use App\LlmDriver\Responses\CompletionResponse;
 use App\LlmDriver\Responses\EmbeddingsResponseDto;
 use Illuminate\Support\Facades\Http;
+use Laravel\Pennant\Feature;
 use Tests\TestCase;
 
 class OllamaClientTest extends TestCase
@@ -80,9 +81,11 @@ class OllamaClientTest extends TestCase
 
     public function test_functions_prompt(): void
     {
-
+        if(!Feature::active('ollama-functions')) {
+            $this->markTestSkipped('Feature ollama-functions is not active');
+        }
         $data = get_fixture('ollamas_function_response.json');
-        
+
         Http::fake([
             '127.0.0.1:11434/*' => Http::response($data, 200),
         ]);

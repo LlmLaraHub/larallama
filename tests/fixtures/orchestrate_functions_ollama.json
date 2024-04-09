@@ -1,1 +1,8 @@
-[]
+[
+    {
+        "name": "summarize_collection",
+        "arguments": [
+            "TLDR it for me"
+        ]
+    }
+]

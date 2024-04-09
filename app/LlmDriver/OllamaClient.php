@@ -6,16 +6,13 @@ use App\LlmDriver\Requests\MessageInDto;
 use App\LlmDriver\Responses\CompletionResponse;
 use App\LlmDriver\Responses\EmbeddingsResponseDto;
 use Illuminate\Contracts\Container\BindingResolutionException;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Str;
 use Laravel\Pennant\Feature;
 
 class OllamaClient extends BaseClient
 {
     protected string $driver = 'ollama';
-
 
     public function embedData(string $prompt): EmbeddingsResponseDto
     {
@@ -44,21 +41,21 @@ class OllamaClient extends BaseClient
     public function functionPromptChat(array $messages, array $only = []): array
     {
         Log::info('LlmDriver::OllmaClient::functionPromptChat', $messages);
-    
+
         $functions = [];
-    
-        if(Feature::active("ollama-functions")) {
+
+        if (Feature::active('ollama-functions')) {
             $functions = $this->getFunctions();
 
             $functionsEncoded = collect($functions)->transform(
-                function($item) {
+                function ($item) {
                     return sprintf("### START FUNCTION \n name: %s, description: %s, parameters: %s \n### ", $item['name'], $item['description'], json_encode($item['parameters']));
-            })->implode("\n");
-            
-             $messages = collect($messages)->each(function($message, $loop) use ($functionsEncoded, $messages) {
-    
-                    if ($loop === count($messages) - 1) {
-                        $prompt = <<<EOD
+                })->implode("\n");
+
+            $messages = collect($messages)->each(function ($message, $loop) use ($functionsEncoded, $messages) {
+
+                if ($loop === count($messages) - 1) {
+                    $prompt = <<<EOD
                         Does the following question prompt from the user: 
                         ### START PROMPT
                         {$message->content} 
@@ -82,29 +79,28 @@ class OllamaClient extends BaseClient
                         none are a fit which is ok too: 
                         {$functionsEncoded}
                         EOD;
-    
-                        $message->content = $prompt;
-                    }
+
+                    $message->content = $prompt;
                 }
-             )->map(function ($message) {
+            }
+            )->map(function ($message) {
                 return $message->toArray();
             })->toArray();
-    
+
             $response = $this->getClient()->post('/chat', [
                 'model' => $this->getConfig('ollama')['models']['completion_model'],
                 'messages' => $messages,
-                'format' => "json",
+                'format' => 'json',
                 'stream' => false,
             ]);
-    
 
             $results = $response->json()['message']['content'];
             $functionsFromResults = json_decode($results, true);
-            $functions = []; //reset this 
-            if($functionsFromResults) {
-                if(
+            $functions = []; //reset this
+            if ($functionsFromResults) {
+                if (
                     array_key_exists('arguments', $functionsFromResults) &&
-                    array_key_exists('name', $functionsFromResults) && 
+                    array_key_exists('name', $functionsFromResults) &&
                     data_get($functionsFromResults, 'name') !== 'search_and_summarize') {
                     $functions[] = $functionsFromResults;
                 }
@@ -112,8 +108,6 @@ class OllamaClient extends BaseClient
         } else {
             Log::info('LlmDriver::OllamaClient::functionPromptChat is not active');
         }
-
-        
 
         /**
          * @TODO
