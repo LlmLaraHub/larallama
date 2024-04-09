@@ -46,8 +46,10 @@ class VectorlizeDataJob implements ShouldQueue
         $results = LlmDriverFacade::driver($this->documentChunk->getEmbeddingDriver())
             ->embedData($content);
 
+        $embedding_column = $this->documentChunk->getEmbeddingColumn();
+
         $this->documentChunk->update([
-            'embedding' => $results->embedding,
+            $embedding_column => $results->embedding,
             'status_embeddings' => StatusEnum::Complete,
         ]);
     }

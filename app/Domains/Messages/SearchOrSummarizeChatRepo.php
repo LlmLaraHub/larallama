@@ -26,10 +26,12 @@ class SearchOrSummarizeChatRepo
             $chat->chatable->getEmbeddingDriver()
         )->embedData($input);
 
+        $embeddingSize = get_embedding_size($chat->chatable->getEmbeddingDriver());
+
         $results = DocumentChunk::query()
             ->join('documents', 'documents.id', '=', 'document_chunks.document_id')
             ->selectRaw(
-                'document_chunks.embedding <-> ? as distance, document_chunks.content, document_chunks.embedding as embedding, document_chunks.id as id',
+                "document_chunks.{$embeddingSize} <-> ? as distance, document_chunks.content, document_chunks.{$embeddingSize} as embedding, document_chunks.id as id",
                 [$embedding->embedding]
             )
             ->where('documents.collection_id', $chat->chatable->id)

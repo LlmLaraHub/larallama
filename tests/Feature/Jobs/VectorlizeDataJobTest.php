@@ -25,13 +25,13 @@ class VectorlizeDataJobTest extends TestCase
             ->once()
             ->andReturn($dto);
 
-        $documentChunk = DocumentChunk::factory()->create([
-            'embedding' => null,
-        ]);
+        $documentChunk = DocumentChunk::factory()
+            ->openAi()
+            ->create();
 
         $job = new VectorlizeDataJob($documentChunk);
         $job->handle();
 
-        $this->assertNotEmpty($documentChunk->embedding);
+        $this->assertNotEmpty($documentChunk->embedding_3072);
     }
 }
