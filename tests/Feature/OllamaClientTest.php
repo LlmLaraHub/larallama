@@ -81,7 +81,7 @@ class OllamaClientTest extends TestCase
 
     public function test_functions_prompt(): void
     {
-        if(!Feature::active('ollama-functions')) {
+        if (! Feature::active('ollama-functions')) {
             $this->markTestSkipped('Feature ollama-functions is not active');
         }
         $data = get_fixture('ollamas_function_response.json');

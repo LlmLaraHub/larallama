@@ -5,7 +5,6 @@ namespace Tests\Feature;
 use App\LlmDriver\Requests\MessageInDto;
 use App\LlmDriver\Responses\CompletionResponse;
 use App\LlmDriver\Responses\EmbeddingsResponseDto;
-use Laravel\Pennant\Feature;
 use OpenAI\Laravel\Facades\OpenAI;
 use OpenAI\Responses\Chat\CreateResponse as ChatCreateResponse;
 use OpenAI\Responses\Embeddings\CreateResponse;
@@ -93,8 +92,6 @@ class OpenAiClientTest extends TestCase
 
     public function test_functions_prompt(): void
     {
-
-
 
         $data = get_fixture('openai_response_with_functions_summarize_collection.json');
 
