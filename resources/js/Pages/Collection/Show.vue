@@ -47,7 +47,7 @@ onMounted(() => {
 });
 
 const reset = () => {
-    router.reload();
+    //router.reload();
 }
 
 </script>
