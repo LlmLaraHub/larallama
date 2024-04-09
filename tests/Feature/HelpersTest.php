@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\DocumentChunk;
 use Tests\TestCase;
 
 class HelpersTest extends TestCase
@@ -12,7 +13,26 @@ class HelpersTest extends TestCase
     public function test_config_helper(): void
     {
 
-        $this->assertEquals(4096, driverHelper('mock', 'embedding_size.mock'));
+        $this->assertEquals('mock', driverHelper('mock', 'embedding_model'));
+
+    }
+
+    public function test_get_embedding_size(): void
+    {
+
+        $model = DocumentChunk::factory()->create();
+
+        $embedding_column = get_embedding_size($model->getEmbeddingDriver());
+
+        $this->assertEquals('embedding_4096', $embedding_column);
+
+        $model = DocumentChunk::factory()
+            ->openAi()
+            ->create();
+
+        $embedding_column = get_embedding_size($model->getEmbeddingDriver());
+
+        $this->assertEquals('embedding_3072', $embedding_column);
 
     }
 }

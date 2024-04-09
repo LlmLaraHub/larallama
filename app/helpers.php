@@ -58,3 +58,18 @@ if (! function_exists('driverHelper')) {
         return config("llmdriver.drivers.{$driver}.{$key}");
     }
 }
+
+if (! function_exists('get_embedding_size')) {
+    function get_embedding_size(string $ebmedding_driver): string
+    {
+        $embeddingModel = driverHelper($ebmedding_driver, 'embedding_model');
+
+        $size = config('llmdriver.embedding_sizes.'.$embeddingModel);
+
+        if ($size) {
+            return 'embedding_'.$size;
+        }
+
+        return 'embeding_3072';
+    }
+}

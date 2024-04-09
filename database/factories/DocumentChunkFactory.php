@@ -44,6 +44,7 @@ class DocumentChunkFactory extends Factory
         return $this->state(function (array $attributes) {
             $collection = Collection::factory()->create([
                 'driver' => DriversEnum::OpenAi,
+                'embedding_driver' => DriversEnum::OpenAi,
             ]);
             $document = Document::factory()->create([
                 'collection_id' => $collection->id,
