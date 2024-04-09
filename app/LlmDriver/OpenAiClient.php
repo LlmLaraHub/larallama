@@ -19,7 +19,7 @@ class OpenAiClient extends BaseClient
     {
 
         $response = OpenAI::chat()->create([
-            'model' => $this->getConfig('openai')['chat_model'],
+            'model' => $this->getConfig('openai')['models']['chat_model'],
             'messages' => collect($messages)->map(function ($message) {
                 return $message->toArray();
             })->toArray(),
@@ -38,7 +38,7 @@ class OpenAiClient extends BaseClient
     {
 
         $response = OpenAI::embeddings()->create([
-            'model' => $this->getConfig('openai')['embedding_model'],
+            'model' => $this->getConfig('openai')['models']['embedding_model'],
             'input' => $data,
         ]);
 
@@ -57,7 +57,7 @@ class OpenAiClient extends BaseClient
     public function completion(string $prompt, int $temperature = 0): CompletionResponse
     {
         $response = OpenAI::chat()->create([
-            'model' => $this->getConfig('openai')['completion_model'],
+            'model' => $this->getConfig('openai')['models']['completion_model'],
             'messages' => [
                 ['role' => 'user', 'content' => $prompt],
             ],
@@ -87,7 +87,7 @@ class OpenAiClient extends BaseClient
         $functions = $this->getFunctions();
 
         $response = OpenAI::chat()->create([
-            'model' => $this->getConfig('openai')['chat_model'],
+            'model' => $this->getConfig('openai')['models']['chat_model'],
             'messages' => collect($messages)->map(function ($message) {
                 return $message->toArray();
             })->toArray(),

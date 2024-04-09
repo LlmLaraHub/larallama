@@ -13,7 +13,7 @@ class HelpersTest extends TestCase
     public function test_config_helper(): void
     {
 
-        $this->assertEquals('mock', driverHelper('mock', 'embedding_model'));
+        $this->assertEquals('mock', driverHelper('mock', 'models.embedding_model'));
 
     }
 

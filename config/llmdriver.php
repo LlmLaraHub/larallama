@@ -8,20 +8,26 @@ return [
         'text-embedding-3-large' => 3072,
         'text-embedding-3-medium' => 768,
         'text-embedding-3-small' => 384,
+        'ollama' => 4096,
         'llama2' => 4096,
         'mistral' => 4096,
     ],
 
     'drivers' => [
         'mock' => [
-            'embedding_model' => 'mock',
+            'models' => [
+                'completion_model' => 'mock',
+                'embedding_model' => 'mock',
+            ],
         ],
         'openai' => [
             'api_key' => env('OPENAI_API_KEY'),
             'api_url' => env('OPENAI_API_URL', 'https://api.openai.com/v1'),
-            'embedding_model' => env('OPENAI_EMBEDDING_MODEL', 'text-embedding-3-large'),
-            'completion_model' => env('OPENAI_COMPLETION_MODEL', 'gpt-4-turbo-preview'),
-            'chat_model' => env('OPENAICHAT_MODEL', 'gpt-4-turbo-preview'),
+            'models' => [
+                'embedding_model' => env('OPENAI_EMBEDDING_MODEL', 'text-embedding-3-large'),
+                'completion_model' => env('OPENAI_COMPLETION_MODEL', 'gpt-4-turbo-preview'),
+                'chat_model' => env('OPENAICHAT_MODEL', 'gpt-4-turbo-preview'),
+            ],
         ],
         'claude' => [
             'api_key' => env('CLAUDE_API_KEY'),
