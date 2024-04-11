@@ -48,6 +48,12 @@ class OllamaClientTest extends TestCase
 
     }
 
+    public function test_not_async()
+    {
+        $client = new OllamaClient();
+        $this->assertFalse($client->isAsync());
+    }
+
     public function test_chat(): void
     {
         $client = new OllamaClient();

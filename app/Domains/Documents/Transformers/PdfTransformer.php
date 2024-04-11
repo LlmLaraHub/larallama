@@ -50,7 +50,8 @@ class PdfTransformer
                 $chunks[] = [
                     new VectorlizeDataJob($DocumentChunk),
                     new SummarizeDataJob($DocumentChunk),
-                    //Tagging
+                    //new TagDataJob($this->document),
+                    //then mark it all as done and notify the ui
                 ];
 
                 CollectionStatusEvent::dispatch($document->collection, CollectionStatusEnum::PROCESSING);

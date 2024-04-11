@@ -13,6 +13,7 @@
         "autoprefixer": "^10.4.16",
         "axios": "^1.6.4",
         "chokidar": "^3.6.0",
+        "daisyui": "^4.10.1",
         "laravel-echo": "^1.16.0",
         "laravel-vite-plugin": "^1.0",
         "postcss": "^8.4.32",

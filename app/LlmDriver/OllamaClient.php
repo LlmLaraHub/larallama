@@ -198,4 +198,9 @@ class OllamaClient extends BaseClient
 
         })->toArray();
     }
+
+    public function isAsync(): bool
+    {
+        return false;
+    }
 }

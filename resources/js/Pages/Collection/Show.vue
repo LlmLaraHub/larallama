@@ -15,6 +15,9 @@ import Label from '@/Components/Labels.vue';
 import CreateChat from './Components/CreateChat.vue';
 import DocumentReset from './Components/DocumentReset.vue';
 import { ChatBubbleLeftIcon } from '@heroicons/vue/24/outline';
+import { EllipsisVerticalIcon } from '@heroicons/vue/24/solid';
+import ConfirmationModal from '@/Components/ConfirmationModal.vue';
+import ReindexAllDocuments from './Components/ReindexAllDocuments.vue';
 
 const props = defineProps({
     collection: {
@@ -28,6 +31,12 @@ const props = defineProps({
         type: Object,
     },
 });
+
+const showReindexCollection = ref(false);
+
+const toggleReindexCollection = () => {
+    showReindexCollection.value = !showReindexCollection.value;
+};
 
 const showEditCollection = ref(false);
 
@@ -89,7 +98,22 @@ const reset = () => {
                                 Continue Chatting</SecondaryLink>
 
                             </div>
-                            <PrimaryButton type="button" @click="showEditCollectionSlideOut">Edit</PrimaryButton>
+                                
+                                    <details class="dropdown dropdown-end">
+                                        <summary class="m-1 btn border-none">
+                                            <EllipsisVerticalIcon class="h-5 w-5"/>
+                                        </summary>
+                                    <ul class="p-2 shadow menu dropdown-content z-[50] w-52">
+                                        <li>
+                                            <button type="button" class="btn-link" 
+                                            @click="showEditCollectionSlideOut">Edit</button>
+                                        </li>
+                                        <li>
+                                            <button type="button" class="btn-link" 
+                                            @click="toggleReindexCollection">Reindex Documents</button>
+                                        </li>
+                                    </ul>
+                                    </details>
                             </div>
 
                         </div>
@@ -196,5 +220,29 @@ const reset = () => {
         <EditCollection
         :collection="collection.data"
         :open="showEditCollection" @closing="closeEditCollectionSlideOut"/>
+
+        <ConfirmationModal 
+        :show="showReindexCollection" 
+        @close="toggleReindexCollection"
+
+        >
+        <template #title>
+            Reindex Collection
+        </template>
+        <template #content>
+            This will remove all existing indexes and start the process over 
+            with your current set of uploaded documents. Are you sure? 
+            This will NOT delete chats threads.
+        </template>
+            <template #footer>
+                <div class="flex justify-end gap-4 items-center">
+                    <SecondaryButton @click="toggleReindexCollection">
+                        Cancel
+                    </SecondaryButton>
+
+                    <ReindexAllDocuments :collection="collection.data" @reindexed="toggleReindexCollection"/>   
+                </div>
+            </template>
+        </ConfirmationModal>
     </AppLayout>
 </template>

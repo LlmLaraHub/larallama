@@ -55,4 +55,14 @@ class LlmDriverClient
             (new SummarizeCollection())->getFunction(),
         ];
     }
+
+    /**
+     * @NOTE
+     * Some systems like Ollama might not like all the traffic
+     * at once
+     */
+    public function isAsync(): bool
+    {
+        return true;
+    }
 }

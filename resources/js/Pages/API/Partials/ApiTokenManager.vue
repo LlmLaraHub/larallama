@@ -227,7 +227,8 @@ const deleteApiToken = () => {
         </DialogModal>
 
         <!-- Delete Token Confirmation Modal -->
-        <ConfirmationModal :show="apiTokenBeingDeleted != null" @close="apiTokenBeingDeleted = null">
+        <ConfirmationModal :show="apiTokenBeingDeleted != null" 
+        @close="apiTokenBeingDeleted = null">
             <template #title>
                 Delete API Token
             </template>

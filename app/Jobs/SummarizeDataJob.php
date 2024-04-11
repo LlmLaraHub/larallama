@@ -11,6 +11,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\Middleware\WithoutOverlapping;
 use Illuminate\Queue\SerializesModels;
 
 class SummarizeDataJob implements ShouldQueue
@@ -23,6 +24,17 @@ class SummarizeDataJob implements ShouldQueue
     public function __construct(public DocumentChunk $documentChunk)
     {
         //
+    }
+
+    public function middleware(): array
+    {
+        if (! LlmDriverFacade::driver($this->documentChunk->getDriver())->isAsync()) {
+            return [];
+        }
+
+        return [(
+            new WithoutOverlapping($this->documentChunk->document->collection_id)
+        )];
     }
 
     /**
