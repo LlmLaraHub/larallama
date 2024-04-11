@@ -11,6 +11,6 @@ class ReindexCollectionControllerTest extends TestCase
      */
     public function test_reindex(): void
     {
-        $this->markTestSkipped("@TODO had to get back to work!");
+        $this->markTestSkipped('@TODO had to get back to work!');
     }
 }

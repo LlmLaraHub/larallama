@@ -33,7 +33,7 @@ class VectorlizeDataJob implements ShouldQueue
         }
 
         return [(
-            new WithoutOverlapping($this->documentChunk->document->collection_id)
+            new WithoutOverlapping($this->documentChunk->getDriver())
         )];
     }
 
