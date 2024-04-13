@@ -4,6 +4,7 @@ use App\Http\Controllers\ChatController;
 use App\Http\Controllers\CollectionController;
 use App\Http\Controllers\ExampleChatBotController;
 use App\Http\Controllers\ExampleController;
+use App\Http\Controllers\ReindexCollectionController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -22,10 +23,18 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
+
     Route::get('/dashboard', function () {
         return to_route('collections.index');
         //return Inertia::render('Dashboard');
     })->name('dashboard');
+
+    Route::controller(ReindexCollectionController::class)->group(
+        function () {
+            Route::post('/collections/{collection}/reindex', 'reindex')
+                ->name('collections.reindex');
+        }
+    );
 
     Route::controller(ExampleChatBotController::class)->group(function () {
         Route::get('/examples/chatbot', 'show')->name('example.chatbot.show');

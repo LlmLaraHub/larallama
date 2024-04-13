@@ -35,6 +35,19 @@ class CollectionStatusEvent implements ShouldBroadcast
     }
 
     /**
+     * Get the data to broadcast.
+     *
+     * @return array<string, mixed>
+     */
+    public function broadcastWith(): array
+    {
+        return [
+            'id' => $this->collection->id,
+            'status' => $this->status->value,
+        ];
+    }
+
+    /**
      * The event's broadcast name.
      */
     public function broadcastAs(): string

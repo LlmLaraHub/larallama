@@ -55,4 +55,22 @@ class DocumentChunkFactory extends Factory
             ];
         });
     }
+
+    public function ollama(): Factory
+    {
+
+        return $this->state(function (array $attributes) {
+            $collection = Collection::factory()->create([
+                'driver' => DriversEnum::Ollama,
+                'embedding_driver' => DriversEnum::Ollama,
+            ]);
+            $document = Document::factory()->create([
+                'collection_id' => $collection->id,
+            ]);
+
+            return [
+                'document_id' => $document->id,
+            ];
+        });
+    }
 }

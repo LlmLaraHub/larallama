@@ -108,7 +108,10 @@ class Chat extends Model implements HasDrivers
 
     public function getChatResponse(int $limit = 5): array
     {
-        $latestMessages = $this->messages()->latest()->limit($limit)->get()->sortBy('id');
+        $latestMessages = $this->messages()
+            ->latest()
+            ->limit(5)
+            ->get();
 
         $latestMessagesArray = [];
 
@@ -118,7 +121,7 @@ class Chat extends Model implements HasDrivers
             ]);
         }
 
-        return $latestMessagesArray;
+        return array_reverse($latestMessagesArray);
 
     }
 

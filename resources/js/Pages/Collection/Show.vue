@@ -103,7 +103,7 @@ const reset = () => {
                                         <summary class="m-1 btn border-none">
                                             <EllipsisVerticalIcon class="h-5 w-5"/>
                                         </summary>
-                                    <ul class="p-2 shadow menu dropdown-content z-[50] w-52">
+                                    <ul class="p-2 shadow menu dropdown-content z-[49] w-52">
                                         <li>
                                             <button type="button" class="btn-link" 
                                             @click="showEditCollectionSlideOut">Edit</button>

@@ -1,0 +1,9 @@
+[
+    {
+        "key": "ollama",
+        "releaseAfter": 30,
+        "expiresAfter": 600,
+        "prefix": "laravel-queue-overlap:",
+        "shareKey": false
+    }
+]

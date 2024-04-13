@@ -19,6 +19,20 @@ class VectorlizeDataJob implements ShouldQueue
     use Batchable, Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /**
+     * The number of times the job may be attempted.
+     *
+     * @var int
+     */
+    public $tries = 25;
+
+    /**
+     * The maximum number of unhandled exceptions to allow before failing.
+     *
+     * @var int
+     */
+    public $maxExceptions = 3;
+
+    /**
      * Create a new job instance.
      */
     public function __construct(public DocumentChunk $documentChunk)
@@ -28,13 +42,17 @@ class VectorlizeDataJob implements ShouldQueue
 
     public function middleware(): array
     {
-        if (! LlmDriverFacade::driver($this->documentChunk->getDriver())->isAsync()) {
-            return [];
+        $defaults = [];
+
+        if (LlmDriverFacade::driver($this->documentChunk->getDriver())->isAsync()) {
+            return $defaults;
         }
 
-        return [(
-            new WithoutOverlapping($this->documentChunk->getDriver())
-        )];
+        return [
+            (new WithoutOverlapping($this->documentChunk->getDriver()))
+                ->releaseAfter(30)
+                ->expireAfter(600),
+        ];
     }
 
     /**

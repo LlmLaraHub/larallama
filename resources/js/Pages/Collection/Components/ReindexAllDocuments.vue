@@ -25,6 +25,18 @@ const form = useForm({});
 const submit = () => {
     toast.info("Running reindexing jobs...")
     emit('reindexed');
+
+    form.post(route('collections.reindex', {
+        collection: props.collection.id
+    }), {
+        preserveScroll: true,
+        onSuccess: () => {
+            toast.success("Reindexing jobs have been started.");
+        },
+        onError: () => {
+            toast.error("Failed to start reindexing jobs.");
+        }
+    });
 }
 
 

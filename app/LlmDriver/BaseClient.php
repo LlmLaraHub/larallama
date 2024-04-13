@@ -102,6 +102,11 @@ EOD;
         return config("llmdriver.drivers.$driver");
     }
 
+    public function isAsync(): bool
+    {
+        return true;
+    }
+
     public function getFunctions(): array
     {
         $functions = LlmDriverFacade::getFunctions();

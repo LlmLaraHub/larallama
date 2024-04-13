@@ -163,7 +163,9 @@ class OllamaClient extends BaseClient
 
         return Http::withHeaders([
             'content-type' => 'application/json',
-        ])->baseUrl($baseUrl);
+        ])
+            ->timeout(120)
+            ->baseUrl($baseUrl);
     }
 
     public function getFunctions(): array

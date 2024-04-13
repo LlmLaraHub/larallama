@@ -47,16 +47,14 @@ class SearchOrSummarizeChatRepo
 
         $content = implode(' ', $content);
 
-        $content = 'This is data from the search results when entering the users prompt please use this for context and only this and return as markdown so I can render it: '.$content;
+        $content = "This is data from the search results when entering the users prompt which is ### START PROMPT ### {$input} ### END PROMPT ### please use this with the following context and only this and return as markdown so I can render it: ".$content;
 
         $chat->addInput(
             message: $content,
-            role: RoleEnum::Assistant,
+            role: RoleEnum::User,
             systemPrompt: $chat->chatable->systemPrompt(),
             show_in_thread: false
         );
-
-        $chat->addInput($input, RoleEnum::User, $chat->chatable->systemPrompt());
 
         $latestMessagesArray = $chat->getChatResponse();
 

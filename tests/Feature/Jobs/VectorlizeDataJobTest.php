@@ -34,4 +34,23 @@ class VectorlizeDataJobTest extends TestCase
 
         $this->assertNotEmpty($documentChunk->embedding_3072);
     }
+
+    public function test_middleware()
+    {
+        $documentChunk = DocumentChunk::factory()
+            ->ollama()
+            ->create();
+
+        $job = new VectorlizeDataJob($documentChunk);
+
+        $this->assertNotEmpty($job->middleware());
+
+        $documentChunk = DocumentChunk::factory()
+            ->openAi()
+            ->create();
+
+        $job = new VectorlizeDataJob($documentChunk);
+
+        $this->assertEmpty($job->middleware());
+    }
 }

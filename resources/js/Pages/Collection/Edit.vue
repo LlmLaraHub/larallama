@@ -1,6 +1,6 @@
 <template>
     <TransitionRoot as="template" :show="open">
-      <Dialog as="div" class="relative z-10" @close="open = false">
+      <Dialog as="div" class="relative z-50" @close="open = false">
         <div class="fixed inset-0" />
   
         <div class="fixed inset-0 overflow-hidden">
