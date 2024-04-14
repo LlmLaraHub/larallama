@@ -17,7 +17,6 @@ use LlmLaraHub\LlmDriver\Responses\CompletionResponse;
 class SummarizeDataJob implements ShouldQueue
 {
     use Batchable, Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-
     use JobMiddlewareTrait;
 
     /**

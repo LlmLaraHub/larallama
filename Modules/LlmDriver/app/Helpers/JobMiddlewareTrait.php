@@ -2,13 +2,14 @@
 
 namespace LlmLaraHub\LlmDriver\Helpers;
 
-use LlmLaraHub\LlmDriver\LlmDriverFacade;
 use Illuminate\Queue\Middleware\WithoutOverlapping;
 use LlmLaraHub\LlmDriver\HasDrivers;
+use LlmLaraHub\LlmDriver\LlmDriverFacade;
 
-trait JobMiddlewareTrait {
-
-    public function driverMiddleware(HasDrivers $hasDrivers) : array {
+trait JobMiddlewareTrait
+{
+    public function driverMiddleware(HasDrivers $hasDrivers): array
+    {
         $defaults = [];
 
         if (LlmDriverFacade::driver($hasDrivers->getDriver())->isAsync()) {
