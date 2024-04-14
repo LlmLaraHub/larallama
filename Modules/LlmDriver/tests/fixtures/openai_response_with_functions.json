@@ -1,0 +1,33 @@
+{
+    "id": "chatcmpl-99MsQDhcyADcsehLfCQAwuyhhTxmB",
+    "object": "chat.completion",
+    "created": 1712019918,
+    "model": "gpt-4-0125-preview",
+    "systemFingerprint": "fp_f38f4d6482",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": null,
+                "toolCalls": [
+                    {
+                        "id": "call_u3GOeiE4LaSJvOqV2uOqeXK2",
+                        "type": "function",
+                        "function": {
+                            "name": "search_and_summarize",
+                            "arguments": "{\"prompt\":\"define 'Generative AI'\"}"
+                        }
+                    }
+                ],
+                "functionCall": null
+            },
+            "finishReason": "tool_calls"
+        }
+    ],
+    "usage": {
+        "promptTokens": 101,
+        "completionTokens": 22,
+        "totalTokens": 123
+    }
+}

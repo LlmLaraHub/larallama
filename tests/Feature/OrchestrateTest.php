@@ -3,16 +3,16 @@
 namespace Tests\Feature;
 
 use App\Events\ChatUiUpdateEvent;
-use App\LlmDriver\Functions\SummarizeCollection;
-use App\LlmDriver\LlmDriverFacade;
-use App\LlmDriver\Orchestrate;
-use App\LlmDriver\Requests\MessageInDto;
-use App\LlmDriver\Responses\FunctionResponse;
 use App\Models\Chat;
 use App\Models\Collection;
 use App\Models\User;
 use Facades\App\Domains\Messages\SearchOrSummarizeChatRepo;
 use Illuminate\Support\Facades\Event;
+use LlmLaraHub\LlmDriver\Functions\SummarizeCollection;
+use LlmLaraHub\LlmDriver\LlmDriverFacade;
+use LlmLaraHub\LlmDriver\Orchestrate;
+use LlmLaraHub\LlmDriver\Requests\MessageInDto;
+use LlmLaraHub\LlmDriver\Responses\FunctionResponse;
 use Mockery;
 use Tests\TestCase;
 

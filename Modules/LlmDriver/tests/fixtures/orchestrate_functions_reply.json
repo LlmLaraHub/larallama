@@ -1,0 +1,12 @@
+[
+    {
+        "name": "summarize_collection",
+        "arguments": {
+            "prompt": {
+                "description": "The prompt the user is using to search for summarization.",
+                "type": "string",
+                "default": ""
+            }
+        }
+    }
+]

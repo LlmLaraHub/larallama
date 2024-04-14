@@ -3,10 +3,10 @@
 namespace Database\Factories;
 
 use App\Domains\Documents\StatusEnum;
-use App\LlmDriver\DriversEnum;
 use App\Models\Collection;
 use App\Models\Document;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use LlmLaraHub\LlmDriver\DriversEnum;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\DocumentChunk>

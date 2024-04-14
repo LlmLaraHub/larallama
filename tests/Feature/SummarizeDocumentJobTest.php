@@ -3,8 +3,8 @@
 namespace Tests\Feature;
 
 use App\Jobs\SummarizeDocumentJob;
-use App\LlmDriver\LlmDriverFacade;
 use App\Models\Document;
+use LlmLaraHub\LlmDriver\LlmDriverFacade;
 use Tests\TestCase;
 
 class SummarizeDocumentJobTest extends TestCase
@@ -16,7 +16,7 @@ class SummarizeDocumentJobTest extends TestCase
     {
 
         $data = 'Foo bar';
-        $dto = new \App\LlmDriver\Responses\CompletionResponse($data);
+        $dto = new \LlmLaraHub\LlmDriver\Responses\CompletionResponse($data);
 
         LlmDriverFacade::shouldReceive('driver->completion')
             ->once()

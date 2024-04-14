@@ -7,10 +7,10 @@ use App\Events\ChatUpdatedEvent;
 use App\Http\Resources\ChatResource;
 use App\Http\Resources\CollectionResource;
 use App\Http\Resources\MessageResource;
-use App\LlmDriver\Requests\MessageInDto;
 use App\Models\Chat;
 use App\Models\Collection;
-use Facades\App\LlmDriver\Orchestrate;
+use Facades\LlmLaraHub\LlmDriver\Orchestrate;
+use LlmLaraHub\LlmDriver\Requests\MessageInDto;
 
 class ChatController extends Controller
 {

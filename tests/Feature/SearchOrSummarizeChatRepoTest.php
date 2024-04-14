@@ -3,11 +3,11 @@
 namespace Tests\Feature;
 
 use App\Domains\Messages\SearchOrSummarizeChatRepo;
-use App\LlmDriver\LlmDriverFacade;
 use App\Models\Chat;
 use App\Models\Collection;
 use App\Models\Document;
 use App\Models\DocumentChunk;
+use LlmLaraHub\LlmDriver\LlmDriverFacade;
 use Tests\TestCase;
 
 class SearchOrSummarizeChatRepoTest extends TestCase
@@ -19,7 +19,7 @@ class SearchOrSummarizeChatRepoTest extends TestCase
     {
 
         $data = 'Foo bar';
-        $dto = new \App\LlmDriver\Responses\CompletionResponse($data);
+        $dto = new \LlmLaraHub\LlmDriver\Responses\CompletionResponse($data);
 
         LlmDriverFacade::shouldReceive('driver->chat')
             ->once()
@@ -27,7 +27,7 @@ class SearchOrSummarizeChatRepoTest extends TestCase
 
         $embedding = get_fixture('embedding_response.json');
 
-        $dto = \App\LlmDriver\Responses\EmbeddingsResponseDto::from([
+        $dto = \LlmLaraHub\LlmDriver\Responses\EmbeddingsResponseDto::from([
             'embedding' => data_get($embedding, 'data.0.embedding'),
             'token_count' => 1000,
         ]);

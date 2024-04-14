@@ -2,9 +2,9 @@
 
 namespace Tests\Feature;
 
-use App\LlmDriver\Functions\FunctionDto;
-use App\LlmDriver\Functions\ParametersDto;
-use App\LlmDriver\Functions\PropertyDto;
+use LlmLaraHub\LlmDriver\Functions\FunctionDto;
+use LlmLaraHub\LlmDriver\Functions\ParametersDto;
+use LlmLaraHub\LlmDriver\Functions\PropertyDto;
 use Tests\TestCase;
 
 class FunctionDtoTest extends TestCase

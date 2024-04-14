@@ -2,9 +2,9 @@
 
 namespace Database\Factories;
 
-use App\LlmDriver\DriversEnum;
 use App\Models\Team;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use LlmLaraHub\LlmDriver\DriversEnum;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Collection>

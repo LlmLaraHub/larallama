@@ -3,20 +3,21 @@
 namespace App\Jobs;
 
 use App\Domains\Documents\StatusEnum;
-use App\LlmDriver\LlmDriverFacade;
-use App\LlmDriver\Responses\CompletionResponse;
 use App\Models\DocumentChunk;
 use Illuminate\Bus\Batchable;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Queue\Middleware\WithoutOverlapping;
 use Illuminate\Queue\SerializesModels;
+use LlmLaraHub\LlmDriver\Helpers\JobMiddlewareTrait;
+use LlmLaraHub\LlmDriver\LlmDriverFacade;
+use LlmLaraHub\LlmDriver\Responses\CompletionResponse;
 
 class SummarizeDataJob implements ShouldQueue
 {
     use Batchable, Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    use JobMiddlewareTrait;
 
     /**
      * Create a new job instance.
@@ -28,13 +29,9 @@ class SummarizeDataJob implements ShouldQueue
 
     public function middleware(): array
     {
-        if (! LlmDriverFacade::driver($this->documentChunk->getDriver())->isAsync()) {
-            return [];
-        }
+        $middleware = $this->driverMiddleware($this->documentChunk);
 
-        return [(
-            new WithoutOverlapping($this->documentChunk->getDriver())
-        )];
+        return $middleware;
     }
 
     /**

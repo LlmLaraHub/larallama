@@ -3,20 +3,21 @@
 namespace App\Jobs;
 
 use App\Domains\Documents\StatusEnum;
-use App\LlmDriver\LlmDriverFacade;
-use App\LlmDriver\Responses\EmbeddingsResponseDto;
 use App\Models\DocumentChunk;
 use Illuminate\Bus\Batchable;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Queue\Middleware\WithoutOverlapping;
 use Illuminate\Queue\SerializesModels;
+use LlmLaraHub\LlmDriver\Helpers\JobMiddlewareTrait;
+use LlmLaraHub\LlmDriver\LlmDriverFacade;
+use LlmLaraHub\LlmDriver\Responses\EmbeddingsResponseDto;
 
 class VectorlizeDataJob implements ShouldQueue
 {
     use Batchable, Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    use JobMiddlewareTrait;
 
     /**
      * The number of times the job may be attempted.
@@ -42,17 +43,9 @@ class VectorlizeDataJob implements ShouldQueue
 
     public function middleware(): array
     {
-        $defaults = [];
+        $middleware = $this->driverMiddleware($this->documentChunk);
 
-        if (LlmDriverFacade::driver($this->documentChunk->getDriver())->isAsync()) {
-            return $defaults;
-        }
-
-        return [
-            (new WithoutOverlapping($this->documentChunk->getDriver()))
-                ->releaseAfter(30)
-                ->expireAfter(600),
-        ];
+        return $middleware;
     }
 
     /**

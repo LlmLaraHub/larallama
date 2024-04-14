@@ -1,8 +1,8 @@
 <?php
 
-use App\LlmDriver\Helpers\TrimText;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
+use LlmLaraHub\LlmDriver\Helpers\TrimText;
 
 if (! function_exists('put_fixture')) {
     function put_fixture($file_name, $content = [], $json = true)

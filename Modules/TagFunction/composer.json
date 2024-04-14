@@ -1,0 +1,30 @@
+{
+    "name": "nwidart/tagfunction",
+    "description": "Tag Function that works with LLMDriver",
+    "authors": [
+        {
+            "name": "Alfred Nutile",
+            "email": "alfrednutile@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [],
+            "aliases": {
+
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "LlmLaraHub\\TagFunction\\": "app/",
+            "LlmLaraHub\\TagFunction\\Database\\Factories\\": "database/factories/",
+            "LlmLaraHub\\TagFunction\\Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "LlmLaraHub\\TagFunction\\Tests\\": "tests/"
+        }
+    }
+}

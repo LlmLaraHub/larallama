@@ -1,0 +1,23 @@
+[
+    {
+        "type": "function",
+        "function": {
+            "name": "summarize_collection",
+            "description": "NOT FOR SEARCH, This is used when the prompt wants to summarize the entire collection of documents",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "prompt": {
+                        "description": "The prompt the user is using the search for.",
+                        "type": "string",
+                        "enum": [],
+                        "default": ""
+                    }
+                }
+            },
+            "required": [
+                "prompt"
+            ]
+        }
+    }
+]

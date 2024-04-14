@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\LlmDriver\Functions\FunctionCallDto;
+use LlmLaraHub\LlmDriver\Functions\FunctionCallDto;
 use Tests\TestCase;
 
 class FunctionCallDtoTest extends TestCase
