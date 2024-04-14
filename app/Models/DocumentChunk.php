@@ -7,12 +7,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use LlmLaraHub\LlmDriver\HasDrivers;
 use LlmLaraHub\TagFunction\Helpers\Taggable;
+use LlmLaraHub\TagFunction\Contracts\TaggableContract;
 use Pgvector\Laravel\Vector;
 
 /**
  * @property Document $document
  */
-class DocumentChunk extends Model implements HasDrivers
+class DocumentChunk extends Model implements HasDrivers, TaggableContract
 {
     use HasFactory;
     use Taggable;

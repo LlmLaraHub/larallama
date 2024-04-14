@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use LlmLaraHub\LlmDriver\HasDrivers;
 use LlmLaraHub\TagFunction\Helpers\Taggable;
+use LlmLaraHub\TagFunction\Contracts\TaggableContract;
 
 /**
  * Class Document
@@ -19,7 +20,7 @@ use LlmLaraHub\TagFunction\Helpers\Taggable;
  * @property string|null $summary
  * @property string|null $file_path
  */
-class Document extends Model implements HasDrivers
+class Document extends Model implements HasDrivers, TaggableContract
 {
     use HasFactory;
     use Taggable;

@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 use LlmLaraHub\LlmDriver\DriversEnum;
 use LlmLaraHub\LlmDriver\HasDrivers;
 use LlmLaraHub\TagFunction\Helpers\Taggable;
+use LlmLaraHub\TagFunction\Contracts\TaggableContract;
 
 /**
  * Class Project
@@ -24,7 +25,7 @@ use LlmLaraHub\TagFunction\Helpers\Taggable;
  * @property \Illuminate\Support\Carbon $created_at
  * @property \Illuminate\Support\Carbon $updated_at
  */
-class Collection extends Model implements HasDrivers
+class Collection extends Model implements HasDrivers, TaggableContract
 {
     use HasFactory;
     use Taggable;

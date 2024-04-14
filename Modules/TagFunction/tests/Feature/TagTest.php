@@ -19,13 +19,34 @@ class TagTest extends TestCase
         ->has(Tag::factory(), 'tags')->create();
 
         $this->assertNotEmpty($document->tags);
-        
+
         $tag = $document->tags()->first();
 
         $this->assertEquals(
             $document->id,
             $tag->documents->first()->id
         );
+    }
 
+    public function test_add_tag_new() {
+        $document = Document::factory()->create();
+        $tag = Tag::factory()->create();
+
+        $this->assertDatabaseCount('tags', 1);
+        $document->addTag($tag->name);
+
+        $this->assertNotEmpty($document->tags);
+        $this->assertDatabaseCount('tags', 1);
+
+    }
+
+    public function test_add_tag_existing() {
+        $document = Document::factory()->create();
+
+        $this->assertDatabaseCount('tags', 0);
+        $document->addTag("foobar");
+
+        $this->assertNotEmpty($document->tags);
+        $this->assertDatabaseCount('tags', 1);
     }
 }

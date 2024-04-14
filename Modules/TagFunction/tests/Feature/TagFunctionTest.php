@@ -80,5 +80,7 @@ EOT;
                "arguments" => "[]"
             ])
         );
+
+        $this->assertCount(10, $documentChunk->refresh()->tags);
     }
 }

@@ -9,6 +9,7 @@ use LlmLaraHub\LlmDriver\HasDrivers;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
 use LlmLaraHub\LlmDriver\Requests\MessageInDto;
 use LlmLaraHub\LlmDriver\Responses\FunctionResponse;
+use LlmLaraHub\TagFunction\Contracts\TaggableContract;
 
 class TaggingFunction extends FunctionContract
 {
@@ -18,7 +19,7 @@ class TaggingFunction extends FunctionContract
 
     public function handle(
         array $messageArray,
-        HasDrivers $model,
+        HasDrivers|TaggableContract $model,
         FunctionCallDto $functionCallDto): FunctionResponse
     {
         Log::info('[LaraChain] Tagging function called');
@@ -45,15 +46,15 @@ EOD;
 
         $results = LlmDriverFacade::driver($model->getDriver())->chat($messagesArray);
 
-        //it will return a list of tags
-        //get type and id from the model
-        //and then add them to the system tags table
-        //and attach them to the ???
-        //and return the tags as a response 
+        $tags = json_decode($results->content, true);
+
+        foreach($tags as $tag) {
+            $model->addTag($tag);
+        }
 
         return FunctionResponse::from(
             [
-                'content' => '',
+                'content' => implode(', ', $tags),
             ]
         );
     }
