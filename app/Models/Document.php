@@ -40,6 +40,21 @@ class Document extends Model implements HasDrivers
         return $this->hasMany(DocumentChunk::class);
     }
 
+    public function getSummary(): string
+    {
+        return $this->summary;
+    }
+
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    public function getType(): string
+    {
+        return Document::class;
+    }
+
     public function pathToFile(): ?string
     {
         return sprintf(

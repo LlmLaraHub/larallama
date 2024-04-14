@@ -3,6 +3,7 @@
 namespace LlmLaraHub\LlmDriver\Functions;
 
 use App\Models\Chat;
+use LlmLaraHub\LlmDriver\HasDrivers;
 use LlmLaraHub\LlmDriver\Responses\FunctionResponse;
 
 class SearchAndSummarize extends FunctionContract
@@ -13,9 +14,13 @@ class SearchAndSummarize extends FunctionContract
 
     public function handle(
         array $messageArray,
-        Chat $chat,
+        HasDrivers $model,
         FunctionCallDto $functionCallDto): FunctionResponse
     {
+        /**
+         * @TODO
+         * @see https://github.com/orgs/LlmLaraHub/projects/1/views/1?pane=issue&itemId=59671259
+         */
         return FunctionResponse::from(
             [
                 'content' => '',

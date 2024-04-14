@@ -2,7 +2,7 @@
 
 namespace LlmLaraHub\LlmDriver\Functions;
 
-use App\Models\Chat;
+use LlmLaraHub\LlmDriver\HasDrivers;
 use LlmLaraHub\LlmDriver\Requests\MessageInDto;
 use LlmLaraHub\LlmDriver\Responses\FunctionResponse;
 
@@ -19,7 +19,7 @@ abstract class FunctionContract
      */
     abstract public function handle(
         array $messageArray,
-        Chat $chat,
+        HasDrivers $model,
         FunctionCallDto $functionCallDto): FunctionResponse;
 
     public function getFunction(): FunctionDto

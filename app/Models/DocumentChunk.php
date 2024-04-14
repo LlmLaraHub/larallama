@@ -50,6 +50,16 @@ class DocumentChunk extends Model implements HasDrivers
         return $this->document->collection->embedding_driver->value;
     }
 
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    public function getType(): string
+    {
+        return DocumentChunk::class;
+    }
+
     public function getDriver(): string
     {
         return $this->document->collection->driver->value;
@@ -61,4 +71,10 @@ class DocumentChunk extends Model implements HasDrivers
         return get_embedding_size($this->getEmbeddingDriver());
 
     }
+
+    public function getSummary(): string
+    {
+        return $this->summary;
+    }
+
 }

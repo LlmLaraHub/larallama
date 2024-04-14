@@ -5,6 +5,7 @@ namespace LlmLaraHub\LlmDriver\Functions;
 use App\Domains\Messages\RoleEnum;
 use App\Models\Chat;
 use Illuminate\Support\Facades\Log;
+use LlmLaraHub\LlmDriver\HasDrivers;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
 use LlmLaraHub\LlmDriver\Requests\MessageInDto;
 use LlmLaraHub\LlmDriver\Responses\FunctionResponse;
@@ -17,14 +18,14 @@ class SummarizeCollection extends FunctionContract
 
     public function handle(
         array $messageArray,
-        Chat $chat,
+        HasDrivers $model,
         FunctionCallDto $functionCallDto): FunctionResponse
     {
         Log::info('[LaraChain] SummarizeCollection function called');
 
         $summary = collect([]);
 
-        foreach ($chat->chatable->documents as $document) {
+        foreach ($model->chatable->documents as $document) {
             foreach ($document->document_chunks as $chunk) {
                 $summary->add($chunk->summary);
             }
@@ -41,9 +42,13 @@ class SummarizeCollection extends FunctionContract
             'role' => 'user',
         ]);
 
-        $results = LlmDriverFacade::driver($chat->getDriver())->chat($messagesArray);
+        $results = LlmDriverFacade::driver($model->getDriver())->chat($messagesArray);
 
-        $chat->addInput(
+        /**
+         * @TODO
+         * We assume chat model 
+         */
+        $model->addInput(
             message: $results->content,
             role: RoleEnum::Assistant,
             show_in_thread: true);

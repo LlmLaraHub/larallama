@@ -27,6 +27,7 @@
         "tightenco/ziggy": "^2.0",
         "voku/stop-words": "^2.0",
         "wamania/php-stemmer": "^3.0",
+        "llmlarahub/tagfunction": "dev-main",
         "yethee/tiktoken": "^0.3.0"
     },
     "require-dev": {
@@ -102,10 +103,10 @@
     },
     "minimum-stability": "beta",
     "prefer-stable": true,
-    "repositories": {
-        "craftable-pro": {
-            "type": "composer",
-            "url": "https://packages.craftable.pro/"
+    "repositories": [
+        {
+            "type": "path",
+            "url": "Modules/TagFunction"
         }
-    }
+    ]
 }

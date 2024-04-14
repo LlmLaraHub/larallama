@@ -45,6 +45,21 @@ class Collection extends Model implements HasDrivers
         return $this->driver->value;
     }
 
+    public function getSummary(): string
+    {
+        return $this->description;
+    }
+
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    public function getType(): string
+    {
+        return Collection::class;
+    }
+
     public function getEmbeddingDriver(): string
     {
         return $this->embedding_driver->value;
