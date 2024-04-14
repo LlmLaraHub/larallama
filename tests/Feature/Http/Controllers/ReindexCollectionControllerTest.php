@@ -28,8 +28,8 @@ class ReindexCollectionControllerTest extends TestCase
         ]);
         Document::factory()
             ->has(DocumentChunk::factory(), 'document_chunks')->create([
-            'collection_id' => $collection->id,
-        ]);
+                'collection_id' => $collection->id,
+            ]);
         /**
          * @TODO Policy in place by now
          */

@@ -27,7 +27,6 @@ class Chat extends Model implements HasDrivers
         return $this->chatable->getDriver();
     }
 
-
     public function getSummary(): string
     {
         return $this->chatable->description;

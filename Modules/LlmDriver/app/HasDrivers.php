@@ -8,9 +8,9 @@ interface HasDrivers
 
     public function getEmbeddingDriver(): string;
 
-    public function getSummary() : string;
+    public function getSummary(): string;
 
-    public function getId() : int;
+    public function getId(): int;
 
-    public function getType() : string;
+    public function getType(): string;
 }

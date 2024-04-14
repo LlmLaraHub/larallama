@@ -2,7 +2,6 @@
 
 namespace LlmLaraHub\TagFunction\Database\Factories;
 
-use App\Models\DocumentChunk;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class TagFactory extends Factory
@@ -22,7 +21,7 @@ class TagFactory extends Factory
         ];
     }
 
-        /**
+    /**
      * Associate the tag with a taggable model.
      */
     public function taggable($modelType, $modelId)
@@ -35,4 +34,3 @@ class TagFactory extends Factory
         });
     }
 }
-

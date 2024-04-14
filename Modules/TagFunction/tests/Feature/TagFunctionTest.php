@@ -16,13 +16,13 @@ class TagFunctionTest extends TestCase
      */
     public function test_talks_to_llm(): void
     {
-        $tags = get_fixture("taggings_results_from_llm.json");
+        $tags = get_fixture('taggings_results_from_llm.json');
         LlmDriverFacade::shouldReceive('driver->chat')->once()->andReturn(
             CompletionResponse::from([
                 'content' => $tags,
             ])
         );
-        $content = <<<EOT
+        $content = <<<'EOT'
         61Accelerate: State of DevOps 2019   |    How Do We Improve Productivity?    
         We wondered if the amount of juggling work would be 
         significantly different among our highest and lowest 
@@ -76,8 +76,8 @@ EOT;
             [],
             $documentChunk,
             FunctionCallDto::from([
-               "function_name" => "tagging_function",
-               "arguments" => "[]"
+                'function_name' => 'tagging_function',
+                'arguments' => '[]',
             ])
         );
 

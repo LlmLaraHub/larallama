@@ -1,6 +1,7 @@
-<?php 
+<?php
 
 namespace LlmLaraHub\TagFunction\Functions;
+
 use Illuminate\Support\Facades\Log;
 use LlmLaraHub\LlmDriver\Functions\FunctionCallDto;
 use LlmLaraHub\LlmDriver\Functions\FunctionContract;
@@ -14,7 +15,7 @@ use LlmLaraHub\TagFunction\Contracts\TaggableContract;
 class TaggingFunction extends FunctionContract
 {
     protected string $name = 'tagging_function';
-    
+
     protected string $description = 'Used to tag a user input with a tag or tags.';
 
     public function handle(
@@ -26,7 +27,7 @@ class TaggingFunction extends FunctionContract
 
         $summary = $model->getSummary();
 
-        $tags = data_get($functionCallDto->arguments, 'tags', "no limit");
+        $tags = data_get($functionCallDto->arguments, 'tags', 'no limit');
 
         $prompt = <<<EOD
 This content needs tagging. Please return a list of tags that would apply to this content as JSON array like: ["tag1", "tag2", "tag3"]
@@ -38,7 +39,7 @@ Consider year as a tag as well if that is seen in the content.
 $summary
 ### END CONTENT
 EOD;
-        $messagesArray = []; //just to reset it 
+        $messagesArray = []; //just to reset it
         $messagesArray[] = MessageInDto::from([
             'content' => $prompt,
             'role' => 'user',
@@ -48,7 +49,7 @@ EOD;
 
         $tags = json_decode($results->content, true);
 
-        foreach($tags as $tag) {
+        foreach ($tags as $tag) {
             $model->addTag($tag);
         }
 

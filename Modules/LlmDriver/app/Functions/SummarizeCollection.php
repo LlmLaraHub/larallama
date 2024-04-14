@@ -46,7 +46,7 @@ class SummarizeCollection extends FunctionContract
 
         /**
          * @TODO
-         * We assume chat model 
+         * We assume chat model
          */
         $model->addInput(
             message: $results->content,

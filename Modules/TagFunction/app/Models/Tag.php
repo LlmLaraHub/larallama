@@ -5,9 +5,8 @@ namespace LlmLaraHub\TagFunction\Models;
 use App\Models\Collection;
 use App\Models\Document;
 use App\Models\DocumentChunk;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use LlmLaraHub\TagFunction\Database\Factories\TagFactory;
 
@@ -27,7 +26,6 @@ class Tag extends Model
         return $this->morphedByMany(DocumentChunk::class, 'taggable');
     }
 
-
     public function documents(): MorphToMany
     {
         return $this->morphedByMany(Document::class, 'taggable');
@@ -37,5 +35,4 @@ class Tag extends Model
     {
         return $this->morphedByMany(Collection::class, 'taggable');
     }
-
 }
