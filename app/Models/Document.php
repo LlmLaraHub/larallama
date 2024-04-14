@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use LlmLaraHub\LlmDriver\HasDrivers;
+use LlmLaraHub\TagFunction\Helpers\Taggable;
 
 /**
  * Class Document
@@ -21,6 +22,7 @@ use LlmLaraHub\LlmDriver\HasDrivers;
 class Document extends Model implements HasDrivers
 {
     use HasFactory;
+    use Taggable;
 
     protected $guarded = [];
 

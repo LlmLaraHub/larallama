@@ -6,6 +6,7 @@ use App\Domains\Documents\StatusEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use LlmLaraHub\LlmDriver\HasDrivers;
+use LlmLaraHub\TagFunction\Helpers\Taggable;
 use Pgvector\Laravel\Vector;
 
 /**
@@ -14,6 +15,7 @@ use Pgvector\Laravel\Vector;
 class DocumentChunk extends Model implements HasDrivers
 {
     use HasFactory;
+    use Taggable;
 
     protected $casts = [
         'embedding_3072' => Vector::class,

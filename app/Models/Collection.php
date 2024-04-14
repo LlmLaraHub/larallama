@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use LlmLaraHub\LlmDriver\DriversEnum;
 use LlmLaraHub\LlmDriver\HasDrivers;
+use LlmLaraHub\TagFunction\Helpers\Taggable;
 
 /**
  * Class Project
@@ -26,6 +27,7 @@ use LlmLaraHub\LlmDriver\HasDrivers;
 class Collection extends Model implements HasDrivers
 {
     use HasFactory;
+    use Taggable;
 
     protected $guarded = [];
 
