@@ -12,6 +12,13 @@ trait JobMiddlewareTrait
     {
         $defaults = [];
 
+        /**
+         * @NOTE
+         * basically Ollama can only handle one job
+         * at a time from what I can tell right now.
+         * So this prevents to many jobs hitting
+         * it at once
+         */
         if (LlmDriverFacade::driver($hasDrivers->getDriver())->isAsync()) {
             return $defaults;
         }
