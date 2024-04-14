@@ -1,7 +1,6 @@
 <?php 
 
-namespace LLmLaraHub\TagFunction\Functions;
-
+namespace LlmLaraHub\TagFunction\Functions;
 use Illuminate\Support\Facades\Log;
 use LlmLaraHub\LlmDriver\Functions\FunctionCallDto;
 use LlmLaraHub\LlmDriver\Functions\FunctionContract;
@@ -32,6 +31,7 @@ class TaggingFunction extends FunctionContract
 This content needs tagging. Please return a list of tags that would apply to this content as JSON array like: ["tag1", "tag2", "tag3"]
 They might want you to limit it to a list of tags like: $tags 
 But if it says 'no limits' then just return the tags that apply.
+Consider year as a tag as well if that is seen in the content.
 
 ### START CONTENT
 $summary
@@ -44,8 +44,6 @@ EOD;
         ]);
 
         $results = LlmDriverFacade::driver($model->getDriver())->chat($messagesArray);
-
-        put_fixture("taggings_results_from_llm.json", $results->content);
 
         //it will return a list of tags
         //get type and id from the model

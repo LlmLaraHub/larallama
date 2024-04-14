@@ -4,7 +4,9 @@ namespace LlmLaraHub\TagFunction\Tests\Feature;
 
 use App\Models\DocumentChunk;
 use LlmLaraHub\LlmDriver\Functions\FunctionCallDto;
-use LLmLaraHub\TagFunction\Functions\TaggingFunction;
+use LlmLaraHub\LlmDriver\LlmDriverFacade;
+use LlmLaraHub\LlmDriver\Responses\CompletionResponse;
+use LlmLaraHub\TagFunction\Functions\TaggingFunction;
 use Tests\TestCase;
 
 class TagFunctionTest extends TestCase
@@ -14,6 +16,12 @@ class TagFunctionTest extends TestCase
      */
     public function test_talks_to_llm(): void
     {
+        $tags = get_fixture("taggings_results_from_llm.json");
+        LlmDriverFacade::shouldReceive('driver->chat')->once()->andReturn(
+            CompletionResponse::from([
+                'content' => $tags,
+            ])
+        );
         $content = <<<EOT
         61Accelerate: State of DevOps 2019   |    How Do We Improve Productivity?    
         We wondered if the amount of juggling work would be 
@@ -69,7 +77,7 @@ EOT;
             $documentChunk,
             FunctionCallDto::from([
                "function_name" => "tagging_function",
-               "arguments" => []
+               "arguments" => "[]"
             ])
         );
     }

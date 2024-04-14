@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "24e3c29581b174064508c772ffc8bb0a",
+    "content-hash": "adae68b420859d3b73b9c311d73c7d5b",
     "packages": [
         {
             "name": "amphp/amp",
@@ -4240,44 +4240,6 @@
                 }
             ],
             "time": "2024-04-02T14:22:50+00:00"
-        },
-        {
-            "name": "llmlarahub/tagfunction",
-            "version": "dev-main",
-            "dist": {
-                "type": "path",
-                "url": "Modules/TagFunction",
-                "reference": "5123c79790614510a4c2d9176cd31b1e549d2ec5"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [],
-                    "aliases": []
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "LlmLaraHub\\TagFunction\\": "app/",
-                    "LlmLaraHub\\TagFunction\\Database\\Factories\\": "database/factories/",
-                    "LlmLaraHub\\TagFunction\\Database\\Seeders\\": "database/seeders/"
-                }
-            },
-            "autoload-dev": {
-                "psr-4": {
-                    "LlmLaraHub\\TagFunction\\Tests\\": "tests/"
-                }
-            },
-            "authors": [
-                {
-                    "name": "Alfred Nutile",
-                    "email": "alfrednutile@gmail.com"
-                }
-            ],
-            "description": "Tag Function that works with LLMDriver",
-            "transport-options": {
-                "relative": true
-            }
         },
         {
             "name": "mobiledetect/mobiledetectlib",
@@ -13626,8 +13588,7 @@
     "minimum-stability": "beta",
     "stability-flags": {
         "laravel/pulse": 10,
-        "laravel/reverb": 10,
-        "llmlarahub/tagfunction": 20
+        "laravel/reverb": 10
     },
     "prefer-stable": true,
     "prefer-lowest": false,
