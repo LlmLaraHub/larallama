@@ -3,9 +3,9 @@
 namespace App\Models;
 
 use App\Domains\Documents\StatusEnum;
-use App\LlmDriver\HasDrivers;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use LlmLaraHub\LlmDriver\HasDrivers;
 use Pgvector\Laravel\Vector;
 
 /**

@@ -1,0 +1,12 @@
+[
+    {
+        "index": 0,
+        "message": {
+            "role": "assistant",
+            "content": "\n\nHello there, this is a fake chat response.",
+            "toolCalls": [],
+            "functionCall": null
+        },
+        "finishReason": "stop"
+    }
+]

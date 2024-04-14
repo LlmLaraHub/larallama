@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\LlmDriver\Helpers\TrimText as HelpersTrimText;
+use LlmLaraHub\LlmDriver\Helpers\TrimText as HelpersTrimText;
 use Tests\TestCase;
 
 class TrimTextTest extends TestCase

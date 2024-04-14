@@ -3,13 +3,13 @@
 namespace App\Models;
 
 use App\Domains\Messages\RoleEnum;
-use App\LlmDriver\HasDrivers;
-use App\LlmDriver\Requests\MessageInDto;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
+use LlmLaraHub\LlmDriver\HasDrivers;
+use LlmLaraHub\LlmDriver\Requests\MessageInDto;
 use OpenAI\Laravel\Facades\OpenAI;
 
 /**

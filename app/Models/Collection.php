@@ -2,13 +2,13 @@
 
 namespace App\Models;
 
-use App\LlmDriver\DriversEnum;
-use App\LlmDriver\HasDrivers;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use LlmLaraHub\LlmDriver\DriversEnum;
+use LlmLaraHub\LlmDriver\HasDrivers;
 
 /**
  * Class Project

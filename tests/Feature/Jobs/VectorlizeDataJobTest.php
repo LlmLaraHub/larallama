@@ -3,8 +3,8 @@
 namespace Tests\Feature\Jobs;
 
 use App\Jobs\VectorlizeDataJob;
-use App\LlmDriver\LlmDriverFacade;
 use App\Models\DocumentChunk;
+use LlmLaraHub\LlmDriver\LlmDriverFacade;
 use Tests\TestCase;
 
 class VectorlizeDataJobTest extends TestCase
@@ -16,7 +16,7 @@ class VectorlizeDataJobTest extends TestCase
     {
         $embedding = get_fixture('embedding_response.json');
 
-        $dto = \App\LlmDriver\Responses\EmbeddingsResponseDto::from([
+        $dto = \LlmLaraHub\LlmDriver\Responses\EmbeddingsResponseDto::from([
             'embedding' => data_get($embedding, 'data.0.embedding'),
             'token_count' => 1000,
         ]);

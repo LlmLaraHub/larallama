@@ -2,14 +2,14 @@
 
 namespace Tests\Feature;
 
-use App\LlmDriver\Functions\ParametersDto;
-use App\LlmDriver\Functions\PropertyDto;
-use App\LlmDriver\Functions\SummarizeCollection;
-use App\LlmDriver\LlmDriverFacade;
-use App\LlmDriver\Requests\MessageInDto;
-use App\LlmDriver\Responses\CompletionResponse;
 use App\Models\Collection;
 use App\Models\DocumentChunk;
+use LlmLaraHub\LlmDriver\Functions\ParametersDto;
+use LlmLaraHub\LlmDriver\Functions\PropertyDto;
+use LlmLaraHub\LlmDriver\Functions\SummarizeCollection;
+use LlmLaraHub\LlmDriver\LlmDriverFacade;
+use LlmLaraHub\LlmDriver\Requests\MessageInDto;
+use LlmLaraHub\LlmDriver\Responses\CompletionResponse;
 use Tests\TestCase;
 
 class SummarizeCollectionTest extends TestCase
@@ -19,7 +19,7 @@ class SummarizeCollectionTest extends TestCase
      */
     public function test_can_generate_function_as_array(): void
     {
-        $searchAndSummarize = new \App\LlmDriver\Functions\SummarizeCollection();
+        $searchAndSummarize = new \LlmLaraHub\LlmDriver\Functions\SummarizeCollection();
 
         $function = $searchAndSummarize->getFunction();
 
@@ -32,7 +32,7 @@ class SummarizeCollectionTest extends TestCase
 
     public function test_gathers_all_content()
     {
-        $searchAndSummarize = new \App\LlmDriver\Functions\SummarizeCollection();
+        $searchAndSummarize = new \LlmLaraHub\LlmDriver\Functions\SummarizeCollection();
         $messageArray = [];
 
         $messageArray[] = MessageInDto::from([
@@ -64,7 +64,7 @@ class SummarizeCollectionTest extends TestCase
             ]
         );
 
-        $functionCallDto = \App\LlmDriver\Functions\FunctionCallDto::from([
+        $functionCallDto = \LlmLaraHub\LlmDriver\Functions\FunctionCallDto::from([
             'function_name' => 'summarize_collection',
             'arguments' => json_encode([
                 'prompt' => 'Can you summarize all this content for me',
@@ -73,7 +73,7 @@ class SummarizeCollectionTest extends TestCase
 
         $results = (new SummarizeCollection())->handle($messageArray, $chat, $functionCallDto);
 
-        $this->assertInstanceOf(\App\LlmDriver\Responses\FunctionResponse::class, $results);
+        $this->assertInstanceOf(\LlmLaraHub\LlmDriver\Responses\FunctionResponse::class, $results);
 
         $this->assertNotEmpty($results->content);
     }

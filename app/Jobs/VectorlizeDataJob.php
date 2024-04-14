@@ -3,8 +3,6 @@
 namespace App\Jobs;
 
 use App\Domains\Documents\StatusEnum;
-use App\LlmDriver\LlmDriverFacade;
-use App\LlmDriver\Responses\EmbeddingsResponseDto;
 use App\Models\DocumentChunk;
 use Illuminate\Bus\Batchable;
 use Illuminate\Bus\Queueable;
@@ -13,6 +11,8 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\Middleware\WithoutOverlapping;
 use Illuminate\Queue\SerializesModels;
+use LlmLaraHub\LlmDriver\LlmDriverFacade;
+use LlmLaraHub\LlmDriver\Responses\EmbeddingsResponseDto;
 
 class VectorlizeDataJob implements ShouldQueue
 {

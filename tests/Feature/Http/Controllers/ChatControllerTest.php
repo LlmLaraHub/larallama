@@ -5,7 +5,7 @@ namespace Tests\Feature\Http\Controllers;
 use App\Models\Chat;
 use App\Models\Collection;
 use App\Models\User;
-use Facades\App\LlmDriver\Orchestrate;
+use Facades\LlmLaraHub\LlmDriver\Orchestrate;
 use Tests\TestCase;
 
 class ChatControllerTest extends TestCase

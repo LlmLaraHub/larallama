@@ -1,0 +1,8 @@
+[
+    {
+        "name": "summarize_collection",
+        "arguments": {
+            "prompt": "The users prompt here"
+        }
+    }
+]

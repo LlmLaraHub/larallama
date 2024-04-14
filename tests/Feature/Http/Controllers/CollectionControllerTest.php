@@ -3,7 +3,6 @@
 namespace Tests\Feature\Http\Controllers;
 
 use App\Jobs\ProcessFileJob;
-use App\LlmDriver\DriversEnum;
 use App\Models\Collection;
 use App\Models\Document;
 use App\Models\DocumentChunk;
@@ -12,6 +11,7 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Testing\AssertableInertia as Assert;
+use LlmLaraHub\LlmDriver\DriversEnum;
 use Tests\TestCase;
 
 class CollectionControllerTest extends TestCase

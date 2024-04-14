@@ -1,0 +1,11 @@
+{
+    "name": "TagFunction",
+    "alias": "tagfunction",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "LlmLaraHub\\TagFunction\\Providers\\TagFunctionServiceProvider"
+    ],
+    "files": []
+}

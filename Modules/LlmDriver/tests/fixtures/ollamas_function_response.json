@@ -1,0 +1,15 @@
+{
+    "model": "llama2",
+    "created_at": "2024-04-05T20:13:23.828175Z",
+    "message": {
+        "role": "assistant",
+        "content": "{\n    \"name\": \"summarize_collection\",\n    \"arguments\": {\n        \"collection_id\": 1\n    }\n}"
+    },
+    "done": true,
+    "total_duration": 3419984542,
+    "load_duration": 2225417,
+    "prompt_eval_count": 313,
+    "prompt_eval_duration": 1998462000,
+    "eval_count": 34,
+    "eval_duration": 1414097000
+}

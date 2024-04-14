@@ -4,11 +4,11 @@ namespace App\Models;
 
 use App\Domains\Documents\StatusEnum;
 use App\Domains\Documents\TypesEnum;
-use App\LlmDriver\HasDrivers;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use LlmLaraHub\LlmDriver\HasDrivers;
 
 /**
  * Class Document

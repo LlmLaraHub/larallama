@@ -1,0 +1,26 @@
+[
+    {
+        "content": "test",
+        "role": "user"
+    },
+    {
+        "content": "test 1",
+        "role": "assistant"
+    },
+    {
+        "role": "user",
+        "content": "Continuation of search results"
+    },
+    {
+        "content": "test 2",
+        "role": "assistant"
+    },
+    {
+        "role": "user",
+        "content": "Continuation of search results"
+    },
+    {
+        "content": "test 3",
+        "role": "assistant"
+    }
+]

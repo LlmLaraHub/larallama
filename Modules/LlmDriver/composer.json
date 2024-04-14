@@ -1,0 +1,28 @@
+{
+    "name": "llmlarahub/llmdriver",
+    "description": "Driver for any LLM",
+    "authors": [
+        {
+            "name": "Alfred Nutile",
+            "email": "alfrednutile@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [],
+            "aliases": {
+
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "LlmLaraHub\\LlmDriver\\": "app/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "LlmLaraHub\\LlmDriver\\Tests\\": "tests/"
+        }
+    }
+}

@@ -2,12 +2,12 @@
 
 namespace App\Domains\Messages;
 
-use App\LlmDriver\LlmDriverFacade;
-use App\LlmDriver\Responses\CompletionResponse;
-use App\LlmDriver\Responses\EmbeddingsResponseDto;
 use App\Models\Chat;
 use App\Models\DocumentChunk;
 use Illuminate\Support\Facades\Log;
+use LlmLaraHub\LlmDriver\LlmDriverFacade;
+use LlmLaraHub\LlmDriver\Responses\CompletionResponse;
+use LlmLaraHub\LlmDriver\Responses\EmbeddingsResponseDto;
 
 class SearchOrSummarizeChatRepo
 {

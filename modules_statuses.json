@@ -1,3 +1,5 @@
 {
-    "TagFunction": true
+    "TagFunction": true,
+    "Foundation": true,
+    "LlmDriver": true
 }
