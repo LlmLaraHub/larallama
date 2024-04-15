@@ -34,17 +34,18 @@ class Document extends Model implements HasDrivers, TaggableContract
         'summary_status' => StatusEnum::class,
     ];
 
-    public function siblingTags() : array {
+    public function siblingTags(): array
+    {
         return Tag::query()
-        ->select("tags.name")
-        ->join("taggables", "taggables.tag_id", "=", "tags.id")
-        ->join("document_chunks", "document_chunks.document_id", "=", "taggables.taggable_id")
-        ->where("taggables.taggable_type", "=", DocumentChunk::class)
-        ->where("document_chunks.document_id", "=", $this->id)
-        ->distinct('name')
-        ->get()
-        ->pluck("name")
-        ->toArray();
+            ->select('tags.name')
+            ->join('taggables', 'taggables.tag_id', '=', 'tags.id')
+            ->join('document_chunks', 'document_chunks.document_id', '=', 'taggables.taggable_id')
+            ->where('taggables.taggable_type', '=', DocumentChunk::class)
+            ->where('document_chunks.document_id', '=', $this->id)
+            ->distinct('name')
+            ->get()
+            ->pluck('name')
+            ->toArray();
     }
 
     public function collection(): BelongsTo

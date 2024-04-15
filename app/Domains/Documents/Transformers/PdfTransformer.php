@@ -4,7 +4,6 @@ namespace App\Domains\Documents\Transformers;
 
 use App\Domains\Collections\CollectionStatusEnum;
 use App\Events\CollectionStatusEvent;
-use App\Jobs\DocumentProcessingCompleteJob;
 use App\Jobs\SummarizeDataJob;
 use App\Jobs\SummarizeDocumentJob;
 use App\Jobs\VectorlizeDataJob;

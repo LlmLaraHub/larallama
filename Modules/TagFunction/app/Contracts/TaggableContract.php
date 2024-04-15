@@ -10,5 +10,5 @@ interface TaggableContract
 
     public function addTag(string $tag): void;
 
-    public function siblingTags() : array;
+    public function siblingTags(): array;
 }

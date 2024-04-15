@@ -34,7 +34,7 @@ class ProcessFileJob implements ShouldQueue
             new ParsePdfFileJob($this->document),
         ])
             ->name('Process PDF Document - '.$document->id)
-            ->finally(function (Batch $batch) use ($document) {
+            ->finally(function (Batch $batch) {
             })
             ->allowFailures()
             ->dispatch();
