@@ -3,6 +3,7 @@
 namespace LlmLaraHub\TagFunction\tests\Feature;
 
 use App\Models\Document;
+use App\Models\DocumentChunk;
 use LlmLaraHub\TagFunction\Models\Tag;
 use Tests\TestCase;
 
@@ -49,4 +50,30 @@ class TagTest extends TestCase
         $this->assertNotEmpty($document->tags);
         $this->assertDatabaseCount('tags', 1);
     }
+
+    public function test_sibling_tags()
+    {
+        $document = Document::factory()->create();
+
+        $documentChunk = DocumentChunk::factory()->create([
+            'document_id' => $document->id
+        ]);
+        
+        $documentChunk->addTag("foobar1");
+
+        $documentChunk = DocumentChunk::factory()->create([
+            'document_id' => $document->id
+        ]);
+
+        $this->assertCount(2, $document->refresh()->document_chunks);
+        $documentChunk->addTag("foobar1");
+        $documentChunk->addTag("foobar2");
+
+        $tags = $document->siblingTags();
+
+        $this->assertCount(2, $tags);
+
+        $this->assertTrue(in_array("foobar1", $document->siblingTags()));
+    }
+
 }

@@ -35,6 +35,11 @@ class DocumentChunk extends Model implements HasDrivers, TaggableContract
         return $this->belongsTo(Document::class);
     }
 
+    public function siblingTags() : array {
+        return [];
+    }
+
+
     /**
      * The "booted" method of the model.
      *

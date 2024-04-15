@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Models;
 
+use LlmLaraHub\TagFunction\Models\Tag;
 use Tests\TestCase;
 
 class DocumentTest extends TestCase
@@ -18,4 +19,6 @@ class DocumentTest extends TestCase
         $this->assertCount(1, $model->collection->documents);
         $this->assertNotNull($model->collection->documents()->first()->id);
     }
+
+   
 }

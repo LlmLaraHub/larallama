@@ -35,7 +35,6 @@ class ProcessFileJob implements ShouldQueue
         ])
             ->name('Process PDF Document - '.$document->id)
             ->finally(function (Batch $batch) use ($document) {
-                DocumentProcessingCompleteJob::dispatch($document);
             })
             ->allowFailures()
             ->dispatch();

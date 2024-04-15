@@ -48,6 +48,10 @@ class Collection extends Model implements HasDrivers, TaggableContract
         return $this->driver->value;
     }
 
+    public function siblingTags() : array {
+        return [];
+    }
+
     public function getSummary(): string
     {
         return $this->description;

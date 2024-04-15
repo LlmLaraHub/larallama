@@ -65,5 +65,7 @@ EOD;
             $this->document->collection,
             CollectionStatusEnum::PROCESSED
         );
+
+        DocumentProcessingCompleteJob::dispatch($this->document);
     }
 }
