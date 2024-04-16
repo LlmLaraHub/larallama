@@ -1,5 +1,6 @@
 {
     "TagFunction": true,
     "Foundation": true,
-    "LlmDriver": true
+    "LlmDriver": true,
+    "EmailSource": true
 }

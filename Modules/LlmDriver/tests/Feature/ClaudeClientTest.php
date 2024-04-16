@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use Feature;
 use Illuminate\Support\Facades\Http;
 use LlmLaraHub\LlmDriver\ClaudeClient;
 use LlmLaraHub\LlmDriver\Requests\MessageInDto;
@@ -120,6 +121,9 @@ class ClaudeClientTest extends TestCase
 
     public function test_get_functions(): void
     {
+        Feature::define('llm-driver.claude.functions', function() {
+            return true;
+        });
         $openaiClient = new \LlmLaraHub\LlmDriver\ClaudeClient();
         $response = $openaiClient->getFunctions();
         $this->assertNotEmpty($response);
@@ -134,7 +138,9 @@ class ClaudeClientTest extends TestCase
 
     public function test_functions_prompt(): void
     {
-
+        Feature::define('llm-driver.claude.functions', function() {
+            return true;
+        });
         $data = get_fixture('cloud_client_tool_use_response.json');
 
         Http::fake([

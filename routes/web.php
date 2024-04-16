@@ -5,6 +5,7 @@ use App\Http\Controllers\CollectionController;
 use App\Http\Controllers\ExampleChatBotController;
 use App\Http\Controllers\ExampleController;
 use App\Http\Controllers\ReindexCollectionController;
+use App\Http\Controllers\TextDocumentController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -35,6 +36,11 @@ Route::middleware([
                 ->name('collections.reindex');
         }
     );
+
+    Route::controller(TextDocumentController::class)->group(function () {
+        Route::post('/collections/{collection}/text-documents', 'store')
+            ->name('text-documents.store');
+    });
 
     Route::controller(ExampleChatBotController::class)->group(function () {
         Route::get('/examples/chatbot', 'show')->name('example.chatbot.show');

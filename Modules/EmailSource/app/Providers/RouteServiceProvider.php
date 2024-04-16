@@ -1,9 +1,9 @@
 <?php
 
-namespace LlmLaraHub\TagFunction\Providers;
+namespace LlmLaraHub\EmailSource\Providers;
 
-use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -34,7 +34,7 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function mapWebRoutes(): void
     {
-        Route::middleware('web')->group(module_path('TagFunction', '/routes/web.php'));
+        Route::middleware('web')->group(module_path('EmailSource', '/routes/web.php'));
     }
 
     /**
@@ -44,6 +44,6 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function mapApiRoutes(): void
     {
-        Route::middleware('api')->prefix('api')->name('api.')->group(module_path('TagFunction', '/routes/api.php'));
+        Route::middleware('api')->prefix('api')->name('api.')->group(module_path('EmailSource', '/routes/api.php'));
     }
 }

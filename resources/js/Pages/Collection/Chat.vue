@@ -36,13 +36,11 @@ provide('system_prompt', props.system_prompt);
 onMounted(() => {
     Echo.private(`collection.chat.${props.collection.data.id}.${props.chat.data.id}`)
     .listen('.status', (e) => {
-        console.log(e);
         router.reload({
             preserveScroll: true,
         })
     })
     .listen('.update', (e) => {
-        console.log(e);
         // Make a better ui for htis
         toast.success(e.updateMessage, {
                 position: "bottom-right",

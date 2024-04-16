@@ -1,0 +1,11 @@
+{
+    "name": "EmailSource",
+    "alias": "emailsource",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "LlmLaraHub\\EmailSource\\Providers\\EmailSourceServiceProvider"
+    ],
+    "files": []
+}

@@ -5,6 +5,7 @@ namespace LlmLaraHub\LlmDriver;
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use Laravel\Pennant\Feature;
 use LlmLaraHub\LlmDriver\Requests\MessageInDto;
 use LlmLaraHub\LlmDriver\Responses\CompletionResponse;
 use LlmLaraHub\LlmDriver\Responses\EmbeddingsResponseDto;
@@ -190,6 +191,10 @@ class ClaudeClient extends BaseClient
     public function getFunctions(): array
     {
         $functions = LlmDriverFacade::getFunctions();
+
+        if(!Feature::active('llm-driver.claude.functions')) {
+            return [];
+        } 
 
         return collect($functions)->map(function ($function) {
             $function = $function->toArray();
