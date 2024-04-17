@@ -44,14 +44,7 @@ class SummarizeCollection extends FunctionContract
 
         $results = LlmDriverFacade::driver($model->getDriver())->chat($messagesArray);
 
-        /**
-         * @TODO
-         * We assume chat model
-         */
-        $model->addInput(
-            message: $results->content,
-            role: RoleEnum::Assistant,
-            show_in_thread: true);
+
 
         return FunctionResponse::from([
             'content' => $results->content,
