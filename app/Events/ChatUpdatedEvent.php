@@ -42,7 +42,7 @@ class ChatUpdatedEvent implements ShouldBroadcast
         return 'status';
     }
 
-        /**
+    /**
      * Get the data to broadcast.
      *
      * @return array<string, mixed>
