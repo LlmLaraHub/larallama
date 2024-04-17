@@ -42,7 +42,7 @@ class ChatUiUpdateEvent implements ShouldBroadcast
         return 'update';
     }
 
-            /**
+    /**
      * Get the data to broadcast.
      *
      * @return array<string, mixed>
@@ -51,7 +51,7 @@ class ChatUiUpdateEvent implements ShouldBroadcast
     {
         return [
             'id' => $this->collection->id,
-            'updateMessage' => $this->updateMessage
+            'updateMessage' => $this->updateMessage,
         ];
     }
 }
