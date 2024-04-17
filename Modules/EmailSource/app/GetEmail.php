@@ -1,13 +1,13 @@
-<?php 
+<?php
 
 namespace LlmLaraHub\EmailSource;
 
 use App\Models\Collection;
 
-class GetEmail {
-    
-
-    public function handle(Collection $collection) {
+class GetEmail
+{
+    public function handle(Collection $collection)
+    {
         return $collection->email;
     }
-};
+}
