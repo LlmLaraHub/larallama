@@ -1,0 +1,14 @@
+[
+    {
+        "content": "if I was to break that up into slides for a presentation that last 20 minutes can you help",
+        "role": "user"
+    },
+    {
+        "content": "See content from the surrounding user messages to understand the context of the request.",
+        "role": "assistant"
+    },
+    {
+        "content": "Here is a summary of the key points from the provided content:\n\n- The content discusses the challenges in building a specific application at Pfizer, requiring careful consideration of various nuances and specific requirements for the product.\n- It shares the author's experience of determining the right technology for a software project, whether as a lone developer or as part of a team.\n- The system was designed to work on AWS, with a strong testing foundation, and accommodate a growing team of 25 people, while enabling easy, zero-downtime deployments and migrations.\n- The system had to use technology that the team could work with, with consistent training and documentation, and a linting system to help maintain team standards.\n- The success or failure of a product is rarely due to the technology itself, but rather the alignment between the product vision and the system implementation, as well as the skills of the developers involved.\n- The document discusses the automation of minor updates and security updates, as well as the need to scale due to the use of queues.\n- The technical requirements for the project include a JavaScript-based user interface, a backend with a queue system for long-running processes, and a robust authentication system.\n- The key requirements for the system include authentication integration, feature flag management, API integration, environmental configuration management, and real-time UI updates through web sockets.\n- The importance of understanding the product owner's goals and using the appropriate technology to achieve those goals is emphasized, regardless of the scale of the business.",
+        "role": "user"
+    }
+]

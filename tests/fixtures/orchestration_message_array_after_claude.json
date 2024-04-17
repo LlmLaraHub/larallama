@@ -1,0 +1,10 @@
+[
+    {
+        "content": "Can you help me make a list of slide ideas from this content",
+        "role": "user"
+    },
+    {
+        "content": "This is data from the search results when entering the users prompt which is ### START PROMPT ### Can you help me make a list of slide ideas from this content ### END PROMPT ### please use this with the following context and only this and return as markdown so I can render it: brain dump context talk, middl I list bullet point lead into. good sens context I turn slide surfac Technolog parts. I think I like interact Q I possibl audienc like that? I ask build specif applic I contract Pfizer requir lot nuances. product I build thing present. (final list end) One, I go start concept technolog doe alway matters\/ I want focus technolog abl achiev product owner goal understand goal key. build saa person compani 100 just know goal use right tech goal. 13) use technolog team work skill did current team 14) Consist Train document (team standards, ci\/cd etc) ideal stack amaz document community. 15) Lint help team standard lead right tech I go make right tech lone dev team just tri figur right tech let share I went figur tih Pfizer 12 year ago I think work today.",
+        "role": "assistant"
+    }
+]

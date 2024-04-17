@@ -5,7 +5,6 @@ namespace LlmLaraHub\LlmDriver;
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
-use Laravel\Pennant\Feature;
 use LlmLaraHub\LlmDriver\Requests\MessageInDto;
 use LlmLaraHub\LlmDriver\Responses\CompletionResponse;
 use LlmLaraHub\LlmDriver\Responses\EmbeddingsResponseDto;
@@ -39,7 +38,9 @@ class ClaudeClient extends BaseClient
          * in betwee a user row with some copy to make it work like "And the user search results had"
          * using the Laravel Collection library
          */
-        $messages = $this->remapMessagesForClaude($messages);
+        $messages = $this->remapMessages($messages);
+
+        put_fixture('orchestration_message_array_after_claude.json', $messages);
 
         $results = $this->getClient()->post('/messages', [
             'model' => $model,
@@ -133,7 +134,7 @@ class ClaudeClient extends BaseClient
      */
     public function functionPromptChat(array $messages, array $only = []): array
     {
-        $messages = $this->remapMessagesForClaude($messages);
+        $messages = $this->remapMessages($messages);
         Log::info('LlmDriver::ClaudeClient::functionPromptChat', $messages);
 
         $functions = $this->getFunctions();
@@ -192,10 +193,6 @@ class ClaudeClient extends BaseClient
     {
         $functions = LlmDriverFacade::getFunctions();
 
-        if(!Feature::active('llm-driver.claude.functions')) {
-            return [];
-        } 
-
         return collect($functions)->map(function ($function) {
             $function = $function->toArray();
             $properties = [];
@@ -229,9 +226,14 @@ class ClaudeClient extends BaseClient
     }
 
     /**
+     * @see https://docs.anthropic.com/claude/reference/messages_post
+     * The order of the messages has to be start is oldest
+     * then descending is the current
+     * with each one alternating between user and assistant
+     *
      * @param  MessageInDto[]  $messages
      */
-    protected function remapMessagesForClaude(array $messages): array
+    protected function remapMessages(array $messages): array
     {
         $messages = collect($messages)->map(function ($item) {
             if ($item->role === 'system') {
@@ -239,19 +241,38 @@ class ClaudeClient extends BaseClient
             }
 
             return $item->toArray();
-        })->reverse()->values();
+        })
+            ->values();
 
-        $messages = $messages->flatMap(function ($item, $index) use ($messages) {
-            if ($index > 0 && $item['role'] === 'assistant' && optional($messages->get($index + 1))['role'] === 'assistant') {
-                return [
-                    $item,
-                    ['role' => 'user', 'content' => 'Continuation of search results'],
-                ];
+        $lastRole = null;
+
+        $newMessagesArray = [];
+
+        foreach ($messages as $index => $message) {
+            $currentRole = data_get($message, 'role');
+
+            if ($currentRole === $lastRole) {
+                if ($currentRole === 'assistant') {
+                    $newMessagesArray[] = [
+                        'role' => 'user',
+                        'content' => 'Using the surrounding context to continue this response thread',
+                    ];
+                } else {
+                    $newMessagesArray[] = [
+                        'role' => 'assistant',
+                        'content' => 'Using the surrounding context to continue this response thread',
+                    ];
+                }
+
+                $newMessagesArray[] = $message;
+            } else {
+                $newMessagesArray[] = $message;
             }
 
-            return [$item];
-        })->toArray();
+            $lastRole = $currentRole;
 
-        return $messages;
+        }
+
+        return $newMessagesArray;
     }
 }

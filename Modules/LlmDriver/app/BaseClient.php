@@ -145,4 +145,16 @@ EOD;
             ];
         })->toArray();
     }
+
+    /**
+     * @NOTE
+     * Some systems like Claude have to do this
+     * So adding it here as a standar options
+     *
+     * @param  MessageInDto[]  $messages
+     */
+    protected function remapMessages(array $messages): array
+    {
+        return $messages;
+    }
 }

@@ -89,7 +89,11 @@ class ClaudeClientTest extends TestCase
 
         $results = $client->chat([
             MessageInDto::from([
-                'content' => 'test 3',
+                'content' => 'test',
+                'role' => 'user',
+            ]),
+            MessageInDto::from([
+                'content' => 'test 1',
                 'role' => 'assistant',
             ]),
             MessageInDto::from([
@@ -97,31 +101,27 @@ class ClaudeClientTest extends TestCase
                 'role' => 'assistant',
             ]),
             MessageInDto::from([
-                'content' => 'test 1',
+                'content' => 'test 3',
                 'role' => 'assistant',
-            ]),
-            MessageInDto::from([
-                'content' => 'test',
-                'role' => 'user',
             ]),
         ]);
 
         $this->assertInstanceOf(CompletionResponse::class, $results);
 
         Http::assertSent(function ($request) {
-            $message1 = $request->data()['messages'][0]['role'];
-            $message2 = $request->data()['messages'][1]['role'];
-            $message3 = $request->data()['messages'][1]['role'];
+            $message0 = $request->data()['messages'][0]['role'];
+            $message1 = $request->data()['messages'][1]['role'];
+            $message2 = $request->data()['messages'][2]['role'];
 
-            return $message2 === 'assistant' &&
-                $message1 === 'user' && $message3 === 'assistant';
+            return $message0 === 'assistant' &&
+                $message1 === 'user' && $message2 === 'assistant';
         });
 
     }
 
     public function test_get_functions(): void
     {
-        Feature::define('llm-driver.claude.functions', function() {
+        Feature::define('llm-driver.claude.functions', function () {
             return true;
         });
         $openaiClient = new \LlmLaraHub\LlmDriver\ClaudeClient();
@@ -138,7 +138,7 @@ class ClaudeClientTest extends TestCase
 
     public function test_functions_prompt(): void
     {
-        Feature::define('llm-driver.claude.functions', function() {
+        Feature::define('llm-driver.claude.functions', function () {
             return true;
         });
         $data = get_fixture('cloud_client_tool_use_response.json');

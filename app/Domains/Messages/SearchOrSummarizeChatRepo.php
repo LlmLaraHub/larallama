@@ -51,7 +51,7 @@ class SearchOrSummarizeChatRepo
 
         $chat->addInput(
             message: $content,
-            role: RoleEnum::User,
+            role: RoleEnum::Assistant,
             systemPrompt: $chat->chatable->systemPrompt(),
             show_in_thread: false
         );

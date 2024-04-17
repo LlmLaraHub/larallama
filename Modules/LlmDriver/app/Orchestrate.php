@@ -7,6 +7,7 @@ use App\Events\ChatUiUpdateEvent;
 use App\Models\Chat;
 use Facades\App\Domains\Messages\SearchOrSummarizeChatRepo;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Log;
 use LlmLaraHub\LlmDriver\Functions\FunctionCallDto;
 use LlmLaraHub\LlmDriver\Requests\MessageInDto;
 use LlmLaraHub\LlmDriver\Responses\FunctionResponse;
@@ -25,10 +26,12 @@ class Orchestrate
         /**
          * We are looking first for functions / agents / tools
          */
+        Log::info('[LaraChain] Orchestration Function Check');
         $functions = LlmDriverFacade::driver($chat->chatable->getDriver())
             ->functionPromptChat($messagesArray);
 
         if ($this->hasFunctions($functions)) {
+            Log::info('[LaraChain] Orchestration Has Fucntions', $functions);
             /**
              * @TODO
              * We will deal with multi functions shortly
@@ -88,10 +91,19 @@ class Orchestrate
 
             /**
              * @NOTE the function might return the results of a table
-             * or csv file or image info etc.
+             * or csv file or image info etc.o
              * This prompt should consider the initial prompt and the output of the function(s)
              */
             if ($this->requiresFollowup) {
+                Log::info('[LaraChain] Orchestration Requires Followup');
+
+                // $chat->addInput(
+                //     message: "Use the previous assistant response to help for context to the users previous prompt",
+                //     role: RoleEnum::User,
+                //     show_in_thread: true);
+
+                put_fixture('orchestration_message_array_followup_pre.json', $messagesArray);
+
                 $results = LlmDriverFacade::driver($chat->chatable->getDriver())
                     ->chat($messagesArray);
 

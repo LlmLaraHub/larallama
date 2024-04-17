@@ -2,8 +2,6 @@
 
 namespace LlmLaraHub\LlmDriver\Functions;
 
-use App\Domains\Messages\RoleEnum;
-use App\Models\Chat;
 use Illuminate\Support\Facades\Log;
 use LlmLaraHub\LlmDriver\HasDrivers;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
@@ -44,10 +42,9 @@ class SummarizeCollection extends FunctionContract
 
         $results = LlmDriverFacade::driver($model->getDriver())->chat($messagesArray);
 
-
-
         return FunctionResponse::from([
             'content' => $results->content,
+            'requires_followup' => true,
         ]);
     }
 
