@@ -32,7 +32,7 @@ class PdfTransformer
             try {
                 $page_number = $page_number + 1;
                 $pageContent = $page->getText();
-                $guid = md5($pageContent); 
+                $guid = md5($pageContent);
                 $DocumentChunk = DocumentChunk::updateOrCreate(
                     [
                         'guid' => $guid,

@@ -2,21 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Domains\Collections\CollectionStatusEnum;
 use App\Domains\Documents\StatusEnum;
 use App\Domains\Documents\TypesEnum;
-use App\Domains\Collections\CollectionStatusEnum;
+use App\Events\CollectionStatusEvent;
+use App\Jobs\SummarizeDataJob;
+use App\Jobs\SummarizeDocumentJob;
+use App\Jobs\VectorlizeDataJob;
 use App\Models\Collection;
 use App\Models\Document;
-use App\Jobs\SummarizeDataJob;
 use App\Models\DocumentChunk;
 use Illuminate\Bus\Batch;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
-use App\Events\CollectionStatusEvent;
-use App\Jobs\SummarizeDocumentJob;
-use App\Jobs\VectorlizeDataJob;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
 
 class TextDocumentController extends Controller
@@ -58,7 +58,7 @@ EOT;
 
         $decoded = json_decode($chunks->content);
 
-        foreach($decoded as $chunk) {
+        foreach ($decoded as $chunk) {
             try {
                 $page_number = $page_number + 1;
                 $guid = Str::uuid();
@@ -89,7 +89,6 @@ EOT;
             }
         }
 
-
         Bus::batch($jobs)
             ->name("Chunking Document - $document->file_path")
             ->finally(function (Batch $batch) use ($document) {
@@ -99,6 +98,7 @@ EOT;
             ->dispatch();
 
         $request->session()->flash('flash.banner', 'Document created successfully!');
+
         return back();
     }
 }
