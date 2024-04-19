@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\Domains\Messages\SearchOrSummarizeChatRepo;
+use App\Domains\Messages\SearchAndSummarizeChatRepo;
 use App\Models\Chat;
 use App\Models\Collection;
 use App\Models\Document;
@@ -10,7 +10,7 @@ use App\Models\DocumentChunk;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
 use Tests\TestCase;
 
-class SearchOrSummarizeChatRepoTest extends TestCase
+class SearchAndSummarizeChatRepoTest extends TestCase
 {
     /**
      * A basic feature test example.
@@ -50,7 +50,7 @@ class SearchOrSummarizeChatRepoTest extends TestCase
             'document_id' => $document->id,
         ]);
 
-        $results = (new SearchOrSummarizeChatRepo())->search($chat, 'Puppy');
+        $results = (new SearchAndSummarizeChatRepo())->search($chat, 'Puppy');
 
         $this->assertNotNull($results);
 

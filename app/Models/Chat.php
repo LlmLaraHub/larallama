@@ -42,6 +42,16 @@ class Chat extends Model implements HasDrivers
         return $this->chatable_type;
     }
 
+    public function getChat(): Chat
+    {
+        return $this;
+    }
+
+    public function getChatable(): HasDrivers
+    {
+        return $this->chatable;
+    }
+
     public function getEmbeddingDriver(): string
     {
         return $this->chatable->getEmbeddingDriver();

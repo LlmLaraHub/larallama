@@ -4,7 +4,7 @@ namespace LlmLaraHub\LlmDriver;
 
 use App\Events\ChatUiUpdateEvent;
 use App\Models\Chat;
-use Facades\App\Domains\Messages\SearchOrSummarizeChatRepo;
+use Facades\App\Domains\Messages\SearchAndSummarizeChatRepo;
 use Illuminate\Support\Facades\Log;
 
 class SimpleSearchAndSummarizeOrchestrate
@@ -23,7 +23,7 @@ class SimpleSearchAndSummarizeOrchestrate
             'Searching data now to summarize content'
         );
 
-        $response = SearchOrSummarizeChatRepo::search($chat, $message);
+        $response = SearchAndSummarizeChatRepo::search($chat, $message);
 
         return $response;
     }

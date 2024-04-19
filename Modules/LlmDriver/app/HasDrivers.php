@@ -2,6 +2,8 @@
 
 namespace LlmLaraHub\LlmDriver;
 
+use App\Models\Chat;
+
 interface HasDrivers
 {
     public function getDriver(): string;
@@ -13,4 +15,8 @@ interface HasDrivers
     public function getId(): int;
 
     public function getType(): string;
+
+    public function getChatable() : HasDrivers;
+
+    public function getChat() : Chat;
 }

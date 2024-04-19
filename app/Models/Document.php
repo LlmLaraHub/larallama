@@ -53,6 +53,11 @@ class Document extends Model implements HasDrivers, TaggableContract
         return $this->belongsTo(Collection::class);
     }
 
+    public function getChatable(): HasDrivers
+    {
+        return $this->collection;
+    }
+
     public function document_chunks(): HasMany
     {
         return $this->hasMany(DocumentChunk::class);
@@ -71,6 +76,15 @@ class Document extends Model implements HasDrivers, TaggableContract
     public function getType(): string
     {
         return Document::class;
+    }
+
+    public function getChat(): Chat
+    {
+        /**
+         * @TODO 
+         * I need to come back to this 
+         */
+        return $this->collection->chats()->first();
     }
 
     public function pathToFile(): ?string

@@ -6,7 +6,7 @@ use App\Events\ChatUiUpdateEvent;
 use App\Models\Chat;
 use App\Models\Collection;
 use App\Models\User;
-use Facades\App\Domains\Messages\SearchOrSummarizeChatRepo;
+use Facades\App\Domains\Messages\SearchAndSummarizeChatRepo;
 use Illuminate\Support\Facades\Event;
 use LlmLaraHub\LlmDriver\Functions\SummarizeCollection;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
@@ -35,7 +35,7 @@ class OrchestrateTest extends TestCase
 
         LlmDriverFacade::shouldReceive('driver->chat')->never();
 
-        SearchOrSummarizeChatRepo::shouldReceive('search')->never();
+        SearchAndSummarizeChatRepo::shouldReceive('search')->never();
 
         $this->instance(
             'summarize_collection',
@@ -66,6 +66,5 @@ class OrchestrateTest extends TestCase
         Event::assertDispatched(ChatUiUpdateEvent::class);
 
         $this->assertEquals($results, 'This is the summary of the collection');
-
     }
 }

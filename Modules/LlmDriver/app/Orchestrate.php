@@ -5,7 +5,7 @@ namespace LlmLaraHub\LlmDriver;
 use App\Domains\Messages\RoleEnum;
 use App\Events\ChatUiUpdateEvent;
 use App\Models\Chat;
-use Facades\App\Domains\Messages\SearchOrSummarizeChatRepo;
+use Facades\App\Domains\Messages\SearchAndSummarizeChatRepo;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Log;
 use LlmLaraHub\LlmDriver\Functions\FunctionCallDto;
@@ -31,7 +31,7 @@ class Orchestrate
             ->functionPromptChat($messagesArray);
 
         if ($this->hasFunctions($functions)) {
-            Log::info('[LaraChain] Orchestration Has Fucntions', $functions);
+            Log::info('[LaraChain] Orchestration Has Functions', $functions);
             /**
              * @TODO
              * We will deal with multi functions shortly
@@ -73,7 +73,7 @@ class Orchestrate
                 $chat->addInput(
                     message: $response->content,
                     role: RoleEnum::Assistant,
-                    show_in_thread: false);
+                    show_in_thread: true);
 
                 $messagesArray = Arr::wrap(MessageInDto::from([
                     'role' => 'assistant',
@@ -97,13 +97,6 @@ class Orchestrate
             if ($this->requiresFollowup) {
                 Log::info('[LaraChain] Orchestration Requires Followup');
 
-                // $chat->addInput(
-                //     message: "Use the previous assistant response to help for context to the users previous prompt",
-                //     role: RoleEnum::User,
-                //     show_in_thread: true);
-
-                put_fixture('orchestration_message_array_followup_pre.json', $messagesArray);
-
                 $results = LlmDriverFacade::driver($chat->chatable->getDriver())
                     ->chat($messagesArray);
 
@@ -125,7 +118,7 @@ class Orchestrate
 
             return $this->response;
         } else {
-            Log::info('[LaraChain] Orchestration No Fucntions SearchAnd Summarize');
+            Log::info('[LaraChain] Orchestration No Functions Default SearchAnd Summarize');
             /**
              * @NOTE
              * this assumes way too much
@@ -136,11 +129,7 @@ class Orchestrate
                 }
             )->content;
 
-            Log::info('[LaraChain] Orchestration No Fucntions SearchAnd Summarize', [
-                'message' => $message,
-            ]);
-
-            return SearchOrSummarizeChatRepo::search($chat, $message);
+            return SearchAndSummarizeChatRepo::search($chat, $message);
         }
     }
 

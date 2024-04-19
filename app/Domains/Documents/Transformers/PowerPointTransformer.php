@@ -35,7 +35,7 @@ class PowerPointTransformer
                 foreach ($page->getShapeCollection() as $shape) {
                     // Check if shape contains text
                     if ($shape instanceof RichText) {
-                        // Get the text from the shape
+                        // Get the text from the shapes
                         $page_number = $page_number + 1;
                         $pageContent = $shape->getPlainText();
                         $guid = $filePath.'_'.$page_number;

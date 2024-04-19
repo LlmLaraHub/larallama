@@ -23,6 +23,10 @@ class SummarizeCollection extends FunctionContract
 
         $summary = collect([]);
 
+        /**
+         * @TODO
+         * Token count???
+         */
         foreach ($model->chatable->documents as $document) {
             foreach ($document->document_chunks as $chunk) {
                 $summary->add($chunk->summary);

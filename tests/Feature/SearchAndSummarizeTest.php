@@ -2,8 +2,16 @@
 
 namespace Tests\Feature;
 
+use App\Models\Chat;
+use App\Models\Collection;
+use App\Models\Document;
+use App\Models\DocumentChunk;
 use LlmLaraHub\LlmDriver\Functions\ParametersDto;
 use LlmLaraHub\LlmDriver\Functions\PropertyDto;
+use LlmLaraHub\LlmDriver\Functions\SearchAndSummarize;
+use LlmLaraHub\LlmDriver\LlmDriverFacade;
+use LlmLaraHub\LlmDriver\Requests\MessageInDto;
+use LlmLaraHub\LlmDriver\Responses\CompletionResponse;
 use Tests\TestCase;
 
 class SearchAndSummarizeTest extends TestCase
@@ -22,5 +30,62 @@ class SearchAndSummarizeTest extends TestCase
         $this->assertInstanceOf(ParametersDto::class, $parameters);
         $this->assertIsArray($parameters->properties);
         $this->assertInstanceOf(PropertyDto::class, $parameters->properties[0]);
+    }
+
+    public function test_gets_user_input() {
+        $messageArray = [];
+
+        $messageArray[] = MessageInDto::from([
+            'content' => 'Can you summarize all this content for me',
+            'role' => 'user',
+        ]);
+
+        $data = 'Foo bar';
+
+        $dto = new \LlmLaraHub\LlmDriver\Responses\CompletionResponse($data);
+
+        $functionCallDto = \LlmLaraHub\LlmDriver\Functions\FunctionCallDto::from([
+            'function_name' => 'search_and_summarize',
+            'arguments' => json_encode([
+                'prompt' => 'search for foobar and summarize',
+            ]),
+        ]);
+
+        LlmDriverFacade::shouldReceive('driver->chat')
+            ->once()
+            ->andReturn($dto);
+
+        $embedding = get_fixture('embedding_response.json');
+
+        $dto = \LlmLaraHub\LlmDriver\Responses\EmbeddingsResponseDto::from([
+            'embedding' => data_get($embedding, 'data.0.embedding'),
+            'token_count' => 1000,
+        ]);
+
+        LlmDriverFacade::shouldReceive('driver->embedData')
+            ->once()
+            ->andReturn($dto);
+
+        $collection = Collection::factory()->create();
+
+        $chat = Chat::factory()->create([
+            'chatable_id' => $collection->id,
+        ]);
+
+        $document = Document::factory()->create([
+            'collection_id' => $collection->id,
+        ]);
+
+        $documentChunk = DocumentChunk::factory(3)->create([
+            'document_id' => $document->id,
+        ]);
+
+        $results = (new SearchAndSummarize())->handle(
+            messageArray: $messageArray,
+            model: $chat,
+            functionCallDto: $functionCallDto
+        );
+
+        $this->assertNotNull($results);
     }
 }

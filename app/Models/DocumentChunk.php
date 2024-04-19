@@ -58,6 +58,20 @@ class DocumentChunk extends Model implements HasDrivers, TaggableContract
         return $this->document->collection->embedding_driver->value;
     }
 
+    public function getChatable(): HasDrivers
+    {
+        return $this->document->collection;
+    }
+
+    public function getChat(): Chat
+    {
+        /**
+         * @TODO 
+         * I need to come back to this 
+         */
+        return $this->document->collection->chats()->first();
+    }
+
     public function getId(): int
     {
         return $this->id;

@@ -10,7 +10,7 @@ use LlmLaraHub\LlmDriver\LlmDriverFacade;
 use LlmLaraHub\LlmDriver\Responses\CompletionResponse;
 use LlmLaraHub\LlmDriver\Responses\EmbeddingsResponseDto;
 
-class SearchOrSummarizeChatRepo
+class SearchAndSummarizeChatRepo
 {
     public function search(Chat $chat, string $input): string
     {
@@ -29,6 +29,11 @@ class SearchOrSummarizeChatRepo
 
         $embeddingSize = get_embedding_size($chat->chatable->getEmbeddingDriver());
 
+        /**
+         * @TODO 
+         * Track the document page for referehce
+         * @see https://github.com/orgs/LlmLaraHub/projects/1?pane=issue&itemId=60394288
+         */
         $results = DocumentChunk::query()
             ->join('documents', 'documents.id', '=', 'document_chunks.document_id')
             ->selectRaw(
