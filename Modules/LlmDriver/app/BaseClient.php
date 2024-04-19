@@ -116,6 +116,8 @@ EOD;
     {
         $functions = LlmDriverFacade::getFunctions();
 
+        
+
         return collect($functions)->map(function ($function) {
             $function = $function->toArray();
             $properties = [];

@@ -121,6 +121,7 @@ class SearchAndSummarize extends FunctionContract
         return FunctionResponse::from(
             [
                 'content' => $content,
+                'save_to_message' => false
             ]
         );
     }

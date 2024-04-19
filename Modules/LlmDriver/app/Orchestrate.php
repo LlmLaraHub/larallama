@@ -30,6 +30,8 @@ class Orchestrate
         $functions = LlmDriverFacade::driver($chat->chatable->getDriver())
             ->functionPromptChat($messagesArray);
 
+        Log::info("['LaraChain'] Functions Found", $functions);
+
         if ($this->hasFunctions($functions)) {
             Log::info('[LaraChain] Orchestration Has Functions', $functions);
             /**
@@ -70,10 +72,12 @@ class Orchestrate
                 /** @var FunctionResponse $response */
                 $response = $functionClass->handle($messagesArray, $chat, $functionDto);
 
-                $chat->addInput(
-                    message: $response->content,
-                    role: RoleEnum::Assistant,
-                    show_in_thread: true);
+                if($response->save_to_message) {
+                    $chat->addInput(
+                        message: $response->content,
+                        role: RoleEnum::Assistant,
+                        show_in_thread: true);
+                }
 
                 $messagesArray = Arr::wrap(MessageInDto::from([
                     'role' => 'assistant',
