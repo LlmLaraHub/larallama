@@ -3,23 +3,15 @@
 namespace LlmLaraHub\LlmDriver\Functions;
 
 use App\Domains\Messages\RoleEnum;
-use LlmLaraHub\LlmDriver\HasDrivers;
-use LlmLaraHub\LlmDriver\Responses\FunctionResponse;
-use App\Models\Chat;
 use App\Models\DocumentChunk;
-use Illuminate\Contracts\Container\BindingResolutionException;
-use Exception;
 use Illuminate\Support\Facades\Log;
 use Laravel\Pennant\Feature;
+use LlmLaraHub\LlmDriver\HasDrivers;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
 use LlmLaraHub\LlmDriver\Requests\MessageInDto;
 use LlmLaraHub\LlmDriver\Responses\CompletionResponse;
 use LlmLaraHub\LlmDriver\Responses\EmbeddingsResponseDto;
-use Psr\Container\NotFoundExceptionInterface;
-use Psr\Container\ContainerExceptionInterface;
-use Spatie\LaravelData\Exceptions\MaxTransformationDepthReached;
-use Spatie\LaravelData\Exceptions\CannotCreateData;
-use Spatie\LaravelData\Exceptions\CannotSetComputedValue;
+use LlmLaraHub\LlmDriver\Responses\FunctionResponse;
 
 class SearchAndSummarize extends FunctionContract
 {
@@ -28,11 +20,7 @@ class SearchAndSummarize extends FunctionContract
     protected string $description = 'Used to embed users prompt, search database and return summarized results.';
 
     /**
-     * 
-     * @param MessageInDto[] $messageArray 
-     * @param HasDrivers $model 
-     * @param FunctionCallDto $functionCallDto 
-     * @return FunctionResponse 
+     * @param  MessageInDto[]  $messageArray
      */
     public function handle(
         array $messageArray,
@@ -43,12 +31,11 @@ class SearchAndSummarize extends FunctionContract
          * @TODO
          *
          * @see https://github.com/orgs/LlmLaraHub/projects/1/views/1?pane=issue&itemId=59671259
-         * 
-         * @TODO 
+         *
+         * @TODO
          * Should I break up the string using the LLM to make the search better?
-         * 
          */
-        $input = collect($messageArray)->first(function($item) {
+        $input = collect($messageArray)->first(function ($item) {
             return $item->role === 'user';
         });
 
@@ -61,10 +48,10 @@ class SearchAndSummarize extends FunctionContract
 
         $embeddingSize = get_embedding_size($model->getEmbeddingDriver());
 
-
         /**
-         * @TODO 
+         * @TODO
          * Track the document page for referehce
+         *
          * @see https://github.com/orgs/LlmLaraHub/projects/1?pane=issue&itemId=60394288
          */
         $results = DocumentChunk::query()
@@ -121,7 +108,7 @@ class SearchAndSummarize extends FunctionContract
         return FunctionResponse::from(
             [
                 'content' => $content,
-                'save_to_message' => false
+                'save_to_message' => false,
             ]
         );
     }

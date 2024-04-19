@@ -30,8 +30,9 @@ class SearchAndSummarizeChatRepo
         $embeddingSize = get_embedding_size($chat->chatable->getEmbeddingDriver());
 
         /**
-         * @TODO 
+         * @TODO
          * Track the document page for referehce
+         *
          * @see https://github.com/orgs/LlmLaraHub/projects/1?pane=issue&itemId=60394288
          */
         $results = DocumentChunk::query()

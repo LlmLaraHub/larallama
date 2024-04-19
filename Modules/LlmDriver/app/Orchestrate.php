@@ -72,7 +72,7 @@ class Orchestrate
                 /** @var FunctionResponse $response */
                 $response = $functionClass->handle($messagesArray, $chat, $functionDto);
 
-                if($response->save_to_message) {
+                if ($response->save_to_message) {
                     $chat->addInput(
                         message: $response->content,
                         role: RoleEnum::Assistant,

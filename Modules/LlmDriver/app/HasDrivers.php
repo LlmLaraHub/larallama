@@ -16,7 +16,7 @@ interface HasDrivers
 
     public function getType(): string;
 
-    public function getChatable() : HasDrivers;
+    public function getChatable(): HasDrivers;
 
-    public function getChat() : Chat;
+    public function getChat(): Chat;
 }

@@ -11,7 +11,6 @@ use LlmLaraHub\LlmDriver\Functions\PropertyDto;
 use LlmLaraHub\LlmDriver\Functions\SearchAndSummarize;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
 use LlmLaraHub\LlmDriver\Requests\MessageInDto;
-use LlmLaraHub\LlmDriver\Responses\CompletionResponse;
 use Tests\TestCase;
 
 class SearchAndSummarizeTest extends TestCase
@@ -32,7 +31,8 @@ class SearchAndSummarizeTest extends TestCase
         $this->assertInstanceOf(PropertyDto::class, $parameters->properties[0]);
     }
 
-    public function test_gets_user_input() {
+    public function test_gets_user_input()
+    {
         $messageArray = [];
 
         $messageArray[] = MessageInDto::from([

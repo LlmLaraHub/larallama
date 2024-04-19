@@ -38,8 +38,9 @@ class Collection extends Model implements HasDrivers, TaggableContract
         'embedding_driver' => DriversEnum::class,
     ];
 
-    public function getChatable(): HasDrivers { 
-        return $this; 
+    public function getChatable(): HasDrivers
+    {
+        return $this;
     }
 
     public function team(): BelongsTo
@@ -50,8 +51,8 @@ class Collection extends Model implements HasDrivers, TaggableContract
     public function getChat(): Chat
     {
         /**
-         * @TODO 
-         * I need to come back to this 
+         * @TODO
+         * I need to come back to this
          */
         return $this->chats()->first();
     }
