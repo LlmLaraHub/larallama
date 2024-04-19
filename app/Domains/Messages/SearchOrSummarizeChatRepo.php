@@ -36,7 +36,7 @@ class SearchOrSummarizeChatRepo
                 [$embedding->embedding]
             )
             ->where('documents.collection_id', $chat->chatable->id)
-            ->limit(5)
+            ->limit(10)
             ->orderByRaw('distance')
             ->get();
 

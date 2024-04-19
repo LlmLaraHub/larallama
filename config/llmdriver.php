@@ -10,6 +10,7 @@ return [
         'text-embedding-3-small' => 384,
         'ollama' => 4096,
         'llama2' => 4096,
+        'llama3' => 4096,
         'mistral' => 4096,
         'mxbai-embed-large' => 1024,
     ],
@@ -46,8 +47,8 @@ return [
             'api_url' => env('OLLAMA_API_URL', 'http://127.0.0.1:11434/api/'),
             'models' => [
                 //@see https://github.com/ollama/ollama/blob/main/docs/openai.md
-                'completion_model' => env('OLLAMA_COMPLETION_MODEL', 'llama2'),
-                'embedding_model' => env('OLLAMA_EMBEDDING_MODEL', 'llama2'),
+                'completion_model' => env('OLLAMA_COMPLETION_MODEL', 'llama3'),
+                'embedding_model' => env('OLLAMA_EMBEDDING_MODEL', 'llama3'),
             ],
         ],
     ],

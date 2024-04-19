@@ -1,0 +1,22 @@
+[
+    {
+        "content": "What are the manifestations of Lyme Disease?",
+        "role": "user"
+    },
+    {
+        "content": "This is data from the search results when entering the users prompt which is ### START PROMPT ### What are the manifestations of Lyme Disease? ### END PROMPT ###  please use this with the following context and only this, summarize it for the user and return as markdown so I can render it and strip out and formatting like extra spaces, tabs, periods etc: 6ConfidentialBreakthroughs that change patients lives\nExecutive Summary   24ConfidentialBreakthroughs that change patients lives\nMeeting Evaluation Summary  Respondent Awareness and Willingness To Take a \nLyme Disease Vaccine  3ConfidentialBreakthroughs that change patients lives\nProject Overview & Methods  Lyme Disease Medical Value Story \nCollated Evidence \nSeptember 21, 2023   Lyme Disease Medical Value Story \nCollated Evidence \nSeptember 21, 2023   1ConfidentialBreakthroughs that change patients lives\nLyme Vaccine Demand Refinement\nFinal Report\nAugust 13th 2021  1ConfidentialBreakthroughs that change patients lives\nLyme Vaccine Demand Refinement\nFinal Report\nAugust 13th 2021  Ticks and Tick-borne Diseases 15 (2024) 102326\n3  1ConfidentialBreakthroughs that change patients lives\nLyme Vaccine Virtual Advisory Board Executive Summary\nGermany, Switzerland, Austria\n2627 April 2021 ",
+        "role": "assistant"
+    },
+    {
+        "content": "What are the manifestations of Lyme Disease?",
+        "role": "user"
+    },
+    {
+        "content": "This is data from the search results when entering the users prompt which is ### START PROMPT ### What are the manifestations of Lyme Disease? ### END PROMPT ###  please use this with the following context and only this, summarize it for the user and return as markdown so I can render it and strip out and formatting like extra spaces, tabs, periods etc: 6ConfidentialBreakthroughs that change patients lives\nExecutive Summary   24ConfidentialBreakthroughs that change patients lives\nMeeting Evaluation Summary  Respondent Awareness and Willingness To Take a \nLyme Disease Vaccine  3ConfidentialBreakthroughs that change patients lives\nProject Overview & Methods  Lyme Disease Medical Value Story \nCollated Evidence \nSeptember 21, 2023   Lyme Disease Medical Value Story \nCollated Evidence \nSeptember 21, 2023   1ConfidentialBreakthroughs that change patients lives\nLyme Vaccine Demand Refinement\nFinal Report\nAugust 13th 2021  1ConfidentialBreakthroughs that change patients lives\nLyme Vaccine Demand Refinement\nFinal Report\nAugust 13th 2021  Ticks and Tick-borne Diseases 15 (2024) 102326\n3  1ConfidentialBreakthroughs that change patients lives\nLyme Vaccine Virtual Advisory Board Executive Summary\nGermany, Switzerland, Austria\n2627 April 2021 ",
+        "role": "assistant"
+    },
+    {
+        "content": "What are the manifestations of Lyme Disease?",
+        "role": "user"
+    }
+]
