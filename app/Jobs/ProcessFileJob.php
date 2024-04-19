@@ -57,12 +57,14 @@ class ProcessFileJob implements ShouldQueue
                     throw new \Exception('Can not read the document '.$filePath);
                 }
 
+                /** @phpstan-ignore-next-line */
                 $writer = IOFactory::createReader($filePath, 'PDF');
 
                 $filePath = $this->document->pathToFile();
 
                 $filePath = str_replace('.pptx', '.pdf', $filePath);
 
+                /** @phpstan-ignore-next-line */
                 $writer->save($filePath);
 
             }

@@ -47,7 +47,7 @@ class ChatController extends Controller
     {
         $validated = request()->validate([
             'input' => 'required|string',
-            'completion' => 'boolean'
+            'completion' => 'boolean',
         ]);
 
         $chat->addInput(
@@ -62,7 +62,7 @@ class ChatController extends Controller
             'role' => 'user',
         ]);
 
-        if(data_get($validated, 'completion', false)) {
+        if (data_get($validated, 'completion', false)) {
             Log::info('[LaraChain] Running Simple Completion');
             $prompt = $validated['input'];
             $response = LlmDriverFacade::driver($chat->getDriver())->completion($prompt);

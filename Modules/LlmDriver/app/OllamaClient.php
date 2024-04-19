@@ -127,15 +127,15 @@ class OllamaClient extends BaseClient
 
         $messages = $this->remapMessages($messages);
 
-        put_fixture("messages_llama3.json", $messages);
-        
+        put_fixture('messages_llama3.json', $messages);
+
         $response = $this->getClient()->post('/chat', [
             'model' => $this->getConfig('ollama')['models']['completion_model'],
             'messages' => $messages,
             'stream' => false,
         ]);
 
-        put_fixture("ollama_chat_results.json", $response->json());
+        put_fixture('ollama_chat_results.json', $response->json());
 
         $results = $response->json()['message']['content'];
 
@@ -225,13 +225,13 @@ class OllamaClient extends BaseClient
             return $message->toArray();
         });
 
-        if(in_array('llama3', [
+        if (in_array('llama3', [
             $this->getConfig('ollama')['models']['completion_model']])) {
-                Log::info('[LaraChain] LlmDriver::OllamaClient::remapMessages');
-                $messages = collect($messages)->reverse();
+            Log::info('[LaraChain] LlmDriver::OllamaClient::remapMessages');
+            $messages = collect($messages)->reverse();
         }
 
         return $messages->values()->toArray();
-        
+
     }
 }
