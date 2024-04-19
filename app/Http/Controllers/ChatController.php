@@ -10,6 +10,9 @@ use App\Http\Resources\MessageResource;
 use App\Models\Chat;
 use App\Models\Collection;
 use Facades\LlmLaraHub\LlmDriver\Orchestrate;
+use Facades\LlmLaraHub\LlmDriver\SimpleSearchAndSummarizeOrchestrate;
+use Illuminate\Support\Facades\Log;
+use LlmLaraHub\LlmDriver\LlmDriverFacade;
 use LlmLaraHub\LlmDriver\Requests\MessageInDto;
 
 class ChatController extends Controller
@@ -44,6 +47,7 @@ class ChatController extends Controller
     {
         $validated = request()->validate([
             'input' => 'required|string',
+            'completion' => 'boolean'
         ]);
 
         $chat->addInput(
@@ -58,7 +62,22 @@ class ChatController extends Controller
             'role' => 'user',
         ]);
 
-        $response = Orchestrate::handle($messagesArray, $chat);
+        if(data_get($validated, 'completion', false)) {
+            Log::info('[LaraChain] Running Simple Completion');
+            $prompt = $validated['input'];
+            $response = LlmDriverFacade::driver($chat->getDriver())->completion($prompt);
+            $response = $response->content;
+            $chat->addInput(
+                message: $response,
+                role: RoleEnum::Assistant,
+                show_in_thread: true);
+        } elseif (LlmDriverFacade::driver($chat->getDriver())->hasFunctions()) {
+            Log::info('[LaraChain] Running Orchestrate');
+            $response = Orchestrate::handle($messagesArray, $chat);
+        } else {
+            Log::info('[LaraChain] Simple Search and Summarize');
+            $response = SimpleSearchAndSummarizeOrchestrate::handle($validated['input'], $chat);
+        }
 
         ChatUpdatedEvent::dispatch($chat->chatable, $chat);
 

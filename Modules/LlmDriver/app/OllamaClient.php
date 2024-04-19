@@ -172,6 +172,10 @@ class OllamaClient extends BaseClient
     {
         $functions = LlmDriverFacade::getFunctions();
 
+        if (! Feature::activate('ollama-functions')) {
+            return [];
+        }
+
         return collect($functions)->map(function ($function) {
             $function = $function->toArray();
             $properties = [];
@@ -204,5 +208,10 @@ class OllamaClient extends BaseClient
     public function isAsync(): bool
     {
         return false;
+    }
+
+    public function onQueue(): string
+    {
+        return 'ollama';
     }
 }

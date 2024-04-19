@@ -16,11 +16,6 @@ class DemoSeeder extends Seeder
     public function run(): void
     {
 
-        // call from databaseseeder
-        $this->call([
-            DatabaseSeeder::class,
-        ]);
-
         ApiKey::factory(5)->create();
 
         Chat::factory(20)->create()->each(function ($chat) {

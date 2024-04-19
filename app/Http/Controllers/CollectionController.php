@@ -10,6 +10,7 @@ use App\Http\Resources\DocumentResource;
 use App\Jobs\ProcessFileJob;
 use App\Models\Collection;
 use App\Models\Document;
+use Illuminate\Support\Facades\Log;
 
 class CollectionController extends Controller
 {
@@ -92,11 +93,24 @@ class CollectionController extends Controller
         ]);
 
         foreach ($validated['files'] as $file) {
-            $document = Document::create([
-                'collection_id' => $collection->id,
-                'file_path' => $file->getClientOriginalName(),
-                'type' => TypesEnum::PDF,
-            ]);
+            $mimetype = $file->getMimeType();
+
+            //if pptx
+            Log::info($mimetype);
+
+            if ($mimetype === 'application/vnd.openxmlformats-officedocument.presentationml.presentation') {
+                $document = Document::create([
+                    'collection_id' => $collection->id,
+                    'file_path' => $file->getClientOriginalName(),
+                    'type' => TypesEnum::Pptx,
+                ]);
+            } else {
+                $document = Document::create([
+                    'collection_id' => $collection->id,
+                    'file_path' => $file->getClientOriginalName(),
+                    'type' => TypesEnum::PDF,
+                ]);
+            }
 
             $file->storeAs(
                 path: $collection->id,

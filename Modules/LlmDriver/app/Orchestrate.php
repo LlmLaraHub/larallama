@@ -125,6 +125,7 @@ class Orchestrate
 
             return $this->response;
         } else {
+            Log::info('[LaraChain] Orchestration No Fucntions SearchAnd Summarize');
             /**
              * @NOTE
              * this assumes way too much
@@ -134,6 +135,10 @@ class Orchestrate
                     return $message->role === 'user';
                 }
             )->content;
+
+            Log::info('[LaraChain] Orchestration No Fucntions SearchAnd Summarize', [
+                'message' => $message,
+            ]);
 
             return SearchOrSummarizeChatRepo::search($chat, $message);
         }

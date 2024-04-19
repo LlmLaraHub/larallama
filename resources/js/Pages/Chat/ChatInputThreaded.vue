@@ -5,6 +5,8 @@ import { ChevronDoubleDownIcon, ChevronRightIcon} from "@heroicons/vue/20/solid"
 import {computed, inject, onUnmounted, ref, watch} from "vue";
 import axios from "axios";
 import { useToast } from "vue-toastification";
+import { Switch, SwitchGroup, SwitchLabel } from '@headlessui/vue'
+
 
 const toast = useToast();
 
@@ -21,19 +23,24 @@ const emits = defineEmits(['chatSubmitted'])
 const errors = ref({})
 
 const form = useForm({
-    input: ""
+    input: "",
+    completion: false
 })
+
+
 
 const getting_results = ref(false)
 
 const save = () => {
     getting_results.value = true
     let message = form.input
+    let completion = form.completion
     form.reset();
     axios.post(route('chats.messages.create', {
         chat: props.chat.id
     }), {
-        input: message
+        input: message,
+        completion: completion
     }).then(response => {
         getting_results.value = false
         console.log(response.data.message)
@@ -75,13 +82,12 @@ const setQuestion = (question) => {
     <div class="w-full bg-gray-50">
 
         <form @submit.prevent="save"  autocomplete="off"
-              class="relative p-4 flex max-container mx-auto w-full" v-auto-animate>
-            <div v-if="errors?.input">
-                <div class="text-red-500 text-xs italic">{{ errors }}</div>
-            </div>
+              class="relative p-4 flex-col max-container mx-auto w-full" v-auto-animate>
 
-            <input
+            <div class="relative p-4 flex max-container mx-auto w-full" >
+                <input
                 type="text"
+                @keydown.enter.prevent
                 autofocus="true"
                 class="caret caret-indigo-400 caret-opacity-50
                 disabled:opacity-40
@@ -114,6 +120,19 @@ const setQuestion = (question) => {
                             d="M16.1 260.2c-22.6 12.9-20.5 47.3 3.6 57.3L160 376V479.3c0 18.1 14.6 32.7 32.7 32.7c9.7 0 18.9-4.3 25.1-11.8l62-74.3 123.9 51.6c18.9 7.9 40.8-4.5 43.9-24.7l64-416c1.9-12.1-3.4-24.3-13.5-31.2s-23.3-7.5-34-1.4l-448 256zm52.1 25.5L409.7 90.6 190.1 336l1.2 1L68.2 285.7zM403.3 425.4L236.7 355.9 450.8 116.6 403.3 425.4z"/>
                     </svg>
                 </button>
+            </div>
+            <div class="flex justify-start">
+                <SwitchGroup as="div" class="flex items-center">
+                    <Switch v-model="form.completion" :class="[form.completion ? 'bg-indigo-600' : 'bg-gray-200', 'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2']">
+                        <span aria-hidden="true" :class="[form.completion ? 'translate-x-5' : 'translate-x-0', 'pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out']" />
+                    </Switch>
+                    <SwitchLabel as="span" class="ml-3 text-sm">
+                        <span class="font-medium text-gray-900">Completion</span>
+                        {{ ' ' }}
+                        <span class="text-gray-500">(Your LLM does not support functions)</span>
+                    </SwitchLabel>
+                </SwitchGroup>
+            </div>
         </form>
     </div>
 </div>

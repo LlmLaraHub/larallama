@@ -12,6 +12,9 @@ use App\Models\DocumentChunk;
 use Illuminate\Bus\Batch;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Log;
+use LlmLaraHub\LlmDriver\LlmDriverFacade;
+use LlmLaraHub\TagFunction\Database\Seeders\TagFunctionDatabaseSeeder;
+use LlmLaraHub\TagFunction\Functions\TaggingFunction;
 use Smalot\PdfParser\Parser;
 
 class PdfTransformer
@@ -50,7 +53,7 @@ class PdfTransformer
                 $chunks[] = [
                     new VectorlizeDataJob($DocumentChunk),
                     new SummarizeDataJob($DocumentChunk),
-                    //new TagDataJob($this->document),
+                    //new TaggingFunction($this->document),
                     //then mark it all as done and notify the ui
                 ];
 
@@ -66,6 +69,7 @@ class PdfTransformer
                 SummarizeDocumentJob::dispatch($document);
             })
             ->allowFailures()
+            ->onQueue(LlmDriverFacade::driver($document->getDriver())->onQueue())
             ->dispatch();
 
         return $this->document;

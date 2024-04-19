@@ -6,6 +6,8 @@ use App\Models\Chat;
 use App\Models\Collection;
 use App\Models\User;
 use Facades\LlmLaraHub\LlmDriver\Orchestrate;
+use Facades\LlmLaraHub\LlmDriver\SimpleSearchAndSummarizeOrchestrate;
+use LlmLaraHub\LlmDriver\LlmDriverFacade;
 use Tests\TestCase;
 
 class ChatControllerTest extends TestCase
@@ -67,6 +69,29 @@ class ChatControllerTest extends TestCase
                 'input' => 'user input',
             ])->assertOk();
         $this->assertDatabaseCount('messages', 2);
+
+    }
+
+    public function test_no_functions()
+    {
+        $user = User::factory()->create();
+        $collection = Collection::factory()->create();
+        $chat = Chat::factory()->create([
+            'chatable_id' => $collection->id,
+            'chatable_type' => Collection::class,
+            'user_id' => $user->id,
+        ]);
+
+        LlmDriverFacade::shouldReceive('driver->hasFunctions')->once()->andReturn(false);
+        SimpleSearchAndSummarizeOrchestrate::shouldReceive('handle')->once()->andReturn('Yo');
+
+        $this->actingAs($user)->post(route('chats.messages.create', [
+            'chat' => $chat->id,
+        ]),
+            [
+                'system_prompt' => 'Foo',
+                'input' => 'user input',
+            ])->assertOk();
 
     }
 }

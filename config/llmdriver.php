@@ -11,6 +11,7 @@ return [
         'ollama' => 4096,
         'llama2' => 4096,
         'mistral' => 4096,
+        'mxbai-embed-large' => 1024,
     ],
 
     'drivers' => [

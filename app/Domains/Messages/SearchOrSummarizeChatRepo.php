@@ -5,6 +5,7 @@ namespace App\Domains\Messages;
 use App\Models\Chat;
 use App\Models\DocumentChunk;
 use Illuminate\Support\Facades\Log;
+use Laravel\Pennant\Feature;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
 use LlmLaraHub\LlmDriver\Responses\CompletionResponse;
 use LlmLaraHub\LlmDriver\Responses\EmbeddingsResponseDto;
@@ -19,7 +20,7 @@ class SearchOrSummarizeChatRepo
          * by searching the data or a summary of the data.
          * For now we will search.
          */
-        Log::info('ChatController:chat getting embedding', ['input' => $input]);
+        Log::info('[LaraChain] Embedding and Searching');
 
         /** @var EmbeddingsResponseDto $embedding */
         $embedding = LlmDriverFacade::driver(
@@ -42,12 +43,16 @@ class SearchOrSummarizeChatRepo
         $content = [];
 
         foreach ($results as $result) {
-            $content[] = remove_ascii(reduce_text_size($result->content)); //reduce_text_size seem to mess up Claude?
+            $contentString = remove_ascii($result->content);
+            if (Feature::active('reduce_text')) {
+                $result = reduce_text_size($contentString);
+            }
+            $content[] = $contentString; //reduce_text_size seem to mess up Claude?
         }
 
         $content = implode(' ', $content);
 
-        $content = "This is data from the search results when entering the users prompt which is ### START PROMPT ### {$input} ### END PROMPT ### please use this with the following context and only this and return as markdown so I can render it: ".$content;
+        $content = "This is data from the search results when entering the users prompt which is ### START PROMPT ### {$input} ### END PROMPT ###  please use this with the following context and only this, summarize it for the user and return as markdown so I can render it and strip out and formatting like extra spaces, tabs, periods etc: ".$content;
 
         $chat->addInput(
             message: $content,
@@ -57,7 +62,7 @@ class SearchOrSummarizeChatRepo
         );
 
         $latestMessagesArray = $chat->getChatResponse();
-
+        Log::info('[LaraChain] Getting the Summary');
         /** @var CompletionResponse $response */
         $response = LlmDriverFacade::driver(
             $chat->chatable->getDriver()

@@ -21,6 +21,7 @@
         "nwidart/laravel-modules": "^11.0",
         "openai-php/laravel": "^0.8.1",
         "owenvoke/blade-fontawesome": "^2.3",
+        "phpoffice/phppresentation": "^1.0",
         "smalot/pdfparser": "^2.9",
         "spatie/laravel-data": "^4.4",
         "spatie/laravel-markdown": "^2.3",

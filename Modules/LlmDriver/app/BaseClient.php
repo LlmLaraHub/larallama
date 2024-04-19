@@ -107,6 +107,11 @@ EOD;
         return true;
     }
 
+    public function hasFunctions(): bool
+    {
+        return count($this->getFunctions()) > 0;
+    }
+
     public function getFunctions(): array
     {
         $functions = LlmDriverFacade::getFunctions();
@@ -156,5 +161,10 @@ EOD;
     protected function remapMessages(array $messages): array
     {
         return $messages;
+    }
+
+    public function onQueue(): string
+    {
+        return 'default';
     }
 }

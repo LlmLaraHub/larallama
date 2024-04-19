@@ -38,4 +38,13 @@ class DocumentFactory extends Factory
             ];
         });
     }
+
+    public function pptx(): Factory
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'type' => TypesEnum::Pptx,
+            ];
+        });
+    }
 }
