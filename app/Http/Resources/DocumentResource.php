@@ -21,6 +21,7 @@ class DocumentResource extends JsonResource
             'type' => str($this->type->name)->title()->toString(),
             'status' => str($this->status->name)->headline()->toString(),
             'document_chunks_count' => $this->document_chunks()->count(),
+            'tags' => TagResource::collection($this->tags),
         ];
     }
 }

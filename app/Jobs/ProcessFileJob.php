@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use App\Domains\Documents\TypesEnum;
+use App\Events\DocumentParsedEvent;
 use App\Models\Document;
 use Illuminate\Bus\Batch;
 use Illuminate\Bus\Queueable;
@@ -37,7 +38,11 @@ class ProcessFileJob implements ShouldQueue
         if ($document->type === TypesEnum::Pptx) {
             if (Feature::active('process-ppxt')) {
                 /**
-                 * Seems to be some work some do not
+                 * @NOTE
+                 * Seems to work with my example
+                 * power point
+                 * But the ones I needed it to work on broke
+                 * so will tray again soon.
                  */
                 $batch = Bus::batch([
                     new ParsePowerPointJob($this->document),
@@ -74,7 +79,8 @@ class ProcessFileJob implements ShouldQueue
                 new ParsePdfFileJob($this->document),
             ])
                 ->name('Process PDF Document - '.$document->id)
-                ->finally(function (Batch $batch) {
+                ->finally(function (Batch $batch) use ($document) {
+                    DocumentParsedEvent::dispatch($document);
                 })
                 ->allowFailures()
                 ->onQueue(LlmDriverFacade::driver($document->getDriver())->onQueue())
