@@ -12,6 +12,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Bus;
+use Illuminate\Support\Facades\Log;
 use Laravel\Pennant\Feature;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
 use PhpOffice\PhpPresentation\IOFactory;
@@ -37,6 +38,7 @@ class ProcessFileJob implements ShouldQueue
 
         if ($document->type === TypesEnum::Pptx) {
             if (Feature::active('process-ppxt')) {
+                Log::info('Processing PPTX Document');
                 /**
                  * @NOTE
                  * Seems to work with my example
@@ -75,6 +77,7 @@ class ProcessFileJob implements ShouldQueue
             }
 
         } elseif ($document->type === TypesEnum::PDF) {
+            Log::info('Processing PDF Document');
             $batch = Bus::batch([
                 new ParsePdfFileJob($this->document),
             ])

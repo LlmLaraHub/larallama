@@ -52,4 +52,7 @@ return [
             ],
         ],
     ],
+    'features' => [
+        'pptx' => env('FEATURE_PPTX', false),
+    ],
 ];

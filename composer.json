@@ -21,7 +21,7 @@
         "nwidart/laravel-modules": "^11.0",
         "openai-php/laravel": "^0.8.1",
         "owenvoke/blade-fontawesome": "^2.3",
-        "phpoffice/phppresentation": "^1.0",
+        "phpoffice/phppresentation": "dev-fix-pptx",
         "smalot/pdfparser": "^2.9",
         "spatie/laravel-data": "^4.4",
         "spatie/laravel-markdown": "^2.3",
@@ -78,6 +78,12 @@
         "test": "php artisan test",
         "stan": "vendor/bin/phpstan analyse --memory-limit 2G"
     },
+    "repositories": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/alnutile/php-presentation-fix"
+        }
+    ],
     "extra": {
         "branch-alias": {
             "dev-master": "11.x-dev"

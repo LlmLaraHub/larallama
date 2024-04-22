@@ -111,8 +111,7 @@ const setActiveTab = (tab) => {
                                 </span>
                             </a>
                         </div>
-                        <h1 class="mt-10 text-4xl font-bold tracking-tight text-white sm:text-6xl">Transform Your Data
-                            into Insights</h1>
+                        <h1 class="mt-10 text-4xl font-bold tracking-tight text-white sm:text-6xl">Transform Your Data into Insights</h1>
                         <p class="mt-6 text-lg leading-8 text-gray-300">
                             Simplify complex data processes with an intuitive platform designed to empower your
                             decisions.
