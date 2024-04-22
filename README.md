@@ -77,6 +77,3 @@ And just thinking how to make some of those flows work in a Laravel environment
 Per the Laravel docs https://laravel.com/docs/11.x/reverb
 
 
-
-## Local Dev
-
