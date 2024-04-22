@@ -2,16 +2,13 @@
 
 namespace App\Domains\Documents\Transformers;
 
-use App\Domains\Collections\CollectionStatusEnum;
-use App\Events\CollectionStatusEvent;
-use App\Jobs\SummarizeDataJob;
 use App\Domains\UnStructured\StructuredDto;
+use App\Jobs\SummarizeDataJob;
 use App\Jobs\VectorlizeDataJob;
 use App\Models\Document;
 use App\Models\DocumentChunk;
 use Illuminate\Support\Facades\Log;
 use PhpOffice\PhpPresentation\IOFactory;
-use PhpOffice\PhpPresentation\Shape\RichText;
 
 class PowerPointTransformer
 {
@@ -33,7 +30,7 @@ class PowerPointTransformer
 
         $chunks = [];
         while ($results->valid()) {
-            /** @var StructuredDto $dto  */
+            /** @var StructuredDto $dto */
             $dto = $results->current();
             $DocumentChunk = DocumentChunk::updateOrCreate(
                 [
@@ -43,7 +40,7 @@ class PowerPointTransformer
                 [
                     'content' => $dto->content,
                     'sort_order' => $dto->page,
-                    'meta_data' => $dto->toArray()
+                    'meta_data' => $dto->toArray(),
                 ]
             );
 
@@ -54,7 +51,7 @@ class PowerPointTransformer
 
             $results->next();
         }
-        
+
         Log::info('PowerPointTransformer:handle', ['chunks' => count($chunks)]);
 
         return $chunks;

@@ -4,9 +4,6 @@ namespace Tests\Feature;
 
 use App\Domains\UnStructured\StructuredDto;
 use App\Domains\UnStructured\StructuredTypeEnum;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Nette\Schema\Elements\Structure;
 use Tests\TestCase;
 
 class StructuredDtoTest extends TestCase

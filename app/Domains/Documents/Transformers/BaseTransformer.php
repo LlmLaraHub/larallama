@@ -4,27 +4,32 @@ namespace App\Domains\Documents\Transformers;
 
 use App\Domains\UnStructured\StructuredDto;
 use App\Domains\UnStructured\StructuredTypeEnum;
-use Nette\Schema\Elements\Structure;
-
 
 /**
- * @NOTE 
+ * @NOTE
  * the properies so far are things that might be shared page to page
- * 
  */
-abstract class BaseTransformer {
+abstract class BaseTransformer
+{
+    public string $creator = '';
 
+    public string $last_updated_by = '';
 
-    public string $creator = "";
-    public string $last_updated_by = "";
-    public string $path_to_file = "";
-    public string $updated_at = "";
-    public string $coordinates = "";
-    public string $keywords = "";
-    public string $category = "";
-    public string $description = "";
-    public string $subject = "";
-    public string $title = "";
+    public string $path_to_file = '';
+
+    public mixed $updated_at = '';
+
+    public string $coordinates = '';
+
+    public string $keywords = '';
+
+    public string $category = '';
+
+    public string $description = '';
+
+    public string $subject = '';
+
+    public string $title = '';
 
     public function output(
         StructuredTypeEnum $type,
@@ -33,13 +38,13 @@ abstract class BaseTransformer {
         mixed $guid,
         mixed $element_depth,
         bool $is_continuation = false,
-    ) : StructuredDto {
+    ): StructuredDto {
 
         return StructuredDto::from([
             'type' => $type,
             'content' => $content,
             'title' => $this->title,
-            'created_by' => $this->creator, 
+            'created_by' => $this->creator,
             'last_updated_by' => $this->last_updated_by,
             'page' => $page_number,
             'guid' => $guid,
@@ -52,13 +57,13 @@ abstract class BaseTransformer {
             'subject' => $this->subject,
             'keywords' => $this->keywords,
             'category' => $this->category,
-            'parent_id' => null
+            'parent_id' => null,
         ]);
 
     }
 
-    public function getTitleFormatted() : string {
+    public function getTitleFormatted(): string
+    {
         return str($this->title)->snake()->toString();
     }
-
 }

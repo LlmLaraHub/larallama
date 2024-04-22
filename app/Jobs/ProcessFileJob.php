@@ -13,9 +13,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Log;
-use Laravel\Pennant\Feature;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
-use PhpOffice\PhpPresentation\IOFactory;
 
 class ProcessFileJob implements ShouldQueue
 {
@@ -37,17 +35,17 @@ class ProcessFileJob implements ShouldQueue
         $document = $this->document;
 
         if ($document->type === TypesEnum::Pptx) {
-                Log::info('Processing PPTX Document');
-                $batch = Bus::batch([
-                    new ParsePowerPointJob($this->document),
-                ])
-                    ->name('Process PPTX Document - '.$document->id)
-                    ->finally(function (Batch $batch) use ($document) {
-                        DocumentParsedEvent::dispatch($document);
-                    })
-                    ->allowFailures()
-                    ->onQueue(LlmDriverFacade::driver($document->getDriver())->onQueue())
-                    ->dispatch();
+            Log::info('Processing PPTX Document');
+            $batch = Bus::batch([
+                new ParsePowerPointJob($this->document),
+            ])
+                ->name('Process PPTX Document - '.$document->id)
+                ->finally(function (Batch $batch) use ($document) {
+                    DocumentParsedEvent::dispatch($document);
+                })
+                ->allowFailures()
+                ->onQueue(LlmDriverFacade::driver($document->getDriver())->onQueue())
+                ->dispatch();
 
         } elseif ($document->type === TypesEnum::PDF) {
             Log::info('Processing PDF Document');

@@ -1,11 +1,9 @@
-<?php 
+<?php
 
 namespace App\Domains\UnStructured;
 
-use Spatie\LaravelData\Data;
-
-enum StructuredTypeEnum : string {
-
+enum StructuredTypeEnum: string
+{
     case Narrative = 'narrative';
     case Title = 'title';
     case Table = 'table';

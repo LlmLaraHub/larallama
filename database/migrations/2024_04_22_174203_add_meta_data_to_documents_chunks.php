@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('document_chunks', function (Blueprint $table) {
-            $table->json("meta_data")->nullable();
+            $table->json('meta_data')->nullable();
         });
     }
 

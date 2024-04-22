@@ -2,7 +2,6 @@
 
 namespace App\Domains\Documents\Transformers;
 
-use App\Domains\UnStructured\StructuredDto;
 use App\Domains\UnStructured\StructuredTypeEnum;
 use Generator;
 use Illuminate\Support\Facades\File as FacadesFile;
@@ -35,10 +34,8 @@ class ProcessPpt extends BaseTransformer
         $this->category = $documentProperties->getCategory();
         $this->description = $documentProperties->getDescription();
         $this->updated_at = $documentProperties->getModified();
-        
 
         foreach ($oPHPPresentation->getAllSlides() as $page_number => $page) {
-
 
             $page_number = $page_number + 1;
 
@@ -52,7 +49,7 @@ class ProcessPpt extends BaseTransformer
                     if ($shape instanceof RichText) {
                         $pageContent = $shape->getPlainText();
                         $guid = $shape->getHashCode();
-                        
+
                         $content = $this->output(
                             type: StructuredTypeEnum::Narrative,
                             content: $pageContent,
@@ -65,19 +62,19 @@ class ProcessPpt extends BaseTransformer
                         yield $content;
                     } elseif ($shape instanceof Table) {
                         $table = $shape->getRows();
-                        $this->title = "Table";
-                        $this->subject = "Table";
+                        $this->title = 'Table';
+                        $this->subject = 'Table';
 
                         $content = $this->output(
                             type: StructuredTypeEnum::Table,
-                            content: "table data",
+                            content: 'table data',
                             page_number: $page_number,
                             guid: $shape->getHashCode(),
                             element_depth: 0,
                             is_continuation: false,
                         );
                         yield $content;
-                        
+
                         foreach ($table as $rowNumber => $row) {
                             foreach ($row->getCells() as $cellNumber => $cell) {
                                 $pageContent = $cell->getPlainText();
@@ -87,7 +84,7 @@ class ProcessPpt extends BaseTransformer
                                     content: $pageContent,
                                     page_number: $page_number,
                                     guid: $row->getHashCode(),
-                                    element_depth: $rowNumber . $cellNumber,
+                                    element_depth: $rowNumber.$cellNumber,
                                     is_continuation: true,
                                 );
                                 yield $content;
@@ -100,12 +97,12 @@ class ProcessPpt extends BaseTransformer
                         $nameAndType = $this->title.'.'.$mimtype;
                         $this->path_to_file = storage_path('app/temp/'.$nameAndType);
                         FacadesFile::put($this->path_to_file, $contents);
-                        $this->subject = "image";
-                        $this->description = "Image of type " . $mimtype;
+                        $this->subject = 'image';
+                        $this->description = 'Image of type '.$mimtype;
 
                         $content = $this->output(
                             type: StructuredTypeEnum::Image,
-                            content: "see image", //ocr at this point or after 
+                            content: 'see image', //ocr at this point or after
                             page_number: $page_number,
                             guid: $shape->getHashCode(),
                             element_depth: $shapeCount,

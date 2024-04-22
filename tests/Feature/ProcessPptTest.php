@@ -3,17 +3,12 @@
 namespace Tests\Feature;
 
 use App\Domains\Documents\Transformers\ProcessPpt;
-use App\Models\Document;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\File;
 use Tests\TestCase;
 
 class ProcessPptTest extends TestCase
 {
-
     use SharedSetupForPptFile;
-
 
     protected function tearDown(): void
     {

@@ -13,7 +13,6 @@ use Illuminate\Bus\Batch;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Log;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
-use LlmLaraHub\TagFunction\Functions\TaggingFunction;
 use Smalot\PdfParser\Parser;
 
 class PdfTransformer
