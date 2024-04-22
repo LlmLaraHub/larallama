@@ -2,11 +2,10 @@
 
 namespace App\Domains\Documents\Transformers;
 
-use Faker\Core\File;
 use Generator;
 use Illuminate\Support\Facades\File as FacadesFile;
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 use PhpOffice\PhpPresentation\IOFactory;
 use PhpOffice\PhpPresentation\PhpPresentation;
 use PhpOffice\PhpPresentation\Shape\Drawing\Gd;
@@ -40,7 +39,7 @@ class ProcessPpt
                         $guid = $pathToFile.'_'.$page_number;
 
                         yield $pageContent;
-                    } elseif($shape instanceof Table) {
+                    } elseif ($shape instanceof Table) {
                         $table = $shape->getRows();
                         foreach ($table as $row) {
                             foreach ($row->getCells() as $cell) {
@@ -48,12 +47,12 @@ class ProcessPpt
                                 yield $pageContent;
                             }
                         }
-                    }   elseif($shape instanceof Gd) {
-                        $mimtype = str($shape->getMimeType())->afterLast("/")->toString();
+                    } elseif ($shape instanceof Gd) {
+                        $mimtype = str($shape->getMimeType())->afterLast('/')->toString();
                         $contents = $shape->getContents();
                         $name = Str::random(10);
-                        $nameAndType = $name . '.' . $mimtype;
-                        $path = storage_path('app/temp/' . $nameAndType);
+                        $nameAndType = $name.'.'.$mimtype;
+                        $path = storage_path('app/temp/'.$nameAndType);
                         FacadesFile::put($path, $contents);
                     }
                 }

@@ -30,6 +30,5 @@ class AppServiceProvider extends ServiceProvider
             return config('llmdriver.drivers.ollama.feature_flags.functions'); //just not ready yet
         });
 
-
     }
 }
