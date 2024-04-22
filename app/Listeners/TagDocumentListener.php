@@ -60,8 +60,8 @@ EOT;
             $summary = $chunk->summary;
             $prompt = <<<EOT
             This is one chunk or page number {$chunk->sort_order} in the document , Can you make some tags I can use.
-            Please return them as a string of text with each tag separated by a comma for example:
-            Tag 1, Tag Two Test, Tag Three Test
+            Please return them as a flat string of text with each tag separated by a comma for example:
+            Tag Foo Bar Example, Tag Example other Test, Tag Example Test
             
             And nothing else. Here is the summary:
             ### START SUMMARY 

@@ -14,6 +14,7 @@ class DocumentChunkTest extends TestCase
     {
         $model = DocumentChunk::factory()->create();
         $this->assertNotNull($model->content);
+        $this->assertNotNull($model->meta_data);
     }
 
     public function test_original_boot()
@@ -51,6 +52,5 @@ class DocumentChunkTest extends TestCase
         $embedding_column = $model->getEmbeddingColumn();
 
         $this->assertEquals('embedding_3072', $embedding_column);
-
     }
 }

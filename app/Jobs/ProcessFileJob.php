@@ -37,44 +37,17 @@ class ProcessFileJob implements ShouldQueue
         $document = $this->document;
 
         if ($document->type === TypesEnum::Pptx) {
-            if (Feature::active('process-ppxt')) {
                 Log::info('Processing PPTX Document');
-                /**
-                 * @NOTE
-                 * Seems to work with my example
-                 * power point
-                 * But the ones I needed it to work on broke
-                 * so will tray again soon.
-                 */
                 $batch = Bus::batch([
                     new ParsePowerPointJob($this->document),
                 ])
                     ->name('Process PPTX Document - '.$document->id)
                     ->finally(function (Batch $batch) use ($document) {
-                        SummarizeDocumentJob::dispatch($document);
+                        DocumentParsedEvent::dispatch($document);
                     })
                     ->allowFailures()
                     ->onQueue(LlmDriverFacade::driver($document->getDriver())->onQueue())
                     ->dispatch();
-            } else {
-                $filePath = $this->document->pathToFile();
-
-                $parser = IOFactory::createReader('PowerPoint2007');
-                if (! $parser->canRead($filePath)) {
-                    throw new \Exception('Can not read the document '.$filePath);
-                }
-
-                /** @phpstan-ignore-next-line */
-                $writer = IOFactory::createReader($filePath, 'PDF');
-
-                $filePath = $this->document->pathToFile();
-
-                $filePath = str_replace('.pptx', '.pdf', $filePath);
-
-                /** @phpstan-ignore-next-line */
-                $writer->save($filePath);
-
-            }
 
         } elseif ($document->type === TypesEnum::PDF) {
             Log::info('Processing PDF Document');

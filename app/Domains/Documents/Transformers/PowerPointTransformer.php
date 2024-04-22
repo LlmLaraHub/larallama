@@ -5,6 +5,7 @@ namespace App\Domains\Documents\Transformers;
 use App\Domains\Collections\CollectionStatusEnum;
 use App\Events\CollectionStatusEvent;
 use App\Jobs\SummarizeDataJob;
+use App\Domains\UnStructured\StructuredDto;
 use App\Jobs\VectorlizeDataJob;
 use App\Models\Document;
 use App\Models\DocumentChunk;
@@ -27,43 +28,33 @@ class PowerPointTransformer
             throw new \Exception('Can not read the document '.$filePath);
         }
 
-        $oPHPPresentation = $parser->load($filePath);
+        $transformer = new ProcessPpt();
+        $results = $transformer->handle($document->pathToFile());
 
         $chunks = [];
-        foreach ($oPHPPresentation->getAllSlides() as $page_number => $page) {
-            try {
-                foreach ($page->getShapeCollection() as $shape) {
-                    // Check if shape contains text
-                    if ($shape instanceof RichText) {
-                        // Get the text from the shapes
-                        $page_number = $page_number + 1;
-                        $pageContent = $shape->getPlainText();
-                        $guid = $filePath.'_'.$page_number;
-                        $DocumentChunk = DocumentChunk::updateOrCreate(
-                            [
-                                'guid' => $guid,
-                                'document_id' => $this->document->id,
-                            ],
-                            [
-                                'content' => $pageContent,
-                                'sort_order' => $page_number,
-                            ]
-                        );
+        while ($results->valid()) {
+            /** @var StructuredDto $dto  */
+            $dto = $results->current();
+            $DocumentChunk = DocumentChunk::updateOrCreate(
+                [
+                    'guid' => $dto->guid,
+                    'document_id' => $this->document->id,
+                ],
+                [
+                    'content' => $dto->content,
+                    'sort_order' => $dto->page,
+                    'meta_data' => $dto->toArray()
+                ]
+            );
 
-                        $chunks[] = [
-                            new VectorlizeDataJob($DocumentChunk),
-                            new SummarizeDataJob($DocumentChunk),
-                            //new TagDataJob($this->document),
-                            //then mark it all as done and notify the ui
-                        ];
-                    }
-                }
-                CollectionStatusEvent::dispatch($document->collection, CollectionStatusEnum::PROCESSING);
-            } catch (\Exception $e) {
-                Log::error('Error parsing PDF', ['error' => $e->getMessage()]);
-            }
+            $chunks[] = [
+                new VectorlizeDataJob($DocumentChunk),
+                new SummarizeDataJob($DocumentChunk),
+            ];
+
+            $results->next();
         }
-
+        
         Log::info('PowerPointTransformer:handle', ['chunks' => count($chunks)]);
 
         return $chunks;

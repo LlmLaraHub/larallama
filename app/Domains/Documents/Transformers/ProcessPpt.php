@@ -2,6 +2,8 @@
 
 namespace App\Domains\Documents\Transformers;
 
+use App\Domains\UnStructured\StructuredDto;
+use App\Domains\UnStructured\StructuredTypeEnum;
 use Generator;
 use Illuminate\Support\Facades\File as FacadesFile;
 use Illuminate\Support\Facades\Log;
@@ -12,7 +14,7 @@ use PhpOffice\PhpPresentation\Shape\Drawing\Gd;
 use PhpOffice\PhpPresentation\Shape\RichText;
 use PhpOffice\PhpPresentation\Shape\Table;
 
-class ProcessPpt
+class ProcessPpt extends BaseTransformer
 {
     public function handle(string $pathToFile): Generator
     {
@@ -24,36 +26,97 @@ class ProcessPpt
         $phppres = new PhpPresentation();
         $oPHPPresentation = $parser->load($pathToFile);
 
-        foreach ($oPHPPresentation->getAllSlides() as $page_number => $page) {
-            try {
-                foreach ($page->getShapeCollection() as $shape) {
-                    // Check if shape contains text
-                    Log::info('Processing PPTX Document', [
-                        'page_number' => $page_number,
-                        'shape' => class_basename($shape),
-                    ]);
-                    if ($shape instanceof RichText) {
-                        // Get the text from the shapes
-                        $page_number = $page_number + 1;
-                        $pageContent = $shape->getPlainText();
-                        $guid = $pathToFile.'_'.$page_number;
+        $documentProperties = $oPHPPresentation->getDocumentProperties();
+        $this->creator = $documentProperties->getCreator();
+        $this->title = $documentProperties->getTitle();
+        $this->last_updated_by = $documentProperties->getLastModifiedBy();
+        $this->subject = $documentProperties->getSubject();
+        $this->keywords = $documentProperties->getKeywords();
+        $this->category = $documentProperties->getCategory();
+        $this->description = $documentProperties->getDescription();
+        $this->updated_at = $documentProperties->getModified();
+        
 
-                        yield $pageContent;
+        foreach ($oPHPPresentation->getAllSlides() as $page_number => $page) {
+
+
+            $page_number = $page_number + 1;
+
+            try {
+                foreach ($page->getShapeCollection() as $shapeCount => $shape) {
+                    /**
+                     * @TODO
+                     * Chart
+                     * List
+                     */
+                    if ($shape instanceof RichText) {
+                        $pageContent = $shape->getPlainText();
+                        $guid = $shape->getHashCode();
+                        
+                        $content = $this->output(
+                            type: StructuredTypeEnum::Narrative,
+                            content: $pageContent,
+                            page_number: $page_number,
+                            guid: $guid,
+                            element_depth: $shapeCount,
+                            is_continuation: $shapeCount > 0,
+                        );
+
+                        yield $content;
                     } elseif ($shape instanceof Table) {
                         $table = $shape->getRows();
-                        foreach ($table as $row) {
-                            foreach ($row->getCells() as $cell) {
+                        $this->title = "Table";
+                        $this->subject = "Table";
+
+                        $content = $this->output(
+                            type: StructuredTypeEnum::Table,
+                            content: "table data",
+                            page_number: $page_number,
+                            guid: $shape->getHashCode(),
+                            element_depth: 0,
+                            is_continuation: false,
+                        );
+                        yield $content;
+                        
+                        foreach ($table as $rowNumber => $row) {
+                            foreach ($row->getCells() as $cellNumber => $cell) {
                                 $pageContent = $cell->getPlainText();
-                                yield $pageContent;
+
+                                $content = $this->output(
+                                    type: StructuredTypeEnum::TableRow,
+                                    content: $pageContent,
+                                    page_number: $page_number,
+                                    guid: $row->getHashCode(),
+                                    element_depth: $rowNumber . $cellNumber,
+                                    is_continuation: true,
+                                );
+                                yield $content;
                             }
                         }
                     } elseif ($shape instanceof Gd) {
                         $mimtype = str($shape->getMimeType())->afterLast('/')->toString();
                         $contents = $shape->getContents();
-                        $name = Str::random(10);
-                        $nameAndType = $name.'.'.$mimtype;
-                        $path = storage_path('app/temp/'.$nameAndType);
-                        FacadesFile::put($path, $contents);
+                        $this->title = Str::random(10);
+                        $nameAndType = $this->title.'.'.$mimtype;
+                        $this->path_to_file = storage_path('app/temp/'.$nameAndType);
+                        FacadesFile::put($this->path_to_file, $contents);
+                        $this->subject = "image";
+                        $this->description = "Image of type " . $mimtype;
+
+                        $content = $this->output(
+                            type: StructuredTypeEnum::Image,
+                            content: "see image", //ocr at this point or after 
+                            page_number: $page_number,
+                            guid: $shape->getHashCode(),
+                            element_depth: $shapeCount,
+                            is_continuation: false,
+                        );
+                        yield $content;
+                    } else {
+                        Log::info('Missing PPTX Content types', [
+                            'page_number' => $page_number,
+                            'shape' => class_basename($shape),
+                        ]);
                     }
                 }
             } catch (\Exception $e) {

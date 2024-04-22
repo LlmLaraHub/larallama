@@ -26,6 +26,7 @@ class DocumentChunk extends Model implements HasDrivers, TaggableContract
         'status_embeddings' => StatusEnum::class,
         'status_tagging' => StatusEnum::class,
         'status_summary' => StatusEnum::class,
+        'meta_data' => 'array',
     ];
 
     protected $guarded = [];

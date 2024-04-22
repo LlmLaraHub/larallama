@@ -9,7 +9,7 @@ trait SharedSetupForPptFile
 {
     public Document $document;
 
-    protected function setupFile()
+    protected function setupFile() : Document
     {
         $document = Document::factory()->create([
             'file_path' => 'example.ppt',
@@ -32,5 +32,8 @@ trait SharedSetupForPptFile
         }
 
         $this->document = $document;
+
+        return $document;
     }
+
 }

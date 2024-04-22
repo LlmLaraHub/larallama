@@ -45,15 +45,9 @@ class PdfTransformer
                         'sort_order' => $page_number,
                     ]
                 );
-                /**
-                 * Soon taggings
-                 * And Summary
-                 */
                 $chunks[] = [
                     new VectorlizeDataJob($DocumentChunk),
                     new SummarizeDataJob($DocumentChunk),
-                    //new TaggingFunction($this->document),
-                    //then mark it all as done and notify the ui
                 ];
 
                 CollectionStatusEvent::dispatch($document->collection, CollectionStatusEnum::PROCESSING);

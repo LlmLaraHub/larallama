@@ -19,3 +19,7 @@ yarn-error.log
 /.vscode
 docs/images/.DS_Store
 .DS_Store
+tests/fixtures/.DS_Store
+tests/.DS_Store
+docs/.DS_Store
+.DS_Store

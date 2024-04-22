@@ -3,6 +3,8 @@
 namespace Database\Factories;
 
 use App\Domains\Documents\StatusEnum;
+use App\Domains\UnStructured\StructuredDto;
+use App\Domains\UnStructured\StructuredTypeEnum;
 use App\Models\Collection;
 use App\Models\Document;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -22,6 +24,27 @@ class DocumentChunkFactory extends Factory
     {
         $embeddings = get_fixture('embedding_response.json');
 
+        $dto = StructuredDto::from([
+            'type' => StructuredTypeEnum::Narrative,
+            'content' => 'content',
+            'title' => 'test title',
+            'page' => 'page',
+            'guid' => 'guid',
+            'file_name' => 'file_name',
+            'created_by' => 'Bob Belcher',
+            'last_updated_by' => 'Bob Belcher',
+            'created_at' => '1713385302',
+            'description' => fake()->sentences(3, true),
+            'subject' => fake()->sentences(3, true),
+            'keywords' => fake()->sentences(3, true),
+            'category' => fake()->sentences(3, true),
+            'updated_at' => '1713792670',
+            'coordinates' => 'coordinates',
+            'element_depth' => 'elment_depth',
+            'is_continuation' => false,
+            'parent_id' => null,
+        ]);
+
         return [
             'guid' => fake()->uuid(),
             'content' => fake()->sentence(10),
@@ -35,6 +58,7 @@ class DocumentChunkFactory extends Factory
             'embedding_1536' => null,
             'embedding_2048' => null,
             'embedding_4096' => null,
+            'meta_data' => $dto->toArray(),
         ];
     }
 
