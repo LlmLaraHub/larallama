@@ -27,6 +27,8 @@ Make two database is Postgres (use TablePlus https://tableplus.com/ or some othe
 
 Ok then run this in TablePlus:
 
+> NOTE: if you are not using the HERD paid version then download https://dbngin.com and run Redis with that.
+
 ```sql
 CREATE EXTENSION vector;
 ```
