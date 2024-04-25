@@ -32,9 +32,12 @@ CREATE EXTENSION vector;
 ```
 
 ```php 
+cp .env.example .env 
 npm install
 composer install
 ```
+
+Update any secrets in the .env file
 
 All set. Now you can migrate some starting data.
 

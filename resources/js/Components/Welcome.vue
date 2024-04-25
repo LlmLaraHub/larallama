@@ -13,7 +13,7 @@ const people = [
 
 <template>
     <div>
-        <div class="p-6 lg:p-8 bg-white border-b border-gray-200">
+        <div class="py-12 px-10 bg-white border-b border-gray-200">
             <ApplicationLogo class="block h-12 w-auto" />
 
             <h1 class="mt-8 text-2xl font-medium text-gray-900">

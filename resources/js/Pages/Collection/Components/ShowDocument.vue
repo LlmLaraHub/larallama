@@ -3,7 +3,7 @@
       <Dialog as="div" class="relative z-50" @close="open = false">
         <div class="fixed inset-0" />
   
-        <div class="fixed inset-0 overflow-hidden">
+        <div class="fixed inset-0 overflow-hidden ">
           <div class="absolute inset-0 overflow-hidden">
             <div class="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10 sm:pl-16">
               <TransitionChild as="template" enter="transform transition ease-in-out duration-500 sm:duration-700" enter-from="translate-x-full" enter-to="translate-x-0" leave="transform transition ease-in-out duration-500 sm:duration-700" leave-from="translate-x-0" leave-to="translate-x-full">
@@ -27,7 +27,7 @@
                     </div>
                     <div class="relative mt-6 flex-1 px-4 sm:px-6">
                       <h2 class="font-bold text-gray-800">Summary:</h2>
-                      <div class="prose" v-html="document.summary_markdown"></div>
+                      <div class="prose text-gray-800 dark:text-gray-200 mb-10 mt-5" v-html="document.summary_markdown"></div>
                       
                       
                       <Tags :document="document"></Tags>
