@@ -1,15 +1,15 @@
 {
     "model": "llama3",
-    "created_at": "2024-04-19T11:03:23.921316Z",
+    "created_at": "2024-04-24T23:49:41.513706Z",
     "message": {
         "role": "assistant",
-        "content": "**Manifestations of Lyme Disease**\n\nLyme disease is a bacterial infection caused by Borrelia burgdorferi, which can manifest in different ways depending on the stage of infection. The most common symptoms include:\n\n### Early Stage (3-30 days after bite)\n\n* **Rash**: A distinctive \"bull's-eye\" rash called erythema migrans appears at the site of the tick bite, often accompanied by:\n\t+ Fever\n\t+ Headache\n\t+ Fatigue\n\t+ Muscle and joint pain\n\t+ Swollen lymph nodes\n\n### Late Stage (weeks to months after infection)\n\n* **Neurological symptoms**: If left untreated, Lyme disease can spread to the nervous system, causing:\n\t+ Meningitis-like symptoms: stiff neck, headache, fever\n\t+ Neurological problems: numbness or tingling in hands and feet, Bell's palsy (facial paralysis), seizures, encephalitis\n* **Arthritis**: Joint pain and swelling, often affecting the knees, elbows, and wrists\n* **Heart problems**: Abnormal heart rhythms (atrioventricular block) and inflammation of the heart muscle\n\n### Late Latent Stage (months to years after infection)\n\n* **Persistent symptoms**: Fatigue, joint pain, arthritis, or neurological problems may persist even after treatment\n\nIt's essential to seek medical attention if you experience any of these symptoms, especially if you've been bitten by a tick in an area where Lyme disease is common. Early diagnosis and treatment can help prevent long-term complications and alleviate symptoms."
+        "content": "Here is a summarized version of the text in markdown format:\n\n**Net-Zero Carbon Emissions**\n==========================\n\n### Our Ambition\n\nAt [Company], we aim to achieve net-zero carbon emissions across all our operations and value chain by 2030.\n\n### Measuring Our Carbon Footprint\n\nWe measure our carbon footprint by tracking Scope 1, Scope 2 (market-based), and Scope 3 absolute emissions (versus our 2019 baseline).\n\n### Reducing Carbon Emissions\n\nWe plan to reduce 50% of our combined absolute emissions before 2030 through:\n\n* Transitioning to clean energy\n* Improving energy efficiency\n* Investing in nature-based and technology-based carbon removal solutions\n\n### Advancing Carbon-Free Energy\n\nWe're working hard to transition our operations and office campuses on 24\/7 carbon-free energy on every grid where we operate by 2030.\n\n### Managing Residual Emissions\n\nWe expect our emissions to rise before dropping towards our absolute emissions reduction target as we navigate uncertainty and deploy new systems and technologies.\n\n### The Journey Ahead\n\nAchieving net-zero emissions is an ambitious goal, but we recognize that we can't do it alone. We'll need stronger government policies, partnerships with other organizations, and new technologies to make it happen.\n\nLet me know if you'd like me to strip out any formatting or make further changes!"
     },
     "done": true,
-    "total_duration": 16072959625,
-    "load_duration": 1284440125,
-    "prompt_eval_count": 638,
-    "prompt_eval_duration": 1868962000,
-    "eval_count": 319,
-    "eval_duration": 12914397000
+    "total_duration": 16196736292,
+    "load_duration": 3494787667,
+    "prompt_eval_count": 867,
+    "prompt_eval_duration": 3179911000,
+    "eval_count": 277,
+    "eval_duration": 9509234000
 }

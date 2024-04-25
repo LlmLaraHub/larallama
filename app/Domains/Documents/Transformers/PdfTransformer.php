@@ -13,6 +13,7 @@ use Illuminate\Bus\Batch;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Log;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
+use LlmLaraHub\TagFunction\Jobs\TagDocumentJob;
 use Smalot\PdfParser\Parser;
 
 class PdfTransformer
@@ -58,7 +59,16 @@ class PdfTransformer
         Bus::batch($chunks)
             ->name("Chunking Document - {$this->document->id}")
             ->finally(function (Batch $batch) use ($document) {
-                SummarizeDocumentJob::dispatch($document);
+                Bus::batch([
+                    [
+                        new SummarizeDocumentJob($document),
+                        new TagDocumentJob($document),
+                    ],
+                ])
+                    ->name("Summarizing and Tagging Document - {$document->id}")
+                    ->allowFailures()
+                    ->onQueue(LlmDriverFacade::driver($document->getDriver())->onQueue())
+                    ->dispatch();
             })
             ->allowFailures()
             ->onQueue(LlmDriverFacade::driver($document->getDriver())->onQueue())

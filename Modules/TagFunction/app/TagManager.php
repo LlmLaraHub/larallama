@@ -1,34 +1,20 @@
 <?php
 
-namespace App\Listeners;
+namespace LlmLaraHub\TagFunction;
 
-use App\Events\DocumentParsedEvent;
-use Illuminate\Contracts\Queue\ShouldQueue;
+use App\Models\Document;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
 use LlmLaraHub\LlmDriver\Responses\CompletionResponse;
 
-class TagDocumentListener implements ShouldQueue
+class TagManager
 {
     protected Collection $tags;
 
-    /**
-     * Create the event listener.
-     */
-    public function __construct()
+    public function handle(Document $document): void
     {
-        //
-    }
-
-    /**
-     * Handle the event.
-     */
-    public function handle(DocumentParsedEvent $event): void
-    {
-        Log::info('[LaraChain] Tagging document');
-
-        $document = $event->document;
+        Log::info('[LaraChain] TagManager Tagging document');
         $summary = $document->summary;
         $prompt = <<<EOT
 This is the summary of the document, Can you make some tags I can use.
@@ -59,20 +45,23 @@ EOT;
             $tagsFlat = $this->tags->implode(',');
             $summary = $chunk->summary;
             $prompt = <<<EOT
-            This is one chunk or page number {$chunk->sort_order} in the document , Can you make some tags I can use.
-            Please return them as a flat string of text with each tag separated by a comma for example:
-            Tag Foo Bar Example, Tag Example other Test, Tag Example Test
-            
-            And nothing else. Here is the summary:
-            ### START SUMMARY 
-            {$summary}
-            ### END SUMMARY
-            
-            ### AND HERE ARE EXISTING TAGS
-            {$tagsFlat}
-            ### END EXISTING TAGS
+This is one chunk or page number {$chunk->sort_order} in the document , Can you make some tags I can use.
+Please return them as a flat string of text with each tag separated by a comma for example:
+Tag Foo Bar Example, Tag Example other Test, Tag Example Test
+### END EXAMPLE
+Return "" if you do not find any content.
+Do not prepend or append any text other than the tags.
 
-            EOT;
+And nothing else. Here is the summary:
+### START SUMMARY 
+{$summary}
+### END SUMMARY
+
+### AND HERE ARE EXISTING TAGS
+{$tagsFlat}
+### END EXISTING TAGS
+
+EOT;
 
             /** @var CompletionResponse $response */
             $response = LlmDriverFacade::driver($document->getDriver())
@@ -87,6 +76,5 @@ EOT;
                 $this->tags->push($tag);
             }
         }
-
     }
 }

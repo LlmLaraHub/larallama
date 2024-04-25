@@ -3,7 +3,6 @@
 namespace App\Jobs;
 
 use App\Domains\Documents\TypesEnum;
-use App\Events\DocumentParsedEvent;
 use App\Models\Document;
 use Illuminate\Bus\Batch;
 use Illuminate\Bus\Queueable;
@@ -14,6 +13,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Log;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
+use LlmLaraHub\TagFunction\Jobs\TagDocumentJob;
 
 class ProcessFileJob implements ShouldQueue
 {
@@ -41,7 +41,16 @@ class ProcessFileJob implements ShouldQueue
             ])
                 ->name('Process PPTX Document - '.$document->id)
                 ->finally(function (Batch $batch) use ($document) {
-                    DocumentParsedEvent::dispatch($document);
+                    Bus::batch([
+                        [
+                            new SummarizeDocumentJob($document),
+                            new TagDocumentJob($document),
+                        ],
+                    ])
+                        ->name("Summarizing and Tagging Document - {$document->id}")
+                        ->allowFailures()
+                        ->onQueue(LlmDriverFacade::driver($document->getDriver())->onQueue())
+                        ->dispatch();
                 })
                 ->allowFailures()
                 ->onQueue(LlmDriverFacade::driver($document->getDriver())->onQueue())
@@ -53,8 +62,8 @@ class ProcessFileJob implements ShouldQueue
                 new ParsePdfFileJob($this->document),
             ])
                 ->name('Process PDF Document - '.$document->id)
-                ->finally(function (Batch $batch) use ($document) {
-                    DocumentParsedEvent::dispatch($document);
+                ->finally(function (Batch $batch) {
+                    //this is triggered in the PdfTransformer class
                 })
                 ->allowFailures()
                 ->onQueue(LlmDriverFacade::driver($document->getDriver())->onQueue())

@@ -14,7 +14,8 @@ trait Taggable
 
     public function addTag(string $tag): void
     {
+        $tag = str($tag)->lower()->trim()->toString();
         $tag = Tag::firstOrCreate(['name' => $tag]);
-        $this->tags()->attach($tag->id);
+        $this->tags()->syncWithoutDetaching($tag->id);
     }
 }

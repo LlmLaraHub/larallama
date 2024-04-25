@@ -48,7 +48,7 @@ return [
             'models' => [
                 //@see https://github.com/ollama/ollama/blob/main/docs/openai.md
                 'completion_model' => env('OLLAMA_COMPLETION_MODEL', 'llama3'),
-                'embedding_model' => env('OLLAMA_EMBEDDING_MODEL', 'llama3'),
+                'embedding_model' => env('OLLAMA_EMBEDDING_MODEL', 'mxbai-embed-large'),
             ],
         ],
     ],
