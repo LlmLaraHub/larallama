@@ -11,6 +11,17 @@ use LlmLaraHub\LlmDriver\DriversEnum;
 use LlmLaraHub\LlmDriver\HasDrivers;
 use LlmLaraHub\TagFunction\Contracts\TaggableContract;
 use LlmLaraHub\TagFunction\Helpers\Taggable;
+use Filament\Forms;
+use Filament\Forms\Components\MarkdownEditor;
+use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
+use Filament\Forms\Form;
+use Filament\Notifications\Notification;
+use Filament\Resources\Resource;
+use Filament\Tables;
+use Filament\Tables\Table;
 
 /**
  * Class Project
@@ -46,6 +57,39 @@ class Collection extends Model implements HasDrivers, TaggableContract
     public function team(): BelongsTo
     {
         return $this->belongsTo(Team::class);
+    }
+
+    public static function getForm($teamId = null): array
+    {
+        return [
+            Section::make('Collection')
+                ->collapsible()
+                ->description('Here you can centralize documents that you want to chat with')
+                ->icon('heroicon-o-information-circle')
+                ->columns(2)
+                ->schema([
+                    TextInput::make('name')
+                        ->label('Name')
+                        ->placeholder('Enter the name of the collection')
+                        ->required(),
+                    Select::make('team_id')
+                        ->columnSpan(2)
+                        ->hidden(function () use ($teamId) {
+                            return $teamId !== null;
+                        })
+                        ->relationship('team', 'name')
+                        ->required(),                        
+                    MarkdownEditor::make('description')
+                        ->columnSpanFull()
+                        ->label('Description')
+                        ->placeholder('Enter the description of the collection this will help with the LLM ')
+                        ->required(),
+                    Toggle::make('active')
+                        ->label('Active')
+                        ->default(true),
+                ]),
+
+        ];
     }
 
     public function getChat(): Chat
