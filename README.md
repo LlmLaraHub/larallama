@@ -13,8 +13,15 @@ The core of this is a vector plugin for PostGres to simplify the setup. (no Dock
 
 On top of this is Laravel's amazing Batching system to easily allow us to batch up jobs and manage the amount of jobs hit these LLMs at a time and in what order!
 
+## YouTube
+
+[Overview](https://youtu.be/rj5YQLbWF9U)
+
+[Getting it installed](https://youtu.be/SUwI70h5kVY)
 
 ## Getting Started
+
+
 
 Setup your local environment. I am going to use HERD to start off with. https://herd.laravel.com/
 Because their services cost $ (which is well worth it imo) I will link to this to setup PostGres https://postgresapp.com/. Typically I default to DBEngine https://dbngin.com/ but I could not get the vector driver working. 
