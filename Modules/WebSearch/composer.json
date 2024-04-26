@@ -1,0 +1,30 @@
+{
+    "name": "llmlarahub/websearch",
+    "description": "",
+    "authors": [
+        {
+            "name": "Alfred Nutile",
+            "email": "alfrednutile@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [],
+            "aliases": {
+
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "LlmLaraHub\\WebSearch\\": "$APP_FOLDER_NAME$",
+            "LlmLaraHub\\WebSearch\\Database\\Factories\\": "database/factories/",
+            "LlmLaraHub\\WebSearch\\Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "LlmLaraHub\\WebSearch\\Tests\\": "tests/"
+        }
+    }
+}

@@ -82,3 +82,7 @@ And just thinking how to make some of those flows work in a Laravel environment
 Per the Laravel docs https://laravel.com/docs/11.x/reverb
 
 
+## Modules
+We are using this system https://github.com/nWidart/laravel-modules
+
+Make sure to register your module in `bootstrap/providers.php`

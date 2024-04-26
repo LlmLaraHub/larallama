@@ -1,5 +1,7 @@
 <?php
 
+use LlmLaraHub\WebSearch\Providers\WebSearchServiceProvider;
+
 return [
     App\Providers\AppServiceProvider::class,
     App\Providers\FortifyServiceProvider::class,
