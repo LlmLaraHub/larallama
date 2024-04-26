@@ -4,8 +4,6 @@ namespace App\Domains\Sources\WebSearch;
 
 use App\Domains\Sources\WebSearch\Drivers\BraveSearchClient;
 use App\Domains\Sources\WebSearch\Drivers\MockSearchClient;
-use LlmLaraHub\LlmDriver\Functions\SearchAndSummarize;
-use LlmLaraHub\LlmDriver\Functions\SummarizeCollection;
 
 class WebSearchDriverClient
 {

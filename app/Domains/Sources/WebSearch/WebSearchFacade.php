@@ -4,7 +4,6 @@ namespace App\Domains\Sources\WebSearch;
 
 use Illuminate\Support\Facades\Facade;
 
-
 class WebSearchFacade extends Facade
 {
     /**

@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Domains\Sources\WebSearch\Response;
 
@@ -9,10 +9,11 @@ class WebResponseDto extends Data
     public function __construct(
         public string $url,
         public string $title,
-        public string|null $age,
-        public string|null $description,
+        public ?string $age,
+        public ?string $description,
         public array $meta_data,
-        public string|null $thumbnail,
+        public ?string $thumbnail,
         public array $profile = []
-    ) {}
+    ) {
+    }
 }

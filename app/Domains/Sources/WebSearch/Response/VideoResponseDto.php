@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Domains\Sources\WebSearch\Response;
 
@@ -13,5 +13,6 @@ class VideoResponseDto extends Data
         public string $age,
         public array $meta_data,
         public string $thumbnail,
-    ) {}
+    ) {
+    }
 }

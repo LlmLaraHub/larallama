@@ -3,8 +3,6 @@
 namespace Tests\Feature;
 
 use App\Domains\Sources\WebSearch\Drivers\BraveSearchClient;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Http;
 use Tests\TestCase;
 
@@ -27,6 +25,6 @@ class BraveSearchClientTest extends TestCase
 
         $this->assertNotEmpty($results->getVideos());
         $this->assertNotEmpty($results->getWeb());
-        
+
     }
 }

@@ -2,7 +2,6 @@
 
 namespace App\Domains\Sources\WebSearch;
 
-use App\Domains\Sources\WebSearch\WebSearchDriverClient;
 use Illuminate\Support\ServiceProvider;
 
 class WebSearchProvider extends ServiceProvider
@@ -22,7 +21,6 @@ class WebSearchProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        
 
     }
 }

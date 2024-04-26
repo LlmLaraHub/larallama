@@ -60,8 +60,8 @@ return [
         'search' => [
             'drivers' => [
                 'mock',
-                'brave'
-            ]
+                'brave',
+            ],
         ],
         'config' => [
             'mock' => [
@@ -69,7 +69,7 @@ return [
             ],
             'brave' => [
                 'api_token' => env('BRAVE_API_TOKEN', false),
-            ]
-        ]
-    ]
+            ],
+        ],
+    ],
 ];
