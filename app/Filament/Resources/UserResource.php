@@ -10,7 +10,6 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Support\Facades\Hash;
 use Rawilk\FilamentPasswordInput\Password;
 
 class UserResource extends Resource
@@ -36,11 +35,11 @@ class UserResource extends Resource
                                     ->unique(ignoreRecord: true)
                                     ->required(),
                                 Password::make('password')
-                                ->label('Password')
-                                ->copyMessage('Copied')
-                                ->copyable(color: 'warning')
-                                ->regeneratePassword(color: 'primary')
-                                ->inlineSuffix(),
+                                    ->label('Password')
+                                    ->copyMessage('Copied')
+                                    ->copyable(color: 'warning')
+                                    ->regeneratePassword(color: 'primary')
+                                    ->inlineSuffix(),
 
                                 Select::make('teams')
                                     ->relationship(name: 'teams', titleAttribute: 'name')

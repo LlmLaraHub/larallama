@@ -62,7 +62,8 @@ class User extends Authenticatable implements FilamentUser
         'profile_photo_url',
     ];
 
-    public function canAccessPanel(Panel $panel): bool { 
+    public function canAccessPanel(Panel $panel): bool
+    {
         return $this->is_admin;
     }
 
