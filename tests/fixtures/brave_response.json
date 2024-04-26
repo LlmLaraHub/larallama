@@ -1,0 +1,742 @@
+{
+    "query": {
+        "original": "Laravel+news",
+        "show_strict_warning": false,
+        "is_navigational": true,
+        "is_news_breaking": false,
+        "spellcheck_off": true,
+        "country": "us",
+        "bad_results": false,
+        "should_fallback": false,
+        "postal_code": "",
+        "city": "",
+        "header_country": "",
+        "more_results_available": true,
+        "state": ""
+    },
+    "mixed": {
+        "type": "mixed",
+        "main": [
+            {
+                "type": "web",
+                "index": 0,
+                "all": false
+            },
+            {
+                "type": "web",
+                "index": 1,
+                "all": false
+            },
+            {
+                "type": "videos",
+                "all": true
+            },
+            {
+                "type": "web",
+                "index": 2,
+                "all": false
+            },
+            {
+                "type": "web",
+                "index": 3,
+                "all": false
+            },
+            {
+                "type": "web",
+                "index": 4,
+                "all": false
+            },
+            {
+                "type": "web",
+                "index": 5,
+                "all": false
+            },
+            {
+                "type": "web",
+                "index": 6,
+                "all": false
+            },
+            {
+                "type": "web",
+                "index": 7,
+                "all": false
+            },
+            {
+                "type": "web",
+                "index": 8,
+                "all": false
+            },
+            {
+                "type": "web",
+                "index": 9,
+                "all": false
+            },
+            {
+                "type": "web",
+                "index": 10,
+                "all": false
+            },
+            {
+                "type": "web",
+                "index": 11,
+                "all": false
+            },
+            {
+                "type": "web",
+                "index": 12,
+                "all": false
+            },
+            {
+                "type": "web",
+                "index": 13,
+                "all": false
+            },
+            {
+                "type": "web",
+                "index": 14,
+                "all": false
+            },
+            {
+                "type": "web",
+                "index": 15,
+                "all": false
+            },
+            {
+                "type": "web",
+                "index": 16,
+                "all": false
+            },
+            {
+                "type": "web",
+                "index": 17,
+                "all": false
+            }
+        ],
+        "top": [],
+        "side": []
+    },
+    "type": "search",
+    "videos": {
+        "type": "videos",
+        "results": [
+            {
+                "type": "video_result",
+                "url": "https:\/\/www.youtube.com\/watch?v=Z6aY9FfY5eI",
+                "title": "Easily upgrade to Laravel 11 with Laravel Shift - YouTube",
+                "description": "Laravel 11 is now out, and the easiest way to update it is to use Laravel Shift. In this video, let's look at how it works using the Laravel News website as ...",
+                "age": "March 12, 2024",
+                "page_age": "2024-03-12T14:39:38",
+                "video": [],
+                "meta_url": {
+                    "scheme": "https",
+                    "netloc": "youtube.com",
+                    "hostname": "www.youtube.com",
+                    "favicon": "https:\/\/imgs.search.brave.com\/Ux4Hee4evZhvjuTKwtapBycOGjGDci2Gvn2pbSzvbC0\/rs:fit:32:32:1\/g:ce\/aHR0cDovL2Zhdmlj\/b25zLnNlYXJjaC5i\/cmF2ZS5jb20vaWNv\/bnMvOTkyZTZiMWU3\/YzU3Nzc5YjExYzUy\/N2VhZTIxOWNlYjM5\/ZGVjN2MyZDY4Nzdh\/ZDYzMTYxNmI5N2Rk\/Y2Q3N2FkNy93d3cu\/eW91dHViZS5jb20v",
+                    "path": "\u203a watch"
+                },
+                "thumbnail": {
+                    "src": "https:\/\/imgs.search.brave.com\/J75I42_6XwbCsH4tTxh8RnLppwMtB1oa_Czz0Gcw5xg\/rs:fit:200:200:1\/g:ce\/aHR0cHM6Ly9pLnl0\/aW1nLmNvbS92aS9a\/NmFZOUZmWTVlSS9t\/YXhyZXNkZWZhdWx0\/LmpwZw"
+                }
+            },
+            {
+                "type": "video_result",
+                "url": "https:\/\/www.youtube.com\/watch?v=2t_EWlzz-lQ",
+                "title": "Laravel Reverb is scheduled to be released tomorrow! - YouTube",
+                "description": "AboutPressCopyrightContact usCreatorsAdvertiseDevelopersTermsPrivacyPolicy & SafetyHow YouTube worksTest new features \u00b7 \u00a9 2024 Google LLC",
+                "age": "March 11, 2024",
+                "page_age": "2024-03-11T15:19:32",
+                "video": [],
+                "meta_url": {
+                    "scheme": "https",
+                    "netloc": "youtube.com",
+                    "hostname": "www.youtube.com",
+                    "favicon": "https:\/\/imgs.search.brave.com\/Ux4Hee4evZhvjuTKwtapBycOGjGDci2Gvn2pbSzvbC0\/rs:fit:32:32:1\/g:ce\/aHR0cDovL2Zhdmlj\/b25zLnNlYXJjaC5i\/cmF2ZS5jb20vaWNv\/bnMvOTkyZTZiMWU3\/YzU3Nzc5YjExYzUy\/N2VhZTIxOWNlYjM5\/ZGVjN2MyZDY4Nzdh\/ZDYzMTYxNmI5N2Rk\/Y2Q3N2FkNy93d3cu\/eW91dHViZS5jb20v",
+                    "path": "\u203a watch"
+                },
+                "thumbnail": {
+                    "src": "https:\/\/imgs.search.brave.com\/h99BnDU_bNtHTTRoqoYRTv15NGR4K8vJvNdEi9WOvUk\/rs:fit:200:200:1\/g:ce\/aHR0cHM6Ly9pLnl0\/aW1nLmNvbS92aS8y\/dF9FV2x6ei1sUS9t\/YXhyZXMyLmpwZz9z\/cXA9LW9heW13RW9D\/SUFLRU5BRjhxdUtx\/UU1jR0FEd0FRSDRB\/YzRGZ0FMOEJvb0NE\/QWdBRUFFWWZ5QTJL\/Q2t3RHc9PSZhbXA7\/cnM9QU9uNENMQW8x\/b016QmNQRzNSZ1lS\/Q2NZT0xsTlBmS2pS\/dw"
+                }
+            },
+            {
+                "type": "video_result",
+                "url": "https:\/\/www.youtube.com\/watch?v=0dJMX9RjW9A",
+                "title": "Take a look at the new APP_KEY rotation features of Laravel 11 ...",
+                "description": "In older versions of Laravel, changing your APP_KEY could break data in the database. Laravel 11 has a new graceful rotation that will NOT break old encrypte...",
+                "age": "March 9, 2024",
+                "page_age": "2024-03-09T18:14:49",
+                "video": [],
+                "meta_url": {
+                    "scheme": "https",
+                    "netloc": "youtube.com",
+                    "hostname": "www.youtube.com",
+                    "favicon": "https:\/\/imgs.search.brave.com\/Ux4Hee4evZhvjuTKwtapBycOGjGDci2Gvn2pbSzvbC0\/rs:fit:32:32:1\/g:ce\/aHR0cDovL2Zhdmlj\/b25zLnNlYXJjaC5i\/cmF2ZS5jb20vaWNv\/bnMvOTkyZTZiMWU3\/YzU3Nzc5YjExYzUy\/N2VhZTIxOWNlYjM5\/ZGVjN2MyZDY4Nzdh\/ZDYzMTYxNmI5N2Rk\/Y2Q3N2FkNy93d3cu\/eW91dHViZS5jb20v",
+                    "path": "\u203a watch"
+                },
+                "thumbnail": {
+                    "src": "https:\/\/imgs.search.brave.com\/0UrlDX05lkZs8chcai7E0ZdstDUh_YF-Ju5f5TN63hA\/rs:fit:200:200:1\/g:ce\/aHR0cHM6Ly9pLnl0\/aW1nLmNvbS92aS8w\/ZEpNWDlSalc5QS9t\/YXhyZXNkZWZhdWx0\/LmpwZw"
+                }
+            },
+            {
+                "type": "video_result",
+                "url": "https:\/\/www.youtube.com\/watch?v=ErpVLcxo3cI",
+                "title": "A Journey Through Laravel's Welcome Page Up to Laravel 11 - YouTube",
+                "description": "Laravel 11 will be released on Tuesday, March 12, 2024. Along with major updates to Laravel, we'll get a new welcome page when creating a new Laravel applica...",
+                "age": "March 5, 2024",
+                "page_age": "2024-03-05T15:57:43",
+                "video": [],
+                "meta_url": {
+                    "scheme": "https",
+                    "netloc": "youtube.com",
+                    "hostname": "www.youtube.com",
+                    "favicon": "https:\/\/imgs.search.brave.com\/Ux4Hee4evZhvjuTKwtapBycOGjGDci2Gvn2pbSzvbC0\/rs:fit:32:32:1\/g:ce\/aHR0cDovL2Zhdmlj\/b25zLnNlYXJjaC5i\/cmF2ZS5jb20vaWNv\/bnMvOTkyZTZiMWU3\/YzU3Nzc5YjExYzUy\/N2VhZTIxOWNlYjM5\/ZGVjN2MyZDY4Nzdh\/ZDYzMTYxNmI5N2Rk\/Y2Q3N2FkNy93d3cu\/eW91dHViZS5jb20v",
+                    "path": "\u203a watch"
+                },
+                "thumbnail": {
+                    "src": "https:\/\/imgs.search.brave.com\/EO90GiIWBCp46HtO7dFL5FjcA2xDD4R6qXzMxQOKhGg\/rs:fit:200:200:1\/g:ce\/aHR0cHM6Ly9pLnl0\/aW1nLmNvbS92aS9F\/cnBWTGN4bzNjSS9t\/YXhyZXNkZWZhdWx0\/LmpwZw"
+                }
+            },
+            {
+                "type": "video_result",
+                "url": "https:\/\/www.youtube.com\/watch?v=-ZtP2WMsmCw",
+                "title": "Laravel 10.23 adds a new \u201cmake:view\u201d command #laravel - YouTube",
+                "description": "AboutPressCopyrightContact usCreatorsAdvertiseDevelopersTermsPrivacyPolicy & SafetyHow YouTube worksTest new features \u00b7 \u00a9 2024 Google LLC",
+                "age": "September 12, 2023",
+                "page_age": "2023-09-12T18:35:06",
+                "video": [],
+                "meta_url": {
+                    "scheme": "https",
+                    "netloc": "youtube.com",
+                    "hostname": "www.youtube.com",
+                    "favicon": "https:\/\/imgs.search.brave.com\/Ux4Hee4evZhvjuTKwtapBycOGjGDci2Gvn2pbSzvbC0\/rs:fit:32:32:1\/g:ce\/aHR0cDovL2Zhdmlj\/b25zLnNlYXJjaC5i\/cmF2ZS5jb20vaWNv\/bnMvOTkyZTZiMWU3\/YzU3Nzc5YjExYzUy\/N2VhZTIxOWNlYjM5\/ZGVjN2MyZDY4Nzdh\/ZDYzMTYxNmI5N2Rk\/Y2Q3N2FkNy93d3cu\/eW91dHViZS5jb20v",
+                    "path": "\u203a watch"
+                },
+                "thumbnail": {
+                    "src": "https:\/\/imgs.search.brave.com\/NvVVuVdY8YqlHUK2qU6DxIR8LiSYXBqoA0KCaZeM90g\/rs:fit:200:200:1\/g:ce\/aHR0cHM6Ly9pLnl0\/aW1nLmNvbS92aS8t\/WnRQMldNc21Ddy9t\/YXhyZXMyLmpwZz9z\/cXA9LW9heW13RW9D\/SUFLRU5BRjhxdUtx\/UU1jR0FEd0FRSDRB\/YllJZ0FLQUQ0b0NE\/QWdBRUFFWVJTQlVL\/R1V3RHc9PSZhbXA7\/cnM9QU9uNENMRFM0\/VDV4RzZiVDlCUjNv\/MTE1MTRiVTJFQThv\/QQ"
+                }
+            }
+        ],
+        "mutated_by_goggles": false
+    },
+    "web": {
+        "type": "search",
+        "results": [
+            {
+                "title": "Laravel News",
+                "url": "https:\/\/laravel-news.com\/",
+                "is_source_local": false,
+                "is_source_both": false,
+                "description": "Every day bringing you the latest news, tutorials, and packages for the Laravel framework.",
+                "page_age": "2023-09-04T08:00:03",
+                "profile": {
+                    "name": "Laravel News",
+                    "url": "https:\/\/laravel-news.com\/",
+                    "long_name": "laravel-news.com",
+                    "img": "https:\/\/imgs.search.brave.com\/Do-ud-gHtFLCqMmkmsDDwd9XmljyB39iGkOgDR4vAJI\/rs:fit:32:32:1\/g:ce\/aHR0cDovL2Zhdmlj\/b25zLnNlYXJjaC5i\/cmF2ZS5jb20vaWNv\/bnMvMzZiYjM5ODk3\/ZTJiOWFjZDhjMzEx\/NzQ5ODllMzIwNjI3\/YzhhZTQxNGIwMjU1\/ZWMxNmI3NzdiMzg1\/YmE3NWJhYy9sYXJh\/dmVsLW5ld3MuY29t\/Lw"
+                },
+                "language": "en",
+                "family_friendly": true,
+                "type": "search_result",
+                "subtype": "generic",
+                "meta_url": {
+                    "scheme": "https",
+                    "netloc": "laravel-news.com",
+                    "hostname": "laravel-news.com",
+                    "favicon": "https:\/\/imgs.search.brave.com\/Do-ud-gHtFLCqMmkmsDDwd9XmljyB39iGkOgDR4vAJI\/rs:fit:32:32:1\/g:ce\/aHR0cDovL2Zhdmlj\/b25zLnNlYXJjaC5i\/cmF2ZS5jb20vaWNv\/bnMvMzZiYjM5ODk3\/ZTJiOWFjZDhjMzEx\/NzQ5ODllMzIwNjI3\/YzhhZTQxNGIwMjU1\/ZWMxNmI3NzdiMzg1\/YmE3NWJhYy9sYXJh\/dmVsLW5ld3MuY29t\/Lw",
+                    "path": ""
+                },
+                "thumbnail": {
+                    "src": "https:\/\/imgs.search.brave.com\/WYnxLkZOKTixzdq-zz7cCg3OPm7kv0C41fOdO13vvT0\/rs:fit:200:200:1\/g:ce\/aHR0cHM6Ly9waWNw\/ZXJmLmlvL2h0dHBz\/Oi8vbGFyYXZlbC1u\/ZXdzLmNvbS9pbWFn\/ZXMvbGFyYXZlbG5l\/d3Mtb2cucG5n",
+                    "original": "https:\/\/picperf.io\/https:\/\/laravel-news.com\/images\/laravelnews-og.png",
+                    "logo": false
+                },
+                "age": "September 4, 2023"
+            },
+            {
+                "title": "Laravel News (@laravelnews) \u00b7 X",
+                "url": "https:\/\/twitter.com\/laravelnews",
+                "is_source_local": false,
+                "is_source_both": false,
+                "description": "The latest tweets from Laravel News (@laravelnews)",
+                "page_age": "2022-12-15T00:00:00",
+                "profile": {
+                    "name": "X",
+                    "url": "https:\/\/twitter.com\/laravelnews",
+                    "long_name": "twitter.com",
+                    "img": "https:\/\/imgs.search.brave.com\/Zq483bGX0GnSgym-1P7iyOyEDX3PkDZSNT8m56F862A\/rs:fit:32:32:1\/g:ce\/aHR0cDovL2Zhdmlj\/b25zLnNlYXJjaC5i\/cmF2ZS5jb20vaWNv\/bnMvN2MxOTUxNzhj\/OTY1ZTQ3N2I0MjJk\/MTY5NGM0MTRlYWVi\/MjU1YWE2NDUwYmQ2\/YTA2MDFhMDlkZDEx\/NTAzZGNiNi90d2l0\/dGVyLmNvbS8"
+                },
+                "language": "en",
+                "family_friendly": true,
+                "type": "search_result",
+                "subtype": "generic",
+                "meta_url": {
+                    "scheme": "https",
+                    "netloc": "twitter.com",
+                    "hostname": "twitter.com",
+                    "favicon": "https:\/\/imgs.search.brave.com\/Zq483bGX0GnSgym-1P7iyOyEDX3PkDZSNT8m56F862A\/rs:fit:32:32:1\/g:ce\/aHR0cDovL2Zhdmlj\/b25zLnNlYXJjaC5i\/cmF2ZS5jb20vaWNv\/bnMvN2MxOTUxNzhj\/OTY1ZTQ3N2I0MjJk\/MTY5NGM0MTRlYWVi\/MjU1YWE2NDUwYmQ2\/YTA2MDFhMDlkZDEx\/NTAzZGNiNi90d2l0\/dGVyLmNvbS8",
+                    "path": "\u203a laravelnews"
+                },
+                "age": "December 15, 2022"
+            },
+            {
+                "title": "Laravel News",
+                "url": "https:\/\/www.youtube.com\/c\/Laravel-news",
+                "is_source_local": false,
+                "is_source_both": false,
+                "description": "The official YouTube channel of Laravel News",
+                "profile": {
+                    "name": "YouTube",
+                    "url": "https:\/\/www.youtube.com\/c\/Laravel-news",
+                    "long_name": "youtube.com",
+                    "img": "https:\/\/imgs.search.brave.com\/Ux4Hee4evZhvjuTKwtapBycOGjGDci2Gvn2pbSzvbC0\/rs:fit:32:32:1\/g:ce\/aHR0cDovL2Zhdmlj\/b25zLnNlYXJjaC5i\/cmF2ZS5jb20vaWNv\/bnMvOTkyZTZiMWU3\/YzU3Nzc5YjExYzUy\/N2VhZTIxOWNlYjM5\/ZGVjN2MyZDY4Nzdh\/ZDYzMTYxNmI5N2Rk\/Y2Q3N2FkNy93d3cu\/eW91dHViZS5jb20v"
+                },
+                "language": "en",
+                "family_friendly": true,
+                "type": "search_result",
+                "subtype": "generic",
+                "meta_url": {
+                    "scheme": "https",
+                    "netloc": "youtube.com",
+                    "hostname": "www.youtube.com",
+                    "favicon": "https:\/\/imgs.search.brave.com\/Ux4Hee4evZhvjuTKwtapBycOGjGDci2Gvn2pbSzvbC0\/rs:fit:32:32:1\/g:ce\/aHR0cDovL2Zhdmlj\/b25zLnNlYXJjaC5i\/cmF2ZS5jb20vaWNv\/bnMvOTkyZTZiMWU3\/YzU3Nzc5YjExYzUy\/N2VhZTIxOWNlYjM5\/ZGVjN2MyZDY4Nzdh\/ZDYzMTYxNmI5N2Rk\/Y2Q3N2FkNy93d3cu\/eW91dHViZS5jb20v",
+                    "path": "  \u203a laravel news"
+                },
+                "thumbnail": {
+                    "src": "https:\/\/imgs.search.brave.com\/YgwF5m_oygTv8opAelLEBAXF3ORedEwU02cZBTjmYjk\/rs:fit:200:200:1\/g:ce\/aHR0cHM6Ly95dDMu\/Z29vZ2xldXNlcmNv\/bnRlbnQuY29tL1dC\/aWdkUWdoX254bHkw\/QmlzWktOQTVFajJQ\/MWNCZGpjQlQ3WW1K\/bHJHYmpPeTdLWTho\/OUFPbGpXMlhrSDQ2\/bHZnazZSaFpVYkpn\/PXM5MDAtYy1rLWMw\/eDAwZmZmZmZmLW5v\/LXJq",
+                    "original": "https:\/\/yt3.googleusercontent.com\/WBigdQgh_nxly0BisZKNA5Ej2P1cBdjcBT7YmJlrGbjOy7KY8h9AOljW2XkH46lvgk6RhZUbJg=s900-c-k-c0x00ffffff-no-rj",
+                    "logo": false
+                }
+            },
+            {
+                "title": "Laravel News | LinkedIn",
+                "url": "https:\/\/www.linkedin.com\/company\/laravel-news",
+                "is_source_local": false,
+                "is_source_both": false,
+                "description": "Laravel News | 123,472 followers on LinkedIn. Your news source for the Laravel PHP Framework | Laravel News keeps you up to date on everything going on in the Laravel world. From news, tips, tutorials, and packages new stuff is posted daily.",
+                "profile": {
+                    "name": "LinkedIn",
+                    "url": "https:\/\/www.linkedin.com\/company\/laravel-news",
+                    "long_name": "linkedin.com",
+                    "img": "https:\/\/imgs.search.brave.com\/TQTym5qzpizZ5GHIgpHu6-RTEchhOps_4v-FWSI8ZIE\/rs:fit:32:32:1\/g:ce\/aHR0cDovL2Zhdmlj\/b25zLnNlYXJjaC5i\/cmF2ZS5jb20vaWNv\/bnMvNGE1YzZjOWNj\/NmNiODQ4NzI0ODg1\/MGY5ZGQ2YzhjZTRm\/N2NjOGIzZjc1NTlj\/NDM2ZGI5Yjk3ZWI1\/YzBmNzJmZS93d3cu\/bGlua2VkaW4uY29t\/Lw"
+                },
+                "language": "en",
+                "family_friendly": true,
+                "type": "search_result",
+                "subtype": "generic",
+                "meta_url": {
+                    "scheme": "https",
+                    "netloc": "linkedin.com",
+                    "hostname": "www.linkedin.com",
+                    "favicon": "https:\/\/imgs.search.brave.com\/TQTym5qzpizZ5GHIgpHu6-RTEchhOps_4v-FWSI8ZIE\/rs:fit:32:32:1\/g:ce\/aHR0cDovL2Zhdmlj\/b25zLnNlYXJjaC5i\/cmF2ZS5jb20vaWNv\/bnMvNGE1YzZjOWNj\/NmNiODQ4NzI0ODg1\/MGY5ZGQ2YzhjZTRm\/N2NjOGIzZjc1NTlj\/NDM2ZGI5Yjk3ZWI1\/YzBmNzJmZS93d3cu\/bGlua2VkaW4uY29t\/Lw",
+                    "path": "\u203a company  \u203a laravel-news"
+                },
+                "thumbnail": {
+                    "src": "https:\/\/imgs.search.brave.com\/v4_bUfTXpnWpJzUeCfst0tEMqZzMLz3YCauRZGrIAsM\/rs:fit:200:200:1\/g:ce\/aHR0cHM6Ly9tZWRp\/YS5saWNkbi5jb20v\/ZG1zL2ltYWdlL0M0\/RDBCQVFGWkhZbmEz\/YkZZRHcvY29tcGFu\/eS1sb2dvXzIwMF8y\/MDAvMC8xNjMwNDk0\/Mjk5NTE3L2xhcmF2\/ZWxfbmV3c19sb2dv\/P2U9MjE0NzQ4MzY0\/NyZhbXA7dj1iZXRh\/JmFtcDt0PXlGVU5S\/ZE1zdU91UHVBbWx2\/dWtDZWRKdlN6VGxM\/VW5vWnBfQncwdy1x\/NHc",
+                    "original": "https:\/\/media.licdn.com\/dms\/image\/C4D0BAQFZHYna3bFYDw\/company-logo_200_200\/0\/1630494299517\/laravel_news_logo?e=2147483647&amp;v=beta&amp;t=yFUNRdMsuOuPuAmlvukCedJvSzTlLUnoZp_Bw0w-q4w",
+                    "logo": true
+                }
+            },
+            {
+                "title": "Laravel News (@laravelnews)",
+                "url": "https:\/\/www.instagram.com\/laravelnews\/",
+                "is_source_local": false,
+                "is_source_both": false,
+                "description": "See Instagram photos and videos from Laravel News (@laravelnews)",
+                "profile": {
+                    "name": "Instagram",
+                    "url": "https:\/\/www.instagram.com\/laravelnews\/",
+                    "long_name": "instagram.com",
+                    "img": "https:\/\/imgs.search.brave.com\/7A-upEbZhKg3zcLw2J4VdqF63kB8ow6z3oq0uJL0Xlw\/rs:fit:32:32:1\/g:ce\/aHR0cDovL2Zhdmlj\/b25zLnNlYXJjaC5i\/cmF2ZS5jb20vaWNv\/bnMvN2RiYmJiZDA4\/NTBkNWQ0ZmQ3NDE5\/OGUxOGI4NzE5ZDI0\/Zjk0M2ExMDkzZmJm\/ODA0MmJiMzkwZjMy\/ZDM4YWVkOS93d3cu\/aW5zdGFncmFtLmNv\/bS8"
+                },
+                "language": "en",
+                "family_friendly": true,
+                "type": "search_result",
+                "subtype": "generic",
+                "meta_url": {
+                    "scheme": "https",
+                    "netloc": "instagram.com",
+                    "hostname": "www.instagram.com",
+                    "favicon": "https:\/\/imgs.search.brave.com\/7A-upEbZhKg3zcLw2J4VdqF63kB8ow6z3oq0uJL0Xlw\/rs:fit:32:32:1\/g:ce\/aHR0cDovL2Zhdmlj\/b25zLnNlYXJjaC5i\/cmF2ZS5jb20vaWNv\/bnMvN2RiYmJiZDA4\/NTBkNWQ0ZmQ3NDE5\/OGUxOGI4NzE5ZDI0\/Zjk0M2ExMDkzZmJm\/ODA0MmJiMzkwZjMy\/ZDM4YWVkOS93d3cu\/aW5zdGFncmFtLmNv\/bS8",
+                    "path": "\u203a laravelnews"
+                }
+            },
+            {
+                "title": "GitHub - jeroennoten\/laravel-news",
+                "url": "https:\/\/github.com\/jeroennoten\/laravel-news",
+                "is_source_local": false,
+                "is_source_both": false,
+                "description": "Contribute to jeroennoten\/laravel-news development by creating an account on GitHub.",
+                "profile": {
+                    "name": "GitHub",
+                    "url": "https:\/\/github.com\/jeroennoten\/laravel-news",
+                    "long_name": "github.com",
+                    "img": "https:\/\/imgs.search.brave.com\/v8685zI4XInM0zxlNI2s7oE_2Sb-EL7lAy81WXbkQD8\/rs:fit:32:32:1\/g:ce\/aHR0cDovL2Zhdmlj\/b25zLnNlYXJjaC5i\/cmF2ZS5jb20vaWNv\/bnMvYWQyNWM1NjA5\/ZjZmZjNlYzI2MDNk\/N2VkNmJhYjE2MzZl\/MDY5ZTMxMDUzZmY1\/NmU3NWIzNWVmMjk0\/NTBjMjJjZi9naXRo\/dWIuY29tLw"
+                },
+                "language": "en",
+                "family_friendly": true,
+                "type": "search_result",
+                "subtype": "software",
+                "meta_url": {
+                    "scheme": "https",
+                    "netloc": "github.com",
+                    "hostname": "github.com",
+                    "favicon": "https:\/\/imgs.search.brave.com\/v8685zI4XInM0zxlNI2s7oE_2Sb-EL7lAy81WXbkQD8\/rs:fit:32:32:1\/g:ce\/aHR0cDovL2Zhdmlj\/b25zLnNlYXJjaC5i\/cmF2ZS5jb20vaWNv\/bnMvYWQyNWM1NjA5\/ZjZmZjNlYzI2MDNk\/N2VkNmJhYjE2MzZl\/MDY5ZTMxMDUzZmY1\/NmU3NWIzNWVmMjk0\/NTBjMjJjZi9naXRo\/dWIuY29tLw",
+                    "path": "\u203a jeroennoten  \u203a laravel-news"
+                },
+                "thumbnail": {
+                    "src": "https:\/\/imgs.search.brave.com\/rKPHcLKgTSZ4LRuOguRzN29oYhHOwaLbTjPN6TCuY48\/rs:fit:200:200:1\/g:ce\/aHR0cHM6Ly9vcGVu\/Z3JhcGguZ2l0aHVi\/YXNzZXRzLmNvbS80\/NWUyNDE5NGFkMzM2\/NjBkYWQ5NDlhMzc2\/MWYwZWQzM2I0N2Y5\/NGU5ZDAwNTI2ZGM5\/ZDk5MjQ3ZjdjMTYx\/ODllL2plcm9lbm5v\/dGVuL2xhcmF2ZWwt\/bmV3cw",
+                    "original": "https:\/\/opengraph.githubassets.com\/45e24194ad33660dad949a3761f0ed33b47f94e9d00526dc9d99247f7c16189e\/jeroennoten\/laravel-news",
+                    "logo": false
+                }
+            },
+            {
+                "title": "Laravel News Links (@LaravelLinks) \/ ...",
+                "url": "https:\/\/twitter.com\/laravellinks",
+                "is_source_local": false,
+                "is_source_both": false,
+                "description": "The latest tweets from Laravel News Links (@LaravelLinks)",
+                "profile": {
+                    "name": "X",
+                    "url": "https:\/\/twitter.com\/laravellinks",
+                    "long_name": "twitter.com",
+                    "img": "https:\/\/imgs.search.brave.com\/Zq483bGX0GnSgym-1P7iyOyEDX3PkDZSNT8m56F862A\/rs:fit:32:32:1\/g:ce\/aHR0cDovL2Zhdmlj\/b25zLnNlYXJjaC5i\/cmF2ZS5jb20vaWNv\/bnMvN2MxOTUxNzhj\/OTY1ZTQ3N2I0MjJk\/MTY5NGM0MTRlYWVi\/MjU1YWE2NDUwYmQ2\/YTA2MDFhMDlkZDEx\/NTAzZGNiNi90d2l0\/dGVyLmNvbS8"
+                },
+                "language": "en",
+                "family_friendly": true,
+                "type": "search_result",
+                "subtype": "generic",
+                "meta_url": {
+                    "scheme": "https",
+                    "netloc": "twitter.com",
+                    "hostname": "twitter.com",
+                    "favicon": "https:\/\/imgs.search.brave.com\/Zq483bGX0GnSgym-1P7iyOyEDX3PkDZSNT8m56F862A\/rs:fit:32:32:1\/g:ce\/aHR0cDovL2Zhdmlj\/b25zLnNlYXJjaC5i\/cmF2ZS5jb20vaWNv\/bnMvN2MxOTUxNzhj\/OTY1ZTQ3N2I0MjJk\/MTY5NGM0MTRlYWVi\/MjU1YWE2NDUwYmQ2\/YTA2MDFhMDlkZDEx\/NTAzZGNiNi90d2l0\/dGVyLmNvbS8",
+                    "path": "\u203a laravellinks"
+                }
+            },
+            {
+                "title": "Laravel News | Substack",
+                "url": "https:\/\/substack.com\/@laravelnews",
+                "is_source_local": false,
+                "is_source_both": false,
+                "description": "Your official news source for the Laravel PHP Framework.",
+                "profile": {
+                    "name": "Substack",
+                    "url": "https:\/\/substack.com\/@laravelnews",
+                    "long_name": "substack.com",
+                    "img": "https:\/\/imgs.search.brave.com\/EFoALQ_h0fnDfAXjMm7Bkp_ie6NBfwU7OrSr4qR9Aqc\/rs:fit:32:32:1\/g:ce\/aHR0cDovL2Zhdmlj\/b25zLnNlYXJjaC5i\/cmF2ZS5jb20vaWNv\/bnMvMDI0N2FmMDI1\/OGRiNmI3NGUyZTE5\/ZTY2ODhhNjRkMTFj\/YjQyMjYyN2MxYTYy\/NDBlYWJlYzQ2Yjg4\/NTUzMWJhMC9zdWJz\/dGFjay5jb20v"
+                },
+                "language": "en",
+                "family_friendly": true,
+                "type": "search_result",
+                "subtype": "generic",
+                "meta_url": {
+                    "scheme": "https",
+                    "netloc": "substack.com",
+                    "hostname": "substack.com",
+                    "favicon": "https:\/\/imgs.search.brave.com\/EFoALQ_h0fnDfAXjMm7Bkp_ie6NBfwU7OrSr4qR9Aqc\/rs:fit:32:32:1\/g:ce\/aHR0cDovL2Zhdmlj\/b25zLnNlYXJjaC5i\/cmF2ZS5jb20vaWNv\/bnMvMDI0N2FmMDI1\/OGRiNmI3NGUyZTE5\/ZTY2ODhhNjRkMTFj\/YjQyMjYyN2MxYTYy\/NDBlYWJlYzQ2Yjg4\/NTUzMWJhMC9zdWJz\/dGFjay5jb20v",
+                    "path": "\u203a @laravelnews"
+                },
+                "thumbnail": {
+                    "src": "https:\/\/imgs.search.brave.com\/uXZJlJiNdQBqeMMKDmctJR-gw9AoPwOae1ZX626rz0s\/rs:fit:200:200:1\/g:ce\/aHR0cHM6Ly9zdWJz\/dGFja2Nkbi5jb20v\/aW1hZ2UvZmV0Y2gv\/Zl9hdXRvLHFfYXV0\/bzpnb29kLGZsX3By\/b2dyZXNzaXZlOnN0\/ZWVwL2h0dHBzJTNB\/JTJGJTJGc3Vic3Rh\/Y2stcG9zdC1tZWRp\/YS5zMy5hbWF6b25h\/d3MuY29tJTJGcHVi\/bGljJTJGaW1hZ2Vz\/JTJGZGY1NzBkNzkt\/MDk2Yy00ODFmLWFj\/NzUtOWQ2MjM4MDUy\/ZTA3XzUxMng1MTIu\/cG5n",
+                    "original": "https:\/\/substackcdn.com\/image\/fetch\/f_auto,q_auto:good,fl_progressive:steep\/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fdf570d79-096c-481f-ac75-9d6238052e07_512x512.png",
+                    "logo": false
+                }
+            },
+            {
+                "title": "Laravel - The PHP Framework For Web Artisans",
+                "url": "https:\/\/laravel.com",
+                "is_source_local": false,
+                "is_source_both": false,
+                "description": "Laravel is a PHP web application framework with expressive, elegant syntax. We\u2019ve already laid the foundation \u2014 freeing you to create without sweating the small things.",
+                "page_age": "2023-05-01T20:10:05",
+                "profile": {
+                    "name": "Laravel",
+                    "url": "https:\/\/laravel.com",
+                    "long_name": "laravel.com",
+                    "img": "https:\/\/imgs.search.brave.com\/KtiFeu8P-KWfpyeAQWTdGra1ZXFMDUxXzva1T-SygME\/rs:fit:32:32:1\/g:ce\/aHR0cDovL2Zhdmlj\/b25zLnNlYXJjaC5i\/cmF2ZS5jb20vaWNv\/bnMvZGRhYjI4NDQw\/MDFmMzAxYjY1MDBm\/Njc4OTM1ZjI0YTBm\/OThjOWQ2NjEyOTE3\/Y2M0MTdhZWQ3OTVm\/YjhkMmQxYy9sYXJh\/dmVsLmNvbS8"
+                },
+                "language": "en",
+                "family_friendly": true,
+                "type": "search_result",
+                "subtype": "generic",
+                "meta_url": {
+                    "scheme": "https",
+                    "netloc": "laravel.com",
+                    "hostname": "laravel.com",
+                    "favicon": "https:\/\/imgs.search.brave.com\/KtiFeu8P-KWfpyeAQWTdGra1ZXFMDUxXzva1T-SygME\/rs:fit:32:32:1\/g:ce\/aHR0cDovL2Zhdmlj\/b25zLnNlYXJjaC5i\/cmF2ZS5jb20vaWNv\/bnMvZGRhYjI4NDQw\/MDFmMzAxYjY1MDBm\/Njc4OTM1ZjI0YTBm\/OThjOWQ2NjEyOTE3\/Y2M0MTdhZWQ3OTVm\/YjhkMmQxYy9sYXJh\/dmVsLmNvbS8",
+                    "path": ""
+                },
+                "thumbnail": {
+                    "src": "https:\/\/imgs.search.brave.com\/ZZmCehIOZK29NFUusZ0rDvCisFHZdideTP-kb_glvqQ\/rs:fit:200:200:1\/g:ce\/aHR0cHM6Ly9sYXJh\/dmVsLmNvbS9pbWcv\/b2ctaW1hZ2UuanBn",
+                    "original": "https:\/\/laravel.com\/img\/og-image.jpg",
+                    "logo": false
+                },
+                "age": "May 1, 2023"
+            },
+            {
+                "title": "GitHub - mdutt247\/laravel-news: Admin dashboard on the web and RESTful API for consumers in Laravel 8 [Jetstream, Livewire, Sanctum, and Tailwind].",
+                "url": "https:\/\/github.com\/mdutt247\/laravel-news",
+                "is_source_local": false,
+                "is_source_both": false,
+                "description": "Admin dashboard on the web and RESTful API for consumers in Laravel 8 [Jetstream, Livewire, Sanctum, and Tailwind]. - mdutt247\/laravel-news",
+                "page_age": "2022-02-19T00:00:00",
+                "profile": {
+                    "name": "GitHub",
+                    "url": "https:\/\/github.com\/mdutt247\/laravel-news",
+                    "long_name": "github.com",
+                    "img": "https:\/\/imgs.search.brave.com\/v8685zI4XInM0zxlNI2s7oE_2Sb-EL7lAy81WXbkQD8\/rs:fit:32:32:1\/g:ce\/aHR0cDovL2Zhdmlj\/b25zLnNlYXJjaC5i\/cmF2ZS5jb20vaWNv\/bnMvYWQyNWM1NjA5\/ZjZmZjNlYzI2MDNk\/N2VkNmJhYjE2MzZl\/MDY5ZTMxMDUzZmY1\/NmU3NWIzNWVmMjk0\/NTBjMjJjZi9naXRo\/dWIuY29tLw"
+                },
+                "language": "en",
+                "family_friendly": true,
+                "type": "search_result",
+                "subtype": "software",
+                "meta_url": {
+                    "scheme": "https",
+                    "netloc": "github.com",
+                    "hostname": "github.com",
+                    "favicon": "https:\/\/imgs.search.brave.com\/v8685zI4XInM0zxlNI2s7oE_2Sb-EL7lAy81WXbkQD8\/rs:fit:32:32:1\/g:ce\/aHR0cDovL2Zhdmlj\/b25zLnNlYXJjaC5i\/cmF2ZS5jb20vaWNv\/bnMvYWQyNWM1NjA5\/ZjZmZjNlYzI2MDNk\/N2VkNmJhYjE2MzZl\/MDY5ZTMxMDUzZmY1\/NmU3NWIzNWVmMjk0\/NTBjMjJjZi9naXRo\/dWIuY29tLw",
+                    "path": "\u203a mdutt247  \u203a laravel-news"
+                },
+                "thumbnail": {
+                    "src": "https:\/\/imgs.search.brave.com\/7ah2dQDrp30mWcF5_3wbd220pcrF6koFq8rhLtda2o4\/rs:fit:200:200:1\/g:ce\/aHR0cHM6Ly9yZXBv\/c2l0b3J5LWltYWdl\/cy5naXRodWJ1c2Vy\/Y29udGVudC5jb20v\/MzEzNjU3MDg0L2Nj\/ODYwZGQwLTZhYjAt\/NGIzZS05OTU4LThj\/Y2ViNWVhMjg5Nw",
+                    "original": "https:\/\/repository-images.githubusercontent.com\/313657084\/cc860dd0-6ab0-4b3e-9958-8cceb5ea2897",
+                    "logo": false
+                },
+                "age": "February 19, 2022"
+            },
+            {
+                "title": "Laravel News - Crunchbase Company Profile & Funding",
+                "url": "https:\/\/www.crunchbase.com\/organization\/laravel-news",
+                "is_source_local": false,
+                "is_source_both": false,
+                "description": "Laravel News is a news provider that provides news, tips, tutorials, and other information about the Laravel PHP framework.",
+                "profile": {
+                    "name": "Crunchbase",
+                    "url": "https:\/\/www.crunchbase.com\/organization\/laravel-news",
+                    "long_name": "crunchbase.com",
+                    "img": "https:\/\/imgs.search.brave.com\/2vTsih_JUSJJbjsE1mXetwzvycYM6FN7ge0u6DGowc4\/rs:fit:32:32:1\/g:ce\/aHR0cDovL2Zhdmlj\/b25zLnNlYXJjaC5i\/cmF2ZS5jb20vaWNv\/bnMvYzczZDk0MDEy\/NDYwMzBjYTE2MWYx\/NzhhOGRkZGE4YmQz\/NTJlNmMwNDY4N2Ew\/MjcwNGU0Mzc4NDA3\/YTBlMGIxMy93d3cu\/Y3J1bmNoYmFzZS5j\/b20v"
+                },
+                "language": "en",
+                "family_friendly": true,
+                "type": "search_result",
+                "subtype": "faq",
+                "meta_url": {
+                    "scheme": "https",
+                    "netloc": "crunchbase.com",
+                    "hostname": "www.crunchbase.com",
+                    "favicon": "https:\/\/imgs.search.brave.com\/2vTsih_JUSJJbjsE1mXetwzvycYM6FN7ge0u6DGowc4\/rs:fit:32:32:1\/g:ce\/aHR0cDovL2Zhdmlj\/b25zLnNlYXJjaC5i\/cmF2ZS5jb20vaWNv\/bnMvYzczZDk0MDEy\/NDYwMzBjYTE2MWYx\/NzhhOGRkZGE4YmQz\/NTJlNmMwNDY4N2Ew\/MjcwNGU0Mzc4NDA3\/YTBlMGIxMy93d3cu\/Y3J1bmNoYmFzZS5j\/b20v",
+                    "path": "\u203a organization  \u203a laravel-news"
+                },
+                "thumbnail": {
+                    "src": "https:\/\/imgs.search.brave.com\/_coWUsSq8XTzwP7UmMl2b21IM_8PvUjxdyC23R8srsM\/rs:fit:200:200:1\/g:ce\/aHR0cHM6Ly9pbWFn\/ZXMuY3J1bmNoYmFz\/ZS5jb20vaW1hZ2Uv\/dXBsb2FkL2NfcGFk\/LGhfMjU2LHdfMjU2\/LGZfYXV0byxxX2F1\/dG86ZWNvLGRwcl8x\/L3U0cWZnbThmcXZu\/aDZmMTB0YnVt",
+                    "original": "https:\/\/images.crunchbase.com\/image\/upload\/c_pad,h_256,w_256,f_auto,q_auto:eco,dpr_1\/u4qfgm8fqvnh6f10tbum",
+                    "logo": false
+                }
+            },
+            {
+                "title": "Laravel News Podcast | Listen on Amazon Music",
+                "url": "https:\/\/music.amazon.com\/podcasts\/af26669d-eb18-47a5-8712-a120273676ed\/laravel-news-podcast",
+                "is_source_local": false,
+                "is_source_both": false,
+                "description": "The Laravel News Podcast brings you all the latest news and events related to the Laravel PHP Framework",
+                "profile": {
+                    "name": "Amazon",
+                    "url": "https:\/\/music.amazon.com\/podcasts\/af26669d-eb18-47a5-8712-a120273676ed\/laravel-news-podcast",
+                    "long_name": "music.amazon.com",
+                    "img": "https:\/\/imgs.search.brave.com\/zrT53DovMTudLg7OfRU9h7ATccFWP0bvnpKz-YcXz58\/rs:fit:32:32:1\/g:ce\/aHR0cDovL2Zhdmlj\/b25zLnNlYXJjaC5i\/cmF2ZS5jb20vaWNv\/bnMvODA3M2MzNDY5\/MzFmMDEzYTI1ZDc4\/ZTE3ODdkMWY5Nzkx\/ZDdjOTU5MTg1YmVi\/ZmM5ZDRjMmI2N2Qw\/OTY2YjdlNC9tdXNp\/Yy5hbWF6b24uY29t\/Lw"
+                },
+                "language": "en",
+                "family_friendly": true,
+                "type": "search_result",
+                "subtype": "generic",
+                "meta_url": {
+                    "scheme": "https",
+                    "netloc": "music.amazon.com",
+                    "hostname": "music.amazon.com",
+                    "favicon": "https:\/\/imgs.search.brave.com\/zrT53DovMTudLg7OfRU9h7ATccFWP0bvnpKz-YcXz58\/rs:fit:32:32:1\/g:ce\/aHR0cDovL2Zhdmlj\/b25zLnNlYXJjaC5i\/cmF2ZS5jb20vaWNv\/bnMvODA3M2MzNDY5\/MzFmMDEzYTI1ZDc4\/ZTE3ODdkMWY5Nzkx\/ZDdjOTU5MTg1YmVi\/ZmM5ZDRjMmI2N2Qw\/OTY2YjdlNC9tdXNp\/Yy5hbWF6b24uY29t\/Lw",
+                    "path": "\u203a podcasts  \u203a af26669d-eb18-47a5-8712-a120273676ed  \u203a laravel-news-podcast"
+                }
+            },
+            {
+                "title": "GitHub - cviebrock\/laravel-news-sitemap: A Google News sitemap generator for Laravel 4.",
+                "url": "https:\/\/github.com\/cviebrock\/laravel-news-sitemap",
+                "is_source_local": false,
+                "is_source_both": false,
+                "description": "A Google News sitemap generator for Laravel 4. Contribute to cviebrock\/laravel-news-sitemap development by creating an account on GitHub.",
+                "page_age": "2022-02-12T00:00:00",
+                "profile": {
+                    "name": "GitHub",
+                    "url": "https:\/\/github.com\/cviebrock\/laravel-news-sitemap",
+                    "long_name": "github.com",
+                    "img": "https:\/\/imgs.search.brave.com\/v8685zI4XInM0zxlNI2s7oE_2Sb-EL7lAy81WXbkQD8\/rs:fit:32:32:1\/g:ce\/aHR0cDovL2Zhdmlj\/b25zLnNlYXJjaC5i\/cmF2ZS5jb20vaWNv\/bnMvYWQyNWM1NjA5\/ZjZmZjNlYzI2MDNk\/N2VkNmJhYjE2MzZl\/MDY5ZTMxMDUzZmY1\/NmU3NWIzNWVmMjk0\/NTBjMjJjZi9naXRo\/dWIuY29tLw"
+                },
+                "language": "en",
+                "family_friendly": true,
+                "type": "search_result",
+                "subtype": "software",
+                "meta_url": {
+                    "scheme": "https",
+                    "netloc": "github.com",
+                    "hostname": "github.com",
+                    "favicon": "https:\/\/imgs.search.brave.com\/v8685zI4XInM0zxlNI2s7oE_2Sb-EL7lAy81WXbkQD8\/rs:fit:32:32:1\/g:ce\/aHR0cDovL2Zhdmlj\/b25zLnNlYXJjaC5i\/cmF2ZS5jb20vaWNv\/bnMvYWQyNWM1NjA5\/ZjZmZjNlYzI2MDNk\/N2VkNmJhYjE2MzZl\/MDY5ZTMxMDUzZmY1\/NmU3NWIzNWVmMjk0\/NTBjMjJjZi9naXRo\/dWIuY29tLw",
+                    "path": "\u203a cviebrock  \u203a laravel-news-sitemap"
+                },
+                "thumbnail": {
+                    "src": "https:\/\/imgs.search.brave.com\/NIEIgiP61NoRNZW2iZOlRUr6_OxZmUv9Ccny_zzWaG8\/rs:fit:200:200:1\/g:ce\/aHR0cHM6Ly9vcGVu\/Z3JhcGguZ2l0aHVi\/YXNzZXRzLmNvbS8y\/YWYyM2ZlYzlhZTky\/NTFhN2FlZjNmY2Vm\/ODQxMjFiOGRkYmIx\/YTFlZTY4ODJkMGVj\/MWVhZDM4ZTc0YmNl\/NjY5L2N2aWVicm9j\/ay9sYXJhdmVsLW5l\/d3Mtc2l0ZW1hcA",
+                    "original": "https:\/\/opengraph.githubassets.com\/2af23fec9ae9251a7aef3fcef84121b8ddbb1a1ee6882d0ec1ead38e74bce669\/cviebrock\/laravel-news-sitemap",
+                    "logo": false
+                },
+                "age": "February 12, 2022"
+            },
+            {
+                "title": "Laravel News \u2013 Medium",
+                "url": "https:\/\/medium.com\/@laravelnews",
+                "is_source_local": false,
+                "is_source_both": false,
+                "description": "Read writing from Laravel News on Medium. Curated news &amp; information about Laravel, by @ericlbarnes. Every day, Laravel News and thousands of other voices read, write, and share important stories on Medium.",
+                "profile": {
+                    "name": "Medium",
+                    "url": "https:\/\/medium.com\/@laravelnews",
+                    "long_name": "medium.com",
+                    "img": "https:\/\/imgs.search.brave.com\/qvE2kIQCiAsnPv2C6P9xM5J2VVWdm55g-A-2Q_yIJ0g\/rs:fit:32:32:1\/g:ce\/aHR0cDovL2Zhdmlj\/b25zLnNlYXJjaC5i\/cmF2ZS5jb20vaWNv\/bnMvOTZhYmQ1N2Q4\/NDg4ZDcyODIyMDZi\/MzFmOWNhNjE3Y2E4\/Y2YzMThjNjljNDIx\/ZjllZmNhYTcwODhl\/YTcwNDEzYy9tZWRp\/dW0uY29tLw"
+                },
+                "language": "en",
+                "family_friendly": true,
+                "type": "search_result",
+                "subtype": "generic",
+                "meta_url": {
+                    "scheme": "https",
+                    "netloc": "medium.com",
+                    "hostname": "medium.com",
+                    "favicon": "https:\/\/imgs.search.brave.com\/qvE2kIQCiAsnPv2C6P9xM5J2VVWdm55g-A-2Q_yIJ0g\/rs:fit:32:32:1\/g:ce\/aHR0cDovL2Zhdmlj\/b25zLnNlYXJjaC5i\/cmF2ZS5jb20vaWNv\/bnMvOTZhYmQ1N2Q4\/NDg4ZDcyODIyMDZi\/MzFmOWNhNjE3Y2E4\/Y2YzMThjNjljNDIx\/ZjllZmNhYTcwODhl\/YTcwNDEzYy9tZWRp\/dW0uY29tLw",
+                    "path": "\u203a @laravelnews"
+                },
+                "thumbnail": {
+                    "src": "https:\/\/imgs.search.brave.com\/JB9C3GoYa5jfm5L__scvqNmA93dQmkCedrNNoSL22fo\/rs:fit:200:200:1\/g:ce\/aHR0cHM6Ly9taXJv\/Lm1lZGl1bS5jb20v\/djIvcmVzaXplOmZp\/dDoyNDAwLzEqc0NN\/VU9PT0lYUEZacnRr\/WVU4YlZ0US5wbmc",
+                    "original": "https:\/\/miro.medium.com\/v2\/resize:fit:2400\/1*sCMUOOOIXPFZrtkYU8bVtQ.png",
+                    "logo": false
+                }
+            },
+            {
+                "title": "Laravel 9 - News Portal Website for Beginner to Advanced | Udemy",
+                "url": "https:\/\/www.udemy.com\/course\/laravel-news-portal-website-for-beginner-to-advanced\/",
+                "is_source_local": false,
+                "is_source_both": false,
+                "description": "Learning Laravel fundamentals (A to Z) and developing a complete news portal website with Laravel 9",
+                "page_age": "2023-06-25T00:00:00",
+                "profile": {
+                    "name": "Udemy",
+                    "url": "https:\/\/www.udemy.com\/course\/laravel-news-portal-website-for-beginner-to-advanced\/",
+                    "long_name": "udemy.com",
+                    "img": "https:\/\/imgs.search.brave.com\/0CaDS2PLXxbSp_JD_-yr2r02rNq9IDfasVeOB8TLSLU\/rs:fit:32:32:1\/g:ce\/aHR0cDovL2Zhdmlj\/b25zLnNlYXJjaC5i\/cmF2ZS5jb20vaWNv\/bnMvODAzODNiOGEw\/MjgwZTNjMTg1Njgz\/ZDdkNzVkZDBjNTgz\/ZGViNDM1NjVhODQ1\/ZTYzNDdkNThkNmU4\/YjA5OTY1Yi93d3cu\/dWRlbXkuY29tLw"
+                },
+                "language": "en",
+                "family_friendly": true,
+                "type": "search_result",
+                "subtype": "creative_work",
+                "meta_url": {
+                    "scheme": "https",
+                    "netloc": "udemy.com",
+                    "hostname": "www.udemy.com",
+                    "favicon": "https:\/\/imgs.search.brave.com\/0CaDS2PLXxbSp_JD_-yr2r02rNq9IDfasVeOB8TLSLU\/rs:fit:32:32:1\/g:ce\/aHR0cDovL2Zhdmlj\/b25zLnNlYXJjaC5i\/cmF2ZS5jb20vaWNv\/bnMvODAzODNiOGEw\/MjgwZTNjMTg1Njgz\/ZDdkNzVkZDBjNTgz\/ZGViNDM1NjVhODQ1\/ZTYzNDdkNThkNmU4\/YjA5OTY1Yi93d3cu\/dWRlbXkuY29tLw",
+                    "path": "  \u203a development  \u203a web development  \u203a laravel"
+                },
+                "thumbnail": {
+                    "src": "https:\/\/imgs.search.brave.com\/ADKqbI-OrlpwzOsp0DVZnoozOrWIdHBSdYGGMqSVgnE\/rs:fit:200:200:1\/g:ce\/aHR0cHM6Ly9pbWct\/Yy51ZGVteWNkbi5j\/b20vY291cnNlLzc1\/MHg0MjIvNDU2MzQ1\/OF9kZWZhXzIuanBn",
+                    "original": "https:\/\/img-c.udemycdn.com\/course\/750x422\/4563458_defa_2.jpg",
+                    "logo": false
+                },
+                "age": "June 25, 2023"
+            },
+            {
+                "title": "laravel-news\/src\/Http\/Controllers\/NewsController.php at master \u00b7 jeroennoten\/laravel-news",
+                "url": "https:\/\/github.com\/jeroennoten\/laravel-news\/blob\/master\/src\/Http\/Controllers\/NewsController.php",
+                "is_source_local": false,
+                "is_source_both": false,
+                "description": "Contribute to jeroennoten\/laravel-news development by creating an account on GitHub.",
+                "profile": {
+                    "name": "GitHub",
+                    "url": "https:\/\/github.com\/jeroennoten\/laravel-news\/blob\/master\/src\/Http\/Controllers\/NewsController.php",
+                    "long_name": "github.com",
+                    "img": "https:\/\/imgs.search.brave.com\/v8685zI4XInM0zxlNI2s7oE_2Sb-EL7lAy81WXbkQD8\/rs:fit:32:32:1\/g:ce\/aHR0cDovL2Zhdmlj\/b25zLnNlYXJjaC5i\/cmF2ZS5jb20vaWNv\/bnMvYWQyNWM1NjA5\/ZjZmZjNlYzI2MDNk\/N2VkNmJhYjE2MzZl\/MDY5ZTMxMDUzZmY1\/NmU3NWIzNWVmMjk0\/NTBjMjJjZi9naXRo\/dWIuY29tLw"
+                },
+                "language": "en",
+                "family_friendly": true,
+                "type": "search_result",
+                "subtype": "software",
+                "meta_url": {
+                    "scheme": "https",
+                    "netloc": "github.com",
+                    "hostname": "github.com",
+                    "favicon": "https:\/\/imgs.search.brave.com\/v8685zI4XInM0zxlNI2s7oE_2Sb-EL7lAy81WXbkQD8\/rs:fit:32:32:1\/g:ce\/aHR0cDovL2Zhdmlj\/b25zLnNlYXJjaC5i\/cmF2ZS5jb20vaWNv\/bnMvYWQyNWM1NjA5\/ZjZmZjNlYzI2MDNk\/N2VkNmJhYjE2MzZl\/MDY5ZTMxMDUzZmY1\/NmU3NWIzNWVmMjk0\/NTBjMjJjZi9naXRo\/dWIuY29tLw",
+                    "path": "\u203a jeroennoten  \u203a laravel-news  \u203a blob  \u203a master  \u203a src  \u203a Http  \u203a Controllers  \u203a NewsController.php"
+                },
+                "thumbnail": {
+                    "src": "https:\/\/imgs.search.brave.com\/rKPHcLKgTSZ4LRuOguRzN29oYhHOwaLbTjPN6TCuY48\/rs:fit:200:200:1\/g:ce\/aHR0cHM6Ly9vcGVu\/Z3JhcGguZ2l0aHVi\/YXNzZXRzLmNvbS80\/NWUyNDE5NGFkMzM2\/NjBkYWQ5NDlhMzc2\/MWYwZWQzM2I0N2Y5\/NGU5ZDAwNTI2ZGM5\/ZDk5MjQ3ZjdjMTYx\/ODllL2plcm9lbm5v\/dGVuL2xhcmF2ZWwt\/bmV3cw",
+                    "original": "https:\/\/opengraph.githubassets.com\/45e24194ad33660dad949a3761f0ed33b47f94e9d00526dc9d99247f7c16189e\/jeroennoten\/laravel-news",
+                    "logo": false
+                }
+            },
+            {
+                "title": "Laravel News PHP Scripts | CodeCanyon",
+                "url": "https:\/\/codecanyon.net\/category\/php-scripts?term=laravel%20news",
+                "is_source_local": false,
+                "is_source_both": false,
+                "description": "Get 46 laravel news PHP scripts on CodeCanyon such as ONNO - Laravel News &amp; Magazine Script, NewsLooks | OpenAI Powered Laravel News &amp; Magazines Script, Laramagz - Laravel News &amp; Blog CMS Script",
+                "profile": {
+                    "name": "CodeCanyon",
+                    "url": "https:\/\/codecanyon.net\/category\/php-scripts?term=laravel%20news",
+                    "long_name": "codecanyon.net",
+                    "img": "https:\/\/imgs.search.brave.com\/cXuCgpdyQWwV8T1TeS_jADYrkCHYhYDR29DI7tWH9wQ\/rs:fit:32:32:1\/g:ce\/aHR0cDovL2Zhdmlj\/b25zLnNlYXJjaC5i\/cmF2ZS5jb20vaWNv\/bnMvNzJkYjlmMDgx\/MmI2ZmQ4NjE1ZjZm\/MWY2YzAwZDRkNDdh\/MjhjYWU2ZDAyNGZk\/NjJlNTk5MzBjMDI1\/MTM5NWUzMS9jb2Rl\/Y2FueW9uLm5ldC8"
+                },
+                "language": "en",
+                "family_friendly": true,
+                "type": "search_result",
+                "subtype": "generic",
+                "meta_url": {
+                    "scheme": "https",
+                    "netloc": "codecanyon.net",
+                    "hostname": "codecanyon.net",
+                    "favicon": "https:\/\/imgs.search.brave.com\/cXuCgpdyQWwV8T1TeS_jADYrkCHYhYDR29DI7tWH9wQ\/rs:fit:32:32:1\/g:ce\/aHR0cDovL2Zhdmlj\/b25zLnNlYXJjaC5i\/cmF2ZS5jb20vaWNv\/bnMvNzJkYjlmMDgx\/MmI2ZmQ4NjE1ZjZm\/MWY2YzAwZDRkNDdh\/MjhjYWU2ZDAyNGZk\/NjJlNTk5MzBjMDI1\/MTM5NWUzMS9jb2Rl\/Y2FueW9uLm5ldC8",
+                    "path": "\u203a category  \u203a php-scripts"
+                },
+                "thumbnail": {
+                    "src": "https:\/\/imgs.search.brave.com\/iGIqpowgpxP_YSQiLYbVrXGmS6DVw4aCdxqdm4FSScM\/rs:fit:200:200:1\/g:ce\/aHR0cHM6Ly9hc3Nl\/dHMubWFya2V0LXN0\/b3JlZnJvbnQuZW52\/YXRvLXN0YXRpYy5j\/b20vc3RvcmVmcm9u\/dC9hc3NldHMvb2ct\/aW1hZ2VzL2NvZGVj\/YW55b24tOGE5NThl\/OTA4ZmJiNWJhYzVl\/NTRiMzJjYTMyOWM3\/ZDMxYjllMTM0YmFk\/MjBmYjJlYTFmMTUz\/MTcwMWNhMDU2MS5w\/bmc",
+                    "original": "https:\/\/assets.market-storefront.envato-static.com\/storefront\/assets\/og-images\/codecanyon-8a958e908fbb5bac5e54b32ca329c7d31b9e134bad20fb2ea1f1531701ca0561.png",
+                    "logo": false
+                }
+            },
+            {
+                "title": "\u200eLaravel News Podcast on Apple Podcasts",
+                "url": "https:\/\/podcasts.apple.com\/us\/podcast\/laravel-news-podcast\/id1051289963",
+                "is_source_local": false,
+                "is_source_both": false,
+                "description": "The Laravel News Podcast brings you all the latest news and events related to the Laravel PHP Framework",
+                "page_age": "2024-01-18T13:22:11",
+                "profile": {
+                    "name": "Apple Podcasts",
+                    "url": "https:\/\/podcasts.apple.com\/us\/podcast\/laravel-news-podcast\/id1051289963",
+                    "long_name": "podcasts.apple.com",
+                    "img": "https:\/\/imgs.search.brave.com\/gj_Q_xxxmXGzJBBo752yliEtu4I49IN0QkKft7VdZcQ\/rs:fit:32:32:1\/g:ce\/aHR0cDovL2Zhdmlj\/b25zLnNlYXJjaC5i\/cmF2ZS5jb20vaWNv\/bnMvOTRmOTI2M2Yy\/YTMzOGQ0ZWZhZDU4\/YWVmYTU5ZjkwNzE2\/ZGM0NGM5ZDQxZWE1\/YjE0YThhYTFmNTI0\/ZTM4ZDkzZS9wb2Rj\/YXN0cy5hcHBsZS5j\/b20v"
+                },
+                "language": "en",
+                "family_friendly": true,
+                "type": "search_result",
+                "subtype": "generic",
+                "meta_url": {
+                    "scheme": "https",
+                    "netloc": "podcasts.apple.com",
+                    "hostname": "podcasts.apple.com",
+                    "favicon": "https:\/\/imgs.search.brave.com\/gj_Q_xxxmXGzJBBo752yliEtu4I49IN0QkKft7VdZcQ\/rs:fit:32:32:1\/g:ce\/aHR0cDovL2Zhdmlj\/b25zLnNlYXJjaC5i\/cmF2ZS5jb20vaWNv\/bnMvOTRmOTI2M2Yy\/YTMzOGQ0ZWZhZDU4\/YWVmYTU5ZjkwNzE2\/ZGM0NGM5ZDQxZWE1\/YjE0YThhYTFmNTI0\/ZTM4ZDkzZS9wb2Rj\/YXN0cy5hcHBsZS5j\/b20v",
+                    "path": "\u203a us  \u203a podcast  \u203a laravel-news-podcast  \u203a id1051289963"
+                },
+                "thumbnail": {
+                    "src": "https:\/\/imgs.search.brave.com\/U53ZWdaPuO5dc2EJ-VmnuhuR259t9M4DuwmkOJr3hPQ\/rs:fit:200:200:1\/g:ce\/aHR0cHM6Ly9pczEt\/c3NsLm16c3RhdGlj\/LmNvbS9pbWFnZS90\/aHVtYi9Qb2RjYXN0\/czEyNi92NC8xNy8y\/My9hYi8xNzIzYWIx\/Mi1jYjJkLWM0MTct\/ZmUyMi0zNWYyMmQ3\/NWQyYjIvbXphXzEx\/NzU0NDU1MDU4OTQ5\/MjUyNjYzLmpwZy8x\/MjAweDYzMHdwLnBu\/Zw",
+                    "original": "https:\/\/is1-ssl.mzstatic.com\/image\/thumb\/Podcasts126\/v4\/17\/23\/ab\/1723ab12-cb2d-c417-fe22-35f22d75d2b2\/mza_11754455058949252663.jpg\/1200x630wp.png",
+                    "logo": false
+                },
+                "age": "January 18, 2024"
+            }
+        ],
+        "family_friendly": true
+    }
+}

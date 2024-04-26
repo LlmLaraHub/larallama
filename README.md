@@ -57,6 +57,21 @@ npm run dev
 
 We need Horizon since Batching is key.
 
+## Update your PHP.ini 
+
+See this video on how:
+[See the video](https://www.youtube.com/watch?v=aTuw6W_8CPE)
+
+```
+max_execution_time=0
+upload_max_filesize=500M
+auto_prepend_file=/Applications/Herd.app/Contents/Resources/valet/dump-loader.php
+memory_limit=-1
+post_max_size = 100M
+```
+
+
+
 ## Road Map (still in motion)
 
 You can see a lot of it [here](https://github.com/orgs/LlmLaraHub/projects/1)

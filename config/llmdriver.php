@@ -44,7 +44,7 @@ return [
                 'functions' => env('OLLAMA_FUNCTIONS', false),
             ],
             'api_key' => 'ollama',
-            'api_url' => env('OLLAMA_API_URL', 'http://127.0.0.1:11434/api/'),
+            'api_url' => env('OLLAMA_API_URL', 'http://localhost:11434/api/'),
             'models' => [
                 //@see https://github.com/ollama/ollama/blob/main/docs/openai.md
                 'completion_model' => env('OLLAMA_COMPLETION_MODEL', 'llama3'),
@@ -55,4 +55,21 @@ return [
     'features' => [
         'pptx' => env('FEATURE_PPTX', false),
     ],
+    'sources' => [
+        'search_driver' => env('LARALAMMA_SEARCH_SOURCE', 'mock'),
+        'search' => [
+            'drivers' => [
+                'mock',
+                'brave'
+            ]
+        ],
+        'config' => [
+            'mock' => [
+                'api_token' => 'foobar',
+            ],
+            'brave' => [
+                'api_token' => env('BRAVE_API_TOKEN', false),
+            ]
+        ]
+    ]
 ];
