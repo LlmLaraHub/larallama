@@ -3,7 +3,6 @@
 namespace App\Domains\Sources\WebSearch\Drivers;
 
 use App\Domains\Sources\WebSearch\Response\SearchResponseDto;
-use PhpOffice\PhpSpreadsheet\Calculation\TextData\Search;
 
 abstract class BaseSearchClient
 {

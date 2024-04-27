@@ -183,4 +183,9 @@ class Chat extends Model implements HasDrivers
     {
         return $this->belongsTo(User::class);
     }
+
+    public function chat_document_references(): HasMany
+    {
+        return $this->hasMany(ChatDocumentReference::class);
+    }
 }

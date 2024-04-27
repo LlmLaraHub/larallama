@@ -77,6 +77,14 @@ memory_limit=-1
 post_max_size = 100M
 ```
 
+## Which Model????
+
+Keep in mind the size of the model is not the only thing that matters. If you read over [https://ollama.com/library](https://ollama.com/library)
+you will see some are better at chat, some at large context, some at code etc. LaraLamma can use multiple models for different jobs.
+
+Looking in the `config/llmdriver.php` you can see the options in there.
+
+
 
 
 ## Road Map (still in motion)
