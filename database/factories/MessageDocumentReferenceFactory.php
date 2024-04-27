@@ -2,15 +2,14 @@
 
 namespace Database\Factories;
 
-use App\Models\Chat;
-use App\Models\Document;
 use App\Models\DocumentChunk;
+use App\Models\Message;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\ChatDocumentReference>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\MessageDocumentReference>
  */
-class ChatDocumentReferenceFactory extends Factory
+class MessageDocumentReferenceFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -20,10 +19,10 @@ class ChatDocumentReferenceFactory extends Factory
     public function definition(): array
     {
         return [
-            'chat_id' => Chat::factory(),
-            'document_id' => Document::factory(),
+            'message_id' => Message::factory(),
             'document_chunk_id' => DocumentChunk::factory(),
             'reference' => fake()->text(),
+            'distance' => 11.321851037400464,
         ];
     }
 }

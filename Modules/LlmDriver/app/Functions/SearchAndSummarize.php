@@ -4,6 +4,8 @@ namespace LlmLaraHub\LlmDriver\Functions;
 
 use App\Domains\Messages\RoleEnum;
 use App\Models\DocumentChunk;
+use App\Models\Message;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Log;
 use Laravel\Pennant\Feature;
 use LlmLaraHub\LlmDriver\HasDrivers;
@@ -57,7 +59,7 @@ class SearchAndSummarize extends FunctionContract
         $results = DocumentChunk::query()
             ->join('documents', 'documents.id', '=', 'document_chunks.document_id')
             ->selectRaw(
-                "document_chunks.{$embeddingSize} <-> ? as distance, document_chunks.content, document_chunks.{$embeddingSize} as embedding, document_chunks.id as id",
+                "document_chunks.{$embeddingSize} <-> ? as distance, document_chunks.content, document_chunks.{$embeddingSize} as embedding, document_chunks.id as id, document_chunks.summary as summary, document_chunks.document_id as document_id",
                 [$embedding->embedding]
             )
             ->where('documents.collection_id', $model->getChatable()->id)
@@ -82,7 +84,7 @@ class SearchAndSummarize extends FunctionContract
 
         $content = implode(' ', $content);
 
-        $content = "This is data from the search results when entering the users prompt which is ### START PROMPT ### {$input} ### END PROMPT ###  please use this with the following context and only this, summarize it for the user and return as markdown so I can render it and strip out and formatting like extra spaces, tabs, periods etc: ".$content;
+        $content = "You are a helpful assistsant in the RAG system: This is data from the search results when entering the users prompt which is ### START PROMPT ### {$input} ### END PROMPT ###  please use this with the following context and only this, summarize it for the user and return as markdown so I can render it and strip out and formatting like extra spaces, tabs, periods etc: ".$content;
 
         $model->getChat()->addInput(
             message: $content,
@@ -103,7 +105,12 @@ class SearchAndSummarize extends FunctionContract
             $model->getChatable()->getDriver()
         )->chat([$messageArray]);
 
-        $model->getChat()->addInput($response->content, RoleEnum::Assistant);
+        $message = $model->getChat()->addInput($response->content, RoleEnum::Assistant);
+
+        /**
+         * We want to trigger the job to build up document reference history
+         */
+        $this->saveDocumentReference($message, $results);
 
         return FunctionResponse::from(
             [
@@ -111,6 +118,20 @@ class SearchAndSummarize extends FunctionContract
                 'save_to_message' => false,
             ]
         );
+    }
+
+    protected function saveDocumentReference(
+        Message $model,
+        Collection $documentChunks
+    ): void {
+        //add each one to a batch job or do the work here.
+        foreach ($documentChunks as $documentChunk) {
+            $model->message_document_references()->create([
+                'document_chunk_id' => $documentChunk->id,
+                'distance' => $documentChunk->distance,
+                'reference' => $documentChunk->summary,
+            ]);
+        }
     }
 
     /**

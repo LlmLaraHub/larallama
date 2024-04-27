@@ -6,6 +6,7 @@ use App\Domains\Messages\RoleEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Message extends Model
 {
@@ -70,5 +71,10 @@ class Message extends Model
     public function chat(): BelongsTo
     {
         return $this->belongsTo(Chat::class);
+    }
+
+    public function message_document_references(): HasMany
+    {
+        return $this->hasMany(MessageDocumentReference::class);
     }
 }

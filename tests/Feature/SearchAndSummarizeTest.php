@@ -87,5 +87,6 @@ class SearchAndSummarizeTest extends TestCase
         );
 
         $this->assertNotNull($results);
+        $this->assertDatabaseCount('message_document_references', 3);
     }
 }

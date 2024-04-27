@@ -6,20 +6,15 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class ChatDocumentReference extends Model
+class MessageDocumentReference extends Model
 {
     use HasFactory;
 
     protected $guarded = [];
 
-    public function chat(): BelongsTo
+    public function message(): BelongsTo
     {
-        return $this->belongsTo(Chat::class);
-    }
-
-    public function document(): BelongsTo
-    {
-        return $this->belongsTo(Document::class);
+        return $this->belongsTo(Message::class);
     }
 
     public function document_chunk(): BelongsTo

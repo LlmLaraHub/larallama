@@ -1,8 +1,7 @@
 <?php
 
-use App\Models\Chat;
-use App\Models\Document;
 use App\Models\DocumentChunk;
+use App\Models\Message;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -14,12 +13,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('chat_document_references', function (Blueprint $table) {
+        Schema::create('message_document_references', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Chat::class);
-            $table->foreignIdFor(Document::class);
+            $table->foreignIdFor(Message::class);
             $table->foreignIdFor(DocumentChunk::class);
-            $table->string('reference');
+            $table->string('reference')->nullable();
+            $table->decimal('distance', 18, 15)->nullable();
             $table->timestamps();
         });
     }
