@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\CollectionController;
+use App\Http\Controllers\DownloadController;
 use App\Http\Controllers\ExampleChatBotController;
 use App\Http\Controllers\ExampleController;
 use App\Http\Controllers\ReindexCollectionController;
@@ -24,6 +25,13 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
+
+    Route::controller(DownloadController::class)->group(
+        function () {
+            Route::get('/collections/{collection}/download', 'download')
+                ->name('download.document');
+        }
+    );
 
     Route::get('/dashboard', function () {
         return to_route('collections.index');

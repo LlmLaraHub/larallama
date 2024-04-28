@@ -20,6 +20,7 @@ class MessageResource extends JsonResource
             'initials' => ($this->from_ai) ? 'Ai' : 'You',
             'type' => 'text', //@TODO
             'body' => $this->body,
+            'collection_id' => $this->chat->chatable_id,
             'body_markdown' => str($this->body)->markdown(),
             'diff_for_humans' => $this->created_at->diffForHumans(),
             'message_document_references' => MessageDocumentReferenceResource::collection(

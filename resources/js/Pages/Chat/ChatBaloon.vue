@@ -1,7 +1,7 @@
 <script setup>
 
 import { TabGroup, TabList, Tab, TabPanels, TabPanel, TransitionRoot } from '@headlessui/vue'
-
+import ReferenceTable from './Components/ReferenceTable.vue'
 
 const props = defineProps({
     message: Object
@@ -40,10 +40,10 @@ const props = defineProps({
                 <TabGroup >
                     <TabList class="flex justify-start gap-4 items-center">
                         <Tab as="template" v-slot="{ selected }">
-                            <div :class="{ 'underline text-gray-800': selected }" class="m4-2 text-gray-500">Message</div>
+                            <div :class="{ 'underline text-gray-800': selected }" class="hover:cursor-pointer m4-2 text-gray-500">Message</div>
                         </Tab>
                         <Tab as="template" v-slot="{ selected }">
-                            <div :class="{ 'underline text-gray-800': selected }" class="m4-2 text-gray-500">Sources</div>
+                            <div :class="{ 'underline text-gray-800': selected }" class="hover:cursor-pointer m4-2 text-gray-500">Sources</div>
                         </Tab>
                     </TabList>
                     <TabPanels  v-auto-animate>
@@ -65,35 +65,9 @@ const props = defineProps({
                             <div class="min-w-full">
                                 <div>
                                     <div class="overflow-x-auto">
-                                        <table class="table table-zebra">
-                                            <!-- head -->
-                                            <thead>
-                                                <tr>
-                                                    <th></th>
-                                                    <th>Document Name</th>
-                                                    <th>Page</th>
-                                                    <th>Distance</th>
-                                                    <th>Summary</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <!-- row 1 -->
-                                                <tr v-for="reference in message.message_document_references" :key="reference.id">
-                                                    <th>{{ reference.id }}</th>
-                                                    <td>{{ reference.document_name }}</td>
-                                                    <td>{{ reference.page }}</td>
-                                                    <td>{{ reference.distance }}</td>
-                                                    <td>
-                                                        <span v-html="reference.summary"></span>
-                                                    </td>
-
-                                                </tr>
-                                              
-                                            </tbody>
-                                        </table>
+                                        <ReferenceTable :message="message" />   
                                     </div>
                                 </div>
-
                             </div>
                         </TabPanel>
                     </TabPanels>
