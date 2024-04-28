@@ -3,12 +3,11 @@
 namespace LlmLaraHub\LlmDriver\Functions;
 
 use App\Domains\Messages\RoleEnum;
-use App\Models\DocumentChunk;
-use App\Models\Message;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Log;
 use Laravel\Pennant\Feature;
 use LlmLaraHub\LlmDriver\HasDrivers;
+use LlmLaraHub\LlmDriver\Helpers\CreateReferencesTrait;
+use LlmLaraHub\LlmDriver\Helpers\DistanceQueryTrait;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
 use LlmLaraHub\LlmDriver\Requests\MessageInDto;
 use LlmLaraHub\LlmDriver\Responses\CompletionResponse;
@@ -17,6 +16,8 @@ use LlmLaraHub\LlmDriver\Responses\FunctionResponse;
 
 class SearchAndSummarize extends FunctionContract
 {
+    use CreateReferencesTrait, DistanceQueryTrait;
+
     protected string $name = 'search_and_summarize';
 
     protected string $description = 'Used to embed users prompt, search database and return summarized results.';
@@ -29,6 +30,8 @@ class SearchAndSummarize extends FunctionContract
         HasDrivers $model,
         FunctionCallDto $functionCallDto): FunctionResponse
     {
+        Log::info('[LaraChain] Using Function: SearchAndSummarize');
+
         /**
          * @TODO
          *
@@ -50,22 +53,11 @@ class SearchAndSummarize extends FunctionContract
 
         $embeddingSize = get_embedding_size($model->getEmbeddingDriver());
 
-        /**
-         * @TODO
-         * Track the document page for referehce
-         *
-         * @see https://github.com/orgs/LlmLaraHub/projects/1?pane=issue&itemId=60394288
-         */
-        $results = DocumentChunk::query()
-            ->join('documents', 'documents.id', '=', 'document_chunks.document_id')
-            ->selectRaw(
-                "document_chunks.{$embeddingSize} <-> ? as distance, document_chunks.content, document_chunks.{$embeddingSize} as embedding, document_chunks.id as id, document_chunks.summary as summary, document_chunks.document_id as document_id",
-                [$embedding->embedding]
-            )
-            ->where('documents.collection_id', $model->getChatable()->id)
-            ->limit(10)
-            ->orderByRaw('distance')
-            ->get();
+        $documentChunkResults = $this->distance(
+            $embeddingSize,
+            $model->getChatable()->id,
+            $embedding->embedding
+        );
 
         $content = [];
 
@@ -74,7 +66,7 @@ class SearchAndSummarize extends FunctionContract
          * Yes this is a lot like the SearchAndSummarizeChatRepo
          * But just getting a sense of things
          */
-        foreach ($results as $result) {
+        foreach ($documentChunkResults as $result) {
             $contentString = remove_ascii($result->content);
             if (Feature::active('reduce_text')) {
                 $result = reduce_text_size($contentString);
@@ -107,10 +99,7 @@ class SearchAndSummarize extends FunctionContract
 
         $message = $model->getChat()->addInput($response->content, RoleEnum::Assistant);
 
-        /**
-         * We want to trigger the job to build up document reference history
-         */
-        $this->saveDocumentReference($message, $results);
+        $this->saveDocumentReference($message, $documentChunkResults);
 
         return FunctionResponse::from(
             [
@@ -118,20 +107,6 @@ class SearchAndSummarize extends FunctionContract
                 'save_to_message' => false,
             ]
         );
-    }
-
-    protected function saveDocumentReference(
-        Message $model,
-        Collection $documentChunks
-    ): void {
-        //add each one to a batch job or do the work here.
-        foreach ($documentChunks as $documentChunk) {
-            $model->message_document_references()->create([
-                'document_chunk_id' => $documentChunk->id,
-                'distance' => $documentChunk->distance,
-                'reference' => $documentChunk->summary,
-            ]);
-        }
     }
 
     /**

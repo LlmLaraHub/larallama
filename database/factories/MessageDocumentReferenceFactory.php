@@ -21,7 +21,6 @@ class MessageDocumentReferenceFactory extends Factory
         return [
             'message_id' => Message::factory(),
             'document_chunk_id' => DocumentChunk::factory(),
-            'reference' => fake()->text(),
             'distance' => 11.321851037400464,
         ];
     }

@@ -53,6 +53,7 @@ class SearchAndSummarizeChatRepoTest extends TestCase
         $results = (new SearchAndSummarizeChatRepo())->search($chat, 'Puppy');
 
         $this->assertNotNull($results);
+        $this->assertDatabaseCount('message_document_references', 3);
 
     }
 }

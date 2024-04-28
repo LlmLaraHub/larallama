@@ -17,7 +17,6 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(Message::class);
             $table->foreignIdFor(DocumentChunk::class);
-            $table->string('reference')->nullable();
             $table->decimal('distance', 18, 15)->nullable();
             $table->timestamps();
         });

@@ -22,6 +22,8 @@ class MessageResource extends JsonResource
             'body' => $this->body,
             'body_markdown' => str($this->body)->markdown(),
             'diff_for_humans' => $this->created_at->diffForHumans(),
+            'message_document_references' => MessageDocumentReferenceResource::collection(
+                $this->message_document_references()->orderBy('distance', 'asc')->limit(5)->get()),
         ];
     }
 }

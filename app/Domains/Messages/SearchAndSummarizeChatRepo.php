@@ -6,12 +6,16 @@ use App\Models\Chat;
 use App\Models\DocumentChunk;
 use Illuminate\Support\Facades\Log;
 use Laravel\Pennant\Feature;
+use LlmLaraHub\LlmDriver\Helpers\CreateReferencesTrait;
+use LlmLaraHub\LlmDriver\Helpers\DistanceQueryTrait;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
 use LlmLaraHub\LlmDriver\Responses\CompletionResponse;
 use LlmLaraHub\LlmDriver\Responses\EmbeddingsResponseDto;
 
 class SearchAndSummarizeChatRepo
 {
+    use CreateReferencesTrait, DistanceQueryTrait;
+
     public function search(Chat $chat, string $input): string
     {
         /**
@@ -29,26 +33,16 @@ class SearchAndSummarizeChatRepo
 
         $embeddingSize = get_embedding_size($chat->chatable->getEmbeddingDriver());
 
-        /**
-         * @TODO
-         * Track the document page for referehce
-         *
-         * @see https://github.com/orgs/LlmLaraHub/projects/1?pane=issue&itemId=60394288
-         */
-        $results = DocumentChunk::query()
-            ->join('documents', 'documents.id', '=', 'document_chunks.document_id')
-            ->selectRaw(
-                "document_chunks.{$embeddingSize} <-> ? as distance, document_chunks.content, document_chunks.{$embeddingSize} as embedding, document_chunks.id as id",
-                [$embedding->embedding]
-            )
-            ->where('documents.collection_id', $chat->chatable->id)
-            ->limit(10)
-            ->orderByRaw('distance')
-            ->get();
-
+        $documentChunkResults = $this->distance(
+            $embeddingSize,
+            /** @phpstan-ignore-next-line */
+            $chat->getChatable()->id,
+            $embedding->embedding
+        );
         $content = [];
 
-        foreach ($results as $result) {
+        /** @var DocumentChunk $result */
+        foreach ($documentChunkResults as $result) {
             $contentString = remove_ascii($result->content);
             if (Feature::active('reduce_text')) {
                 $result = reduce_text_size($contentString);
@@ -68,13 +62,17 @@ class SearchAndSummarizeChatRepo
         );
 
         $latestMessagesArray = $chat->getChatResponse();
+
         Log::info('[LaraChain] Getting the Summary');
+
         /** @var CompletionResponse $response */
         $response = LlmDriverFacade::driver(
             $chat->chatable->getDriver()
         )->chat($latestMessagesArray);
 
-        $chat->addInput($response->content, RoleEnum::Assistant);
+        $message = $chat->addInput($response->content, RoleEnum::Assistant);
+
+        $this->saveDocumentReference($message, $documentChunkResults);
 
         return $response->content;
     }

@@ -1,6 +1,7 @@
 <script setup>
 
-import LightIndicator from "./LightIndicator.vue";
+import { TabGroup, TabList, Tab, TabPanels, TabPanel, TransitionRoot } from '@headlessui/vue'
+
 
 const props = defineProps({
     message: Object
@@ -8,52 +9,109 @@ const props = defineProps({
 </script>
 
 <template>
-    <div class="message-container mx-auto max-container flex items-start gap-x-4"
 
-         :class="message.from_ai ? 'flex-row-reverse' : 'flex-row'">
+
+    <div class="message-container mx-auto max-container flex items-start gap-x-4"
+        :class="message.from_ai ? 'flex-row-reverse' : 'flex-row'">
+
+
         <div class="flex-shrink-0 hidden md:block">
             <span class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-gray-300">
                 <span class="text-xs font-medium leading-none text-white">
-                    {{  message.initials }}
+                    {{ message.initials }}
                 </span>
             </span>
         </div>
 
         <div>
 
-            <div class="text-xs mb-1 w-full flex gap-x-2"
-                 :class="message.from_ai ? 'flex-row-reverse' : ''"
-            >
+            <div class="text-xs mb-1 w-full flex gap-x-2" :class="message.from_ai ? 'flex-row-reverse' : ''">
                 <span class="font-semibold text-gray-300" v-if="message.from_ai">
                     Ai
                 </span>
                 <span class="font-semibold text-gray-300" v-else>
                     You
                 </span>
-
-
-                <span
-                    class="text-gray-500">
-                    {{message.diff_for_humans}}
+                <span class="text-gray-500">
+                    {{ message.diff_for_humans }}
                 </span>
             </div>
+            <div v-if="message.from_ai">
+                <TabGroup >
+                    <TabList class="flex justify-start gap-4 items-center">
+                        <Tab as="template" v-slot="{ selected }">
+                            <div :class="{ 'underline text-gray-800': selected }" class="m4-2 text-gray-500">Message</div>
+                        </Tab>
+                        <Tab as="template" v-slot="{ selected }">
+                            <div :class="{ 'underline text-gray-800': selected }" class="m4-2 text-gray-500">Sources</div>
+                        </Tab>
+                    </TabList>
+                    <TabPanels  v-auto-animate>
+                        <TabPanel>
+                            <div class="message-baloon flex rounded-md relative shadow-lg shadow-inner-custom  p-4 prose space-y-4l "
+                                :class="message.from_ai ? 'bg-gray-300/10 rounded-tr-none border-indigo-500' : 'flex-row-reverse'">
 
-            <div class="message-baloon flex rounded-md relative shadow-lg shadow-inner-custom  p-4 prose space-y-4l "
-                 :class="message.from_ai ? 'bg-gray-300/10 rounded-tr-none border-indigo-500' : 'flex-row-reverse'">
+                                <div v-if="message.type !== 'image'" class="message-content grow "
+                                    :class="message.from_ai ? 'rounded-tr-none' : 'rounded-tl-none'"
+                                    v-html="message.body_markdown">
+                                </div>
 
-                <div
+                                <div v-if="message.type === 'image'">
+                                    <img class="max-w-2xl" :src="message.file_url" />
+                                </div>
+                            </div>
+                        </TabPanel>
+                        <TabPanel>
+                            <div class="min-w-full">
+                                <div>
+                                    <div class="overflow-x-auto">
+                                        <table class="table table-zebra">
+                                            <!-- head -->
+                                            <thead>
+                                                <tr>
+                                                    <th></th>
+                                                    <th>Document Name</th>
+                                                    <th>Page</th>
+                                                    <th>Distance</th>
+                                                    <th>Summary</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <!-- row 1 -->
+                                                <tr v-for="reference in message.message_document_references" :key="reference.id">
+                                                    <th>{{ reference.id }}</th>
+                                                    <td>{{ reference.document_name }}</td>
+                                                    <td>{{ reference.page }}</td>
+                                                    <td>{{ reference.distance }}</td>
+                                                    <td>
+                                                        <span v-html="reference.summary"></span>
+                                                    </td>
 
-                    v-if="message.type !== 'image'"
-                    class="message-content grow "
-                    :class="message.from_ai ? 'rounded-tr-none' : 'rounded-tl-none'"
-                v-html="message.body_markdown"
-                >
+                                                </tr>
+                                              
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </TabPanel>
+                    </TabPanels>
+                </TabGroup>
+            </div>
+            <div v-else
+                class="message-baloon flex rounded-md relative shadow-lg shadow-inner-custom  p-4 prose space-y-4l "
+                :class="message.from_ai ? 'bg-gray-300/10 rounded-tr-none border-indigo-500' : 'flex-row-reverse'">
+
+                <div v-if="message.type !== 'image'" class="message-content grow "
+                    :class="message.from_ai ? 'rounded-tr-none' : 'rounded-tl-none'" v-html="message.body_markdown">
                 </div>
 
                 <div v-if="message.type === 'image'">
-                    <img class="max-w-2xl" :src="message.file_url"/>
+                    <img class="max-w-2xl" :src="message.file_url" />
                 </div>
             </div>
+
 
         </div>
 
@@ -62,6 +120,4 @@ const props = defineProps({
 
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>
