@@ -39,11 +39,14 @@ const props = defineProps({
             <div v-if="message.from_ai">
                 <TabGroup >
                     <TabList class="flex justify-start gap-4 items-center">
-                        <Tab as="template" v-slot="{ selected }">
+                        <Tab as="div" v-slot="{ selected }">
                             <div :class="{ 'underline text-gray-800': selected }" class="hover:cursor-pointer m4-2 text-gray-500">Message</div>
                         </Tab>
-                        <Tab as="template" v-slot="{ selected }">
-                            <div :class="{ 'underline text-gray-800': selected }" class="hover:cursor-pointer m4-2 text-gray-500">Sources</div>
+                        <Tab as="div" v-slot="{ selected }" :disabled="message?.message_document_references.length === 0" class="disabled:opacity-45 disabled:cursor-not-allowed">
+                            <div :class="{ 'underline text-gray-800': selected }" class="hover:cursor-pointer 
+                            text-gray-500 flex justify-start gap-2 items-center">
+                                <span>Sources</span> <div class="text-xs text-white rounded-full bg-indigo-600 h-4 w-6 text-center">{{ message?.message_document_references.length}}</div>
+                            </div>
                         </Tab>
                     </TabList>
                     <TabPanels  v-auto-animate>

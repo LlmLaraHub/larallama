@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Domains\Agents\VerifyPromptInputDto;
+use Facades\App\Domains\Agents\VerifyResponseAgent;
 use App\Domains\Messages\RoleEnum;
 use App\Events\ChatUpdatedEvent;
 use App\Http\Resources\ChatResource;
@@ -14,6 +16,8 @@ use Facades\LlmLaraHub\LlmDriver\SimpleSearchAndSummarizeOrchestrate;
 use Illuminate\Support\Facades\Log;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
 use LlmLaraHub\LlmDriver\Requests\MessageInDto;
+use App\Domains\Agents\VerifyPromptOutputDto;
+use App\Events\ChatUiUpdateEvent;
 
 class ChatController extends Controller
 {
@@ -68,12 +72,42 @@ class ChatController extends Controller
         if (data_get($validated, 'completion', false)) {
             Log::info('[LaraChain] Running Simple Completion');
             $prompt = $validated['input'];
+
+
+            ChatUiUpdateEvent::dispatch(
+                $chat->chatable,
+                $chat,
+                "We are running a completion back shortly"
+            );
+
             $response = LlmDriverFacade::driver($chat->getDriver())->completion($prompt);
             $response = $response->content;
+
+            $dto = VerifyPromptInputDto::from(
+                [
+                    'chattable' => $chat,
+                    'originalPrompt' => $prompt,
+                    'context' => $prompt,
+                    'llmResponse' => $response,
+                    'verifyPrompt' => 'This is a completion so the users prompt was past directly to the llm with all the context. That is why ORIGINAL PROMPT is the same as CONTEXT. Keep the format as Markdown.',
+                ]
+            );
+
+            ChatUiUpdateEvent::dispatch(
+                $chat->chatable,
+                $chat,
+                "We are verifying the completion back shortly"
+            );
+
+
+            /** @var VerifyPromptOutputDto $response */
+            $response = VerifyResponseAgent::verify($dto);
+
             $chat->addInput(
-                message: $response,
+                message: $response->response,
                 role: RoleEnum::Assistant,
                 show_in_thread: true);
+
         } elseif (LlmDriverFacade::driver($chat->getDriver())->hasFunctions()) {
             Log::info('[LaraChain] Running Orchestrate');
             $response = Orchestrate::handle($messagesArray, $chat);

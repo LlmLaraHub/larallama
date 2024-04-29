@@ -85,9 +85,9 @@ const setQuestion = (question) => {
               class="relative p-4 flex-col max-container mx-auto w-full" v-auto-animate>
 
             <div class="relative p-4 flex max-container mx-auto w-full" >
-                <input
+                <textarea
+                rows="2"
                 type="text"
-                @keydown.enter.prevent
                 autofocus="true"
                 class="caret caret-indigo-400 caret-opacity-50
                 disabled:opacity-40

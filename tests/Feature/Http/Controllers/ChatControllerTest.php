@@ -2,12 +2,17 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use App\Domains\Agents\VerifyPromptOutputDto;
+use App\Domains\Messages\RoleEnum;
+use Facades\App\Domains\Agents\VerifyResponseAgent;
 use App\Models\Chat;
 use App\Models\Collection;
+use App\Models\Message;
 use App\Models\User;
 use Facades\LlmLaraHub\LlmDriver\Orchestrate;
 use Facades\LlmLaraHub\LlmDriver\SimpleSearchAndSummarizeOrchestrate;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
+use LlmLaraHub\LlmDriver\Responses\CompletionResponse;
 use Tests\TestCase;
 
 class ChatControllerTest extends TestCase
@@ -26,6 +31,55 @@ class ChatControllerTest extends TestCase
         ]))->assertRedirect();
         $this->assertDatabaseCount('chats', 1);
     }
+
+
+    public function test_will_verify_on_completion(): void
+    {
+        $user = User::factory()->create();
+        $collection = Collection::factory()->create();
+        $chat = Chat::factory()->create([
+            'chatable_id' => $collection->id,
+            'chatable_type' => Collection::class,
+            'user_id' => $user->id,
+        ]);
+
+        Orchestrate::shouldReceive('handle')->never();
+
+        $firstResponse = CompletionResponse::from([
+            'content' => 'test'
+        ]);
+
+        LlmDriverFacade::shouldReceive('driver->completion')->once()->andReturn($firstResponse);
+
+
+        VerifyResponseAgent::shouldReceive('verify')->once()->andReturn(
+            VerifyPromptOutputDto::from(
+            [
+                'chattable' => $chat,
+                'originalPrompt' => 'test',
+                'context' => 'test',
+                'llmResponse' => 'test',
+                'verifyPrompt' => 'This is a completion so the users prompt was past directly to the llm with all the context.',
+                'response' => "verified yay!"
+            ]
+        ));
+
+
+        $this->assertDatabaseCount('messages', 0);
+        $this->actingAs($user)->post(route('chats.messages.create', [
+            'chat' => $chat->id,
+        ]),
+            [
+                'system_prompt' => 'Foo',
+                'input' => 'user input',
+                'completion' => true,
+            ])->assertOk();
+        $this->assertDatabaseCount('messages', 2);
+        $message = Message::where('role', RoleEnum::Assistant)->first();
+
+        $this->assertEquals("verified yay!", $message->body);
+    }
+
 
     public function test_a_function_based_chat()
     {
