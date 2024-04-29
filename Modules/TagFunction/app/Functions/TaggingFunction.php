@@ -12,6 +12,12 @@ use LlmLaraHub\LlmDriver\Requests\MessageInDto;
 use LlmLaraHub\LlmDriver\Responses\FunctionResponse;
 use LlmLaraHub\TagFunction\Contracts\TaggableContract;
 
+/**
+ * @TODO
+ * The core TagManager does all of this
+ * I just need to either move it all here or call it from here
+ * moving it hear will be better I think
+ */
 class TaggingFunction extends FunctionContract
 {
     protected string $name = 'tagging_function';

@@ -115,7 +115,7 @@ class ClaudeClient extends BaseClient
             throw new \Exception('Claude API Token not found');
         }
 
-        return Http::retry(2, 6000)->withHeaders([
+        return Http::retry(3, 6000)->withHeaders([
             'x-api-key' => $api_token,
             'anthropic-beta' => 'tools-2024-04-04',
             'anthropic-version' => $this->version,

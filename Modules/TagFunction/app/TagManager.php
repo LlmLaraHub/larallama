@@ -3,13 +3,13 @@
 namespace LlmLaraHub\TagFunction;
 
 use App\Domains\Agents\VerifyPromptInputDto;
+use App\Domains\Agents\VerifyPromptOutputDto;
 use App\Models\Document;
 use Facades\App\Domains\Agents\VerifyResponseAgent;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
 use LlmLaraHub\LlmDriver\Responses\CompletionResponse;
-use App\Domains\Agents\VerifyPromptOutputDto;
 
 class TagManager
 {
@@ -35,13 +35,13 @@ EOT;
             ->completion(
                 prompt: $prompt
             );
-        
+
         $verifyPrompt = <<<'PROMPT'
         This was the response from the LLM to get Tags from the content.
         Please verify the json is good if not fix it so what you return is just JSON
         and remove from tags any text that is not needed and any
         tags that are not correct.
-        PROMPT; 
+        PROMPT;
 
         $dto = VerifyPromptInputDto::from(
             [
@@ -95,10 +95,10 @@ EOT;
             Please verify the json is good if not fix it so what you return is just JSON
             and remove from tags any text that is not needed and any
             tags that are not correct.
-            PROMPT; 
+            PROMPT;
 
             $originalLlm = $response->content;
-    
+
             $dto = VerifyPromptInputDto::from(
                 [
                     'chattable' => $document,
@@ -108,12 +108,12 @@ EOT;
                     'verifyPrompt' => $verifyPrompt,
                 ]
             );
-        
+
             /** @var VerifyPromptOutputDto $response */
             $response = VerifyResponseAgent::verify($dto);
             Log::info('[LaraChain] TagManager Tagging document VERIFY', [
                 'response' => $response->response,
-                'original' => $originalLlm
+                'original' => $originalLlm,
             ]);
 
             $tagsChild = explode(',', $response->response);

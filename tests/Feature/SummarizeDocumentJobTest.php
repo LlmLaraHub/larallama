@@ -33,7 +33,7 @@ class SummarizeDocumentJobTest extends TestCase
 
         $document = Document::factory()->create([
             'summary' => null,
-            'collection_id' => $collection->id, 
+            'collection_id' => $collection->id,
         ]);
 
         $this->fakeVerify($chat);

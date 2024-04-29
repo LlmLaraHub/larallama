@@ -2,8 +2,6 @@
 
 namespace LlmLaraHub\TagFunction\Tests\Feature;
 
-use App\Models\Chat;
-use App\Models\Collection;
 use App\Models\DocumentChunk;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
 use LlmLaraHub\LlmDriver\Responses\CompletionResponse;

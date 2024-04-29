@@ -23,7 +23,8 @@ abstract class TestCase extends BaseTestCase
         return $user->refresh();
     }
 
-    public function fakeVerify(HasDrivers $model, $times = 1, $response = 'verified yay!') {
+    public function fakeVerify(HasDrivers $model, $times = 1, $response = 'verified yay!')
+    {
         VerifyResponseAgent::shouldReceive('verify')->times($times)->andReturn(
             VerifyPromptOutputDto::from(
                 [

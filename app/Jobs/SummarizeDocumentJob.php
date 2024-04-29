@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use App\Domains\Agents\VerifyPromptInputDto;
+use App\Domains\Agents\VerifyPromptOutputDto;
 use App\Domains\Collections\CollectionStatusEnum;
 use App\Domains\Documents\StatusEnum;
 use App\Events\CollectionStatusEvent;
@@ -17,7 +18,6 @@ use Illuminate\Queue\SerializesModels;
 use LlmLaraHub\LlmDriver\Helpers\TrimText;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
 use LlmLaraHub\LlmDriver\Responses\CompletionResponse;
-use App\Domains\Agents\VerifyPromptOutputDto;
 
 class SummarizeDocumentJob implements ShouldQueue
 {
@@ -44,10 +44,10 @@ class SummarizeDocumentJob implements ShouldQueue
         }
 
         $content = implode(' ', $content);
-        $intro = "The following content is part of a larger document. I would like you to summarize it so 
+        $intro = 'The following content is part of a larger document. I would like you to summarize it so 
         I can show a summary view of all the other pages and this ones related to the same document.
         Just return the summary, 1-2 lines if possible and no extra surrounding text.
-        The content to summarize follows:";
+        The content to summarize follows:';
 
         $prompt = <<<EOD
 $intro
@@ -59,7 +59,6 @@ EOD;
         $results = LlmDriverFacade::driver(
             $this->document->getDriver()
         )->completion($prompt);
-
 
         $verifyPrompt = <<<'PROMPT'
         This the content from all the documents in this collection.
@@ -83,7 +82,6 @@ EOD;
             'summary' => $response->response,
             'status_summary' => StatusEnum::Complete,
         ]);
-
 
         CollectionStatusEvent::dispatch(
             $this->document->collection,
