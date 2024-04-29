@@ -2,10 +2,12 @@
 
 namespace Tests\Feature;
 
+use App\Domains\Agents\VerifyPromptOutputDto;
 use App\Models\Chat;
 use App\Models\Collection;
 use App\Models\Document;
 use App\Models\DocumentChunk;
+use Facades\App\Domains\Agents\VerifyResponseAgent;
 use LlmLaraHub\LlmDriver\Functions\ParametersDto;
 use LlmLaraHub\LlmDriver\Functions\PropertyDto;
 use LlmLaraHub\LlmDriver\Functions\SearchAndSummarize;
@@ -79,6 +81,18 @@ class SearchAndSummarizeTest extends TestCase
         $documentChunk = DocumentChunk::factory(3)->create([
             'document_id' => $document->id,
         ]);
+
+        VerifyResponseAgent::shouldReceive('verify')->once()->andReturn(
+            VerifyPromptOutputDto::from(
+                [
+                    'chattable' => $chat,
+                    'originalPrompt' => 'test',
+                    'context' => 'test',
+                    'llmResponse' => 'test',
+                    'verifyPrompt' => 'This is a completion so the users prompt was past directly to the llm with all the context.',
+                    'response' => 'verified yay!',
+                ]
+            ));
 
         $results = (new SearchAndSummarize())->handle(
             messageArray: $messageArray,

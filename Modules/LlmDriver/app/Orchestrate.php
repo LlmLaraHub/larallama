@@ -34,15 +34,7 @@ class Orchestrate
 
         if ($this->hasFunctions($functions)) {
             Log::info('[LaraChain] Orchestration Has Functions', $functions);
-            /**
-             * @TODO
-             * We will deal with multi functions shortly
-             * @TODO
-             * When should messages be made
-             * which class should make them
-             * In this case I will assume the user of this class
-             * save the Users input as a Message already
-             */
+
             foreach ($functions as $function) {
                 $functionName = data_get($function, 'name', null);
 
@@ -73,6 +65,7 @@ class Orchestrate
                 $response = $functionClass->handle($messagesArray, $chat, $functionDto);
 
                 if ($response->save_to_message) {
+
                     $chat->addInput(
                         message: $response->content,
                         role: RoleEnum::Assistant,

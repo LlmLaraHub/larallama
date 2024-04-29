@@ -1,7 +1,9 @@
 <?php
 
+use App\Events\ChatUiUpdateEvent;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
+use LlmLaraHub\LlmDriver\HasDrivers;
 use LlmLaraHub\LlmDriver\Helpers\TrimText;
 
 if (! function_exists('put_fixture')) {
@@ -20,6 +22,17 @@ if (! function_exists('put_fixture')) {
         );
 
         return true;
+    }
+}
+
+if (! function_exists('notify_ui')) {
+    function notify_ui(HasDrivers $model, string $message)
+    {
+        ChatUiUpdateEvent::dispatch(
+            $model->getChatable(),
+            $model->getChat(),
+            $message
+        );
     }
 }
 

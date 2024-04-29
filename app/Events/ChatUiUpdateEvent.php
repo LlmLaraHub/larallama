@@ -9,6 +9,7 @@ use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
+use LlmLaraHub\LlmDriver\HasDrivers;
 
 class ChatUiUpdateEvent implements ShouldBroadcast
 {
@@ -17,7 +18,7 @@ class ChatUiUpdateEvent implements ShouldBroadcast
     /**
      * Create a new event instance.
      */
-    public function __construct(public Collection $collection, public Chat $chat, public string $updateMessage)
+    public function __construct(public Collection|HasDrivers $collection, public Chat $chat, public string $updateMessage)
     {
         //
     }
@@ -30,7 +31,7 @@ class ChatUiUpdateEvent implements ShouldBroadcast
     public function broadcastOn(): array
     {
         return [
-            new PrivateChannel('collection.chat.'.$this->collection->id.'.'.$this->chat->id),
+            new PrivateChannel('collection.chat.'.$this->collection->getId().'.'.$this->chat->id),
         ];
     }
 
@@ -50,7 +51,7 @@ class ChatUiUpdateEvent implements ShouldBroadcast
     public function broadcastWith(): array
     {
         return [
-            'id' => $this->collection->id,
+            'id' => $this->collection->getId(),
             'updateMessage' => $this->updateMessage,
         ];
     }

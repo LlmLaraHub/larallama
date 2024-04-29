@@ -2,8 +2,11 @@
 
 namespace App\Domains\Messages;
 
+use App\Domains\Agents\VerifyPromptInputDto;
+use App\Domains\Agents\VerifyPromptOutputDto;
 use App\Models\Chat;
 use App\Models\DocumentChunk;
+use Facades\App\Domains\Agents\VerifyResponseAgent;
 use Illuminate\Support\Facades\Log;
 use Laravel\Pennant\Feature;
 use LlmLaraHub\LlmDriver\Helpers\CreateReferencesTrait;
@@ -18,13 +21,11 @@ class SearchAndSummarizeChatRepo
 
     public function search(Chat $chat, string $input): string
     {
-        /**
-         * @TODO
-         * Later using the LLM we will decide if the input is best served
-         * by searching the data or a summary of the data.
-         * For now we will search.
-         */
         Log::info('[LaraChain] Embedding and Searching');
+
+        $originalPrompt = $input;
+
+        notify_ui($chat, 'Searching documents');
 
         /** @var EmbeddingsResponseDto $embedding */
         $embedding = LlmDriverFacade::driver(
@@ -39,6 +40,7 @@ class SearchAndSummarizeChatRepo
             $chat->getChatable()->id,
             $embedding->embedding
         );
+
         $content = [];
 
         /** @var DocumentChunk $result */
@@ -50,12 +52,26 @@ class SearchAndSummarizeChatRepo
             $content[] = $contentString; //reduce_text_size seem to mess up Claude?
         }
 
-        $content = implode(' ', $content);
+        $context = implode(' ', $content);
 
-        $content = "This is data from the search results when entering the users prompt which is ### START PROMPT ### {$input} ### END PROMPT ###  please use this with the following context and only this, summarize it for the user and return as markdown so I can render it and strip out and formatting like extra spaces, tabs, periods etc: ".$content;
+        $contentFlattened = <<<PROMPT
+You are a helpful assistant in the RAG system: 
+This is data from the search results when entering the users prompt which is 
+
+
+### START PROMPT 
+{$originalPrompt} 
+### END PROMPT
+
+Please use this with the following context and only this, summarize it for the user and return as markdown so I can render it and strip out and formatting like extra spaces, tabs, periods etc: 
+
+### START Context
+$context
+### END Context
+PROMPT;
 
         $chat->addInput(
-            message: $content,
+            message: $contentFlattened,
             role: RoleEnum::Assistant,
             systemPrompt: $chat->chatable->systemPrompt(),
             show_in_thread: false
@@ -65,15 +81,40 @@ class SearchAndSummarizeChatRepo
 
         Log::info('[LaraChain] Getting the Summary');
 
+        notify_ui($chat, 'Building Summary');
+
         /** @var CompletionResponse $response */
         $response = LlmDriverFacade::driver(
             $chat->chatable->getDriver()
         )->chat($latestMessagesArray);
 
-        $message = $chat->addInput($response->content, RoleEnum::Assistant);
+        /**
+         * Lets Verify
+         */
+        $verifyPrompt = <<<'PROMPT'
+This is the results from a Vector search based on the Users Prompt.
+Then that was passed into the LLM to summarize the results.
+PROMPT;
+
+        $dto = VerifyPromptInputDto::from(
+            [
+                'chattable' => $chat,
+                'originalPrompt' => $originalPrompt,
+                'context' => $context,
+                'llmResponse' => $response->content,
+                'verifyPrompt' => $verifyPrompt,
+            ]
+        );
+
+        notify_ui($chat, 'Verifiying Results');
+
+        /** @var VerifyPromptOutputDto $response */
+        $response = VerifyResponseAgent::verify($dto);
+
+        $message = $chat->addInput($response->response, RoleEnum::Assistant);
 
         $this->saveDocumentReference($message, $documentChunkResults);
 
-        return $response->content;
+        return $response->response;
     }
 }

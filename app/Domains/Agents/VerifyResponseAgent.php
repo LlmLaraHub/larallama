@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Domains\Agents;
 
@@ -8,15 +8,14 @@ use LlmLaraHub\LlmDriver\Responses\CompletionResponse;
 
 class VerifyResponseAgent extends BaseAgent
 {
-    public function verify(VerifyPromptInputDto $input) : VerifyPromptOutputDto 
+    public function verify(VerifyPromptInputDto $input): VerifyPromptOutputDto
     {
 
-        Log::info("[LaraChain] VerifyResponseAgent::verify");
+        Log::info('[LaraChain] VerifyResponseAgent::verify');
         $originalPrompt = $input->originalPrompt;
         $context = $input->context;
         $llmResponse = $input->llmResponse;
         $verifyPrompt = $input->verifyPrompt;
-
 
         $prompt = <<<EOT
 As a date verification assistant please review the following and return 
@@ -53,16 +52,15 @@ Your repsonse will NOT be a list like below but just follow the formatting of th
 {$verifyPrompt}
 ### END VERIFY PROMPT
 
-EOT;        
+EOT;
 
-
-Log::info("[LaraChain] VerifyResponseAgent::verify", [
-    'prompt' => $prompt    
-]);
+        Log::info('[LaraChain] VerifyResponseAgent::verify', [
+            'prompt' => $prompt,
+        ]);
         /** @var CompletionResponse $response */
         $response = LlmDriverFacade::driver(
             $input->chattable->getDriver()
-        )->completion($prompt, $input->llmResponse);
+        )->completion($prompt);
 
         return VerifyPromptOutputDto::from(
             [
@@ -71,7 +69,7 @@ Log::info("[LaraChain] VerifyResponseAgent::verify", [
                 'context' => $input->context,
                 'llmResponse' => $input->llmResponse,
                 'verifyPrompt' => $input->verifyPrompt,
-                'response' => $response->content
+                'response' => $response->content,
             ]
         );
     }

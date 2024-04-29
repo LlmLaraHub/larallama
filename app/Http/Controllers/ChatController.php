@@ -3,21 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Domains\Agents\VerifyPromptInputDto;
-use Facades\App\Domains\Agents\VerifyResponseAgent;
+use App\Domains\Agents\VerifyPromptOutputDto;
 use App\Domains\Messages\RoleEnum;
+use App\Events\ChatUiUpdateEvent;
 use App\Events\ChatUpdatedEvent;
 use App\Http\Resources\ChatResource;
 use App\Http\Resources\CollectionResource;
 use App\Http\Resources\MessageResource;
 use App\Models\Chat;
 use App\Models\Collection;
+use Facades\App\Domains\Agents\VerifyResponseAgent;
 use Facades\LlmLaraHub\LlmDriver\Orchestrate;
 use Facades\LlmLaraHub\LlmDriver\SimpleSearchAndSummarizeOrchestrate;
 use Illuminate\Support\Facades\Log;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
 use LlmLaraHub\LlmDriver\Requests\MessageInDto;
-use App\Domains\Agents\VerifyPromptOutputDto;
-use App\Events\ChatUiUpdateEvent;
 
 class ChatController extends Controller
 {
@@ -73,11 +73,10 @@ class ChatController extends Controller
             Log::info('[LaraChain] Running Simple Completion');
             $prompt = $validated['input'];
 
-
             ChatUiUpdateEvent::dispatch(
                 $chat->chatable,
                 $chat,
-                "We are running a completion back shortly"
+                'We are running a completion back shortly'
             );
 
             $response = LlmDriverFacade::driver($chat->getDriver())->completion($prompt);
@@ -96,9 +95,8 @@ class ChatController extends Controller
             ChatUiUpdateEvent::dispatch(
                 $chat->chatable,
                 $chat,
-                "We are verifying the completion back shortly"
+                'We are verifying the completion back shortly'
             );
-
 
             /** @var VerifyPromptOutputDto $response */
             $response = VerifyResponseAgent::verify($dto);

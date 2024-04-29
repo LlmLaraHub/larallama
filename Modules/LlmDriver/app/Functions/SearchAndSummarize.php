@@ -2,7 +2,9 @@
 
 namespace LlmLaraHub\LlmDriver\Functions;
 
+use App\Domains\Agents\VerifyPromptInputDto;
 use App\Domains\Messages\RoleEnum;
+use Facades\App\Domains\Agents\VerifyResponseAgent;
 use Illuminate\Support\Facades\Log;
 use Laravel\Pennant\Feature;
 use LlmLaraHub\LlmDriver\HasDrivers;
@@ -44,14 +46,16 @@ class SearchAndSummarize extends FunctionContract
             return $item->role === 'user';
         });
 
-        $input = $input->content;
+        $originalPrompt = $input->content;
 
         /** @var EmbeddingsResponseDto $embedding */
         $embedding = LlmDriverFacade::driver(
             $model->getEmbeddingDriver()
-        )->embedData($input);
+        )->embedData($originalPrompt);
 
         $embeddingSize = get_embedding_size($model->getEmbeddingDriver());
+
+        notify_ui($model, 'Searching documents');
 
         $documentChunkResults = $this->distance(
             $embeddingSize,
@@ -74,12 +78,25 @@ class SearchAndSummarize extends FunctionContract
             $content[] = $contentString; //reduce_text_size seem to mess up Claude?
         }
 
-        $content = implode(' ', $content);
+        $context = implode(' ', $content);
 
-        $content = "You are a helpful assistsant in the RAG system: This is data from the search results when entering the users prompt which is ### START PROMPT ### {$input} ### END PROMPT ###  please use this with the following context and only this, summarize it for the user and return as markdown so I can render it and strip out and formatting like extra spaces, tabs, periods etc: ".$content;
+        $contentFlattened = <<<PROMPT
+You are a helpful assistant in the RAG system: 
+This is data from the search results when entering the users prompt which is 
+
+### START PROMPT 
+{$originalPrompt} 
+### END PROMPT
+
+Please use this with the following context and only this, summarize it for the user and return as markdown so I can render it and strip out and formatting like extra spaces, tabs, periods etc: 
+
+### START Context
+$context
+### END Context
+PROMPT;
 
         $model->getChat()->addInput(
-            message: $content,
+            message: $contentFlattened,
             role: RoleEnum::Assistant,
             systemPrompt: $model->getChat()->chatable->systemPrompt(),
             show_in_thread: false
@@ -88,22 +105,47 @@ class SearchAndSummarize extends FunctionContract
         Log::info('[LaraChain] Getting the Summary from the search results');
 
         $messageArray = MessageInDto::from([
-            'content' => $content,
+            'content' => $contentFlattened,
             'role' => 'user',
         ]);
+
+        notify_ui($model, 'Building Summary');
 
         /** @var CompletionResponse $response */
         $response = LlmDriverFacade::driver(
             $model->getChatable()->getDriver()
         )->chat([$messageArray]);
 
-        $message = $model->getChat()->addInput($response->content, RoleEnum::Assistant);
+        /**
+         * Lets Verify
+         */
+        $verifyPrompt = <<<'PROMPT'
+This is the results from a Vector search based on the Users Prompt.
+Then that was passed into the LLM to summarize the results.
+PROMPT;
+
+        $dto = VerifyPromptInputDto::from(
+            [
+                'chattable' => $model->getChat(),
+                'originalPrompt' => $originalPrompt,
+                'context' => $context,
+                'llmResponse' => $response->content,
+                'verifyPrompt' => $verifyPrompt,
+            ]
+        );
+
+        notify_ui($model, 'Verifiying Results');
+
+        /** @var VerifyPromptOutputDto $response */
+        $response = VerifyResponseAgent::verify($dto);
+
+        $message = $model->getChat()->addInput($response->response, RoleEnum::Assistant);
 
         $this->saveDocumentReference($message, $documentChunkResults);
 
         return FunctionResponse::from(
             [
-                'content' => $content,
+                'content' => $response->response,
                 'save_to_message' => false,
             ]
         );

@@ -4,11 +4,11 @@ namespace Tests\Feature\Http\Controllers;
 
 use App\Domains\Agents\VerifyPromptOutputDto;
 use App\Domains\Messages\RoleEnum;
-use Facades\App\Domains\Agents\VerifyResponseAgent;
 use App\Models\Chat;
 use App\Models\Collection;
 use App\Models\Message;
 use App\Models\User;
+use Facades\App\Domains\Agents\VerifyResponseAgent;
 use Facades\LlmLaraHub\LlmDriver\Orchestrate;
 use Facades\LlmLaraHub\LlmDriver\SimpleSearchAndSummarizeOrchestrate;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
@@ -32,7 +32,6 @@ class ChatControllerTest extends TestCase
         $this->assertDatabaseCount('chats', 1);
     }
 
-
     public function test_will_verify_on_completion(): void
     {
         $user = User::factory()->create();
@@ -46,24 +45,22 @@ class ChatControllerTest extends TestCase
         Orchestrate::shouldReceive('handle')->never();
 
         $firstResponse = CompletionResponse::from([
-            'content' => 'test'
+            'content' => 'test',
         ]);
 
         LlmDriverFacade::shouldReceive('driver->completion')->once()->andReturn($firstResponse);
 
-
         VerifyResponseAgent::shouldReceive('verify')->once()->andReturn(
             VerifyPromptOutputDto::from(
-            [
-                'chattable' => $chat,
-                'originalPrompt' => 'test',
-                'context' => 'test',
-                'llmResponse' => 'test',
-                'verifyPrompt' => 'This is a completion so the users prompt was past directly to the llm with all the context.',
-                'response' => "verified yay!"
-            ]
-        ));
-
+                [
+                    'chattable' => $chat,
+                    'originalPrompt' => 'test',
+                    'context' => 'test',
+                    'llmResponse' => 'test',
+                    'verifyPrompt' => 'This is a completion so the users prompt was past directly to the llm with all the context.',
+                    'response' => 'verified yay!',
+                ]
+            ));
 
         $this->assertDatabaseCount('messages', 0);
         $this->actingAs($user)->post(route('chats.messages.create', [
@@ -77,9 +74,8 @@ class ChatControllerTest extends TestCase
         $this->assertDatabaseCount('messages', 2);
         $message = Message::where('role', RoleEnum::Assistant)->first();
 
-        $this->assertEquals("verified yay!", $message->body);
+        $this->assertEquals('verified yay!', $message->body);
     }
-
 
     public function test_a_function_based_chat()
     {

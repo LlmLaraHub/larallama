@@ -6,8 +6,6 @@ use App\Domains\Agents\VerifyPromptInputDto;
 use App\Domains\Agents\VerifyPromptOutputDto;
 use App\Domains\Agents\VerifyResponseAgent;
 use App\Models\Chat;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
 use LlmLaraHub\LlmDriver\Responses\CompletionResponse;
 use Tests\TestCase;
@@ -22,7 +20,7 @@ class VerifyResponseAgentTest extends TestCase
         $chat = Chat::factory()->create();
 
         $response = CompletionResponse::from([
-            'content' => 'test'
+            'content' => 'test',
         ]);
 
         LlmDriverFacade::shouldReceive('driver->completion')->once()->andReturn($response);
@@ -32,9 +30,8 @@ class VerifyResponseAgentTest extends TestCase
             'originalPrompt' => 'test',
             'context' => 'test',
             'llmResponse' => 'test',
-            'verifyPrompt' => 'test'
+            'verifyPrompt' => 'test',
         ]);
-
 
         $response = (new VerifyResponseAgent())->verify($verifyPromptInput);
 
