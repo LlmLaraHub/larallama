@@ -68,7 +68,7 @@ EOD;
 
         $dto = VerifyPromptInputDto::from(
             [
-                'chattable' => $this->document->collection->getChat(),
+                'chattable' => $this->document->collection,
                 'originalPrompt' => $intro,
                 'context' => $content,
                 'llmResponse' => $results->content,

@@ -23,16 +23,16 @@ abstract class TestCase extends BaseTestCase
         return $user->refresh();
     }
 
-    public function fakeVerify(HasDrivers $model) {
-        VerifyResponseAgent::shouldReceive('verify')->once()->andReturn(
+    public function fakeVerify(HasDrivers $model, $times = 1, $response = 'verified yay!') {
+        VerifyResponseAgent::shouldReceive('verify')->times($times)->andReturn(
             VerifyPromptOutputDto::from(
                 [
-                    'chattable' => $model->getChat(),
+                    'chattable' => $model,
                     'originalPrompt' => 'test',
                     'context' => 'test',
                     'llmResponse' => 'test',
                     'verifyPrompt' => 'This is a completion so the users prompt was past directly to the llm with all the context.',
-                    'response' => 'verified yay!',
+                    'response' => $response,
                 ]
             ));
     }

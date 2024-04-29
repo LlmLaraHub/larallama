@@ -165,6 +165,6 @@ EOD;
 
     public function onQueue(): string
     {
-        return 'default';
+        return 'api_request';
     }
 }

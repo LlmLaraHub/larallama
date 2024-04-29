@@ -2,6 +2,8 @@
 
 namespace LlmLaraHub\TagFunction\Tests\Feature;
 
+use App\Models\Chat;
+use App\Models\Collection;
 use App\Models\DocumentChunk;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
 use LlmLaraHub\LlmDriver\Responses\CompletionResponse;
@@ -71,13 +73,15 @@ EOT;
             'content' => $content,
         ]);
 
-        (new TagManager())->handle($documentChunk->document);
-
-        $this->assertCount(10, $documentChunk->refresh()->tags);
+        $this->fakeVerify($documentChunk->document, 4, 'Tag Example, Tag Example other Test, Tag Example Test');
 
         (new TagManager())->handle($documentChunk->document);
 
-        $this->assertCount(10, $documentChunk->refresh()->tags);
+        $this->assertCount(3, $documentChunk->refresh()->tags);
+
+        (new TagManager())->handle($documentChunk->document);
+
+        $this->assertCount(3, $documentChunk->refresh()->tags);
     }
 
     public function test_use_existing_tags_for_document_level(): void
@@ -138,9 +142,11 @@ EOT;
             'content' => $content,
         ]);
 
+        $this->fakeVerify($documentChunk->document, 2, 'Tag Example, Tag Example other Test, Tag Example Test');
+
         (new TagManager())->handle($documentChunk->document);
 
-        $this->assertCount(10, $documentChunk->refresh()->tags);
+        $this->assertCount(3, $documentChunk->refresh()->tags);
 
     }
 }

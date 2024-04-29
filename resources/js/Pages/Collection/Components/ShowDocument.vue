@@ -13,7 +13,7 @@
                   bg-white  border-b border-gray-100 dark:border-gray-700 py-6 shadow-xl">
                     <div class="px-4 sm:px-6">
                       <div class="flex items-start justify-between">
-                        <DialogTitle class="text-base font-semibold leading-6">Document.. {{ document.file_path }}</DialogTitle>
+                        <DialogTitle class="text-base font-semibold leading-6 text-gray-800">Document {{ document.file_path }}</DialogTitle>
                         <div class="ml-3 flex h-7 items-center">
                           <button 
                           type="button" class="relative rounded-md bg-white   focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2" 

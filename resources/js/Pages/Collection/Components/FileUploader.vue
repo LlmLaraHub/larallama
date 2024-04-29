@@ -10,12 +10,13 @@
     })">
             <input v-bind="getInputProps()" class="h-40" />
             <p v-if="isDragActive">Drop the files here ...</p>
-            <p v-else>Drag 'n' drop some Documents, Images here, or click <span class="underline">select</span> to choose files</p>
+            <div class="w-full text-center flex gap-2" v-else>Drag 'n' drop some Documents, Images here, or click <span class="underline flex">
+                here</span> to choose files</div>
             </div>
 
         <div class="flex mt-5 justify-center ">
             <PrimaryButton type="button" :disabled="form.files.length === 0" @click="submitFiles()">
-                Save ({{ form.files.length }}) Files
+                Start Importing ({{ form.files.length }}) Files
             </PrimaryButton>
 
         </div>

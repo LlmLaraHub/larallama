@@ -40,8 +40,6 @@ class ClaudeClient extends BaseClient
          */
         $messages = $this->remapMessages($messages);
 
-        put_fixture('orchestration_message_array_after_claude.json', $messages);
-
         $results = $this->getClient()->post('/messages', [
             'model' => $model,
             'system' => 'Return a markdown response.',
@@ -117,7 +115,7 @@ class ClaudeClient extends BaseClient
             throw new \Exception('Claude API Token not found');
         }
 
-        return Http::withHeaders([
+        return Http::retry(2, 6000)->withHeaders([
             'x-api-key' => $api_token,
             'anthropic-beta' => 'tools-2024-04-04',
             'anthropic-version' => $this->version,
