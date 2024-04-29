@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Domains\Agents\VerifyPromptInputDto;
 use App\Domains\Agents\VerifyPromptOutputDto;
 use App\Domains\Messages\RoleEnum;
-use App\Events\ChatUiUpdateEvent;
 use App\Events\ChatUpdatedEvent;
 use App\Http\Resources\ChatResource;
 use App\Http\Resources\CollectionResource;
@@ -73,7 +72,7 @@ class ChatController extends Controller
             Log::info('[LaraChain] Running Simple Completion');
             $prompt = $validated['input'];
 
-            notify_ui($chat, "We are running a completion back shortly");
+            notify_ui($chat, 'We are running a completion back shortly');
 
             $response = LlmDriverFacade::driver($chat->getDriver())->completion($prompt);
             $response = $response->content;
@@ -88,7 +87,7 @@ class ChatController extends Controller
                 ]
             );
 
-            notify_ui($chat, "We are verifying the completion back shortly");
+            notify_ui($chat, 'We are verifying the completion back shortly');
 
             /** @var VerifyPromptOutputDto $response */
             $response = VerifyResponseAgent::verify($dto);

@@ -2,8 +2,10 @@
 
 namespace Tests\Feature;
 
+use App\Domains\Agents\VerifyPromptOutputDto;
 use App\Models\Collection;
 use App\Models\DocumentChunk;
+use Facades\App\Domains\Agents\VerifyResponseAgent;
 use LlmLaraHub\LlmDriver\Functions\ParametersDto;
 use LlmLaraHub\LlmDriver\Functions\PropertyDto;
 use LlmLaraHub\LlmDriver\Functions\SummarizeCollection;
@@ -53,6 +55,18 @@ class SummarizeCollectionTest extends TestCase
             'chatable_type' => Collection::class,
             'chatable_id' => $collection->id,
         ]);
+
+        VerifyResponseAgent::shouldReceive('verify')->once()->andReturn(
+            VerifyPromptOutputDto::from(
+                [
+                    'chattable' => $chat,
+                    'originalPrompt' => 'test',
+                    'context' => 'test',
+                    'llmResponse' => 'test',
+                    'verifyPrompt' => 'This is a completion so the users prompt was past directly to the llm with all the context.',
+                    'response' => 'verified yay!',
+                ]
+            ));
 
         $document = \App\Models\Document::factory()->create([
             'collection_id' => $collection->id,
