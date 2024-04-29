@@ -73,11 +73,7 @@ class ChatController extends Controller
             Log::info('[LaraChain] Running Simple Completion');
             $prompt = $validated['input'];
 
-            ChatUiUpdateEvent::dispatch(
-                $chat->chatable,
-                $chat,
-                'We are running a completion back shortly'
-            );
+            notify_ui($chat, "We are running a completion back shortly");
 
             $response = LlmDriverFacade::driver($chat->getDriver())->completion($prompt);
             $response = $response->content;
@@ -92,11 +88,7 @@ class ChatController extends Controller
                 ]
             );
 
-            ChatUiUpdateEvent::dispatch(
-                $chat->chatable,
-                $chat,
-                'We are verifying the completion back shortly'
-            );
+            notify_ui($chat, "We are verifying the completion back shortly");
 
             /** @var VerifyPromptOutputDto $response */
             $response = VerifyResponseAgent::verify($dto);
