@@ -3,6 +3,8 @@
 namespace Tests\Feature;
 
 use App\Jobs\SummarizeDocumentJob;
+use App\Models\Chat;
+use App\Models\Collection;
 use App\Models\Document;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
 use Tests\TestCase;
@@ -22,13 +24,23 @@ class SummarizeDocumentJobTest extends TestCase
             ->once()
             ->andReturn($dto);
 
+        $collection = Collection::factory()->create();
+
+        $chat = Chat::factory()->create([
+            'chatable_type' => Collection::class,
+            'chatable_id' => $collection->id,
+        ]);
+
         $document = Document::factory()->create([
             'summary' => null,
+            'collection_id' => $collection->id, 
         ]);
+
+        $this->fakeVerify($chat);
 
         $job = new SummarizeDocumentJob($document);
         $job->handle();
 
-        $this->assertEquals('Foo bar', $document->refresh()->summary);
+        $this->assertEquals('verified yay!', $document->refresh()->summary);
     }
 }
