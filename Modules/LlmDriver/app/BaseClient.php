@@ -2,6 +2,7 @@
 
 namespace LlmLaraHub\LlmDriver;
 
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Log;
 use LlmLaraHub\LlmDriver\Requests\MessageInDto;
 use LlmLaraHub\LlmDriver\Responses\CompletionResponse;
@@ -24,6 +25,13 @@ abstract class BaseClient
             'embedding' => data_get($data, 'data.0.embedding'),
             'token_count' => 1000,
         ]);
+    }
+
+    protected function messagesToArray(array $messages): array
+    {
+        return collect($messages)->map(function ($message) {
+            return $message->toArray();
+        })->toArray();
     }
 
     /**
@@ -152,11 +160,71 @@ EOD;
     }
 
     /**
+     * @param  MessageInDto[]  $messages
+     */
+    protected function insertFunctionsIntoMessageArray(array $messages): array
+    {
+        $functions = $this->getFunctions();
+
+        $functionsEncoded = collect($functions)->transform(
+            function ($item) {
+                $name = data_get($item, 'name');
+                $description = data_get($item, 'description');
+                $input_schema = data_get($item, 'input_schema', []);
+                $input_schema = json_encode($input_schema);
+            }
+        )->implode('\n');
+
+
+        $systemPrompt = <<<EOD
+        You are a helpful assistant in a RAG system with tools and functions to help perform tasks. 
+        When you find the right function make sure to return just the JSON that represents the requirements of that function. 
+        If no function is found just return {} empty json
+
+        If so can you return the function name and arguments to call it with. the return format would just be json
+        and it would be empty if no function is needed. But if a function is needed it would be like this:
+        [
+            {
+                "name": "example_function_name",
+                "arguments": {
+                    "prompt": "The users prompt here"
+                }
+            }
+        ]
+        Here is a list of the function names, description and parameters for the function. IT IS OK TO RETURN EMPTY ARRAY if none are needed.
+        No extra text like "I think it is this function"
+        The default function the system uses will take care of anything else so if the user just wants a word or phrase search just return an empy array the default.
+        Do not stray from this below list since these are the only functions the system can run other than the default one mentioned above. The below list of 
+        functions to choose from will start with ### START FUNCTION and end with ### END FUNCTION. Pleas ONLY choose from that list and return JSON OR return [] if 
+        none are a fit which is ok too: 
+        {$functionsEncoded}
+        EOD;
+
+
+        $messages = $this->messagesToArray($messages);
+
+        if(!collect($messages)->first(
+            function ($message) {
+                return $message['role'] === 'system';
+            }
+            )){
+            $messages = Arr::prepend($messages, [
+                'content' => $systemPrompt,
+                'role' => 'system',
+            ]);
+        } else {
+            //replace the current one
+        }
+
+        return $messages;
+    }
+
+    /**
      * @NOTE
      * Some systems like Claude have to do this
      * So adding it here as a standar options
      *
-     * @param  MessageInDto[]  $messages
+     * @param  MessageInDto[]  $messagess
      */
     protected function remapMessages(array $messages): array
     {

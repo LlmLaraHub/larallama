@@ -1,0 +1,29 @@
+{
+    "id": "chatcmpl-a81fe4d3-ff84-4b53-936b-b173a4126597",
+    "object": "chat.completion",
+    "created": 1714475587,
+    "model": "mixtral-8x7b-32768",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "Laravel is a popular open-source PHP web application framework that follows the Model-View-Controller (MVC) architectural pattern. It was created by Taylor Otwell and was first released in June 2011. Laravel is known for its elegant syntax, high level of abstraction, and large community of developers and contributors.\n\nSome of the key features of Laravel include:\n\n* A powerful ORM (Object-Relational Mapping) system for working with databases\n* A clean and expressive syntax for building web applications\n* A robust set of tools for routing, middleware, and controllers\n* An integrated template engine for building user interfaces\n* Support for Artisan, a command-line interface for Laravel\n* A large ecosystem of third-party packages and libraries\n\nLaravel is a popular choice for web developers due to its ease of use, flexibility, and scalability. It is suitable for a wide range of web applications, from small, simple websites to large, complex systems.\n\nIf you are interested in learning more about Laravel, there are many resources available online, including the official Laravel documentation, tutorials, and video courses. I would suggest starting with the Laravel documentation to get a solid understanding of the framework's core concepts and features. From there, you can explore the many other resources available to help you learn and master Laravel."
+            },
+            "logprobs": null,
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 18,
+        "prompt_time": 0.005,
+        "completion_tokens": 296,
+        "completion_time": 0.522,
+        "total_tokens": 314,
+        "total_time": 0.527
+    },
+    "system_fingerprint": "fp_c5f20b5bb1",
+    "x_groq": {
+        "id": "req_01hwqban9tfw6aamnka4w7jtrp"
+    }
+}

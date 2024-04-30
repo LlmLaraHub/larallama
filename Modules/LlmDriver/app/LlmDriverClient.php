@@ -29,6 +29,8 @@ class LlmDriverClient
         switch ($name) {
             case 'openai':
                 return new OpenAiClient();
+            case 'groq':
+                return new GroqClient();
             case 'ollama':
                 return new OllamaClient();
             case 'claude':

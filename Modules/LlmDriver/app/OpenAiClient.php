@@ -20,9 +20,7 @@ class OpenAiClient extends BaseClient
 
         $response = OpenAI::chat()->create([
             'model' => $this->getConfig('openai')['models']['chat_model'],
-            'messages' => collect($messages)->map(function ($message) {
-                return $message->toArray();
-            })->toArray(),
+            'messages' => $this->messagesToArray($messages),
         ]);
 
         $results = null;

@@ -1,0 +1,29 @@
+{
+    "id": "chatcmpl-e1fe3e51-f81c-45b3-b0cf-fb862332304d",
+    "object": "chat.completion",
+    "created": 1714481375,
+    "model": "mixtral-8x7b-32768",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "[\n    {\n        \"name\": \"summarize_content\",\n        \"arguments\": {\n            \"collection\": \"The content to summarize\"\n        }\n    }\n]"
+            },
+            "logprobs": null,
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 325,
+        "prompt_time": 0.074,
+        "completion_tokens": 42,
+        "completion_time": 0.076,
+        "total_tokens": 367,
+        "total_time": 0.15
+    },
+    "system_fingerprint": "fp_7b44c65f25",
+    "x_groq": {
+        "id": "req_01hwqgv9tkefg93ng07j3da8je"
+    }
+}

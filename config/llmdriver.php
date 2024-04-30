@@ -39,6 +39,14 @@ return [
                 'completion_model' => env('CLAUDE_COMPLETION_MODEL', 'claude-3-haiku-20240307'),
             ],
         ],
+        'groq' => [
+            'api_key' => env('GROQ_API_KEY'),
+            'max_tokens' => env('GROQ_MAX_TOKENS', 32000),
+            'models' => [
+                //@see https://www.anthropic.com/news/claude-3-family
+                'completion_model' => env('GROQ_COMPLETION_MODEL', 'mixtral-8x7b-32768'),
+            ],
+        ],
         'ollama' => [
             'feature_flags' => [
                 'functions' => env('OLLAMA_FUNCTIONS', false),
