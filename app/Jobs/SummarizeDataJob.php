@@ -2,8 +2,11 @@
 
 namespace App\Jobs;
 
+use App\Domains\Agents\VerifyPromptInputDto;
+use App\Domains\Agents\VerifyPromptOutputDto;
 use App\Domains\Documents\StatusEnum;
 use App\Models\DocumentChunk;
+use Facades\App\Domains\Agents\VerifyResponseAgent;
 use Illuminate\Bus\Batchable;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -62,8 +65,26 @@ EOD;
             $this->documentChunk->getDriver()
         )->completion($prompt);
 
+        $verifyPrompt = <<<'PROMPT'
+        This the content from a chunk of data in a document.
+        Can you verify the summary is correct?
+        PROMPT;
+
+        $dto = VerifyPromptInputDto::from(
+            [
+                'chattable' => $this->documentChunk,
+                'originalPrompt' => $prompt,
+                'context' => $content,
+                'llmResponse' => $results->content,
+                'verifyPrompt' => $verifyPrompt,
+            ]
+        );
+
+        /** @var VerifyPromptOutputDto $response */
+        $response = VerifyResponseAgent::verify($dto);
+
         $this->documentChunk->update([
-            'summary' => $results->content,
+            'summary' => $response->response,
             'status_summary' => StatusEnum::Complete,
         ]);
     }

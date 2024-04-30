@@ -26,9 +26,11 @@ class SummarizeDataJobTest extends TestCase
             'summary' => null,
         ]);
 
+        $this->fakeVerify($documentChunk);
+
         $job = new SummarizeDataJob($documentChunk);
         $job->handle();
 
-        $this->assertEquals('Foo bar', $documentChunk->refresh()->summary);
+        $this->assertEquals('verified yay!', $documentChunk->refresh()->summary);
     }
 }
