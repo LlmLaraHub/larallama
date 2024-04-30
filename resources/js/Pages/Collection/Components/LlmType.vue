@@ -52,6 +52,7 @@
     { active: true, key: "claude", title: 'Claude', description: 'This will work with the Claude Api', current: false },
     { active: false, key: "mock", title: 'OpenAi Azure', description: 'This will work with the Azure OpenAi Api', current: false },
     { active: true, key: "ollama", title: 'Ollama', description: 'This will work with the Ollam API', current: false },
+    { active: true, key: "groq", title: 'Groq', description: 'This will work with the Groq Api', current: false },
     { active: false, key: "mock", title: 'Gemini', description: 'This will work with the Gemini Api', current: false },
     
   ]

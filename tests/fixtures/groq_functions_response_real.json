@@ -1,0 +1,29 @@
+{
+    "id": "chatcmpl-55229faa-82f5-4935-9bf3-899c00194e09",
+    "object": "chat.completion",
+    "created": 1714482793,
+    "model": "mixtral-8x7b-32768",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "[\n    {\n        \"name\": \"summarize_collection\",\n        \"arguments\": {\n            \"prompt\": \"can you summarize the collection\"\n        }\n    }\n]"
+            },
+            "logprobs": null,
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 508,
+        "prompt_time": 0.323,
+        "completion_tokens": 44,
+        "completion_time": 0.079,
+        "total_tokens": 552,
+        "total_time": 0.402
+    },
+    "system_fingerprint": "fp_c5f20b5bb1",
+    "x_groq": {
+        "id": "req_01hwqj6j64fh2tm9kkmnr3cg1p"
+    }
+}

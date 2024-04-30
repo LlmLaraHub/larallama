@@ -10,4 +10,5 @@ enum DriversEnum: string
     case Ollama = 'ollama';
     case Gemini = 'gemini';
     case Claude = 'claude';
+    case Groq = 'groq';
 }

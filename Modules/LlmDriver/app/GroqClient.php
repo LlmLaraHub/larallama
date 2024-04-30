@@ -125,7 +125,7 @@ class GroqClient extends BaseClient
 
         $messages = $this->insertFunctionsIntoMessageArray($messages);
 
-        //put_fixture("groq_functions_prompt.json",$messages);
+        put_fixture("groq_functions_prompt_real.json",$messages);
 
         $results = $this->getClient()->post('/chat/completions', [
             'model' => $model,
@@ -141,7 +141,7 @@ class GroqClient extends BaseClient
             throw new \Exception('Groq API Error '.$error);
         }
 
-        //put_fixture("groq_functions_response.json", $results->json());
+        put_fixture("groq_functions_response_real.json", $results->json());
 
         foreach ($results->json()['choices'] as $content) {
             $functionArray = data_get($content, 'message.content', []);

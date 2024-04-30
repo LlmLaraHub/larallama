@@ -172,8 +172,11 @@ EOD;
                 $description = data_get($item, 'description');
                 $input_schema = data_get($item, 'input_schema', []);
                 $input_schema = json_encode($input_schema);
+
+                return sprintf("### START FUNCTION \n name: %s, description: %s, parameters: %s \n ###  END FUNCTION", $name, $description, $input_schema);
             }
         )->implode('\n');
+
 
         $systemPrompt = <<<EOD
         You are a helpful assistant in a RAG system with tools and functions to help perform tasks. 
@@ -211,7 +214,11 @@ EOD;
                 'role' => 'system',
             ]);
         } else {
-            //replace the current one
+            foreach($messages as $index => $message) {
+                if ($message['role'] === 'system') {
+                    $messages[$index]['content'] = $systemPrompt;
+                }
+            }
         }
 
         return $messages;
