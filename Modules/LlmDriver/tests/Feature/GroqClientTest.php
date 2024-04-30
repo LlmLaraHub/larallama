@@ -2,19 +2,14 @@
 
 namespace Tests\Feature;
 
-use Feature;
 use Illuminate\Support\Facades\Http;
-use LlmLaraHub\LlmDriver\ClaudeClient;
 use LlmLaraHub\LlmDriver\GroqClient;
 use LlmLaraHub\LlmDriver\Requests\MessageInDto;
 use LlmLaraHub\LlmDriver\Responses\CompletionResponse;
-use LlmLaraHub\LlmDriver\Responses\EmbeddingsResponseDto;
 use Tests\TestCase;
 
 class GroqClientTest extends TestCase
 {
-
-
     public function test_completion(): void
     {
         $client = new GroqClient();
@@ -30,7 +25,6 @@ class GroqClientTest extends TestCase
         $this->assertInstanceOf(CompletionResponse::class, $results);
 
     }
-
 
     public function test_chat(): void
     {

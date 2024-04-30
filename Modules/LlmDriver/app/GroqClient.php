@@ -39,7 +39,7 @@ class GroqClient extends BaseClient
         ]);
 
         if (! $results->ok()) {
-            $error = $this->getError($results);;
+            $error = $this->getError($results);
             Log::error('Groq API Error '.$error);
             throw new \Exception('Groq API Error '.$error);
         }
@@ -124,9 +124,9 @@ class GroqClient extends BaseClient
         $maxTokens = $this->getConfig('groq')['max_tokens'];
 
         $messages = $this->insertFunctionsIntoMessageArray($messages);
-        
+
         //put_fixture("groq_functions_prompt.json",$messages);
-        
+
         $results = $this->getClient()->post('/chat/completions', [
             'model' => $model,
             'max_tokens' => $maxTokens,
@@ -143,13 +143,13 @@ class GroqClient extends BaseClient
 
         //put_fixture("groq_functions_response.json", $results->json());
 
-        foreach($results->json()['choices'] as $content) {
+        foreach ($results->json()['choices'] as $content) {
             $functionArray = data_get($content, 'message.content', []);
             $functionArray = json_decode($functionArray, true);
-            foreach($functionArray as $possibleFunction) {
+            foreach ($functionArray as $possibleFunction) {
                 $functions[] = $possibleFunction;
             }
-            
+
         }
 
         /**
@@ -200,6 +200,4 @@ class GroqClient extends BaseClient
             ];
         })->toArray();
     }
-
-
 }
