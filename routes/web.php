@@ -6,6 +6,7 @@ use App\Http\Controllers\DownloadController;
 use App\Http\Controllers\ExampleChatBotController;
 use App\Http\Controllers\ExampleController;
 use App\Http\Controllers\ReindexCollectionController;
+use App\Http\Controllers\SearchSourceController;
 use App\Http\Controllers\TextDocumentController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -44,6 +45,11 @@ Route::middleware([
                 ->name('collections.reindex');
         }
     );
+
+    Route::controller(SearchSourceController::class)->group(function () {
+        Route::post('/collections/{collection}/search-web', 'store')
+            ->name('search-web.store');
+    });
 
     Route::controller(TextDocumentController::class)->group(function () {
         Route::post('/collections/{collection}/text-documents', 'store')

@@ -13,6 +13,7 @@ enum TypesEnum: string
 
     case WebHook = 'web_hook';
     case ScrapeWebPage = 'scrape_web_page';
+    case HTML = 'html';
     case PDF = 'pdf';
     case CSV = 'csv';
     case Txt = 'txt';
