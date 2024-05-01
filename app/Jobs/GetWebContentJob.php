@@ -21,8 +21,7 @@ class GetWebContentJob implements ShouldQueue
     public function __construct(
         public Document $document,
         public WebResponseDto $webResponseDto
-    )
-    {
+    ) {
         //
     }
 
@@ -33,10 +32,9 @@ class GetWebContentJob implements ShouldQueue
     {
         if ($this->batch()->cancelled()) {
             // Determine if the batch has been cancelled...
- 
+
             return;
         }
 
-        
     }
 }

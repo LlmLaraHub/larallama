@@ -4,8 +4,6 @@ namespace Tests\Feature\Http\Controllers;
 
 use App\Jobs\KickOffWebSearchCreationJob;
 use App\Models\Collection;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Queue;
 use Tests\TestCase;
 

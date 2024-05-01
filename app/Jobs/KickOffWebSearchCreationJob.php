@@ -11,7 +11,6 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Bus;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
-use PhpOffice\PhpSpreadsheet\Calculation\TextData\Search;
 
 class KickOffWebSearchCreationJob implements ShouldQueue
 {
@@ -43,15 +42,15 @@ $content
 ### END USER QUERY
 
 
-PROMPT;        
+PROMPT;
 
         $response = LlmDriverFacade::driver($this->document->getDriver())
-        ->completion($prompt);
+            ->completion($prompt);
 
         $search = $response->content;
 
         $results = WebSearchFacade::search($search, [
-            'count' => 5
+            'count' => 5,
         ]);
 
         $jobs = [];
@@ -59,13 +58,12 @@ PROMPT;
         foreach ($results->getWeb() as $web) {
             $jobs[] = new GetWebContentJob($this->document, $web);
         }
-        
+
         Bus::batch($jobs)
             ->name("Getting Web Content - {$this->document->id}")
             ->onQueue(LlmDriverFacade::driver($this->document->getDriver())->onQueue())
             ->allowFailures()
             ->dispatch();
-        
 
     }
 }

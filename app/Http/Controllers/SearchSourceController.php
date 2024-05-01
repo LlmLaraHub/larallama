@@ -9,13 +9,11 @@ use App\Events\CollectionStatusEvent;
 use App\Jobs\KickOffWebSearchCreationJob;
 use App\Models\Collection;
 use App\Models\Document;
-use Illuminate\Http\Request;
 
 class SearchSourceController extends Controller
 {
-    
-
-    public function store(Collection $collection) {
+    public function store(Collection $collection)
+    {
         $validated = request()->validate([
             'content' => 'required|string',
             'name' => 'required|string',
@@ -30,9 +28,9 @@ class SearchSourceController extends Controller
         ]);
 
         KickOffWebSearchCreationJob::dispatch($document);
-        
+
         CollectionStatusEvent::dispatch($document->collection, CollectionStatusEnum::PROCESSING);
-        
+
         request()->session()->flash('flash.banner', 'Starting initial Search pages will show shortly');
 
         return back();
