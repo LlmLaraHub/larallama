@@ -28,11 +28,15 @@ if (! function_exists('put_fixture')) {
 if (! function_exists('notify_ui')) {
     function notify_ui(HasDrivers $model, string $message)
     {
-        ChatUiUpdateEvent::dispatch(
-            $model->getChatable(),
-            $model->getChat(),
-            $message
-        );
+        try {
+            ChatUiUpdateEvent::dispatch(
+                $model->getChatable(),
+                $model->getChat(),
+                $message
+            );
+        } catch (\Exception $e) {
+            Log::error('Error notifying UI', ['error' => $e->getMessage()]);
+        }
     }
 }
 
