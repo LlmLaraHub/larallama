@@ -12,8 +12,6 @@ class BraveSearchClient extends BaseSearchClient
     public function search(string $search, array $options = []): SearchResponseDto
     {
 
-        //$is_news_breaking = data_get($options, "is_news_breaking", false);
-
         $response = $this->getClient()->get('web/search', [
             'q' => urlencode($search),
         ]);

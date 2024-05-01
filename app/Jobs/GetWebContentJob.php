@@ -36,5 +36,10 @@ class GetWebContentJob implements ShouldQueue
             return;
         }
 
+        //use GetPage to get the page
+        //still working on best response right now it is PDF :(
+        //then make chunks out of that for the document
+        //and put those onto a batch job like @see app/Domains/Documents/Transformers/PdfTransformer.php
+
     }
 }

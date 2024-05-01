@@ -30,7 +30,7 @@ class KickOffWebSearchCreationJob implements ShouldQueue
     public function handle(): void
     {
         //use the prompt to query the web
-        $content = $this->document->content;
+        $content = $this->document->summary;
 
         $prompt = <<<PROMPT
 The user is asking to search the web but I want you to review the query and clean it up so I can pass 
@@ -49,6 +49,7 @@ PROMPT;
 
         $search = $response->content;
 
+        /** @phpstan-ignore-next-line */
         $results = WebSearchFacade::search($search, [
             'count' => 5,
         ]);
