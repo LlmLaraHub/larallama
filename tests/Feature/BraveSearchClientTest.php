@@ -13,7 +13,6 @@ class BraveSearchClientTest extends TestCase
      */
     public function test_search(): void
     {
-        $this->markTestSkipped('@TODO will come back to this after I finish the multi shot response work');
         $data = get_fixture('brave_response.json');
 
         Http::fake([
