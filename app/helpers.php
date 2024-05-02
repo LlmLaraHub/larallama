@@ -25,6 +25,17 @@ if (! function_exists('put_fixture')) {
     }
 }
 
+if (! function_exists('token_counter')) {
+    function token_counter(string $message)
+    {
+        $words = preg_split('/\s+/', trim($message));
+
+        $tokenCount = count($words);
+
+        return $tokenCount;
+    }
+}
+
 if (! function_exists('notify_ui')) {
     function notify_ui(HasDrivers $model, string $message)
     {

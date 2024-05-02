@@ -1,0 +1,22 @@
+[
+  {
+    "type": "title",
+    "content": "SSH Config"
+  },
+  {
+    "type": "narrative",
+    "content": "As with all these quick tips, I\\'m trying to just show basic things that I don\\'t want to assume. Everybody knows. This one is a nice one that I use a lot. When I have to SSH into a server, which I try not to do. Basically everybody has a config file. In there. I\\'ll move him into it. So SSH Config. In this file, you can add if it\\'s not there these type of this line, these lines, and you could have many of them. So for example, this is a host. I\\'m going to call quick tips. So I can call that server quick tips. That server has an IP, and that server has the username. Now I could even use a different key."
+  },
+  {
+    "type": "image",
+    "content": "/storage/screenshot-2023-03-14-at-10.28.02-am.png"
+  },
+  {
+    "type": "video",
+    "content": "https://youtu.be/QYJk0Gt1FIE"
+  },
+  {
+    "type": "footer",
+    "content": "&copy; 2024 Alfred Nutile&trade;. All Rights Reserved."
+  }
+]

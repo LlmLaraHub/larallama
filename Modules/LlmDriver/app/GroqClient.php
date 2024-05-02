@@ -102,7 +102,7 @@ class GroqClient extends BaseClient
             throw new \Exception('Groq API Token not found');
         }
 
-        return Http::retry(3, 6000)->withToken($api_token)->withHeaders([
+        return Http::retry(3, 6000)->timeout(120)->withToken($api_token)->withHeaders([
             'content-type' => 'application/json',
         ])->baseUrl($this->baseUrl);
     }
@@ -125,8 +125,6 @@ class GroqClient extends BaseClient
 
         $messages = $this->insertFunctionsIntoMessageArray($messages);
 
-        put_fixture('groq_functions_prompt_real.json', $messages);
-
         $results = $this->getClient()->post('/chat/completions', [
             'model' => $model,
             'max_tokens' => $maxTokens,
@@ -140,8 +138,6 @@ class GroqClient extends BaseClient
             Log::error('Groq API Error '.$error);
             throw new \Exception('Groq API Error '.$error);
         }
-
-        put_fixture('groq_functions_response_real.json', $results->json());
 
         foreach ($results->json()['choices'] as $content) {
             $functionArray = data_get($content, 'message.content', []);
