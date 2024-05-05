@@ -31,6 +31,7 @@ class Document extends Model implements HasDrivers, TaggableContract
     protected $casts = [
         'type' => TypesEnum::class,
         'status' => StatusEnum::class,
+        'meta_data' => 'array',
         'summary_status' => StatusEnum::class,
     ];
 
@@ -112,5 +113,10 @@ class Document extends Model implements HasDrivers, TaggableContract
     public function getEmbeddingDriver(): string
     {
         return $this->collection->embedding_driver->value;
+    }
+
+    public function source() : BelongsTo
+    {
+        return $this->belongsTo(Source::class);
     }
 }

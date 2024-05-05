@@ -27,6 +27,7 @@
         <!-- <env name="DB_DATABASE" value=":memory:"/> -->
         <env name="MAIL_MAILER" value="array"/>
         <env name="PULSE_ENABLED" value="false"/>
+        <env name="LARALAMMA_SEARCH_SOURCE" value="mock"/>
         <env name="BRAVE_API_TOKEN" value="FOOBAR"/>
         <!-- this is a fake token! -->
         <env name="OPENAI_API_KEY" value="sk-m8ox9NVgboSLRCr5VA5RT3BXbkFJzP1QGUedbQxGmmuAQWRT"/>

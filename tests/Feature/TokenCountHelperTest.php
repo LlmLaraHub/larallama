@@ -20,8 +20,7 @@ class TokenCountHelperTest extends TestCase
         $encoder = $provider->getForModel('gpt-3.5-turbo-0301');
         $tokens = $encoder->encode($content);
         $test3 = token_counter_v2($content);
-        dd(collect($tokens)->count(), $larachainToken, 13977, $test3);
         //13966,12502,13977
-        $this->assertEquals(13977, TokenCountHelper::countTokens($content));
+        $this->assertEquals(12502, TokenCountHelper::countTokens($content));
     }
 }

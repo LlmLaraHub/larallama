@@ -66,4 +66,12 @@ class MockClientTest extends TestCase
         $this->assertInstanceOf(CompletionResponse::class, $results);
 
     }
+
+    public function test_max_token() : void {
+        $client = new MockClient();
+
+        $results = $client->getMaxTokenSize('claude');
+
+        $this->assertEquals(4096, $results);
+    }
 }

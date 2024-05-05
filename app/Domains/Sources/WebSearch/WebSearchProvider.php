@@ -15,7 +15,7 @@ class WebSearchProvider extends ServiceProvider
             $driver = config('llmdriver.sources.search_driver');
             $client = new WebSearchDriverClient();
 
-            return $client->driver($driver);
+            return $client;
         });
     }
 

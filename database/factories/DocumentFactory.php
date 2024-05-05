@@ -5,6 +5,7 @@ namespace Database\Factories;
 use App\Domains\Documents\StatusEnum;
 use App\Domains\Documents\TypesEnum;
 use App\Models\Collection;
+use App\Models\Source;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -22,6 +23,8 @@ class DocumentFactory extends Factory
         return [
             'type' => TypesEnum::random(),
             'status' => StatusEnum::random(),
+            'source_id' => Source::factory(),
+            'meta_data' => [],
             'status_summary' => StatusEnum::random(),
             'summary' => $this->faker->text(),
             'file_path' => $this->faker->url(),

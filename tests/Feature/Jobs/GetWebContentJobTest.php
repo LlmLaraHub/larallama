@@ -5,6 +5,7 @@ namespace Tests\Feature\Jobs;
 use App\Domains\Sources\WebSearch\Response\WebResponseDto;
 use App\Jobs\GetWebContentJob;
 use App\Models\Document;
+use App\Models\Source;
 use Facades\App\Domains\Sources\WebSearch\GetPage;
 use Illuminate\Support\Facades\Bus;
 use Tests\TestCase;
@@ -18,7 +19,7 @@ class GetWebContentJobTest extends TestCase
     {
         Bus::fake();
 
-        $document = Document::factory()->create();
+        $source = Source::factory()->create();
 
         $webResponseDto = WebResponseDto::from([
             'url' => 'https://example.com',
@@ -30,17 +31,23 @@ class GetWebContentJobTest extends TestCase
             'profile' => ['key' => 'value'],
         ]);
 
+        $content = fake()->sentences(1000, true);
+
         GetPage::shouldReceive('make->handle')
             ->once()
             ->andReturn('foobar');
 
         GetPage::shouldReceive('make->parseHtml')
             ->once()
-            ->andReturn('some html');
+            ->andReturn($content);
 
-        [$job, $batch] = (new GetWebContentJob($document, $webResponseDto))->withFakeBatch();
+        $this->assertDatabaseCount('documents', 0);
+        $this->assertDatabaseCount('document_chunks', 0);
+        [$job, $batch] = (new GetWebContentJob($source, $webResponseDto))->withFakeBatch();
 
         $job->handle();
+        $this->assertDatabaseCount('documents', 1);
+        $this->assertDatabaseCount('document_chunks', 3);
 
     }
 }

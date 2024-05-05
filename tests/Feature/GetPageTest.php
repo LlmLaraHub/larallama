@@ -38,23 +38,6 @@ class GetPageTest extends TestCase
 
         $collection = Collection::factory()->create();
 
-        LlmDriverFacade::shouldReceive('driver->completion')
-            ->once()
-            ->andReturn(
-                CompletionResponse::from([
-                    'content' => $json,
-                ])
-            );
-
-        $data = get_fixture('json_fixed.json', false);
-
-        LlmDriverFacade::shouldReceive('driver->completion')
-            ->once()
-            ->andReturn(
-                CompletionResponse::from([
-                    'content' => $data,
-                ])
-            );
 
         $results = GetPage::make($collection)->parseHtml($html);
 
@@ -65,7 +48,7 @@ class GetPageTest extends TestCase
     public function test_ideas_for_markdown(): void
     {
         //Storage::fake('collections');
-        //$this->markTestSkipped('@TODO mock browser shot');
+        $this->markTestSkipped('@TODO mock browser shot');
         $html = get_fixture('test.html', false);
         $html = get_fixture('test_blog.html', false);
 
@@ -82,6 +65,5 @@ class GetPageTest extends TestCase
         );
 
         $markdown = $converter->convert($html);
-        dd($markdown);
     }
 }

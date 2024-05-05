@@ -4,6 +4,7 @@ use App\Events\ChatUiUpdateEvent;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
 use LlmLaraHub\LlmDriver\HasDrivers;
+use Illuminate\Support\Str;
 use LlmLaraHub\LlmDriver\Helpers\TrimText;
 use SundanceSolutions\LarachainTokenCount\Facades\LarachainTokenCount;
 
@@ -23,6 +24,19 @@ if (! function_exists('put_fixture')) {
         );
 
         return true;
+    }
+}
+
+if (! function_exists('chunk_string')) {
+    function chunk_string(string $string, int $maxTokenSize) : array
+    {   
+        $tokenCountWithBuffer = token_counter($string) * 1.25; // buffer for the response of the llm
+
+        $chunksToMake = ceil($tokenCountWithBuffer / $maxTokenSize);
+
+        $chunks = str_split($string, round(strlen($string) / $chunksToMake));
+
+        return $chunks;
     }
 }
 
