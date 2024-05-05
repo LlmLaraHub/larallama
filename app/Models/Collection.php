@@ -108,8 +108,7 @@ EOD;
         return $prompt;
     }
 
-
-    public function sources() : HasMany
+    public function sources(): HasMany
     {
         return $this->hasMany(Source::class);
     }

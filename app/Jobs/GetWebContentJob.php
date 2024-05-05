@@ -55,11 +55,11 @@ class GetWebContentJob implements ShouldQueue
             ],
             [
                 'content' => $results,
-                'sort_order' => $page_number
+                'sort_order' => $page_number,
             ]
         );
 
-        Log::info("[Larachain] adding to new batch");
+        Log::info('[Larachain] adding to new batch');
         $this->batch()->add([
             new VectorlizeDataJob($DocumentChunk),
             new SummarizeDataJob($DocumentChunk),

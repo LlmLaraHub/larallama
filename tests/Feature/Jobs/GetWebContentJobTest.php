@@ -38,10 +38,9 @@ class GetWebContentJobTest extends TestCase
             ->once()
             ->andReturn('some html');
 
+        [$job, $batch] = (new GetWebContentJob($document, $webResponseDto))->withFakeBatch();
 
-            [$job, $batch] = (new GetWebContentJob($document, $webResponseDto))->withFakeBatch();
- 
-            $job->handle();
+        $job->handle();
 
     }
 }

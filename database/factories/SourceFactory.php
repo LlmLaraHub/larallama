@@ -24,7 +24,7 @@ class SourceFactory extends Factory
             'details' => $this->faker->sentence, // 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.
             'type' => $this->faker->randomElement(SourceTypeEnum::values()),
             'meta_data' => [
-                'driver' => "brave",
+                'driver' => 'brave',
                 'limit' => 5,
                 'api_key' => $this->faker->uuid,
             ],

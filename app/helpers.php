@@ -40,7 +40,7 @@ if (! function_exists('token_counter_v2')) {
         $wordCount = count($words);
         $spaceCount = preg_match_all('/\s+/', $text, $matches);
         $punctuationCount = preg_match_all('/[.,;:\?\!]/', $text, $matches);
-    
+
         return $wordCount + $spaceCount + $punctuationCount;
     }
 }

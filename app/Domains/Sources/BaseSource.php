@@ -1,9 +1,7 @@
-<?php 
+<?php
 
 namespace App\Domains\Sources;
 
-abstract class BaseSource {
-
-
-
+abstract class BaseSource
+{
 }

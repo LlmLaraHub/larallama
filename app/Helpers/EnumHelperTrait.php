@@ -28,7 +28,6 @@ trait EnumHelperTrait
         )->toArray();
     }
 
-
     public static function random(): string
     {
         $enumReflection = new ReflectionClass(self::class);

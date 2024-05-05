@@ -4,8 +4,6 @@ namespace Tests\Feature\Models;
 
 use App\Domains\Sources\SourceTypeEnum;
 use App\Domains\Sources\WebSearchSource;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Mockery;
 use Tests\TestCase;
 
@@ -23,20 +21,20 @@ class SourceTest extends TestCase
         $this->assertNotNull($model->collection->sources()->first()->id);
     }
 
-
-    public function test_runs_web_search() {
+    public function test_runs_web_search()
+    {
         $source = \App\Models\Source::factory()->create([
-            'type' => SourceTypeEnum::WebSearchSource
+            'type' => SourceTypeEnum::WebSearchSource,
         ]);
         $this->instance(
             WebSearchSource::class,
             Mockery::mock(WebSearchSource::class, function ($mock) use ($source) {
                 $mock->shouldReceive('handle')
-                ->with($source)
-                ->once();
+                    ->with($source)
+                    ->once();
             })
         );
-  
+
         $source->run();
     }
 }

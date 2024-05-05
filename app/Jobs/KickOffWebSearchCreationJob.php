@@ -49,34 +49,35 @@ PROMPT;
 
         try {
             $response = LlmDriverFacade::driver($this->document->getDriver())
-            ->completion($prompt);
+                ->completion($prompt);
 
-        $search = $response->content;
+            $search = $response->content;
 
-        Log::info("[Larachain] Starting web search ", [
-            'content reworked' => $search
-        ]);
-        /** @phpstan-ignore-next-line */
-        $results = WebSearchFacade::search($search, [   
-            'count' => 5,
-        ]);
+            Log::info('[Larachain] Starting web search ', [
+                'content reworked' => $search,
+            ]);
 
-        $jobs = [];
+            $results = WebSearchFacade::search($search, [
+                'count' => 5,
+            ]);
 
-        Log::info("[Larachain] Getting Content from websearch");
+            $jobs = [];
 
-        foreach ($results->getWeb() as $web) {
-            $jobs[] = new GetWebContentJob($this->document, $web);
-        }
+            Log::info('[Larachain] Getting Content from websearch');
 
-        Bus::batch($jobs)
-            ->name("Getting Web Content - {$this->document->id}")
-            ->onQueue(LlmDriverFacade::driver($this->document->getDriver())->onQueue())
-            ->allowFailures()
-            ->dispatch();
+            foreach ($results->getWeb() as $web) {
+                $jobs[] = new GetWebContentJob($this->document, $web);
+            }
+
+            Bus::batch($jobs)
+                ->name("Getting Web Content - {$this->document->id}")
+                ->onQueue(LlmDriverFacade::driver($this->document->getDriver())->onQueue())
+                ->allowFailures()
+                ->dispatch();
 
         } catch (\Exception $e) {
             Log::error("[Larachain] KickOffWebSearchCreationJob - {$this->document->id} - Error: {$e->getMessage()}");
+
             return;
         }
 

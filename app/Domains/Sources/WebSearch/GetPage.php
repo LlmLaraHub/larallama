@@ -3,13 +3,9 @@
 namespace App\Domains\Sources\WebSearch;
 
 use App\Models\Collection;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use League\HTMLToMarkdown\HtmlConverter;
-use LlmLaraHub\LlmDriver\LlmDriverFacade;
-use LlmLaraHub\LlmDriver\Responses\CompletionResponse;
 use Spatie\Browsershot\Browsershot;
-use SundanceSolutions\LarachainTokenCount\Facades\LarachainTokenCount;
 
 class GetPage
 {
@@ -44,7 +40,7 @@ class GetPage
                 'suppress_errors' => true,
                 'hard_break' => true,
                 'strip_placeholder_links' => true,
-                'remove_nodes' => "nav footer header script style meta"
+                'remove_nodes' => 'nav footer header script style meta',
             ]
         );
 

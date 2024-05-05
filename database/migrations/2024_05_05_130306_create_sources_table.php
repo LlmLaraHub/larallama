@@ -15,13 +15,13 @@ return new class extends Migration
     {
         Schema::create('sources', function (Blueprint $table) {
             $table->id();
-            $table->string("title");
-            $table->longText("details");
+            $table->string('title');
+            $table->longText('details');
             $table->foreignIdFor(Collection::class);
-            $table->string("type")->default(SourceTypeEnum::WebSearchSource->value);
-            $table->string("recurring")->nullable();
-            $table->datetime("last_run")->nullable();
-            $table->json("meta_data");
+            $table->string('type')->default(SourceTypeEnum::WebSearchSource->value);
+            $table->string('recurring')->nullable();
+            $table->datetime('last_run')->nullable();
+            $table->json('meta_data');
             $table->timestamps();
         });
     }

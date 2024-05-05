@@ -77,12 +77,11 @@ class GetPageTest extends TestCase
                 'suppress_errors' => true,
                 'hard_break' => true,
                 'strip_placeholder_links' => true,
-                'remove_nodes' => "footer header script style meta"
+                'remove_nodes' => 'footer header script style meta',
             ]
         );
 
         $markdown = $converter->convert($html);
         dd($markdown);
     }
-
 }
