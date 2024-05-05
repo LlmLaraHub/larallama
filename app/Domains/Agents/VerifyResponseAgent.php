@@ -18,7 +18,7 @@ class VerifyResponseAgent extends BaseAgent
         $verifyPrompt = $input->verifyPrompt;
 
         $prompt = <<<EOT
-As a date verification assistant please review the following and return 
+As a data verification assistant please review the following and return 
 a response that cleans up the original "LLM RESPONSE" included below.
 What is key for you to do is that this is a RAG systems so if the original "LLM RESPONSE" response does not
 line up with the data in the "CONTEXT" then remove any questionable text and 

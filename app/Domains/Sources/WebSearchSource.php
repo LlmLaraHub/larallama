@@ -63,6 +63,10 @@ PROMPT;
                 $jobs[] = new GetWebContentJob($source, $web);
             }
 
+            Log::info('[Larachain] Dispatching jobs to get content', [
+                'jobs' => count($jobs),
+            ]);
+
             Bus::batch($jobs)
             ->name("Getting Web Content for Source - {$source->title}")
             ->onQueue(LlmDriverFacade::driver($source->getDriver())->onQueue())

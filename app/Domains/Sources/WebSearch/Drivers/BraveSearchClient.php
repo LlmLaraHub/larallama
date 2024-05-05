@@ -11,9 +11,11 @@ class BraveSearchClient extends BaseSearchClient
 {
     public function search(string $search, array $options = []): SearchResponseDto
     {
+        $count = data_get($options, 'limit', 5);
 
         $response = $this->getClient()->get('web/search', [
             'q' => urlencode($search),
+            'count' => $count,
         ]);
 
         $video_dto = [];

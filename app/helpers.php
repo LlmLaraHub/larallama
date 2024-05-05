@@ -32,7 +32,7 @@ if (! function_exists('chunk_string')) {
     {   
         $tokenCountWithBuffer = token_counter($string) * 1.25; // buffer for the response of the llm
 
-        $chunksToMake = ceil($tokenCountWithBuffer / $maxTokenSize);
+        $chunksToMake = ceil($tokenCountWithBuffer / $maxTokenSize) + 2; //still needs a ton of work
 
         $chunks = str_split($string, round(strlen($string) / $chunksToMake));
 

@@ -44,7 +44,6 @@ class WebSearchSourceTest extends TestCase
 
         $websource->handle($source);
 
-
         Bus::assertBatchCount(1);
     }
 
