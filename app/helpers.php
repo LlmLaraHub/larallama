@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
 use LlmLaraHub\LlmDriver\HasDrivers;
 use LlmLaraHub\LlmDriver\Helpers\TrimText;
+use SundanceSolutions\LarachainTokenCount\Facades\LarachainTokenCount;
 
 if (! function_exists('put_fixture')) {
     function put_fixture($file_name, $content = [], $json = true)
@@ -28,11 +29,19 @@ if (! function_exists('put_fixture')) {
 if (! function_exists('token_counter')) {
     function token_counter(string $message)
     {
-        $words = preg_split('/\s+/', trim($message));
+        return LarachainTokenCount::count($message);
+    }
+}
 
-        $tokenCount = count($words);
-
-        return $tokenCount;
+if (! function_exists('token_counter_v2')) {
+    function token_counter_v2(string $text)
+    {
+        $words = preg_split('/\s+/', $text);
+        $wordCount = count($words);
+        $spaceCount = preg_match_all('/\s+/', $text, $matches);
+        $punctuationCount = preg_match_all('/[.,;:\?\!]/', $text, $matches);
+    
+        return $wordCount + $spaceCount + $punctuationCount;
     }
 }
 

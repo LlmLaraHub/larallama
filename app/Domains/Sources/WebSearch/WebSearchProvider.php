@@ -12,7 +12,10 @@ class WebSearchProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->bind('web_search_driver', function () {
-            return new WebSearchDriverClient();
+            $driver = config('llmdriver.sources.search_driver');
+            $client = new WebSearchDriverClient();
+
+            return $client->driver($driver);
         });
     }
 

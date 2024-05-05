@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Models\Collection;
 use Facades\App\Domains\Sources\WebSearch\GetPage;
 use Illuminate\Support\Facades\Storage;
+use League\HTMLToMarkdown\HtmlConverter;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
 use LlmLaraHub\LlmDriver\Responses\CompletionResponse;
 use Tests\TestCase;
@@ -60,4 +61,28 @@ class GetPageTest extends TestCase
         $this->assertNotEmpty($results);
 
     }
+
+    public function test_ideas_for_markdown(): void
+    {
+        //Storage::fake('collections');
+        //$this->markTestSkipped('@TODO mock browser shot');
+        $html = get_fixture('test.html', false);
+        $html = get_fixture('test_blog.html', false);
+
+        $markdown = str($html)->markdown()->toString();
+
+        $converter = new HtmlConverter(
+            [
+                'strip_tags' => true,
+                'suppress_errors' => true,
+                'hard_break' => true,
+                'strip_placeholder_links' => true,
+                'remove_nodes' => "footer header script style meta"
+            ]
+        );
+
+        $markdown = $converter->convert($html);
+        dd($markdown);
+    }
+
 }

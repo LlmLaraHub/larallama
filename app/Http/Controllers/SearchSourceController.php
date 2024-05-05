@@ -23,7 +23,7 @@ class SearchSourceController extends Controller
             'file_path' => $validated['name'],
             'collection_id' => $collection->id,
             'type' => TypesEnum::HTML,
-            'summary' => StatusEnum::Pending,
+            'summary' => $validated['content'],
             'status_summary' => StatusEnum::Pending,
         ]);
 

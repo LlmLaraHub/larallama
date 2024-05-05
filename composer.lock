@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "511668e6b110e084cb24e846981c0e5c",
+    "content-hash": "2ee5f7ea09193899ce88b967038a526f",
     "packages": [
         {
             "name": "amphp/amp",
@@ -12339,16 +12339,16 @@
         },
         {
             "name": "yethee/tiktoken",
-            "version": "0.3.0",
+            "version": "0.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/yethee/tiktoken-php.git",
-                "reference": "c84f066dcb0cff60685537c71bf795967775446a"
+                "reference": "f512721b4d4e960313e9218306c8be0660b07b1f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yethee/tiktoken-php/zipball/c84f066dcb0cff60685537c71bf795967775446a",
-                "reference": "c84f066dcb0cff60685537c71bf795967775446a",
+                "url": "https://api.github.com/repos/yethee/tiktoken-php/zipball/f512721b4d4e960313e9218306c8be0660b07b1f",
+                "reference": "f512721b4d4e960313e9218306c8be0660b07b1f",
                 "shasum": ""
             },
             "require": {
@@ -12357,9 +12357,10 @@
             },
             "require-dev": {
                 "doctrine/coding-standard": "^12.0",
+                "phpbench/phpbench": "^1.2",
                 "phpunit/phpunit": "^10.3",
-                "psalm/plugin-phpunit": "^0.18.3",
-                "vimeo/psalm": "5.19.0"
+                "psalm/plugin-phpunit": "^0.19.0",
+                "vimeo/psalm": "5.23.1"
             },
             "type": "library",
             "autoload": {
@@ -12382,9 +12383,9 @@
             ],
             "support": {
                 "issues": "https://github.com/yethee/tiktoken-php/issues",
-                "source": "https://github.com/yethee/tiktoken-php/tree/0.3.0"
+                "source": "https://github.com/yethee/tiktoken-php/tree/0.4.0"
             },
-            "time": "2024-01-10T10:34:57+00:00"
+            "time": "2024-04-30T14:30:21+00:00"
         }
     ],
     "packages-dev": [
