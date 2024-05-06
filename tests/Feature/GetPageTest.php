@@ -6,8 +6,6 @@ use App\Models\Collection;
 use Facades\App\Domains\Sources\WebSearch\GetPage;
 use Illuminate\Support\Facades\Storage;
 use League\HTMLToMarkdown\HtmlConverter;
-use LlmLaraHub\LlmDriver\LlmDriverFacade;
-use LlmLaraHub\LlmDriver\Responses\CompletionResponse;
 use Tests\TestCase;
 
 class GetPageTest extends TestCase
@@ -37,7 +35,6 @@ class GetPageTest extends TestCase
         $json = get_fixture('web_search_html_converted_to_json_ollama.json', false);
 
         $collection = Collection::factory()->create();
-
 
         $results = GetPage::make($collection)->parseHtml($html);
 

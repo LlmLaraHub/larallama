@@ -67,7 +67,8 @@ class MockClientTest extends TestCase
 
     }
 
-    public function test_max_token() : void {
+    public function test_max_token(): void
+    {
         $client = new MockClient();
 
         $results = $client->getMaxTokenSize('claude');

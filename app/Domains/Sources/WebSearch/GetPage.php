@@ -25,7 +25,10 @@ class GetPage
             ->dismissDialogs()
             ->fullPage();
 
-        $name = str($url)->afterLast('/')->toString().'.pdf';
+        /**
+         * @TODO this can repeat
+         */
+        $name = md5($url).'.pdf';
 
         Storage::disk('collections')->put($this->collection->id.'/'.$name, $results->pdf());
 

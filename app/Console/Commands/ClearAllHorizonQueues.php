@@ -11,7 +11,7 @@ class ClearAllHorizonQueues extends Command
      *
      * @var string
      */
-    protected $signature = 'app:clear-all-horizon-queues';
+    protected $signature = 'horizon:clear-all-horizon-queues';
 
     /**
      * The console command description.

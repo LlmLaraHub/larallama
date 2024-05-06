@@ -43,6 +43,4 @@ class SourceTest extends TestCase
 
         $source->run();
     }
-
-
 }

@@ -26,7 +26,7 @@ Tag 1, Tag Two Test, Tag Three Test
 
 And nothing else. Here is the summary:
 ### START SUMMARY 
-{$summary}
+$summary
 ### END SUMMARY
 
 EOT;
@@ -75,11 +75,11 @@ Do not prepend or append any text other than the tags.
 
 And nothing else. Here is the summary:
 ### START SUMMARY 
-{$summary}
+$summary
 ### END SUMMARY
 
 ### AND HERE ARE EXISTING TAGS
-{$tagsFlat}
+$tagsFlat
 ### END EXISTING TAGS
 
 EOT;

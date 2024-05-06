@@ -4,12 +4,11 @@ namespace Tests\Feature;
 
 use App\Domains\Sources\SourceTypeEnum;
 use App\Domains\Sources\WebSearch\Response\SearchResponseDto;
-use App\Domains\Sources\WebSearch\Response\WebResponseDto;
 use App\Domains\Sources\WebSearch\WebSearchFacade;
-use Tests\TestCase;
 use Illuminate\Support\Facades\Bus;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
 use LlmLaraHub\LlmDriver\Responses\CompletionResponse;
+use Tests\TestCase;
 
 class WebSearchSourceTest extends TestCase
 {
@@ -21,12 +20,12 @@ class WebSearchSourceTest extends TestCase
         Bus::fake();
 
         LlmDriverFacade::shouldReceive('driver->completion')
-        ->once()->andReturn(CompletionResponse::from([
+            ->once()->andReturn(CompletionResponse::from([
             'content' => 'updated query',
         ]));
 
         LlmDriverFacade::shouldReceive('driver->onQueue')
-        ->once()->andReturn('ollama');
+            ->once()->andReturn('ollama');
 
         WebSearchFacade::shouldReceive('driver->search')
             ->once()
@@ -46,5 +45,4 @@ class WebSearchSourceTest extends TestCase
 
         Bus::assertBatchCount(1);
     }
-
 }

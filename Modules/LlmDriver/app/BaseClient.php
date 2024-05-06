@@ -240,9 +240,10 @@ EOD;
         return 'api_request';
     }
 
-    public function getMaxTokenSize(string $driver) : int
+    public function getMaxTokenSize(string $driver): int
     {
         $driver = config("llmdriver.drivers.$driver");
+
         return data_get($driver, 'max_tokens', 8192);
     }
 }

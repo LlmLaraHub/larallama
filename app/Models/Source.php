@@ -44,7 +44,6 @@ class Source extends Model implements HasDrivers
         return $this->collection->getId();
     }
 
-
     public function getDriver(): string
     {
         return $this->collection->getDriver();
@@ -78,7 +77,7 @@ class Source extends Model implements HasDrivers
         return $this->belongsTo(Collection::class);
     }
 
-    public function documents() : HasMany
+    public function documents(): HasMany
     {
         return $this->hasMany(Document::class);
     }

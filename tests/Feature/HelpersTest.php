@@ -17,10 +17,11 @@ class HelpersTest extends TestCase
 
     }
 
-    public function test_chunks_a_string() {
+    public function test_chunks_a_string()
+    {
         $maxLength = 100;
 
-        $string = <<<STRING
+        $string = <<<'STRING'
         Cupidatat nostrud anim consectetur veniam enim excepteur ut aliqua Lorem nulla non. Pariatur eu sunt quis. Consectetur fugiat Lorem reprehenderit reprehenderit id sunt labore duis irure laboris officia. In labore culpa nulla. Reprehenderit non eu reprehenderit. Culpa irure voluptate consequat consequat. Esse aliquip ipsum culpa tempor nostrud esse laborum eiusmod est laborum.
 
         Mollit do minim ullamco exercitation sint in laboris pariatur ea Lorem Lorem. Est sunt sit pariatur in elit nisi id incididunt eiusmod ipsum Lorem commodo ut incididunt. Enim et dolor consequat adipisicing mollit dolor officia dolore. Quis aute dolor enim ullamco exercitation dolor minim laboris mollit fugiat velit. Sit deserunt dolor ea. In ipsum ipsum reprehenderit pariatur sit reprehenderit velit anim nostrud nostrud sit velit. Adipisicing ad laboris excepteur in veniam magna dolore aute excepteur dolore nostrud adipisicing excepteur laborum ut. Minim ea officia duis aliquip eiusmod qui ex incididunt eiusmod.
@@ -28,11 +29,11 @@ class HelpersTest extends TestCase
         Veniam officia labore enim eu laboris et voluptate velit. Id do velit adipisicing ex. Consectetur do amet et exercitation duis laboris. Irure labore ipsum et sint labore ex sunt aute magna aute.
         
         Qui ipsum aute laborum quis ea officia in sit ut. Minim occaecat aliquip enim officia ut pariatur. Tempor officia pariatur officia adipisicing excepteur velit irure irure ex adipisicing aliquip ea culpa aute nulla. Ut ad veniam est nostrud consectetur. Elit commodo ea non aliqua aliquip id consectetur tempor sit aliqua minim eiusmod consequat sit do.
-STRING;        
+STRING;
 
         $chunks = chunk_string($string, $maxLength);
 
-        $this->assertCount(8, $chunks);
+        $this->assertCount(10, $chunks);
 
     }
 

@@ -115,7 +115,7 @@ class Document extends Model implements HasDrivers, TaggableContract
         return $this->collection->embedding_driver->value;
     }
 
-    public function source() : BelongsTo
+    public function source(): BelongsTo
     {
         return $this->belongsTo(Source::class);
     }

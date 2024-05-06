@@ -239,7 +239,12 @@ const reset = () => {
                                                         </td>
                                                         <td
                                                             class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-3">
-                                                            {{ document.file_path }}
+                                                            
+                                                            <a class="underline" target="_blank" :href="route('download.document', {
+                                                                collection: collection.data.id,
+                                                                document_name: document.file_path
+                                                            })">{{ document.file_path }}</a>
+                                                            
                                                         </td>
                                                         <td
                                                             class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-3">

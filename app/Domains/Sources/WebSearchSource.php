@@ -22,8 +22,6 @@ class WebSearchSource extends BaseSource
             $limit = data_get($meta_data, 'limit', 5);
             $driver = data_get($meta_data, 'driver', 'mock');
 
-
-
             $prompt = <<<PROMPT
             The user is asking to search the web but I want you to review the query and clean it up so I can pass 
             it to an api to get results: Just return their content but with your rework so I can pass it right to the 
@@ -34,18 +32,17 @@ class WebSearchSource extends BaseSource
             ### END USER QUERY
             
 PROMPT;
-    
+
             Log::info('[LaraChain] Asking LLM to optimize search query');
 
             $response = LlmDriverFacade::driver($source->getDriver())
-            ->completion($prompt);
+                ->completion($prompt);
 
             $search = $response->content;
 
             Log::info('[LaraChain] Starting web search ', [
                 'content reworked' => $search,
             ]);
-    
 
             /** @var SearchResponseDto $response */
             $response = WebSearchFacade::driver($driver)->search(
@@ -68,21 +65,19 @@ PROMPT;
             ]);
 
             Bus::batch($jobs)
-            ->name("Getting Web Content for Source - {$source->title}")
-            ->onQueue(LlmDriverFacade::driver($source->getDriver())->onQueue())
-            ->allowFailures()
-            ->dispatch();
+                ->name("Getting Web Content for Source - {$source->title}")
+                ->onQueue(LlmDriverFacade::driver($source->getDriver())->onQueue())
+                ->allowFailures()
+                ->dispatch();
 
             $source->last_run = now();
             $source->save();
 
-
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             Log::error('[LaraChain] - Error running WebSearchSource', [
                 'error' => $e->getMessage(),
             ]);
         }
-
 
     }
 }

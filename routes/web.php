@@ -3,8 +3,6 @@
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\CollectionController;
 use App\Http\Controllers\DownloadController;
-use App\Http\Controllers\ExampleChatBotController;
-use App\Http\Controllers\ExampleController;
 use App\Http\Controllers\ReindexCollectionController;
 use App\Http\Controllers\TextDocumentController;
 use Illuminate\Foundation\Application;
@@ -45,15 +43,9 @@ Route::middleware([
         }
     );
 
-
     Route::controller(TextDocumentController::class)->group(function () {
         Route::post('/collections/{collection}/text-documents', 'store')
             ->name('text-documents.store');
-    });
-
-    Route::controller(ExampleChatBotController::class)->group(function () {
-        Route::get('/examples/chatbot', 'show')->name('example.chatbot.show');
-        Route::put('/examples/chat', 'chat')->name('example.chatbot.chat');
     });
 
     Route::controller(CollectionController::class)->group(function () {
@@ -73,7 +65,4 @@ Route::middleware([
             ->name('chats.messages.create');
     });
 
-});
-Route::controller(ExampleController::class)->group(function () {
-    Route::get('/examples/charts', 'charts')->name('example.charts');
 });
