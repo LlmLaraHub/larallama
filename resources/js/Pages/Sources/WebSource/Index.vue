@@ -33,11 +33,12 @@ const props = defineProps({
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                     <div class="flex justify-end mt-2 mr-2 -mb-10">
 
-                    <div class="bg-gray-200 bg-opacity-25 grid grid-cols-1 p-6">
-                        <div>
-                            <div class="mt-2 flow-root">
-                                <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-                                   Sources Here
+                        <div class="bg-gray-200 bg-opacity-25 grid grid-cols-1 p-6">
+                            <div>
+                                <div class="mt-2 flow-root">
+                                    <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                                        Sources Here
+                                    </div>
                                 </div>
                             </div>
                         </div>

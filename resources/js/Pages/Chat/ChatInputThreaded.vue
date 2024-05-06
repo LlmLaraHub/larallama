@@ -1,6 +1,5 @@
 <script setup>
 import {router, useForm, usePage} from "@inertiajs/vue3";
-import SampleQuestions from "./SampleQuestions.vue";
 import { ChevronDoubleDownIcon, ChevronRightIcon} from "@heroicons/vue/20/solid";
 import {computed, inject, onUnmounted, ref, watch} from "vue";
 import axios from "axios";
