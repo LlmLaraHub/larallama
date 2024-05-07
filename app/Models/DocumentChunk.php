@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use LlmLaraHub\LlmDriver\HasDrivers;
 use LlmLaraHub\TagFunction\Contracts\TaggableContract;
 use LlmLaraHub\TagFunction\Helpers\Taggable;
+use Pgvector\Laravel\HasNeighbors;
 use Pgvector\Laravel\Vector;
 
 /**
@@ -16,6 +17,7 @@ use Pgvector\Laravel\Vector;
 class DocumentChunk extends Model implements HasDrivers, TaggableContract
 {
     use HasFactory;
+    use HasNeighbors;
     use Taggable;
 
     protected $casts = [

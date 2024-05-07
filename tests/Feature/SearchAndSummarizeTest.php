@@ -8,6 +8,7 @@ use App\Models\Collection;
 use App\Models\Document;
 use App\Models\DocumentChunk;
 use Facades\App\Domains\Agents\VerifyResponseAgent;
+use Illuminate\Support\Facades\File;
 use LlmLaraHub\LlmDriver\Functions\ParametersDto;
 use LlmLaraHub\LlmDriver\Functions\PropertyDto;
 use LlmLaraHub\LlmDriver\Functions\SearchAndSummarize;
@@ -31,6 +32,23 @@ class SearchAndSummarizeTest extends TestCase
         $this->assertInstanceOf(ParametersDto::class, $parameters);
         $this->assertIsArray($parameters->properties);
         $this->assertInstanceOf(PropertyDto::class, $parameters->properties[0]);
+    }
+
+
+    public function testing_distance() {
+        $files = File::files(base_path('tests/fixtures/document_chunks'));
+
+        foreach($files as $file) {
+            $documentChunk = json_decode(File::get($file), true);
+
+            $documentChunk = DocumentChunk::factory()->create($documentChunk);
+
+        }
+
+        $question = get_fixture('embedding_question_distance.json');
+        
+
+        
     }
 
     public function test_gets_user_input()

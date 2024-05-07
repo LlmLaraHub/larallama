@@ -4,10 +4,12 @@ namespace LlmLaraHub\LlmDriver\Helpers;
 
 use App\Models\DocumentChunk;
 use Illuminate\Database\Eloquent\Collection;
+use Pgvector\Laravel\Distance;
 use Pgvector\Laravel\Vector;
 
 trait DistanceQueryTrait
 {
+    protected int $distanceThreshold = 0;
     /**
      * @TODO
      * Track the document page for referehce
@@ -20,17 +22,27 @@ trait DistanceQueryTrait
         Vector $embedding
     ): Collection {
 
+        //put_fixture("embedding_question_distance.json", $embedding->toArray());
+
+        // $documentChunkResults = DocumentChunk::query()
+        //     ->join('documents', 'documents.id', '=', 'document_chunks.document_id')
+        //     ->selectRaw(
+        //         "document_chunks.{$embeddingSize} <-> ? as distance, document_chunks.content as content, document_chunks.{$embeddingSize} as embedding, document_chunks.id as id, document_chunks.summary as summary, document_chunks.document_id as document_id",
+        //         [$embedding]
+        //     )
+        //     /** @phpstan-ignore-next-line */
+        //     ->where('documents.collection_id', $collectionId)
+        //     ->limit(10)
+        //     ->orderByRaw('distance')
+        //     ->get();
+
         $documentChunkResults = DocumentChunk::query()
+            ->select('document_chunks.id as id', 'document_chunks.content as content', 'document_chunks.summary as summary', 'document_chunks.document_id as document_id', "document_chunks.{$embeddingSize} as embedding")
             ->join('documents', 'documents.id', '=', 'document_chunks.document_id')
-            ->selectRaw(
-                "document_chunks.{$embeddingSize} <-> ? as distance, document_chunks.content as content, document_chunks.{$embeddingSize} as embedding, document_chunks.id as id, document_chunks.summary as summary, document_chunks.document_id as document_id",
-                [$embedding]
-            )
-            /** @phpstan-ignore-next-line */
-            ->where('documents.collection_id', $collectionId)
-            ->limit(10)
-            ->orderByRaw('distance')
+            ->nearestNeighbors($embeddingSize, $embedding, Distance::L2)
+            ->take(5)
             ->get();
+       
 
         return $documentChunkResults;
     }
