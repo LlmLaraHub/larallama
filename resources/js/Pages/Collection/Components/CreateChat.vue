@@ -1,10 +1,9 @@
 <template>
-    <SecondaryButton 
+    <button 
     type="button"
     @click="start"
     class="flex justify-between items-center gap-4">
-        <ChatBubbleLeftIcon class="h-5 w-5"></ChatBubbleLeftIcon>
-        start a new chat</SecondaryButton>
+    Chat with your Collection</button>
 </template>
 
 <script setup>

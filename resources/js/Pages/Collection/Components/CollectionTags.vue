@@ -1,5 +1,5 @@
 <template>
-            <div class="flex justify-center gap-2 items-center mt-4">
+            <div class="flex justify-center gap-2 items-center ">
             <Label>
                 <template #title>
                     Chat LLm 

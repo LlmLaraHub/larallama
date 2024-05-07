@@ -4,7 +4,7 @@ import Welcome from '@/Components/Welcome.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import SecondaryLink from '@/Components/SecondaryLink.vue';
 import { computed, onMounted, provide, ref } from 'vue';
-
+import Nav from '@/Pages/Collection/Components/Nav.vue';
 import CollectionTags from './Components/CollectionTags.vue';
 import { useDropzone } from "vue3-dropzone";
 import { router, useForm } from '@inertiajs/vue3';
@@ -68,6 +68,8 @@ onMounted(() => {
             </h2>
         </template>
 
+        <Nav :collection="collection.data" :chat="chat?.data"></Nav>
+
         <div class="py-12">
 
 
@@ -77,25 +79,17 @@ onMounted(() => {
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                     <!-- Top area -->
 
-                    <div class="border-b pb-5 px-3 py-4">
+                    <div class="border-b px-3 py-4">
                         <div class="flex justify-between items-center">
-                        <div>
-                            <h3 class="text-base font-semibold leading-6 text-gray-900">{{ collection.data.name }}</h3>
-                            <p class="mt-2 max-w-4xl text-sm text-gray-500">
-                                {{ collection.data.description }}
-                            </p>
+                            <div>
+                                <h3 class="text-base font-semibold leading-6 text-gray-900">{{ collection.data.name }}</h3>
+                                <p class="mt-2 max-w-4xl text-sm text-gray-500">
+                                    {{ collection.data.description }}
+                                </p>    
 
+                            </div>
+                            <CollectionTags :collection="collection.data"></CollectionTags>
                         </div>
-
-                        <SecondaryLink class="flex justify-between items-center gap-4" :href="route('collections.show', {
-                    collection: collection.data.id,
-                })">    <DocumentTextIcon class="h-5 w-5"></DocumentTextIcon>
-                                
-                            Back to Documents
-                        </SecondaryLink>
-                    </div>
-                    <CollectionTags :collection="collection"></CollectionTags>
-
                     </div>
                     <div class="p-10">
                         <ChatUi :chat="chat" :messages="messages"></ChatUi>

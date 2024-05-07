@@ -98,13 +98,13 @@ const reset = () => {
             </h2>
         </template>
 
-        <Nav :collection="collection.data"></Nav>
+        <Nav :collection="collection.data" :chat="chat?.data"></Nav>
 
         <div class="py-12" v-auto-animate>
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                     <CollectionHeader 
-                    :chat="chat.data"
+                    :chat="chat?.data"
                     :collection="collection.data"></CollectionHeader>
 
                     <!-- Files upload -->

@@ -68,13 +68,7 @@ class CollectionController extends Controller
 
     public function show(Collection $collection)
     {
-        $chatResource = $collection->chats()->where('user_id', auth()->user()->id)
-            ->latest('id')
-            ->first();
-
-        if ($chatResource?->id) {
-            $chatResource = new ChatResource($chatResource);
-        }
+        $chatResource = $chatResource = $this->getChatResource($collection);
 
         return inertia('Collection/Show', [
             'chat' => $chatResource,

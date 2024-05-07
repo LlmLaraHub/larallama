@@ -3,18 +3,9 @@
         <div class="flex justify-between items-center">
             <h3 class="text-base font-semibold leading-6 text-gray-900">{{ collection.name }}</h3>
             <div class="flex justify-end gap-2 items-center">
-                <CreateChat v-if="!chat?.id" :collection="collection" />
-                <div v-else>
-                    <SecondaryLink class="flex justify-between items-center gap-4" :href="route('chats.collection.show', {
-                collection: collection.id,
-                chat: chat.id
-            })">
-                        <ChatBubbleLeftIcon class="h-5 w-5"></ChatBubbleLeftIcon>
-                        Continue Chatting
-                    </SecondaryLink>
 
-                </div>
-
+                <CollectionTags :collection="collection"></CollectionTags>
+                
                 <details class="dropdown dropdown-end">
                     <summary class="m-1 btn border-none">
                         <EllipsisVerticalIcon class="h-5 w-5" />
@@ -35,7 +26,6 @@
         <p class="mt-2 max-w-4xl text-sm text-gray-500">
             {{ collection.description }}
         </p>
-        <CollectionTags :collection="collection"></CollectionTags>
     </div>
 </template>
 

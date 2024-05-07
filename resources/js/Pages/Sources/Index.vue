@@ -4,7 +4,7 @@ import PrimaryButton from '@/Components/PrimaryButton.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
 import { ref } from 'vue';
 import PrimaryButtonLink from '@/Components/PrimaryButtonLink.vue';
-
+import Nav from '@/Pages/Collection/Components/Nav.vue';
 
 const props = defineProps({
     collection: {
@@ -13,7 +13,13 @@ const props = defineProps({
     },
     sources: {
         type: Object
-    }
+    },
+    documents: {
+        type: Object,
+    },
+    chat: {
+        type: Object,
+    },
 });
 
 
@@ -28,21 +34,13 @@ const props = defineProps({
             </h2>
         </template>
 
+        <Nav :collection="collection.data" :chat="chat?.data"></Nav>
+
+
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-                    <div class="flex justify-end mt-2 mr-2 -mb-10">
-
-                        <div class="bg-gray-200 bg-opacity-25 grid grid-cols-1 p-6">
-                            <div>
-                                <div class="mt-2 flow-root">
-                                    <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-                                        Sources Here
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-10">
+                  Sources Here
                 </div>
             </div>
         </div>
