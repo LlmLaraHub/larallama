@@ -7,9 +7,9 @@ use App\Domains\Messages\RoleEnum;
 use Facades\App\Domains\Agents\VerifyResponseAgent;
 use Illuminate\Support\Facades\Log;
 use Laravel\Pennant\Feature;
+use Facades\LlmLaraHub\LlmDriver\DistanceQuery;
 use LlmLaraHub\LlmDriver\HasDrivers;
 use LlmLaraHub\LlmDriver\Helpers\CreateReferencesTrait;
-use LlmLaraHub\LlmDriver\Helpers\DistanceQueryTrait;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
 use LlmLaraHub\LlmDriver\Requests\MessageInDto;
 use LlmLaraHub\LlmDriver\Responses\CompletionResponse;
@@ -18,7 +18,7 @@ use LlmLaraHub\LlmDriver\Responses\FunctionResponse;
 
 class SearchAndSummarize extends FunctionContract
 {
-    use CreateReferencesTrait, DistanceQueryTrait;
+    use CreateReferencesTrait;
 
     protected string $name = 'search_and_summarize';
 
@@ -57,7 +57,7 @@ class SearchAndSummarize extends FunctionContract
 
         notify_ui($model, 'Searching documents');
 
-        $documentChunkResults = $this->distance(
+        $documentChunkResults = DistanceQuery::distance(
             $embeddingSize,
             $model->getChatable()->id,
             $embedding->embedding

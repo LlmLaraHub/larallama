@@ -28,6 +28,7 @@ Your Response will not include anything about the verification process you are j
 Your Response will be that just cleaned up for chat.
 DO NOT include text like "Here is the cleaned-up response" the user should not even know your step happened :) 
 Your repsonse will NOT be a list like below but just follow the formatting of the "LLM RESPONSE".
+DO NOT get an information outside of this context.
 
 ### Included are the following sections
 - ORIGINAL PROMPT: The question from the user

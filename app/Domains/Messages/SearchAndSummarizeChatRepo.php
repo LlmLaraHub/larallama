@@ -9,23 +9,27 @@ use App\Models\DocumentChunk;
 use Facades\App\Domains\Agents\VerifyResponseAgent;
 use Illuminate\Support\Facades\Log;
 use Laravel\Pennant\Feature;
+use Facades\LlmLaraHub\LlmDriver\DistanceQuery;
 use LlmLaraHub\LlmDriver\Helpers\CreateReferencesTrait;
-use LlmLaraHub\LlmDriver\Helpers\DistanceQueryTrait;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
 use LlmLaraHub\LlmDriver\Responses\CompletionResponse;
 use LlmLaraHub\LlmDriver\Responses\EmbeddingsResponseDto;
 
 class SearchAndSummarizeChatRepo
 {
-    use CreateReferencesTrait, DistanceQueryTrait;
+    use CreateReferencesTrait;
 
     public function search(Chat $chat, string $input): string
     {
-        Log::info('[LaraChain] Embedding and Searching');
+        Log::info('[LaraChain] Search and Summarize Default Function');
 
         $originalPrompt = $input;
 
         notify_ui($chat, 'Searching documents');
+
+        Log::info('[LaraChain] Embedding the Data', [
+            'question' => $input,
+        ]);
 
         /** @var EmbeddingsResponseDto $embedding */
         $embedding = LlmDriverFacade::driver(
@@ -34,7 +38,7 @@ class SearchAndSummarizeChatRepo
 
         $embeddingSize = get_embedding_size($chat->chatable->getEmbeddingDriver());
 
-        $documentChunkResults = $this->distance(
+        $documentChunkResults = DistanceQuery::distance(
             $embeddingSize,
             /** @phpstan-ignore-next-line */
             $chat->getChatable()->id,

@@ -30,7 +30,10 @@ class Orchestrate
         $functions = LlmDriverFacade::driver($chat->chatable->getDriver())
             ->functionPromptChat($messagesArray);
 
-        Log::info("['LaraChain'] Functions Found", $functions);
+        Log::info("['LaraChain'] Functions Found?", [
+            'count' => count($functions),
+            'functions' => $functions
+        ]);
 
         if ($this->hasFunctions($functions)) {
             Log::info('[LaraChain] Orchestration Has Functions', $functions);
@@ -115,7 +118,7 @@ class Orchestrate
 
             return $this->response;
         } else {
-            Log::info('[LaraChain] Orchestration No Functions Default SearchAnd Summarize');
+            Log::info('[LaraChain] Orchestration No Functions Default Search And Summarize');
             /**
              * @NOTE
              * this assumes way too much

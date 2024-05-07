@@ -9,6 +9,7 @@ use App\Models\Document;
 use App\Models\DocumentChunk;
 use Facades\App\Domains\Agents\VerifyResponseAgent;
 use Illuminate\Support\Facades\File;
+use Facades\LlmLaraHub\LlmDriver\DistanceQuery;
 use LlmLaraHub\LlmDriver\Functions\ParametersDto;
 use LlmLaraHub\LlmDriver\Functions\PropertyDto;
 use LlmLaraHub\LlmDriver\Functions\SearchAndSummarize;
@@ -35,21 +36,6 @@ class SearchAndSummarizeTest extends TestCase
     }
 
 
-    public function testing_distance() {
-        $files = File::files(base_path('tests/fixtures/document_chunks'));
-
-        foreach($files as $file) {
-            $documentChunk = json_decode(File::get($file), true);
-
-            $documentChunk = DocumentChunk::factory()->create($documentChunk);
-
-        }
-
-        $question = get_fixture('embedding_question_distance.json');
-        
-
-        
-    }
 
     public function test_gets_user_input()
     {
@@ -99,6 +85,10 @@ class SearchAndSummarizeTest extends TestCase
         $documentChunk = DocumentChunk::factory(3)->create([
             'document_id' => $document->id,
         ]);
+
+        DistanceQuery::shouldReceive('distance')
+            ->once()
+            ->andReturn(DocumentChunk::all());
 
         VerifyResponseAgent::shouldReceive('verify')->once()->andReturn(
             VerifyPromptOutputDto::from(
