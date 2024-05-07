@@ -1,0 +1,582 @@
+As a Data Integrity Officer please review the following and return only what remains after you clean it up.
+DO NOT include text like "Here is the cleaned-up response" the user should not even know your step happened in the process.
+DO NOT get an information outside of this context.
+Just return the text as if answering the intial users prompt "ORIGINAL PROMPT"
+Using the CONTEXT make sure the LLM RESPONSE is accurent and just clean it up if not.
+
+### START ORIGINAL PROMPT 
+what is "Cronbach's alpha"
+### END ORIGINAL PROMPT
+
+### START CONTEXT
+  |
+9STARK ETAL.  
+Behavioral Medicine, 44(2), 171180. h t t p s : / /d o i .o r g /1 0 .1 0 0 7 /
+s 1 2 1 60 -0 1 2 -9 3 6 6 -5
+Gould, L. H., Nelson, R. S., Griffith, K. S., Hayes, E. B., Piesman, J., Mead, 
+P. S., & Cartter, M. L. (2008). Knowledge, attitudes, and behaviors 
+regarding Lyme disease prevention among Connecticut residents, 
+19992004. Vector-	Borne and Zoonotic Diseases, 8(6), 769776. 
+h t t p s : / /d o i .o r g /1 0 .1 0 8 9 /v b z .2 0 0 7 .0 2 2 1
+Guidry, J. P. D., Laestadius, L. I., Vraga, E. K., Miller, C. A., Perrin, P. B., 
+Burton, C. W., Ryan, M., Fuemmeler, B. F., & Carlyle, K. E. (2021). 
+Willingness to get the COVID-	19 vaccine with and without emer-
+gency use authorization. American Journal of Infection Control, 49(2), 
+137142 . h t t p s : / /d o i .o r g /1 0 .1 0 1 6 / j .a j i c .2 0 2 0 .1 1 .0 1 8
+Hays, R. D., Liu, H., & Kapteyn, A. (2015). Use of internet panels to con-
+duct surveys. Behavior Research Methods , 47, 685690.
+Hook, S. A., Hansen, A. P., Niesobecki, S. A., Meek, J. I., Bjork, J. K. H., 
+Kough, E. M., Peterson, M. S., Schiffman, E. K., Rutz, H. J., Rowe, A. 
+J., White, J. L., Peel, J. L., Biggerstaff, B. J., & Hinckley, A. F. (2022). 
+Evaluating public acceptability of a potential Lyme disease vaccine 
+using a population-	based, cross-	sectional survey in high incidence 
+areas of the United States. Vaccine, 40(2), 298305. h t t p s : / /d o i .
+o r g /1 0 .1 0 1 6 / j .v a c c in e .2 0 2 1 .1 1 .0 6 5
+Hook, S. A., Jeon, S., Niesobecki, S. A., Hansen, A. P., Meek, J. I., Bjork, J. K. 
+H., Dorr, F. M., Rutz, H. J., Feldman, K. A., White, J. L., Backenson, P. 
+B., Shankar, M. B., Meltzer, M. I., & Hinckley, A. F. (2022). Economic 
+burden of reported Lyme disease in high-	incidence areas, United 
+States, 2014-	2016. Emerging Infectious Diseases, 28(6), 11701179. 
+h t t p s : / /d o i .o r g /1 0 .3 2 0 1 /e i d 2 80 6 .2 1 1 3 3 5
+Husted, M., Gibbons, A., Cheung, W.-	Y., & Keating, S. (2023). COVID-	19 
+vaccination hesitancy in adults in the United Kingdom: Barriers 
+and facilitators to uptake. Health Psychology: Official Journal of the 
+Division of Health Psychology, American Psychological Association, 42, 
+584592. h t t p s : / /d o i .o r g /1 0 .1 0 3 7 /h e a 0 00 1 2 5 6
+Jacob, J., Valois, P., Aenishaenslin, C., Bouchard, C., Briand, S., Talbot, 
+D., & Tessier, M. (2019). Factors leading municipal authorities to 
+implement preventive interventions for Lyme disease. International 
+Journal of Environmental Research and Public Health, 16(9), 1547. 
+h t t p s : / /d o i .o r g /1 0 .3 3 9 0 /i j e r ph 1 6 0 91 5 4 7
+Kache, P. A., Bron, G. M., Zapata-	Ramirez, S., Tsao, J. I., Bartholomay, 
+L. C., Paskewitz, S. M., Diuk-	Wasser, M. A., & Fernandez, M. D. P. 
+(2023). Evaluating spatial and temporal patterns of tick exposure in 
+the United States using community science data submitted through 
+a smartphone application. Ticks and Tick-	borne Diseases, 14(4), 
+102163. h t t p s : / /d o i .o r g /1 0 .1 0 1 6 / j .t t b d i s .2 0 2 3 .1 0 2 1 6 3
+Marques, A. (2022). Persistent symptoms after treatment of Lyme dis-
+ease. Infectious Disease Clinics, 36(3), 621638.
+Masterson, J. M., Luu, M., Dallas, K. B., Daskivich, L. P., Spiegel, B., & 
+Daskivich, T. J. (2023). Disparities in COVID-	19 disease incidence by 
+income and vaccination coverage  81 communities, Los Angeles, 
+California, July 2020September 2021. MMWR. Morbidity and 
+Mortality Weekly Report, 72, 728731. h t t p s : / /d o i .o r g /1 0 .1 5 5 8 5 /
+mmwr.	mm7226a5
+Miller, C., Rainie, L., Purcell, K., Mitchell, A., & Rosenstiel, T. (2012). How 
+people get local news and information in different communities. Pew 
+Research Center.
+Nelson, C. A., Saha, S., Kugeler, K. J., Delorey, M. J., Shankar, M. B., 
+Hinckley, A., & Mead, P. S. (2015). Incidence of clinician-	diagnosed 
+Lyme disease, United States, 20052010. Emerging Infectious 
+Diseases, 21(9), 16251631. h t t p s : / /d o i .o r g /1 0 .3 2 0 1 /e i d 2 10 9 .
+150417
+Newman, P. A., Logie, C. H., Lacombe-	Duncan, A., Baiden, P., Tepjan, 
+S., Rubincam, C., Doukas, N., & Asey, F. (2018). Parents' uptake of 
+human papillomavirus vaccines for their children: A systematic re-
+view and meta-	analysis of observational studies. BMJ Open, 8(4), 
+e019206.
+Niesobecki, S., Hansen, A., Rutz, H., Mehta, S., Feldman, K., Meek, J., 
+Niccolai, L., Hook, S., & Hinckley, A. (2019). Knowledge, attitudes, 
+and behaviors regarding tick-	borne disease prevention in endemic 
+areas. Ticks and Tick-	borne Diseases, 10(6), 101264. h t t p s : / /d o i .o r g /
+1 0 .1 0 1 6 / j .t t b d i s .2 0 1 9 .0 7 .0 0 8
+Nigrovic, L. E., & Thompson, K. M. (2007). The Lyme vaccine: A caution-
+ary tale. Epidemiology and Infection, 135(1), 18. h t t p s : / /d o i .o r g /1 0 .
+1 0 1 7 /S 0 9 5 02 6 8 8 06 0 0 7 0 9 6
+Ostfeld, R. S., Mowry, S., Bremer, W., Duerr, S., Evans, A. S., Fischhoff, I. 
+R., Hinckley, A. F., Hook, S. A., Keating, F., Pendleton, J., Pfister, A., 
+Teator, M., & Keesing, F. (2023). Impacts over time of neighborhood-
+scale interventions to control ticks and tick-	borne disease inci-
+dence. Vector-	Borne and Zoonotic Diseases, 23(3), 89105. ht t p s ://
+d o i .o r g /1 0 .1 0 8 9 /v b z .2 0 2 2 .0 0 9 4
+Peterson, R. A. (1994). A meta-	analysis of Cronbach's coefficient alpha. 
+Journal of Consumer Research, 21(2), 381391.
+Poland, G. A. (2011). Vaccines against Lyme disease: What happened and 
+what lessons can we learn? Clinical Infectious Diseases	, 52(suppl_3), 
+s253s258. h t t p s : / /d o i .o r g /1 0 .1 0 9 3 /c i d /c i q 1 1 6
+Qualtrics. (2023). Everything you need to know when working with your IRB.
+Rajamoorthy, Y., Radam, A., Taib, N. M., Rahim, K. A., Wagner, A. L., 
+Mudatsir, M., Munusamy, S., & Harapan, H. (2018). The relationship 
+between perceptions and self-	paid hepatitis B vaccination: A struc-
+tural equation modeling approach. PLoS One	, 13(12), e0208402.
+Reiter, P. L., Gilkey, M. B., & Brewer, N. T. (2013). HPV vaccination among 
+adolescent males: Results from the National Immunization Survey-
+Teen. Vaccine, 31(26), 28162821. h t t p s : / /d o i .o r g /1 0 .1 0 1 6 / j .v a c c i
+ne.2013.04.010
+Rosenstock, I. M. (1974). The health belief model and preventive health 
+behavior. Health Education Monographs, 2(4), 354386. h t t p s : / /d o i .
+o r g /1 0 .1 1 7 7 /1 0 9 0 19 8 1 7 40 0 2 0 0 4 0 5
+Salmon, D. A., Dudley, M. Z., Glanz, J. M., & Omer, S. B. (2015). 
+Vaccine hesitancy: Causes, consequences, and a call to action. 
+Vaccine, 33, D66D71. h t t p s : / /d o i .o r g /1 0 .1 0 1 6 / j .v a c c in e .2 0 1 5 .0 9 .
+035
+Schwartz, A. M., Mackeprang, J. M., Mead, P. S., & Hinckley, A. F. (2022). 
+Effectiveness of personal protection measures against Lyme dis-
+ease: A review of epidemiologic studies from the United States. 
+Zoonoses and Public Health, 69(7), 777791. h t t p s : / /d o i .o r g /1 0 .
+1111/	zph.	12984
+Shadick, N. A., Zibit, M. J., Nardone, E., DeMaria, A., Iannaccone, C. K., 
+& Cui, J. (2016). A school-	based intervention to increase Lyme dis-
+ease preventive measures among elementary school-	aged children. 
+Vector-	Borne and Zoonotic Diseases, 16(8), 507515. h t t p s : / /d o i .o r g /
+1 0 .1 0 8 9 /v b z .2 0 1 6 .1 9 4 2
+Shen, A. K., Mead, P. S., & Beard, C. B. (2011). The Lyme disease vac-
+cineA public health perspective. Clinical Infectious Diseases: An 
+Official Publication of the Infectious Diseases Society of America, 52 
+Suppl 3, s247s252. h t t p s : / /d o i .o r g /1 0 .1 0 9 3 /c i d /c i q 1 1 5
+Shmueli, L. (2021). Predicting intention to receive COVID-	19 vaccine 
+among the general population using the health belief model and the 
+theory of planned behavior model. BMC Public Health, 21(1), 804. 
+h t t p s : / /d o i .o r g /1 0 .1 1 8 6 /s 1 2 8 89 -0 2 1 -1 0 8 1 6-7
+Trachtenberg, F., Dugan, E., & Hall, M. A. (2005). How patients' trust re-
+lates to their involvement in medical care. Journal of Family Practice, 
+54(4), 344354.
+U.S. Census Burearu. (2021). 2021: ACS 1-	year estimates data pro-
+files. Retrived from h t t p s : / /d a t a .c e n s u s .g o v /t a b l e /A C S D P1 Y 2 0 2 1 .
+DP05?q=d e m o gr a p h ic s+by+	state
+U.S. Census Burearu. (2023). State population totals and components of 
+change: 20202022. Retrived from h t t p s : / /w w w .c e n s u s .g o v /d a t a /
+t a b l e s /t i m e -s e r i e s /d e m o /p o p e s t /2 0 2 0 s-s t a t e-t o t a l .h t m l
+Wong, M. C. S., Wong, E. L. Y., Huang, J., Cheung, A. W. L., Law, K., 
+Chong, M. K. C., Ng, R. W. Y., Lai, C. K. C., Boon, S. S., Lau, J. T. F., 
+Chen, Z., & Chan, P. K. S. (2021). Acceptance of the COVID-	19 vac-
+cine based on the health belief model: A population-	based survey in 
+Hong Kong. Vaccine, 39(7), 11481156. h t t p s : / /d o i .o r g /1 0 .1 0 1 6 / j .
+v a c c in e .2 0 2 0 .1 2 .0 8 3 18632378, 0, Downloaded from https://onlinelibrary.wiley.com/doi/10.1111/zph.13107 by Pfizer Inc Groton, Wiley Online Library on [05/01/2024]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License    
+Page 1 of 10 
+Article DOI: https://doi.org/10.3201/eid2812.212612
+ 
+Systematic Review and Meta-analysis of 
+Lyme Disease Data and Seropositivity for 
+Borrelia burgdorferi, China, 20052020 
+Appendix 
+Appendix Table 1. Search strategies and results by database 
+Database 	Search strategy 	Results 
+PubMed 	Borreliosis OR lyme OR borrelia 	8,537 
+ 	Filters: Full text, from 2005/1/1 - 2020/12/31  
+EMBASE 	(((borrelia AND (2005:2020[pdat])) OR (lyme AND (2005:2020[pdat]))) OR 
+(borreliosis AND (2005:2020[pdat]))) 
+10,445 
+ 	Filters: Date: Publication years 2005  2020; Pub. Types: Article, Data 
+Papers, Review 
+ 
+Global Health (CABI Direct) ((borrelia OR lyme OR borreliosis ) AND yr:[2005 TO 2020]) AND ( ((item-
+type:(( "Journal article" ) )) )) 
+6,348 
+CNKI 	Topic: Lyme disease (vague) OR Topic: Borrelia burgdorferi (vague) OR 
+Topic: Lyme disease AND Serum (vague) 
+2,032 
+ 	Publication time: 1st Jan 2005 - 31st Jan 2020  
+Wanfang Data 	All (vague): Lyme disease; All (vague): Borrelia burgdorferi; All (vague): Lyme 
+disease AND Serum 
+3,658 
+ 	Publication time: 1st Jan 2005 - 31st Jan 2020  
+ 
+ 
+ 
+ 
+Appendix Table 2. Studies included in systematic literature review contributing to seropositivity analyses and associated data 
+points 
+Study 
+Year(s) of 
+data 
+collection 
+Province 
+of data 
+collection 
+Diagnosti
+c test(s) 
+Antibody
+* 
+Sero-
+positivity, 
+(%)
+
+ 
+Study 
+Denominator 
+Exposure 
+category Study population details 
+Chen et 
+al. (1) 
+2011 Beijing ELISA IgG 4.6% 549 Moderate 
+exposure risk 
+Mountain residents of 
+randomly selected survey sites 
+in Miyun, Beijing, with history 
+of defined field activities within 
+one year. No specific forestry 
+exposure mentioned. 
+Cui et al. 
+(2) 
+2003
+2006 
+Zhejiang IFA IgG 11.9% 932 High exposure 
+risk 
+Forestry (forest farms) workers 
+and mountain residents in 
+three districts of Hangzhou, 
+Zhejiang. 
+Dong et 
+al. (3) 
+2004 Neimengg
+u 
+(Inner 
+Mongolia) 
+IFA IgG 1. 10.4% 
+2. 33.3% 
+1. 671 
+2. 84 
+1. High 
+exposure 
+risk 
+2. Clinical 
+suspicion 
+1. Forestry residents from 
+forest farms of Greater 
+Khingan, Neimenggu 
+2. Hospitalized psychiatric 
+patients in the forestry 
+area of Greater Khingan, 
+Neimenggu 
+Dou et 
+al. (4) 
+2013 Beijing ELISA + 
+WB 
+IgG 5.1% 801 Moderate 
+exposure risk 
+Mountain residents lived near 
+Miyun Reservoir in the 
+northern suburb of Beijing. No 
+specific forestry exposure 
+mentioned. 
+Du et al. 
+(5) 
+2010 Henan IFA IgG 10.3% 126 High exposure 
+risk 
+Local residents in the 
+mountain regions of Henan 
+with high vegetation coverage 
+and high risk of tick exposure 
+during animal contact.   SYNOPSIS
+for the primary analytical strategy, neither estimate nor 
+variance differed. The total sample size producing this 
+summary estimate was 34,719 (Table 1). 
+Fewer articles and estimates were available for 
+the diagnostic sensitivity analyses. For the sensitivity 
+analysis based on 35 estimates (sample size of 9,446 
+obtained from 5 articles) that did not distinguish be-
+tween IgG and IgM results, seropositivity was 14.5% 
+(95% CI 11.8%17.2%). For the sensitivity analysis 
+that used a 2-tier testing system (16 estimates ob-
+tained from 6 articles with a sample size of 8,837), se-
+ropositivity was 1.8% (95% CI 0.9%2.7%) (Table 1).
+Seropositivity for the clinical suspicion sample was 
+7.1% (95% CI 6.4%8.0%). Lyme disease seropositiv-
+ity estimates by exposure risk populations were 4.5% 
+(95% CI 3.9%5.1%) for low risk, 6.1% (95% CI 5.4%
+6.7%) for medium risk, and 10.0% (95% CI 9.6%10.4%) 
+for high risk (Table 1). The odds ratio of high exposure 
+risk seropositivity compared with low exposure risk 
+seropositivity was 2.4 (95% CI 2.12.7) and of moderate 
+exposure risk seropositivity compared with low expo-
+sure risk seropositivity was 1.4 (95% CI 1.21.6).
+Variation by province was substantial; the high-
+est seropositivity estimates were 23.1% for Heilongji-
+ang Province and 16.2% for Neimenggu (Inner Mon-
+golia) Province (Figure 2). Moreover, variation across 
+provinces was substantial (Figure 3). There was no 
+discernable trend over time for seropositivity (data 
+not shown).
+Discussion
+Our systematic literature review of B. burgdorferi se-
+ropositivity in China generated summary estimates 
+by diagnostic test, exposure risk, sex, age group, 
+province, and year. Depending on the testing algo-
+rithm applied, the seropositivity ranged from 1.8% to 
+14.5%, reflecting Lyme disease endemicity in the pop-
+ulation. Combined with the widespread distribution 
+of Ixodes ticks, specifically I. persulcatus ticks in many 
+provinces, this analysis reinforces that Lyme disease 
+is a public health problem in China.
+The summary estimates of 9.1% among EIA/IFA 
+positive samples and 1.8% among samples confirmed 
+with WB fell within the range identified in Europe. In 
+Germany, the nationwide, population-based cross-
+sectional KiGGS study estimated seropositivity among 
+children and adolescents of 4.8% by single-tier ELISA 
+testing (4% when confirmed by line blot) (14). A similar 
+nationwide, population-based, cross-sectional study 
+among adults in Germany (DEGS) reported overall 
+seropositivity of 9.4%, confirmed by line blot (15). A 
+cross-sectional health survey among a representative 
+sample of adults in Finland reported seropositivity of 
+3.9% according to 2-tier testing (16). A representative 
+sample of healthy blood donors from the Tyrol region 
+of Austria reported a seropositivity range of 1.5%7.2% 
+from samples confirmed by line blot (17). A regional 
+study in Turkey among healthy volunteers revealed 
+seropositivity of 4.1% by single-tier testing with ELISA 
+and 2.2% confirmed by WB (18).
+In China, results of the diagnostic sensitivity 
+analyses were consistent with expectations based on 
+Lyme diagnostic testing limitations. Several studies 
+did not adequately delineate the results by IgM or 
+IgG positivity, and this joint numerator resulted in a 
+substantially higher estimate than IgG seropositivity 
+2392 	Emerging Infectious Diseases  www.cdc.gov/eid  Vol. 28, No. 12, December 2022 
+ 
+Table 1. Modeled estimates of seropositivity for Borrelia burgdorferi sensu lato in China, 20052020* 
+Variable 
+Seropositivity estimates, no. (study 
+denominator sample size) Modeled seropositivity, % (95% CI) 
+Primary analysis: IgG only 	72 (34,719) 	9.1 (7.510.7) 
+Sensitivity analysis   
+ IgM and IgG 	35 (9,446) 	14.5 (11.817.2) 
+ EIA + WB 	16 (8,837) 	1.8 (0.92.7) 
+Exposure group   
+ Clinical suspicion 	10 (3,982) 	7.1 (6.48.0) 
+ Low risk 	10 (5,245) 	4.5 (3.95.1) 
+ Moderate risk 	12 (5,300) 	6.1 (5.46.7) 
+ High risk 	40 (20,192) 	10.0 (9.610.4) 
+Sex   
+ F 	21 (7,542) 	10.0 (6.613.2) 
+ M 	21 (8,223) 	9.4 (6.212.6) 
+Age group, y   
+ <20  	13 (1,420) 	12.0 (4.419.6) 
+ 2029  	11 (1,416) 	12.3 (6.318.4) 
+ 3039  	11 (1,734) 	14.5 (5.923.1) 
+ 4049  	11 (1,757) 	14.2 (8.520.0) 
+ 5059  	11 (1,434) 	13.1 (8.517.7) 
+ >60  	12 (1,429) 	12.6 (6.618.5) 
+*EIA, enzyme immunoassay; WB, Western blot. 
+Positive test results: primary analysis = 2,859; sensitivity analysis IgM and IgG = 1,260; sensitivity analysis EIA + WB = 147. 
+First-tier test was either an ELISA or immunofluorescence assay. 
+    
+Page 6 of 10 
+Study 
+Year(s) of 
+data 
+collection 
+Province 
+of data 
+collection 
+Diagnosti
+c test(s) 
+Antibody
+* 
+Sero-
+positivity, 
+(%)
+
+ 
+Study 
+Denominator 
+Exposure 
+category Study population details 
+clinical diagnosis of arthritis or 
+neurological disease 
+suspected with B. burgdorferi 
+infection (excluding related 
+diseases). 
+Zhu et 
+al. (43) 
+2015 Hainan 1. IFA 
+2. 
+IFA+
+WB 
+IgG 1. 3.4% 
+2. 1.4% 
+ 
+1. 900 
+2. 900 
+Clinical 
+suspicion 
+Healthcare-seeking patients 
+identified from two hospitals in 
+western region, Hainan. 
+Suspected cases were defined 
+as patients with clinical 
+diagnosis of arthritis or 
+neurological disease 
+suspected of Lyme disease 
+(excluding rheumatoid arthritis 
+and other related diseases). 
+Zhuang 
+et al. 
+(44) 
+2006 Guizhou 1. IFA 
+2. 
+IFA+
+WB 
+IgG 1. 5.3% 
+2. 1.1% 
+ 
+1. 1,233 
+2. 1,233 
+Low exposure 
+risk 
+Rural population of 8 counties 
+in Guizhou (alpine, mainly 
+plains area). No specific 
+forestry exposure mentioned. 
+*Antibody measured reflects data used for analysis. For IgG and IgM, results were presented collectively without separation. ELISA, enzyme-linked 
+immunosorbent assay; IFA, immunofluorescence assay; IgG, immunoglobulin G; IgM, immunoglobulin M; WB, Western immunoblot. 
+Multiple estimates from same source presented as the total estimate. 
+Multiple data points available in Supplementary Table 1. 
+References 
+1. Chen YL, Yang YS, Jia LL, Geng LB, Wang YQ, Zheng FH. Seroprevalence of Lyme disease in 
+Miyun county of Beijing, China. Can J Public Health. 2016;10: 835. 
+2. Cui WW, Deng J, Shi SF, Huang RJ, Xu K, Huang CX, et al.  
+. Chin J Prev Med. 2007;8:3826. 
+3. Dong JH, Zhu JH, Yin FR. . 	Pract Prev Med. 2007;14: 1457
+8. 
+4. Dou X, Lyu Y, Jiang Y, Tian L, Li X, Lin C, et al. Seroprevalence of Lyme disease and associated risk 
+factors in rural population of Beijing. Int J Clin Exp Med. 2015;8:79959. PubMed 
+5. Du YH, Zhao JY, Lu X, Bai JM, Xia SL. Serological epidemiology investigation of Lyme disease in 
+Henan Province [in Chinese ]. Xian Dai Yu Fang Yi Xue. 2012;39:36812. 
+6. Geng Z, Hou XX, Hao Q, Hu GL, Wan KL. Anti-borrelia burgdorferi antibody response in 827 patients 
+with suspected Lyme disease 	[in Chinese]. Zhongguo Meijie Shengwuxue Ji Kongzhi Zazhi. 
+2007;18:219 21. 
+7. Geng Z, Hou X-X, Guo JH, Huang X, Wang CS, Wang B, et al. Epidemiological investigation on 
+Lyme disease in Changbai and Tonghua county, Jilin province [in Chinese]. Zhongguo Meijie 
+Shengwuxue Ji Kongzhi Zazhi. 2010;21:5725.     |
+7STARK ETAL.  
+respondents were likely or very likely to get vaccinated against 
+LD. Our study, however, found that 60% of adults and 71% of care-
+givers were likely or very likely to get vaccinated against LD if a 
+vaccine were available. Differences across study samples could 
+account for some of the variations in vaccine intention estimates. 
+Our respondents were drawn from a broader population (i.e.all 16 
+endemic states), whereas respondents from both Hook, Hansen, 
+etal.(2022) and Niesobecki et	al.(2019) were exclusively from 
+a select few endemic states. In addition to broader coverage, 
+our quota-	based sampling technique led to a more representa-
+tive group of respondents. For example, 23% of the Adult sam-
+ple and 36% of the Caregiver sample reported income of greater 
+than $100,000, while 53% of the respondents in Niesobecki 
+etal.(2019) reported an income greater than $100,000. While 
+the specific relationship between LD vaccination intention and 
+income is not well studied, higher median household income has 
+been found to be associated with higher community COVID-	19 
+vaccination rates (Masterson etal.,2023	).
+Shadick etal.(2016), which applied the HBM to educational ini-
+tiatives for LD, found that educational programmes that included el-
+ements of awareness and knowledge of LD, benefits of preventative 
+behaviour, and self-	efficacy can improve knowledge, attitude and 
+self-	reported precautionary behaviour among at-	risk children. While 
+their study methodology and scope differ from ours, the importance 
+of perceived benefits in preventative behaviour aligns with our find-
+ings. Jacob et al.(2019), which used an HBM focused on LD pre-
+vention at the municipal level, found that barriers to implementing 
+preventive interventions moderated the intention-	implementation 
+relationship, suggesting that while barriers may not be significant 
+predictors of intention to vaccinate, they could become significant 
+predictors of whether a person would follow through on receiving 
+a vaccine.
+While our study contributes to the growing literature on LD and 
+drivers of vaccination uptake, we acknowledge the study's limita-
+tions. Although we implemented quotas to ensure that the demo-
+graphics of the sample would approximate those of the underlying 
+population and distributed the survey through a panel that has 
+shown to be demographically representative of the United States 
+(Boas et al.,2020), the final sample slightly oversampled respon-
+dents who identified as White.
+iv
+ Survey panels more broadly may 
+also have inherent limitations, which includes the tendency for panel 
+members to be more educated than non-	panel members (Callegaro 
+etal.,2014; Hays et al.,2015). Moreover, while we found the HBM 
+to be a strong framework to identify key drivers associated with 
+vaccination intention, we acknowledge that it does not capture all 
+factors associated with vaccination intention (e.g. socioeconomic 
+status, ethnicity, education level). Lastly, the question on the inten-
+tion to vaccinate was for a generic LD vaccine and not specific to 
+a vaccine with defined attributes (e.g. schedule, efficacy, safety), 
+and therefore may either underestimate or overestimate intention 
+for a future vaccine. Regardless, the data and study indicate the 
+importance of ongoing research on LD vaccination uptake. Future 
+renditions of similar research may consider conducting HBMs with 
+FIGURE 1Prediction of adult intention to vaccinate from Health 
+Belief Model (HBM). ***, **, and * denote a p	- value of < 0.001, 0.01, 
+and 0.05.
+Perceived 
+susceptibility
+Perceived severity
+Perceived benefits
+Perceived barriers
+Safety concerns
+Cue to action
+Intention to 
+Vaccinate
+0.20***
+0.04
+0.17***
+-0.16***
+-0.04
+0.49***
+FIGURE 2Prediction of caregiver intention to vaccinate from 
+Health Belief Model (HBM). ***, **, and * denote a p	- value of 
+<0.001, 0.01, and 0.05.
+Perceived 
+susceptibility
+Perceived severity
+Perceived benefits
+Perceived barriers
+Safety concerns
+Cue to action
+Intention to 
+Vaccinate
+0.13***
+0.06*
+0.17***
+-0.05
+-0.08**
+0.53***
+FIGURE 3Prediction of intention to vaccinate from Health 
+Belief Model (HBM) for interaction terms. ***, **, and denote a 
+p- value of <0.001, 0.01, and 0.05.
+Perceived 
+susceptibility 
+(interaction)
+Perceived severity 
+(interaction)
+Perceived benefits
+(interaction)
+Perceived barriers
+(interaction)
+Safety concerns
+(interaction)
+Cue to action
+(interaction)
+Intention to 
+Vaccinate
+-0.14*
+0.06
+-0.05
+0.17***
+-0.08
+0.09 18632378, 0, Downloaded from https://onlinelibrary.wiley.com/doi/10.1111/zph.13107 by Pfizer Inc Groton, Wiley Online Library on [05/01/2024]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License  
+### END CONTEXT
+
+### START LLM RESPONSE
+You're referring to Alpha, a measure of internal consistency developed by Lee J. Cronbach!
+
+Cronbach's Alpha is a statistical measure that calculates the reliability of a test or scale based on its internal structure. The estimate varies depending on several factors, including:
+
+1. **Number of items**: More items generally lead to higher Alpha values.
+2. **Item difficulty**: Items with similar difficulties tend to increase Alpha.
+3. **Item overlap**: Overlapping item content can boost Alpha.
+4. **Test length**: Longer tests often have lower Alpha values due to increased measurement error.
+
+Here are some general guidelines for interpreting Cronbach's Alpha estimates:
+
+* **Alpha > 0.9**: Very high reliability; the test or scale is highly consistent and reliable.
+* **Alpha = 0.8-0.89**: High reliability; the test or scale is generally consistent, but with some minor inconsistencies.
+* **Alpha = 0.7-0.79**: Moderate reliability; the test or scale has some inconsistencies, but still provides a reasonable measure of what it's supposed to measure.
+* **Alpha = 0.6-0.69**: Low reliability; the test or scale is prone to errors and inconsistent measurements.
+* **Alpha < 0.6**: Very low reliability; the test or scale is unreliable and may not be a good measure of what it's supposed to measure.
+
+Keep in mind that these are general guidelines, and the interpretation of Alpha values depends on the specific context and research question being investigated. It's always a good idea to consult with a statistician or researcher familiar with your field to better understand how to interpret Cronbach's Alpha estimates for your particular study.
+### END LLM RESPONSE
+

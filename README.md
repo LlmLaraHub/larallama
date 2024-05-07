@@ -116,3 +116,12 @@ Per the Laravel docs https://laravel.com/docs/11.x/reverb
 We are using this system https://github.com/nWidart/laravel-modules
 
 Make sure to register your module in `bootstrap/providers.php`
+
+
+## Ollama Notes
+
+Make sure to run 
+```bash
+launchctl setenv OLLAMA_NUM_PARALLEL 3
+```
+and restart the service so you get multiple requests at a time

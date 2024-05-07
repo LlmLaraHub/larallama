@@ -18,42 +18,28 @@ class VerifyResponseAgent extends BaseAgent
         $verifyPrompt = $input->verifyPrompt;
 
         $prompt = <<<EOT
-As a data verification assistant please review the following and return 
-a response that cleans up the original "LLM RESPONSE" included below.
-What is key for you to do is that this is a RAG systems so if the original "LLM RESPONSE" response does not
-line up with the data in the "CONTEXT" then remove any questionable text and 
-numbers. See VERIFY PROMPT for any additional information. The output here
-will go directly to the user in a chat window so please reply accordingly.
-Your Response will not include anything about the verification process you are just a proxy to the origin LLM RESPONSE.
-Your Response will be that just cleaned up for chat.
-DO NOT include text like "Here is the cleaned-up response" the user should not even know your step happened :) 
-Your repsonse will NOT be a list like below but just follow the formatting of the "LLM RESPONSE".
+As a Data Integrity Officer please review the following and return only what remains after you clean it up.
+DO NOT include text like "Here is the cleaned-up response" the user should not even know your step happened in the process.
 DO NOT get an information outside of this context.
-
-### Included are the following sections
-- ORIGINAL PROMPT: The question from the user
-- CONTEXT: 
-- LLM RESPONSE: The response from the LLM system using the original prompt and context
-- VERIFY PROMPT: The prompt added to help clear up the required output.
-
+Just return the text as if answering the intial users prompt "ORIGINAL PROMPT"
+Using the CONTEXT make sure the LLM RESPONSE is accurent and just clean it up if not.
 
 ### START ORIGINAL PROMPT 
-{$originalPrompt}
+$originalPrompt
 ### END ORIGINAL PROMPT
 
 ### START CONTEXT
-{$context}
+$context
 ### END CONTEXT
 
 ### START LLM RESPONSE
-{$llmResponse}
+$llmResponse
 ### END LLM RESPONSE
 
-### START VERIFY PROMPT
-{$verifyPrompt}
-### END VERIFY PROMPT
 
 EOT;
+
+        //put_fixture("verified_prompt_not_working.txt", $prompt, false);
 
         Log::info('[LaraChain] VerifyResponseAgent::verify', [
             'prompt' => $prompt,
