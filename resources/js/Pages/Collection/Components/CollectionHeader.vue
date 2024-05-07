@@ -50,4 +50,15 @@ const props = defineProps({
         type: Object
     }
 });
+
+const emit = defineEmits(['showEditCollectionSlideOut', 'toggleReindexCollection']);
+
+const showEditCollectionSlideOut = () => {
+    emit('showEditCollectionSlideOut');
+};
+
+const toggleReindexCollection = () => {
+    emit('toggleReindexCollection');
+};
+
 </script>
