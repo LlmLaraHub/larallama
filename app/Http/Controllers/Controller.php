@@ -7,11 +7,11 @@ use App\Models\Collection;
 
 abstract class Controller
 {
-    
-    protected function getChatResource(Collection $collection) {
+    protected function getChatResource(Collection $collection)
+    {
         $chatResource = $collection->chats()->where('user_id', auth()->user()->id)
-        ->latest('id')
-        ->first();
+            ->latest('id')
+            ->first();
 
         if ($chatResource?->id) {
             $chatResource = new ChatResource($chatResource);

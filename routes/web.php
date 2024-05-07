@@ -6,6 +6,7 @@ use App\Http\Controllers\DownloadController;
 use App\Http\Controllers\ReindexCollectionController;
 use App\Http\Controllers\SourceController;
 use App\Http\Controllers\TextDocumentController;
+use App\Http\Controllers\WebSourceController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -33,9 +34,21 @@ Route::middleware([
     );
 
     Route::controller(SourceController::class)->group(
-        function() {
+        function () {
             Route::get('/collections/{collection}/sources', 'index')
                 ->name('collections.sources.index');
+
+            Route::post('/sources/{source}/run', 'run')
+                ->name('collections.sources.run');
+        }
+    );
+
+    Route::controller(WebSourceController::class)->group(
+        function () {
+            Route::get('/collections/{collection}/sources/websearch/create', 'create')
+                ->name('collections.sources.websearch.create');
+            Route::post('/collections/{collection}/sources/websearch', 'store')
+                ->name('collections.sources.websearch.store');
         }
     );
 

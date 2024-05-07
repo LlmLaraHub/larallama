@@ -2,17 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\ChatResource;
 use App\Http\Resources\CollectionResource;
 use App\Http\Resources\DocumentResource;
 use App\Http\Resources\SourceResource;
 use App\Models\Collection;
 use App\Models\Document;
-use Illuminate\Http\Request;
+use App\Models\Source;
 
 class SourceController extends Controller
 {
-    
     public function index(Collection $collection)
     {
         $chatResource = $chatResource = $this->getChatResource($collection);
@@ -26,5 +24,13 @@ class SourceController extends Controller
                 ->get()),
             'sources' => SourceResource::collection($collection->sources()->paginate(10)),
         ]);
+    }
+
+    public function run(Source $source)
+    {
+        $source->run();
+        request()->session()->flash('flas.banner', 'Web source is running');
+
+        return back();
     }
 }
