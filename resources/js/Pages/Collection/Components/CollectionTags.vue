@@ -4,13 +4,13 @@
                 <template #title>
                     Chat LLm 
                 </template>
-                {{ collection.data.driver }}
+                {{ collection.driver }}
             </Label>
             <Label>
                 <template #title>
                     Embedding LLm 
                 </template>
-                {{ collection.data.embedding_driver }}
+                {{ collection.embedding_driver }}
             </Label>
         </div>
 </template>

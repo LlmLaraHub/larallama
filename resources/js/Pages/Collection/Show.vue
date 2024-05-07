@@ -1,22 +1,17 @@
 <script setup>
 import AppLayout from '@/Layouts/AppLayout.vue';
-import Welcome from '@/Components/Welcome.vue';
-import SecondaryLink from '@/Components/SecondaryLink.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
 import { computed, onMounted, ref } from 'vue';
 
+import CollectionHeader from './Components/CollectionHeader.vue';
+
 import EditCollection from './Edit.vue';
 import ShowDocument from './Components/ShowDocument.vue';
+import Nav from './Components/Nav.vue';
 import { useDropzone } from "vue3-dropzone";
 import { router, useForm, Link } from '@inertiajs/vue3';
-import CollectionTags from './Components/CollectionTags.vue';
 import FileUploader from './Components/FileUploader.vue';
-import Label from '@/Components/Labels.vue';
-import CreateChat from './Components/CreateChat.vue';
 import DocumentReset from './Components/DocumentReset.vue';
-import { ChatBubbleLeftIcon } from '@heroicons/vue/24/outline';
-import { EllipsisVerticalIcon } from '@heroicons/vue/24/solid';
 import ConfirmationModal from '@/Components/ConfirmationModal.vue';
 import Tags from '@/Components/Tags.vue';
 import ReindexAllDocuments from './Components/ReindexAllDocuments.vue';
@@ -103,57 +98,17 @@ const reset = () => {
             </h2>
         </template>
 
+        <Nav :collection="collection.data"></Nav>
+
         <div class="py-12" v-auto-animate>
-
-
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-
-
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
+                    <CollectionHeader 
+                    :chat="chat.data"
+                    :collection="collection.data"></CollectionHeader>
 
+                    <!-- Files upload -->
 
-                    <!-- Top area -->
-
-                    <div class="border-b pb-5 px-3 py-4">
-                        <div class="flex justify-between items-center">
-                            <h3 class="text-base font-semibold leading-6 text-gray-900">{{ collection.data.name }}</h3>
-                            <div class="flex justify-end gap-2 items-center">
-                                <CreateChat v-if="!chat?.data?.id" :collection="collection.data" />
-                                <div v-else>
-                                    <SecondaryLink class="flex justify-between items-center gap-4" :href="route('chats.collection.show', {
-                                collection: collection.data.id,
-                                chat: chat.data.id
-                            })">
-                                        <ChatBubbleLeftIcon class="h-5 w-5"></ChatBubbleLeftIcon>
-                                        Continue Chatting
-                                    </SecondaryLink>
-
-                                </div>
-
-                                <details class="dropdown dropdown-end">
-                                    <summary class="m-1 btn border-none">
-                                        <EllipsisVerticalIcon class="h-5 w-5" />
-                                    </summary>
-                                    <ul class="p-2 shadow menu dropdown-content z-[49] w-52">
-                                        <li>
-                                            <button type="button" class="btn-link"
-                                                @click="showEditCollectionSlideOut">Edit</button>
-                                        </li>
-                                        <li>
-                                            <button type="button" class="btn-link"
-                                                @click="toggleReindexCollection">Reindex
-                                                Documents</button>
-                                        </li>
-                                    </ul>
-                                </details>
-                            </div>
-
-                        </div>
-                        <p class="mt-2 max-w-4xl text-sm text-gray-500">
-                            {{ collection.data.description }}
-                        </p>
-                        <CollectionTags :collection="collection"></CollectionTags>
-                    </div>
                     <div class="mx-auto max-7xl flex justify-center">
                         <div role="tablist" class="tabs tabs-bordered gap-4">
                             <button @click="changeSourceView('file_upload')" type="button" role="tab" class="tab"

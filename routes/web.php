@@ -4,6 +4,7 @@ use App\Http\Controllers\ChatController;
 use App\Http\Controllers\CollectionController;
 use App\Http\Controllers\DownloadController;
 use App\Http\Controllers\ReindexCollectionController;
+use App\Http\Controllers\SourceController;
 use App\Http\Controllers\TextDocumentController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -28,6 +29,13 @@ Route::middleware([
         function () {
             Route::get('/collections/{collection}/download', 'download')
                 ->name('download.document');
+        }
+    );
+
+    Route::controller(SourceController::class)->group(
+        function() {
+            Route::get('/collections/{collection}/sources', 'index')
+                ->name('collections.sources.index');
         }
     );
 
