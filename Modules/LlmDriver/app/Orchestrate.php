@@ -32,7 +32,7 @@ class Orchestrate
 
         Log::info("['LaraChain'] Functions Found?", [
             'count' => count($functions),
-            'functions' => $functions
+            'functions' => $functions,
         ]);
 
         if ($this->hasFunctions($functions)) {

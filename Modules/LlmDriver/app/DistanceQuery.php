@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace LlmLaraHub\LlmDriver;
 
@@ -12,6 +12,7 @@ use Pgvector\Laravel\Vector;
 class DistanceQuery
 {
     protected int $distanceThreshold = 0;
+
     /**
      * @TODO
      * Track the document page for referehce
@@ -27,7 +28,7 @@ class DistanceQuery
             ->select('id')
             ->where('documents.collection_id', $collectionId)
             ->pluck('id');
-    
+
         $commonQuery = DocumentChunk::query()
             ->whereIn('document_id', $documentIds);
 
@@ -36,7 +37,7 @@ class DistanceQuery
             ->nearestNeighbors($embeddingSize, $embedding, Distance::L2)
             ->take(5)
             ->get();
-    
+
         // Get IDs of the nearest neighbors found 5
         $nearestNeighborIds = $documentChunkResults->pluck('id')->toArray();
         Log::info('[LaraChain] Nearest Neighbor IDs', [
@@ -48,8 +49,8 @@ class DistanceQuery
             ->whereNotIn('document_chunks.id', $nearestNeighborIds)
             ->nearestNeighbors($embeddingSize, $embedding, Distance::InnerProduct)
             ->get();
-        
-        // Find nearest neighbors using Cosine distance found 0 
+
+        // Find nearest neighbors using Cosine distance found 0
         $neighborsInnerProductIds = $neighborsInnerProduct->pluck('id')->toArray();
 
         Log::info('[LaraChain] Nearest Neighbor Inner Product IDs', [
@@ -59,7 +60,7 @@ class DistanceQuery
 
         $neighborsCosine = $commonQuery
             ->whereNotIn('id', $nearestNeighborIds)
-            ->when(!empty($neighborsInnerProductIds), function($query) use ($neighborsInnerProductIds) {
+            ->when(! empty($neighborsInnerProductIds), function ($query) use ($neighborsInnerProductIds) {
                 return $query->whereNotIn('id', $neighborsInnerProductIds);
             })
             ->nearestNeighbors($embeddingSize, $embedding, Distance::Cosine)
@@ -74,5 +75,4 @@ class DistanceQuery
 
         return $results;
     }
-
 }

@@ -15,9 +15,10 @@ class MessageDocumentReferenceResource extends JsonResource
     public function toArray(Request $request): array
     {
         $tags = $this->document_chunk?->tags;
-        if($tags) {
+        if ($tags) {
             $tags = TagResource::collection($tags);
         }
+
         return [
             'id' => $this->id,
             'document_name' => $this->document_chunk?->document->file_path,

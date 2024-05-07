@@ -52,11 +52,12 @@ STRING;
 
         $embedding_column = get_embedding_size($model->getEmbeddingDriver());
 
-         $this->assertEquals('embedding_3072', $embedding_column);
+        $this->assertEquals('embedding_3072', $embedding_column);
 
     }
 
-    public function test_calculate_dynamic_threshold() {
+    public function test_calculate_dynamic_threshold()
+    {
         $distances = [0.5, 0.75, 2, 3, 10];
 
         $threshold = calculate_dynamic_threshold($distances);

@@ -26,33 +26,30 @@ if (! function_exists('put_fixture')) {
     }
 }
 
-
 if (! function_exists('calculate_dynamic_threshold')) {
     function calculate_dynamic_threshold(array $distances, int $percentile = 90): float
     {
-    // Sort the distances in ascending order
-    sort($distances);
-    
-    // Get the total number of distances
-    $count = count($distances);
-    
-    // Calculate the index for the given percentile
-    $index = ceil($count * ($percentile / 100)) - 1;
+        // Sort the distances in ascending order
+        sort($distances);
 
-    // Ensure the index is within the bounds of the array
-    if ($index >= $count) {
-        $index = $count - 1;
-    }
+        // Get the total number of distances
+        $count = count($distances);
 
-    // Calculate the average of distances up to the percentile index
-    $threshold = array_sum(array_slice($distances, 0, $index + 1)) / ($index + 1);
+        // Calculate the index for the given percentile
+        $index = ceil($count * ($percentile / 100)) - 1;
 
-    return $threshold;
-        
+        // Ensure the index is within the bounds of the array
+        if ($index >= $count) {
+            $index = $count - 1;
+        }
+
+        // Calculate the average of distances up to the percentile index
+        $threshold = array_sum(array_slice($distances, 0, $index + 1)) / ($index + 1);
+
+        return $threshold;
+
     }
 }
-
-
 
 if (! function_exists('chunk_string')) {
     function chunk_string(string $string, int $maxTokenSize): array

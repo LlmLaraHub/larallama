@@ -8,7 +8,6 @@ use App\Models\Collection;
 use App\Models\Document;
 use App\Models\DocumentChunk;
 use Facades\App\Domains\Agents\VerifyResponseAgent;
-use Illuminate\Support\Facades\File;
 use Facades\LlmLaraHub\LlmDriver\DistanceQuery;
 use LlmLaraHub\LlmDriver\Functions\ParametersDto;
 use LlmLaraHub\LlmDriver\Functions\PropertyDto;
@@ -34,8 +33,6 @@ class SearchAndSummarizeTest extends TestCase
         $this->assertIsArray($parameters->properties);
         $this->assertInstanceOf(PropertyDto::class, $parameters->properties[0]);
     }
-
-
 
     public function test_gets_user_input()
     {
