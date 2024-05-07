@@ -55,4 +55,13 @@ STRING;
         $this->assertEquals('embedding_3072', $embedding_column);
 
     }
+
+    public function test_calculate_dynamic_threshold()
+    {
+        $distances = [0.5, 0.75, 2, 3, 10];
+
+        $threshold = calculate_dynamic_threshold($distances);
+
+        $this->assertEquals(3.25, $threshold);
+    }
 }

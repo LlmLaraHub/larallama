@@ -8,6 +8,7 @@ use App\Models\Collection;
 use App\Models\Document;
 use App\Models\DocumentChunk;
 use Facades\App\Domains\Agents\VerifyResponseAgent;
+use Facades\LlmLaraHub\LlmDriver\DistanceQuery;
 use LlmLaraHub\LlmDriver\Functions\ParametersDto;
 use LlmLaraHub\LlmDriver\Functions\PropertyDto;
 use LlmLaraHub\LlmDriver\Functions\SearchAndSummarize;
@@ -81,6 +82,10 @@ class SearchAndSummarizeTest extends TestCase
         $documentChunk = DocumentChunk::factory(3)->create([
             'document_id' => $document->id,
         ]);
+
+        DistanceQuery::shouldReceive('distance')
+            ->once()
+            ->andReturn(DocumentChunk::all());
 
         VerifyResponseAgent::shouldReceive('verify')->once()->andReturn(
             VerifyPromptOutputDto::from(

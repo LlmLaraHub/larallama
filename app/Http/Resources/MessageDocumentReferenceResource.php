@@ -14,13 +14,18 @@ class MessageDocumentReferenceResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        $tags = $this->document_chunk?->tags;
+        if ($tags) {
+            $tags = TagResource::collection($tags);
+        }
+
         return [
             'id' => $this->id,
-            'document_name' => $this->document_chunk->document->file_path,
-            'page' => $this->document_chunk->sort_order,
+            'document_name' => $this->document_chunk?->document->file_path,
+            'page' => $this->document_chunk?->sort_order,
             'distance' => round($this->distance, 2),
-            'summary' => str($this->document_chunk->summary)->markdown(),
-            'taggings' => TagResource::collection($this->document_chunk->tags),
+            'summary' => str($this->document_chunk?->summary)->markdown(),
+            'taggings' => $tags,
         ];
     }
 }
