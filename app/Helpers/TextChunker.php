@@ -1,10 +1,9 @@
-<?php 
+<?php
 
 namespace App\Helpers;
 
-class TextChunker {
-
-
+class TextChunker
+{
     public static function handle(string $text, int $chunkSize = 600, int $overlapSize = 100): array
     {
         $chunks = [];
