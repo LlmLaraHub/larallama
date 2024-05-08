@@ -71,7 +71,11 @@ class DistanceQuery
             'ids' => $neighborsCosine->pluck('id')->toArray(),
         ]);
 
-        $results = collect($documentChunkResults)->merge($neighborsCosine)->unique('id')->take(5);
+        $results = collect($neighborsCosine)
+        ->merge($neighborsInnerProduct)
+        ->merge($documentChunkResults)
+        ->unique('id')
+        ->take(10);
 
         return $results;
     }
