@@ -145,7 +145,7 @@ PROMPT;
         $message = $model->getChat()->addInput($response->response, RoleEnum::Assistant);
 
         $this->saveDocumentReference($message, $documentChunkResults);
-        
+
         notify_ui($model->getChat(), 'Complete');
 
         return FunctionResponse::from(
