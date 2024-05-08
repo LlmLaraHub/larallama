@@ -122,7 +122,6 @@ class GetWebContentJob implements ShouldQueue
 
                 $this->batch()->add([
                     new VectorlizeDataJob($DocumentChunk),
-                    new SummarizeDataJob($DocumentChunk),
                 ]);
 
                 $page_number++;

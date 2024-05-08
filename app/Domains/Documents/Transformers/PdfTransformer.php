@@ -52,7 +52,6 @@ class PdfTransformer
 
                     $chunks[] = [
                         new VectorlizeDataJob($DocumentChunk),
-                        new SummarizeDataJob($DocumentChunk),
                     ];
 
                 }

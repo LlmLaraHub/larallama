@@ -55,7 +55,6 @@ class PowerPointTransformer
 
                 $chunks[] = [
                     new VectorlizeDataJob($DocumentChunk),
-                    new SummarizeDataJob($DocumentChunk),
                 ];
             }
 

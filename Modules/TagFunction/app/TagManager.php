@@ -18,6 +18,10 @@ class TagManager
 
     public function handle(Document $document): void
     {
+        if(!$document->summary) {
+            return;
+        }
+        
         Log::info('[LaraChain] TagManager Tagging document');
         $summary = $document->summary;
         $prompt = <<<EOT

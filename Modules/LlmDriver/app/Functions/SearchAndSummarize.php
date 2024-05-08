@@ -4,6 +4,7 @@ namespace LlmLaraHub\LlmDriver\Functions;
 
 use App\Domains\Agents\VerifyPromptInputDto;
 use App\Domains\Messages\RoleEnum;
+use App\Domains\Prompts\SummarizePrompt;
 use Facades\App\Domains\Agents\VerifyResponseAgent;
 use Facades\LlmLaraHub\LlmDriver\DistanceQuery;
 use Illuminate\Support\Facades\Log;
@@ -80,20 +81,10 @@ class SearchAndSummarize extends FunctionContract
 
         $context = implode(' ', $content);
 
-        $contentFlattened = <<<PROMPT
-You are a helpful assistant in the Retrieval augmented generation system (RAG - an architectural approach that can improve the efficacy of large language model (LLM) applications by leveraging custom data) system: 
-This is data from the search results when entering the users prompt which is 
-
-### START PROMPT 
-{$originalPrompt} 
-### END PROMPT
-
-Please use this with the following context and only this, summarize it for the user and return as markdown so I can render it and strip out and formatting like extra spaces, tabs, periods etc: 
-
-### START Context
-$context
-### END Context
-PROMPT;
+        $contentFlattened = SummarizePrompt::prompt(
+            originalPrompt: $originalPrompt,
+            context: $context
+        );
 
         $model->getChat()->addInput(
             message: $contentFlattened,
@@ -102,7 +93,7 @@ PROMPT;
             show_in_thread: false
         );
 
-        Log::info('[LaraChain] Getting the Summary from the search results', [
+        Log::info('[LaraChain] Getting the Search and Summary results', [
             'input' => $contentFlattened,
             'driver' => $model->getChat()->chatable->getDriver(),
         ]);

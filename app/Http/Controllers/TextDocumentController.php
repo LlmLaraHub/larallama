@@ -54,15 +54,9 @@ class TextDocumentController extends Controller
                         'sort_order' => $page_number,
                     ]
                 );
-                /**
-                 * Soon taggings
-                 * And Summary
-                 */
+
                 $jobs[] = [
                     new VectorlizeDataJob($DocumentChunk),
-                    new SummarizeDataJob($DocumentChunk),
-                    //new TagDataJob($this->document),
-                    //then mark it all as done and notify the ui
                 ];
 
                 CollectionStatusEvent::dispatch($document->collection, CollectionStatusEnum::PROCESSING);

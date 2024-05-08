@@ -1,5 +1,5 @@
 <template>
-    <div class="grid grid-cols-6 gap-4 text-gray-900 dark:text-gray-200">
+    <div class="grid grid-cols-6 gap-4 text-gray-900 dark:text-gray-400">
 
         <div class="col-span-6 sm:col-span-6">
             <InputLabel value="Name" />

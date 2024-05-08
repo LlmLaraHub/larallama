@@ -4,6 +4,7 @@ namespace App\Domains\Messages;
 
 use App\Domains\Agents\VerifyPromptInputDto;
 use App\Domains\Agents\VerifyPromptOutputDto;
+use App\Domains\Prompts\SummarizePrompt;
 use App\Models\Chat;
 use App\Models\DocumentChunk;
 use Facades\App\Domains\Agents\VerifyResponseAgent;
@@ -58,21 +59,11 @@ class SearchAndSummarizeChatRepo
 
         $context = implode(' ', $content);
 
-        $contentFlattened = <<<PROMPT
-You are a helpful assistant in the Retrieval augmented generation system (RAG - an architectural approach that can improve the efficacy of large language model (LLM) applications by leveraging custom data): 
-This is data from the search results when entering the users prompt which is 
+        $contentFlattened = SummarizePrompt::prompt(
+            originalPrompt: $originalPrompt,
+            context: $context
+        );
 
-
-### START PROMPT 
-$originalPrompt
-### END PROMPT
-
-Please use this with the following context and only this, summarize it for the user and return as markdown so I can render it and strip out and formatting like extra spaces, tabs, periods etc: 
-
-### START Context
-$context
-### END Context
-PROMPT;
 
         $chat->addInput(
             message: $contentFlattened,
@@ -94,6 +85,10 @@ PROMPT;
         $response = LlmDriverFacade::driver(
             $chat->chatable->getDriver()
         )->completion($contentFlattened);
+
+        Log::info('[LaraChain] Summary Results before verification', [
+            'response' => $response->content,
+        ]);
 
         /**
          * Lets Verify
