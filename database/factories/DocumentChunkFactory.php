@@ -48,6 +48,8 @@ class DocumentChunkFactory extends Factory
         return [
             'guid' => fake()->uuid(),
             'content' => fake()->sentence(10),
+            'sort_order' => fake()->numberBetween(1, 100),
+            'section_number' => fake()->numberBetween(1, 100),
             'status_embeddings' => StatusEnum::random(),
             'status_tagging' => StatusEnum::random(),
             'status_summary' => StatusEnum::random(),

@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('document_chunks', function (Blueprint $table) {
-            $table->integer('section')->nullable();
+            $table->integer('section_number')->nullable();
         });
     }
 
