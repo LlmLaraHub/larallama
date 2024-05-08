@@ -72,10 +72,10 @@ class DistanceQuery
         ]);
 
         $results = collect($neighborsCosine)
-        ->merge($neighborsInnerProduct)
-        ->merge($documentChunkResults)
-        ->unique('id')
-        ->take(10);
+            ->merge($neighborsInnerProduct)
+            ->merge($documentChunkResults)
+            ->unique('id')
+            ->take(10);
 
         return $results;
     }
