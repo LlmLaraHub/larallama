@@ -5,6 +5,7 @@ namespace App\Jobs;
 use App\Domains\Documents\StatusEnum;
 use App\Domains\Documents\TypesEnum;
 use App\Domains\Sources\WebSearch\Response\WebResponseDto;
+use App\Helpers\TextChunker;
 use App\Models\Document;
 use App\Models\DocumentChunk;
 use App\Models\Source;
@@ -99,17 +100,21 @@ class GetWebContentJob implements ShouldQueue
 
             $page_number = 1;
 
-            $chunks = chunk_string($results, $maxTokenSize);
+            $chunked_chunks = TextChunker::handle($results);
 
-            foreach ($chunks as $chunk) {
+            foreach($chunked_chunks as $chunkSection => $chunkContent) {
+
+                $guid = md5($chunkContent);
+
                 $DocumentChunk = DocumentChunk::updateOrCreate(
                     [
-                        'guid' => $guid.'-'.$page_number,
                         'document_id' => $document->id,
                         'sort_order' => $page_number,
+                        'section_number' => $chunkSection,
                     ],
                     [
-                        'content' => $chunk,
+                        'guid' => $guid,
+                        'content' => $chunkContent,
                     ]
                 );
 

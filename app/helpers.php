@@ -1,6 +1,9 @@
 <?php
 
+use App\Domains\Collections\CollectionStatusEnum;
 use App\Events\ChatUiUpdateEvent;
+use App\Events\CollectionStatusEvent;
+use App\Models\Collection;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
 use LlmLaraHub\LlmDriver\HasDrivers;
@@ -98,6 +101,17 @@ if (! function_exists('notify_ui')) {
             );
         } catch (\Exception $e) {
             Log::error('Error notifying UI', ['error' => $e->getMessage()]);
+        }
+    }
+}
+
+if (! function_exists('notify_collection_ui')) {
+    function notify_collection_ui(Collection $collection, CollectionStatusEnum $status, string $message = '')
+    {
+        try {
+            CollectionStatusEvent::dispatch($collection, $status, $message);
+        } catch (\Exception $e) {
+            Log::error('Error notifying collection UI', ['error' => $e->getMessage()]);
         }
     }
 }

@@ -27,4 +27,13 @@ class TextChunkerTest extends TestCase
         //put_fixture("chunkable_text_results.json", $results);
         $this->assertEquals(get_fixture('chunkable_text_results.json'), $results);
     }
+
+    public function test_larger_file(): void
+    {
+        $text = get_fixture('example_pdf_text.txt', false);
+
+        $results = TextChunker::handle($text);
+
+        $this->assertCount(8, $results);
+    }
 }

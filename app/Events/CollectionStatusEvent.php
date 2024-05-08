@@ -17,7 +17,7 @@ class CollectionStatusEvent implements ShouldBroadcast
     /**
      * Create a new event instance.
      */
-    public function __construct(public Collection $collection, public CollectionStatusEnum $status)
+    public function __construct(public Collection $collection, public CollectionStatusEnum $status, public string $message = '')
     {
         //
     }
@@ -44,6 +44,7 @@ class CollectionStatusEvent implements ShouldBroadcast
         return [
             'id' => $this->collection->id,
             'status' => $this->status->value,
+            'message' => $this->message,
         ];
     }
 
