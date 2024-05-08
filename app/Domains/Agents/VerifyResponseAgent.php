@@ -24,6 +24,9 @@ DO NOT get an information outside of this context.
 Just return the text as if answering the intial users prompt "ORIGINAL PROMPT"
 Using the CONTEXT make sure the LLM RESPONSE is accurent and just clean it up if not.
 
+$verifyPrompt
+
+
 ### START ORIGINAL PROMPT 
 $originalPrompt
 ### END ORIGINAL PROMPT
@@ -38,8 +41,6 @@ $llmResponse
 
 
 EOT;
-
-        //put_fixture("verified_prompt_not_working.txt", $prompt, false);
 
         Log::info('[LaraChain] VerifyResponseAgent::verify', [
             'prompt' => $prompt,

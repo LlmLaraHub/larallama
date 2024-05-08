@@ -178,7 +178,7 @@ EOD;
         )->implode('\n');
 
         $systemPrompt = <<<EOD
-        You are a helpful assistant in a RAG system with tools and functions to help perform tasks. 
+        You are a helpful assistant in a Retrieval augmented generation system (RAG - an architectural approach that can improve the efficacy of large language model (LLM) applications by leveraging custom data) system with tools and functions to help perform tasks. 
         When you find the right function make sure to return just the JSON that represents the requirements of that function. 
         If no function is found just return {} empty json
 

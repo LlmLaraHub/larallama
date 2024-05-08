@@ -28,7 +28,7 @@ class TagDocumentJob implements ShouldQueue
      */
     public function handle(): void
     {
-        if ($this->batch()->cancelled()) {
+        if ($this->batch()?->cancelled()) {
             // Determine if the batch has been cancelled...
 
             return;

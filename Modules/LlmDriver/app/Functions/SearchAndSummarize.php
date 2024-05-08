@@ -81,7 +81,7 @@ class SearchAndSummarize extends FunctionContract
         $context = implode(' ', $content);
 
         $contentFlattened = <<<PROMPT
-You are a helpful assistant in the RAG system: 
+You are a helpful assistant in the Retrieval augmented generation system (RAG - an architectural approach that can improve the efficacy of large language model (LLM) applications by leveraging custom data) system: 
 This is data from the search results when entering the users prompt which is 
 
 ### START PROMPT 
@@ -102,7 +102,10 @@ PROMPT;
             show_in_thread: false
         );
 
-        Log::info('[LaraChain] Getting the Summary from the search results');
+        Log::info('[LaraChain] Getting the Summary from the search results', [
+            'input' => $contentFlattened,
+            'driver' => $model->getChat()->chatable->getDriver(),
+        ]);
 
         $messageArray = MessageInDto::from([
             'content' => $contentFlattened,
@@ -114,7 +117,7 @@ PROMPT;
         /** @var CompletionResponse $response */
         $response = LlmDriverFacade::driver(
             $model->getChatable()->getDriver()
-        )->chat([$messageArray]);
+        )->completion($contentFlattened);
 
         /**
          * Lets Verify
@@ -142,6 +145,8 @@ PROMPT;
         $message = $model->getChat()->addInput($response->response, RoleEnum::Assistant);
 
         $this->saveDocumentReference($message, $documentChunkResults);
+        
+        notify_ui($model->getChat(), 'Complete');
 
         return FunctionResponse::from(
             [

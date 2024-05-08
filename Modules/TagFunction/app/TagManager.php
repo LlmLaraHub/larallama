@@ -4,6 +4,7 @@ namespace LlmLaraHub\TagFunction;
 
 use App\Domains\Agents\VerifyPromptInputDto;
 use App\Domains\Agents\VerifyPromptOutputDto;
+use App\Domains\Collections\CollectionStatusEnum;
 use App\Models\Document;
 use Facades\App\Domains\Agents\VerifyResponseAgent;
 use Illuminate\Support\Collection;
@@ -63,7 +64,7 @@ EOT;
         });
 
         foreach ($document->document_chunks as $chunk) {
-            $tagsFlat = $this->tags->implode(',');
+            $tagsFlat = $this->tags->take(20)->implode(',');
             $summary = $chunk->summary;
             $prompt = <<<EOT
 This is one chunk or page number {$chunk->sort_order} in the document , Can you make some tags I can use.
@@ -123,5 +124,7 @@ EOT;
                 $this->tags->push($tag);
             }
         }
+
+        notify_collection_ui($document->collection, CollectionStatusEnum::PROCESSING, 'Tags added');
     }
 }

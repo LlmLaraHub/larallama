@@ -17,6 +17,7 @@ import ConfirmationModal from '@/Components/ConfirmationModal.vue';
 import Tags from '@/Components/Tags.vue';
 import ReindexAllDocuments from './Components/ReindexAllDocuments.vue';
 import TextDocumentCreate from './Components/TextDocumentCreate.vue';
+import { useToast } from 'vue-toastification';
 
 const props = defineProps({
     collection: {
@@ -30,6 +31,8 @@ const props = defineProps({
         type: Object,
     },
 });
+
+const toast = useToast();
 
 const showReindexCollection = ref(false);
 
@@ -68,6 +71,10 @@ onMounted(() => {
         .listen('.status', (e) => {
             console.log(e.status);
             router.reload({ only: ['documents'] })
+            let message = e.message;
+            if (message) {
+                toast.info(message)
+            }
         });
 });
 

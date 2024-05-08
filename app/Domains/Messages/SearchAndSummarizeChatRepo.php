@@ -59,12 +59,12 @@ class SearchAndSummarizeChatRepo
         $context = implode(' ', $content);
 
         $contentFlattened = <<<PROMPT
-You are a helpful assistant in the RAG system: 
+You are a helpful assistant in the Retrieval augmented generation system (RAG - an architectural approach that can improve the efficacy of large language model (LLM) applications by leveraging custom data): 
 This is data from the search results when entering the users prompt which is 
 
 
 ### START PROMPT 
-{$originalPrompt} 
+$originalPrompt
 ### END PROMPT
 
 Please use this with the following context and only this, summarize it for the user and return as markdown so I can render it and strip out and formatting like extra spaces, tabs, periods etc: 
@@ -83,22 +83,25 @@ PROMPT;
 
         $latestMessagesArray = $chat->getChatResponse();
 
-        Log::info('[LaraChain] Getting the Summary');
+        Log::info('[LaraChain] Getting the Summary', [
+            'input' => $contentFlattened,
+            'driver' => $chat->chatable->getDriver(),
+        ]);
 
         notify_ui($chat, 'Building Summary');
 
         /** @var CompletionResponse $response */
         $response = LlmDriverFacade::driver(
             $chat->chatable->getDriver()
-        )->chat($latestMessagesArray);
+        )->completion($contentFlattened);
 
         /**
          * Lets Verify
          */
-        $verifyPrompt = <<<'PROMPT'
+        $verifyPrompt = <<<'EOD'
 This is the results from a Vector search based on the Users Prompt.
 Then that was passed into the LLM to summarize the results.
-PROMPT;
+EOD;
 
         $dto = VerifyPromptInputDto::from(
             [
@@ -115,9 +118,14 @@ PROMPT;
         /** @var VerifyPromptOutputDto $response */
         $response = VerifyResponseAgent::verify($dto);
 
+        Log::info('[LaraChain] Verification', [
+            'output' => $response->response,
+        ]);
+
         $message = $chat->addInput($response->response, RoleEnum::Assistant);
 
         $this->saveDocumentReference($message, $documentChunkResults);
+        notify_ui($chat, 'Complete');
 
         return $response->response;
     }
