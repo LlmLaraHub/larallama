@@ -4,8 +4,6 @@ namespace Tests\Feature\Http\Controllers;
 
 use App\Models\Collection;
 use Illuminate\Support\Facades\Bus;
-use LlmLaraHub\LlmDriver\LlmDriverFacade;
-use LlmLaraHub\LlmDriver\Responses\CompletionResponse;
 use Tests\TestCase;
 
 class TextDocumentControllerTest extends TestCase
@@ -23,7 +21,7 @@ class TextDocumentControllerTest extends TestCase
             'team_id' => $user->currentTeam->id,
         ]);
 
-        $content = get_fixture("chunkable_text.txt", false);
+        $content = get_fixture('chunkable_text.txt', false);
         $this->assertDatabaseCount('documents', 0);
         $this->assertDatabaseCount('document_chunks', 0);
         $this->actingAs($user)->post(route('text-documents.store', [

@@ -102,7 +102,7 @@ class GetWebContentJob implements ShouldQueue
 
             $chunked_chunks = TextChunker::handle($results);
 
-            foreach($chunked_chunks as $chunkSection => $chunkContent) {
+            foreach ($chunked_chunks as $chunkSection => $chunkContent) {
 
                 $guid = md5($chunkContent);
 

@@ -17,8 +17,6 @@ use Illuminate\Bus\Batch;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Str;
-use LlmLaraHub\LlmDriver\LlmDriverFacade;
 
 class TextDocumentController extends Controller
 {
@@ -37,11 +35,10 @@ class TextDocumentController extends Controller
             'status_summary' => StatusEnum::Pending,
         ]);
 
-
         $jobs = [];
         $page_number = 1;
         $chunked_chunks = TextChunker::handle($validated['content']);
-        foreach($chunked_chunks as $chunkSection => $chunkContent) {
+        foreach ($chunked_chunks as $chunkSection => $chunkContent) {
 
             try {
                 $guid = md5($chunkContent);
@@ -74,7 +71,6 @@ class TextDocumentController extends Controller
             }
 
         }
-
 
         Bus::batch($jobs)
             ->name("Chunking Document - $document->file_path")

@@ -3,7 +3,6 @@
 namespace App\Domains\Documents\Transformers;
 
 use App\Domains\Collections\CollectionStatusEnum;
-use App\Events\CollectionStatusEvent;
 use App\Helpers\TextChunker;
 use App\Jobs\SummarizeDataJob;
 use App\Jobs\SummarizeDocumentJob;
@@ -37,7 +36,7 @@ class PdfTransformer
                 $pageContent = $page->getText();
 
                 $chunked_chunks = TextChunker::handle($pageContent);
-                foreach($chunked_chunks as $chunkSection => $chunkContent) {
+                foreach ($chunked_chunks as $chunkSection => $chunkContent) {
                     $guid = md5($chunkContent);
                     $DocumentChunk = DocumentChunk::updateOrCreate(
                         [
@@ -55,8 +54,7 @@ class PdfTransformer
                         new VectorlizeDataJob($DocumentChunk),
                         new SummarizeDataJob($DocumentChunk),
                     ];
-    
-                    
+
                 }
                 notify_collection_ui($document->collection, CollectionStatusEnum::PROCESSING, 'Processing Document');
 

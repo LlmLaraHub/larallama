@@ -36,7 +36,6 @@ class PowerPointTransformerTest extends TestCase
         $transformer->handle($this->document);
         $this->assertDatabaseCount('document_chunks', 5);
 
-
     }
 
     public function test_does_not_repeat()

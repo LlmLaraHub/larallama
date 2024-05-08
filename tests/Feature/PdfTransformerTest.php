@@ -3,8 +3,6 @@
 namespace Tests\Feature;
 
 use App\Domains\Documents\Transformers\PdfTransformer;
-use App\Models\Document;
-use App\Models\DocumentChunk;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
@@ -34,9 +32,9 @@ class PdfTransformerTest extends TestCase
         $pages = 10;
 
         $this->assertCount(10, DB::table('document_chunks')
-        ->where("section_number", 0)
-        ->where("document_id", $this->document->id)
-        ->get());
+            ->where('section_number', 0)
+            ->where('document_id', $this->document->id)
+            ->get());
 
         Bus::assertBatchCount(1);
 

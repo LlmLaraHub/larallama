@@ -39,7 +39,7 @@ class PowerPointTransformer
 
             $chunked_chunks = TextChunker::handle($content);
 
-            foreach($chunked_chunks as $chunkSection => $chunkContent) {
+            foreach ($chunked_chunks as $chunkSection => $chunkContent) {
                 $DocumentChunk = DocumentChunk::updateOrCreate(
                     [
                         'document_id' => $this->document->id,
@@ -52,19 +52,17 @@ class PowerPointTransformer
                         'meta_data' => $dto->toArray(),
                     ]
                 );
-    
+
                 $chunks[] = [
                     new VectorlizeDataJob($DocumentChunk),
                     new SummarizeDataJob($DocumentChunk),
                 ];
             }
 
-
             $results->next();
         }
 
         notify_collection_ui($document->collection, CollectionStatusEnum::PROCESSING, 'Processing Document');
-
 
         Log::info('PowerPointTransformer:handle', ['chunks' => count($chunks)]);
 
