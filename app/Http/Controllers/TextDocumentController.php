@@ -6,6 +6,7 @@ use App\Domains\Collections\CollectionStatusEnum;
 use App\Domains\Documents\StatusEnum;
 use App\Domains\Documents\TypesEnum;
 use App\Events\CollectionStatusEvent;
+use App\Helpers\TextChunker;
 use App\Jobs\SummarizeDataJob;
 use App\Jobs\SummarizeDocumentJob;
 use App\Jobs\VectorlizeDataJob;
@@ -36,39 +37,23 @@ class TextDocumentController extends Controller
             'status_summary' => StatusEnum::Pending,
         ]);
 
-        $chunks = [];
-
-        $page_number = 0;
-
-        $prompt = <<<EOT
-Can you take the following text and break it up into smaller chunks no bigger than 256 characters. The 
-size of the chunks should be more about the quality of the content so that when I vectorize the data and save
-as document_chunks it will still have some meaning. Please return each chunk in an json array like 
-[ "chunk 1", "chunk 2" ] no other surrounding text just json so I can decodd it with PHP: 
-
-### START TEXT TO CHUNK
-{$validated['content']}
-### END TEXT TO CHUNK
-EOT;
-
-        $chunks = LlmDriverFacade::driver($collection->getDriver())
-            ->completion($prompt);
 
         $jobs = [];
+        $page_number = 1;
+        $chunked_chunks = TextChunker::handle($validated['content']);
+        foreach($chunked_chunks as $chunkSection => $chunkContent) {
 
-        $decoded = json_decode($chunks->content);
-
-        foreach ($decoded as $chunk) {
             try {
-                $page_number = $page_number + 1;
-                $guid = Str::uuid();
+                $guid = md5($chunkContent);
                 $DocumentChunk = DocumentChunk::updateOrCreate(
                     [
-                        'guid' => $guid,
                         'document_id' => $document->id,
+                        'sort_order' => $page_number,
+                        'section_number' => $chunkSection,
                     ],
                     [
-                        'content' => $chunk,
+                        'guid' => $guid,
+                        'content' => $chunkContent,
                         'sort_order' => $page_number,
                     ]
                 );
@@ -87,7 +72,9 @@ EOT;
             } catch (\Exception $e) {
                 Log::error('Error parsing PDF', ['error' => $e->getMessage()]);
             }
+
         }
+
 
         Bus::batch($jobs)
             ->name("Chunking Document - $document->file_path")
