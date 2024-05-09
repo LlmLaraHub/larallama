@@ -17,6 +17,7 @@ class PromptHistoryTest extends TestCase
         $this->assertNotNull($model->collection->id);
         $this->assertNotNull($model->collection->prompt_history);
         $this->assertNotNull($model->message->id);
+        $this->assertNotNull($model->message->prompt_histories);
 
     }
 }

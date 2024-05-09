@@ -2,6 +2,7 @@
 
 import { TabGroup, TabList, Tab, TabPanels, TabPanel, TransitionRoot } from '@headlessui/vue'
 import ReferenceTable from './Components/ReferenceTable.vue'
+import History from './Components/History.vue'
 
 const props = defineProps({
     message: Object
@@ -48,6 +49,9 @@ const props = defineProps({
                                 <span>Sources</span> <div class="text-xs text-white rounded-full bg-indigo-600 h-4 w-6 text-center">{{ message?.message_document_references.length}}</div>
                             </div>
                         </Tab>
+                        <Tab as="div" v-slot="{ selected }">
+                            <div :class="{ 'underline text-gray-800': selected }" class="hover:cursor-pointer m4-2 text-gray-500">Prompt History</div>
+                        </Tab>
                     </TabList>
                     <TabPanels  v-auto-animate>
                         <TabPanel>
@@ -69,6 +73,15 @@ const props = defineProps({
                                 <div>
                                     <div class="overflow-x-auto">
                                         <ReferenceTable :message="message" />   
+                                    </div>
+                                </div>
+                            </div>
+                        </TabPanel>
+                        <TabPanel>
+                            <div class="min-w-full">
+                                <div>
+                                    <div class="overflow-x-auto">
+                                        <History :message="message" />
                                     </div>
                                 </div>
                             </div>

@@ -23,6 +23,7 @@ class MessageResource extends JsonResource
             'collection_id' => $this->chat->chatable_id,
             'body_markdown' => str($this->body)->markdown(),
             'diff_for_humans' => $this->created_at->diffForHumans(),
+            'prompt_histories' => PromptHistoryResource::collection($this->prompt_histories),
             'message_document_references' => MessageDocumentReferenceResource::collection(
                 $this->message_document_references()->orderBy('distance', 'asc')->limit(10)->get()),
         ];

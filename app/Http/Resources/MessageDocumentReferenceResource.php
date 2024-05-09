@@ -26,7 +26,7 @@ class MessageDocumentReferenceResource extends JsonResource
             'distance' => round($this->distance, 2),
             'document_chunk_id' => $this->document_chunk_id,
             'section_number' => $this->document_chunk?->section_number + 1, //since 0 does not look good in the ui
-            'summary' => str($this->document_chunk?->summary)->markdown(),
+            'summary' => str($this->document_chunk?->content)->markdown(),
             'taggings' => $tags,
         ];
     }
