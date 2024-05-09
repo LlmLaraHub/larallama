@@ -85,6 +85,25 @@ you will see some are better at chat, some at large context, some at code etc. L
 Looking in the `config/llmdriver.php` you can see the options in there.
 
 
+## Pulling down the latest code
+
+When you pull down a branch or new code always do the following:
+
+```bash
+git fetch
+git checkout {branch}
+git pull origin {branch}
+composer install
+npm install
+php artisan pennant:purge
+php artisan optimize:clear
+php artisan migrate
+```
+
+Since most changes will be breaking consider starting a new collection (releases will come soon but this is stil 0.0.x)
+
+
+
 
 
 ## Road Map (still in motion)
