@@ -1,11 +1,12 @@
-<?php 
+<?php
 
 namespace LlmLaraHub\LlmDriver\Prompts;
 
-class SummarizeCollectionPrompt {
-
-    public static function prompt(string $context) : string {
-  return <<<PROMPT
+class SummarizeCollectionPrompt
+{
+    public static function prompt(string $context): string
+    {
+        return <<<PROMPT
   # **Role, Task, Format (R.T.F)**
   **Role**: You are a summarization agent within the Retrieval Augmented Generation system (RAG). Your role is to provide concise summaries of extensive text data from multiple documents.
   **Task**: Summarize the entirety of the content provided from a collection of documents.

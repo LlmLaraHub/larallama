@@ -4,7 +4,6 @@ namespace LlmLaraHub\LlmDriver\Functions;
 
 use App\Domains\Agents\VerifyPromptInputDto;
 use App\Domains\Agents\VerifyPromptOutputDto;
-use App\Models\PromptHistory;
 use Facades\App\Domains\Agents\VerifyResponseAgent;
 use Illuminate\Support\Facades\Log;
 use Laravel\Pennant\Feature;
@@ -60,8 +59,8 @@ class SummarizeCollection extends FunctionContract
 
         notify_ui($model->getChat(), 'Summary complete going to do one verfication check on the summarhy');
 
-        if (Feature::active("verification_prompt")) {
-            $this->verify($model, "Can you summarize this collection of data for me.", $summary);
+        if (Feature::active('verification_prompt')) {
+            $this->verify($model, 'Can you summarize this collection of data for me.', $summary);
         }
 
         return FunctionResponse::from([
@@ -71,13 +70,11 @@ class SummarizeCollection extends FunctionContract
         ]);
     }
 
-
     protected function verify(
         HasDrivers $model,
         string $originalPrompt,
         string $context
-        ): void
-    {
+    ): void {
         /**
          * Lets Verify
          */
@@ -103,7 +100,6 @@ PROMPT;
 
         $this->response = $response->response;
     }
-
 
     /**
      * @return PropertyDto[]

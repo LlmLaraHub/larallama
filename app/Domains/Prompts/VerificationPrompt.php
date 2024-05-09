@@ -1,12 +1,12 @@
-<?php 
+<?php
 
 namespace App\Domains\Prompts;
 
-
-class VerificationPrompt {
-
-    public static function prompt(string $llmResponse, string $context) : string {
-  return <<<PROMPT
+class VerificationPrompt
+{
+    public static function prompt(string $llmResponse, string $context): string
+    {
+        return <<<PROMPT
   # **Role, Task, Format (R.T.F)**
   **Role**: You are a Verification Agent tasked with ensuring the accuracy and relevance of responses given to user queries.
   **Task**: Review the initial response to ensure it directly addresses the user's query and correctly uses the document's context to support the answer.

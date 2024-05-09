@@ -46,7 +46,7 @@ class OrchestrateTest extends TestCase
                         FunctionResponse::from(
                             [
                                 'content' => 'This is the summary of the collection',
-                                'prompt' => 'TLDR it for me'
+                                'prompt' => 'TLDR it for me',
                             ])
                     );
             })

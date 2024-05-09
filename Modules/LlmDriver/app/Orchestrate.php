@@ -3,7 +3,6 @@
 namespace LlmLaraHub\LlmDriver;
 
 use App\Domains\Messages\RoleEnum;
-use App\Events\ChatUiUpdateEvent;
 use App\Models\Chat;
 use App\Models\PromptHistory;
 use Facades\App\Domains\Messages\SearchAndSummarizeChatRepo;
@@ -69,7 +68,7 @@ class Orchestrate
                         role: RoleEnum::Assistant,
                         show_in_thread: true);
 
-                    if($response->prompt) {
+                    if ($response->prompt) {
                         PromptHistory::create([
                             'prompt' => $response->prompt,
                             'chat_id' => $chat->id,
@@ -84,7 +83,7 @@ class Orchestrate
                     'content' => $response->content,
                 ]));
 
-                notify_ui($chat, 'The Agent has completed the task going to the final step now');                    
+                notify_ui($chat, 'The Agent has completed the task going to the final step now');
 
                 $this->response = $response->content;
                 $this->requiresFollowup = $response->requires_follow_up_prompt;
@@ -107,7 +106,7 @@ class Orchestrate
                     show_in_thread: true);
 
                 notify_ui($chat, 'Functions and Agents have completed their tasks, results will appear shortly');
-                
+
                 $this->response = $results->content;
             }
 

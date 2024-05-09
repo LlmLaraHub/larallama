@@ -12,19 +12,18 @@ class PromptHistory extends Model
 
     protected $guarded = [];
 
-    public function chat() : BelongsTo
+    public function chat(): BelongsTo
     {
         return $this->belongsTo(Chat::class);
     }
 
-    public function message() : BelongsTo
+    public function message(): BelongsTo
     {
         return $this->belongsTo(Message::class);
     }
 
-    public function collection() : BelongsTo
+    public function collection(): BelongsTo
     {
         return $this->belongsTo(Collection::class);
     }
-
 }

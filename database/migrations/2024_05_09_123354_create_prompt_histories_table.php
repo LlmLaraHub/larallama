@@ -16,7 +16,7 @@ return new class extends Migration
     {
         Schema::create('prompt_histories', function (Blueprint $table) {
             $table->id();
-            $table->longText("prompt");
+            $table->longText('prompt');
             $table->foreignIdFor(Chat::class);
             $table->foreignIdFor(Collection::class);
             $table->foreignIdFor(Message::class)->nullable(); //might not always lead to one

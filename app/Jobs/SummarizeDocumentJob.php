@@ -7,7 +7,6 @@ use App\Domains\Agents\VerifyPromptOutputDto;
 use App\Domains\Collections\CollectionStatusEnum;
 use App\Domains\Documents\StatusEnum;
 use App\Domains\Prompts\SummarizeDocumentPrompt;
-use App\Events\CollectionStatusEvent;
 use App\Models\Document;
 use Facades\App\Domains\Agents\VerifyResponseAgent;
 use Illuminate\Bus\Batchable;
@@ -25,7 +24,6 @@ use LlmLaraHub\LlmDriver\Responses\CompletionResponse;
 class SummarizeDocumentJob implements ShouldQueue
 {
     use Batchable, Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-
 
     protected string $results = '';
 
@@ -65,23 +63,23 @@ class SummarizeDocumentJob implements ShouldQueue
 
         $this->results = $results->content;
 
-        if(Feature::active("verification_prompt_summary")) {
+        if (Feature::active('verification_prompt_summary')) {
 
             $verifyPrompt = <<<'PROMPT'
             This the content from all the documents in this collection.
             Then that was passed into the LLM to summarize the results.
             PROMPT;
-    
+
             $dto = VerifyPromptInputDto::from(
                 [
                     'chattable' => $this->document->collection,
                     'originalPrompt' => $prompt,
                     'context' => $content,
-                    'llmResponse' =>  $this->results,
+                    'llmResponse' => $this->results,
                     'verifyPrompt' => $verifyPrompt,
                 ]
             );
-    
+
             /** @var VerifyPromptOutputDto $response */
             $response = VerifyResponseAgent::verify($dto);
 

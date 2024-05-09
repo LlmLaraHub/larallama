@@ -5,7 +5,6 @@ namespace App\Domains\Documents\Transformers;
 use App\Domains\Collections\CollectionStatusEnum;
 use App\Domains\UnStructured\StructuredDto;
 use App\Helpers\TextChunker;
-use App\Jobs\SummarizeDataJob;
 use App\Jobs\VectorlizeDataJob;
 use App\Models\Document;
 use App\Models\DocumentChunk;

@@ -81,5 +81,4 @@ EOT;
 
         $this->assertCount(10, $documentChunk->document->refresh()->tags);
     }
-
 }

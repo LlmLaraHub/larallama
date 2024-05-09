@@ -67,7 +67,6 @@ class SearchAndSummarizeChatRepo
             context: $context
         );
 
-
         $chat->addInput(
             message: $contentFlattened,
             role: RoleEnum::Assistant,
@@ -90,15 +89,13 @@ class SearchAndSummarizeChatRepo
             $chat->chatable->getDriver()
         )->completion($contentFlattened);
 
-
-
         $this->response = $response->content;
 
         Log::info('[LaraChain] Summary Results before verification', [
             'response' => $this->response,
         ]);
 
-        if (Feature::active("verification_prompt")) {
+        if (Feature::active('verification_prompt')) {
             $this->verify($chat, $originalPrompt, $context);
         }
 
@@ -108,7 +105,8 @@ class SearchAndSummarizeChatRepo
             'prompt' => $contentFlattened,
             'chat_id' => $chat->id,
             'message_id' => $message->id,
-            'collection_id' => $chat->getChatable()->id,
+            /** @phpstan-ignore-next-line */
+            'collection_id' => $chat->getChatable()?->id,
         ]);
 
         $this->saveDocumentReference($message, $documentChunkResults);
@@ -140,9 +138,9 @@ class SearchAndSummarizeChatRepo
         $response = VerifyResponseAgent::verify($dto);
 
         $this->response = $response->response;
-        
+
         Log::info('[LaraChain] Verification', [
-            'output' =>  $this->response,
+            'output' => $this->response,
         ]);
     }
 }

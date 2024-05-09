@@ -1,12 +1,12 @@
-<?php 
+<?php
 
 namespace App\Domains\Prompts;
 
-
-class SummarizeDocumentPrompt {
-
-    public static function prompt(string $documentContent) : string {
-  return <<<PROMPT
+class SummarizeDocumentPrompt
+{
+    public static function prompt(string $documentContent): string
+    {
+        return <<<PROMPT
   # **Role, Task, Format (R.T.F)**
   **Role**: You are a summarization agent tasked with distilling content from a larger document into a brief, clear summary.
   **Task**: Generate a concise 4-10 line summary of the provided content, focusing on capturing the essence of the text.

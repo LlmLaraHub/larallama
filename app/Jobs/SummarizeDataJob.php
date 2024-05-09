@@ -49,10 +49,10 @@ class SummarizeDataJob implements ShouldQueue
                 $this->documentChunk->update([
                     'status_summary' => StatusEnum::Cancelled,
                 ]);
-    
+
                 return;
             }
-            
+
             $content = $this->documentChunk->content;
             $prompt = <<<EOD
     The following content is part of a larger document. I would like you to summarize it so 
@@ -62,17 +62,17 @@ class SummarizeDataJob implements ShouldQueue
     
     $content
     EOD;
-    
+
             /** @var CompletionResponse $results */
             $results = LlmDriverFacade::driver(
                 $this->documentChunk->getDriver()
             )->completion($prompt);
-    
+
             $verifyPrompt = <<<'PROMPT'
             This the content from a chunk of data in a document.
             Can you verify the summary is correct?
             PROMPT;
-    
+
             $dto = VerifyPromptInputDto::from(
                 [
                     'chattable' => $this->documentChunk,
@@ -82,18 +82,19 @@ class SummarizeDataJob implements ShouldQueue
                     'verifyPrompt' => $verifyPrompt,
                 ]
             );
-    
+
             /** @var VerifyPromptOutputDto $response */
             $response = VerifyResponseAgent::verify($dto);
-    
+
             $this->documentChunk->update([
                 'summary' => $response->response,
                 'status_summary' => StatusEnum::Complete,
             ]);
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             Log::error('SummarizeDataJob Error', [
                 'message' => $e->getMessage(),
             ]);
+
             return;
         }
     }

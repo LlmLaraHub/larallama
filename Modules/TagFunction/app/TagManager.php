@@ -19,13 +19,12 @@ class TagManager
 
     protected string $tagsAsString = '';
 
-
     public function handle(Document $document): void
     {
-        if(!$document->summary) {
+        if (! $document->summary) {
             return;
         }
-        
+
         Log::info('[LaraChain] TagManager Tagging document');
         $summary = $document->summary;
         $prompt = <<<EOT
@@ -47,15 +46,14 @@ EOT;
 
         $this->tagsAsString = $response->content;
 
-
-        if(Feature::active("verification_prompt_tags")) {
+        if (Feature::active('verification_prompt_tags')) {
             $verifyPrompt = <<<'PROMPT'
             This was the response from the LLM to get Tags from the content.
             Please verify the json is good if not fix it so what you return is just JSON
             and remove from tags any text that is not needed and any
             tags that are not correct.
             PROMPT;
-    
+
             $dto = VerifyPromptInputDto::from(
                 [
                     'chattable' => $document,
@@ -65,22 +63,19 @@ EOT;
                     'verifyPrompt' => $verifyPrompt,
                 ]
             );
-    
+
             /** @var VerifyPromptOutputDto $response */
             $response = VerifyResponseAgent::verify($dto);
-    
+
             $this->tagsAsString = $response->response;
-            
+
         }
-        
 
         $this->tags = collect(explode(',', $this->tagsAsString));
 
-            
         $this->tags->map(function ($tag) use ($document) {
             $document->addTag($tag);
         });
-
 
         notify_collection_ui($document->collection, CollectionStatusEnum::PROCESSING, 'Tags added');
     }

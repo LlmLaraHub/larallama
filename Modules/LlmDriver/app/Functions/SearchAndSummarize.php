@@ -3,6 +3,7 @@
 namespace LlmLaraHub\LlmDriver\Functions;
 
 use App\Domains\Agents\VerifyPromptInputDto;
+use App\Domains\Agents\VerifyPromptOutputDto;
 use App\Domains\Messages\RoleEnum;
 use App\Domains\Prompts\SummarizePrompt;
 use Facades\App\Domains\Agents\VerifyResponseAgent;
@@ -16,7 +17,6 @@ use LlmLaraHub\LlmDriver\Requests\MessageInDto;
 use LlmLaraHub\LlmDriver\Responses\CompletionResponse;
 use LlmLaraHub\LlmDriver\Responses\EmbeddingsResponseDto;
 use LlmLaraHub\LlmDriver\Responses\FunctionResponse;
-use App\Domains\Agents\VerifyPromptOutputDto;
 
 class SearchAndSummarize extends FunctionContract
 {
@@ -115,11 +115,11 @@ class SearchAndSummarize extends FunctionContract
 
         $this->response = $response->content;
 
-        if (Feature::active("verification_prompt")) {
+        if (Feature::active('verification_prompt')) {
             $this->verify($model, $originalPrompt, $context);
         }
 
-        $message = $model->getChat()->addInput( $this->response, RoleEnum::Assistant);
+        $message = $model->getChat()->addInput($this->response, RoleEnum::Assistant);
 
         $this->saveDocumentReference($message, $documentChunkResults);
 
@@ -137,8 +137,7 @@ class SearchAndSummarize extends FunctionContract
         HasDrivers $model,
         string $originalPrompt,
         string $context
-        ): void
-    {
+    ): void {
         /**
          * Lets Verify
          */

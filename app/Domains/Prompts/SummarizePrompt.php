@@ -1,12 +1,12 @@
-<?php 
+<?php
 
 namespace App\Domains\Prompts;
 
-
-class SummarizePrompt {
-
-    public static function prompt(string $originalPrompt, string $context) : string {
-  return <<<PROMPT
+class SummarizePrompt
+{
+    public static function prompt(string $originalPrompt, string $context): string
+    {
+        return <<<PROMPT
   # **Role, Task, Format (R.T.F)**
   **Role**: You are the core Agent of the Retrieval Augmented Generation system (RAG). Your primary role is to respond to user queries accurately by interpreting and synthesizing relevant information from provided documents.
   **Task**: Prioritize the user’s query to guide your response, using the context from the documents to support and inform your answer.

@@ -78,7 +78,7 @@ class ChatController extends Controller
             $response = LlmDriverFacade::driver($chat->getDriver())->completion($prompt);
             $response = $response->content;
 
-            if(Feature::active("verification_prompt")) {
+            if (Feature::active('verification_prompt')) {
                 $dto = VerifyPromptInputDto::from(
                     [
                         'chattable' => $chat,
@@ -89,11 +89,10 @@ class ChatController extends Controller
                     ]
                 );
 
-                 /** @var VerifyPromptOutputDto $response */
+                /** @var VerifyPromptOutputDto $response */
                 $response = VerifyResponseAgent::verify($dto);
                 $response = $response->response;
             }
-
 
             notify_ui($chat, 'We are verifying the completion back shortly');
 

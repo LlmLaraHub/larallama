@@ -7,7 +7,6 @@ use App\Domains\Documents\StatusEnum;
 use App\Domains\Documents\TypesEnum;
 use App\Events\CollectionStatusEvent;
 use App\Helpers\TextChunker;
-use App\Jobs\SummarizeDataJob;
 use App\Jobs\SummarizeDocumentJob;
 use App\Jobs\VectorlizeDataJob;
 use App\Models\Collection;
