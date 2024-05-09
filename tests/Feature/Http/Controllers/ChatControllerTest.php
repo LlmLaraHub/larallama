@@ -50,7 +50,7 @@ class ChatControllerTest extends TestCase
 
         LlmDriverFacade::shouldReceive('driver->completion')->once()->andReturn($firstResponse);
 
-        VerifyResponseAgent::shouldReceive('verify')->once()->andReturn(
+        VerifyResponseAgent::shouldReceive('verify')->never()->andReturn(
             VerifyPromptOutputDto::from(
                 [
                     'chattable' => $chat,
@@ -74,7 +74,7 @@ class ChatControllerTest extends TestCase
         $this->assertDatabaseCount('messages', 2);
         $message = Message::where('role', RoleEnum::Assistant)->first();
 
-        $this->assertEquals('verified yay!', $message->body);
+        $this->assertEquals('test', $message->body);
     }
 
     public function test_a_function_based_chat()

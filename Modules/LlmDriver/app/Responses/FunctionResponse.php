@@ -11,6 +11,7 @@ class FunctionResponse extends \Spatie\LaravelData\Data
 {
     public function __construct(
         public string $content,
+        public string $prompt = '',
         public bool $requires_follow_up_prompt = false,
         public bool $save_to_message = true
     ) {

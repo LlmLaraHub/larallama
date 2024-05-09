@@ -16,6 +16,7 @@ use LlmLaraHub\LlmDriver\Requests\MessageInDto;
 use LlmLaraHub\LlmDriver\Responses\CompletionResponse;
 use LlmLaraHub\LlmDriver\Responses\EmbeddingsResponseDto;
 use LlmLaraHub\LlmDriver\Responses\FunctionResponse;
+use App\Domains\Agents\VerifyPromptOutputDto;
 
 class SearchAndSummarize extends FunctionContract
 {
@@ -25,14 +26,16 @@ class SearchAndSummarize extends FunctionContract
 
     protected string $description = 'Used to embed users prompt, search database and return summarized results.';
 
+    protected string $response = '';
+
     /**
      * @param  MessageInDto[]  $messageArray
      */
     public function handle(
         array $messageArray,
         HasDrivers $model,
-        FunctionCallDto $functionCallDto): FunctionResponse
-    {
+        FunctionCallDto $functionCallDto
+    ): FunctionResponse {
         Log::info('[LaraChain] Using Function: SearchAndSummarize');
 
         /**
@@ -110,6 +113,32 @@ class SearchAndSummarize extends FunctionContract
             $model->getChatable()->getDriver()
         )->completion($contentFlattened);
 
+        $this->response = $response->content;
+
+        if (Feature::active("verification_prompt")) {
+            $this->verify($model, $originalPrompt, $context);
+        }
+
+        $message = $model->getChat()->addInput( $this->response, RoleEnum::Assistant);
+
+        $this->saveDocumentReference($message, $documentChunkResults);
+
+        notify_ui($model->getChat(), 'Complete');
+
+        return FunctionResponse::from(
+            [
+                'content' => $this->response,
+                'save_to_message' => false,
+            ]
+        );
+    }
+
+    protected function verify(
+        HasDrivers $model,
+        string $originalPrompt,
+        string $context
+        ): void
+    {
         /**
          * Lets Verify
          */
@@ -123,7 +152,7 @@ PROMPT;
                 'chattable' => $model->getChat(),
                 'originalPrompt' => $originalPrompt,
                 'context' => $context,
-                'llmResponse' => $response->content,
+                'llmResponse' => $this->response,
                 'verifyPrompt' => $verifyPrompt,
             ]
         );
@@ -133,18 +162,7 @@ PROMPT;
         /** @var VerifyPromptOutputDto $response */
         $response = VerifyResponseAgent::verify($dto);
 
-        $message = $model->getChat()->addInput($response->response, RoleEnum::Assistant);
-
-        $this->saveDocumentReference($message, $documentChunkResults);
-
-        notify_ui($model->getChat(), 'Complete');
-
-        return FunctionResponse::from(
-            [
-                'content' => $response->response,
-                'save_to_message' => false,
-            ]
-        );
+        $this->response = $response->response;
     }
 
     /**

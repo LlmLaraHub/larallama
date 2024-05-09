@@ -35,5 +35,10 @@ class AppServiceProvider extends ServiceProvider
             return false;
         });
 
+
+        Feature::define('verification_prompt', function (User $user) {
+            return false;
+        });
+
     }
 }

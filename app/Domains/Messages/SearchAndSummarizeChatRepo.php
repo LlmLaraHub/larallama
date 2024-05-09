@@ -7,6 +7,7 @@ use App\Domains\Agents\VerifyPromptOutputDto;
 use App\Domains\Prompts\SummarizePrompt;
 use App\Models\Chat;
 use App\Models\DocumentChunk;
+use App\Models\PromptHistory;
 use Facades\App\Domains\Agents\VerifyResponseAgent;
 use Facades\LlmLaraHub\LlmDriver\DistanceQuery;
 use Illuminate\Support\Facades\Log;
@@ -19,6 +20,8 @@ use LlmLaraHub\LlmDriver\Responses\EmbeddingsResponseDto;
 class SearchAndSummarizeChatRepo
 {
     use CreateReferencesTrait;
+
+    protected string $response = '';
 
     public function search(Chat $chat, string $input): string
     {
@@ -72,6 +75,7 @@ class SearchAndSummarizeChatRepo
             show_in_thread: false
         );
 
+        /** @TODO coming back to chat shorly just moved to completion to focus on prompt */
         $latestMessagesArray = $chat->getChatResponse();
 
         Log::info('[LaraChain] Getting the Summary', [
@@ -86,24 +90,46 @@ class SearchAndSummarizeChatRepo
             $chat->chatable->getDriver()
         )->completion($contentFlattened);
 
+
+
+        $this->response = $response->content;
+
         Log::info('[LaraChain] Summary Results before verification', [
-            'response' => $response->content,
+            'response' => $this->response,
         ]);
 
-        /**
-         * Lets Verify
-         */
+        if (Feature::active("verification_prompt")) {
+            $this->verify($chat, $originalPrompt, $context);
+        }
+
+        $message = $chat->addInput($this->response, RoleEnum::Assistant);
+
+        PromptHistory::create([
+            'prompt' => $contentFlattened,
+            'chat_id' => $chat->id,
+            'message_id' => $message->id,
+            'collection_id' => $chat->getChatable()->id,
+        ]);
+
+        $this->saveDocumentReference($message, $documentChunkResults);
+        notify_ui($chat, 'Complete');
+
+        return $this->response;
+    }
+
+    protected function verify(Chat $chat, string $originalPrompt, string $context): void
+    {
         $verifyPrompt = <<<'EOD'
-This is the results from a Vector search based on the Users Prompt.
-Then that was passed into the LLM to summarize the results.
-EOD;
+        This is the results from a Vector search based on the Users Prompt.
+        Then that was passed into the LLM to summarize the results.
+        EOD;
 
         $dto = VerifyPromptInputDto::from(
             [
                 'chattable' => $chat,
                 'originalPrompt' => $originalPrompt,
                 'context' => $context,
-                'llmResponse' => $response->content,
+                'llmResponse' => $this->response,
                 'verifyPrompt' => $verifyPrompt,
             ]
         );
@@ -113,15 +139,10 @@ EOD;
         /** @var VerifyPromptOutputDto $response */
         $response = VerifyResponseAgent::verify($dto);
 
+        $this->response = $response->response;
+        
         Log::info('[LaraChain] Verification', [
-            'output' => $response->response,
+            'output' =>  $this->response,
         ]);
-
-        $message = $chat->addInput($response->response, RoleEnum::Assistant);
-
-        $this->saveDocumentReference($message, $documentChunkResults);
-        notify_ui($chat, 'Complete');
-
-        return $response->response;
     }
 }

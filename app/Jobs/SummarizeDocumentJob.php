@@ -75,7 +75,7 @@ class SummarizeDocumentJob implements ShouldQueue
             $dto = VerifyPromptInputDto::from(
                 [
                     'chattable' => $this->document->collection,
-                    'originalPrompt' => $intro,
+                    'originalPrompt' => $prompt,
                     'context' => $content,
                     'llmResponse' =>  $this->results,
                     'verifyPrompt' => $verifyPrompt,
@@ -88,10 +88,9 @@ class SummarizeDocumentJob implements ShouldQueue
             $this->results = $response->response;
 
         }
-        
 
         $this->document->update([
-            'summary' => $response->response,
+            'summary' => $this->results,
             'status_summary' => StatusEnum::Complete,
         ]);
 

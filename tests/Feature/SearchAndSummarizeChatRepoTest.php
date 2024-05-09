@@ -45,7 +45,7 @@ class SearchAndSummarizeChatRepoTest extends TestCase
             'chatable_id' => $collection->id,
         ]);
 
-        VerifyResponseAgent::shouldReceive('verify')->once()->andReturn(
+        VerifyResponseAgent::shouldReceive('verify')->never()->andReturn(
             VerifyPromptOutputDto::from(
                 [
                     'chattable' => $chat,
@@ -73,6 +73,7 @@ class SearchAndSummarizeChatRepoTest extends TestCase
 
         $this->assertNotNull($results);
         $this->assertDatabaseCount('message_document_references', 3);
+        $this->assertDatabaseCount('prompt_histories', 1);
 
     }
 }

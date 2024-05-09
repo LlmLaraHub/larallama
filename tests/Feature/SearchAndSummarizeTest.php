@@ -87,7 +87,7 @@ class SearchAndSummarizeTest extends TestCase
             ->once()
             ->andReturn(DocumentChunk::all());
 
-        VerifyResponseAgent::shouldReceive('verify')->once()->andReturn(
+        VerifyResponseAgent::shouldReceive('verify')->never()->andReturn(
             VerifyPromptOutputDto::from(
                 [
                     'chattable' => $chat,

@@ -36,11 +36,11 @@ class SummarizeDocumentJobTest extends TestCase
             'collection_id' => $collection->id,
         ]);
 
-        $this->fakeVerify($chat);
+        //$this->fakeVerify($chat);
 
         $job = new SummarizeDocumentJob($document);
         $job->handle();
 
-        $this->assertEquals('verified yay!', $document->refresh()->summary);
+        $this->assertEquals('Foo bar', $document->refresh()->summary);
     }
 }

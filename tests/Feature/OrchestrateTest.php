@@ -43,7 +43,11 @@ class OrchestrateTest extends TestCase
                 $mock->shouldReceive('handle')
                     ->once()
                     ->andReturn(
-                        FunctionResponse::from(['content' => 'This is the summary of the collection'])
+                        FunctionResponse::from(
+                            [
+                                'content' => 'This is the summary of the collection',
+                                'prompt' => 'TLDR it for me'
+                            ])
                     );
             })
         );
@@ -66,5 +70,7 @@ class OrchestrateTest extends TestCase
         Event::assertDispatched(ChatUiUpdateEvent::class);
 
         $this->assertEquals($results, 'This is the summary of the collection');
+
+        $this->assertDatabaseCount('prompt_histories', 1);
     }
 }
