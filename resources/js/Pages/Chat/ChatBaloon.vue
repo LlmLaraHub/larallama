@@ -69,7 +69,7 @@ const props = defineProps({
                             </div>
                         </TabPanel>
                         <TabPanel>
-                            <div class="min-w-full">
+                            <div class="min-w-full border border-gray-400 p-4 mt-2 shadow-lg rounded-md">
                                 <div>
                                     <div class="overflow-x-auto">
                                         <ReferenceTable :message="message" />   
@@ -78,7 +78,7 @@ const props = defineProps({
                             </div>
                         </TabPanel>
                         <TabPanel>
-                            <div class="min-w-full">
+                            <div class="min-w-full border border-gray-400 p-4 mt-2 shadow-lg rounded-md">
                                 <div>
                                     <div class="overflow-x-auto">
                                         <History :message="message" />
