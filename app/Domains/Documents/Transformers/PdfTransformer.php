@@ -20,6 +20,8 @@ class PdfTransformer
 {
     protected Document $document;
 
+    protected string $content = '';
+
     public function handle(Document $document): Document
     {
         $this->document = $document;

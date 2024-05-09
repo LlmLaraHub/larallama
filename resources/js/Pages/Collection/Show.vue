@@ -73,7 +73,9 @@ onMounted(() => {
             router.reload({ only: ['documents'] })
             let message = e.message;
             if (message) {
-                toast.info(message)
+                if(message !== 'Processing Document') {
+                    toast.info(message)
+                }
             }
         });
 });
