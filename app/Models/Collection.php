@@ -101,7 +101,7 @@ class Collection extends Model implements HasDrivers, TaggableContract
     {
         $systemPrompt = config('llmlarahub.collection.system_prompt');
         $prompt = <<<EOD
-{$systemPrompt}: 
+{$systemPrompt}:
 {$this->description}
 EOD;
 
@@ -111,6 +111,11 @@ EOD;
     public function sources(): HasMany
     {
         return $this->hasMany(Source::class);
+    }
+
+    public function outputs(): HasMany
+    {
+        return $this->hasMany(Output::class);
     }
 
     public function prompt_history(): HasMany
