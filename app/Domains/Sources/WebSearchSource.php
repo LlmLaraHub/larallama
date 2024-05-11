@@ -24,15 +24,6 @@ class WebSearchSource extends BaseSource
             $limit = data_get($meta_data, 'limit', 5);
             $driver = data_get($meta_data, 'driver', 'mock');
 
-            $prompt = SearchPrompt::prompt($search);
-
-            Log::info('[LaraChain] Asking LLM to optimize search query');
-
-            $response = LlmDriverFacade::driver($source->getDriver())
-                ->completion($prompt);
-
-            $search = $response->content;
-
             Log::info('[LaraChain] Starting web search ', [
                 'content reworked' => $search,
             ]);
@@ -69,7 +60,7 @@ class WebSearchSource extends BaseSource
             notify_collection_ui(
                 collection: $source->collection,
                 status: CollectionStatusEnum::PENDING,
-                message: "Search complete getting results from each page"
+                message: 'Search complete getting results from each page'
             );
 
         } catch (\Exception $e) {

@@ -8,7 +8,7 @@ class SummarizePrompt
 {
     public static function prompt(string $originalPrompt, string $context): string
     {
-        Log::info("[LaraChain] - SummarizePrompt");
+        Log::info('[LaraChain] - SummarizePrompt');
 
         return <<<PROMPT
   # **Role, Task, Format (R.T.F)**
