@@ -8,7 +8,7 @@ class SummarizeDocumentPrompt
 {
     public static function prompt(string $documentContent): string
     {
-        Log::info("[LaraChain] - SummarizeDocumentPrompt");
+        Log::info('[LaraChain] - SummarizeDocumentPrompt');
 
         return <<<PROMPT
 # **Task, Action, Goal (T.A.G)**

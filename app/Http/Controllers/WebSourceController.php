@@ -38,11 +38,38 @@ class WebSourceController extends Controller
             'details' => $validated['details'],
             'collection_id' => $collection->id,
             'type' => SourceTypeEnum::WebSearchSource,
-            'meta_data' => [],
+            'meta_data' => [
+                'driver' => 'brave',
+                'limit' => 5,
+            ],
         ]);
 
-        request()->session()->flash('flas.banner', 'Web source added successfully');
+        request()->session()->flash('flash.banner', 'Web source added successfully');
 
         return to_route('collections.sources.index', $collection);
+    }
+
+    public function edit(Collection $collection, Source $source)
+    {
+
+        return inertia('Sources/WebSource/Edit', [
+            'source' => $source,
+            'collection' => new CollectionResource($source->collection),
+        ]);
+    }
+
+    public function update(Collection $collection, Source $source)
+    {
+
+        $validated = request()->validate([
+            'title' => 'required|string',
+            'details' => 'required|string',
+        ]);
+
+        $source->update($validated);
+
+        request()->session()->flash('flash.banner', 'Updated');
+
+        return back();
     }
 }

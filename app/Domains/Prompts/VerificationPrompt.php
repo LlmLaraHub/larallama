@@ -8,7 +8,7 @@ class VerificationPrompt
 {
     public static function prompt(string $llmResponse, string $context): string
     {
-        Log::info("[LaraChain] - VerificationPrompt");
+        Log::info('[LaraChain] - VerificationPrompt');
 
         return <<<PROMPT
   # **Role, Task, Format (R.T.F)**

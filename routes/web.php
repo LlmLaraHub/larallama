@@ -53,6 +53,10 @@ Route::middleware([
                 ->name('collections.sources.websearch.create');
             Route::post('/collections/{collection}/sources/websearch', 'store')
                 ->name('collections.sources.websearch.store');
+            Route::get('/collections/{collection}/sources/websearch/{source}/edit', 'edit')
+                ->name('collections.sources.websearch.edit');
+            Route::put('/collections/{collection}/sources/websearch/{source}/update', 'update')
+                ->name('collections.sources.websearch.update');
         }
     );
 

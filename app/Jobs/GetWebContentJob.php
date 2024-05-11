@@ -64,23 +64,23 @@ class GetWebContentJob implements ShouldQueue
             ]
         );
 
-        Log::info("[Larachain] GetWebContentJob - {$this->source->title} - URL: {$this->webResponseDto->url}");
+        Log::info("[LaraChain] GetWebContentJob - {$this->source->title} - URL: {$this->webResponseDto->url}");
         $html = GetPage::make($this->source->collection)->handle($this->webResponseDto->url);
 
+        /**
+         * @NOTE
+         * making them PDF for now
+         * I ran into "noise" issues
+         * of just a lot of script tags and stuff
+         * there is some code in the getPage for html
+         * that might be worth it later
+         */
         if (! Feature::active('html_to_text')) {
             $document->update([
                 'type' => TypesEnum::PDF,
                 'file_path' => md5($this->webResponseDto->url).'.pdf',
             ]);
 
-            /**
-             * @NOTE
-             * making them PDF for now
-             * I ran into "noise" issues
-             * of just a lot of script tags and stuff
-             * there is some code in the getPage for html
-             * that might be worth it later
-             */
             Bus::batch([
                 new ParsePdfFileJob($document),
             ])

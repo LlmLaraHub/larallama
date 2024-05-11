@@ -17,6 +17,8 @@ class SourceResource extends JsonResource
         return [
             'id' => $this->id,
             'title' => $this->title,
+            'collection_id' => $this->collection_id,
+            'details' => $this->details,
             'description' => $this->description,
             'type' => str($this->type->name)->headline()->toString(),
         ];

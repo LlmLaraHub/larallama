@@ -65,8 +65,11 @@ const run = (source) => {
                  </Intro>
 
                   <div class="border border-gray-200 p-5 mt-5 flex">
-                    <div v-if="sources.data.lenth === 0" class="text-gray-500 text-lg">
-                        No sources yet.
+                    <div v-if="sources.data.length === 0" class="text-center w-full">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mx-auto text-gray-400">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 8.25H7.5a2.25 2.25 0 0 0-2.25 2.25v9a2.25 2.25 0 0 0 2.25 2.25h9a2.25 2.25 0 0 0 2.25-2.25v-9a2.25 2.25 0 0 0-2.25-2.25H15M9 12l3 3m0 0 3-3m-3 3V2.25" />
+                        </svg>
+                        <div class="text-xl text-gray-600">No sources yet. Choose one below</div>
                     </div>
                     <div v-else class="card rounded-none w-96 bg-base-100 shadow-xl" v-for="source in sources.data" :key="source.id">
                         <div class="card-body">
@@ -74,9 +77,15 @@ const run = (source) => {
                             <div>
                                 Type: <span class="font-bold text-gray-600">{{ source.type }}</span>
                             </div>
+                            <div>
+                                Details: <span class="font-bold text-gray-600">{{ source.details }}</span>
+                            </div>
                             <div class="card-actions justify-end">
                                 <button @click="run(source)" type="button" class="btn btn-primary rounded-none">Run</button>
-                                <button class="btn btn-primary rounded-none">Edit</button>
+                                <Link :href="route('collections.sources.websearch.edit', {
+                                    collection: source.collection_id,
+                                    source: source.id
+                                })" class="btn btn-primary rounded-none">Edit</Link>
                             </div>
                         </div>
                     </div>
@@ -89,7 +98,7 @@ const run = (source) => {
 
                             <Link
                             class="btn btn-info rounded-none"
-                            :href="route('collections.sources.websearch.create', 
+                            :href="route('collections.sources.websearch.create',
                                 {collection: collection.data.id}
                             )"
                             >Web Search</Link>
@@ -102,7 +111,7 @@ const run = (source) => {
                 </div>
 
             </div>
-            
+
         </div>
     </AppLayout>
 </template>
