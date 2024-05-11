@@ -34,42 +34,15 @@ class DistanceQuery
         $documentIds = Document::query()
             ->select('id')
             ->where('documents.collection_id', $collectionId)
+            ->orderBy('id')
             ->pluck('id');
 
         $commonQuery = DocumentChunk::query()
+            ->orderBy('sort_order')
+            ->orderBy('section_number')
             ->whereIn('document_id', $documentIds);
 
-        // Find nearest neighbors using L2 distance
-        $documentChunkResults = $commonQuery
-            ->nearestNeighbors($embeddingSize, $embedding, Distance::L2)
-            ->take(5)
-            ->get();
-
-        // Get IDs of the nearest neighbors found 5
-        $nearestNeighborIds = $documentChunkResults->pluck('id')->toArray();
-        Log::info('[LaraChain] Nearest Neighbor IDs', [
-            'count' => count($nearestNeighborIds),
-            'ids' => $nearestNeighborIds,
-        ]);
-        // Find nearest neighbors using InnerProduct distance
-        $neighborsInnerProduct = $commonQuery
-            ->whereNotIn('document_chunks.id', $nearestNeighborIds)
-            ->nearestNeighbors($embeddingSize, $embedding, Distance::InnerProduct)
-            ->get();
-
-        // Find nearest neighbors using Cosine distance found 0
-        $neighborsInnerProductIds = $neighborsInnerProduct->pluck('id')->toArray();
-
-        Log::info('[LaraChain] Nearest Neighbor Inner Product IDs', [
-            'count' => count($neighborsInnerProductIds),
-            'ids' => $neighborsInnerProductIds,
-        ]);
-
         $neighborsCosine = $commonQuery
-            ->whereNotIn('id', $nearestNeighborIds)
-            ->when(! empty($neighborsInnerProductIds), function ($query) use ($neighborsInnerProductIds) {
-                return $query->whereNotIn('id', $neighborsInnerProductIds);
-            })
             ->nearestNeighbors($embeddingSize, $embedding, Distance::Cosine)
             ->get();
 
@@ -79,10 +52,8 @@ class DistanceQuery
         ]);
 
         $results = collect($neighborsCosine)
-            ->merge($neighborsInnerProduct)
-            ->merge($documentChunkResults)
             ->unique('id')
-            ->take(10);
+            ->take(5);
 
         $siblingsIncluded = collect();
 

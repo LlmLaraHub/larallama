@@ -6,8 +6,7 @@
                 <th></th>
                 <th>Document Name</th>
                 <th>Page</th>
-                <th class="text-center">Section <br>Record ID</th>
-                <th>Distance</th>
+                <th class="text-center">Section/<br>Record ID</th>
                 <th>Summary</th>
             </tr>
         </thead>
@@ -23,7 +22,6 @@
                 </td>
                 <td>{{ reference.page }}</td>
                 <td>{{ reference.section_number }}/{{ reference.document_chunk_id }}</td>
-                <td>{{ reference.distance }}</td>
                 <td>
                     <span v-html="reference.summary"></span>
                   </td>

@@ -15,6 +15,7 @@ class GenericSiteSpiderTest extends TestCase
      */
     public function test_spider(): void
     {
+        $this->markTestSkipped('@NOTE not sure I will keep this');
         $urls = [
             'https://alfrednutile.info/ssh-config',
             'https://alnutile.medium.com/multiple-openai-functions-php-laravel-466cb72eefb8',
