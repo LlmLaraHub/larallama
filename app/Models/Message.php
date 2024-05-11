@@ -77,4 +77,9 @@ class Message extends Model
     {
         return $this->hasMany(MessageDocumentReference::class);
     }
+
+    public function prompt_histories(): HasMany
+    {
+        return $this->hasMany(PromptHistory::class);
+    }
 }

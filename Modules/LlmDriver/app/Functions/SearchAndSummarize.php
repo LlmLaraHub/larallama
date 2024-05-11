@@ -3,7 +3,9 @@
 namespace LlmLaraHub\LlmDriver\Functions;
 
 use App\Domains\Agents\VerifyPromptInputDto;
+use App\Domains\Agents\VerifyPromptOutputDto;
 use App\Domains\Messages\RoleEnum;
+use App\Domains\Prompts\SummarizePrompt;
 use Facades\App\Domains\Agents\VerifyResponseAgent;
 use Facades\LlmLaraHub\LlmDriver\DistanceQuery;
 use Illuminate\Support\Facades\Log;
@@ -24,14 +26,16 @@ class SearchAndSummarize extends FunctionContract
 
     protected string $description = 'Used to embed users prompt, search database and return summarized results.';
 
+    protected string $response = '';
+
     /**
      * @param  MessageInDto[]  $messageArray
      */
     public function handle(
         array $messageArray,
         HasDrivers $model,
-        FunctionCallDto $functionCallDto): FunctionResponse
-    {
+        FunctionCallDto $functionCallDto
+    ): FunctionResponse {
         Log::info('[LaraChain] Using Function: SearchAndSummarize');
 
         /**
@@ -80,20 +84,10 @@ class SearchAndSummarize extends FunctionContract
 
         $context = implode(' ', $content);
 
-        $contentFlattened = <<<PROMPT
-You are a helpful assistant in the RAG system: 
-This is data from the search results when entering the users prompt which is 
-
-### START PROMPT 
-{$originalPrompt} 
-### END PROMPT
-
-Please use this with the following context and only this, summarize it for the user and return as markdown so I can render it and strip out and formatting like extra spaces, tabs, periods etc: 
-
-### START Context
-$context
-### END Context
-PROMPT;
+        $contentFlattened = SummarizePrompt::prompt(
+            originalPrompt: $originalPrompt,
+            context: $context
+        );
 
         $model->getChat()->addInput(
             message: $contentFlattened,
@@ -102,7 +96,10 @@ PROMPT;
             show_in_thread: false
         );
 
-        Log::info('[LaraChain] Getting the Summary from the search results');
+        Log::info('[LaraChain] Getting the Search and Summary results', [
+            'input' => $contentFlattened,
+            'driver' => $model->getChat()->chatable->getDriver(),
+        ]);
 
         $messageArray = MessageInDto::from([
             'content' => $contentFlattened,
@@ -114,8 +111,33 @@ PROMPT;
         /** @var CompletionResponse $response */
         $response = LlmDriverFacade::driver(
             $model->getChatable()->getDriver()
-        )->chat([$messageArray]);
+        )->completion($contentFlattened);
 
+        $this->response = $response->content;
+
+        if (Feature::active('verification_prompt')) {
+            $this->verify($model, $originalPrompt, $context);
+        }
+
+        $message = $model->getChat()->addInput($this->response, RoleEnum::Assistant);
+
+        $this->saveDocumentReference($message, $documentChunkResults);
+
+        notify_ui($model->getChat(), 'Complete');
+
+        return FunctionResponse::from(
+            [
+                'content' => $this->response,
+                'save_to_message' => false,
+            ]
+        );
+    }
+
+    protected function verify(
+        HasDrivers $model,
+        string $originalPrompt,
+        string $context
+    ): void {
         /**
          * Lets Verify
          */
@@ -129,7 +151,7 @@ PROMPT;
                 'chattable' => $model->getChat(),
                 'originalPrompt' => $originalPrompt,
                 'context' => $context,
-                'llmResponse' => $response->content,
+                'llmResponse' => $this->response,
                 'verifyPrompt' => $verifyPrompt,
             ]
         );
@@ -139,16 +161,7 @@ PROMPT;
         /** @var VerifyPromptOutputDto $response */
         $response = VerifyResponseAgent::verify($dto);
 
-        $message = $model->getChat()->addInput($response->response, RoleEnum::Assistant);
-
-        $this->saveDocumentReference($message, $documentChunkResults);
-
-        return FunctionResponse::from(
-            [
-                'content' => $response->response,
-                'save_to_message' => false,
-            ]
-        );
+        $this->response = $response->response;
     }
 
     /**

@@ -27,7 +27,7 @@
                     </div>
                     <div class="relative mt-6 flex-1 px-4 sm:px-6">
                       <h2 class="font-bold text-gray-800">Summary:</h2>
-                      <div class="prose text-gray-800 dark:text-gray-200 mb-10 mt-5" v-html="document.summary_markdown"></div>
+                      <div class="prose text-gray-800 dark:text-gray-400 mb-10 mt-5" v-html="document.summary_markdown"></div>
                       
                       
                       <Tags :document="document"></Tags>

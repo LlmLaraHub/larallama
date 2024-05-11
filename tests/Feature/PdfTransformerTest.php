@@ -3,8 +3,8 @@
 namespace Tests\Feature;
 
 use App\Domains\Documents\Transformers\PdfTransformer;
-use App\Models\Document;
 use Illuminate\Support\Facades\Bus;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Tests\TestCase;
 
@@ -24,11 +24,17 @@ class PdfTransformerTest extends TestCase
     {
         Bus::fake();
         $this->webFileDownloadSetup();
-        $document = Document::factory()->pdf()->create();
         $this->assertDatabaseCount('document_chunks', 0);
         $transformer = new PdfTransformer();
         $transformer->handle($this->document);
-        $this->assertDatabaseCount('document_chunks', 10);
+        $this->assertDatabaseCount('document_chunks', 66);
+
+        $pages = 10;
+
+        $this->assertCount(10, DB::table('document_chunks')
+            ->where('section_number', 0)
+            ->where('document_id', $this->document->id)
+            ->get());
 
         Bus::assertBatchCount(1);
 
@@ -38,12 +44,11 @@ class PdfTransformerTest extends TestCase
     {
         Bus::fake();
         $this->webFileDownloadSetup();
-        $document = Document::factory()->pdf()->create();
         $this->assertDatabaseCount('document_chunks', 0);
         $transformer = new PdfTransformer();
         $transformer->handle($this->document);
-        $this->assertDatabaseCount('document_chunks', 10);
+        $this->assertDatabaseCount('document_chunks', 66);
         $transformer->handle($this->document);
-        $this->assertDatabaseCount('document_chunks', 10);
+        $this->assertDatabaseCount('document_chunks', 66);
     }
 }

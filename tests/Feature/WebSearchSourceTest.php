@@ -21,8 +21,8 @@ class WebSearchSourceTest extends TestCase
 
         LlmDriverFacade::shouldReceive('driver->completion')
             ->once()->andReturn(CompletionResponse::from([
-            'content' => 'updated query',
-        ]));
+                'content' => 'updated query',
+            ]));
 
         LlmDriverFacade::shouldReceive('driver->onQueue')
             ->once()->andReturn('ollama');

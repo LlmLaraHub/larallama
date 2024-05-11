@@ -50,7 +50,7 @@ class GetWebContentJobTest extends TestCase
 
         $job->handle();
         $this->assertDatabaseCount('documents', 1);
-        $this->assertDatabaseCount('document_chunks', 4);
+        $this->assertDatabaseCount('document_chunks', 82);
 
     }
 

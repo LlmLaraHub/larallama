@@ -3,8 +3,7 @@
 namespace App\Domains\Documents\Transformers;
 
 use App\Domains\Collections\CollectionStatusEnum;
-use App\Events\CollectionStatusEvent;
-use App\Jobs\SummarizeDataJob;
+use App\Helpers\TextChunker;
 use App\Jobs\SummarizeDocumentJob;
 use App\Jobs\VectorlizeDataJob;
 use App\Models\Document;
@@ -20,6 +19,8 @@ class PdfTransformer
 {
     protected Document $document;
 
+    protected string $content = '';
+
     public function handle(Document $document): Document
     {
         $this->document = $document;
@@ -34,23 +35,29 @@ class PdfTransformer
             try {
                 $page_number = $page_number + 1;
                 $pageContent = $page->getText();
-                $guid = md5($pageContent);
-                $DocumentChunk = DocumentChunk::updateOrCreate(
-                    [
-                        'guid' => $guid,
-                        'document_id' => $this->document->id,
-                    ],
-                    [
-                        'content' => $pageContent,
-                        'sort_order' => $page_number,
-                    ]
-                );
-                $chunks[] = [
-                    new VectorlizeDataJob($DocumentChunk),
-                    new SummarizeDataJob($DocumentChunk),
-                ];
 
-                CollectionStatusEvent::dispatch($document->collection, CollectionStatusEnum::PROCESSING);
+                $chunked_chunks = TextChunker::handle($pageContent);
+                foreach ($chunked_chunks as $chunkSection => $chunkContent) {
+                    $guid = md5($chunkContent);
+                    $DocumentChunk = DocumentChunk::updateOrCreate(
+                        [
+                            'document_id' => $this->document->id,
+                            'sort_order' => $page_number,
+                            'section_number' => $chunkSection,
+                        ],
+                        [
+                            'guid' => $guid,
+                            'content' => $chunkContent,
+                        ]
+                    );
+
+                    $chunks[] = [
+                        new VectorlizeDataJob($DocumentChunk),
+                    ];
+
+                }
+                notify_collection_ui($document->collection, CollectionStatusEnum::PROCESSING, 'Processing Document');
+
             } catch (\Exception $e) {
                 Log::error('Error parsing PDF', ['error' => $e->getMessage()]);
             }

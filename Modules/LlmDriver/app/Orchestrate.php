@@ -3,8 +3,8 @@
 namespace LlmLaraHub\LlmDriver;
 
 use App\Domains\Messages\RoleEnum;
-use App\Events\ChatUiUpdateEvent;
 use App\Models\Chat;
+use App\Models\PromptHistory;
 use Facades\App\Domains\Messages\SearchAndSummarizeChatRepo;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Log;
@@ -45,13 +45,7 @@ class Orchestrate
                     throw new \Exception('Function name is required');
                 }
 
-                ChatUiUpdateEvent::dispatch(
-                    $chat->chatable,
-                    $chat,
-                    sprintf('We are running the agent %s back shortly',
-                        str($functionName)->headline()->toString()
-                    )
-                );
+                notify_ui($chat, 'We are running the agent back shortly');
 
                 $functionClass = app()->make($functionName);
 
@@ -69,10 +63,19 @@ class Orchestrate
 
                 if ($response->save_to_message) {
 
-                    $chat->addInput(
+                    $message = $chat->addInput(
                         message: $response->content,
                         role: RoleEnum::Assistant,
                         show_in_thread: true);
+
+                    if ($response->prompt) {
+                        PromptHistory::create([
+                            'prompt' => $response->prompt,
+                            'chat_id' => $chat->id,
+                            'message_id' => $message->id,
+                            'collection_id' => $chat->getChatable()?->id,
+                        ]);
+                    }
                 }
 
                 $messagesArray = Arr::wrap(MessageInDto::from([
@@ -80,10 +83,7 @@ class Orchestrate
                     'content' => $response->content,
                 ]));
 
-                ChatUiUpdateEvent::dispatch(
-                    $chat->chatable,
-                    $chat,
-                    'The Agent has completed the task going to the final step now');
+                notify_ui($chat, 'The Agent has completed the task going to the final step now');
 
                 $this->response = $response->content;
                 $this->requiresFollowup = $response->requires_follow_up_prompt;
@@ -105,13 +105,7 @@ class Orchestrate
                     role: RoleEnum::Assistant,
                     show_in_thread: true);
 
-                /**
-                 * Could just show this in the ui
-                 */
-                ChatUiUpdateEvent::dispatch(
-                    $chat->chatable,
-                    $chat,
-                    'Functions and Agents have completed their tasks, results will appear shortly');
+                notify_ui($chat, 'Functions and Agents have completed their tasks, results will appear shortly');
 
                 $this->response = $results->content;
             }

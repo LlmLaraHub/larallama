@@ -75,9 +75,9 @@ const closeEditCollectionSlideOut = () => {
                                         v-else v-for="collectionItem in collections.data" :key="collectionItem.id">
                                             <div>
                                                <div class="font-bold text-lg text-gray-500">
-                                                {{  collectionItem.name }}
+                                               <span class="text-gray-400 text-sm"> #{{ collectionItem.id }}</span> {{  collectionItem.name }} 
                                                </div> 
-                                               <div class="text-md text-gray-500 font-semibold">
+                                               <div class="text-md text-gray-400 font-semibold">
                                                     {{  collectionItem.description }}
                                                </div>
                                                <div class="flex justify-center mt-10 gap-2">
@@ -89,12 +89,6 @@ const closeEditCollectionSlideOut = () => {
                                                     </span>
                                                     <span class="rounded-md bg-indigo-500 text-indigo-200 px-2 py-2 ">
                                                         Document Count: {{ collectionItem.documents_count }}
-                                                    </span>
-                                                    <span class="rounded-md bg-indigo-500 text-indigo-200 px-2 py-2 ">
-                                                        Tag:Test
-                                                    </span>
-                                                    <span class="rounded-md bg-indigo-500 text-indigo-200 px-2 py-2 ">
-                                                        Tag:Other Tag
                                                     </span>
                                                </div>
                                             </div>

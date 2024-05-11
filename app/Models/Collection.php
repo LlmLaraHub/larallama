@@ -112,4 +112,9 @@ EOD;
     {
         return $this->hasMany(Source::class);
     }
+
+    public function prompt_history(): HasMany
+    {
+        return $this->hasMany(PromptHistory::class);
+    }
 }

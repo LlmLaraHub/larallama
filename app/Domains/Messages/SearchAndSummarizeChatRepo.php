@@ -4,8 +4,10 @@ namespace App\Domains\Messages;
 
 use App\Domains\Agents\VerifyPromptInputDto;
 use App\Domains\Agents\VerifyPromptOutputDto;
+use App\Domains\Prompts\SummarizePrompt;
 use App\Models\Chat;
 use App\Models\DocumentChunk;
+use App\Models\PromptHistory;
 use Facades\App\Domains\Agents\VerifyResponseAgent;
 use Facades\LlmLaraHub\LlmDriver\DistanceQuery;
 use Illuminate\Support\Facades\Log;
@@ -18,6 +20,8 @@ use LlmLaraHub\LlmDriver\Responses\EmbeddingsResponseDto;
 class SearchAndSummarizeChatRepo
 {
     use CreateReferencesTrait;
+
+    protected string $response = '';
 
     public function search(Chat $chat, string $input): string
     {
@@ -58,21 +62,10 @@ class SearchAndSummarizeChatRepo
 
         $context = implode(' ', $content);
 
-        $contentFlattened = <<<PROMPT
-You are a helpful assistant in the RAG system: 
-This is data from the search results when entering the users prompt which is 
-
-
-### START PROMPT 
-{$originalPrompt} 
-### END PROMPT
-
-Please use this with the following context and only this, summarize it for the user and return as markdown so I can render it and strip out and formatting like extra spaces, tabs, periods etc: 
-
-### START Context
-$context
-### END Context
-PROMPT;
+        $contentFlattened = SummarizePrompt::prompt(
+            originalPrompt: $originalPrompt,
+            context: $context
+        );
 
         $chat->addInput(
             message: $contentFlattened,
@@ -81,31 +74,60 @@ PROMPT;
             show_in_thread: false
         );
 
+        /** @TODO coming back to chat shorly just moved to completion to focus on prompt */
         $latestMessagesArray = $chat->getChatResponse();
 
-        Log::info('[LaraChain] Getting the Summary');
+        Log::info('[LaraChain] Getting the Summary', [
+            'input' => $contentFlattened,
+            'driver' => $chat->chatable->getDriver(),
+        ]);
 
         notify_ui($chat, 'Building Summary');
 
         /** @var CompletionResponse $response */
         $response = LlmDriverFacade::driver(
             $chat->chatable->getDriver()
-        )->chat($latestMessagesArray);
+        )->completion($contentFlattened);
 
-        /**
-         * Lets Verify
-         */
-        $verifyPrompt = <<<'PROMPT'
-This is the results from a Vector search based on the Users Prompt.
-Then that was passed into the LLM to summarize the results.
-PROMPT;
+        $this->response = $response->content;
+
+        Log::info('[LaraChain] Summary Results before verification', [
+            'response' => $this->response,
+        ]);
+
+        if (Feature::active('verification_prompt')) {
+            $this->verify($chat, $originalPrompt, $context);
+        }
+
+        $message = $chat->addInput($this->response, RoleEnum::Assistant);
+
+        PromptHistory::create([
+            'prompt' => $contentFlattened,
+            'chat_id' => $chat->id,
+            'message_id' => $message->id,
+            /** @phpstan-ignore-next-line */
+            'collection_id' => $chat->getChatable()?->id,
+        ]);
+
+        $this->saveDocumentReference($message, $documentChunkResults);
+        notify_ui($chat, 'Complete');
+
+        return $this->response;
+    }
+
+    protected function verify(Chat $chat, string $originalPrompt, string $context): void
+    {
+        $verifyPrompt = <<<'EOD'
+        This is the results from a Vector search based on the Users Prompt.
+        Then that was passed into the LLM to summarize the results.
+        EOD;
 
         $dto = VerifyPromptInputDto::from(
             [
                 'chattable' => $chat,
                 'originalPrompt' => $originalPrompt,
                 'context' => $context,
-                'llmResponse' => $response->content,
+                'llmResponse' => $this->response,
                 'verifyPrompt' => $verifyPrompt,
             ]
         );
@@ -115,10 +137,10 @@ PROMPT;
         /** @var VerifyPromptOutputDto $response */
         $response = VerifyResponseAgent::verify($dto);
 
-        $message = $chat->addInput($response->response, RoleEnum::Assistant);
+        $this->response = $response->response;
 
-        $this->saveDocumentReference($message, $documentChunkResults);
-
-        return $response->response;
+        Log::info('[LaraChain] Verification', [
+            'output' => $this->response,
+        ]);
     }
 }

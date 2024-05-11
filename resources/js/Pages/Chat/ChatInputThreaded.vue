@@ -1,7 +1,7 @@
 <script setup>
 import {router, useForm, usePage} from "@inertiajs/vue3";
 import { ChevronDoubleDownIcon, ChevronRightIcon} from "@heroicons/vue/20/solid";
-import {computed, inject, onUnmounted, ref, watch} from "vue";
+import {computed, inject, onMounted, onUnmounted, ref, watch} from "vue";
 import axios from "axios";
 import { useToast } from "vue-toastification";
 import { Switch, SwitchGroup, SwitchLabel } from '@headlessui/vue'
@@ -26,9 +26,29 @@ const form = useForm({
     completion: false
 })
 
-
-
 const getting_results = ref(false)
+
+onMounted(() => {
+    Echo.private(`collection.chat.${props.chat.chatable_id}.${props.chat.id}`)
+    .listen('.status', (e) => {
+        router.reload({
+            preserveScroll: true,
+        })
+    })
+    .listen('.update', (e) => {
+        // Make a better ui for htis
+        console.log("chat reuslts came in")
+        console.log(e)
+        if(e.updateMessage === 'Complete') {
+            getting_results.value = false
+            router.reload({
+                preserveScroll: true,
+            })
+        }
+    });
+});
+
+
 
 const save = () => {
     getting_results.value = true
@@ -40,12 +60,6 @@ const save = () => {
     }), {
         input: message,
         completion: completion
-    }).then(response => {
-        getting_results.value = false
-        console.log(response.data.message)
-        router.reload({
-            preserveScroll: true
-        });
     }).catch(error => {
         getting_results.value = false
         toast.error('An error occurred. Please try again.')

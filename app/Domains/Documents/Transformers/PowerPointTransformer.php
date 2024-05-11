@@ -2,8 +2,9 @@
 
 namespace App\Domains\Documents\Transformers;
 
+use App\Domains\Collections\CollectionStatusEnum;
 use App\Domains\UnStructured\StructuredDto;
-use App\Jobs\SummarizeDataJob;
+use App\Helpers\TextChunker;
 use App\Jobs\VectorlizeDataJob;
 use App\Models\Document;
 use App\Models\DocumentChunk;
@@ -32,25 +33,34 @@ class PowerPointTransformer
         while ($results->valid()) {
             /** @var StructuredDto $dto */
             $dto = $results->current();
-            $DocumentChunk = DocumentChunk::updateOrCreate(
-                [
-                    'guid' => $dto->guid,
-                    'document_id' => $this->document->id,
-                ],
-                [
-                    'content' => $dto->content,
-                    'sort_order' => $dto->page,
-                    'meta_data' => $dto->toArray(),
-                ]
-            );
 
-            $chunks[] = [
-                new VectorlizeDataJob($DocumentChunk),
-                new SummarizeDataJob($DocumentChunk),
-            ];
+            $content = $dto->content;
+
+            $chunked_chunks = TextChunker::handle($content);
+
+            foreach ($chunked_chunks as $chunkSection => $chunkContent) {
+                $DocumentChunk = DocumentChunk::updateOrCreate(
+                    [
+                        'document_id' => $this->document->id,
+                        'sort_order' => $dto->page,
+                        'section_number' => $chunkSection,
+                    ],
+                    [
+                        'guid' => $dto->guid,
+                        'content' => $chunkContent,
+                        'meta_data' => $dto->toArray(),
+                    ]
+                );
+
+                $chunks[] = [
+                    new VectorlizeDataJob($DocumentChunk),
+                ];
+            }
 
             $results->next();
         }
+
+        notify_collection_ui($document->collection, CollectionStatusEnum::PROCESSING, 'Processing Document');
 
         Log::info('PowerPointTransformer:handle', ['chunks' => count($chunks)]);
 

@@ -56,7 +56,7 @@ class SummarizeCollectionTest extends TestCase
             'chatable_id' => $collection->id,
         ]);
 
-        VerifyResponseAgent::shouldReceive('verify')->once()->andReturn(
+        VerifyResponseAgent::shouldReceive('verify')->never()->andReturn(
             VerifyPromptOutputDto::from(
                 [
                     'chattable' => $chat,

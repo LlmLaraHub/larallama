@@ -15,6 +15,8 @@ class DocumentChunkTest extends TestCase
         $model = DocumentChunk::factory()->create();
         $this->assertNotNull($model->content);
         $this->assertNotNull($model->meta_data);
+        $this->assertNotNull($model->section_number);
+        $this->assertNotNull($model->sort_order);
     }
 
     public function test_original_boot()

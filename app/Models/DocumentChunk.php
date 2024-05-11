@@ -99,6 +99,6 @@ class DocumentChunk extends Model implements HasDrivers, TaggableContract
 
     public function getSummary(): string
     {
-        return $this->summary;
+        return $this->content;
     }
 }

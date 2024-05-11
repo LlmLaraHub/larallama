@@ -54,7 +54,7 @@ class SearchAndSummarizeTest extends TestCase
             ]),
         ]);
 
-        LlmDriverFacade::shouldReceive('driver->chat')
+        LlmDriverFacade::shouldReceive('driver->completion')
             ->once()
             ->andReturn($dto);
 
@@ -87,7 +87,7 @@ class SearchAndSummarizeTest extends TestCase
             ->once()
             ->andReturn(DocumentChunk::all());
 
-        VerifyResponseAgent::shouldReceive('verify')->once()->andReturn(
+        VerifyResponseAgent::shouldReceive('verify')->never()->andReturn(
             VerifyPromptOutputDto::from(
                 [
                     'chattable' => $chat,

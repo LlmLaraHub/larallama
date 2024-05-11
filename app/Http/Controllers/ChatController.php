@@ -9,12 +9,13 @@ use App\Events\ChatUpdatedEvent;
 use App\Http\Resources\ChatResource;
 use App\Http\Resources\CollectionResource;
 use App\Http\Resources\MessageResource;
+use App\Jobs\OrchestrateJob;
+use App\Jobs\SimpleSearchAndSummarizeOrchestrateJob;
 use App\Models\Chat;
 use App\Models\Collection;
 use Facades\App\Domains\Agents\VerifyResponseAgent;
-use Facades\LlmLaraHub\LlmDriver\Orchestrate;
-use Facades\LlmLaraHub\LlmDriver\SimpleSearchAndSummarizeOrchestrate;
 use Illuminate\Support\Facades\Log;
+use Laravel\Pennant\Feature;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
 use LlmLaraHub\LlmDriver\Requests\MessageInDto;
 
@@ -77,36 +78,39 @@ class ChatController extends Controller
             $response = LlmDriverFacade::driver($chat->getDriver())->completion($prompt);
             $response = $response->content;
 
-            $dto = VerifyPromptInputDto::from(
-                [
-                    'chattable' => $chat,
-                    'originalPrompt' => $prompt,
-                    'context' => $prompt,
-                    'llmResponse' => $response,
-                    'verifyPrompt' => 'This is a completion so the users prompt was past directly to the llm with all the context. That is why ORIGINAL PROMPT is the same as CONTEXT. Keep the format as Markdown.',
-                ]
-            );
+            if (Feature::active('verification_prompt')) {
+                $dto = VerifyPromptInputDto::from(
+                    [
+                        'chattable' => $chat,
+                        'originalPrompt' => $prompt,
+                        'context' => $prompt,
+                        'llmResponse' => $response,
+                        'verifyPrompt' => 'This is a completion so the users prompt was past directly to the llm with all the context. That is why ORIGINAL PROMPT is the same as CONTEXT. Keep the format as Markdown.',
+                    ]
+                );
+
+                /** @var VerifyPromptOutputDto $response */
+                $response = VerifyResponseAgent::verify($dto);
+                $response = $response->response;
+            }
 
             notify_ui($chat, 'We are verifying the completion back shortly');
 
-            /** @var VerifyPromptOutputDto $response */
-            $response = VerifyResponseAgent::verify($dto);
-
             $chat->addInput(
-                message: $response->response,
+                message: $response,
                 role: RoleEnum::Assistant,
                 show_in_thread: true);
 
         } elseif (LlmDriverFacade::driver($chat->getDriver())->hasFunctions()) {
-            Log::info('[LaraChain] Running Orchestrate');
-            $response = Orchestrate::handle($messagesArray, $chat);
+            Log::info('[LaraChain] Running Orchestrate added to queue');
+            OrchestrateJob::dispatch($messagesArray, $chat);
         } else {
-            Log::info('[LaraChain] Simple Search and Summarize');
-            $response = SimpleSearchAndSummarizeOrchestrate::handle($validated['input'], $chat);
+            Log::info('[LaraChain] Simple Search and Summarize added to queue');
+            SimpleSearchAndSummarizeOrchestrateJob::dispatch($validated['input'], $chat);
         }
 
         ChatUpdatedEvent::dispatch($chat->chatable, $chat);
 
-        return response()->json(['message' => $response]);
+        return response()->json(['message' => 'ok']);
     }
 }
