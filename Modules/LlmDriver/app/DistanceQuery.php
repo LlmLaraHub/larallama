@@ -53,7 +53,7 @@ class DistanceQuery
 
         $results = collect($neighborsCosine)
             ->unique('id')
-            ->take(5);
+            ->take(8);
 
         $siblingsIncluded = collect();
 

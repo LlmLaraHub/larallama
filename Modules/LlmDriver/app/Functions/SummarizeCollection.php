@@ -4,6 +4,7 @@ namespace LlmLaraHub\LlmDriver\Functions;
 
 use App\Domains\Agents\VerifyPromptInputDto;
 use App\Domains\Agents\VerifyPromptOutputDto;
+use App\Domains\Chat\UiStatusEnum;
 use Facades\App\Domains\Agents\VerifyResponseAgent;
 use Illuminate\Support\Facades\Log;
 use Laravel\Pennant\Feature;
@@ -36,7 +37,7 @@ class SummarizeCollection extends FunctionContract
          */
         foreach ($model->chatable->documents as $document) {
             foreach ($document->document_chunks as $chunk) {
-                $summary->add($chunk->summary);
+                $summary->add($chunk->content);
             }
         }
 
@@ -57,11 +58,14 @@ class SummarizeCollection extends FunctionContract
 
         $this->response = $results->content;
 
-        notify_ui($model->getChat(), 'Summary complete going to do one verfication check on the summarhy');
+        notify_ui($model->getChat(), 'Summary complete');
 
         if (Feature::active('verification_prompt')) {
+            Log::info("[LaraChain] Verifying Summary Collection");
             $this->verify($model, 'Can you summarize this collection of data for me.', $summary);
         }
+
+        notify_ui($model->getChat(), UiStatusEnum::Complete->name);
 
         return FunctionResponse::from([
             'content' => $this->response,
