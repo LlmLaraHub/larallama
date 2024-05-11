@@ -40,7 +40,7 @@ class WebSourceController extends Controller
             'type' => SourceTypeEnum::WebSearchSource,
             'meta_data' => [
                 'driver' => 'brave',
-                'limit' => 5
+                'limit' => 5,
             ],
         ]);
 
@@ -49,7 +49,8 @@ class WebSourceController extends Controller
         return to_route('collections.sources.index', $collection);
     }
 
-    public function edit(Collection $collection, Source $source) {
+    public function edit(Collection $collection, Source $source)
+    {
 
         return inertia('Sources/WebSource/Edit', [
             'source' => $source,
@@ -57,7 +58,8 @@ class WebSourceController extends Controller
         ]);
     }
 
-    public function update(Collection $collection, Source $source) {
+    public function update(Collection $collection, Source $source)
+    {
 
         $validated = request()->validate([
             'title' => 'required|string',
@@ -66,7 +68,7 @@ class WebSourceController extends Controller
 
         $source->update($validated);
 
-        request()->session()->flash('flash.banner', "Updated");
+        request()->session()->flash('flash.banner', 'Updated');
 
         return back();
     }

@@ -3,7 +3,6 @@
 namespace App\Domains\Sources;
 
 use App\Domains\Collections\CollectionStatusEnum;
-use App\Domains\Prompts\SearchPrompt;
 use App\Domains\Sources\WebSearch\Response\SearchResponseDto;
 use App\Domains\Sources\WebSearch\WebSearchFacade;
 use App\Jobs\GetWebContentJob;

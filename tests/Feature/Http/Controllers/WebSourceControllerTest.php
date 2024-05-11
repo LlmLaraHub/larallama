@@ -31,7 +31,8 @@ class WebSourceControllerTest extends TestCase
         $this->assertEquals('brave', $source->meta_data['driver']);
     }
 
-    public function test_update() {
+    public function test_update()
+    {
         $source = Source::factory()->create();
 
         $user = User::factory()->create();
@@ -40,7 +41,7 @@ class WebSourceControllerTest extends TestCase
             ->put(route('collections.sources.websearch.update',
                 [
                     'collection' => $source->collection->id,
-                    'source' => $source->id
+                    'source' => $source->id,
                 ]
             ), [
                 'title' => 'Test Title2',
