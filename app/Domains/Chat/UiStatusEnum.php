@@ -2,7 +2,7 @@
 
 namespace App\Domains\Chat;
 
-enum UiStatusEnum : string
+enum UiStatusEnum: string
 {
-    case Complete = "complete";
+    case Complete = 'complete';
 }

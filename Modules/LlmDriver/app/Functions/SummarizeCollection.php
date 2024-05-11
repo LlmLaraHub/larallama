@@ -61,7 +61,7 @@ class SummarizeCollection extends FunctionContract
         notify_ui($model->getChat(), 'Summary complete');
 
         if (Feature::active('verification_prompt')) {
-            Log::info("[LaraChain] Verifying Summary Collection");
+            Log::info('[LaraChain] Verifying Summary Collection');
             $this->verify($model, 'Can you summarize this collection of data for me.', $summary);
         }
 
