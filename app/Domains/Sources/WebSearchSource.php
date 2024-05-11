@@ -2,6 +2,8 @@
 
 namespace App\Domains\Sources;
 
+use App\Domains\Collections\CollectionStatusEnum;
+use App\Domains\Prompts\SearchPrompt;
 use App\Domains\Sources\WebSearch\Response\SearchResponseDto;
 use App\Domains\Sources\WebSearch\WebSearchFacade;
 use App\Jobs\GetWebContentJob;
@@ -22,29 +24,7 @@ class WebSearchSource extends BaseSource
             $limit = data_get($meta_data, 'limit', 5);
             $driver = data_get($meta_data, 'driver', 'mock');
 
-            $prompt = <<<PROMPT
-            The user is asking to search the web but I want you to review the query and clean it keeping it as 
-            a string.
-
-            Here are some examples of how I want you to return the data:
-            ### RETURN FORMAT
-            in: Search the web for PHP news and Laravle news
-            out: php news OR laravel news -filetype:pdf -intitle:pdf
-
-            in: current data on the llm industry
-            out: llm industry news OR llm industry updates -filetype:pdf -intitle:pdf
-
-            in: latest news on the laravel framework
-            out: laravel framework news OR laravel framework updates -filetype:pdf -intitle:pdf
-            ### END RETURN FORMAT
-
-            
-            ### START USER QUERY
-            $search
-            ### END USER QUERY
-
-         
-PROMPT;
+            $prompt = SearchPrompt::prompt($search);
 
             Log::info('[LaraChain] Asking LLM to optimize search query');
 
@@ -85,6 +65,12 @@ PROMPT;
 
             $source->last_run = now();
             $source->save();
+
+            notify_collection_ui(
+                collection: $source->collection,
+                status: CollectionStatusEnum::PENDING,
+                message: "Search complete getting results from each page"
+            );
 
         } catch (\Exception $e) {
             Log::error('[LaraChain] - Error running WebSearchSource', [

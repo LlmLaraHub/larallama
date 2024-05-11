@@ -73,7 +73,15 @@ class GetWebContentJob implements ShouldQueue
                 'file_path' => md5($this->webResponseDto->url).'.pdf',
             ]);
 
-            $batch = Bus::batch([
+            /**
+             * @NOTE
+             * making them PDF for now
+             * I ran into "noise" issues
+             * of just a lot of script tags and stuff
+             * there is some code in the getPage for html
+             * that might be worth it later
+             */
+            Bus::batch([
                 new ParsePdfFileJob($document),
             ])
                 ->name('Process PDF Document - '.$document->id)
@@ -118,7 +126,7 @@ class GetWebContentJob implements ShouldQueue
                     ]
                 );
 
-                Log::info('[Larachain] adding to new batch');
+                Log::info('[LaraChain] adding to new batch');
 
                 $this->batch()->add([
                     new VectorlizeDataJob($DocumentChunk),
