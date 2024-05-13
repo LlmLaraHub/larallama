@@ -13,6 +13,7 @@ use App\Models\Collection;
 use App\Models\DocumentChunk;
 use App\Models\Output;
 use Facades\LlmLaraHub\LlmDriver\DistanceQuery;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Log;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
 use LlmLaraHub\LlmDriver\Requests\MessageInDto;
@@ -31,6 +32,7 @@ class WebPageOutputController extends Controller
             ]);
 
             request()->session()->push('messages', $messages);
+            $messages = Arr::wrap($messages);
         }
 
         return $messages;
