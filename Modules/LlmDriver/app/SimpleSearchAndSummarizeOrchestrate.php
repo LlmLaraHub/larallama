@@ -2,7 +2,6 @@
 
 namespace LlmLaraHub\LlmDriver;
 
-use App\Events\ChatUiUpdateEvent;
 use App\Models\Chat;
 use Facades\App\Domains\Messages\SearchAndSummarizeChatRepo;
 use Illuminate\Support\Facades\Log;

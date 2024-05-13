@@ -6,8 +6,6 @@ use App\Models\Collection;
 use App\Models\Document;
 use App\Models\Output;
 use App\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
 use LlmLaraHub\LlmDriver\Responses\CompletionResponse;
 use LlmLaraHub\LlmDriver\Responses\EmbeddingsResponseDto;
@@ -16,24 +14,25 @@ use Tests\TestCase;
 
 class WebPageOutputControllerTest extends TestCase
 {
-
-    public function test_show() {
+    public function test_show()
+    {
         $output = Output::factory()->create([
             'active' => true,
-            'public' => true
+            'public' => true,
         ]);
 
         $this->get(route(
             'collections.outputs.web_page.show', [
-                'output' => $output->slug
+                'output' => $output->slug,
             ]
         ))->assertStatus(200);
     }
 
-    public function test_chat() {
+    public function test_chat()
+    {
         $output = Output::factory()->create([
             'active' => true,
-            'public' => true
+            'public' => true,
         ]);
 
         $question = get_fixture('embedding_question_distance.json');
@@ -45,63 +44,65 @@ class WebPageOutputControllerTest extends TestCase
             ->andReturn(EmbeddingsResponseDto::from(
                 [
                     'embedding' => $vector,
-                    'token_count' => 2
+                    'token_count' => 2,
                 ]
             ));
 
         LlmDriverFacade::shouldReceive('driver->completion')
             ->once()
             ->andReturn(CompletionResponse::from([
-                'content' => 'Test'
+                'content' => 'Test',
             ]));
 
         $this->post(route(
             'collections.outputs.web_page.chat', [
-                'output' => $output->id
+                'output' => $output->id,
             ]
         ), [
-            'input' => "Testing"
+            'input' => 'Testing',
         ])->assertStatus(302);
     }
 
-    public function test_show_not_public() {
+    public function test_show_not_public()
+    {
         $output = Output::factory()->create([
             'active' => true,
-            'public' => false
+            'public' => false,
         ]);
 
         $this->get(route(
             'collections.outputs.web_page.show', [
-                'output' => $output->slug
+                'output' => $output->slug,
             ]
         ))->assertStatus(404);
 
     }
 
-    public function test_show_not_public_but_authenticated() {
+    public function test_show_not_public_but_authenticated()
+    {
         $output = Output::factory()->create([
             'active' => true,
-            'public' => false
+            'public' => false,
         ]);
 
         $this->actingAs(User::factory()->create())
             ->get(route(
-            'collections.outputs.web_page.show', [
-                'output' => $output->slug
-            ]
-        ))->assertStatus(200);
+                'collections.outputs.web_page.show', [
+                    'output' => $output->slug,
+                ]
+            ))->assertStatus(200);
     }
 
-
-    public function test_show_not_active() {
+    public function test_show_not_active()
+    {
         $output = Output::factory()->create([
             'active' => false,
-            'public' => true
+            'public' => true,
         ]);
 
         $this->get(route(
             'collections.outputs.web_page.show', [
-                'output' => $output->slug
+                'output' => $output->slug,
             ]
         ))->assertStatus(404);
 
@@ -116,22 +117,22 @@ class WebPageOutputControllerTest extends TestCase
         $user = User::factory()->create();
 
         LlmDriverFacade::shouldReceive('driver->completion')
-        ->once()->andReturn(CompletionResponse::from([
-            'content' => "Test"
+            ->once()->andReturn(CompletionResponse::from([
+            'content' => 'Test',
         ]));
 
         $collection = Collection::factory()->create();
 
         Document::factory(5)->create([
-            'collection_id' => $collection->id
+            'collection_id' => $collection->id,
         ]);
 
         $this->actingAs($user)->post(route(
-                'collections.outputs.web_page.summary',
-                [
-                    'collection' => $collection->id
-                ]
-            )
+            'collections.outputs.web_page.summary',
+            [
+                'collection' => $collection->id,
+            ]
+        )
         );
 
     }
@@ -144,23 +145,23 @@ class WebPageOutputControllerTest extends TestCase
         $collection = Collection::factory()->create();
 
         Document::factory(5)->create([
-            'collection_id' => $collection->id
+            'collection_id' => $collection->id,
         ]);
 
         $this->actingAs($user)->post(route(
-                'collections.outputs.web_page.store',
-                [
-                    'collection' => $collection->id
-                ]
-            ), [
-                'title' => "Foobar",
-                'summary' => "Foobar",
-                'active' => false,
-                'public' => false,
+            'collections.outputs.web_page.store',
+            [
+                'collection' => $collection->id,
             ]
+        ), [
+            'title' => 'Foobar',
+            'summary' => 'Foobar',
+            'active' => false,
+            'public' => false,
+        ]
         );
 
-        $this->assertDatabaseCount("outputs", 1);
+        $this->assertDatabaseCount('outputs', 1);
 
     }
 
@@ -175,7 +176,7 @@ class WebPageOutputControllerTest extends TestCase
             'collections.outputs.web_page.edit',
             [
                 'collection' => $output->collection_id,
-                'output' => $output->id
+                'output' => $output->id,
             ]
         )
         )->assertStatus(200);
@@ -193,17 +194,17 @@ class WebPageOutputControllerTest extends TestCase
             'collections.outputs.web_page.update',
             [
                 'collection' => $webpage->collection_id,
-                'output' => $webpage->id
+                'output' => $webpage->id,
             ]
         ), [
-                'title' => "Foobar2",
-                'summary' => "Foobar2",
-                'active' => true,
-                'public' => false,
-            ]
+            'title' => 'Foobar2',
+            'summary' => 'Foobar2',
+            'active' => true,
+            'public' => false,
+        ]
         );
 
-        $this->assertDatabaseCount("outputs", 1);
+        $this->assertDatabaseCount('outputs', 1);
 
         $output = Output::first();
 

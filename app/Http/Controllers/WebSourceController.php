@@ -4,14 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Domains\Sources\SourceTypeEnum;
 use App\Http\Resources\CollectionResource;
-use App\Http\Resources\SourceResource;
 use App\Models\Collection;
 use App\Models\Source;
 
 class WebSourceController extends Controller
 {
-
-
     public function create(Collection $collection)
     {
         return inertia('Sources/WebSource/Create', [
@@ -66,6 +63,4 @@ class WebSourceController extends Controller
 
         return back();
     }
-
-
 }

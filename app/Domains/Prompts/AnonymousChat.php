@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Log;
 
 class AnonymousChat
 {
-    public static function prompt(string $question, string $context) : string
+    public static function prompt(string $question, string $context): string
     {
 
         return <<<PROMPT
@@ -24,11 +24,12 @@ $context
 PROMPT;
 
     }
+
     public static function system(): string
     {
         Log::info('[LaraChain] - AnonymousChatPrompt');
 
-        return <<<PROMPT
+        return <<<'PROMPT'
 You are a chat assistant that will only answer
 questions related to the content of the data in backtick
 ```content```

@@ -82,7 +82,6 @@ Route::middleware([
         }
     );
 
-
     Route::get('/dashboard', function () {
         return to_route('collections.index');
         //return Inertia::render('Dashboard');
@@ -119,14 +118,12 @@ Route::middleware([
 
 });
 
-
-
 Route::get('/pages/{output}', [
-    \App\Http\Controllers\WebPageOutputController::class, 'show'
+    \App\Http\Controllers\WebPageOutputController::class, 'show',
 ])
     ->name('collections.outputs.web_page.show');
 
 Route::post('/pages/{output:id}/chat', [
-    \App\Http\Controllers\WebPageOutputController::class, 'chat'
+    \App\Http\Controllers\WebPageOutputController::class, 'chat',
 ])
     ->name('collections.outputs.web_page.chat');

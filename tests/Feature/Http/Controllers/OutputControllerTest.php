@@ -4,10 +4,7 @@ namespace Tests\Feature\Http\Controllers;
 
 use App\Models\Collection;
 use App\Models\Output;
-use App\Models\Source;
 use App\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class OutputControllerTest extends TestCase

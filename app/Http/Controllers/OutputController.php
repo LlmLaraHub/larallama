@@ -5,10 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Resources\CollectionResource;
 use App\Http\Resources\DocumentResource;
 use App\Http\Resources\OutputResource;
-use App\Http\Resources\SourceResource;
 use App\Models\Collection;
 use App\Models\Document;
-use Illuminate\Http\Request;
 
 class OutputController extends Controller
 {

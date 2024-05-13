@@ -7,55 +7,44 @@ use App\Domains\Outputs\OutputTypeEnum;
 use App\Domains\Prompts\AnonymousChat;
 use App\Domains\Prompts\SummarizeForPage;
 use App\Domains\Prompts\SummarizePrompt;
-use App\Domains\Sources\SourceTypeEnum;
 use App\Http\Resources\CollectionResource;
-use App\Http\Resources\OutputResource;
 use App\Http\Resources\PublicOutputResource;
 use App\Models\Collection;
 use App\Models\DocumentChunk;
-use Facades\LlmLaraHub\LlmDriver\DistanceQuery;
 use App\Models\Output;
-use App\Models\Source;
-use Illuminate\Http\Request;
+use Facades\LlmLaraHub\LlmDriver\DistanceQuery;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Str;
-use Laravel\Pennant\Feature;
-use LlmLaraHub\LlmDriver\Functions\SummarizeCollection;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
-use LlmLaraHub\LlmDriver\Prompts\SummarizeCollectionPrompt;
 use LlmLaraHub\LlmDriver\Requests\MessageInDto;
-use LlmLaraHub\LlmDriver\Responses\CompletionResponse;
-use LlmLaraHub\LlmDriver\Responses\EmbeddingsResponseDto;
 
 class WebPageOutputController extends Controller
 {
-
-    protected function getChatMessages() : array {
+    protected function getChatMessages(): array
+    {
         $messages = request()->session()->only(['messages']);
 
-        if(empty($messages)) {
+        if (empty($messages)) {
             $messages = MessageInDto::from([
                 'content' => AnonymousChat::system(),
                 'role' => 'system',
-                'is_ai' => true
+                'is_ai' => true,
             ]);
 
             request()->session()->push('messages', $messages);
         }
 
-
-
         return $messages;
     }
 
-    protected function setChatMessages(string $input, string $role = 'user') {
+    protected function setChatMessages(string $input, string $role = 'user')
+    {
         $this->getChatMessages();
 
         $messages = MessageInDto::from([
             'content' => str($input)->markdown(),
-            'role' =>  $role,
+            'role' => $role,
             'is_ai' => $role !== 'user',
-            'show' => $role !== 'system'
+            'show' => $role !== 'system',
         ]);
 
         request()->session()->push('messages', $messages);
@@ -65,19 +54,19 @@ class WebPageOutputController extends Controller
 
     public function chat(Output $output)
     {
-        if(!auth()->check() && !$output->public) {
+        if (! auth()->check() && ! $output->public) {
             abort(404);
         }
 
-        if(!$output->active) {
+        if (! $output->active) {
             abort(404);
         }
 
         $validated = request()->validate([
-            'input' => 'required|string'
+            'input' => 'required|string',
         ]);
 
-        Log::info("[LaraChain] - Message Coming in", [
+        Log::info('[LaraChain] - Message Coming in', [
             'message' => $validated['input']]
         );
 
@@ -94,7 +83,6 @@ class WebPageOutputController extends Controller
         //put_fixture("anonymous_embedding_result.json", $embedding);
         $documentChunkResults = DistanceQuery::distance(
             $embeddingSize,
-            /** @phpstan-ignore-next-line */
             $output->collection->id,
             $embedding->embedding
         );
@@ -109,11 +97,10 @@ class WebPageOutputController extends Controller
 
         $context = implode(' ', $content);
 
-        Log::info("[LaraChain] - Content Found", [
-                'content' => $content
-            ]
+        Log::info('[LaraChain] - Content Found', [
+            'content' => $content,
+        ]
         );
-
 
         $contentFlattened = SummarizePrompt::prompt(
             originalPrompt: $input,
@@ -129,7 +116,6 @@ class WebPageOutputController extends Controller
         return back();
     }
 
-
     public function create(Collection $collection)
     {
         return inertia('Outputs/WebPage/Create', [
@@ -137,9 +123,10 @@ class WebPageOutputController extends Controller
         ]);
     }
 
-    public function generateSummaryFromCollection(Collection $collection) {
+    public function generateSummaryFromCollection(Collection $collection)
+    {
 
-        Log::info("[LaraChain] - Getting Summary");
+        Log::info('[LaraChain] - Getting Summary');
         $summary = collect([]);
 
         foreach ($collection->documents as $document) {
@@ -153,19 +140,19 @@ class WebPageOutputController extends Controller
         notify_collection_ui(
             collection: $collection,
             status: CollectionStatusEnum::PENDING,
-            message: "Sending Collection Summary to LLM"
+            message: 'Sending Collection Summary to LLM'
         );
 
         $prompt = SummarizeForPage::prompt($summary);
 
         $results = LlmDriverFacade::driver($collection->getDriver())->completion($prompt);
 
-        Log::info("[LaraChain] - Page Summary Created", [
-            'summary' => $results->content
+        Log::info('[LaraChain] - Page Summary Created', [
+            'summary' => $results->content,
         ]);
 
         return response()->json([
-            'summary' => $results->content
+            'summary' => $results->content,
         ]);
     }
 
@@ -176,7 +163,7 @@ class WebPageOutputController extends Controller
             'title' => 'required|string',
             'summary' => 'required|string',
             'active' => 'boolean|nullable',
-            'public' => 'boolean|nullable'
+            'public' => 'boolean|nullable',
         ]);
 
         Output::create([
@@ -208,7 +195,7 @@ class WebPageOutputController extends Controller
             'title' => 'required|string',
             'summary' => 'required|string',
             'active' => 'boolean|nullable',
-            'public' => 'boolean|nullable'
+            'public' => 'boolean|nullable',
         ]);
 
         $output->update($validated);
@@ -220,20 +207,17 @@ class WebPageOutputController extends Controller
 
     public function show(Output $output)
     {
-        if(!auth()->check() && !$output->public) {
+        if (! auth()->check() && ! $output->public) {
             abort(404);
         }
 
-        if(!$output->active) {
+        if (! $output->active) {
             abort(404);
         }
 
-        return inertia("Outputs/WebPage/Show", [
+        return inertia('Outputs/WebPage/Show', [
             'output' => new PublicOutputResource($output),
-            'messages' => data_get($this->getChatMessages(), 'messages', [])
+            'messages' => data_get($this->getChatMessages(), 'messages', []),
         ]);
     }
-
-
-
 }

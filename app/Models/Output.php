@@ -14,11 +14,11 @@ class Output extends Model
     use HasFactory;
     use HasSlug;
 
-        protected $guarded = [];
+    protected $guarded = [];
 
     protected $casts = [
         'type' => OutputTypeEnum::class,
-        'meta_data' => 'array'
+        'meta_data' => 'array',
     ];
 
     public function getSlugOptions(): SlugOptions
