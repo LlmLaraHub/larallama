@@ -2,6 +2,7 @@
 import { ref } from 'vue';
 import Tags from '@/Components/Tags.vue';
 import ShowDocument from '@/Pages/Collection/Components/ShowDocument.vue';
+import DocumentReset from '@/Pages/Collection/Components/DocumentReset.vue';
 
 const props = defineProps({
     collection: {
@@ -150,9 +151,9 @@ const closeDocument = () => {
         </div>
     </div>
     <Teleport to="body">
-        
+
     <ShowDocument :document="document" :open="showDocumentSlideOut"
-            @closing="closeDocument" />   
+            @closing="closeDocument" />
     </Teleport>
 
 </template>
