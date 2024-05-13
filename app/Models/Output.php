@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Domains\Outputs\OutputTypeEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -13,7 +14,12 @@ class Output extends Model
     use HasFactory;
     use HasSlug;
 
-    protected $guarded = [];
+        protected $guarded = [];
+
+    protected $casts = [
+        'type' => OutputTypeEnum::class,
+        'meta_data' => 'array'
+    ];
 
     public function getSlugOptions(): SlugOptions
     {

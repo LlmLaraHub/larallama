@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Models;
 
+use App\Domains\Outputs\OutputTypeEnum;
 use App\Models\Output;
 use Tests\TestCase;
 
@@ -15,6 +16,8 @@ class OutputTest extends TestCase
         $output = Output::factory()->create();
 
         $this->assertNotNull($output->slug);
+        $this->assertNotNull($output->meta_data);
+        $this->assertEquals(OutputTypeEnum::WebPage, $output->type);
         $this->assertNotNull($output->collection->id);
         $this->assertNotNull($output->collection->outputs()->first()->id);
     }

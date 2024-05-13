@@ -1,0 +1,87 @@
+<script setup>
+import AppLayout from '@/Layouts/AppLayout.vue';
+import PrimaryButton from '@/Components/PrimaryButton.vue';
+import SecondaryButton from '@/Components/SecondaryButton.vue';
+import { ref } from 'vue';
+import Intro from '@/Components/Intro.vue';
+import SecondaryLink from '@/Components/SecondaryLink.vue';
+import Resources from './Components/Resources.vue';
+import { useForm } from '@inertiajs/vue3';
+import {useToast} from "vue-toastification";
+
+const toast = useToast();
+
+const props = defineProps({
+    collection: {
+        type: Object,
+        required: true,
+    },
+    output: {
+        type: Object
+    }
+});
+
+const form = useForm({
+    title: props.output.title,
+    summary: props.output.summary,
+    active: props.output.active,
+    public: props.output.public,
+});
+
+
+const submit = () => {
+    form.put(
+        route('collections.outputs.web_page.update', {
+            collection: props.collection.data.id,
+            output: props.output.id
+        }), {
+            preserveScroll: true,
+            onSuccess: params => {
+                toast.info("Updated");
+            }
+        });
+}
+</script>
+
+<template>
+    <AppLayout title=" Edit Web Page">
+        <template #header>
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                Edit Web Page
+            </h2>
+        </template>
+
+        <div class="py-12">
+            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-5">
+                    <Intro>
+                        Web Page
+                        <template #description>
+                            You can edit the web page as needed
+                        </template>
+                    </Intro>
+
+                    <form @submit.prevent="submit" class="p-10 ">
+                        <Resources
+                        v-model="form">
+
+                        </Resources>
+
+                        <div class="flex justify-end items-center gap-4">
+                            <PrimaryButton type="submit">
+                                Save
+                            </PrimaryButton>
+                            <SecondaryLink :href="route('collections.sources.index', {
+                                collection: collection.data.id
+
+                            })">
+                                Cancel
+                            </SecondaryLink>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </AppLayout>
+</template>

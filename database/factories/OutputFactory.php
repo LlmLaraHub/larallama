@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Domains\Outputs\OutputTypeEnum;
 use App\Models\Collection;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -21,6 +22,8 @@ class OutputFactory extends Factory
             'title' => fake()->title,
             'collection_id' => Collection::factory(),
             'active' => fake()->boolean,
+            'type' => OutputTypeEnum::WebPage,
+            'meta_data' => [],
             'public' => fake()->boolean,
             'summary' => fake()->sentences(4, true),
         ];

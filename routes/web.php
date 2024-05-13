@@ -37,6 +37,13 @@ Route::middleware([
         }
     );
 
+    Route::controller(\App\Http\Controllers\OutputController::class)->group(
+        function () {
+            Route::get('/collections/{collection}/outputs', 'index')
+                ->name('collections.outputs.index');
+        }
+    );
+
     Route::controller(SourceController::class)->group(
         function () {
             Route::get('/collections/{collection}/sources', 'index')
@@ -59,6 +66,22 @@ Route::middleware([
                 ->name('collections.sources.websearch.update');
         }
     );
+
+    Route::controller(\App\Http\Controllers\WebPageOutputController::class)->group(
+        function () {
+            Route::get('/collections/{collection}/outputs/web_page/create', 'create')
+                ->name('collections.outputs.web_page.create');
+            Route::get('/collections/{collection}/outputs/web_page/{output:id}/edit', 'edit')
+                ->name('collections.outputs.web_page.edit');
+            Route::post('/collections/{collection}/outputs/web_page', 'store')
+                ->name('collections.outputs.web_page.store');
+            Route::post('/collections/{collection}/outputs/web_page/summary', 'generateSummaryFromCollection')
+                ->name('collections.outputs.web_page.summary');
+            Route::put('/collections/{collection}/outputs/web_page/{output:id}/update', 'update')
+                ->name('collections.outputs.web_page.update');
+        }
+    );
+
 
     Route::get('/dashboard', function () {
         return to_route('collections.index');
@@ -95,3 +118,15 @@ Route::middleware([
     });
 
 });
+
+
+
+Route::get('/pages/{output}', [
+    \App\Http\Controllers\WebPageOutputController::class, 'show'
+])
+    ->name('collections.outputs.web_page.show');
+
+Route::post('/pages/{output:id}/chat', [
+    \App\Http\Controllers\WebPageOutputController::class, 'chat'
+])
+    ->name('collections.outputs.web_page.chat');

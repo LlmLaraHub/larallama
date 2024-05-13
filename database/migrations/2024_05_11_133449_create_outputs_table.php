@@ -18,6 +18,8 @@ return new class extends Migration
             $table->boolean('public')->default(false);
             $table->longText('summary')->nullable(); //going to let AI generate it
             $table->string('title');
+            $table->json('meta_data')->nullable();
+            $table->string('type')->default(\App\Domains\Outputs\OutputTypeEnum::WebPage->value);
             $table->string('slug')->nullable(); //will be made during save
             $table->timestamps();
         });

@@ -17,12 +17,11 @@ class SimpleSearchAndSummarizeOrchestrate
     {
         Log::info('[LaraChain] Skipping over functions doing search and summarize');
 
-        ChatUiUpdateEvent::dispatch(
+        notify_ui(
             $chat->chatable,
             $chat,
             'Searching data now to summarize content'
         );
-
         $response = SearchAndSummarizeChatRepo::search($chat, $message);
 
         return $response;

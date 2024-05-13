@@ -10,13 +10,7 @@ use App\Models\Source;
 
 class WebSourceController extends Controller
 {
-    public function index(Collection $collection)
-    {
-        return inertia('Sources/WebSource/Index', [
-            'collection' => $collection,
-            'sources' => SourceResource::collection($collection->sources()->paginate(10)),
-        ]);
-    }
+
 
     public function create(Collection $collection)
     {
@@ -72,4 +66,6 @@ class WebSourceController extends Controller
 
         return back();
     }
+
+
 }
