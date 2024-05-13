@@ -118,8 +118,8 @@ class WebPageOutputControllerTest extends TestCase
 
         LlmDriverFacade::shouldReceive('driver->completion')
             ->once()->andReturn(CompletionResponse::from([
-            'content' => 'Test',
-        ]));
+                'content' => 'Test',
+            ]));
 
         $collection = Collection::factory()->create();
 

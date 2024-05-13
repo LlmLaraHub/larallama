@@ -17,6 +17,17 @@ class HelpersTest extends TestCase
 
     }
 
+    public function test_fixes_text()
+    {
+        // Create a string with an invalid UTF-8 character sequence
+        $text = 'An endemic state is defined as an incidence of '.chr(0x80);
+
+        $results = to_utf8($text);
+
+        // Check that the invalid character has been removed
+        $this->assertEquals('An endemic state is defined as an incidence of ', $results);
+    }
+
     public function test_chunks_a_string()
     {
         $maxLength = 100;

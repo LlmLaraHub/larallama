@@ -47,7 +47,7 @@ class PdfTransformer
                         ],
                         [
                             'guid' => $guid,
-                            'content' => $chunkContent,
+                            'content' => to_utf8($chunkContent),
                         ]
                     );
 
@@ -64,7 +64,7 @@ class PdfTransformer
         }
 
         Bus::batch($chunks)
-            ->name("Chunking Document - {$this->document->id}")
+            ->name("Chunking Document - {$this->document->id} {$this->document->file_path}")
             ->finally(function (Batch $batch) use ($document) {
                 Bus::batch([
                     [

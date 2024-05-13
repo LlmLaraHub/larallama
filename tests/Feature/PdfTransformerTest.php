@@ -27,7 +27,7 @@ class PdfTransformerTest extends TestCase
         $this->assertDatabaseCount('document_chunks', 0);
         $transformer = new PdfTransformer();
         $transformer->handle($this->document);
-        $this->assertDatabaseCount('document_chunks', 66);
+        $this->assertDatabaseCount('document_chunks', 72);
 
         $pages = 10;
 
@@ -47,8 +47,8 @@ class PdfTransformerTest extends TestCase
         $this->assertDatabaseCount('document_chunks', 0);
         $transformer = new PdfTransformer();
         $transformer->handle($this->document);
-        $this->assertDatabaseCount('document_chunks', 66);
+        $this->assertDatabaseCount('document_chunks', 72);
         $transformer->handle($this->document);
-        $this->assertDatabaseCount('document_chunks', 66);
+        $this->assertDatabaseCount('document_chunks', 72);
     }
 }
