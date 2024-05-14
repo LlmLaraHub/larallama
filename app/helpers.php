@@ -71,6 +71,20 @@ if (! function_exists('chunk_string')) {
     }
 }
 
+if (! function_exists('too_large_for_json')) {
+    function too_large_for_json(int $count): int
+    {
+        $size = config('llmdriver.chunking.default_size');
+        $totalPotentialSize = $size * $count;
+
+        if ($totalPotentialSize >= 1048576) {
+            return ceil($totalPotentialSize / 1048576);
+        }
+
+        return 1;
+    }
+}
+
 if (! function_exists('token_counter')) {
     function token_counter(string $message)
     {

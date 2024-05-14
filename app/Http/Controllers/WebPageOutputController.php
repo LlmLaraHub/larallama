@@ -15,6 +15,7 @@ use App\Models\Output;
 use Facades\LlmLaraHub\LlmDriver\DistanceQuery;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Log;
+use LlmLaraHub\LlmDriver\Helpers\TrimText;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
 use LlmLaraHub\LlmDriver\Requests\MessageInDto;
 
@@ -29,6 +30,7 @@ class WebPageOutputController extends Controller
                 'content' => AnonymousChat::system(),
                 'role' => 'system',
                 'is_ai' => true,
+                'show' => false,
             ]);
 
             request()->session()->push('messages', $messages);
@@ -109,6 +111,10 @@ class WebPageOutputController extends Controller
             context: $context
         );
 
+        Log::info("[LaraChain] - Prompt with Context", [
+            'prompt' => $contentFlattened
+        ]);
+
         $response = LlmDriverFacade::driver(
             $output->collection->getDriver()
         )->completion($contentFlattened);
@@ -130,11 +136,9 @@ class WebPageOutputController extends Controller
 
         Log::info('[LaraChain] - Getting Summary');
         $summary = collect([]);
-
         foreach ($collection->documents as $document) {
-            foreach ($document->document_chunks as $chunk) {
-                $summary->add($chunk->content);
-            }
+            $chunk = (new TrimText())->handle($document->summary);
+            $summary->add($chunk);
         }
 
         $summary = $summary->implode('\n');

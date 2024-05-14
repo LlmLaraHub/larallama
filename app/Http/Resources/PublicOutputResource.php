@@ -23,6 +23,9 @@ class PublicOutputResource extends JsonResource
             'active' => $this->active,
             'public' => $this->public,
             'slug' => $this->slug,
+            'url' => route('collections.outputs.web_page.show', [
+                'output' => $this->slug,
+            ]),
         ];
     }
 }

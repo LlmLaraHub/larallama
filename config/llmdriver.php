@@ -3,6 +3,9 @@
 return [
     'driver' => env('LLM_DRIVER', 'mock'),
 
+    'chunking' => [
+        'default_size' => env('CHUNK_SIZE', 600),
+    ],
     'embedding_sizes' => [
         'mock' => 4096,
         'text-embedding-3-large' => 3072,

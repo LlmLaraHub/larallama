@@ -88,6 +88,7 @@ const chat = () => {
                 disabled:opacity-40
                 bg-transparent block w-full border-0 py-1.5 ring-0 ring-inset
                 ring-indigo-500 placeholder:text-gray-400 focus:ring-2
+                text-gray-800
                 focus:ring-indigo-500 sm:text-sm sm:leading-6"
                     v-model="form.input" placeholder="Chat about your Collection"/>
 

@@ -36,7 +36,6 @@ const props = defineProps({
                 <div v-if="message.is_ai">
                     <div class="message-baloon flex rounded-md relative shadow-lg shadow-inner-custom  p-4 prose space-y-4l "
                          :class="message.is_ai ? 'bg-gray-300/10 rounded-tr-none border-indigo-500' : 'flex-row-reverse'">
-
                         <div v-if="message.type !== 'image'" class="message-content grow"
                              :class="message.role === 'assistant' ? 'rounded-tr-none' : 'rounded-tl-none'"
                              v-html="message.content">

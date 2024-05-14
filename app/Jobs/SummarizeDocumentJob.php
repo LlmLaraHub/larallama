@@ -43,7 +43,18 @@ class SummarizeDocumentJob implements ShouldQueue
 
         $content = [];
 
-        foreach ($this->document->document_chunks as $chunk) {
+        /**
+         * @NOTE
+         * Hit max payload on system here so
+         * not 100% sure the best way to break this up.
+         */
+        $divisor = too_large_for_json($this->document->document_chunks()->count());
+
+        foreach ($this->document->document_chunks as $chunkIndex => $chunk) {
+            if ($chunkIndex % $divisor == 0) {
+                continue;
+            }
+
             $content[] = (new TrimText())->handle($chunk->content);
         }
 

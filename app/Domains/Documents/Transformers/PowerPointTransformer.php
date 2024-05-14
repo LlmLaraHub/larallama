@@ -35,8 +35,8 @@ class PowerPointTransformer
             $dto = $results->current();
 
             $content = $dto->content;
-
-            $chunked_chunks = TextChunker::handle($content);
+            $size = config('llmdriver.chunking.default_size');
+            $chunked_chunks = TextChunker::handle($content, $size);
 
             foreach ($chunked_chunks as $chunkSection => $chunkContent) {
                 $DocumentChunk = DocumentChunk::updateOrCreate(

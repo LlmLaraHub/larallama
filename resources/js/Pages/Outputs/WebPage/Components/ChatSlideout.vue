@@ -15,11 +15,11 @@
                                leave-to="translate-x-full">
                 <DialogPanel class="pointer-events-auto w-screen max-w-2xl">
                   <div class="flex h-full flex-col overflow-y-scroll
-                  text-gray-200 dark:text-gray-400
+                  text-gray-200
                   bg-white  border-b border-gray-100 dark:border-gray-700 py-6 shadow-xl">
                     <div class="px-4 sm:px-6">
                       <div class="flex items-start justify-between">
-                        <DialogTitle class="text-base font-semibold leading-6 text-gray-800 dark:text-gray-500">
+                        <DialogTitle class="text-base font-semibold leading-6 text-gray-800 ">
                             Chat with the collection.
                         </DialogTitle>
                         <div class="ml-3 flex h-7 items-center">

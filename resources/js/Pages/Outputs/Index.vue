@@ -64,10 +64,12 @@ const props = defineProps({
                         <div class="card-body">
                             <h2 class="card-title text-gray-600">{{ output.title }}</h2>
 
-                            <div>
-                                <span class="font-bold text-gray-600" v-html="output.summary_truncated"></span>
+                            <div class="overflow-hidden">
+                                <span class="font-bold text-gray-600 text-xs" v-html="output.summary_truncated"></span>
                             </div>
-                            <div class="card-actions justify-end">
+
+                            <div class="card-actions justify-end flex items-center">
+                                <Link class="link" :href="output.url">visit</Link>
                                 <Link :href="route('collections.outputs.web_page.edit', {
                                     collection: output.collection_id,
                                     output: output.id

@@ -36,7 +36,8 @@ class PdfTransformer
                 $page_number = $page_number + 1;
                 $pageContent = $page->getText();
 
-                $chunked_chunks = TextChunker::handle($pageContent);
+                $size = config('llmdriver.chunking.default_size');
+                $chunked_chunks = TextChunker::handle($pageContent, $size);
                 foreach ($chunked_chunks as $chunkSection => $chunkContent) {
                     $guid = md5($chunkContent);
                     $DocumentChunk = DocumentChunk::updateOrCreate(

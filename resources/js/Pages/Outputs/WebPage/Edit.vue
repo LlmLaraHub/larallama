@@ -8,6 +8,7 @@ import SecondaryLink from '@/Components/SecondaryLink.vue';
 import Resources from './Components/Resources.vue';
 import { useForm } from '@inertiajs/vue3';
 import {useToast} from "vue-toastification";
+import Generate from "@/Pages/Outputs/WebPage/Components/Generate.vue";
 
 const toast = useToast();
 
@@ -27,6 +28,10 @@ const form = useForm({
     active: props.output.active,
     public: props.output.public,
 });
+const updateSummary = (summary) => {
+
+    form.summary = summary;
+}
 
 
 const submit = () => {
@@ -64,7 +69,9 @@ const submit = () => {
                     <form @submit.prevent="submit" class="p-10 ">
                         <Resources
                         v-model="form">
-
+                            <Generate :collection="collection.data"
+                                      @generated="updateSummary"
+                            ></Generate>
                         </Resources>
 
                         <div class="flex justify-end items-center gap-4">
