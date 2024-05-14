@@ -72,7 +72,7 @@ if (! function_exists('chunk_string')) {
 }
 
 if (! function_exists('too_large_for_json')) {
-    function too_large_for_json(int $count): int
+    function too_large_for_json(int $count): float
     {
         $size = config('llmdriver.chunking.default_size');
         $totalPotentialSize = $size * $count;

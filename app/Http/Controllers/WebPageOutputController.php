@@ -111,8 +111,8 @@ class WebPageOutputController extends Controller
             context: $context
         );
 
-        Log::info("[LaraChain] - Prompt with Context", [
-            'prompt' => $contentFlattened
+        Log::info('[LaraChain] - Prompt with Context', [
+            'prompt' => $contentFlattened,
         ]);
 
         $response = LlmDriverFacade::driver(
