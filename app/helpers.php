@@ -137,6 +137,24 @@ if (! function_exists('remove_ascii')) {
     }
 }
 
+if (! function_exists('to_utf8')) {
+    function to_utf8($string): string
+    {
+        // Detect the string's current encoding
+        $encoding = mb_detect_encoding($string, mb_detect_order(), true);
+
+        // If the string is not already in UTF-8, convert it
+        if ($encoding && $encoding != 'UTF-8') {
+            $string = mb_convert_encoding($string, 'UTF-8', $encoding);
+        }
+
+        // Remove any remaining invalid UTF-8 characters
+        $fixed = iconv('UTF-8', 'UTF-8//IGNORE', $string);
+
+        return $fixed;
+    }
+}
+
 if (! function_exists('get_fixture')) {
     function get_fixture($file_name, $decode = true)
     {

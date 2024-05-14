@@ -18,7 +18,6 @@ class SimpleSearchAndSummarizeOrchestrate
 
         notify_ui(
             $chat->chatable,
-            $chat,
             'Searching data now to summarize content'
         );
         $response = SearchAndSummarizeChatRepo::search($chat, $message);
