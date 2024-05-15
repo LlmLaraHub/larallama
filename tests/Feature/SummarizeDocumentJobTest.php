@@ -43,4 +43,34 @@ class SummarizeDocumentJobTest extends TestCase
 
         $this->assertEquals('Foo bar', $document->refresh()->summary);
     }
+
+    public function test_too_large(): void
+    {
+
+        $data = 'Foo bar';
+        $dto = new \LlmLaraHub\LlmDriver\Responses\CompletionResponse($data);
+
+        LlmDriverFacade::shouldReceive('driver->completion')
+            ->once()
+            ->andReturn($dto);
+
+        $collection = Collection::factory()->create();
+
+        $chat = Chat::factory()->create([
+            'chatable_type' => Collection::class,
+            'chatable_id' => $collection->id,
+        ]);
+
+        $document = Document::factory()->create([
+            'summary' => null,
+            'collection_id' => $collection->id,
+        ]);
+
+        //$this->fakeVerify($chat);
+
+        $job = new SummarizeDocumentJob($document);
+        $job->handle();
+
+        $this->assertEquals('Foo bar', $document->refresh()->summary);
+    }
 }

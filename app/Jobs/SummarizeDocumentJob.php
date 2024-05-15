@@ -50,12 +50,14 @@ class SummarizeDocumentJob implements ShouldQueue
          */
         $divisor = too_large_for_json($this->document->document_chunks()->count());
 
+        Log::info('[LaraChain] Divisor', [
+            'count' => $divisor,
+        ]);
+
         foreach ($this->document->document_chunks as $chunkIndex => $chunk) {
             if ($chunkIndex % $divisor == 0) {
-                continue;
+                $content[] = (new TrimText())->handle($chunk->content);
             }
-
-            $content[] = (new TrimText())->handle($chunk->content);
         }
 
         $content = implode(' ', $content);
@@ -63,6 +65,10 @@ class SummarizeDocumentJob implements ShouldQueue
         Log::info('[LaraChain] Summarizing Document', [
             'token_count_v2' => token_counter_v2($content),
             'token_count_v1' => token_counter($content),
+        ]);
+
+        Log::info('[LaraChain] - The Chunks to Summarize', [
+            'content' => $content,
         ]);
 
         $prompt = SummarizeDocumentPrompt::prompt($content);
