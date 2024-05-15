@@ -18,6 +18,7 @@ class SummarizeDocumentPrompt
 
   - Analyze the data retrieved by the RAG system to identify key themes and information.
   - Integrate these insights into a concise and informative summary or response.
+  - Return as markdown I can render in the UI (do not wrap the markdown in ```` since it is not code)
 
   **Goal**: Produce a distilled and accurate synthesis of the retrieved information, aiding in quick comprehension and effective decision-making based on comprehensive data input.
 

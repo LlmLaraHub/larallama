@@ -4,8 +4,10 @@ namespace Tests\Feature\Http\Controllers;
 
 use App\Models\Collection;
 use App\Models\Document;
+use App\Models\DocumentChunk;
 use App\Models\Output;
 use App\Models\User;
+use Facades\LlmLaraHub\LlmDriver\DistanceQuery;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
 use LlmLaraHub\LlmDriver\Responses\CompletionResponse;
 use LlmLaraHub\LlmDriver\Responses\EmbeddingsResponseDto;
@@ -28,8 +30,46 @@ class WebPageOutputControllerTest extends TestCase
         ))->assertStatus(200);
     }
 
-    public function test_chat()
+    public function test_chat_summarize()
     {
+        $output = Output::factory()->create([
+            'active' => true,
+            'public' => true,
+        ]);
+
+        Document::factory()->create([
+            'collection_id' => $output->collection_id,
+        ]);
+
+        DocumentChunk::factory()->create();
+
+        DistanceQuery::shouldReceive('distance')->never();
+
+        LlmDriverFacade::shouldReceive('driver->embedData')
+            ->never();
+
+        LlmDriverFacade::shouldReceive('driver->completion')
+            ->twice()
+            ->andReturn(CompletionResponse::from([
+                'content' => 'summarize',
+            ]));
+
+        $this->post(route(
+            'collections.outputs.web_page.chat', [
+                'output' => $output->id,
+            ]
+        ), [
+            'input' => 'Summarize the collection',
+        ])->assertStatus(302);
+    }
+
+    public function test_chat_search()
+    {
+
+        $documentChunk = DocumentChunk::factory()->create();
+
+        DistanceQuery::shouldReceive('distance')->once()->andReturn(DocumentChunk::all());
+
         $output = Output::factory()->create([
             'active' => true,
             'public' => true,
@@ -49,9 +89,9 @@ class WebPageOutputControllerTest extends TestCase
             ));
 
         LlmDriverFacade::shouldReceive('driver->completion')
-            ->once()
+            ->twice()
             ->andReturn(CompletionResponse::from([
-                'content' => 'Test',
+                'content' => 'search',
             ]));
 
         $this->post(route(
@@ -59,7 +99,47 @@ class WebPageOutputControllerTest extends TestCase
                 'output' => $output->id,
             ]
         ), [
-            'input' => 'Testing',
+            'input' => 'Search for foo bar',
+        ])->assertStatus(302);
+    }
+
+    public function test_no_search_no_summary()
+    {
+
+        DocumentChunk::factory()->create();
+
+        DistanceQuery::shouldReceive('distance')->once()->andReturn(DocumentChunk::all());
+
+        $output = Output::factory()->create([
+            'active' => true,
+            'public' => true,
+        ]);
+
+        $question = get_fixture('embedding_question_distance.json');
+
+        $vector = new Vector($question);
+
+        LlmDriverFacade::shouldReceive('driver->embedData')
+            ->once()
+            ->andReturn(EmbeddingsResponseDto::from(
+                [
+                    'embedding' => $vector,
+                    'token_count' => 2,
+                ]
+            ));
+
+        LlmDriverFacade::shouldReceive('driver->completion')
+            ->twice()
+            ->andReturn(CompletionResponse::from([
+                'content' => 'not sure :(',
+            ]));
+
+        $this->post(route(
+            'collections.outputs.web_page.chat', [
+                'output' => $output->id,
+            ]
+        ), [
+            'input' => 'Search for foo bar',
         ])->assertStatus(302);
     }
 
