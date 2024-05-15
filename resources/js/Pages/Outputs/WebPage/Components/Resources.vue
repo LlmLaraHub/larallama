@@ -10,7 +10,7 @@
         <div>
             <InputLabel value="Summary"/>
             <textarea v-model="modelValue.summary" class="rounded-none textarea textarea-bordered w-full mb-5"
-                placeholder="Page content here"></textarea>
+                placeholder="Page content here" rows="25"></textarea>
             <InputError :message="modelValue.errors.summary" />
         </div>
         <slot></slot>
