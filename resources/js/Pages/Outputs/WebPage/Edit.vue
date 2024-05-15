@@ -78,11 +78,11 @@ const submit = () => {
                             <PrimaryButton type="submit">
                                 Save
                             </PrimaryButton>
-                            <SecondaryLink :href="route('collections.sources.index', {
+                            <SecondaryLink :href="route('collections.outputs.index', {
                                 collection: collection.data.id
 
                             })">
-                                Cancel
+                                Back
                             </SecondaryLink>
                         </div>
                     </form>
