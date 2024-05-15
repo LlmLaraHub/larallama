@@ -26,6 +26,7 @@ class DocumentProcessingCompleteJobTest extends TestCase
 
         DocumentChunk::factory()->count(5)->create([
             'document_id' => $document->id,
+            'section_number' => 0,
         ]);
 
         Bus::fake();

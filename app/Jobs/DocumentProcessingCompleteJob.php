@@ -31,7 +31,7 @@ class DocumentProcessingCompleteJob implements ShouldQueue
     public function handle(): void
     {
 
-        $count = $this->document->document_chunks()->count();
+        $count = $this->document->document_chunks()->where('section_number', 0)->count();
 
         $this->document->update([
             'status' => StatusEnum::Complete,
