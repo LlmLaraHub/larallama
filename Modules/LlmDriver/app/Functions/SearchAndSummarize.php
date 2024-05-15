@@ -15,7 +15,6 @@ use LlmLaraHub\LlmDriver\Helpers\CreateReferencesTrait;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
 use LlmLaraHub\LlmDriver\Requests\MessageInDto;
 use LlmLaraHub\LlmDriver\Responses\CompletionResponse;
-use LlmLaraHub\LlmDriver\Responses\EmbeddingsResponseDto;
 use LlmLaraHub\LlmDriver\Responses\FunctionResponse;
 
 class SearchAndSummarize extends FunctionContract
@@ -52,7 +51,6 @@ class SearchAndSummarize extends FunctionContract
 
         $originalPrompt = $input->content;
 
-        /** @var EmbeddingsResponseDto $embedding */
         $embedding = LlmDriverFacade::driver(
             $model->getEmbeddingDriver()
         )->embedData($originalPrompt);
@@ -92,13 +90,13 @@ class SearchAndSummarize extends FunctionContract
         $model->getChat()->addInput(
             message: $contentFlattened,
             role: RoleEnum::Assistant,
-            systemPrompt: $model->getChat()->chatable->systemPrompt(),
+            systemPrompt: $model->getChat()->getChatable()->systemPrompt(),
             show_in_thread: false
         );
 
         Log::info('[LaraChain] Getting the Search and Summary results', [
             'input' => $contentFlattened,
-            'driver' => $model->getChat()->chatable->getDriver(),
+            'driver' => $model->getChat()->getChatable()->getDriver(),
         ]);
 
         $messageArray = MessageInDto::from([
