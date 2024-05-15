@@ -144,3 +144,22 @@ Make sure to run
 launchctl setenv OLLAMA_NUM_PARALLEL 3
 ```
 and restart the service so you get multiple requests at a time
+
+
+## Troubleshooting
+
+## Can you connect to Ollama
+```
+curl http://127.0.0.1:11434/api/tags 
+curl http://localhost:11434/api/tags
+```
+
+## Do you see the default models in that output above
+
+```
+mxbai-embed-large
+llama3
+```
+
+
+```

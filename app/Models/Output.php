@@ -9,6 +9,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
+/**
+ * @property Collection $collection
+ * @property bool $public
+ * @property bool $active
+ */
 class Output extends Model
 {
     use HasFactory;
