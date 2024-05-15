@@ -147,6 +147,8 @@ class WebPageOutputController extends Controller
                 'response' => $response->content]
             );
 
+            $content = [];
+
             foreach ($output->collection->documents as $result) {
                 $contentString = remove_ascii($result->summary);
                 $content[] = $contentString; //reduce_text_size seem to mess up Claude?
