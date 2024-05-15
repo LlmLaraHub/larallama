@@ -17,5 +17,9 @@ class DocumentTest extends TestCase
         $this->assertNotNull($model->collection->id);
         $this->assertCount(1, $model->collection->documents);
         $this->assertNotNull($model->collection->documents()->first()->id);
+        $this->assertEquals(
+            $model->summary,
+            $model->content
+        );
     }
 }
