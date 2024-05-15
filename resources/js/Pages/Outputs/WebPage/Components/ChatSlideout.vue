@@ -24,7 +24,7 @@
                         </DialogTitle>
                         <div class="ml-3 flex h-7 items-center">
                           <button
-                          type="button" class="relative rounded-md bg-white   focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                          type="button" class="relative rounded-md bg-white  text-gray-800  focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                           @click="closeSlideOut()">
                             <span class="absolute -inset-2.5" />
                             <span class="sr-only">Close panel</span>

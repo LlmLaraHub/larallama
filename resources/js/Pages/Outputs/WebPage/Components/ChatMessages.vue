@@ -10,8 +10,12 @@ const props = defineProps({
     <div id="chat-messages"
          class="flex-col flex flex-grow h-full overflow-y-scroll gap-y-8 py-10 px-2
      ">
-        <div v-if="messages.length === 0">
-            Ask a question below to get started.
+        <div v-if="messages.length === 0" class=" text-gray-900 flex justify-start gap-2 items-center">
+            <div>Ask a question below to get started.</div>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="m15 15-6 6m0 0-6-6m6 6V9a6 6 0 0 1 12 0v3" />
+            </svg>
+
         </div>
 
         <div v-for="message in messages" v-else>
