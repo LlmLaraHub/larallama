@@ -49,6 +49,11 @@ class Document extends Model implements HasDrivers, TaggableContract
             ->toArray();
     }
 
+    public function getContentAttribute(): string
+    {
+        return $this->summary;
+    }
+
     public function collection(): BelongsTo
     {
         return $this->belongsTo(Collection::class);
