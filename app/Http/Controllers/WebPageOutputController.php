@@ -20,6 +20,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Log;
 use LlmLaraHub\LlmDriver\Helpers\TrimText;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
+use Facades\LlmLaraHub\LlmDriver\NonFunctionSearchOrSummarize;
 use LlmLaraHub\LlmDriver\Requests\MessageInDto;
 
 class WebPageOutputController extends Controller
@@ -85,132 +86,9 @@ class WebPageOutputController extends Controller
             'message' => $validated['input']]
         );
 
-        $prompt = SearchOrSummarize::prompt($input);
+        $results = NonFunctionSearchOrSummarize::handle($input, $output->collection);
 
-        $response = LlmDriverFacade::driver(
-            $output->collection->getDriver()
-        )->completion($prompt);
-
-        Log::info('[LaraChain] - Results from search or summarize', [
-            'results' => $response->content,
-        ]);
-
-        if (str($response->content)->contains('search')) {
-            Log::info('[LaraChain] - LLM Thinks it is Search', [
-                'response' => $response->content]
-            );
-
-            $embedding = LlmDriverFacade::driver(
-                $output->collection->getEmbeddingDriver()
-            )->embedData($input);
-
-            $embeddingSize = get_embedding_size($output->collection->getEmbeddingDriver());
-
-            //put_fixture("anonymous_embedding_result.json", $embedding);
-            $documentChunkResults = DistanceQuery::distance(
-                $embeddingSize,
-                $output->collection->id,
-                $embedding->embedding
-            );
-
-            $content = [];
-
-            /** @var DocumentChunk $result */
-            foreach ($documentChunkResults as $result) {
-                $contentString = remove_ascii($result->content);
-                $content[] = $contentString; //reduce_text_size seem to mess up Claude?
-            }
-
-            $context = implode(' ', $content);
-
-            Log::info('[LaraChain] - Content Found', [
-                'content' => $content,
-            ]);
-
-            $contentFlattened = SummarizePrompt::prompt(
-                originalPrompt: $input,
-                context: $context
-            );
-
-            Log::info('[LaraChain] - Prompt with Context', [
-                'prompt' => $contentFlattened,
-            ]);
-
-            $response = LlmDriverFacade::driver(
-                $output->collection->getDriver()
-            )->completion($contentFlattened);
-
-            $this->setChatMessages($response->content, 'assistant');
-
-        } elseif (str($response->content)->contains('summarize')) {
-            Log::info('[LaraChain] - LLM Thinks it is summarize', [
-                'response' => $response->content]
-            );
-
-            $content = [];
-
-            foreach ($output->collection->documents as $result) {
-                $contentString = remove_ascii($result->summary);
-                $content[] = $contentString; //reduce_text_size seem to mess up Claude?
-            }
-
-            $contentFlattened = implode(' ', $content);
-
-            Log::info('[LaraChain] - Documents Flattened', [
-                'collection' => $output->collection_id,
-                'content' => $content]
-            );
-
-            $prompt = SummarizeDocumentPrompt::prompt($contentFlattened);
-
-            $response = LlmDriverFacade::driver(
-                $output->collection->getDriver()
-            )->completion($prompt);
-
-            $this->setChatMessages($response->content, 'assistant');
-        } else {
-            Log::info('[LaraChain] - LLM is not sure :(', [
-                'response' => $response->content]
-            );
-
-            $embedding = LlmDriverFacade::driver(
-                $output->collection->getEmbeddingDriver()
-            )->embedData($input);
-
-            $embeddingSize = get_embedding_size($output->collection->getEmbeddingDriver());
-
-            $documentChunkResults = DistanceQuery::distance(
-                $embeddingSize,
-                $output->collection->id,
-                $embedding->embedding
-            );
-
-            $content = [];
-
-            /** @var DocumentChunk $result */
-            foreach ($documentChunkResults as $result) {
-                $contentString = remove_ascii($result->content);
-                $content[] = $contentString; //reduce_text_size seem to mess up Claude?
-            }
-
-            $context = implode(' ', $content);
-
-            Log::info('[LaraChain] - Content Found', [
-                'content' => $content,
-            ]);
-
-            $contentFlattened = DefaultPrompt::prompt(
-                originalPrompt: $input,
-                context: $context
-            );
-
-            $response = LlmDriverFacade::driver(
-                $output->collection->getDriver()
-            )->completion($contentFlattened);
-
-            $this->setChatMessages($response->content, 'assistant');
-
-        }
+        $this->setChatMessages($results, 'assistant');
 
         return back();
     }
