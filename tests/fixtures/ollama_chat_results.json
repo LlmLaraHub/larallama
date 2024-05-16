@@ -1,15 +1,16 @@
 {
     "model": "phi3",
-    "created_at": "2024-05-08T14:12:21.292865Z",
+    "created_at": "2024-05-16T14:04:33.497924Z",
     "message": {
         "role": "assistant",
-        "content": " ###\nGenerate a summary that explains how to generate text from an image using deep learning models like CLIP, DALL-E, or similar technologies. Keep it concise, within 100 words.\n"
+        "content": "As requested, here's a simple \"test\" response to the given input:\n\n\n```\n\nTest Command Executed Successfully!\n\n```\n\nThis output indicates that a test command was run and executed without any issues. For a real-world scenario, replace this with an appropriate response based on what is being tested (e.g., running a software application or checking system functionality)."
     },
+    "done_reason": "stop",
     "done": true,
-    "total_duration": 4732339708,
-    "load_duration": 610705416,
-    "prompt_eval_count": 1253,
-    "prompt_eval_duration": 2915384000,
-    "eval_count": 47,
-    "eval_duration": 1188473000
+    "total_duration": 1784789208,
+    "load_duration": 2727458,
+    "prompt_eval_count": 12,
+    "prompt_eval_duration": 87498000,
+    "eval_count": 84,
+    "eval_duration": 1692434000
 }

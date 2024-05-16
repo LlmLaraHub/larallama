@@ -9,10 +9,11 @@ use App\Models\Collection;
 use App\Models\Message;
 use App\Models\User;
 use Facades\App\Domains\Agents\VerifyResponseAgent;
+use Facades\LlmLaraHub\LlmDriver\NonFunctionSearchOrSummarize;
 use Facades\LlmLaraHub\LlmDriver\Orchestrate;
-use Facades\LlmLaraHub\LlmDriver\SimpleSearchAndSummarizeOrchestrate;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
 use LlmLaraHub\LlmDriver\Responses\CompletionResponse;
+use LlmLaraHub\LlmDriver\Responses\NonFunctionResponseDto;
 use Tests\TestCase;
 
 class ChatControllerTest extends TestCase
@@ -133,7 +134,13 @@ class ChatControllerTest extends TestCase
         ]);
 
         LlmDriverFacade::shouldReceive('driver->hasFunctions')->once()->andReturn(false);
-        SimpleSearchAndSummarizeOrchestrate::shouldReceive('handle')->once()->andReturn('Yo');
+
+        NonFunctionSearchOrSummarize::shouldReceive('handle')->once()->andReturn(
+            NonFunctionResponseDto::from([
+                'response' => 'Foobar',
+                'documentChunks' => collect(),
+                'prompt' => 'Foobar',
+            ]));
 
         $this->actingAs($user)->post(route('chats.messages.create', [
             'chat' => $chat->id,

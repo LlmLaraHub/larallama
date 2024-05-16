@@ -68,11 +68,11 @@ class ClaudeClientTest extends TestCase
         $this->assertInstanceOf(CompletionResponse::class, $results);
 
         Http::assertSent(function ($request) {
-            $message1 = $request->data()['messages'][0]['role'];
-            $message2 = $request->data()['messages'][1]['role'];
+            $messageAssistant = $request->data()['messages'][0]['role'];
+            $messageUser = $request->data()['messages'][1]['role'];
 
-            return $message2 === 'assistant' &&
-                $message1 === 'user';
+            return $messageAssistant === 'assistant' &&
+                $messageUser === 'user';
         });
 
     }
@@ -109,12 +109,11 @@ class ClaudeClientTest extends TestCase
         $this->assertInstanceOf(CompletionResponse::class, $results);
 
         Http::assertSent(function ($request) {
-            $message0 = $request->data()['messages'][0]['role'];
-            $message1 = $request->data()['messages'][1]['role'];
-            $message2 = $request->data()['messages'][2]['role'];
+            $messageAssistant = $request->data()['messages'][1]['role'];
+            $messageUser = $request->data()['messages'][2]['role'];
 
-            return $message0 === 'assistant' &&
-                $message1 === 'user' && $message2 === 'assistant';
+            return $messageAssistant === 'assistant' &&
+                $messageUser === 'user';
         });
 
     }

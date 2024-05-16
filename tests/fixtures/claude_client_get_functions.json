@@ -16,5 +16,21 @@
                 "prompt"
             ]
         }
+    },
+    {
+        "name": "search_and_summarize",
+        "description": "Used to embed users prompt, search database and return summarized results.",
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "prompt": {
+                    "description": "This is the prompt the user is using to search the database and may or may not assist the results.",
+                    "type": "string",
+                    "enum": [],
+                    "default": ""
+                }
+            },
+            "required": []
+        }
     }
 ]

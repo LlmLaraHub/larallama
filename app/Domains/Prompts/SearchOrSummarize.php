@@ -9,7 +9,7 @@ class SearchOrSummarize
     public static function prompt(string $originalPrompt): string
     {
 
-        Log::info('[LaraChain] - Search or SearchAndSummarize');
+        Log::info('[LaraChain] - SearchOrSummarize Prompt');
 
         return <<<PROMPT
 ### Task, Action, Goal (T.A.G)

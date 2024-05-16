@@ -4,8 +4,6 @@ namespace Tests\Feature;
 
 use App\Models\DocumentChunk;
 use App\Models\Output;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Facades\LlmLaraHub\LlmDriver\DistanceQuery;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
 use LlmLaraHub\LlmDriver\NonFunctionSearchOrSummarize;
@@ -49,13 +47,14 @@ class NonFunctionSearchOrSummarizeTest extends TestCase
                 'content' => 'search',
             ]));
 
-        $results = (new NonFunctionSearchOrSummarize())->handle("Search for foo", $output->collection);
+        $results = (new NonFunctionSearchOrSummarize())->handle('Search for foo', $output->collection);
 
-        $this->assertNotNull($results);
+        $this->assertNotNull($results->response);
+        $this->assertNotNull($results->documentChunks);
     }
 
-
-    public function test_no_search_no_summary() {
+    public function test_no_search_no_summary()
+    {
 
         DocumentChunk::factory()->create();
 
@@ -85,9 +84,9 @@ class NonFunctionSearchOrSummarizeTest extends TestCase
                 'content' => 'not sure :(',
             ]));
 
-        $results = (new NonFunctionSearchOrSummarize())->handle("Search for foo", $output->collection);
+        $results = (new NonFunctionSearchOrSummarize())->handle('Search for foo', $output->collection);
 
-        $this->assertNotNull($results);
+        $this->assertNotNull($results->response);
 
     }
 }

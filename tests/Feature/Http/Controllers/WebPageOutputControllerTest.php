@@ -8,11 +8,10 @@ use App\Models\DocumentChunk;
 use App\Models\Output;
 use App\Models\User;
 use Facades\LlmLaraHub\LlmDriver\DistanceQuery;
-use LlmLaraHub\LlmDriver\LlmDriverFacade;
 use Facades\LlmLaraHub\LlmDriver\NonFunctionSearchOrSummarize;
+use LlmLaraHub\LlmDriver\LlmDriverFacade;
 use LlmLaraHub\LlmDriver\Responses\CompletionResponse;
-use LlmLaraHub\LlmDriver\Responses\EmbeddingsResponseDto;
-use Pgvector\Laravel\Vector;
+use LlmLaraHub\LlmDriver\Responses\NonFunctionResponseDto;
 use Tests\TestCase;
 
 class WebPageOutputControllerTest extends TestCase
@@ -71,7 +70,12 @@ class WebPageOutputControllerTest extends TestCase
             'public' => true,
         ]);
         NonFunctionSearchOrSummarize::shouldReceive('handle')
-            ->once()->andReturn("Foo");
+            ->once()->andReturn(
+                NonFunctionResponseDto::from([
+                    'response' => 'Foobar',
+                    'documentChunks' => collect(),
+                    'prompt' => 'Foobar',
+                ]));
 
         $this->post(route(
             'collections.outputs.web_page.chat', [
@@ -85,7 +89,13 @@ class WebPageOutputControllerTest extends TestCase
     public function test_no_search_no_summary()
     {
         NonFunctionSearchOrSummarize::shouldReceive('handle')
-            ->once()->andReturn("Foo");
+            ->once()->andReturn(
+                NonFunctionResponseDto::from([
+                    'response' => 'Foobar',
+                    'documentChunks' => collect(),
+                    'prompt' => 'Foobar',
+                ])
+            );
 
         $output = Output::factory()->create([
             'active' => true,

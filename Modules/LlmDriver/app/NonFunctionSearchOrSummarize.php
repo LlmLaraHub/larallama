@@ -10,17 +10,21 @@ use App\Models\Collection;
 use App\Models\DocumentChunk;
 use Facades\LlmLaraHub\LlmDriver\DistanceQuery;
 use Illuminate\Support\Facades\Log;
+use LlmLaraHub\LlmDriver\Responses\NonFunctionResponseDto;
 
 class NonFunctionSearchOrSummarize
 {
-    protected string $results = "";
-
-    public function handle(string $input, Collection $collection) : string
+    public function handle(string $input, HasDrivers $collection): NonFunctionResponseDto
     {
+        $collection = $collection->getChatable();
 
-        Log::info("[LaraChain] - Using the Non Function Search and Summarize Prompt", [
+        if (! get_class($collection) === Collection::class) {
+            throw new \Exception('Can only do Collection class right now');
+        }
+
+        Log::info('[LaraChain] - Using the Non Function Search and Summarize Prompt', [
             'collection' => $collection->id,
-            'input' => $input
+            'input' => $input,
         ]);
 
         $prompt = SearchOrSummarize::prompt($input);
@@ -35,7 +39,7 @@ class NonFunctionSearchOrSummarize
 
         if (str($response->content)->contains('search')) {
             Log::info('[LaraChain] - LLM Thinks it is Search', [
-                    'response' => $response->content]
+                'response' => $response->content]
             );
 
             $embedding = LlmDriverFacade::driver(
@@ -78,10 +82,16 @@ class NonFunctionSearchOrSummarize
                 $collection->getDriver()
             )->completion($contentFlattened);
 
-            $this->results = $response->content;
+            return NonFunctionResponseDto::from(
+                [
+                    'response' => $response->content,
+                    'documentChunks' => $documentChunkResults,
+                    'prompt' => $contentFlattened,
+                ]
+            );
         } elseif (str($response->content)->contains('summarize')) {
             Log::info('[LaraChain] - LLM Thinks it is summarize', [
-                    'response' => $response->content]
+                'response' => $response->content]
             );
 
             $content = [];
@@ -94,8 +104,8 @@ class NonFunctionSearchOrSummarize
             $contentFlattened = implode(' ', $content);
 
             Log::info('[LaraChain] - Documents Flattened', [
-                    'collection' => $collection->id,
-                    'content' => $content]
+                'collection' => $collection->id,
+                'content' => $content]
             );
 
             $prompt = SummarizeDocumentPrompt::prompt($contentFlattened);
@@ -104,11 +114,16 @@ class NonFunctionSearchOrSummarize
                 $collection->getDriver()
             )->completion($prompt);
 
-
-            $this->results = $response->content;
+            return NonFunctionResponseDto::from(
+                [
+                    'response' => $response->content,
+                    'documentChunks' => collect(),
+                    'prompt' => $prompt,
+                ]
+            );
         } else {
             Log::info('[LaraChain] - LLM is not sure :(', [
-                    'response' => $response->content]
+                'response' => $response->content]
             );
 
             $embedding = LlmDriverFacade::driver(
@@ -146,11 +161,14 @@ class NonFunctionSearchOrSummarize
                 $collection->getDriver()
             )->completion($contentFlattened);
 
-
-            $this->results = $response->content;
+            return NonFunctionResponseDto::from(
+                [
+                    'response' => $response->content,
+                    'documentChunks' => collect(),
+                    'prompt' => $contentFlattened,
+                ]
+            );
 
         }
-
-        return $this->results;
     }
 }

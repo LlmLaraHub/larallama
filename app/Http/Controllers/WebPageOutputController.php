@@ -5,23 +5,18 @@ namespace App\Http\Controllers;
 use App\Domains\Collections\CollectionStatusEnum;
 use App\Domains\Outputs\OutputTypeEnum;
 use App\Domains\Prompts\AnonymousChat;
-use App\Domains\Prompts\DefaultPrompt;
-use App\Domains\Prompts\SearchOrSummarize;
-use App\Domains\Prompts\SummarizeDocumentPrompt;
 use App\Domains\Prompts\SummarizeForPage;
-use App\Domains\Prompts\SummarizePrompt;
 use App\Http\Resources\CollectionResource;
 use App\Http\Resources\PublicOutputResource;
 use App\Models\Collection;
-use App\Models\DocumentChunk;
 use App\Models\Output;
-use Facades\LlmLaraHub\LlmDriver\DistanceQuery;
+use Facades\LlmLaraHub\LlmDriver\NonFunctionSearchOrSummarize;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Log;
 use LlmLaraHub\LlmDriver\Helpers\TrimText;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
-use Facades\LlmLaraHub\LlmDriver\NonFunctionSearchOrSummarize;
 use LlmLaraHub\LlmDriver\Requests\MessageInDto;
+use LlmLaraHub\LlmDriver\Responses\NonFunctionResponseDto;
 
 class WebPageOutputController extends Controller
 {
@@ -86,9 +81,10 @@ class WebPageOutputController extends Controller
             'message' => $validated['input']]
         );
 
+        /** @var NonFunctionResponseDto $results */
         $results = NonFunctionSearchOrSummarize::handle($input, $output->collection);
 
-        $this->setChatMessages($results, 'assistant');
+        $this->setChatMessages($results->response, 'assistant');
 
         return back();
     }
