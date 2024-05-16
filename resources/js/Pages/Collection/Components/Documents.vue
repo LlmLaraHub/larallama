@@ -1,8 +1,9 @@
 <script setup>
-import { ref } from 'vue';
+import {computed, ref} from 'vue';
 import Tags from '@/Components/Tags.vue';
 import ShowDocument from '@/Pages/Collection/Components/ShowDocument.vue';
 import DocumentReset from '@/Pages/Collection/Components/DocumentReset.vue';
+import ActionDeleteDocuments from "@/Pages/Collection/Components/ActionDeleteDocuments.vue";
 
 const props = defineProps({
     collection: {
@@ -28,6 +29,24 @@ const closeDocument = () => {
     showDocumentSlideOut.value = false;
 };
 
+const selectedDocuments = ref(new Set)
+
+
+const selectedDocumentsToArray = computed(() => {
+    return Array.from(selectedDocuments.value);
+})
+
+const checked = (item) => {
+    if (selectedDocuments.value.has(item)) {
+        selectedDocuments.value.delete(item);
+    } else {
+        selectedDocuments.value.add(item);
+    }
+}
+
+
+
+
 
 </script>
 <template>
@@ -43,6 +62,22 @@ const closeDocument = () => {
             <div class="mt-8 flow-root">
                 <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                     <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+                       <Transition
+                           enter-from-class="opacity-0"
+                           enter-to-class="opacity-100 scale-100"
+                           enter-active-class="transition duration-300"
+                           leave-active-class="transition duration-200"
+                           leave-from-class="opacity-100 scale-100"
+                           leave-to-class="opacity-0"
+                       >
+                           <div v-if="selectedDocumentsToArray.length > 0"
+                           >
+                               <div>
+                                   <div class="text-gray-600">Actions:</div>
+                                   <ActionDeleteDocuments :document-ids="selectedDocumentsToArray"></ActionDeleteDocuments>
+                               </div>
+                           </div>
+                       </Transition>
                         <div v-if="documents.length === 0"
                             class="text-center text-sm font-medium text-gray-900 px-10 py-10">
                             No Documents uploaded yet please upload some documents to get started.
@@ -50,6 +85,9 @@ const closeDocument = () => {
                         <table class="min-w-full divide-y divide-gray-300 mb-10 " v-else>
                             <thead>
                                 <tr>
+                                    <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+
+                                    </th>
                                     <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
                                         ID
                                     </th>
@@ -74,6 +112,10 @@ const closeDocument = () => {
                             <tbody class="bg-white">
                                 <template v-for="document in documents" :key="document.id">
                                     <tr class="even:bg-gray-50">
+                                        <td
+                                            class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-3">
+                                            <input type="checkbox"  @change="checked(document.id)"/>
+                                        </td>
                                         <td
                                             class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-3">
                                             {{ document.id }}

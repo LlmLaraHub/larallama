@@ -87,6 +87,13 @@ Route::middleware([
         //return Inertia::render('Dashboard');
     })->name('dashboard');
 
+    Route::controller(\App\Http\Controllers\DeleteDocumentsController::class)->group(
+        function () {
+            Route::post('/documents/delete', 'delete')
+                ->name('documents.delete');
+        }
+    );
+
     Route::controller(ReindexCollectionController::class)->group(
         function () {
             Route::post('/collections/{collection}/reindex', 'reindex')

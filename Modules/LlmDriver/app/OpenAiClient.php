@@ -54,12 +54,25 @@ class OpenAiClient extends BaseClient
 
     public function completion(string $prompt, int $temperature = 0): CompletionResponse
     {
-        $response = OpenAI::chat()->create([
-            'model' => $this->getConfig('openai')['models']['completion_model'],
-            'messages' => [
-                ['role' => 'user', 'content' => $prompt],
-            ],
-        ]);
+        try {
+            $response = OpenAI::chat()->create([
+                'model' => $this->getConfig('openai')['models']['completion_model'],
+                'messages' => [
+                    ['role' => 'user', 'content' => $prompt],
+                ],
+            ]);
+        } catch (\Exception $e) {
+            Log::info("[LaraChain] - OpenAi Rate limit maybe I should just use Http");
+
+            if(str($e->getMessage())->contains("Rate limit reached")) {
+                sleep(60);
+                $this->completion($prompt, 0);
+            }
+
+            throw new \Exception("OpenAi error", [
+                'error' =>$e->getMessage()
+            ]);
+        }
 
         $results = null;
 
