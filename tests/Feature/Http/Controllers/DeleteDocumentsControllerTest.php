@@ -5,8 +5,6 @@ namespace Tests\Feature\Http\Controllers;
 use App\Models\Document;
 use App\Models\DocumentChunk;
 use App\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use LlmLaraHub\TagFunction\Models\Tag;
 use Tests\TestCase;
 
@@ -19,18 +17,18 @@ class DeleteDocumentsControllerTest extends TestCase
     {
 
         $document = Document::factory()->create();
-        $document->addTag("Fooobar");
+        $document->addTag('Fooobar');
         $documentChunk = DocumentChunk::factory()->create([
-            'document_id' => $document->id
+            'document_id' => $document->id,
         ]);
 
         $user = User::factory()->create();
-        $this->actingAs($user)->post(route("documents.delete"), [
+        $this->actingAs($user)->delete(route('documents.delete'), [
             'documents' => [
-                $document->id
-            ]
+                $document->id,
+            ],
         ])->assertSessionHasNoErrors()
-        ->assertRedirect();
+            ->assertRedirect();
 
         $this->assertFalse(Document::exists());
         $this->assertFalse(DocumentChunk::exists());

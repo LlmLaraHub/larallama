@@ -62,15 +62,15 @@ class OpenAiClient extends BaseClient
                 ],
             ]);
         } catch (\Exception $e) {
-            Log::info("[LaraChain] - OpenAi Rate limit maybe I should just use Http");
+            Log::info('[LaraChain] - OpenAi Rate limit maybe I should just use Http');
 
-            if(str($e->getMessage())->contains("Rate limit reached")) {
+            if (str($e->getMessage())->contains('Rate limit reached')) {
                 sleep(60);
                 $this->completion($prompt, 0);
             }
 
-            throw new \Exception("OpenAi error", [
-                'error' =>$e->getMessage()
+            throw new \Exception('OpenAi error', [
+                'error' => $e->getMessage(),
             ]);
         }
 

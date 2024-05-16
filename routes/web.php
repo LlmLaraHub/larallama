@@ -89,7 +89,7 @@ Route::middleware([
 
     Route::controller(\App\Http\Controllers\DeleteDocumentsController::class)->group(
         function () {
-            Route::post('/documents/delete', 'delete')
+            Route::delete('/documents/delete', 'delete')
                 ->name('documents.delete');
         }
     );
