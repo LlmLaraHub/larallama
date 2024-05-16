@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Document;
+use Illuminate\Support\Facades\Log;
 
 class DeleteDocumentsController extends Controller
 {
@@ -10,6 +11,10 @@ class DeleteDocumentsController extends Controller
     {
         $validated = \request()->validate([
             'documents' => ['required', 'array'],
+        ]);
+
+        Log::info('Deleting', [
+            'ids' => $validated['documents'],
         ]);
 
         foreach ($validated['documents'] as $id) {

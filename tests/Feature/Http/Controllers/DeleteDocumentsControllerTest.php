@@ -22,10 +22,17 @@ class DeleteDocumentsControllerTest extends TestCase
             'document_id' => $document->id,
         ]);
 
+        $document2 = Document::factory()->create();
+        $document->addTag('Fooobar');
+        $documentChunk = DocumentChunk::factory()->create([
+            'document_id' => $document2->id,
+        ]);
+
         $user = User::factory()->create();
         $this->actingAs($user)->delete(route('documents.delete'), [
             'documents' => [
                 $document->id,
+                $document2->id,
             ],
         ])->assertSessionHasNoErrors()
             ->assertRedirect();

@@ -44,7 +44,11 @@ const checked = (item) => {
     }
 }
 
+const emptyDocumentIds = () => {
+    console.log("Resetting documents");
+    selectedDocuments.value = new Set()
 
+}
 
 
 
@@ -74,7 +78,9 @@ const checked = (item) => {
                            >
                                <div>
                                    <div class="text-gray-600">Actions:</div>
-                                   <ActionDeleteDocuments :document-ids="selectedDocumentsToArray"></ActionDeleteDocuments>
+                                   <ActionDeleteDocuments
+                                       @deleted="emptyDocumentIds"
+                                       :document-ids="selectedDocumentsToArray"></ActionDeleteDocuments>
                                </div>
                            </div>
                        </Transition>
