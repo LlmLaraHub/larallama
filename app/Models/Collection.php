@@ -43,6 +43,11 @@ class Collection extends Model implements HasDrivers, TaggableContract
         return $this;
     }
 
+    public function filters(): HasMany
+    {
+        return $this->hasMany(Filter::class);
+    }
+
     public function team(): BelongsTo
     {
         return $this->belongsTo(Team::class);
