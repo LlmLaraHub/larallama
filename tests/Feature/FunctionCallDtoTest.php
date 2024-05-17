@@ -29,7 +29,7 @@ class FunctionCallDtoTest extends TestCase
         $dto = FunctionCallDto::from([
             'arguments' => json_encode(['TLDR it for me']),
             'function_name' => 'summarize_collection',
-            'filter' => $filter
+            'filter' => $filter,
         ]);
 
         $this->assertInstanceOf(Filter::class, $dto->filter);

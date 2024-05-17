@@ -74,7 +74,6 @@ class ChatController extends Controller
             'role' => 'user',
         ]);
 
-
         $filter = data_get($validated, 'filter', null);
 
         if ($filter) {
@@ -118,7 +117,6 @@ class ChatController extends Controller
             OrchestrateJob::dispatch($messagesArray, $chat, $filter);
         } else {
             Log::info('[LaraChain] Simple Search and Summarize added to queue');
-
 
             SimpleSearchAndSummarizeOrchestrateJob::dispatch($validated['input'], $chat, $filter);
         }

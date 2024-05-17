@@ -25,8 +25,8 @@ class SearchAndSummarizeChatRepo
     protected string $response = '';
 
     public function search(Chat $chat,
-                           string $input,
-                           ?Filter $filter = null): string
+        string $input,
+        ?Filter $filter = null): string
     {
         Log::info('[LaraChain] Search and Summarize Default Function');
 

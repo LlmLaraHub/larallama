@@ -16,8 +16,8 @@ use LlmLaraHub\LlmDriver\Responses\NonFunctionResponseDto;
 class NonFunctionSearchOrSummarize
 {
     public function handle(string $input,
-                           HasDrivers $collection,
-                           ?Filter $filter = null): NonFunctionResponseDto
+        HasDrivers $collection,
+        ?Filter $filter = null): NonFunctionResponseDto
     {
         $collection = $collection->getChatable();
 

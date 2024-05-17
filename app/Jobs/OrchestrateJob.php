@@ -19,8 +19,8 @@ class OrchestrateJob implements ShouldQueue
      * Create a new job instance.
      */
     public function __construct(public array $messagesArray,
-                                public Chat $chat,
-                                public ?Filter $filter = null)
+        public Chat $chat,
+        public ?Filter $filter = null)
     {
         //
     }
