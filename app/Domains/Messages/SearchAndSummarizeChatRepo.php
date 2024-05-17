@@ -7,6 +7,7 @@ use App\Domains\Agents\VerifyPromptOutputDto;
 use App\Domains\Prompts\SummarizePrompt;
 use App\Models\Chat;
 use App\Models\DocumentChunk;
+use App\Models\Filter;
 use App\Models\PromptHistory;
 use Facades\App\Domains\Agents\VerifyResponseAgent;
 use Facades\LlmLaraHub\LlmDriver\DistanceQuery;
@@ -23,7 +24,9 @@ class SearchAndSummarizeChatRepo
 
     protected string $response = '';
 
-    public function search(Chat $chat, string $input): string
+    public function search(Chat $chat,
+                           string $input,
+                           ?Filter $filter = null): string
     {
         Log::info('[LaraChain] Search and Summarize Default Function');
 
@@ -46,7 +49,8 @@ class SearchAndSummarizeChatRepo
             $embeddingSize,
             /** @phpstan-ignore-next-line */
             $chat->getChatable()->id,
-            $embedding->embedding
+            $embedding->embedding,
+            $filter
         );
 
         $content = [];

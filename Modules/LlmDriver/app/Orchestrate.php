@@ -4,6 +4,7 @@ namespace LlmLaraHub\LlmDriver;
 
 use App\Domains\Messages\RoleEnum;
 use App\Models\Chat;
+use App\Models\Filter;
 use App\Models\PromptHistory;
 use Facades\App\Domains\Messages\SearchAndSummarizeChatRepo;
 use Illuminate\Support\Arr;
@@ -21,7 +22,10 @@ class Orchestrate
     /**
      * @param  MessageInDto[]  $messagesArray
      */
-    public function handle(array $messagesArray, Chat $chat): ?string
+    public function handle(
+        array $messagesArray,
+        Chat $chat,
+        ?Filter $filter = null): ?string
     {
         /**
          * We are looking first for functions / agents / tools
@@ -56,6 +60,7 @@ class Orchestrate
                 $functionDto = FunctionCallDto::from([
                     'arguments' => $arguments,
                     'function_name' => $functionName,
+                    'filter' => $filter,
                 ]);
 
                 /** @var FunctionResponse $response */
@@ -123,7 +128,7 @@ class Orchestrate
                 }
             )->content;
 
-            return SearchAndSummarizeChatRepo::search($chat, $message);
+            return SearchAndSummarizeChatRepo::search($chat, $message, $filter);
         }
     }
 

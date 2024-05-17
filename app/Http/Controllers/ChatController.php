@@ -74,6 +74,13 @@ class ChatController extends Controller
             'role' => 'user',
         ]);
 
+
+        $filter = data_get($validated, 'filter', null);
+
+        if ($filter) {
+            $filter = Filter::find($filter);
+        }
+
         if (data_get($validated, 'completion', false)) {
             Log::info('[LaraChain] Running Simple Completion');
             $prompt = $validated['input'];
@@ -108,15 +115,10 @@ class ChatController extends Controller
 
         } elseif (LlmDriverFacade::driver($chat->getDriver())->hasFunctions()) {
             Log::info('[LaraChain] Running Orchestrate added to queue');
-            OrchestrateJob::dispatch($messagesArray, $chat);
+            OrchestrateJob::dispatch($messagesArray, $chat, $filter);
         } else {
             Log::info('[LaraChain] Simple Search and Summarize added to queue');
 
-            $filter = data_get($validated, 'filter', null);
-
-            if ($filter) {
-                $filter = Filter::find($filter);
-            }
 
             SimpleSearchAndSummarizeOrchestrateJob::dispatch($validated['input'], $chat, $filter);
         }

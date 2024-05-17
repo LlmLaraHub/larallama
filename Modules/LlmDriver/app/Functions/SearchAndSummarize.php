@@ -62,7 +62,8 @@ class SearchAndSummarize extends FunctionContract
         $documentChunkResults = DistanceQuery::distance(
             $embeddingSize,
             $model->getChatable()->id,
-            $embedding->embedding
+            $embedding->embedding,
+            $functionCallDto->filter,
         );
 
         $content = [];

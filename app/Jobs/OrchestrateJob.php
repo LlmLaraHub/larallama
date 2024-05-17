@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use App\Models\Chat;
+use App\Models\Filter;
 use Facades\LlmLaraHub\LlmDriver\Orchestrate;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -17,7 +18,9 @@ class OrchestrateJob implements ShouldQueue
     /**
      * Create a new job instance.
      */
-    public function __construct(public array $messagesArray, public Chat $chat)
+    public function __construct(public array $messagesArray,
+                                public Chat $chat,
+                                public ?Filter $filter = null)
     {
         //
     }
@@ -27,6 +30,6 @@ class OrchestrateJob implements ShouldQueue
      */
     public function handle(): void
     {
-        Orchestrate::handle($this->messagesArray, $this->chat);
+        Orchestrate::handle($this->messagesArray, $this->chat, $this->filter);
     }
 }
