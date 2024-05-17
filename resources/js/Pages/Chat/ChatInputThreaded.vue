@@ -5,6 +5,7 @@ import {computed, inject, onMounted, onUnmounted, ref, watch} from "vue";
 import axios from "axios";
 import { useToast } from "vue-toastification";
 import { Switch, SwitchGroup, SwitchLabel } from '@headlessui/vue'
+import Filters from "@/Pages/Collection/Components/Filters.vue";
 
 
 const toast = useToast();
@@ -23,8 +24,16 @@ const errors = ref({})
 
 const form = useForm({
     input: "",
-    completion: false
+    completion: false,
+    filter: null
 })
+
+const filterChosen = ref({})
+
+const filter = (filter) => {
+    filterChosen.value = filter;
+    form.filter = filter?.id
+}
 
 const getting_results = ref(false)
 
@@ -108,7 +117,7 @@ const setQuestion = (question) => {
                 ring-indigo-500 placeholder:text-gray-400 focus:ring-2
                 focus:ring-indigo-500 sm:text-sm sm:leading-6"
                 v-model="form.input" placeholder="Chat about your Collection"/>
-            
+
                 <span
                 v-if="getting_results"
                 class="mt-2">
@@ -117,7 +126,7 @@ const setQuestion = (question) => {
                         <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                     </svg>
                 </span>
-            
+
                 <button
                     v-else
                     :disabled="getting_results" type="submit"
@@ -134,9 +143,9 @@ const setQuestion = (question) => {
                     </svg>
                 </button>
             </div>
-            <div class="flex justify-start">
+            <div class="flex justify-between">
                 <SwitchGroup
-                
+
                 v-if="!usePage().props.settings.supports_functions"
                 as="div" class="flex items-center">
                     <Switch v-model="form.completion" :class="[form.completion ? 'bg-indigo-600' : 'bg-gray-200', 'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2']">
@@ -148,7 +157,18 @@ const setQuestion = (question) => {
                         <span class="text-gray-500">(Your LLM does not support functions)</span>
                     </SwitchLabel>
                 </SwitchGroup>
+
+                <div class="flex justify-start gap-2 items-center">
+                    <div>
+                        {{filterChosen.name}}
+                    </div>
+                <Filters
+                    @filter="filter"
+                    :collection="chat.collection"></Filters>
+                </div>
             </div>
+
+
         </form>
     </div>
 </div>

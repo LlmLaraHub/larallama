@@ -8,11 +8,13 @@ use App\Domains\Messages\RoleEnum;
 use App\Events\ChatUpdatedEvent;
 use App\Http\Resources\ChatResource;
 use App\Http\Resources\CollectionResource;
+use App\Http\Resources\FilterResource;
 use App\Http\Resources\MessageResource;
 use App\Jobs\OrchestrateJob;
 use App\Jobs\SimpleSearchAndSummarizeOrchestrateJob;
 use App\Models\Chat;
 use App\Models\Collection;
+use App\Models\Filter;
 use Facades\App\Domains\Agents\VerifyResponseAgent;
 use Illuminate\Support\Facades\Log;
 use Laravel\Pennant\Feature;
@@ -42,6 +44,7 @@ class ChatController extends Controller
         return inertia('Collection/Chat', [
             'collection' => new CollectionResource($collection),
             'chat' => new ChatResource($chat),
+            'filters' => FilterResource::collection($collection->filters),
             'system_prompt' => $collection->systemPrompt(),
             'settings' => [
                 'supports_functions' => LlmDriverFacade::driver($chat->getDriver())->hasFunctions(),
@@ -55,6 +58,7 @@ class ChatController extends Controller
         $validated = request()->validate([
             'input' => 'required|string',
             'completion' => 'boolean',
+            'filter' => ['nullable', 'integer']
         ]);
 
         $chat->addInput(
@@ -106,7 +110,12 @@ class ChatController extends Controller
             OrchestrateJob::dispatch($messagesArray, $chat);
         } else {
             Log::info('[LaraChain] Simple Search and Summarize added to queue');
-            SimpleSearchAndSummarizeOrchestrateJob::dispatch($validated['input'], $chat);
+
+            $filter = data_get($validated, 'filter', null);
+            if($filter) {
+                $filter = Filter::find($filter);
+            }
+            SimpleSearchAndSummarizeOrchestrateJob::dispatch($validated['input'], $chat, $filter);
         }
 
         ChatUpdatedEvent::dispatch($chat->chatable, $chat);

@@ -6,6 +6,7 @@ use App\Domains\Documents\StatusEnum;
 use App\Domains\Documents\TypesEnum;
 use App\Http\Resources\CollectionResource;
 use App\Http\Resources\DocumentResource;
+use App\Http\Resources\FilterResource;
 use App\Jobs\ProcessFileJob;
 use App\Models\Collection;
 use App\Models\Document;
@@ -73,6 +74,7 @@ class CollectionController extends Controller
         return inertia('Collection/Show', [
             'chat' => $chatResource,
             'collection' => new CollectionResource($collection),
+            'filters' => FilterResource::collection($collection->filters),
             'documents' => DocumentResource::collection(Document::query()
                 ->where('collection_id', $collection->id)
                 ->latest('id')

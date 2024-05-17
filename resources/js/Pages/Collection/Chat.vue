@@ -85,7 +85,7 @@ onMounted(() => {
                                 <h3 class="text-base font-semibold leading-6 text-gray-900">{{ collection.data.name }}</h3>
                                 <p class="mt-2 max-w-4xl text-sm text-gray-500">
                                     {{ collection.data.description }}
-                                </p>    
+                                </p>
 
                             </div>
                             <CollectionTags :collection="collection.data"></CollectionTags>
