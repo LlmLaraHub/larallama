@@ -28,7 +28,7 @@ class SimpleSearchAndSummarizeOrchestrateJob implements ShouldQueue
     public function __construct(
         public string $input,
         public HasDrivers $chat,
-        public Filter|null $filter = null)
+        public ?Filter $filter = null)
     {
         //
     }

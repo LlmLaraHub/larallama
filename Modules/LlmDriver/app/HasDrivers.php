@@ -18,5 +18,5 @@ interface HasDrivers
 
     public function getChatable(): HasDrivers;
 
-    public function getChat(): Chat|null;
+    public function getChat(): ?Chat;
 }

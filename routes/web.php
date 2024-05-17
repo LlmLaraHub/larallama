@@ -38,11 +38,11 @@ Route::middleware([
     );
 
     Route::controller(\App\Http\Controllers\FilterController::class)->group(
-        function() {
-            Route::post("/collections/{collection}/filters/create",
+        function () {
+            Route::post('/collections/{collection}/filters/create',
                 'create')
-            ->name('filters.create');
-            Route::delete("/filters/{filter}/delete",
+                ->name('filters.create');
+            Route::delete('/filters/{filter}/delete',
                 'delete')
                 ->name('filters.delete');
         }

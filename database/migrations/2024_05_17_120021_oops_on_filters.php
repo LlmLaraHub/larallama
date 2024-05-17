@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
 
-        Schema::drop("collection_filter");
+        Schema::drop('collection_filter');
 
         Schema::create('document_filter', function (Blueprint $table) {
             $table->foreignId('filter_id')->constrained()->onDelete('cascade');

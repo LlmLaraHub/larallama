@@ -25,7 +25,7 @@ class Source extends Model implements HasDrivers
         return $this->collection->getChatable();
     }
 
-    public function getChat(): Chat | null
+    public function getChat(): ?Chat
     {
         /**
          * @TODO

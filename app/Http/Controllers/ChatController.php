@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Domains\Agents\VerifyPromptInputDto;
 use App\Domains\Agents\VerifyPromptOutputDto;
 use App\Domains\Messages\RoleEnum;
-use App\Events\ChatUpdatedEvent;
 use App\Http\Resources\ChatResource;
 use App\Http\Resources\CollectionResource;
 use App\Http\Resources\FilterResource;
@@ -58,10 +57,10 @@ class ChatController extends Controller
         $validated = request()->validate([
             'input' => 'required|string',
             'completion' => 'boolean',
-            'filter' => ['nullable', 'integer']
+            'filter' => ['nullable', 'integer'],
         ]);
 
-        Log::info("Request", request()->toArray());
+        Log::info('Request', request()->toArray());
 
         $chat->addInput(
             message: $validated['input'],
@@ -115,14 +114,14 @@ class ChatController extends Controller
 
             $filter = data_get($validated, 'filter', null);
 
-            if($filter) {
+            if ($filter) {
                 $filter = Filter::find($filter);
             }
 
             SimpleSearchAndSummarizeOrchestrateJob::dispatch($validated['input'], $chat, $filter);
         }
 
-        notify_ui($chat, "Working on it!");
+        notify_ui($chat, 'Working on it!');
 
         return response()->json(['message' => 'ok']);
     }

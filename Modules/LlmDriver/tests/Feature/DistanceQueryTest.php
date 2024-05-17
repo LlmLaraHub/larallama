@@ -26,7 +26,7 @@ class DistanceQueryTest extends TestCase
         }
 
         $filter = Filter::factory()->create([
-            'collection_id' => $document->collection_id
+            'collection_id' => $document->collection_id,
         ]);
 
         $filter->documents()->attach($document->id);
@@ -61,7 +61,7 @@ class DistanceQueryTest extends TestCase
         }
 
         $filter = Filter::factory()->create([
-            'collection_id' => $documentNot->collection_id
+            'collection_id' => $documentNot->collection_id,
         ]);
 
         $filter->documents()->attach($documentNot->id);

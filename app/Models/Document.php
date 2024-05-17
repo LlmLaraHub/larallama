@@ -36,7 +36,7 @@ class Document extends Model implements HasDrivers, TaggableContract
         'summary_status' => StatusEnum::class,
     ];
 
-    public function filters() : BelongsToMany
+    public function filters(): BelongsToMany
     {
         return $this->belongsToMany(Filter::class);
     }
@@ -90,7 +90,7 @@ class Document extends Model implements HasDrivers, TaggableContract
         return Document::class;
     }
 
-    public function getChat(): Chat | null
+    public function getChat(): ?Chat
     {
         /**
          * @TODO

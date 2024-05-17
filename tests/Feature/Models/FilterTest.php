@@ -23,6 +23,5 @@ class FilterTest extends TestCase
         $this->assertCount(5, $filter->documents);
         $this->assertEquals($collection->id, $filter->collection->id);
 
-
     }
 }

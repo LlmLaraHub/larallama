@@ -30,17 +30,17 @@ class DistanceQuery
         string $embeddingSize,
         int $collectionId,
         Vector $embedding,
-        Filter|null $filter = null
+        ?Filter $filter = null
     ): Collection {
 
-        Log::info("[LaraChain] - Distance Query", [
-            'filter' => $filter?->toArray()
+        Log::info('[LaraChain] - Distance Query', [
+            'filter' => $filter?->toArray(),
         ]);
 
         $documentIds = Document::query()
             ->select('id')
-            ->when($filter, function ($query, $filter){
-                $query->whereIn("id", $filter->documents()->pluck('id'));
+            ->when($filter, function ($query, $filter) {
+                $query->whereIn('id', $filter->documents()->pluck('id'));
             })
             ->where('documents.collection_id', $collectionId)
             ->orderBy('id')

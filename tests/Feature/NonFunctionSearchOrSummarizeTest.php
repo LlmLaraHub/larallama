@@ -3,7 +3,6 @@
 namespace Tests\Feature;
 
 use App\Models\DocumentChunk;
-use App\Models\Filter;
 use App\Models\Output;
 use Facades\LlmLaraHub\LlmDriver\DistanceQuery;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
@@ -15,7 +14,6 @@ use Tests\TestCase;
 
 class NonFunctionSearchOrSummarizeTest extends TestCase
 {
-
     public function test_results_with_filter(): void
     {
 
@@ -52,6 +50,7 @@ class NonFunctionSearchOrSummarizeTest extends TestCase
         $this->assertNotNull($results->response);
         $this->assertNotNull($results->documentChunks);
     }
+
     /**
      * A basic feature test example.
      */

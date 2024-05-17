@@ -66,7 +66,7 @@ class DocumentChunk extends Model implements HasDrivers, TaggableContract
         return $this->document->collection;
     }
 
-    public function getChat(): Chat | null
+    public function getChat(): ?Chat
     {
         /**
          * @TODO

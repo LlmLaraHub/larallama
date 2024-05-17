@@ -15,7 +15,7 @@ use LlmLaraHub\LlmDriver\Responses\NonFunctionResponseDto;
 
 class NonFunctionSearchOrSummarize
 {
-    public function handle(string $input, HasDrivers $collection, Filter|null $filter = null): NonFunctionResponseDto
+    public function handle(string $input, HasDrivers $collection, ?Filter $filter = null): NonFunctionResponseDto
     {
         $collection = $collection->getChatable();
 
@@ -26,7 +26,7 @@ class NonFunctionSearchOrSummarize
         Log::info('[LaraChain] - Using the Non Function Search and Summarize Prompt', [
             'collection' => $collection->id,
             'input' => $input,
-            'filters' => $filter?->toArray()
+            'filters' => $filter?->toArray(),
         ]);
 
         $prompt = SearchOrSummarize::prompt($input);
@@ -85,8 +85,8 @@ class NonFunctionSearchOrSummarize
                 $collection->getDriver()
             )->completion($contentFlattened);
 
-            if($collection->getChat()) {
-                notify_ui($collection->getChat(), "Complete");
+            if ($collection->getChat()) {
+                notify_ui($collection->getChat(), 'Complete');
             }
 
             return NonFunctionResponseDto::from(
@@ -121,9 +121,8 @@ class NonFunctionSearchOrSummarize
                 $collection->getDriver()
             )->completion($prompt);
 
-
-            if($collection->getChat()) {
-                notify_ui($collection->getChat(), "Complete");
+            if ($collection->getChat()) {
+                notify_ui($collection->getChat(), 'Complete');
             }
 
             return NonFunctionResponseDto::from(
@@ -173,8 +172,8 @@ class NonFunctionSearchOrSummarize
                 $collection->getDriver()
             )->completion($contentFlattened);
 
-            if($collection->getChat()) {
-                notify_ui($collection->getChat(), "Complete");
+            if ($collection->getChat()) {
+                notify_ui($collection->getChat(), 'Complete');
             }
 
             return NonFunctionResponseDto::from(
@@ -186,7 +185,6 @@ class NonFunctionSearchOrSummarize
             );
 
         }
-
 
     }
 }
