@@ -7,6 +7,7 @@ use App\Domains\Documents\TypesEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use LlmLaraHub\LlmDriver\HasDrivers;
 use LlmLaraHub\TagFunction\Contracts\TaggableContract;
@@ -34,6 +35,11 @@ class Document extends Model implements HasDrivers, TaggableContract
         'meta_data' => 'array',
         'summary_status' => StatusEnum::class,
     ];
+
+    public function filters() : BelongsToMany
+    {
+        return $this->belongsToMany(Filter::class);
+    }
 
     public function siblingTags(): array
     {

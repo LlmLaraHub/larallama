@@ -4,6 +4,8 @@ import Tags from '@/Components/Tags.vue';
 import ShowDocument from '@/Pages/Collection/Components/ShowDocument.vue';
 import DocumentReset from '@/Pages/Collection/Components/DocumentReset.vue';
 import ActionDeleteDocuments from "@/Pages/Collection/Components/ActionDeleteDocuments.vue";
+import ActionCreateFilter from "@/Pages/Collection/Components/ActionCreateFilter.vue";
+import Filters from "@/Pages/Collection/Components/Filters.vue";
 
 const props = defineProps({
     collection: {
@@ -11,6 +13,9 @@ const props = defineProps({
         required: true,
     },
     documents: {
+        type: Object,
+    },
+    filters: {
         type: Object,
     }
 });
@@ -55,6 +60,10 @@ const emptyDocumentIds = () => {
 </script>
 <template>
     <div class="px-5">
+
+        <div class="flex justify-end mx-10 ">
+            <Filters :collection="collection" :filters="filters"></Filters>
+        </div>
         <h1 class="text-base font-semibold leading-6 text-gray-900">Related Documents</h1>
         <p class="mt-2 text-sm text-gray-700">Thsee are a list of documents you uploaded or imported
             into this
@@ -76,11 +85,15 @@ const emptyDocumentIds = () => {
                        >
                            <div v-if="selectedDocumentsToArray.length > 0"
                            >
-                               <div>
-                                   <div class="text-gray-600">Actions:</div>
+                               <div  class="flex justify-start gap-2 items-center">
+                                   <div class="text-gray-600 font-bold ">Actions:</div>
                                    <ActionDeleteDocuments
                                        @deleted="emptyDocumentIds"
                                        :document-ids="selectedDocumentsToArray"></ActionDeleteDocuments>
+
+                                   <ActionCreateFilter
+                                       @created="emptyDocumentIds"
+                                       :document-ids="selectedDocumentsToArray" :collection="collection"></ActionCreateFilter>
                                </div>
                            </div>
                        </Transition>
@@ -107,6 +120,9 @@ const emptyDocumentIds = () => {
                                     <th scope="col"
                                         class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-3">
                                         Pages</th>
+                                    <th scope="col"
+                                        class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-3">
+                                        Tags</th>
                                     <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
                                         Status
                                     </th>
@@ -142,6 +158,10 @@ const emptyDocumentIds = () => {
                                         <td
                                             class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-3">
                                             {{ document.document_chunks_count }}
+                                        </td>
+                                        <td
+                                            class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-3">
+                                            {{ document.tags_count }}
                                         </td>
                                         <td
                                             class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-3">
@@ -185,7 +205,7 @@ const emptyDocumentIds = () => {
                                             </ul>
                                         </td>
                                     </tr>
-                                    <tr class="justify-center gap-2 items-center">
+                                    <tr v-if="false" class="justify-center gap-2 items-center">
                                         <td colspan="6" class="w-full">
                                             <Tags :document="document"></Tags>
                                         </td>

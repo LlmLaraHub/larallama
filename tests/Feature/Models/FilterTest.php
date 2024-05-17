@@ -3,6 +3,7 @@
 namespace Tests\Feature\Models;
 
 use App\Models\Collection;
+use App\Models\Document;
 use App\Models\Filter;
 use Tests\TestCase;
 
@@ -13,9 +14,15 @@ class FilterTest extends TestCase
      */
     public function test_filter(): void
     {
-        $collection = Collection::factory()
-            ->has(Filter::factory(), 'filters')->create();
+        $collection = Collection::factory()->create();
+        $filter = Filter::factory()->create(['collection_id' => $collection->id]);
+        $documents = Document::factory()->count(5)->create();
 
-        $this->assertNotEmpty($collection->filters);
+        $filter->documents()->attach($documents->pluck('id'));
+
+        $this->assertCount(5, $filter->documents);
+        $this->assertEquals($collection->id, $filter->collection->id);
+
+
     }
 }

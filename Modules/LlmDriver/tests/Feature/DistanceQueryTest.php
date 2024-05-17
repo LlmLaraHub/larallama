@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Models\Document;
 use App\Models\DocumentChunk;
+use App\Models\Filter;
 use Illuminate\Support\Facades\File;
 use LlmLaraHub\LlmDriver\DistanceQuery;
 use Pgvector\Laravel\Vector;
@@ -14,6 +15,7 @@ class DistanceQueryTest extends TestCase
     public function test_results()
     {
         $files = File::files(base_path('tests/fixtures/document_chunks'));
+
         $document = Document::factory()->create([
             'id' => 31,
         ]);
@@ -23,6 +25,12 @@ class DistanceQueryTest extends TestCase
             DocumentChunk::factory()->create($data);
         }
 
+        $filter = Filter::factory()->create([
+            'collection_id' => $document->collection_id
+        ]);
+
+        $filter->documents()->attach($document->id);
+
         $question = get_fixture('embedding_question_distance.json');
 
         $vector = new Vector($question);
@@ -30,9 +38,45 @@ class DistanceQueryTest extends TestCase
         $results = (new DistanceQuery())->distance(
             'embedding_1024',
             $document->collection_id,
-            $vector);
+            $vector,
+            $filter);
 
         $this->assertCount(1, $results);
+
+    }
+
+    public function test_results_empty_due_to_filter()
+    {
+        $files = File::files(base_path('tests/fixtures/document_chunks'));
+
+        $document = Document::factory()->create([
+            'id' => 31,
+        ]);
+
+        $documentNot = Document::factory()->create();
+
+        foreach ($files as $file) {
+            $data = json_decode(File::get($file), true);
+            DocumentChunk::factory()->create($data);
+        }
+
+        $filter = Filter::factory()->create([
+            'collection_id' => $documentNot->collection_id
+        ]);
+
+        $filter->documents()->attach($documentNot->id);
+
+        $question = get_fixture('embedding_question_distance.json');
+
+        $vector = new Vector($question);
+
+        $results = (new DistanceQuery())->distance(
+            'embedding_1024',
+            $document->collection_id,
+            $vector,
+            $filter);
+
+        $this->assertCount(0, $results);
 
     }
 

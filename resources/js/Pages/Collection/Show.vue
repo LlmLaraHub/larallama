@@ -27,6 +27,9 @@ const props = defineProps({
     documents: {
         type: Object,
     },
+    filters: {
+        type: Object,
+    },
     chat: {
         type: Object,
     },
@@ -138,6 +141,7 @@ const reset = () => {
 
                     <!-- show related files -->
                     <Documents
+                        :filters="filters.data"
                         :collection="collection.data" :documents="documents.data"></Documents>
                 </div>
             </div>

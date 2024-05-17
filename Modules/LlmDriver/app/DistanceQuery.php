@@ -4,6 +4,7 @@ namespace LlmLaraHub\LlmDriver;
 
 use App\Models\Document;
 use App\Models\DocumentChunk;
+use App\Models\Filter;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
 use Pgvector\Laravel\Distance;
@@ -28,11 +29,15 @@ class DistanceQuery
     public function distance(
         string $embeddingSize,
         int $collectionId,
-        Vector $embedding
+        Vector $embedding,
+        Filter|null $filter = null
     ): Collection {
 
         $documentIds = Document::query()
             ->select('id')
+            ->when($filter, function ($query, $filter){
+                $query->whereIn("id", $filter->documents()->pluck('id'));
+            })
             ->where('documents.collection_id', $collectionId)
             ->orderBy('id')
             ->pluck('id');
