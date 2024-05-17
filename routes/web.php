@@ -37,6 +37,14 @@ Route::middleware([
         }
     );
 
+    Route::controller(\App\Http\Controllers\FilterController::class)->group(
+        function() {
+            Route::post("/collections/{collection}/filters/create",
+                'create')
+            ->name('filters.create');
+        }
+    );
+
     Route::controller(\App\Http\Controllers\OutputController::class)->group(
         function () {
             Route::get('/collections/{collection}/outputs', 'index')
