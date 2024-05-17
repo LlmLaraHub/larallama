@@ -30,5 +30,14 @@ class FilterController extends Controller
         return back();
     }
 
+    public function delete(Filter $filter) {
+
+        $filter->delete();
+
+        request()->session()->flash('flash.banner', "Filter Deleted");
+
+        return back();
+    }
+
 
 }

@@ -42,7 +42,7 @@ class Chat extends Model implements HasDrivers
         return $this->chatable_type;
     }
 
-    public function getChat(): Chat
+    public function getChat(): Chat | null
     {
         return $this;
     }

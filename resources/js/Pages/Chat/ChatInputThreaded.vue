@@ -63,12 +63,14 @@ const save = () => {
     getting_results.value = true
     let message = form.input
     let completion = form.completion
+    let filter = form.filter
     form.reset();
     axios.post(route('chats.messages.create', {
         chat: props.chat.id
     }), {
         input: message,
-        completion: completion
+        completion: completion,
+        filter: filter
     }).catch(error => {
         getting_results.value = false
         toast.error('An error occurred. Please try again.')
@@ -159,8 +161,15 @@ const setQuestion = (question) => {
                 </SwitchGroup>
 
                 <div class="flex justify-start gap-2 items-center">
-                    <div>
-                        {{filterChosen.name}}
+                    <div v-if="filterChosen?.name" class="flex justify-start gap-1 items-center">
+                        <span class="text-gray-600">
+                            Filter being used: </span>
+                        <span class="font-bold">{{filterChosen.name}}</span>
+                        <button type="button" @click="filter({})">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                            </svg>
+                        </button>
                     </div>
                 <Filters
                     @filter="filter"

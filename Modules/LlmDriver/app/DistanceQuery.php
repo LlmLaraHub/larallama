@@ -33,6 +33,10 @@ class DistanceQuery
         Filter|null $filter = null
     ): Collection {
 
+        Log::info("[LaraChain] - Distance Query", [
+            'filter' => $filter?->toArray()
+        ]);
+
         $documentIds = Document::query()
             ->select('id')
             ->when($filter, function ($query, $filter){

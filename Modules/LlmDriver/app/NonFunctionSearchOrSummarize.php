@@ -26,6 +26,7 @@ class NonFunctionSearchOrSummarize
         Log::info('[LaraChain] - Using the Non Function Search and Summarize Prompt', [
             'collection' => $collection->id,
             'input' => $input,
+            'filters' => $filter?->toArray()
         ]);
 
         $prompt = SearchOrSummarize::prompt($input);
@@ -84,6 +85,10 @@ class NonFunctionSearchOrSummarize
                 $collection->getDriver()
             )->completion($contentFlattened);
 
+            if($collection->getChat()) {
+                notify_ui($collection->getChat(), "Complete");
+            }
+
             return NonFunctionResponseDto::from(
                 [
                     'response' => $response->content,
@@ -115,6 +120,11 @@ class NonFunctionSearchOrSummarize
             $response = LlmDriverFacade::driver(
                 $collection->getDriver()
             )->completion($prompt);
+
+
+            if($collection->getChat()) {
+                notify_ui($collection->getChat(), "Complete");
+            }
 
             return NonFunctionResponseDto::from(
                 [
@@ -163,6 +173,10 @@ class NonFunctionSearchOrSummarize
                 $collection->getDriver()
             )->completion($contentFlattened);
 
+            if($collection->getChat()) {
+                notify_ui($collection->getChat(), "Complete");
+            }
+
             return NonFunctionResponseDto::from(
                 [
                     'response' => $response->content,
@@ -172,5 +186,7 @@ class NonFunctionSearchOrSummarize
             );
 
         }
+
+
     }
 }

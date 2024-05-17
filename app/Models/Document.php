@@ -90,7 +90,7 @@ class Document extends Model implements HasDrivers, TaggableContract
         return Document::class;
     }
 
-    public function getChat(): Chat
+    public function getChat(): Chat | null
     {
         /**
          * @TODO

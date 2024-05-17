@@ -42,6 +42,9 @@ Route::middleware([
             Route::post("/collections/{collection}/filters/create",
                 'create')
             ->name('filters.create');
+            Route::delete("/filters/{filter}/delete",
+                'delete')
+                ->name('filters.delete');
         }
     );
 

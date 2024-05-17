@@ -6,6 +6,7 @@ import DocumentReset from '@/Pages/Collection/Components/DocumentReset.vue';
 import ActionDeleteDocuments from "@/Pages/Collection/Components/ActionDeleteDocuments.vue";
 import ActionCreateFilter from "@/Pages/Collection/Components/ActionCreateFilter.vue";
 import Filters from "@/Pages/Collection/Components/Filters.vue";
+import ManageFilters from "@/Pages/Collection/Components/ManageFilters.vue";
 
 const props = defineProps({
     collection: {
@@ -62,7 +63,7 @@ const emptyDocumentIds = () => {
     <div class="px-5">
 
         <div class="flex justify-end mx-10 ">
-            <Filters :collection="collection" :filters="filters"></Filters>
+            <ManageFilters :collection="collection" :filters="filters"></ManageFilters>
         </div>
         <h1 class="text-base font-semibold leading-6 text-gray-900">Related Documents</h1>
         <p class="mt-2 text-sm text-gray-700">Thsee are a list of documents you uploaded or imported

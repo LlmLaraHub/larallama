@@ -61,6 +61,8 @@ class ChatController extends Controller
             'filter' => ['nullable', 'integer']
         ]);
 
+        Log::info("Request", request()->toArray());
+
         $chat->addInput(
             message: $validated['input'],
             role: RoleEnum::User,
@@ -112,13 +114,15 @@ class ChatController extends Controller
             Log::info('[LaraChain] Simple Search and Summarize added to queue');
 
             $filter = data_get($validated, 'filter', null);
+
             if($filter) {
                 $filter = Filter::find($filter);
             }
+
             SimpleSearchAndSummarizeOrchestrateJob::dispatch($validated['input'], $chat, $filter);
         }
 
-        ChatUpdatedEvent::dispatch($chat->chatable, $chat);
+        notify_ui($chat, "Working on it!");
 
         return response()->json(['message' => 'ok']);
     }

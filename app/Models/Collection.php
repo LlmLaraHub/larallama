@@ -53,7 +53,7 @@ class Collection extends Model implements HasDrivers, TaggableContract
         return $this->belongsTo(Team::class);
     }
 
-    public function getChat(): Chat
+    public function getChat(): Chat | null
     {
         /**
          * @TODO
