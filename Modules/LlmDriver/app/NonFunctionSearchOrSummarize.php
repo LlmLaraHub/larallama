@@ -8,13 +8,14 @@ use App\Domains\Prompts\SummarizeDocumentPrompt;
 use App\Domains\Prompts\SummarizePrompt;
 use App\Models\Collection;
 use App\Models\DocumentChunk;
+use App\Models\Filter;
 use Facades\LlmLaraHub\LlmDriver\DistanceQuery;
 use Illuminate\Support\Facades\Log;
 use LlmLaraHub\LlmDriver\Responses\NonFunctionResponseDto;
 
 class NonFunctionSearchOrSummarize
 {
-    public function handle(string $input, HasDrivers $collection): NonFunctionResponseDto
+    public function handle(string $input, HasDrivers $collection, Filter|null $filter = null): NonFunctionResponseDto
     {
         $collection = $collection->getChatable();
 
@@ -52,7 +53,8 @@ class NonFunctionSearchOrSummarize
             $documentChunkResults = DistanceQuery::distance(
                 $embeddingSize,
                 $collection->id,
-                $embedding->embedding
+                $embedding->embedding,
+                $filter
             );
 
             $content = [];

@@ -4,6 +4,7 @@ namespace App\Jobs;
 
 use App\Domains\Messages\RoleEnum;
 use App\Models\Collection;
+use App\Models\Filter;
 use App\Models\PromptHistory;
 use Facades\LlmLaraHub\LlmDriver\NonFunctionSearchOrSummarize;
 use Illuminate\Bus\Queueable;
@@ -24,7 +25,10 @@ class SimpleSearchAndSummarizeOrchestrateJob implements ShouldQueue
     /**
      * Create a new job instance.
      */
-    public function __construct(public string $input, public HasDrivers $chat)
+    public function __construct(
+        public string $input,
+        public HasDrivers $chat,
+        public Filter|null $filter = null)
     {
         //
     }
@@ -45,7 +49,7 @@ class SimpleSearchAndSummarizeOrchestrateJob implements ShouldQueue
 
         if (get_class($collection) === Collection::class) {
             /** @var NonFunctionResponseDto $results */
-            $results = NonFunctionSearchOrSummarize::handle($this->input, $collection);
+            $results = NonFunctionSearchOrSummarize::handle($this->input, $collection, $this->filter);
 
             $message = $this->chat->getChat()->addInput(
                 message: $results->response,
