@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use Illuminate\Support\Facades\Http;
 use LlmLaraHub\LlmDriver\Requests\MessageInDto;
 use LlmLaraHub\LlmDriver\Responses\CompletionResponse;
 use LlmLaraHub\LlmDriver\Responses\EmbeddingsResponseDto;
@@ -45,20 +46,19 @@ class OpenAiClientTest extends TestCase
 
     public function test_completion(): void
     {
-        OpenAI::fake([
-            ChatCreateResponse::fake([
+
+        Http::fake([
+            'api.openai.com/*' => Http::response([
                 'choices' => [
-                    [
-                        'message' => [
-                            'content' => 'awesome!',
-                        ],
+                    'messages' => [
+                        'content' => 'Foo bar',
                     ],
                 ],
             ]),
         ]);
 
         $openaiClient = new \LlmLaraHub\LlmDriver\OpenAiClient();
-        $response = $openaiClient->completion('test');
+        $response = $openaiClient->completion('"Foo bar');
         $this->assertInstanceOf(CompletionResponse::class, $response);
     }
 

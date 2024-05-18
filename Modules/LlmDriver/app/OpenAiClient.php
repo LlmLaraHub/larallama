@@ -2,6 +2,7 @@
 
 namespace LlmLaraHub\LlmDriver;
 
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use LlmLaraHub\LlmDriver\Requests\MessageInDto;
 use LlmLaraHub\LlmDriver\Responses\CompletionResponse;
@@ -10,6 +11,8 @@ use OpenAI\Laravel\Facades\OpenAI;
 
 class OpenAiClient extends BaseClient
 {
+    protected string $baseUrl = 'https://api.openai.com/v1';
+
     protected string $driver = 'openai';
 
     /**
@@ -54,30 +57,40 @@ class OpenAiClient extends BaseClient
 
     public function completion(string $prompt, int $temperature = 0): CompletionResponse
     {
-        try {
-            $response = OpenAI::chat()->create([
+
+        $token = config('llmdriver.drivers.openai.api_key');
+
+        if (is_null($token)) {
+            throw new \Exception('Missing open ai api key');
+        }
+
+        $response = Http::withHeaders([
+            'Content-type' => 'application/json',
+        ])
+            ->withToken($token)
+            ->baseUrl($this->baseUrl)
+            ->timeout(240)
+            ->retry(3, function (int $attempt, \Exception $exception) {
+                Log::info('OpenAi API Error going to retry', [
+                    'attempt' => $attempt,
+                    'error' => $exception->getMessage(),
+                ]);
+
+                return 60000;
+            })
+            ->post('/chat/completions', [
                 'model' => $this->getConfig('openai')['models']['completion_model'],
                 'messages' => [
                     ['role' => 'user', 'content' => $prompt],
                 ],
             ]);
-        } catch (\Exception $e) {
-            Log::info('[LaraChain] - OpenAi Rate limit maybe I should just use Http');
-
-            if (str($e->getMessage())->contains('Rate limit reached')) {
-                sleep(60);
-                $this->completion($prompt, 0);
-            }
-
-            throw new \Exception('OpenAi error', [
-                'error' => $e->getMessage(),
-            ]);
-        }
 
         $results = null;
 
-        foreach ($response->choices as $result) {
-            $results = $result->message->content;
+        $response = $response->json();
+
+        foreach (data_get($response, 'choices', []) as $result) {
+            $results = data_get($result, 'message.content', '');
         }
 
         return new CompletionResponse($results);
