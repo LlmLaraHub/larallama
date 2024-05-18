@@ -16,6 +16,7 @@ use Illuminate\Bus\Batch;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Log;
+use LlmLaraHub\TagFunction\Jobs\TagDocumentJob;
 
 class TextDocumentController extends Controller
 {
@@ -69,6 +70,7 @@ class TextDocumentController extends Controller
             ->name("Chunking Document - $document->file_path")
             ->finally(function (Batch $batch) use ($document) {
                 SummarizeDocumentJob::dispatch($document);
+                TagDocumentJob::dispatch($document);
             })
             ->allowFailures()
             ->dispatch();

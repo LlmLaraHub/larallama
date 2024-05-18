@@ -58,7 +58,7 @@ class ProcessFileJob implements ShouldQueue
 
         } elseif ($document->type === TypesEnum::PDF) {
             Log::info('Processing PDF Document');
-            $batch = Bus::batch([
+            Bus::batch([
                 new ParsePdfFileJob($this->document),
             ])
                 ->name('Process PDF Document - '.$document->id)

@@ -20,6 +20,7 @@
         "laravel/tinker": "^2.9",
         "league/html-to-markdown": "^5.1",
         "nwidart/laravel-modules": "^11.0",
+        "opcodesio/log-viewer": "^3.10",
         "openai-php/laravel": "^0.8.1",
         "owenvoke/blade-fontawesome": "^2.3",
         "phpoffice/phppresentation": "dev-fix-pptx",
