@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Domains\Sources\RecurringTypeEnum;
 use App\Domains\Sources\SourceTypeEnum;
 use App\Http\Resources\CollectionResource;
 use App\Models\Collection;
@@ -12,6 +13,7 @@ class WebSourceController extends Controller
     public function create(Collection $collection)
     {
         return inertia('Sources/WebSource/Create', [
+            'recurring' => RecurringTypeEnum::selectOptions(),
             'collection' => new CollectionResource($collection),
         ]);
     }
@@ -22,11 +24,15 @@ class WebSourceController extends Controller
         $validated = request()->validate([
             'title' => 'required|string',
             'details' => 'required|string',
+            'active' => ['boolean', 'required'],
+            'recurring' => ['string', 'required']
         ]);
 
         Source::create([
             'title' => $validated['title'],
             'details' => $validated['details'],
+            'recurring' => $validated['recurring'],
+            'active' => $validated['active'],
             'collection_id' => $collection->id,
             'type' => SourceTypeEnum::WebSearchSource,
             'meta_data' => [
@@ -45,6 +51,7 @@ class WebSourceController extends Controller
 
         return inertia('Sources/WebSource/Edit', [
             'source' => $source,
+            'recurring' => RecurringTypeEnum::selectOptions(),
             'collection' => new CollectionResource($source->collection),
         ]);
     }
@@ -55,7 +62,11 @@ class WebSourceController extends Controller
         $validated = request()->validate([
             'title' => 'required|string',
             'details' => 'required|string',
+            'active' => ['boolean', 'required'],
+            'recurring' => ['string', 'required']
         ]);
+
+
 
         $source->update($validated);
 

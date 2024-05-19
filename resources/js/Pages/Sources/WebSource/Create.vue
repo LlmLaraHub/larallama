@@ -15,12 +15,17 @@ const props = defineProps({
     },
     sources: {
         type: Object
+    },
+    recurring: {
+        type: Object
     }
 });
 
 const form = useForm({
     title: '',
     details: '',
+    recurring: 'not',
+    active: true
 });
 
 
@@ -58,6 +63,7 @@ const submit = () => {
 
                     <form @submit.prevent="submit" class="p-10 ">
                         <Resources
+                            :recurring="recurring"
                         v-model="form">
 
                         </Resources>
@@ -68,7 +74,7 @@ const submit = () => {
                             </PrimaryButton>
                             <SecondaryLink :href="route('collections.sources.index', {
                                 collection: collection.data.id
-                            
+
                             })">
                                 Cancel
                             </SecondaryLink>

@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Domains\Sources\RecurringTypeEnum;
 use App\Domains\Sources\SourceTypeEnum;
 use App\Models\Collection;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -22,6 +23,8 @@ class SourceFactory extends Factory
             'title' => $this->faker->name,
             'collection_id' => Collection::factory(),
             'details' => $this->faker->sentence, // 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            'recurring' => RecurringTypeEnum::Daily,
+            'active' => true,
             'type' => $this->faker->randomElement(SourceTypeEnum::values()),
             'meta_data' => [
                 'driver' => 'brave',

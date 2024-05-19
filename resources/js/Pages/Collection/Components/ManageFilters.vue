@@ -35,7 +35,7 @@ const deleteFilter = (filter) => {
         <summary class="m-1 btn btn-neutral">Filters</summary>
         <ul class="dropdown-content z-[1] p-2 shadow-lg bg-gray-100 rounded-box w-72 -ml-36">
             <li
-                v-if="filters.length > 0"
+                v-if="filters?.length > 0"
                 v-for="filter in filters" :key="filter.id" class="h-12 ml-2 mt-2">
                 <div class="flex justify-start gap-2 items-center text-lg">
                     <span>{{ filter.name }}</span>

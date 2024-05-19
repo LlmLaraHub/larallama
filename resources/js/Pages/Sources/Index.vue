@@ -26,6 +26,9 @@ const props = defineProps({
     chat: {
         type: Object,
     },
+    filters: {
+        type: Object,
+    }
 });
 
 const form = useForm({})
@@ -74,11 +77,17 @@ const run = (source) => {
                     <div v-else class="card rounded-none w-96 bg-base-100 shadow-xl" v-for="source in sources.data" :key="source.id">
                         <div class="card-body">
                             <h2 class="card-title text-gray-600">{{ source.title }}</h2>
-                            <div>
+                            <div class="text-xs">
                                 Type: <span class="font-bold text-gray-600">{{ source.type }}</span>
                             </div>
-                            <div>
+                            <div class="text-xs">
                                 Details: <span class="font-bold text-gray-600">{{ source.details }}</span>
+                            </div>
+                            <div class="text-xs">
+                                Active: <span class="font-bold text-gray-600">{{ source.active }}</span>
+                            </div>
+                            <div class="text-xs">
+                                Recurring: <span class="font-bold text-gray-600">{{ source.recurring }}</span>
                             </div>
                             <div class="card-actions justify-end">
                                 <button @click="run(source)" type="button" class="btn btn-primary rounded-none">Run</button>

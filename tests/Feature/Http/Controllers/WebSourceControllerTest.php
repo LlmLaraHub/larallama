@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use App\Domains\Sources\RecurringTypeEnum;
 use App\Models\Collection;
 use App\Models\Source;
 use App\Models\User;
@@ -20,6 +21,8 @@ class WebSourceControllerTest extends TestCase
         $response = $this->actingAs($user)
             ->post(route('collections.sources.websearch.store', $collection), [
                 'title' => 'Test Title',
+                'active' => 1,
+                'recurring' => RecurringTypeEnum::Daily->value,
                 'details' => 'Test Details',
             ]);
         $response->assertSessionHas('flash.banner', 'Web source added successfully');
@@ -28,6 +31,7 @@ class WebSourceControllerTest extends TestCase
         $source = Source::first();
 
         $this->assertNotEmpty($source->meta_data);
+        $this->assertEquals(RecurringTypeEnum::Daily, $source->recurring);
         $this->assertEquals('brave', $source->meta_data['driver']);
     }
 
@@ -45,11 +49,14 @@ class WebSourceControllerTest extends TestCase
                 ]
             ), [
                 'title' => 'Test Title2',
+                'active' => 1,
+                'recurring' => RecurringTypeEnum::Daily->value,
                 'details' => 'Test Details2',
             ])
             ->assertSessionHasNoErrors()
             ->assertStatus(302);
 
         $this->assertEquals($source->refresh()->details, 'Test Details2');
+        $this->assertEquals($source->refresh()->recurring, RecurringTypeEnum::Daily);
     }
 }

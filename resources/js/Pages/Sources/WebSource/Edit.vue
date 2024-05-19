@@ -15,12 +15,15 @@ const props = defineProps({
     },
     source: {
         type: Object
-    }
+    },
+    recurring: Object
 });
 
 const form = useForm({
     title: props.source.title,
     details: props.source.details,
+    active: props.source.active,
+    recurring: props.source.recurring
 });
 
 
@@ -53,9 +56,9 @@ const submit = () => {
                             This will add documents to your collection.
                         </template>
                     </Intro>
-
                     <form @submit.prevent="submit" class="p-10 ">
                         <Resources
+                            :recurring="recurring"
                         v-model="form">
 
                         </Resources>
@@ -68,7 +71,7 @@ const submit = () => {
                                 collection: collection.data.id
 
                             })">
-                                Cancel
+                                Back
                             </SecondaryLink>
                         </div>
                     </form>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\CollectionResource;
 use App\Http\Resources\DocumentResource;
+use App\Http\Resources\FilterResource;
 use App\Http\Resources\SourceResource;
 use App\Models\Collection;
 use App\Models\Document;
@@ -18,6 +19,7 @@ class SourceController extends Controller
         return inertia('Sources/Index', [
             'chat' => $chatResource,
             'collection' => new CollectionResource($collection),
+            'filters' => FilterResource::collection($collection->filters),
             'documents' => DocumentResource::collection(Document::query()
                 ->where('collection_id', $collection->id)
                 ->latest('id')

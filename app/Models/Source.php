@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Domains\Sources\RecurringTypeEnum;
 use App\Domains\Sources\SourceTypeEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -17,7 +18,10 @@ class Source extends Model implements HasDrivers
 
     protected $casts = [
         'meta_data' => 'array',
+        'active' => "bool",
+        'last_run' => 'datetime',
         'type' => SourceTypeEnum::class,
+        'recurring' => RecurringTypeEnum::class,
     ];
 
     public function getChatable(): HasDrivers

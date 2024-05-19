@@ -13,6 +13,24 @@
                 placeholder="Add Your Search query here"></textarea>
             <InputError :message="modelValue.errors.details" />
         </div>
+
+        <div>
+            <InputLabel value="Active"/>
+            <input v-model="modelValue.active" type="checkbox"  />
+            <InputError :message="modelValue.errors.active" />
+        </div>
+
+
+        <div>
+            <InputLabel value="Recurring"/>
+            <select v-model="modelValue.recurring">
+                <option disabled selected>Types</option>
+                <option v-for="option in recurring" :key="option.id" :value="option.id">
+                    {{option.name}}
+                </option>
+            </select>
+            <InputError :message="modelValue.errors.recurring" />
+        </div>
     </div>
 </template>
 
@@ -25,5 +43,6 @@ const emit = defineEmits(['update:modelValue'])
 
 const props = defineProps({
     modelValue: Object,
+    recurring: Object
 })
 </script>
