@@ -15,7 +15,7 @@ class SourceResource extends JsonResource
     public function toArray(Request $request): array
     {
         $recurring = $this->recurring;
-        if($recurring) {
+        if ($recurring) {
             $recurring = str($recurring->name)->headline()->toString();
         }
 
@@ -24,7 +24,7 @@ class SourceResource extends JsonResource
             'title' => $this->title,
             'collection_id' => $this->collection_id,
             'details' => $this->details,
-            'active' => $this->active ? "Yes" : "No",
+            'active' => $this->active ? 'Yes' : 'No',
             'recurring' => $recurring,
             'description' => $this->description,
             'type' => str($this->type->name)->headline()->toString(),

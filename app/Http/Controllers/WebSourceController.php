@@ -25,7 +25,7 @@ class WebSourceController extends Controller
             'title' => 'required|string',
             'details' => 'required|string',
             'active' => ['boolean', 'required'],
-            'recurring' => ['string', 'required']
+            'recurring' => ['string', 'required'],
         ]);
 
         Source::create([
@@ -63,10 +63,8 @@ class WebSourceController extends Controller
             'title' => 'required|string',
             'details' => 'required|string',
             'active' => ['boolean', 'required'],
-            'recurring' => ['string', 'required']
+            'recurring' => ['string', 'required'],
         ]);
-
-
 
         $source->update($validated);
 

@@ -21,7 +21,6 @@ class SourceTest extends TestCase
             'source_id' => $model->id,
         ]);
 
-
         $this->assertInstanceOf(RecurringTypeEnum::class, $model->recurring);
         $this->assertNotNull($model->title);
         $this->assertNotNull($model->collection->id);
