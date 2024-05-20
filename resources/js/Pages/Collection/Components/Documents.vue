@@ -150,11 +150,35 @@ const emptyDocumentIds = () => {
                                         <td
                                             class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-3">
 
-                                            <a class="underline" target="_blank" :href="route('download.document', {
-                            collection: collection.id,
-                            document_name: document.file_path
-                        })">{{ document.file_path }}</a>
 
+                                                <div v-if="document.subject">
+                                                    <div class="truncate max-w-2xl">
+                                                        <div v-if="!document.link">
+                                                            {{ document.subject }}
+                                                        </div>
+                                                        <div v-else>
+                                                            <a class="underline" target="_blank" :href="document.link">
+                                                                {{ document.subject }}
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="text-gray-400 text-sm">
+                                                        <a class="underline" target="_blank" :href="route('download.document', {
+                                                                collection: collection.id,
+                                                                document_name: document.file_path
+                                                            })">
+                                                            {{ document.file_path }}
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                <div v-else>
+                                                    <a class="underline" target="_blank" :href="route('download.document', {
+                                                        collection: collection.id,
+                                                        document_name: document.file_path
+                                                    })">
+                                                        {{ document.file_path }}
+                                                    </a>
+                                                </div>
                                         </td>
                                         <td
                                             class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-3">

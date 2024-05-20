@@ -6,6 +6,7 @@ use App\Domains\Agents\VerifyPromptInputDto;
 use App\Domains\Agents\VerifyPromptOutputDto;
 use App\Domains\Messages\RoleEnum;
 use App\Domains\Prompts\SummarizePrompt;
+use App\Models\PromptHistory;
 use Facades\App\Domains\Agents\VerifyResponseAgent;
 use Facades\LlmLaraHub\LlmDriver\DistanceQuery;
 use Illuminate\Support\Facades\Log;
@@ -120,6 +121,13 @@ class SearchAndSummarize extends FunctionContract
 
         $message = $model->getChat()->addInput($this->response, RoleEnum::Assistant);
 
+        PromptHistory::create([
+            'prompt' => $contentFlattened,
+            'chat_id' => $model->getChat()->id,
+            'message_id' => $message?->id,
+            'collection_id' => $model->getChat()->getChatable()?->id,
+        ]);
+
         $this->saveDocumentReference($message, $documentChunkResults);
 
         notify_ui($model->getChat(), 'Complete');
@@ -128,6 +136,7 @@ class SearchAndSummarize extends FunctionContract
             [
                 'content' => $this->response,
                 'save_to_message' => false,
+                'prompt' => $contentFlattened,
             ]
         );
     }

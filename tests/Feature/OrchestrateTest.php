@@ -8,6 +8,7 @@ use App\Models\Collection;
 use App\Models\User;
 use Facades\App\Domains\Messages\SearchAndSummarizeChatRepo;
 use Illuminate\Support\Facades\Event;
+use LlmLaraHub\LlmDriver\Functions\SearchAndSummarize;
 use LlmLaraHub\LlmDriver\Functions\SummarizeCollection;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
 use LlmLaraHub\LlmDriver\Orchestrate;
@@ -70,7 +71,56 @@ class OrchestrateTest extends TestCase
         Event::assertDispatched(ChatUiUpdateEvent::class);
 
         $this->assertEquals($results, 'This is the summary of the collection');
+    }
 
-        $this->assertDatabaseCount('prompt_histories', 1);
+    public function test_makes_history_no_message(): void
+    {
+        Event::fake();
+        LlmDriverFacade::shouldReceive('driver->functionPromptChat')->once()->andReturn([
+            [
+                'name' => 'search_and_summarize',
+                'arguments' => [
+                    'TLDR it for me',
+                ],
+            ],
+        ]);
+
+        LlmDriverFacade::shouldReceive('driver->chat')->never();
+
+        SearchAndSummarizeChatRepo::shouldReceive('search')->never();
+
+        $this->instance(
+            'search_and_summarize',
+            Mockery::mock(SearchAndSummarize::class, function ($mock) {
+                $mock->shouldReceive('handle')
+                    ->once()
+                    ->andReturn(
+                        FunctionResponse::from(
+                            [
+                                'content' => 'This is the summary of the collection',
+                                'prompt' => 'TLDR it for me',
+                            ])
+                    );
+            })
+        );
+
+        $user = User::factory()->create();
+        $collection = Collection::factory()->create();
+        $chat = Chat::factory()->create([
+            'chatable_id' => $collection->id,
+            'chatable_type' => Collection::class,
+            'user_id' => $user->id,
+        ]);
+
+        $messageDto = MessageInDto::from([
+            'content' => 'TLDR it for me',
+            'role' => 'user',
+        ]);
+
+        $results = (new Orchestrate())->handle([$messageDto], $chat);
+
+        Event::assertDispatched(ChatUiUpdateEvent::class);
+
+        $this->assertEquals($results, 'This is the summary of the collection');
     }
 }

@@ -45,9 +45,6 @@ onMounted(() => {
         })
     })
     .listen('.update', (e) => {
-        // Make a better ui for htis
-        console.log("chat reuslts came in")
-        console.log(e)
         if(e.updateMessage === 'Complete') {
             getting_results.value = false
             router.reload({

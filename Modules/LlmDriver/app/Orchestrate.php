@@ -5,7 +5,6 @@ namespace LlmLaraHub\LlmDriver;
 use App\Domains\Messages\RoleEnum;
 use App\Models\Chat;
 use App\Models\Filter;
-use App\Models\PromptHistory;
 use Facades\App\Domains\Messages\SearchAndSummarizeChatRepo;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Log;
@@ -51,6 +50,8 @@ class Orchestrate
 
                 notify_ui($chat, 'We are running the agent back shortly');
 
+                Log::info('[LaraChain] - Running function '.$functionName);
+
                 $functionClass = app()->make($functionName);
 
                 $arguments = data_get($function, 'arguments');
@@ -66,6 +67,7 @@ class Orchestrate
                 /** @var FunctionResponse $response */
                 $response = $functionClass->handle($messagesArray, $chat, $functionDto);
 
+                $message = null;
                 if ($response->save_to_message) {
 
                     $message = $chat->addInput(
@@ -73,14 +75,6 @@ class Orchestrate
                         role: RoleEnum::Assistant,
                         show_in_thread: true);
 
-                    if ($response->prompt) {
-                        PromptHistory::create([
-                            'prompt' => $response->prompt,
-                            'chat_id' => $chat->id,
-                            'message_id' => $message->id,
-                            'collection_id' => $chat->getChatable()?->id,
-                        ]);
-                    }
                 }
 
                 $messagesArray = Arr::wrap(MessageInDto::from([

@@ -23,7 +23,7 @@ createInertiaApp({
             .use(autoAnimatePlugin)
             .use(Toast, {
                 transition: "Vue-Toastification__bounce",
-                maxToasts: 2,
+                maxToasts: 1,
                 newestOnTop: true
               })
             .use(ZiggyVue)

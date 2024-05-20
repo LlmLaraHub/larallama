@@ -41,7 +41,6 @@ onMounted(() => {
         })
     })
     .listen('.update', (e) => {
-        // Make a better ui for htis
         toast.success(e.updateMessage, {
                 position: "bottom-right",
                 timeout: 2000,

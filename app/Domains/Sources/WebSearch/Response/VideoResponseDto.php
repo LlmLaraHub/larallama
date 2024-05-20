@@ -10,9 +10,9 @@ class VideoResponseDto extends Data
         public string $url,
         public string $title,
         public string $description,
-        public string $age,
         public array $meta_data,
         public string $thumbnail,
+        public ?string $age = null,
     ) {
     }
 }

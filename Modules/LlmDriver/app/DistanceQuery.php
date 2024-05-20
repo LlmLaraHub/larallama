@@ -35,6 +35,7 @@ class DistanceQuery
 
         Log::info('[LaraChain] - Distance Query', [
             'filter' => $filter?->toArray(),
+            'embedding_size' => $embeddingSize,
         ]);
 
         $documentIds = Document::query()

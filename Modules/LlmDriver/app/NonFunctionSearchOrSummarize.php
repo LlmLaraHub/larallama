@@ -52,7 +52,6 @@ class NonFunctionSearchOrSummarize
 
             $embeddingSize = get_embedding_size($collection->getEmbeddingDriver());
 
-            //put_fixture("anonymous_embedding_result.json", $embedding);
             $documentChunkResults = DistanceQuery::distance(
                 $embeddingSize,
                 $collection->id,

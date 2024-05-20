@@ -54,11 +54,13 @@ class GetWebContentJob implements ShouldQueue
             [
                 'source_id' => $this->source->id,
                 'type' => TypesEnum::HTML,
-                'file_path' => $this->webResponseDto->url,
+                'subject' => $this->webResponseDto->title,
+                'link' => $this->webResponseDto->url,
                 'collection_id' => $this->source->collection_id,
             ],
             [
                 'status' => StatusEnum::Pending,
+                'file_path' => $this->webResponseDto->url,
                 'status_summary' => StatusEnum::Pending,
                 'meta_data' => $this->webResponseDto->toArray(),
             ]
