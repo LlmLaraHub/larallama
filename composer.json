@@ -33,6 +33,8 @@
         "spatie/laravel-markdown": "^2.3",
         "spatie/laravel-sluggable": "^3.6",
         "sundance-solutions/larachain-token-count": "dev-main",
+        "symfony/http-client": "^7.1@RC",
+        "symfony/postmark-mailer": "^7.1@RC",
         "tightenco/ziggy": "^2.0",
         "voku/stop-words": "^2.0",
         "wamania/php-stemmer": "^3.0",
