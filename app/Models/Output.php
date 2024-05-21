@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Domains\Outputs\OutputTypeEnum;
+use App\Domains\Recurring\RecurringTypeEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -13,6 +14,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property Collection $collection
  * @property bool $public
  * @property bool $active
+ * @property RecurringTypeEnum $recurring
  */
 class Output extends Model
 {
@@ -23,6 +25,7 @@ class Output extends Model
 
     protected $casts = [
         'type' => OutputTypeEnum::class,
+        'recurring' => RecurringTypeEnum::class,
         'meta_data' => 'array',
     ];
 

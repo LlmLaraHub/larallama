@@ -17,21 +17,27 @@ const props = defineProps({
 });
 
 const form = useForm({
-    title: '',
-    summary: '',
-    active: false,
-    public: false,
+    title: 'Daily Email Summary',
+    summary: 'Send me a summary of the articles making each article a title and TLDR',
+    active: 1,
+    recurring: "not",
+    meta_data: {
+        to: "your@mail.test,bob@email.test"
+    }
 });
 
-const updateSummary = (summary) => {
-
-    form.summary = summary;
-}
-
+const to_emails = ref("")
 
 const submit = () => {
-    form.post(
-        route('collections.outputs.web_page.store', {
+    form.
+        transform((data) => ({
+            ...data,
+            meta_data: {
+                to: to_emails.value
+            },
+        }))
+        .post(
+        route('collections.outputs.email_output.store', {
             collection: props.collection.data.id
         }), {
             preserveScroll: true,
@@ -43,10 +49,10 @@ const submit = () => {
 </script>
 
 <template>
-    <AppLayout title="Sources">
+    <AppLayout title="Email Output">
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Sources
+                Email Output
             </h2>
         </template>
 
@@ -54,10 +60,13 @@ const submit = () => {
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-5">
                     <Intro>
-                        Web Search Source
+                        Email
                         <template #description>
-                            Add a query below and you will be able to run it as a web search.
-                            This will add documents to your collection.
+                            You can send an email summary of the collection or filter of the collection below.
+                            You can alter the "Prompt" below to tell the system what to do when the latest content.
+                            For example "Send me a summary of the articles making each article a title and TLDR"
+
+                            It will then send any articles from the day that came in.
                         </template>
                     </Intro>
 
@@ -66,9 +75,6 @@ const submit = () => {
                             :collection="collection.data"
                         v-model="form">
 
-                            <Generate :collection="collection.data"
-                            @generated="updateSummary"
-                            ></Generate>
                         </Resources>
 
                         <div class="flex justify-end items-center gap-4">

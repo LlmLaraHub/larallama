@@ -7,22 +7,27 @@ import Intro from '@/Components/Intro.vue';
 import SecondaryLink from '@/Components/SecondaryLink.vue';
 import Resources from './Components/Resources.vue';
 import { useForm } from '@inertiajs/vue3';
+import {useToast} from "vue-toastification";
 import Generate from "@/Pages/Outputs/WebPage/Components/Generate.vue";
+
+const toast = useToast();
 
 const props = defineProps({
     collection: {
         type: Object,
         required: true,
+    },
+    output: {
+        type: Object
     }
 });
 
 const form = useForm({
-    title: '',
-    summary: '',
-    active: false,
-    public: false,
+    title: props.output.title,
+    summary: props.output.summary,
+    active: props.output.active,
+    public: props.output.public,
 });
-
 const updateSummary = (summary) => {
 
     form.summary = summary;
@@ -30,23 +35,24 @@ const updateSummary = (summary) => {
 
 
 const submit = () => {
-    form.post(
-        route('collections.outputs.web_page.store', {
-            collection: props.collection.data.id
+    form.put(
+        route('collections.outputs.web_page.update', {
+            collection: props.collection.data.id,
+            output: props.output.id
         }), {
             preserveScroll: true,
-            onSuccess: () => {
-                form.reset();
+            onSuccess: params => {
+                toast.info("Updated");
             }
         });
 }
 </script>
 
 <template>
-    <AppLayout title="Sources">
+    <AppLayout title=" Edit Web Page">
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Sources
+                Edit Web Page
             </h2>
         </template>
 
@@ -54,20 +60,17 @@ const submit = () => {
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-5">
                     <Intro>
-                        Web Search Source
+                        Web Page
                         <template #description>
-                            Add a query below and you will be able to run it as a web search.
-                            This will add documents to your collection.
+                            You can edit the web page as needed
                         </template>
                     </Intro>
 
                     <form @submit.prevent="submit" class="p-10 ">
                         <Resources
-                            :collection="collection.data"
                         v-model="form">
-
                             <Generate :collection="collection.data"
-                            @generated="updateSummary"
+                                      @generated="updateSummary"
                             ></Generate>
                         </Resources>
 
@@ -79,7 +82,7 @@ const submit = () => {
                                 collection: collection.data.id
 
                             })">
-                                Cancel
+                                Back
                             </SecondaryLink>
                         </div>
                     </form>

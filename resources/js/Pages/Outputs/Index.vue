@@ -9,6 +9,8 @@ import Nav from '@/Pages/Collection/Components/Nav.vue';
 import Documents from '@/Pages/Collection/Components/Documents.vue';
 import Intro from '@/Components/Intro.vue';
 import { useToast } from 'vue-toastification';
+import WebCard from "@/Pages/Outputs/WebPage/Components/Card.vue";
+import EmailCard from "@/Pages/Outputs/EmailOutput/Components/Card.vue";
 
 const toast = useToast();
 
@@ -21,6 +23,9 @@ const props = defineProps({
         type: Object
     },
     documents: {
+        type: Object,
+    },
+    available_outputs: {
         type: Object,
     },
     chat: {
@@ -60,23 +65,10 @@ const props = defineProps({
                         </svg>
                         <div class="text-xl text-gray-600">No Outputs yet. Choose one below</div>
                     </div>
-                    <div v-else class="card rounded-none w-96 bg-base-100 shadow-xl" v-for="output in outputs.data" :key="output.id">
-                        <div class="card-body">
-                            <h2 class="card-title text-gray-600">{{ output.title }}</h2>
-
-                            <div class="overflow-hidden">
-                                <span class="font-bold text-gray-600 text-xs" v-html="output.summary_truncated"></span>
-                            </div>
-
-                            <div class="card-actions justify-end flex items-center">
-                                <Link class="link" :href="output.url">visit</Link>
-                                <Link :href="route('collections.outputs.web_page.edit', {
-                                    collection: output.collection_id,
-                                    output: output.id
-                                })" class="btn btn-primary rounded-none">Edit</Link>
-                            </div>
-                        </div>
-                    </div>
+                    <template v-else v-for="output in outputs.data" :key="output.id">
+                        <EmailCard v-if="output.type === 'email_output'" :output="output"/>
+                        <WebCard v-if="output.type === 'web_page'" :output="output"/>
+                    </template>
 
                   </div>
 
@@ -84,19 +76,18 @@ const props = defineProps({
                         <h3 class="font-bold text-gray-700">Available Outputs</h3>
                         <div class="flex justify-start items-center gap-2">
 
-                            <Link
-                            class="btn btn-gray rounded-none"
-                            :href="route('collections.outputs.web_page.create',
-                                {collection: collection.data.id}
-                            )"
-                            >Web Page</Link>
+                            <template v-for="available in available_outputs" :key="available.name">
+                                <Link
+                                    v-if="available.active"
+                                    class="btn btn-gray rounded-none"
+                                    :href="available.route"
+                                >{{ available.name}}</Link>
+                                <div
 
-                            <Link
-                                class="btn btn-dark rounded-none"
-                                :href="route('collections.outputs.web_page.create',
-                                {collection: collection.data.id}
-                            )"
-                            >Api</Link>
+                                    class="btn btn-gray rounded-none"
+                                    v-else>{{available.name}} (coming soon..)</div>
+                            </template>
+
 
                         </div>
                     </div>

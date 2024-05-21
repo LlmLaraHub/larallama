@@ -93,6 +93,19 @@ Route::middleware([
         }
     );
 
+    Route::controller(\App\Http\Controllers\EmailOutputController::class)->group(
+        function () {
+            Route::get('/collections/{collection}/outputs/email_output/create', 'create')
+                ->name('collections.outputs.email_output.create');
+            Route::get('/collections/{collection}/outputs/email_output/{output:id}/edit', 'edit')
+                ->name('collections.outputs.email_output.edit');
+            Route::post('/collections/{collection}/outputs/email_output', 'store')
+                ->name('collections.outputs.email_output.store');
+            Route::put('/collections/{collection}/outputs/email_output/{output:id}/update', 'update')
+                ->name('collections.outputs.email_output.update');
+        }
+    );
+
     Route::get('/dashboard', function () {
         return to_route('collections.index');
         //return Inertia::render('Dashboard');

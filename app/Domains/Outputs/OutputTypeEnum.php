@@ -9,5 +9,6 @@ enum OutputTypeEnum: string
     use EnumHelperTrait;
 
     case WebPage = 'web_page';
+    case EmailOutput = 'email_output';
 
 }

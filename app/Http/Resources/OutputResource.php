@@ -17,6 +17,8 @@ class OutputResource extends JsonResource
         return [
             'id' => $this->id,
             'title' => $this->title,
+            'type' => $this->type->value,
+            'type_formatted' => str($this->type->name)->headline()->toString(),
             'collection_id' => $this->collection_id,
             'summary' => $this->summary,
             'summary_truncated' => str($this->summary)->limit(128)->markdown(),

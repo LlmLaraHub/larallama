@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Domains\Outputs\OutputTypeEnum;
+use App\Domains\Recurring\RecurringTypeEnum;
 use App\Models\Collection;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -22,6 +23,7 @@ class OutputFactory extends Factory
             'title' => fake()->title,
             'collection_id' => Collection::factory(),
             'active' => fake()->boolean,
+            'recurring' => RecurringTypeEnum::Daily,
             'type' => OutputTypeEnum::WebPage,
             'meta_data' => [],
             'public' => fake()->boolean,

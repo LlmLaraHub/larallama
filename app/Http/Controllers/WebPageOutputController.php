@@ -3,11 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Domains\Collections\CollectionStatusEnum;
-use App\Domains\Outputs\OutputTypeEnum;
 use App\Domains\Prompts\AnonymousChat;
 use App\Domains\Prompts\SummarizeForPage;
-use App\Http\Resources\CollectionResource;
-use App\Http\Resources\PublicOutputResource;
 use App\Models\Collection;
 use App\Models\Output;
 use Facades\LlmLaraHub\LlmDriver\NonFunctionSearchOrSummarize;
@@ -18,7 +15,7 @@ use LlmLaraHub\LlmDriver\LlmDriverFacade;
 use LlmLaraHub\LlmDriver\Requests\MessageInDto;
 use LlmLaraHub\LlmDriver\Responses\NonFunctionResponseDto;
 
-class WebPageOutputController extends Controller
+class WebPageOutputController extends OutputController
 {
     protected function getChatMessages(): array
     {
@@ -89,13 +86,6 @@ class WebPageOutputController extends Controller
         return back();
     }
 
-    public function create(Collection $collection)
-    {
-        return inertia('Outputs/WebPage/Create', [
-            'collection' => new CollectionResource($collection),
-        ]);
-    }
-
     public function generateSummaryFromCollection(Collection $collection)
     {
 
@@ -124,71 +114,6 @@ class WebPageOutputController extends Controller
 
         return response()->json([
             'summary' => $results->content,
-        ]);
-    }
-
-    public function store(Collection $collection)
-    {
-
-        $validated = request()->validate([
-            'title' => 'required|string',
-            'summary' => 'required|string',
-            'active' => 'boolean|nullable',
-            'public' => 'boolean|nullable',
-        ]);
-
-        Output::create([
-            'title' => $validated['title'],
-            'summary' => $validated['summary'],
-            'collection_id' => $collection->id,
-            'active' => data_get($validated, 'active', false),
-            'public' => data_get($validated, 'public', false),
-            'type' => OutputTypeEnum::WebPage,
-            'meta_data' => [],
-        ]);
-
-        request()->session()->flash('flash.banner', 'Web page output added successfully');
-
-        return to_route('collections.outputs.index', $collection);
-    }
-
-    public function edit(Collection $collection, Output $output)
-    {
-        return inertia('Outputs/WebPage/Edit', [
-            'output' => $output,
-            'collection' => new CollectionResource($collection),
-        ]);
-    }
-
-    public function update(Collection $collection, Output $output)
-    {
-        $validated = request()->validate([
-            'title' => 'required|string',
-            'summary' => 'required|string',
-            'active' => 'boolean|nullable',
-            'public' => 'boolean|nullable',
-        ]);
-
-        $output->update($validated);
-
-        request()->session()->flash('flash.banner', 'Updated');
-
-        return back();
-    }
-
-    public function show(Output $output)
-    {
-        if (! auth()->check() && ! $output->public) {
-            abort(404);
-        }
-
-        if (! $output->active) {
-            abort(404);
-        }
-
-        return inertia('Outputs/WebPage/Show', [
-            'output' => new PublicOutputResource($output),
-            'messages' => data_get($this->getChatMessages(), 'messages', []),
         ]);
     }
 }
