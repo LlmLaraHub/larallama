@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Domains\Sources\RecurringTypeEnum;
+use App\Domains\Recurring\RecurringTypeEnum;
 use App\Domains\Sources\SourceTypeEnum;
 use App\Http\Resources\CollectionResource;
 use App\Models\Collection;

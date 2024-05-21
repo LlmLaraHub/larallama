@@ -7,7 +7,6 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class SourceResource extends JsonResource
 {
-
     use HelperTrait;
 
     /**
@@ -20,7 +19,6 @@ class SourceResource extends JsonResource
 
         $recurring = $this->getRecurring();
         $lastRun = $this->getLastRun();
-
 
         return [
             'id' => $this->id,

@@ -79,7 +79,7 @@ class SendOutputEmailJob implements ShouldQueue
         }
 
         $this->output->updateQuietly([
-            'last_run' => now()
+            'last_run' => now(),
         ]);
 
     }

@@ -6,6 +6,5 @@ use App\Models\Output;
 
 abstract class BaseOutput
 {
-
-    abstract public function handle(Output $output) : void;
+    abstract public function handle(Output $output): void;
 }

@@ -4,7 +4,6 @@ namespace App\Http\Resources;
 
 trait HelperTrait
 {
-
     public function getRecurring()
     {
         $recurring = $this->recurring;
@@ -21,6 +20,7 @@ trait HelperTrait
         if ($lastRun) {
             $lastRun = $lastRun->diffForHumans();
         }
+
         return $lastRun;
     }
 }

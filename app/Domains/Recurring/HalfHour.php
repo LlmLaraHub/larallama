@@ -2,7 +2,6 @@
 
 namespace App\Domains\Recurring;
 
-use App\Domains\Sources\RecurringTypeEnum;
 use Carbon\Carbon;
 
 class HalfHour extends Daily

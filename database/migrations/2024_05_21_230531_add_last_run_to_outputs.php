@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('outputs', function (Blueprint $table) {
-            $table->dateTime("last_run")->nullable();
+            $table->dateTime('last_run')->nullable();
         });
     }
 

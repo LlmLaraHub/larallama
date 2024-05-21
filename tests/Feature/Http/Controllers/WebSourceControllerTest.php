@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers;
 
-use App\Domains\Sources\RecurringTypeEnum;
+use App\Domains\Recurring\RecurringTypeEnum;
 use App\Models\Collection;
 use App\Models\Source;
 use App\Models\User;

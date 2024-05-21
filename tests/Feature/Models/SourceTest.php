@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Models;
 
-use App\Domains\Sources\RecurringTypeEnum;
+use App\Domains\Recurring\RecurringTypeEnum;
 use App\Domains\Sources\SourceTypeEnum;
 use App\Domains\Sources\WebSearchSource;
 use App\Models\Document;

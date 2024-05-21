@@ -2,7 +2,7 @@
 
 namespace App\Domains\Recurring;
 
-use App\Domains\Sources\RecurringTypeEnum;
+use App\Jobs\RunOutputJob;
 use App\Jobs\RunSourceJob;
 use App\Models\Output;
 use App\Models\Source;
@@ -15,9 +15,9 @@ class Daily
 
     public function check()
     {
-        $jobs = [];
 
         $this->runSources();
+        $this->runOutputs();
     }
 
     protected function runSources()
@@ -30,6 +30,7 @@ class Daily
                     ->orWhere('last_run', '<', $this->getLastRun());
             })
             ->get();
+        $jobs = [];
 
         foreach ($sources as $source) {
             $source->updateQuietly(['last_run' => now()]);
@@ -38,12 +39,11 @@ class Daily
 
         if (! empty($jobs)) {
             Bus::batch($jobs)
-                ->name($this->recurringTypeEnum->name.' Recurring Run')
+                ->name($this->recurringTypeEnum->name.' Recurring Source Run')
                 ->allowFailures()
                 ->dispatch();
         }
     }
-
 
     protected function runOutputs()
     {
@@ -55,15 +55,16 @@ class Daily
                     ->orWhere('last_run', '<', $this->getLastRun());
             })
             ->get();
+        $jobs = [];
 
         foreach ($sources as $source) {
             $source->updateQuietly(['last_run' => now()]);
-            $jobs[] = new RunSourceJob($source->fresh());
+            $jobs[] = new RunOutputJob($source->fresh());
         }
 
         if (! empty($jobs)) {
             Bus::batch($jobs)
-                ->name($this->recurringTypeEnum->name.' Recurring Run')
+                ->name($this->recurringTypeEnum->name.' Recurring Output Run')
                 ->allowFailures()
                 ->dispatch();
         }

@@ -30,10 +30,10 @@ class OutputTest extends TestCase
         Queue::fake();
 
         $output = Output::factory()->create([
-            'type' => OutputTypeEnum::EmailOutput
+            'type' => OutputTypeEnum::EmailOutput,
         ]);
 
-        $output->run();;
+        $output->run();
 
         Queue::assertPushed(SendOutputEmailJob::class);
     }

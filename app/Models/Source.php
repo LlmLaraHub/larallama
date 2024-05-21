@@ -43,7 +43,8 @@ class Source extends Model implements HasDrivers
         return $this->collection->getSummary();
     }
 
-    public function scopeActive($query) {
+    public function scopeActive($query)
+    {
         return $query->where('active', 1);
     }
 

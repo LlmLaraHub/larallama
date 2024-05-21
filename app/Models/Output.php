@@ -39,7 +39,8 @@ class Output extends Model
             ->saveSlugsTo('slug');
     }
 
-    public function scopeActive($query) {
+    public function scopeActive($query)
+    {
         return $query->where('active', 1);
     }
 

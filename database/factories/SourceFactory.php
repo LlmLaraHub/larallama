@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Domains\Sources\RecurringTypeEnum;
+use App\Domains\Recurring\RecurringTypeEnum;
 use App\Domains\Sources\SourceTypeEnum;
 use App\Models\Collection;
 use Illuminate\Database\Eloquent\Factories\Factory;
