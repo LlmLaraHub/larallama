@@ -13,7 +13,8 @@ const props = defineProps({
     collection: {
         type: Object,
         required: true,
-    }
+    },
+    recurring: Object
 });
 
 const form = useForm({
@@ -73,8 +74,8 @@ const submit = () => {
 
                     <form @submit.prevent="submit" class="p-10 ">
                         <Resources
-                            :collection="collection.data"
-                        v-model="form">
+                            :recurring="recurring"
+                            v-model="form">
 
                         </Resources>
 

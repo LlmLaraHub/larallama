@@ -7,6 +7,9 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class SourceResource extends JsonResource
 {
+
+    use HelperTrait;
+
     /**
      * Transform the resource into an array.
      *
@@ -14,15 +17,10 @@ class SourceResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        $recurring = $this->recurring;
-        if ($recurring) {
-            $recurring = str($recurring->name)->headline()->toString();
-        }
 
-        $lastRun = $this->last_run;
-        if ($lastRun) {
-            $lastRun = $lastRun->diffForHumans();
-        }
+        $recurring = $this->getRecurring();
+        $lastRun = $this->getLastRun();
+
 
         return [
             'id' => $this->id,

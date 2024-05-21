@@ -61,7 +61,7 @@ class OutputController extends Controller
                     'active' => false,
                 ],
             ],
-            'outputs' => OutputResource::collection($collection->outputs()->paginate(10)),
+            'outputs' => OutputResource::collection($collection->outputs()->latest()->paginate(10)),
         ]);
     }
 

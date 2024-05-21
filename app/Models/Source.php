@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Domains\Sources\RecurringTypeEnum;
+use App\Domains\Recurring\RecurringTypeEnum;
 use App\Domains\Sources\SourceTypeEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -41,6 +41,10 @@ class Source extends Model implements HasDrivers
     public function getSummary(): string
     {
         return $this->collection->getSummary();
+    }
+
+    public function scopeActive($query) {
+        return $query->where('active', 1);
     }
 
     public function getId(): int

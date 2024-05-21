@@ -22,6 +22,7 @@ class OutputFactory extends Factory
         return [
             'title' => fake()->title,
             'collection_id' => Collection::factory(),
+            'last_run' => now(),
             'active' => fake()->boolean,
             'recurring' => RecurringTypeEnum::Daily,
             'type' => OutputTypeEnum::WebPage,

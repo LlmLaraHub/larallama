@@ -4,7 +4,9 @@ namespace Tests\Feature\Models;
 
 use App\Domains\Outputs\OutputTypeEnum;
 use App\Domains\Recurring\RecurringTypeEnum;
+use App\Jobs\SendOutputEmailJob;
 use App\Models\Output;
+use Illuminate\Support\Facades\Queue;
 use Tests\TestCase;
 
 class OutputTest extends TestCase
@@ -21,6 +23,19 @@ class OutputTest extends TestCase
         $this->assertEquals(OutputTypeEnum::WebPage, $output->type);
         $this->assertNotNull($output->collection->id);
         $this->assertNotNull($output->collection->outputs()->first()->id);
+    }
+
+    public function test_run()
+    {
+        Queue::fake();
+
+        $output = Output::factory()->create([
+            'type' => OutputTypeEnum::EmailOutput
+        ]);
+
+        $output->run();;
+
+        Queue::assertPushed(SendOutputEmailJob::class);
     }
 
     public function test_meta_data()

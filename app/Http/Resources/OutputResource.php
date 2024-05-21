@@ -7,6 +7,8 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class OutputResource extends JsonResource
 {
+    use HelperTrait;
+
     /**
      * Transform the resource into an array.
      *
@@ -14,6 +16,9 @@ class OutputResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        $recurring = $this->getRecurring();
+        $lastRun = $this->getLastRun();
+
         return [
             'id' => $this->id,
             'title' => $this->title,
@@ -24,6 +29,8 @@ class OutputResource extends JsonResource
             'summary_truncated' => str($this->summary)->limit(128)->markdown(),
             'active' => $this->active,
             'public' => $this->public,
+            'recurring' => $recurring,
+            'last_run' => $lastRun,
             'slug' => $this->slug,
             'url' => route('collections.outputs.web_page.show', [
                 'output' => $this->slug,

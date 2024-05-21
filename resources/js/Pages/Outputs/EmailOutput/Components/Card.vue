@@ -2,6 +2,7 @@
 
 import {Link, useForm} from "@inertiajs/vue3";
 import {useToast} from "vue-toastification";
+import Settings from "@/Pages/Outputs/Components/Settings.vue";
 
 const props = defineProps({
     output: Object
@@ -29,11 +30,14 @@ const send = () => {
 <template>
     <div class="card rounded-none w-96 bg-base-100 shadow-xl">
         <div class="card-body">
-            <h2 class="card-title text-gray-600">{{ output.title }}</h2>
+            <h2 class="card-title text-gray-600">{{ output.title }} <span class="text-sm">#{{output.id}}</span></h2>
 
             <div class="overflow-hidden">
                 <span class="font-bold text-gray-600 text-xs" v-html="output.summary_truncated"></span>
             </div>
+
+            <Settings :output="output"></Settings>
+
 
             <div class="card-actions justify-between flex items-center">
                 <span class="badge badge-default">{{ output.type_formatted}}</span>
