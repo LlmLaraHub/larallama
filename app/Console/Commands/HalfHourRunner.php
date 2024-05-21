@@ -2,7 +2,6 @@
 
 namespace App\Console\Commands;
 
-use App\Domains\Recurring\Daily;
 use App\Domains\Recurring\HalfHour;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;

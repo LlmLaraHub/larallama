@@ -19,6 +19,11 @@ class SourceResource extends JsonResource
             $recurring = str($recurring->name)->headline()->toString();
         }
 
+        $lastRun = $this->last_run;
+        if($lastRun) {
+            $lastRun = $lastRun->diffForHumans();
+        }
+
         return [
             'id' => $this->id,
             'title' => $this->title,
@@ -27,6 +32,7 @@ class SourceResource extends JsonResource
             'active' => $this->active ? 'Yes' : 'No',
             'recurring' => $recurring,
             'description' => $this->description,
+            'last_run' => $lastRun,
             'type' => str($this->type->name)->headline()->toString(),
         ];
     }

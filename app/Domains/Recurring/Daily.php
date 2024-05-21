@@ -12,7 +12,6 @@ class Daily
 {
     protected RecurringTypeEnum $recurringTypeEnum = RecurringTypeEnum::Daily;
 
-
     public function check()
     {
         $jobs = [];
@@ -32,13 +31,14 @@ class Daily
 
         if (! empty($jobs)) {
             Bus::batch($jobs)
-                ->name($this->recurringTypeEnum->name . ' Recurring Run')
+                ->name($this->recurringTypeEnum->name.' Recurring Run')
                 ->allowFailures()
                 ->dispatch();
         }
     }
 
-    protected function getLastRun() : Carbon {
+    protected function getLastRun(): Carbon
+    {
         return now()->subDay();
     }
 }
