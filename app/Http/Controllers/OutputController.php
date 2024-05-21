@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Domains\Outputs\OutputTypeEnum;
+use App\Domains\Prompts\AnonymousChat;
 use App\Http\Resources\CollectionResource;
 use App\Http\Resources\DocumentResource;
 use App\Http\Resources\OutputResource;
@@ -10,6 +11,8 @@ use App\Http\Resources\PublicOutputResource;
 use App\Models\Collection;
 use App\Models\Document;
 use App\Models\Output;
+use Illuminate\Support\Arr;
+use LlmLaraHub\LlmDriver\Requests\MessageInDto;
 
 class OutputController extends Controller
 {
@@ -136,5 +139,40 @@ class OutputController extends Controller
         return inertia($this->create_path, [
             'collection' => new CollectionResource($collection),
         ]);
+    }
+
+    protected function getChatMessages(): array
+    {
+        $messages = request()->session()->only(['messages']);
+
+        if (empty($messages)) {
+            $messages = MessageInDto::from([
+                'content' => AnonymousChat::system(),
+                'role' => 'system',
+                'is_ai' => true,
+                'show' => false,
+            ]);
+
+            request()->session()->push('messages', $messages);
+            $messages = Arr::wrap($messages);
+        }
+
+        return $messages;
+    }
+
+    protected function setChatMessages(string $input, string $role = 'user')
+    {
+        $this->getChatMessages();
+
+        $messages = MessageInDto::from([
+            'content' => str($input)->markdown(),
+            'role' => $role,
+            'is_ai' => $role !== 'user',
+            'show' => $role !== 'system',
+        ]);
+
+        request()->session()->push('messages', $messages);
+
+        return $messages;
     }
 }

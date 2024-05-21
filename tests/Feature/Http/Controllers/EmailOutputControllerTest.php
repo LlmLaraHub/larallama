@@ -11,8 +11,6 @@ use Tests\TestCase;
 
 class EmailOutputControllerTest extends TestCase
 {
-
-
     public function test_store(): void
     {
 
