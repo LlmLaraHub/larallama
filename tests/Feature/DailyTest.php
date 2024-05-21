@@ -5,8 +5,6 @@ namespace Tests\Feature;
 use App\Domains\Recurring\Daily;
 use App\Domains\Sources\RecurringTypeEnum;
 use App\Models\Source;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Bus;
 use Tests\TestCase;
 
@@ -22,10 +20,8 @@ class DailyTest extends TestCase
         $source = Source::factory()
             ->create([
                 'recurring' => RecurringTypeEnum::Daily,
-                'last_run' => null
+                'last_run' => null,
             ]);
-
-
 
         (new Daily())->check();
 

@@ -27,8 +27,8 @@ class DailyRunner extends Command
      */
     public function handle()
     {
-        Log::info("[LaraChain] - Running daily check");
+        Log::info('[LaraChain] - Running daily check');
         (new Daily())->check();
-        Log::info("[LaraChain] - Done Running daily check");
+        Log::info('[LaraChain] - Done Running daily check');
     }
 }
