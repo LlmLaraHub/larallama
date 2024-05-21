@@ -37,7 +37,6 @@ const closeDocument = () => {
 
 const selectedDocuments = ref(new Set)
 
-
 const selectedDocumentsToArray = computed(() => {
     return Array.from(selectedDocuments.value);
 })
@@ -53,7 +52,6 @@ const checked = (item) => {
 const emptyDocumentIds = () => {
     console.log("Resetting documents");
     selectedDocuments.value = new Set()
-
 }
 
 

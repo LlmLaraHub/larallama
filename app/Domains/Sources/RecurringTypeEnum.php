@@ -11,7 +11,6 @@ enum RecurringTypeEnum: string
     case Not = 'not';
     case Daily = 'daily';
     case Hourly = 'hourly';
-
     case HalfHour = 'half_hour';
 
 }
