@@ -10,3 +10,9 @@ Artisan::command('inspire', function () {
 \Illuminate\Support\Facades\Schedule::command('app:daily-runner')
     ->daily()
     ->at('06:00');
+
+\Illuminate\Support\Facades\Schedule::command('app:hourly-runner')
+    ->hourly();
+
+\Illuminate\Support\Facades\Schedule::command('app:half-hourly-runner')
+    ->everyThirtyMinutes();
