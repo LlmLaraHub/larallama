@@ -101,6 +101,8 @@ Route::middleware([
                 ->name('collections.outputs.email_output.edit');
             Route::post('/collections/{collection}/outputs/email_output', 'store')
                 ->name('collections.outputs.email_output.store');
+            Route::post('/outputs/{output:id}/send', 'send')
+                ->name('collections.outputs.email_output.send');
             Route::put('/collections/{collection}/outputs/email_output/{output:id}/update', 'update')
                 ->name('collections.outputs.email_output.update');
         }

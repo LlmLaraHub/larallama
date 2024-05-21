@@ -2,7 +2,7 @@
 import AppLayout from '@/Layouts/AppLayout.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
-import { ref } from 'vue';
+import {onMounted, ref} from 'vue';
 import Intro from '@/Components/Intro.vue';
 import SecondaryLink from '@/Components/SecondaryLink.vue';
 import Resources from './Components/Resources.vue';
@@ -19,24 +19,40 @@ const props = defineProps({
     },
     output: {
         type: Object
-    }
+    },
+    recurring: Object
 });
+
+
+const to_emails = ref("")
 
 const form = useForm({
     title: props.output.title,
     summary: props.output.summary,
     active: props.output.active,
-    public: props.output.public,
+    recurring: props.output.recurring,
+    meta_data: props.output.meta_data,
+    to_emails: "",
 });
-const updateSummary = (summary) => {
 
+onMounted(() => {
+    form.to_emails = props.output.meta_data?.to
+})
+
+const updateSummary = (summary) => {
     form.summary = summary;
 }
 
-
 const submit = () => {
-    form.put(
-        route('collections.outputs.web_page.update', {
+    form
+        .transform((data) => ({
+            ...data,
+            meta_data: {
+                to: form.to_emails
+            },
+        }))
+        .put(
+        route('collections.outputs.email_output.update', {
             collection: props.collection.data.id,
             output: props.output.id
         }), {
@@ -49,29 +65,30 @@ const submit = () => {
 </script>
 
 <template>
-    <AppLayout title=" Edit Web Page">
+    <AppLayout title="Email Output">
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Edit Web Page
+                Email Output
             </h2>
         </template>
-
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-5">
                     <Intro>
-                        Web Page
+                        Email
                         <template #description>
-                            You can edit the web page as needed
+                            You can send an email summary of the collection or filter of the collection below.
+                            You can alter the "Prompt" below to tell the system what to do when the latest content.
+                            For example "Send me a summary of the articles making each article a title and TLDR"
+
+                            It will then send any articles from the day that came in.
                         </template>
                     </Intro>
 
                     <form @submit.prevent="submit" class="p-10 ">
                         <Resources
+                            :recurring="recurring"
                         v-model="form">
-                            <Generate :collection="collection.data"
-                                      @generated="updateSummary"
-                            ></Generate>
                         </Resources>
 
                         <div class="flex justify-end items-center gap-4">

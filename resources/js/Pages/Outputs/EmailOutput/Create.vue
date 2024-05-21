@@ -23,7 +23,8 @@ const form = useForm({
     recurring: "not",
     meta_data: {
         to: "your@mail.test,bob@email.test"
-    }
+    },
+    to_emails: "",
 });
 
 const to_emails = ref("")
@@ -33,7 +34,7 @@ const submit = () => {
         transform((data) => ({
             ...data,
             meta_data: {
-                to: to_emails.value
+                to: form.to_emails
             },
         }))
         .post(

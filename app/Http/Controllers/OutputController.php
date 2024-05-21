@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Domains\Outputs\OutputTypeEnum;
 use App\Domains\Prompts\AnonymousChat;
+use App\Domains\Recurring\RecurringTypeEnum;
 use App\Http\Resources\CollectionResource;
 use App\Http\Resources\DocumentResource;
 use App\Http\Resources\OutputResource;
@@ -96,6 +97,7 @@ class OutputController extends Controller
     {
         return inertia($this->edit_path, [
             'output' => $output,
+            'recurring' => RecurringTypeEnum::selectOptions(),
             'collection' => new CollectionResource($collection),
         ]);
     }
@@ -137,6 +139,7 @@ class OutputController extends Controller
     public function create(Collection $collection)
     {
         return inertia($this->create_path, [
+            'recurring' => RecurringTypeEnum::selectOptions(),
             'collection' => new CollectionResource($collection),
         ]);
     }

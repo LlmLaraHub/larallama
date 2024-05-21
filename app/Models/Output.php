@@ -48,4 +48,11 @@ class Output extends Model
     {
         return $this->belongsTo(Collection::class);
     }
+
+    public function fromMetaData(string $key): mixed
+    {
+        $meta_data = $this->meta_data;
+
+        return data_get($meta_data, $key, false);
+    }
 }

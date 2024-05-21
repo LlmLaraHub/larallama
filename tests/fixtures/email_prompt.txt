@@ -1,0 +1,91 @@
+# **Role, Task, Format (R.T.F.)**
+**Role**: You are a communication assistant designed to transform provided context into a well-structured email summary.
+**Task**: Take the provided context and any user-specific additions for formatting, and create an engaging and concise email summary. Incorporate any additional instructions or formatting preferences specified by the user.
+**Format**: The output should be in Markdown format. This body of text I will pass into an email. DO NOT WRAP THE OUTPUT IN ```markdown it is just text
+
+### EXAMPLE
+
+**Context**: "news from the day"
+
+**User Addition**: "keep it short"
+
+**Output**: "
+**TLDR** of all articles: Foo Bar is popular this week
+
+## Title 2
+Summary of article Foo Bar
+
+## Article 2
+Summary of article Foo Bar
+"
+### END EXAMPLE
+
+### Below is the context and user additions
+
+**Context**: ### Summary of Ollama and Firebase Genkit Announcement and Developments
+
+**Announcement Highlights:**
+- During Google I/O 2024, Google introduced support for Ollama in Firebase Genkit, announcing a new open-source framework aimed at the development, deployment, and monitoring of AI-powered apps.
+- Ollama's latest iteration, Llama 3, launched with enhanced features, including reduced refusal rates for prompts compared to its predecessor, Llama 2, highlighting a significant improvement in content filtering and user interaction.
+- A new generation model, Llama 3, became available on April 18, 2024, boasting compatibility with Ollama and advancements over previous versions, underscoring Meta's commitment to state-of-the-art AI language models.
+
+**Technical Innovations and Support:**
+- Ollama introduced an embedded model feature making it effortless to generate vector embeddings for search, retrieval, and generation applications.
+- Significant strides in hardware compatibility were made, including support for AMD graphics cards on both Windows and Linux, showcasing Ollama's commitment to accessibility and performance enhancement.
+- In early 2024, Ollama was made accessible on Windows with a preview feature, offering a native experience with built-in GPU acceleration, a robust model library, and service via the Ollama API with OpenAI compatibility.
+
+**APIs, Libraries, and Models:**
+- Initial compatibility with OpenAI's API was established, facilitating the use of existing tools with Ollama's local models.
+- A new vision model, Llava 1.6, with enhanced capabilities for handling higher resolution images and improved logic, was introduced.
+- Open-source efforts were bolstered with the initial release of Python and JavaScript libraries for Ollama, simplifying integration with apps and offering features like the Ollama Rest API.
+
+**Community Engagement and Tools:**
+- The advent of client-side technology for building web apps powered by LLMS, and significant community engagement through platforms like GitHub, Discord, and meetups, were noted.
+- Docker Desktop support for Mac and GPU-accelerated Linux containers signified Ollama's emphasis on versatility and developer support.
+
+**Educational and Practical Applications:**
+- Contributions to educational resources and practical applications included guidelines for prompt structuring with Code Llama and the integration of Ollama with note-taking tools like Obsidian.
+- Demonstrations of model versatility with Wizardmath for math problems, and discussions on the uncensoring of Llama 2 models, provided insights into the practical uses and ethical considerations in AI model deployment.
+
+**Conclusion:**
+The series of developments and announcements related to Ollama and Firebase Genkit throughout 2023 and 2024 underscores a robust push towards more accessible, efficient, and versatile AI-powered applications and tools. With improvements in models like Llama 3, compatibility with existing APIs, and a focus on community engagement and open-source resources, the efforts reflect a significant leap forward in AI deployment and developer support.
+The provided content lists a variety of artificial intelligence (AI) models and projects with updates on their developments, parameters, and uses. These models range widely in scale, from billions to trillions of parameters, serving various purposes including natural language understanding, code generation, conversational capabilities, embedding, and more. Key projects and models mentioned include:
+
+- **Codegemma**: A collection of models designed for tasks like code completion, code generation, and more, with updates highlighting various parameter sizes.
+- **Command-r**: A general-purpose model ranging from 3 billion to 70 billion parameters, aimed at performing well even on entry-level hardware.
+- **Wizard Vicuna Uncensor and Dolphin Mixtr**: Projects focusing on uncensoring models based on the Llama and Mistral AI frameworks, respectively.
+- **Yi**: A high-performing, bilingual language model.
+- **Meditron, Phi-3, Wizardlm2**: Various state-of-the-art models focusing on different domains such as medical, general-purpose AI applications, and more advanced chat and multilingual use cases.
+- **Mistral and Gemma**: Both are highlighted for their updated versions and contributions to the development of efficient and powerful models.
+- **Llama 2 and Llama 3**: Foundations for a range of models with updates on their specific versions and enhancements for different applications.
+- **Dbrx**: An open, general-purpose model created by Databricks.
+- **Qwen and Dolphin-phi**: Large language models spanning a broad spectrum of parameters, indicating their substantial capabilities in handling complex tasks.
+- **Stablelm, sqlcoder, and openchat**: Demonstrate applications in stable models for multilingual data, SQL code completion, and improved conversational models rivaling ChatGPT, respectively.
+
+These updates emphasize the rapid development within the AI domain, showcasing advancements in hardware utilization, model training, and domain-specific optimizations. The range of parameters across models indicates the scalability and flexibility in their applications, catering to various needs from lightweight, entry-level use cases to more complex and demanding tasks requiring substantial computational resources. Each project or model also highlights a focus on open-source availability and community engagement through platforms like GitHub and Discord, which fosters further innovation and collaboration in the AI field.
+Ollama is a start-up based in Palo Alto, actively involved in the development of artificial intelligence and developer tools, emphasizing open-source projects. The company, co-founded by Jeffrey Morgan and Michael Chiang, has made headlines for its innovative approach to running large language models locally. Their most recent contributions to the field are highlighted in the Ollama blog, with significant posts dated October 5, 2023, introducing "Run Llama 2 uncensored locally," and another on August 1, 2023, detailing their advancements. Ollama is part of the Winter 2021 (W21) batch of Y Combinator, a well-known accelerator program that supports the growth of start-ups through funding, mentoring, and networking opportunities. The company has sought eyes in the startup ecosystem by being featured in Y Combinator's various resources, such as the startup directory, jobs portal, and by applying for the S2024 batch, indicating its ongoing engagement with YC's community and resources. Ollama’s work is particularly targeted towards engineering, operations, marketing, and sales professionals looking for startup opportunities, underlining its role in the larger tech and AI industry ecosystem. Despite its profound impact and promising technology, the company's employment listings indicate no open positions as of the latest update. 
+
+Ollama's commitment to making large language models more accessible and running them locally stands as a significant contribution to the AI domain, potentially democratizing the power of AI tools for wider developer communities. Their presence in Palo Alto, a hub for tech innovation, along with the backing and recognition from Y Combinator, sets a strong foundation for their future growth and influence in artificial intelligence and open-source software development.
+### Summary
+
+The primary task involves running large language models, specifically referring to Llama 3, Phi 3, Mistral, and Gemma models. These models can be custom-created and are accessible for download. Availability spans across major operating systems including macOS, Linux, and Windows (currently in preview). For further information, resources such as a blog, Discord, GitHub, and documentation are available. Additionally, connectivity and updates can be found on platforms like X (formerly Twitter) and through meetups. The projected timeline or notable updates mentioned points to 2024, possibly relating to Ollama. This summary encapsulates the action of utilizing these advanced language models, the platforms for support and community engagement, as well as the operating system compatibility for users looking to download and implement these models.
+The content outlines how to employ and benefit from open-source Large Language Models (LLMs) such as Llama 2 from Meta and a multimodal model named Llava, showcasing different use-cases and the steps to download and use these models on a local machine. Furthermore, it highlights the advantages of open-source models over closed-source ones, like ChatGPT, in terms of transparency and customization options.
+
+**Key Points:**
+
+- **Open Source LLMs:** Focused on open-source LLMs including **Llama 2** by Meta, a text-based model, and **Llava**, a multimodal model capable of handling both text and images. These models are positioned as valuable tools for developers looking for more transparency and customization in their projects.
+  
+- **Installation and Use:** For using these models, one needs to download **Ollama**, a software that facilitates interaction with these LLMs on a local machine. It supports different operating systems with a specific mention of a preview mode for Windows. Instructions are provided for downloading and running Ollama, emphasizing its role in leveraging open source LLMs for various applications.
+
+- **Potential Applications:** The synthesis highlights a multitude of applications for these LLMs beyond mere conversation. This includes answering questions across a broad range of topics, generating ideas, writing assistance, translation, summarizing content, creative writing (stories, poems), and language learning.
+
+- **Learning Resources:** It also mentions **freecodecamp**, underscoring its mission to help people learn coding through a free 3,000-hour curriculum, supported by donations. freecodecamp is shared as a valuable educational resource and a charity, with its efforts funded by donations that support its servers, services, and staff.
+
+- **Contribution and Community Support:** Finally, it solicits support for freecodecamp, highlighting its significant impact in helping people secure jobs as developers through its open-source curriculum. It calls for donations to sustain and extend its educational initiatives.
+
+This synthesis encapsulates the facilitation of open-source LLMs' application, emphasizing the significance of community-supported educational resources like freecodecamp and the tools needed to harness the power of such language models for diverse and creative use-cases.
+
+**User Addition**: Send me a summary of the articles making each article a title and TLDR
+
+### Output
+- **Email Body (Markdown)**:

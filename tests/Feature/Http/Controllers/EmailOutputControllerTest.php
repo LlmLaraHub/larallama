@@ -3,10 +3,12 @@
 namespace Tests\Feature\Http\Controllers;
 
 use App\Domains\Recurring\RecurringTypeEnum;
+use App\Jobs\SendOutputEmailJob;
 use App\Models\Collection;
 use App\Models\Document;
 use App\Models\Output;
 use App\Models\User;
+use Illuminate\Support\Facades\Queue;
 use Tests\TestCase;
 
 class EmailOutputControllerTest extends TestCase
@@ -93,5 +95,57 @@ class EmailOutputControllerTest extends TestCase
 
         $this->assertEquals(RecurringTypeEnum::Daily, $output->recurring);
         $this->assertEquals(['to' => 'bob@bob.com'], $output->meta_data);
+    }
+
+    public function test_send(): void
+    {
+
+        Queue::fake();
+
+        $output = Output::factory()->create([
+            'recurring' => RecurringTypeEnum::HalfHour,
+            'meta_data' => [
+                'to' => 'bob@bobsburgers.com',
+            ],
+        ]);
+
+        $user = User::factory()->create();
+
+        $this->actingAs($user)->post(route(
+            'collections.outputs.email_output.send',
+            [
+                'output' => $output->id,
+            ]
+        ))
+            ->assertRedirect()
+            ->assertSessionHasNoErrors();
+
+        Queue::assertPushed(SendOutputEmailJob::class);
+    }
+
+    public function test_nothing_sent(): void
+    {
+
+        Queue::fake();
+
+        $output = Output::factory()->create([
+            'recurring' => RecurringTypeEnum::HalfHour,
+            'meta_data' => [
+                'to' => '',
+            ],
+        ]);
+
+        $user = User::factory()->create();
+
+        $this->actingAs($user)->post(route(
+            'collections.outputs.email_output.send',
+            [
+                'output' => $output->id,
+            ]
+        ))
+            ->assertRedirect()
+            ->assertSessionHasNoErrors();
+
+        Queue::assertNothingPushed();
     }
 }
