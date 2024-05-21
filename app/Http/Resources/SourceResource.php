@@ -20,7 +20,7 @@ class SourceResource extends JsonResource
         }
 
         $lastRun = $this->last_run;
-        if($lastRun) {
+        if ($lastRun) {
             $lastRun = $lastRun->diffForHumans();
         }
 
