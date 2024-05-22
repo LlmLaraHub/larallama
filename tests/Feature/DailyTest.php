@@ -20,12 +20,14 @@ class DailyTest extends TestCase
 
         $source = Source::factory()
             ->create([
+                'active' => 1,
                 'recurring' => RecurringTypeEnum::Daily,
                 'last_run' => null,
             ]);
 
         $output = Output::factory()
             ->create([
+                'active' => 1,
                 'recurring' => RecurringTypeEnum::Daily,
                 'last_run' => null,
             ]);
