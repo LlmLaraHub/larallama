@@ -11,6 +11,7 @@ import Intro from '@/Components/Intro.vue';
 import { useToast } from 'vue-toastification';
 import WebCard from "@/Pages/Outputs/WebPage/Components/Card.vue";
 import EmailCard from "@/Pages/Outputs/EmailOutput/Components/Card.vue";
+import ApiCard from "@/Pages/Outputs/ApiOutput/Components/Card.vue";
 
 const toast = useToast();
 
@@ -65,11 +66,14 @@ const props = defineProps({
                         </svg>
                         <div class="text-xl text-gray-600">No Outputs yet. Choose one below</div>
                     </div>
-                    <template v-else v-for="output in outputs.data" :key="output.id">
-                        <EmailCard v-if="output.type === 'email_output'" :output="output"/>
-                        <WebCard v-if="output.type === 'web_page'" :output="output"/>
-                    </template>
-
+                    <div v-else  class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                        <template
+                            v-for="output in outputs.data" :key="output.id">
+                            <EmailCard v-if="output.type === 'email_output'" :output="output"/>
+                            <WebCard v-if="output.type === 'web_page'" :output="output"/>
+                            <ApiCard v-if="output.type === 'api_output'" :output="output"/>
+                        </template>
+                    </div>
                   </div>
 
                   <div class="mt-5 mx-10">

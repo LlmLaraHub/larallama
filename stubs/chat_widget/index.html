@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <title>LaraLamma Chat Widget</title>
+    <link rel="stylesheet" href="style.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts Link For Icons -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,1,0"
+    />
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+  <div class="bg-white rounded rounded-lg shadow-lg p-10 m-10 max-w-7xl">
+    <article class="prose prose-stone p-10"><h1 class="text-lg font-bold">
+      My Other Web Page (Static Site, WordPress, SquareSpace does not matter)
+    </h1>
+      <div class="prose prose-xl">
+        <div class="text-md text-gray-400 font-bold">Summary of Key Developments and Insights in AI and Technology</div>
+      <h4>Large Language Models and Ollama Developments</h4>
+      <div class="p-4 text-md">
+        <ul>
+          <li>
+            <strong>Models and Custom-Creation</strong>: Discussion on various large language models like "Llama 3," "Phi 3," "Mistral," and "Gemma." These models are customizable and downloadable across major operating systems including macOS, Linux, and Windows.</li>
+          <li>
+            <strong>Ollama's Role</strong>: A Palo Alto-based startup, Ollama, is notable for its innovative approach to running large language models locally. Founded by Jeffrey Morgan and Michael Chiang, it has made significant contributions such as "running Llama 2 uncensored locally."</li>
+          <li>
+            <strong>Accessibility and Open Source</strong>: Emphasizes the importance of open-source projects in AI development, with companies like Ollama leading the way in making large language models accessible for local use.</li>
+          <li>
+            <strong>Community and Support</strong>: Resources and community engagement platforms include blogs, Discord, GitHub, and social media platforms like X (formerly Twitter).</li>
+        </ul>
+        <h4>Technology Education and Open-Source Contributions</h4>
+        <ul>
+          <li>
+            <strong>Open-Source Large Language Models (LLMs)</strong>: Focus on models including "Llama 2" and "Llava," showcasing their applications and advantages over closed-source models.</li>
+          <li>
+            <strong>Installation and Use</strong>: Guides on downloading and running models with tools like Ollama across different operating systems, underscored by the community support for diverse applications.</li>
+          <li>
+            <strong>Educational Resources</strong>: Mentions freeCodeCamp as a valuable resource for learning coding and supporting open-source curriculum development.</li>
+        </ul>
+        <h4>Development Tools and Practices</h4>
+        <ul>
+          <li>
+            <strong>Laravel Community Insights</strong>: Shared knowledge on addressing specific development challenges within the Laravel community, emphasizing collaboration and problem-solving.</li>
+          <li>
+            <strong>Reusable React Component Guide</strong>: An article by Gerald Ezenagus on creating reusable React form components, reflecting broader educational content on web and technology development.</li>
+          <li>
+            <strong>AI Model Landscape Overview</strong>: A comprehensive look at the development of AI models tailored for specific domains, code development, and conversational AI, highlighting the growing intersection of AI and software development.</li>
+        </ul>
+        <h4>Key Developments in Ollama and Llama Models (2023-2024)</h4>
+        <ul>
+          <li>
+            <strong>Censorship Performance and Technical Enhancements</strong>: Significant advancements in Llama models, including improved censorship filter accuracy and the release of new developer tools.</li>
+          <li>
+            <strong>Software Integration and API Compatibility</strong>: Introduction of support for AMD graphics cards, new vision models, and initial compatibility with OpenAI's API.</li>
+          <li>
+            <strong>Engagement and Resources</strong>: Development resources and community engagement highlighted through blog posts and guides on leveraging LLMs.</li>
+        </ul>
+        <h4>Project and Model Updates in AI</h4>
+        <ul>
+          <li>Broad advancements in AI model projects are evident, encompassing a wide range of focuses including conversational agents, code assistance, and models aimed at specific domains like medical inquiries.</li>
+          <li>The importance of open-source models and platforms for community engagement, such as GitHub and Discord, is emphasized, showcasing a commitment to accessible AI technology.</li>
+        </ul>
+      </div>
+      <h4 class="text-md text-gray-400 font-bold">Closing Insights</h4>
+      <p>The content collectively underscores the rapid development in AI technologies, the pivotal role of open-source projects and community engagement in tech innovation, and the emphasis on education and accessibility in AI model development and application. Ollama's contributions, alongside the evolving landscape of large language models, highlight a dynamic shift towards more accessible, flexible, and advanced AI solutions across various domains.</p>
+    </div>
+    </article>
+  </div>
+    <button class="chatbot-toggler">
+      <span class="material-symbols-rounded">mode_comment</span>
+      <span class="material-symbols-outlined">close</span>
+    </button>
+    <div class="chatbot">
+      <header>
+        <h2>LaraLamma Chat Widget</h2>
+        <span class="close-btn material-symbols-outlined">close</span>
+      </header>
+      <ul class="chatbox">
+        <li class="chat incoming">
+          <span class="material-symbols-outlined">smart_toy</span>
+          <p>Hi there 👋<br />What would you like to know about our Ollama News</p>
+        </li>
+      </ul>
+      <div class="chat-input">
+        <textarea
+          placeholder="Enter a message..."
+          spellcheck="false"
+          required
+        ></textarea>
+        <span id="send-btn" class="material-symbols-rounded">send</span>
+      </div>
+    </div>
+  </body>
+</html>

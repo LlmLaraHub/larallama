@@ -32,27 +32,24 @@ const form = useForm({
     active: props.output.active,
     recurring: props.output.recurring,
     meta_data: props.output.meta_data,
-    to_emails: "",
+    token: "",
 });
 
 onMounted(() => {
-    form.to_emails = props.output.meta_data?.to
+    form.token = props.output.meta_data?.token
 })
 
-const updateSummary = (summary) => {
-    form.summary = summary;
-}
 
 const submit = () => {
     form
         .transform((data) => ({
             ...data,
             meta_data: {
-                to: form.to_emails
+                token: form.token
             },
         }))
         .put(
-        route('collections.outputs.email_output.update', {
+        route('collections.outputs.api_output.update', {
             collection: props.collection.data.id,
             output: props.output.id
         }), {
@@ -68,20 +65,16 @@ const submit = () => {
     <AppLayout title="Email Output">
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Email Output
+                Api
             </h2>
         </template>
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-5">
                     <Intro>
-                        Email
+                        Api
                         <template #description>
-                            You can send an email summary of the collection or filter of the collection below.
-                            You can alter the "Prompt" below to tell the system what to do when the latest content.
-                            For example "Send me a summary of the articles making each article a title and TLDR"
-
-                            It will then send any articles from the day that came in.
+                            This will create a secure read only api to allow other systems to chat with the data.
                         </template>
                     </Intro>
 

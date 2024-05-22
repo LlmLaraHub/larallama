@@ -5,10 +5,10 @@ namespace App\Domains\Outputs;
 use App\Jobs\SendOutputEmailJob;
 use App\Models\Output;
 
-class EmailOutput extends BaseOutput
+class ApiOutput extends BaseOutput
 {
     public function handle(Output $output): void
     {
-        SendOutputEmailJob::dispatch($output);
+        // @NOTE this really does not do anything here
     }
 }

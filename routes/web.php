@@ -108,6 +108,19 @@ Route::middleware([
         }
     );
 
+    Route::controller(\App\Http\Controllers\ApiOutputController::class)->group(
+        function () {
+            Route::get('/collections/{collection}/outputs/api_output/create', 'create')
+                ->name('collections.outputs.api_output.create');
+            Route::get('/collections/{collection}/outputs/api_output/{output:id}/edit', 'edit')
+                ->name('collections.outputs.api_output.edit');
+            Route::post('/collections/{collection}/outputs/api_output', 'store')
+                ->name('collections.outputs.api_output.store');
+            Route::put('/collections/{collection}/outputs/api_output/{output:id}/update', 'update')
+                ->name('collections.outputs.api_output.update');
+        }
+    );
+
     Route::get('/dashboard', function () {
         return to_route('collections.index');
         //return Inertia::render('Dashboard');
@@ -160,3 +173,5 @@ Route::post('/pages/{output:id}/chat', [
     \App\Http\Controllers\WebPageOutputController::class, 'chat',
 ])
     ->name('collections.outputs.web_page.chat');
+
+

@@ -56,9 +56,13 @@ class OutputController extends Controller
                     'active' => true,
                 ],
                 [
-                    'route' => null,
+                    'route' => route('collections.outputs.api_output.create',
+                        [
+                            'collection' => $collection->id,
+                        ]
+                    ),
                     'name' => 'API',
-                    'active' => false,
+                    'active' => true,
                 ],
             ],
             'outputs' => OutputResource::collection($collection->outputs()->latest()->paginate(10)),
