@@ -9,5 +9,6 @@ enum SourceTypeEnum: string
     use EnumHelperTrait;
 
     case WebSearchSource = 'web_search_source';
+    case EmailSource = 'email_source';
 
 }

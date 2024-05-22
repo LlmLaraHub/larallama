@@ -21,6 +21,7 @@ class SourceFactory extends Factory
     {
         return [
             'title' => $this->faker->name,
+            'slug' => fake()->word,
             'collection_id' => Collection::factory(),
             'details' => $this->faker->sentence, // 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.
             'recurring' => RecurringTypeEnum::Daily,

@@ -3,6 +3,8 @@
 namespace App\Domains\EmailParser;
 
 use App\Jobs\MailBoxParserJob;
+use Illuminate\Support\Facades\Bus;
+use Illuminate\Support\Str;
 use Webklex\IMAP\Facades\Client as ClientFacade;
 use Webklex\PHPIMAP\Message;
 
@@ -22,10 +24,9 @@ class Client
                 $messages->count(),
             ]);
 
+            $mail = [];
             /** @var Message $message */
             foreach ($messages as $message) {
-                logger('Getting Message');
-
                 $messageDto = MailDto::from([
                     'to' => $message->getTo(),
                     'from' => $message->getFrom(),
@@ -34,9 +35,16 @@ class Client
                     'header' => $message->getHeader()->raw,
                 ]);
 
-                //MailBoxParserJob::dispatch($messageDto);
+                $mail[] = new MailBoxParserJob($messageDto);
+
                 //$message->delete(expunge: true);
             }
+
+            Bus::batch($mail)
+                ->name("Mail Check " . Str::random(12))
+                ->allowFailures()
+                ->dispatch();
+
         }
     }
 }

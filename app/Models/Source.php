@@ -8,8 +8,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Str;
 use LlmLaraHub\LlmDriver\HasDrivers;
 
+/**
+ * @property string $slug
+ */
 class Source extends Model implements HasDrivers
 {
     use HasFactory;
@@ -23,6 +27,16 @@ class Source extends Model implements HasDrivers
         'type' => SourceTypeEnum::class,
         'recurring' => RecurringTypeEnum::class,
     ];
+
+    protected static function booted(): void
+    {
+        static::created(function (Source $source) {
+            if(!$source->slug) {
+                $source->slug = Str::random(12);
+                $source->updateQuietly();
+            }
+        });
+    }
 
     public function getChatable(): HasDrivers
     {
@@ -89,5 +103,10 @@ class Source extends Model implements HasDrivers
     public function documents(): HasMany
     {
         return $this->hasMany(Document::class);
+    }
+
+    public function scopeSlug($query, string $slug)
+    {
+        return $query->whereSlug($slug);
     }
 }

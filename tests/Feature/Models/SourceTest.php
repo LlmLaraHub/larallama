@@ -6,6 +6,7 @@ use App\Domains\Recurring\RecurringTypeEnum;
 use App\Domains\Sources\SourceTypeEnum;
 use App\Domains\Sources\WebSearchSource;
 use App\Models\Document;
+use App\Models\Source;
 use Mockery;
 use Tests\TestCase;
 
@@ -27,6 +28,15 @@ class SourceTest extends TestCase
         $this->assertNotNull($model->collection->sources()->first()->id);
 
         $this->assertCount(3, $model->documents);
+    }
+
+    public function test_slug(): void
+    {
+        $model = \App\Models\Source::factory()->create([
+            'slug' => "test"
+        ]);
+
+        $this->assertNotNull(Source::slug('test')->first());
     }
 
     public function test_runs_web_search()
