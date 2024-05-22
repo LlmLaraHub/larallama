@@ -75,6 +75,11 @@ class Document extends Model implements HasDrivers, TaggableContract
         return $this->hasMany(DocumentChunk::class);
     }
 
+    public function transformer() : BelongsTo
+    {
+        return $this->belongsTo(Transformer::class);
+    }
+
     public function getSummary(): string
     {
         return $this->summary;

@@ -10,29 +10,7 @@ use App\Models\Collection;
 use App\Models\Document;
 use App\Models\Source;
 
-class SourceController extends Controller
+class SourceController extends BaseSourceController
 {
-    public function index(Collection $collection)
-    {
-        $chatResource = $chatResource = $this->getChatResource($collection);
 
-        return inertia('Sources/Index', [
-            'chat' => $chatResource,
-            'collection' => new CollectionResource($collection),
-            'filters' => FilterResource::collection($collection->filters),
-            'documents' => DocumentResource::collection(Document::query()
-                ->where('collection_id', $collection->id)
-                ->latest('id')
-                ->get()),
-            'sources' => SourceResource::collection($collection->sources()->paginate(10)),
-        ]);
-    }
-
-    public function run(Source $source)
-    {
-        $source->run();
-        request()->session()->flash('flas.banner', 'Web source is running');
-
-        return back();
-    }
 }

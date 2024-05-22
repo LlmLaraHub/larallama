@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Support\Str;
 use LlmLaraHub\LlmDriver\HasDrivers;
 
@@ -109,4 +110,11 @@ class Source extends Model implements HasDrivers
     {
         return $query->whereSlug($slug);
     }
+
+
+    public function transformers(): MorphMany
+    {
+        return $this->morphMany(Transformer::class, 'transformable');
+    }
+
 }

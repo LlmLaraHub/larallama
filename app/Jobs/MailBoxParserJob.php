@@ -37,9 +37,7 @@ class MailBoxParserJob implements ShouldQueue
         }
 
         try {
-            //See if we have an email source
-            // and if that slug is part of the email
-            // info+slug@laralamma.ai (use config so I can fix this typo)
+
             $slug = str($this->mailDto->to)->between('+', '@')->toString();
 
             $source = EmailSource::getSourceFromSlug($slug);

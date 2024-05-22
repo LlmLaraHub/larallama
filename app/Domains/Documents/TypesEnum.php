@@ -24,4 +24,7 @@ enum TypesEnum: string
     case Ppt = 'ppt';
     case Pptx = 'pptx';
 
+    case Email = 'email';
+    case Contact = 'contact';
+
 }

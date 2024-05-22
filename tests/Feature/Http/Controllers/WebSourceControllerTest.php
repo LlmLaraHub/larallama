@@ -25,7 +25,7 @@ class WebSourceControllerTest extends TestCase
                 'recurring' => RecurringTypeEnum::Daily->value,
                 'details' => 'Test Details',
             ]);
-        $response->assertSessionHas('flash.banner', 'Web source added successfully');
+        $response->assertSessionHas('flash.banner', 'Source added successfully');
         $this->assertDatabaseCount('sources', 1);
 
         $source = Source::first();

@@ -29,7 +29,8 @@ const props = defineProps({
     },
     filters: {
         type: Object,
-    }
+    },
+    available_sources: Object
 });
 
 
@@ -72,14 +73,14 @@ const props = defineProps({
 
                   <div class="mt-5 mx-10">
                         <h3 class="font-bold text-gray-700">Available Sources</h3>
-                        <div class="flex justify-start items-center">
-
-                            <Link
-                            class="btn btn-info rounded-none"
-                            :href="route('collections.sources.websearch.create',
-                                {collection: collection.data.id}
-                            )"
-                            >Web Search</Link>
+                        <div class="flex justify-start items-center gap-2"
+                        >
+                            <template v-for="available_source in available_sources" :key="name">
+                                <Link
+                                    class="btn btn-default rounded-none"
+                                    :href="available_source.route"
+                                >{{ available_source.name }}</Link>
+                            </template>
                         </div>
                     </div>
 

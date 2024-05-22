@@ -65,6 +65,19 @@ Route::middleware([
         }
     );
 
+    Route::controller(\App\Http\Controllers\AssistantEmailBoxSourceController::class)->group(
+        function () {
+            Route::get('/collections/{collection}/sources/email_source/create', 'create')
+                ->name('collections.sources.email_source.create');
+            Route::post('/collections/{collection}/sources/email_source', 'store')
+                ->name('collections.sources.email_source.store');
+            Route::get('/collections/{collection}/sources/email_source/{source}/edit', 'edit')
+                ->name('collections.sources.email_source.edit');
+            Route::put('/collections/{collection}/sources/email_source/{source}/update', 'update')
+                ->name('collections.sources.email_source.update');
+        }
+    );
+
     Route::controller(WebSourceController::class)->group(
         function () {
             Route::get('/collections/{collection}/sources/websearch/create', 'create')
