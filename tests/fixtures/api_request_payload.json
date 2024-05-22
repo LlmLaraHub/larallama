@@ -1,0 +1,8 @@
+{
+    "messages": [
+        {
+            "role": "user",
+            "content": "what is new in Ollama this week"
+        }
+    ]
+}

@@ -101,27 +101,26 @@ class ApiOutputControllerTest extends TestCase
             ],
         ]);
 
-        $this->post(route('collections.outputs.api_output.api', [
+        $url = route('collections.outputs.api_output.api', [
             'output' => $output->id,
-        ]), [
-            'token' => 'foobar',
-            'prompt' => 'Baz',
-        ])->assertStatus(200);
+        ]);
 
-        $this->post(route('collections.outputs.api_output.api', [
-            'output' => $output->id,
-        ]), [
-            'token' => 'bazboo',
-            'prompt' => 'Baz',
-        ])->assertStatus(404);
+        $data = get_fixture('api_request_payload.json');
+        $dataWithToken = $data;
+        $dataWithToken['token'] = 'bazboo';
 
-        $this->post(route('collections.outputs.api_output.api', [
-            'output' => $output->id,
-        ]), [
-            'prompt' => 'Baz',
-        ], [
-            'Authorization' => 'Bearer foobar',
-        ])->assertStatus(200);
+        $this->post($url, $dataWithToken)->assertStatus(404);
+
+        $dataWithToken['token'] = 'foobar';
+        $this->post($url, $dataWithToken)->assertStatus(200);
+
+        $this
+            ->withHeaders([
+                'Authorization' => 'Bearer foobar',
+                'Accept' => 'application/json',
+            ])
+            ->post($url, $data)
+            ->assertStatus(200);
 
     }
 }

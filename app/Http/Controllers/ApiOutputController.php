@@ -20,8 +20,6 @@ class ApiOutputController extends OutputController
 
     public function api(Output $output)
     {
-        Log::info('Chat Coming in', request()->all());
-
         $validate = request()->validate([
             'messages' => ['array', 'required'],
         ]);
