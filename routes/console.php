@@ -16,3 +16,6 @@ Artisan::command('inspire', function () {
 
 \Illuminate\Support\Facades\Schedule::command('app:half-hourly-runner')
     ->everyThirtyMinutes();
+
+\Illuminate\Support\Facades\Schedule::command('app:check_email')
+    ->everyMinute();

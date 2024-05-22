@@ -12,7 +12,7 @@ class CheckEmailCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'laralamma:check_email';
+    protected $signature = 'app:check_email';
 
     /**
      * The console command description.
@@ -26,10 +26,8 @@ class CheckEmailCommand extends Command
      */
     public function handle()
     {
-        logger('Checking Email');
         $this->info('Checking Email');
         Client::handle();
-        logger('Done Checking Email');
         $this->info('Done Checking Email');
     }
 }

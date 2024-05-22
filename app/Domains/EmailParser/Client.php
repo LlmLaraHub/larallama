@@ -34,7 +34,6 @@ class Client
                     'header' => $message->getHeader()->raw,
                 ]);
 
-                put_fixture("email_dto.json", $messageDto->toArray());
                 //MailBoxParserJob::dispatch($messageDto);
                 //$message->delete(expunge: true);
             }
