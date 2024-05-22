@@ -2,15 +2,9 @@
 
 namespace App\Domains\Sources;
 
-use App\Domains\Collections\CollectionStatusEnum;
 use App\Domains\EmailParser\MailDto;
-use App\Domains\Sources\WebSearch\Response\SearchResponseDto;
-use App\Domains\Sources\WebSearch\WebSearchFacade;
-use App\Jobs\GetWebContentJob;
 use App\Models\Source;
-use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Log;
-use LlmLaraHub\LlmDriver\LlmDriverFacade;
 
 class EmailSource extends BaseSource
 {
@@ -24,6 +18,7 @@ class EmailSource extends BaseSource
     public function setMailDto(MailDto $mailDto): self
     {
         $this->mailDto = $mailDto;
+
         return $this;
     }
 
@@ -36,6 +31,7 @@ class EmailSource extends BaseSource
             // 1 Document that is the email
             // 1 Document for the from, to (forwarded)
             //Transformers
+            Log::info("Do something!");
 
         } catch (\Exception $e) {
             Log::error('[LaraChain] - Error running Email Source', [
@@ -45,13 +41,13 @@ class EmailSource extends BaseSource
 
     }
 
-    public function getSourceFromSlug(string $slug) : Source | null
+    public function getSourceFromSlug(string $slug): ?Source
     {
-        $source = Source::where("type", SourceTypeEnum::EmailSource)
+        $source = Source::where('type', SourceTypeEnum::EmailSource)
             ->slug($slug)
             ->first();
 
-        if($source) {
+        if ($source) {
             return $source;
         }
 

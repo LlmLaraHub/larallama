@@ -41,7 +41,7 @@ class Client
             }
 
             Bus::batch($mail)
-                ->name("Mail Check " . Str::random(12))
+                ->name('Mail Check '.Str::random(12))
                 ->allowFailures()
                 ->dispatch();
 

@@ -33,7 +33,7 @@ class SourceTest extends TestCase
     public function test_slug(): void
     {
         $model = \App\Models\Source::factory()->create([
-            'slug' => "test"
+            'slug' => 'test',
         ]);
 
         $this->assertNotNull(Source::slug('test')->first());

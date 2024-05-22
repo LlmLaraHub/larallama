@@ -2,11 +2,9 @@
 
 namespace Tests\Feature;
 
-use Facades\App\Domains\Sources\EmailSource;
 use App\Domains\Sources\SourceTypeEnum;
 use App\Models\Source;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
+use Facades\App\Domains\Sources\EmailSource;
 use Tests\TestCase;
 
 class EmailSourceTest extends TestCase
@@ -18,7 +16,7 @@ class EmailSourceTest extends TestCase
     {
         $source = Source::factory()->create([
             'slug' => 'test',
-            'type' => SourceTypeEnum::EmailSource
+            'type' => SourceTypeEnum::EmailSource,
         ]);
 
         $results = EmailSource::getSourceFromSlug('test');

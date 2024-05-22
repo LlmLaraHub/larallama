@@ -31,7 +31,7 @@ class Source extends Model implements HasDrivers
     protected static function booted(): void
     {
         static::created(function (Source $source) {
-            if(!$source->slug) {
+            if (! $source->slug) {
                 $source->slug = Str::random(12);
                 $source->updateQuietly();
             }

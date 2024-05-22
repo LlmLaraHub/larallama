@@ -70,8 +70,8 @@ return [
             'encryption' => 'ssl',
             'protocal' => 'imap',
             'validate_cert' => true,
-            'username' => env("GMAIL_USERNAME"),
-            'password' => env("GMAIL_PASSWORD"),
+            'username' => env('GMAIL_USERNAME'),
+            'password' => env('GMAIL_PASSWORD'),
         ],
 
         /*
