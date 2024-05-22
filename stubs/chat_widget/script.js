@@ -1,3 +1,4 @@
+// @see https://www.patreon.com/posts/simple-and-easy-104606949
 const chatbotToggler = document.querySelector(".chatbot-toggler");
 const closeBtn = document.querySelector(".close-btn");
 const chatbox = document.querySelector(".chatbox");
