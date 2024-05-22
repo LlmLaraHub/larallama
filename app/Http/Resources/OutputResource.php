@@ -21,7 +21,7 @@ class OutputResource extends JsonResource
         $lastRun = $this->getLastRun();
         $url = null;
 
-        if($this->type === OutputTypeEnum::WebPage) {
+        if ($this->type === OutputTypeEnum::WebPage) {
             $url = route('collections.outputs.web_page.show', [
                 'output' => $this->slug,
             ]);
@@ -45,7 +45,7 @@ class OutputResource extends JsonResource
             'meta_data' => $this->meta_data,
             'last_run' => $lastRun,
             'slug' => $this->slug,
-            'url' => $url
+            'url' => $url,
         ];
     }
 }

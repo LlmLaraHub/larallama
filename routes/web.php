@@ -173,5 +173,3 @@ Route::post('/pages/{output:id}/chat', [
     \App\Http\Controllers\WebPageOutputController::class, 'chat',
 ])
     ->name('collections.outputs.web_page.chat');
-
-

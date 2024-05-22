@@ -6,6 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\Response;
+
 class ApiOutputTokenIsValid
 {
     /**
@@ -16,16 +17,16 @@ class ApiOutputTokenIsValid
     public function handle(Request $request, Closure $next): Response
     {
 
-        $token = $request->output->fromMetaData("token");
+        $token = $request->output->fromMetaData('token');
 
         $tokenPassedIn = $request->input('token');
 
-        if($request->bearerToken()) {
+        if ($request->bearerToken()) {
             $tokenPassedIn = $request->bearerToken();
         }
-        Log::info("ApiOutput Request", [
-           '$tokenPassedIn' => $tokenPassedIn,
-           '$token'  => $token
+        Log::info('ApiOutput Request', [
+            '$tokenPassedIn' => $tokenPassedIn,
+            '$token' => $token,
         ]);
 
         if ($tokenPassedIn !== $token) {

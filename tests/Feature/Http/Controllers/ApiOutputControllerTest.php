@@ -2,16 +2,11 @@
 
 namespace Tests\Feature\Http\Controllers;
 
-
 use App\Domains\Recurring\RecurringTypeEnum;
-use App\Jobs\SendOutputEmailJob;
 use App\Models\Collection;
 use App\Models\Document;
 use App\Models\Output;
 use App\Models\User;
-use Hoa\Stream\IStream\Out;
-use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Queue;
 use Tests\TestCase;
 
 class ApiOutputControllerTest extends TestCase
@@ -37,10 +32,10 @@ class ApiOutputControllerTest extends TestCase
             'summary' => 'Foobar',
             'meta_data' => [
                 'token' => 'hei8Job9Ebooquee',
-                ],
-            ]
+            ],
+        ]
         )->assertRedirect()
-        ->assertSessionHasNoErrors();
+            ->assertSessionHasNoErrors();
         $output = Output::first();
         $this->assertEquals(['token' => 'hei8Job9Ebooquee'], $output->meta_data);
 
@@ -98,37 +93,35 @@ class ApiOutputControllerTest extends TestCase
         $this->assertEquals(['token' => 'hei8Job9Ebooquee'], $output->meta_data);
     }
 
-
     public function test_api_url()
     {
         $output = Output::factory()->create([
             'meta_data' => [
-                'token' => "foobar"
-            ]
+                'token' => 'foobar',
+            ],
         ]);
 
         $this->post(route('collections.outputs.api_output.api', [
-            'output' => $output->id
+            'output' => $output->id,
         ]), [
-            'token' => "foobar",
-            'prompt' => "Baz"
+            'token' => 'foobar',
+            'prompt' => 'Baz',
         ])->assertStatus(200);
 
         $this->post(route('collections.outputs.api_output.api', [
-            'output' => $output->id
+            'output' => $output->id,
         ]), [
-            'token' => "bazboo",
-            'prompt' => "Baz"
+            'token' => 'bazboo',
+            'prompt' => 'Baz',
         ])->assertStatus(404);
 
         $this->post(route('collections.outputs.api_output.api', [
-            'output' => $output->id
+            'output' => $output->id,
         ]), [
-            'prompt' => "Baz"
+            'prompt' => 'Baz',
         ], [
-            "Authorization" => "Bearer foobar"
+            'Authorization' => 'Bearer foobar',
         ])->assertStatus(200);
 
     }
-
 }

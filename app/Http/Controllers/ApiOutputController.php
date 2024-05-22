@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Domains\Outputs\OutputTypeEnum;
 use App\Models\Output;
-use Illuminate\Support\Facades\Log;
 use Facades\LlmLaraHub\LlmDriver\NonFunctionSearchOrSummarize;
+use Illuminate\Support\Facades\Log;
 use LlmLaraHub\LlmDriver\Responses\NonFunctionResponseDto;
 
 class ApiOutputController extends OutputController
@@ -18,17 +18,16 @@ class ApiOutputController extends OutputController
 
     protected string $create_path = 'Outputs/ApiOutput/Create';
 
-
-    public function api(Output $output) {
-        Log::info("Chat Coming in", request()->all());
+    public function api(Output $output)
+    {
+        Log::info('Chat Coming in', request()->all());
 
         $validate = request()->validate([
-            'messages' => ['array', 'required']
+            'messages' => ['array', 'required'],
         ]);
 
-
         Log::info('[LaraChain] - Message Coming in', [
-                'message' => $validate['messages']]
+            'message' => $validate['messages']]
         );
 
         $input = data_get($validate, 'messages.0.content');
@@ -36,15 +35,14 @@ class ApiOutputController extends OutputController
         /** @var NonFunctionResponseDto $results */
         $results = NonFunctionSearchOrSummarize::handle($input, $output->collection);
 
-
         return response()->json([
             'choices' => [
                 [
                     'message' => [
-                        'content' => $results->response
-                    ]
-                ]
-            ]
+                        'content' => $results->response,
+                    ],
+                ],
+            ],
         ]);
     }
 }
