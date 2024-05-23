@@ -2,9 +2,12 @@
 
 namespace App\Providers;
 
+use App\Listeners\InvitingTeamMemberAddToSystemListener;
 use App\Models\User;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
+use Laravel\Jetstream\Events\InvitingTeamMember;
 use Laravel\Pennant\Feature;
 
 class AppServiceProvider extends ServiceProvider
@@ -37,6 +40,11 @@ class AppServiceProvider extends ServiceProvider
         Feature::define('verification_prompt', function (User $user) {
             return false;
         });
+
+        Event::listen(
+            InvitingTeamMember::class,
+            InvitingTeamMemberAddToSystemListener::class,
+        );
 
     }
 }
