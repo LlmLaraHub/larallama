@@ -13,4 +13,12 @@ class MessageInDto extends Data
         public bool $show = true
     ) {
     }
+
+    public function toArray(): array
+    {
+        return [
+            'content' => $this->content,
+            'role' => $this->role,
+        ];
+    }
 }
