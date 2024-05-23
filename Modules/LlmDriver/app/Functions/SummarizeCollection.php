@@ -31,19 +31,18 @@ class SummarizeCollection extends FunctionContract
 
         $summary = collect([]);
 
-        /**
-         * @TODO
-         * Token count???
-         */
-        foreach ($model->chatable->documents as $document) {
-            foreach ($document->document_chunks as $chunk) {
-                $summary->add($chunk->content);
-            }
+        foreach ($model->getChatable()->documents as $document) {
+            $summary->add($document->summary);
         }
 
         notify_ui($model->getChat(), 'Getting Summary');
 
         $summary = $summary->implode('\n');
+
+        Log::info('[LaraChain] SummarizeCollection', [
+            'token_count_v2' => token_counter_v2($summary),
+            'token_count_v1' => token_counter($summary),
+        ]);
 
         $prompt = SummarizeCollectionPrompt::prompt($summary);
 
