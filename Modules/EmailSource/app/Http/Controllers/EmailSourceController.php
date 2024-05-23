@@ -2,7 +2,6 @@
 
 namespace LlmLaraHub\EmailSource\Http\Controllers;
 
-use App\Http\Controllers\BaseSourceController;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;

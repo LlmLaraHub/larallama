@@ -127,6 +127,4 @@ EOD;
     {
         return $this->hasMany(PromptHistory::class);
     }
-
-
 }

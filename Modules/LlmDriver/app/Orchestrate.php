@@ -5,15 +5,19 @@ namespace LlmLaraHub\LlmDriver;
 use App\Domains\Messages\RoleEnum;
 use App\Models\Chat;
 use App\Models\Filter;
+use App\Models\PromptHistory;
 use Facades\App\Domains\Messages\SearchAndSummarizeChatRepo;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Log;
 use LlmLaraHub\LlmDriver\Functions\FunctionCallDto;
+use LlmLaraHub\LlmDriver\Helpers\CreateReferencesTrait;
 use LlmLaraHub\LlmDriver\Requests\MessageInDto;
 use LlmLaraHub\LlmDriver\Responses\FunctionResponse;
 
 class Orchestrate
 {
+    use CreateReferencesTrait;
+
     protected string $response = '';
 
     protected bool $requiresFollowup = false;
@@ -74,7 +78,23 @@ class Orchestrate
                         message: $response->content,
                         role: RoleEnum::Assistant,
                         show_in_thread: true);
+                }
 
+                if ($response->prompt) {
+                    PromptHistory::create([
+                        'prompt' => $response->prompt,
+                        'chat_id' => $chat->getChat()->id,
+                        'message_id' => $message->id,
+                        /** @phpstan-ignore-next-line */
+                        'collection_id' => $chat->getChatable()?->id,
+                    ]);
+                }
+
+                if (! empty($response->documentChunks)) {
+                    $this->saveDocumentReference(
+                        $message,
+                        $response->documentChunks
+                    );
                 }
 
                 $messagesArray = Arr::wrap(MessageInDto::from([

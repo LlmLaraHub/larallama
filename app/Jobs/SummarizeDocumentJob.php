@@ -67,10 +67,6 @@ class SummarizeDocumentJob implements ShouldQueue
             'token_count_v1' => token_counter($content),
         ]);
 
-        Log::info('[LaraChain] - The Chunks to Summarize', [
-            'content' => $content,
-        ]);
-
         $prompt = SummarizeDocumentPrompt::prompt($content);
 
         /** @var CompletionResponse $results */

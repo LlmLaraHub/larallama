@@ -3,7 +3,6 @@
 namespace Database\Factories;
 
 use App\Domains\Transformers\TypeEnum;
-use App\Models\Collection;
 use App\Models\Source;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -26,7 +25,7 @@ class TransformerFactory extends Factory
             'transformable_type' => Source::class,
             'parent_id' => null,
             'last_run' => now(),
-            'active' => true
+            'active' => true,
         ];
     }
 }

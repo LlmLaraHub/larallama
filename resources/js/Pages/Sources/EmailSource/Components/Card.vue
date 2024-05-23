@@ -2,6 +2,9 @@
 
 import {Link, useForm} from "@inertiajs/vue3";
 import {useToast} from "vue-toastification";
+import Settings from "@/Pages/Sources/Cards/Settings.vue";
+import Clipboard from "@/Components/Clipboard.vue";
+import {computed} from "vue";
 const toast = useToast();
 
 const props = defineProps({
@@ -9,6 +12,10 @@ const props = defineProps({
 })
 
 const form = useForm({})
+
+const email = computed(() => {
+    return `assistant+${ props.source.slug }@laralamma.ai`
+})
 
 const run = (source) => {
     form.post(route('collections.sources.run', {
@@ -30,20 +37,12 @@ const run = (source) => {
     <div class="card rounded-none w-96 bg-base-100 shadow-xl" :key="source.id">
         <div class="card-body">
             <h2 class="card-title text-gray-600">{{ source.title }} <span class="text-sm">#{{source.id}}</span></h2>
+            <Settings :source="source"/>
+
             <div class="text-xs">
-                Type: <span class="font-bold text-gray-600">{{ source.type }}</span>
-            </div>
-            <div class="text-xs">
-                Details: <span class="font-bold text-gray-600">{{ source.details }}</span>
-            </div>
-            <div class="text-xs">
-                Active: <span class="font-bold text-gray-600">{{ source.active }}</span>
-            </div>
-            <div class="text-xs">
-                Recurring: <span class="font-bold text-gray-600">{{ source.recurring }}</span>
-            </div>
-            <div class="text-xs">
-                Last Run: <span class="font-bold text-gray-600">{{ source.last_run }}</span>
+                Assistant Email: <span class="font-bold text-gray-400">
+                    <Clipboard :content="email">{{ email}}</Clipboard>
+            </span>
             </div>
             <div class="card-actions justify-end">
                 <button @click="run(source)" type="button" class="btn btn-primary rounded-none">Run</button>

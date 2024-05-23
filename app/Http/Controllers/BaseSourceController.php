@@ -2,22 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Domains\Outputs\OutputTypeEnum;
-use App\Domains\Prompts\AnonymousChat;
 use App\Domains\Recurring\RecurringTypeEnum;
 use App\Domains\Sources\SourceTypeEnum;
 use App\Http\Resources\CollectionResource;
 use App\Http\Resources\DocumentResource;
 use App\Http\Resources\FilterResource;
-use App\Http\Resources\OutputResource;
-use App\Http\Resources\PublicOutputResource;
 use App\Http\Resources\SourceResource;
 use App\Models\Collection;
 use App\Models\Document;
-use App\Models\Output;
 use App\Models\Source;
-use Illuminate\Support\Arr;
-use LlmLaraHub\LlmDriver\Requests\MessageInDto;
 
 class BaseSourceController extends Controller
 {
@@ -28,7 +21,6 @@ class BaseSourceController extends Controller
     protected string $show_path = 'Sources/WebSource/Show';
 
     protected string $create_path = 'Sources/WebSource/Create';
-
 
     public function create(Collection $collection)
     {
@@ -48,6 +40,15 @@ class BaseSourceController extends Controller
             'recurring' => ['string', 'required'],
         ]);
 
+        $this->makeSource($validated, $collection);
+
+        request()->session()->flash('flash.banner', 'Source added successfully');
+
+        return to_route('collections.sources.index', $collection);
+    }
+
+    protected function makeSource(array $validated, Collection $collection): void
+    {
         Source::create([
             'title' => $validated['title'],
             'details' => $validated['details'],
@@ -60,10 +61,6 @@ class BaseSourceController extends Controller
                 'limit' => 5,
             ],
         ]);
-
-        request()->session()->flash('flash.banner', 'Source added successfully');
-
-        return to_route('collections.sources.index', $collection);
     }
 
     public function edit(Collection $collection, Source $source)
@@ -75,7 +72,6 @@ class BaseSourceController extends Controller
             'collection' => new CollectionResource($source->collection),
         ]);
     }
-
 
     public function update(Collection $collection, Source $source)
     {
@@ -96,7 +92,7 @@ class BaseSourceController extends Controller
 
     public function index(Collection $collection)
     {
-        $chatResource =  $this->getChatResource($collection);
+        $chatResource = $this->getChatResource($collection);
 
         return inertia('Sources/Index', [
             'chat' => $chatResource,
@@ -124,7 +120,7 @@ class BaseSourceController extends Controller
                     ),
                     'name' => 'Assistant Email Box',
                     'active' => true,
-                ]
+                ],
             ],
             'sources' => SourceResource::collection($collection->sources()->paginate(10)),
         ]);
@@ -133,9 +129,8 @@ class BaseSourceController extends Controller
     public function run(Source $source)
     {
         $source->run();
-        request()->session()->flash('flash.banner', 'Web source is running');
+        request()->session()->flash('flash.banner', 'Source is running');
 
         return back();
     }
-
 }

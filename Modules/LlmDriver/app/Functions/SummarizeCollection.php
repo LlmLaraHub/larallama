@@ -71,6 +71,7 @@ class SummarizeCollection extends FunctionContract
             'content' => $this->response,
             'prompt' => $prompt,
             'requires_followup' => true,
+            'documentChunks' => collect([]),
         ]);
     }
 

@@ -4,7 +4,6 @@ namespace App\Domains\Sources;
 
 use App\Domains\Documents\StatusEnum;
 use App\Domains\Documents\TypesEnum;
-use Facades\App\Domains\EmailParser\Client;
 use App\Domains\EmailParser\MailDto;
 use App\Helpers\TextChunker;
 use App\Jobs\SummarizeDocumentJob;
@@ -12,6 +11,7 @@ use App\Jobs\VectorlizeDataJob;
 use App\Models\Document;
 use App\Models\DocumentChunk;
 use App\Models\Source;
+use Facades\App\Domains\EmailParser\Client;
 use Illuminate\Bus\Batch;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Log;
@@ -36,25 +36,25 @@ class EmailSource extends BaseSource
 
     public function handle(Source $source): void
     {
-        if(!$this->mailDto) {
+        if (! $this->mailDto) {
             Client::handle();
+
             return;
         }
 
         Log::info('[LaraChain] - Running Email Source');
 
         try {
-            Log::info("Do something!");
+            Log::info('Do something!');
 
-            if($source->transformers()->count() === 0) {
+            if ($source->transformers()->count() === 0) {
                 /**
                  * @NOTE
                  * No need to queue this yet since
                  * it is not doing any LLM work
-                 *
                  */
                 Log::info('[LaraChain] Starting EmailTransformer ', [
-                    'source' => $source->id
+                    'source' => $source->id,
                 ]);
 
                 $chunks = [];
@@ -109,12 +109,11 @@ class EmailSource extends BaseSource
                 foreach ($chunked_chunks as $chunkSection => $chunkContent) {
                     $chunks[] = $this->documentChunk(
                         $document,
-                        $chunkSection,
+                        $chunkContent,
                         4,
                         $chunkSection
                     );
                 }
-
 
                 $chunks = $this->batchJobs($chunks);
 
@@ -137,7 +136,7 @@ class EmailSource extends BaseSource
                     ->dispatch();
 
                 $source->updateQuietly([
-                    'last_run' => now()
+                    'last_run' => now(),
                 ]);
 
             } else {
@@ -158,8 +157,7 @@ class EmailSource extends BaseSource
         string $content,
         int $sort_order,
         int $section_number
-    ) : DocumentChunk
-    {
+    ): DocumentChunk {
         return DocumentChunk::updateOrCreate(
             [
                 'document_id' => $document->id,
@@ -173,7 +171,7 @@ class EmailSource extends BaseSource
         );
     }
 
-    protected function batchJobs(array $jobs) : array
+    protected function batchJobs(array $jobs): array
     {
         $chunks = [];
 

@@ -28,7 +28,9 @@ class SourceResource extends JsonResource
             'active' => $this->active ? 'Yes' : 'No',
             'recurring' => $recurring,
             'description' => $this->description,
+            'slug' => $this->slug,
             'last_run' => $lastRun,
+            'type_key' => $this->type->value,
             'type' => str($this->type->name)->headline()->toString(),
         ];
     }

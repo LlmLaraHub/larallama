@@ -111,10 +111,8 @@ class Source extends Model implements HasDrivers
         return $query->whereSlug($slug);
     }
 
-
     public function transformers(): MorphMany
     {
         return $this->morphMany(Transformer::class, 'transformable');
     }
-
 }

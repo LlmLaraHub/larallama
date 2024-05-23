@@ -71,6 +71,7 @@ class OrchestrateTest extends TestCase
         Event::assertDispatched(ChatUiUpdateEvent::class);
 
         $this->assertEquals($results, 'This is the summary of the collection');
+        $this->assertDatabaseCount('prompt_histories', 1);
     }
 
     public function test_makes_history_no_message(): void

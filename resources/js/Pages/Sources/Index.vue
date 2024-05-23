@@ -10,6 +10,7 @@ import Documents from '@/Pages/Collection/Components/Documents.vue';
 import Intro from '@/Components/Intro.vue';
 import { useToast } from 'vue-toastification';
 import Card from "@/Pages/Sources/Cards/Card.vue";
+import EmailCard from "@/Pages/Sources/EmailSource/Components/Card.vue";
 
 const toast = useToast();
 
@@ -66,7 +67,8 @@ const props = defineProps({
                         <div class="text-xl text-gray-600">No sources yet. Choose one below</div>
                     </div>
                       <template v-else  v-for="source in sources.data" :key="source.id">
-                          <Card :source="source"></Card>
+                          <EmailCard v-if="source.type_key === 'email_source'" :source="source"></EmailCard>
+                          <Card v-else :source="source"></Card>
                       </template>
 
                   </div>
