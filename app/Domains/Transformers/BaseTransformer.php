@@ -13,6 +13,8 @@ abstract class BaseTransformer
 {
     public TypeEnum $type = TypeEnum::GenericTransformer;
 
+    public BaseSource $baseSource;
+
     public array $compatible_sources = [];
 
     public array $chunks = [];

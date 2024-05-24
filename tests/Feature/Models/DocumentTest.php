@@ -22,4 +22,15 @@ class DocumentTest extends TestCase
             $model->content
         );
     }
+
+    public function test_parent()
+    {
+        $modelParent = \App\Models\Document::factory()->create();
+        $model = \App\Models\Document::factory()->create([
+            'parent_id' => $modelParent->id
+        ]);
+
+        $this->assertEquals($modelParent->id,
+        $model->parent->id);
+    }
 }

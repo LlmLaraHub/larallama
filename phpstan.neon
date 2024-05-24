@@ -17,3 +17,4 @@ parameters:
         - app/Http/Resources/*
 
     checkMissingIterableValueType: false
+    treatPhpDocTypesAsCertain: false

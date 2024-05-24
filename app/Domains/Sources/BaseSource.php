@@ -10,6 +10,7 @@ use App\Models\DocumentChunk;
 use App\Models\Source;
 use App\Models\Transformer;
 use Illuminate\Bus\Batch;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Bus;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
 use LlmLaraHub\TagFunction\Jobs\TagDocumentJob;
@@ -32,8 +33,25 @@ abstract class BaseSource
 
     public ?Transformer $lastRan = null;
 
-    /** @var Transformer[] */
-    public array $transformers = [];
+    public array|Collection $transformers = [];
+
+    public function setDocument(Document $document) : self
+    {
+        $this->document = $document;
+        return $this;
+    }
+
+    public function setSource(Source $source) : self
+    {
+        $this->source = $source;
+        return $this;
+    }
+
+    public function setLastRun(Transformer $transformer) : self
+    {
+        $this->lastRan = $transformer;
+        return $this;
+    }
 
     protected function batchWithDocument(Document $document): array
     {

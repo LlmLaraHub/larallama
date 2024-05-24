@@ -101,7 +101,7 @@ const reset = () => {
         <Nav :collection="collection.data" :chat="chat?.data"></Nav>
 
         <div class="py-12" v-auto-animate>
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="max-w-9xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                     <CollectionHeader
                     @toggleReindexCollection="toggleReindexCollection"

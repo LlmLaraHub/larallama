@@ -1,0 +1,108 @@
+**Role**: Your an agent that is good at finding the TO, FROM, FORWARDED from email copy.
+**Task**: Look through this email copy and base on the users WHO find the information, If the message was forwarded the replace the TO with the forwarded address
+**Format**: The Format will be json with the following keys
+
+first_name: [string]
+last_name: [string] //can be null
+email: [string]
+phone: [string]
+socials: [array]
+
+## EXAMPLE RESPONSE
+{
+    "first_name": "Bob",
+    "last_name": "Belcher",
+    "email": "bob@bobsburgers.com",
+    "phone": "+1-111-222-2222",
+    "socials": [
+        "https://facebook.com/bobs_burgers",
+        "https://twitter.com/bobs_burgers"
+    ]
+}
+
+## END EXAMPLE RESPONSE
+
+### START REAL MESSAGE
+
+### FIELD WE ARE LOOKING FOR (TO, FROM, FORWARDED)
+FROM
+
+### FIELD WE ARE LOOKING FOR
+
+### EMAIL BODY
+Al Nutile
+https://calendly.com/alfrednutile <--for appointments
+https://bit.ly/m/alnutile <-- for all my other links
+413.230.4767
+
+
+
+---------- Forwarded message ---------
+From: North Kings Groundwater Well Registration <no-reply@northkingsgsa.org>
+Date: Tue, May 21, 2024 at 10:30 PM
+Subject: Successful new backup of North Kings GSA (production)
+To: Sundance Solutions <info@sundancesolutions.io>
+
+
+North Kings GSA <https://wells.northkingsgsa.org>
+Hello!
+
+Great news, a new backup of North Kings GSA (production) was successfully
+created on the disk named backups. Yours truly, 
+ Sundance Solutions, LLC https://sundancesolutions.io/ +1(413)-225-1844
+
+Application name: North Kings GSA (production)
+
+Backup name: break9_files
+
+Disk: backups
+
+Newest backup size: 1.42 MB
+
+Number of backups: 38
+
+Total storage used: 54.18 MB
+
+Newest backup date: 2024/05/22 02:30:04
+
+Oldest backup date: 2023/10/29 02:30:02
+
+Regards,
+North Kings GSA
+
+© 2024 North Kings GSA. All rights reserved.
+
+
+### END EMAIL BODY
+
+### EMAIL HEADER
+Return-Path: <alfrednutile@gmail.com>
+Delivered-To: assistant+P4FeXmoVOzcE@laralamma.ai
+Received: from DIR-10 ([10.50.14.251])
+	by localhost with LMTP
+	id qOaeHbaNTmb7UQYA0J78UA
+	(envelope-from <alfrednutile@gmail.com>)
+	for <assistant+P4FeXmoVOzcE@laralamma.ai>; Wed, 22 May 2024 20:28:38 -0400
+Received: from mta-04.privateemail.com ([10.50.14.14])
+	by DIR-10 with LMTP
+	id KC5fHbaNTmbrZxwA6K0gBg
+	(envelope-from <alfrednutile@gmail.com>)
+	for <assistant+P4FeXmoVOzcE@laralamma.ai>; Wed, 22 May 2024 20:28:38 -0400
+Received: from asp-relay-pe.jellyfish.systems (unknown [10.50.200.195])
+	by mta-04.privateemail.com (Postfix) with ESMTP id 76DE018002C4
+	for <assistant+P4FeXmoVOzcE@laralamma.ai>; Wed, 22 May 2024 20:28:38 -0400 (EDT)
+Authentication-Results: asp-relay-pe.jellyfish.systems;
+	dkim=pass header.d=gmail.com header.s=20230601 header.b=kDINd25y;
+	dmarc=pass (policy=none) header.from=gmail.com;
+	spf=pass (asp-relay-pe.jellyfish.systems: domain of alfrednutile@gmail.com designates 209.85.128.177 as permitted sender) smtp.mailfrom=alfrednutile@gmail.com
+Received: from mail-yw1-f177.google.com (mail-yw1-f177.google.com [209.85.128.177])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by asp-relay-pe.jellyfish.systems (Postfix) with ESMTPS id 4Vl8D56svbz3wZg
+	for <assistant+P4FeXmoVOzcE@laralamma.ai>; Thu, 23 May 2024 00:28:37 +0000 (UTC)
+Received: by mail-yw1-f177.google.com with SMTP id 00721157ae682-61be674f5d1so52350117b3.2
+        for <assistant+P4FeXmoVOzcE@laralamma.ai>; Wed, 22 May 2024 17:28:37 -0700 (PDT)
+
+
+### END EMAIL HEADER

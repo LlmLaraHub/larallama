@@ -118,6 +118,12 @@ const emptyDocumentIds = () => {
                                         Name</th>
                                     <th scope="col"
                                         class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-3">
+                                        Children</th>
+                                    <th scope="col"
+                                        class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-3">
+                                        Parent Id</th>
+                                    <th scope="col"
+                                        class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-3">
                                         Pages</th>
                                     <th scope="col"
                                         class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-3">
@@ -177,6 +183,16 @@ const emptyDocumentIds = () => {
                                                         {{ document.file_path }}
                                                     </a>
                                                 </div>
+                                        </td>
+
+                                        <td
+                                            class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-3">
+                                            {{ document.children_count }}
+                                        </td>
+
+                                        <td
+                                            class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-3">
+                                            {{ document.parent_id }}
                                         </td>
                                         <td
                                             class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-3">

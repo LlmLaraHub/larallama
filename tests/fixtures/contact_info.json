@@ -1,0 +1,10 @@
+{
+    "first_name": "Bob",
+    "last_name": "Belcher",
+    "email": "bob@bobsburgers.com",
+    "phone": "+1-111-222-2222",
+    "socials": [
+        "https://facebook.com/bobs_burgers",
+        "https://twitter.com/bobs_burgers"
+    ]
+}

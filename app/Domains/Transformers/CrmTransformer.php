@@ -4,12 +4,15 @@ namespace App\Domains\Transformers;
 
 use App\Domains\Documents\StatusEnum;
 use App\Domains\Documents\TypesEnum;
+use App\Domains\EmailParser\MailDto;
 use App\Domains\Prompts\Transformers\GetContactFromEmailPrompt;
 use App\Domains\Sources\BaseSource;
 use App\Domains\Sources\SourceTypeEnum;
+use App\Domains\Transformers\Dtos\ContactDto;
 use App\Models\Document;
 use Illuminate\Support\Facades\Log;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
+use LlmLaraHub\LlmDriver\Responses\CompletionResponse;
 
 class CrmTransformer extends BaseTransformer
 {
@@ -31,39 +34,120 @@ class CrmTransformer extends BaseTransformer
             return $this;
         }
 
+        $this->baseSource = $baseSource;
+
         /**
          * @NOTE2SELF
          * Happy Path
          * The transformer before this was Email
          * The document is here from that output
+         * Maybe I can do || document->type === email since it would be the same
          */
-        if ($baseSource->lastRan?->type === TypesEnum::Email) {
+        if ($baseSource->document?->type === TypesEnum::Email) {
             $emailDocument = $baseSource->document;
+            $mailDto = MailDto::from($emailDocument->meta_data);
 
-            //GET THE TO in case forwarded
-            $prompt = GetContactFromEmailPrompt::prompt($emailDocument);
-            $contactInfo = LlmDriverFacade::driver($baseSource->source->getDriver())
-                ->completion($prompt);
+           $to = $this->makeTheToContact($mailDto, $emailDocument);
 
-            //            $documentTo = Document::updateOrCreate(
-            //                [
-            //                    'source_id' => $baseSource->source->id,
-            //                    'type' => TypesEnum::Contact,
-            //                    'subject' => $baseSource->documentSubject,
-            //                    'collection_id' => $baseSource->source->collection_id,
-            //                ],
-            //                [
-            //                    'status' => StatusEnum::Pending,
-            //                    'file_path' => null,
-            //                    'status_summary' => StatusEnum::Pending,
-            //                    'meta_data' => $baseSource->meta_data,
-            //                ]
-            //            );
+           $from = $this->makeTheFromContact($mailDto, $emailDocument);
+
 
         } else {
             //@TODO make a new one for Email?
         }
 
         return $this;
+    }
+
+    protected function makeContact(CompletionResponse $contactInfo, Document $emailDocument) : Document
+    {
+
+        $dto = ContactDto::from(json_decode($contactInfo->content, TRUE));
+        $socials = $dto->socials;
+        $socialsFlat = implode("\n", $socials);
+
+        $summary = <<<CONTENT
+First Name: $dto->first_name
+Last Name: $dto->last_name,
+Company: $dto->company_name,
+Email: $dto->email,
+Phone: $dto->phone,
+Socials:
+$socialsFlat
+CONTENT;
+
+        $name = $dto->first_name . " " . $dto->last_name;
+
+        if(!$dto->first_name && !$dto->last_name) {
+            $name = $dto->company_name;
+        }
+
+        if(is_null($name)) {
+            $name = "Could not find name or company";
+        }
+
+        return Document::updateOrCreate(
+            [
+                'source_id' => $this->baseSource->source->id,
+                'type' => TypesEnum::Contact,
+                'subject' => $name,
+                'collection_id' => $this->baseSource->source->collection_id,
+                'parent_id' => $emailDocument->id
+            ],
+            [
+                'status' => StatusEnum::Complete,
+                'file_path' => null,
+                'summary' => $summary,
+                'status_summary' => StatusEnum::Complete,
+                'meta_data' => $dto->toArray(),
+            ]
+        );
+    }
+
+    protected function makeTheToContact(MailDto $mailDto, ?Document $emailDocument) : Document|null
+    {
+
+        try {
+            $contactInfo = $this->sendRequest($mailDto, "TO");
+
+            put_fixture("crm_to_response.json", $contactInfo->toArray());
+
+            $toDocument = $this->makeContact($contactInfo, $emailDocument);
+            return $toDocument;
+
+        } catch (\Exception $e) {
+            Log::info("[LaraChain] - Issue with LLM to Contact response", [
+                'message' => $e->getMessage()]);
+            return null;
+        }
+    }
+
+    protected function makeTheFromContact(MailDto $mailDto, ?Document $emailDocument) : Document | null
+    {
+        try {
+            $contactInfo = $this->sendRequest($mailDto, "FROM");
+
+            put_fixture("crm_from_response.json", $contactInfo->toArray());
+
+            $fromDocument = $this->makeContact($contactInfo, $emailDocument);
+
+            return $fromDocument;
+
+        } catch (\Exception $e) {
+            Log::info("[LaraChain] - Issue with LLM From Contact response", [
+                'message' => $e->getMessage()]);
+            return null;
+        }
+    }
+
+    protected function sendRequest(MailDto $mailDto, string $type = "TO") : CompletionResponse
+    {
+        $header = str($mailDto->header)->before("DKIM-Signature")->toString();
+        $prompt = GetContactFromEmailPrompt::prompt($mailDto->body, $header, $type);
+
+        put_fixture("crm_prompt.txt", $prompt, false);
+
+        return LlmDriverFacade::driver($this->baseSource->source->getDriver())
+            ->completion($prompt);
     }
 }
