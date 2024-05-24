@@ -8,6 +8,7 @@ use App\Jobs\VectorlizeDataJob;
 use App\Models\Document;
 use App\Models\DocumentChunk;
 use App\Models\Source;
+use App\Models\Transformer;
 use Illuminate\Bus\Batch;
 use Illuminate\Support\Facades\Bus;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
@@ -25,7 +26,14 @@ abstract class BaseSource
 
     public Source $source;
 
+    public SourceTypeEnum $sourceTypeEnum = SourceTypeEnum::GenericSource;
+
     public string $documentSubject = '';
+
+    public ?Transformer $lastRan = null;
+
+    /** @var Transformer[] */
+    public array $transformers = [];
 
     protected function batchWithDocument(Document $document): array
     {

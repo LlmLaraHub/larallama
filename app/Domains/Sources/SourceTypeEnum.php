@@ -11,4 +11,5 @@ enum SourceTypeEnum: string
     case WebSearchSource = 'web_search_source';
     case EmailSource = 'email_source';
 
+    case GenericSource = 'generic_source';
 }

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Domains\Documents\StatusEnum;
+use App\Domains\UnStructured\StructuredTypeEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use LlmLaraHub\LlmDriver\HasDrivers;
@@ -13,6 +14,7 @@ use Pgvector\Laravel\Vector;
 
 /**
  * @property Document $document
+ * @property StructuredTypeEnum $type
  */
 class DocumentChunk extends Model implements HasDrivers, TaggableContract
 {
@@ -29,6 +31,7 @@ class DocumentChunk extends Model implements HasDrivers, TaggableContract
         'status_tagging' => StatusEnum::class,
         'status_summary' => StatusEnum::class,
         'meta_data' => 'array',
+        'type' => StructuredTypeEnum::class,
     ];
 
     protected $guarded = [];

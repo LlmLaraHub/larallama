@@ -13,6 +13,8 @@ class EmailSource extends BaseSource
 {
     public ?MailDto $mailDto = null;
 
+    public SourceTypeEnum $sourceTypeEnum = SourceTypeEnum::EmailSource;
+
     public function getMailDto(): MailDto
     {
         return $this->mailDto;
@@ -40,6 +42,8 @@ class EmailSource extends BaseSource
         $this->documentSubject = $this->mailDto->subject;
 
         $this->meta_data = $this->mailDto->toArray();
+
+        $this->transformers = $source->transformers;
 
         Log::info('[LaraChain] - Running Email Source');
 
