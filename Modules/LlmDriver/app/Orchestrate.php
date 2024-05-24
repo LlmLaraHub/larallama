@@ -84,7 +84,7 @@ class Orchestrate
                     PromptHistory::create([
                         'prompt' => $response->prompt,
                         'chat_id' => $chat->getChat()->id,
-                        'message_id' => $message->id,
+                        'message_id' => $message?->id,
                         /** @phpstan-ignore-next-line */
                         'collection_id' => $chat->getChatable()?->id,
                     ]);
