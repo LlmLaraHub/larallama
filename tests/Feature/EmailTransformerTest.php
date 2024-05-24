@@ -5,12 +5,8 @@ namespace Tests\Feature;
 use App\Domains\EmailParser\MailDto;
 use App\Domains\Sources\SourceTypeEnum;
 use App\Domains\Transformers\BaseTransformer;
-use Facades\App\Domains\Transformers\EmailTransformer;
-use App\Domains\Transformers\TypeEnum;
 use App\Models\Source;
-use App\Models\Transformer;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
+use Facades\App\Domains\Transformers\EmailTransformer;
 use Tests\TestCase;
 
 class EmailTransformerTest extends TestCase
@@ -18,7 +14,7 @@ class EmailTransformerTest extends TestCase
     /**
      * A basic feature test example.
      */
-    public function test_transformer (): void
+    public function test_transformer(): void
     {
 
         $source = Source::factory()->create([
@@ -47,7 +43,7 @@ BODY;
         $emailSource = new \App\Domains\Sources\EmailSource();
         $emailSource->source = $source;
         $emailSource->mailDto = $dto;
-        $emailSource->documentSubject = "Foobar";
+        $emailSource->documentSubject = 'Foobar';
         $emailSource->content = $dto->getContent();
         $emailSource->meta_data = $dto->toArray();
 

@@ -15,20 +15,19 @@ use LlmLaraHub\TagFunction\Jobs\TagDocumentJob;
 
 abstract class BaseSource
 {
-
-    public string $batchTitle = "Chunking Source";
+    public string $batchTitle = 'Chunking Source';
 
     public ?Document $document = null;
 
-    public ?string $content = "";
+    public ?string $content = '';
 
     public array $meta_data = [];
 
     public Source $source;
 
-    public string $documentSubject = "";
+    public string $documentSubject = '';
 
-    protected function batchWithDocument(Document $document) : array
+    protected function batchWithDocument(Document $document): array
     {
         return [
             [
@@ -38,7 +37,7 @@ abstract class BaseSource
         ];
     }
 
-    protected function batchWithVector(DocumentChunk $documentChunk) : array
+    protected function batchWithVector(DocumentChunk $documentChunk): array
     {
         return [
             new VectorlizeDataJob($documentChunk),

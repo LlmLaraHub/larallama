@@ -6,27 +6,16 @@ use App\Domains\Documents\StatusEnum;
 use App\Domains\Documents\TypesEnum;
 use App\Domains\EmailParser\MailDto;
 use App\Domains\Sources\BaseSource;
-use App\Domains\Sources\SourceTypeEnum;
-use App\Domains\Transformers\BaseTransformer;
-use App\Helpers\TextChunker;
-use App\Jobs\SummarizeDocumentJob;
-use App\Jobs\VectorlizeDataJob;
 use App\Models\Document;
-use App\Models\DocumentChunk;
-use App\Models\Source;
-use Illuminate\Bus\Batch;
-use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Log;
-use LlmLaraHub\LlmDriver\LlmDriverFacade;
-use LlmLaraHub\TagFunction\Jobs\TagDocumentJob;
 
 class EmailTransformer extends BaseTransformer
 {
     public TypeEnum $type = TypeEnum::EmailTransformer;
 
-
     public function transform(
-            BaseSource $baseSource) : self {
+        BaseSource $baseSource): self
+    {
         /**
          * @NOTE
          * No need to queue this yet since
@@ -103,10 +92,6 @@ class EmailTransformer extends BaseTransformer
         $this->chunks = $chunks;
         $this->document = $document;
 
-
         return $this;
     }
-
-
-
 }

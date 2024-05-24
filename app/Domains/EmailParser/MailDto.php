@@ -15,8 +15,7 @@ class MailDto extends Data
     ) {
     }
 
-
-    public function getContent() : string
+    public function getContent(): string
     {
         $to = $this->to;
         $from = $this->from;

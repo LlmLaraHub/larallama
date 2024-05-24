@@ -2,56 +2,21 @@
 
 namespace App\Domains\Sources;
 
-use App\Domains\EmailParser\MailDto;
-use App\Models\Document;
 use App\Models\Source;
-use Facades\App\Domains\EmailParser\Client;
-use Facades\App\Domains\Transformers\EmailTransformer;
 use Illuminate\Support\Facades\Log;
 
-class EmailSource extends BaseSource
+class GenericSource extends BaseSource
 {
-    public ?MailDto $mailDto = null;
-
-    public function getMailDto(): MailDto
-    {
-        return $this->mailDto;
-    }
-
-    public function setMailDto(MailDto $mailDto): self
-    {
-        $this->mailDto = $mailDto;
-
-        return $this;
-    }
-
     public function handle(Source $source): void
     {
-        if (! $this->mailDto) {
-            Client::handle();
-
-            return;
-        }
-
         $this->source = $source;
 
-        $this->content = $this->mailDto->getContent();
-
-        $this->documentSubject = $this->mailDto->subject;
-
-        $this->meta_data = $this->mailDto->toArray();
-
-        Log::info('[LaraChain] - Running Email Source');
+        Log::info('[LaraChain] - Running Generic Source Source');
 
         try {
-            Log::info('Do something!');
-
             if ($source->transformers()->count() === 0) {
 
-                $transformer = EmailTransformer::transform(baseSource: $this);
-
-                $this->batchTransformedSource($transformer, $source);
-
+                Log::info('No Generic Transformer just yet');
             } else {
                 /**
                  * @NOTE
@@ -74,23 +39,10 @@ class EmailSource extends BaseSource
             }
 
         } catch (\Exception $e) {
-            Log::error('[LaraChain] - Error running Email Source', [
+            Log::error('[LaraChain] - Error running Generic Source', [
                 'error' => $e->getMessage(),
             ]);
         }
 
-    }
-
-    public function getSourceFromSlug(string $slug): ?Source
-    {
-        $source = Source::where('type', SourceTypeEnum::EmailSource)
-            ->slug($slug)
-            ->first();
-
-        if ($source) {
-            return $source;
-        }
-
-        return null;
     }
 }

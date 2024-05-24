@@ -8,16 +8,13 @@ use App\Models\DocumentChunk;
 
 abstract class BaseTransformer
 {
-
-
     public TypeEnum $type = TypeEnum::GenericTransformer;
 
     public array $chunks = [];
 
     public ?Document $document = null;
 
-
-    protected function chunkContent(string $content) : array
+    protected function chunkContent(string $content): array
     {
         $size = config('llmdriver.chunking.default_size');
 
@@ -42,6 +39,4 @@ abstract class BaseTransformer
             ]
         );
     }
-
-
 }
