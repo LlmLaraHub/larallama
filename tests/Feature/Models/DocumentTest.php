@@ -27,10 +27,10 @@ class DocumentTest extends TestCase
     {
         $modelParent = \App\Models\Document::factory()->create();
         $model = \App\Models\Document::factory()->create([
-            'parent_id' => $modelParent->id
+            'parent_id' => $modelParent->id,
         ]);
 
         $this->assertEquals($modelParent->id,
-        $model->parent->id);
+            $model->parent->id);
     }
 }

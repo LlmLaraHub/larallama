@@ -29,9 +29,7 @@ class CheckEmailCommand extends Command
     {
         if (config('llmlarahub.check_system_email')) {
             Log::info('Checking Email llmlarahub.check_system_email for turning it off');
-            $this->info('Checking Email');
             Client::handle();
-            $this->info('Done Checking Email');
         } else {
             Log::info('Checking email skipped see llmlarahub.check_system_email');
         }

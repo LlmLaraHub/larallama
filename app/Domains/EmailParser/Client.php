@@ -2,6 +2,7 @@
 
 namespace App\Domains\EmailParser;
 
+use Facades\App\Domains\Sources\EmailSource;
 use App\Jobs\MailBoxParserJob;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Str;
@@ -18,33 +19,41 @@ class Client
         $folders = $client->getFolders(false);
 
         foreach ($folders as $folder) {
-            $messages = $folder->messages()->all()->limit(3, 0)->get();
+            $full_name = data_get($folder, 'full_name');
+            if($full_name === 'INBOX') {
+                $messages = $folder->messages()->all()->limit(10, 0)->get();
 
-            logger('Emails', [
-                $messages->count(),
-            ]);
-
-            $mail = [];
-            /** @var Message $message */
-            foreach ($messages as $message) {
-                $messageDto = MailDto::from([
-                    'to' => $message->getTo(),
-                    'from' => $message->getFrom(),
-                    'body' => $message->getTextBody(),
-                    'subject' => $message->getSubject(),
-                    'header' => $message->getHeader()->raw,
+                logger('[LaraChain] - Email Count', [
+                    'count' => $messages->count(),
+                    'folder' => $full_name,
                 ]);
 
-                $mail[] = new MailBoxParserJob($messageDto);
+                $mail = [];
+                /** @var Message $message */
+                foreach ($messages as $message) {
+                    $messageDto = MailDto::from([
+                        'to' => $message->getTo(),
+                        'from' => $message->getFrom(),
+                        'body' => $message->getTextBody(),
+                        'subject' => $message->getSubject(),
+                        'header' => $message->getHeader()->raw,
+                    ]);
 
-                $message->delete(expunge: true);
+                    /**
+                     * Just check if it is for this system
+                     */
+                    if(EmailSource::getSourceFromSlug($messages->to)) {
+                        $mail[] = new MailBoxParserJob($messageDto);
+                        $message->delete(expunge: true);
+                    }
+
+                }
+
+                Bus::batch($mail)
+                    ->name('Mail Check '.Str::random(12))
+                    ->allowFailures()
+                    ->dispatch();
             }
-
-            Bus::batch($mail)
-                ->name('Mail Check '.Str::random(12))
-                ->allowFailures()
-                ->dispatch();
-
         }
     }
 }

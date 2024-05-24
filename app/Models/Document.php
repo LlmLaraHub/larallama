@@ -4,7 +4,6 @@ namespace App\Models;
 
 use App\Domains\Documents\StatusEnum;
 use App\Domains\Documents\TypesEnum;
-use App\Domains\UnStructured\StructuredTypeEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -137,14 +136,13 @@ class Document extends Model implements HasDrivers, TaggableContract
         return $this->belongsTo(Source::class);
     }
 
-    public function parent() : BelongsTo
+    public function parent(): BelongsTo
     {
         return $this->belongsTo(Document::class, 'parent_id');
     }
 
-    public function children() :HasMany
+    public function children(): HasMany
     {
         return $this->hasMany(Document::class, 'parent_id');
     }
-
 }

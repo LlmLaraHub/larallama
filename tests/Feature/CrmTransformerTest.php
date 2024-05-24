@@ -27,8 +27,8 @@ class CrmTransformerTest extends TestCase
             'type' => SourceTypeEnum::EmailSource,
         ]);
 
-        $contactInfo = get_fixture("contact_info.json", false);
-        $contactFromInfo = get_fixture("contact_info_from.json", false);
+        $contactInfo = get_fixture('contact_info.json', false);
+        $contactFromInfo = get_fixture('contact_info_from.json', false);
 
         LlmDriverFacade::shouldReceive('driver->completion')
             ->twice()
@@ -37,18 +37,17 @@ class CrmTransformerTest extends TestCase
                 CompletionResponse::from(['content' => $contactFromInfo])
             );
 
-
         $transformerModel = Transformer::factory()->create([
-            'type' => TypeEnum::EmailTransformer
+            'type' => TypeEnum::EmailTransformer,
         ]);
 
         $document = Document::factory()->email()->create([
-            'type' => TypesEnum::Email
+            'type' => TypesEnum::Email,
         ]);
 
         $emailSource = new \App\Domains\Sources\EmailSource();
 
-        $this->assertDatabaseCount("documents", 1);
+        $this->assertDatabaseCount('documents', 1);
 
         $emailSource
             ->setDocument($document)
@@ -59,7 +58,7 @@ class CrmTransformerTest extends TestCase
         $transformer = new CrmTransformer();
         $results = $transformer->transform($emailSource);
 
-        $this->assertDatabaseCount("documents", 3);
+        $this->assertDatabaseCount('documents', 3);
     }
 
     public function test_missing_names(): void
@@ -70,8 +69,8 @@ class CrmTransformerTest extends TestCase
             'type' => SourceTypeEnum::EmailSource,
         ]);
 
-        $contactInfo = get_fixture("contact_info_company.json", false);
-        $contactFromInfo = get_fixture("contact_info_from.json", false);
+        $contactInfo = get_fixture('contact_info_company.json', false);
+        $contactFromInfo = get_fixture('contact_info_from.json', false);
 
         LlmDriverFacade::shouldReceive('driver->completion')
             ->twice()
@@ -80,18 +79,17 @@ class CrmTransformerTest extends TestCase
                 CompletionResponse::from(['content' => $contactFromInfo])
             );
 
-
         $transformerModel = Transformer::factory()->create([
-            'type' => TypeEnum::EmailTransformer
+            'type' => TypeEnum::EmailTransformer,
         ]);
 
         $document = Document::factory()->email()->create([
-            'type' => TypesEnum::Email
+            'type' => TypesEnum::Email,
         ]);
 
         $emailSource = new \App\Domains\Sources\EmailSource();
 
-        $this->assertDatabaseCount("documents", 1);
+        $this->assertDatabaseCount('documents', 1);
 
         $emailSource
             ->setDocument($document)
@@ -102,10 +100,10 @@ class CrmTransformerTest extends TestCase
         $transformer = new CrmTransformer();
         $results = $transformer->transform($emailSource);
 
-        $this->assertDatabaseCount("documents", 3);
+        $this->assertDatabaseCount('documents', 3);
 
         $this->assertTrue(
-            Document::whereSubject("Bobs Burgers")->exists()
+            Document::whereSubject('Bobs Burgers')->exists()
         );
     }
 }

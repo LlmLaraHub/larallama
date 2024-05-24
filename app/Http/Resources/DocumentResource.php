@@ -28,7 +28,7 @@ class DocumentResource extends JsonResource
             'tags_count' => $this->tags->count(),
             'children_count' => $this->children->count(),
             'parent_id' => $this->parent_id,
-            'children' => DocumentResource::collection($this->children)
+            'children' => DocumentResource::collection($this->children),
         ];
     }
 }

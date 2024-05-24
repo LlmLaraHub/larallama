@@ -35,21 +35,24 @@ abstract class BaseSource
 
     public array|Collection $transformers = [];
 
-    public function setDocument(Document $document) : self
+    public function setDocument(Document $document): self
     {
         $this->document = $document;
+
         return $this;
     }
 
-    public function setSource(Source $source) : self
+    public function setSource(Source $source): self
     {
         $this->source = $source;
+
         return $this;
     }
 
-    public function setLastRun(Transformer $transformer) : self
+    public function setLastRun(Transformer $transformer): self
     {
         $this->lastRan = $transformer;
+
         return $this;
     }
 

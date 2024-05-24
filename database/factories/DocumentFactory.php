@@ -66,7 +66,7 @@ BODY;
                     'subject' => 'This is it',
                     'header' => 'This is header',
                     'body' => $body,
-                ])
+                ]),
             ];
         });
     }

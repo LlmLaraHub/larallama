@@ -159,10 +159,10 @@ return [
         'dispositions' => ['attachment', 'inline'],
         'common_folders' => [
             'root' => 'INBOX',
-            'junk' => 'INBOX/Junk',
-            'draft' => 'INBOX/Drafts',
-            'sent' => 'INBOX/Sent',
-            'trash' => 'INBOX/Trash',
+//            'junk' => 'INBOX/Junk',
+//            'draft' => 'INBOX/Drafts',
+//            'sent' => 'INBOX/Sent',
+//            'trash' => 'INBOX/Trash',
         ],
         'decoder' => [
             'message' => 'utf-8', // mimeheader

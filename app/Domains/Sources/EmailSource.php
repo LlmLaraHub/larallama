@@ -19,6 +19,7 @@ class EmailSource extends BaseSource
     {
         return $this->mailDto;
     }
+
     public function setMailDto(MailDto $mailDto): self
     {
         $this->mailDto = $mailDto;
