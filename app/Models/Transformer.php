@@ -7,6 +7,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
+/**
+ * @property string $transformable_type
+ * @property int $transformable_id
+ */
 class Transformer extends Model
 {
     use HasFactory;

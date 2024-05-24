@@ -14,4 +14,30 @@ class MailDto extends Data
         public ?string $header
     ) {
     }
+
+
+    public function getContent() : string
+    {
+        $to = $this->to;
+        $from = $this->from;
+        $body = $this->body;
+        $header = $this->header;
+
+        $content = <<<CONTENT
+TO: $to
+FROM: $from
+BODY:
+$body
+
+### END BODY
+
+HEADER:
+$header
+
+### END HEADER
+CONTENT;
+
+        return $content;
+
+    }
 }

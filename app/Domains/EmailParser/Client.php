@@ -37,7 +37,7 @@ class Client
 
                 $mail[] = new MailBoxParserJob($messageDto);
 
-                //$message->delete(expunge: true);
+                $message->delete(expunge: true);
             }
 
             Bus::batch($mail)

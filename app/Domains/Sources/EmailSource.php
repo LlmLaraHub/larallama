@@ -5,6 +5,9 @@ namespace App\Domains\Sources;
 use App\Domains\Documents\StatusEnum;
 use App\Domains\Documents\TypesEnum;
 use App\Domains\EmailParser\MailDto;
+use App\Domains\Transformers\BaseTransformer;
+use Facades\App\Domains\Transformers\EmailTransformer;
+use App\Domains\Transformers\GenericTransformer;
 use App\Helpers\TextChunker;
 use App\Jobs\SummarizeDocumentJob;
 use App\Jobs\VectorlizeDataJob;
@@ -20,7 +23,8 @@ use LlmLaraHub\TagFunction\Jobs\TagDocumentJob;
 
 class EmailSource extends BaseSource
 {
-    private ?MailDto $mailDto = null;
+    public ?MailDto $mailDto = null;
+
 
     public function getMailDto(): MailDto
     {
@@ -38,9 +42,16 @@ class EmailSource extends BaseSource
     {
         if (! $this->mailDto) {
             Client::handle();
-
             return;
         }
+
+        $this->source = $source;
+
+        $this->content = $this->mailDto->getContent();
+
+        $this->documentSubject = $this->mailDto->subject;
+
+        $this->meta_data = $this->mailDto->toArray();
 
         Log::info('[LaraChain] - Running Email Source');
 
@@ -48,99 +59,30 @@ class EmailSource extends BaseSource
             Log::info('Do something!');
 
             if ($source->transformers()->count() === 0) {
-                /**
-                 * @NOTE
-                 * No need to queue this yet since
-                 * it is not doing any LLM work
-                 */
-                Log::info('[LaraChain] Starting EmailTransformer ', [
-                    'source' => $source->id,
-                ]);
 
-                $chunks = [];
+                $transformer = EmailTransformer::transform(baseSource: $this);
 
-                $document = Document::updateOrCreate(
-                    [
-                        'source_id' => $source->id,
-                        'type' => TypesEnum::Email,
-                        'subject' => $this->mailDto->subject,
-                        'collection_id' => $source->collection_id,
-                    ],
-                    [
-                        'status' => StatusEnum::Pending,
-                        'file_path' => null,
-                        'status_summary' => StatusEnum::Pending,
-                        'meta_data' => $this->mailDto->toArray(),
-                    ]
-                );
-
-                $chunks[] = $this->documentChunk(
-                    $document,
-                    $this->mailDto->from,
-                    0,
-                    0
-                );
-
-                $chunks[] = $this->documentChunk(
-                    $document,
-                    $this->mailDto->to,
-                    1,
-                    0
-                );
-
-                $chunks[] = $this->documentChunk(
-                    $document,
-                    $this->mailDto->subject,
-                    2,
-                    0
-                );
-
-                $chunks[] = $this->documentChunk(
-                    $document,
-                    $this->mailDto->header,
-                    3,
-                    0
-                );
-
-                $size = config('llmdriver.chunking.default_size');
-                $chunked_chunks = TextChunker::handle($this->mailDto->body,
-                    $size);
-
-                foreach ($chunked_chunks as $chunkSection => $chunkContent) {
-                    $chunks[] = $this->documentChunk(
-                        $document,
-                        $chunkContent,
-                        4,
-                        $chunkSection
-                    );
-                }
-
-                $chunks = $this->batchJobs($chunks);
-
-                Bus::batch($chunks)
-                    ->name("Chunking Email Source Document - {$document->id}")
-                    ->finally(function (Batch $batch) use ($document) {
-                        Bus::batch([
-                            [
-                                new SummarizeDocumentJob($document),
-                                new TagDocumentJob($document),
-                            ],
-                        ])
-                            ->name("Summarizing and Tagging Email Source Document - {$document->id}")
-                            ->allowFailures()
-                            ->onQueue(LlmDriverFacade::driver($document->getDriver())->onQueue())
-                            ->dispatch();
-                    })
-                    ->allowFailures()
-                    ->onQueue(LlmDriverFacade::driver($document->getDriver())->onQueue())
-                    ->dispatch();
-
-                $source->updateQuietly([
-                    'last_run' => now(),
-                ]);
+                $this->batchTransformedSource($transformer, $source);
 
             } else {
-                //lots to do here!
+                /**
+                 * @NOTE
+                 * Examples
+                 * Example One: Maybe there is 1 transformer to make a reply to the email
+                 * Transformer 1 of 1 ReplyTo Email
+                 *   Take the email
+                 *   Use Collection as voice
+                 *   Make reply to email
+                 *   The Transformer as an Output attached to it and the reply is sent.
+                 *
+                 *  Example Two: CRM Transformer
+                 *    Take the email and make document (Type Email) and chunks from the email
+                 *    After that take the content and make who is it to, who is it from
+                 *    and make Documents for each for those of type Contact
+                 *    Relate those to the document (Type Email)
+                 *    and now there are relations for later use
+                 *
+                 */
                 Log::info("[LaraChain] - Source has Transformers let's figure out which one to run");
             }
 
@@ -150,38 +92,7 @@ class EmailSource extends BaseSource
             ]);
         }
 
-    }
 
-    protected function documentChunk(
-        Document $document,
-        string $content,
-        int $sort_order,
-        int $section_number
-    ): DocumentChunk {
-        return DocumentChunk::updateOrCreate(
-            [
-                'document_id' => $document->id,
-                'sort_order' => $sort_order,
-                'section_number' => $section_number,
-                'guid' => md5($content),
-            ],
-            [
-                'content' => $content,
-            ]
-        );
-    }
-
-    protected function batchJobs(array $jobs): array
-    {
-        $chunks = [];
-
-        foreach ($jobs as $DocumentChunk) {
-            $chunks[] = [
-                new VectorlizeDataJob($DocumentChunk),
-            ];
-        }
-
-        return $chunks;
     }
 
     public function getSourceFromSlug(string $slug): ?Source
@@ -196,4 +107,5 @@ class EmailSource extends BaseSource
 
         return null;
     }
+
 }

@@ -4,38 +4,23 @@ namespace Tests\Feature;
 
 use App\Domains\EmailParser\MailDto;
 use App\Domains\Sources\SourceTypeEnum;
+use App\Domains\Transformers\BaseTransformer;
+use Facades\App\Domains\Transformers\EmailTransformer;
+use App\Domains\Transformers\TypeEnum;
 use App\Models\Source;
-use Facades\App\Domains\EmailParser\Client;
-use Facades\App\Domains\Sources\EmailSource;
-use Illuminate\Support\Facades\Bus;
+use App\Models\Transformer;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
-class EmailSourceTest extends TestCase
+class EmailTransformerTest extends TestCase
 {
     /**
      * A basic feature test example.
      */
-    public function test_gets_slagged_source(): void
+    public function test_transformer (): void
     {
-        Bus::fake();
 
-        $source = Source::factory()->create([
-            'slug' => 'test',
-            'type' => SourceTypeEnum::EmailSource,
-        ]);
-
-        $results = EmailSource::getSourceFromSlug('test');
-
-        $this->assertNotNull($results);
-
-        $results = EmailSource::getSourceFromSlug('foobar');
-
-        $this->assertNull($results);
-    }
-
-    public function test_batches()
-    {
-        Bus::fake();
         $source = Source::factory()->create([
             'slug' => 'test',
             'type' => SourceTypeEnum::EmailSource,
@@ -60,25 +45,19 @@ BODY;
         ]);
 
         $emailSource = new \App\Domains\Sources\EmailSource();
-        $emailSource->setMailDto($dto)->handle($source);
+        $emailSource->source = $source;
+        $emailSource->mailDto = $dto;
+        $emailSource->documentSubject = "Foobar";
+        $emailSource->content = $dto->getContent();
+        $emailSource->meta_data = $dto->toArray();
+
+        $transformer = EmailTransformer::transform($emailSource);
 
         $this->assertDatabaseCount('documents', 1);
 
         $this->assertDatabaseCount('document_chunks', 9);
 
-        Bus::assertBatchCount(1);
+        $this->assertInstanceOf(BaseTransformer::class, $transformer);
 
-    }
-
-    public function test_run()
-    {
-        Client::shouldReceive('handle')->once();
-
-        $source = Source::factory()->create([
-            'slug' => 'test',
-            'type' => SourceTypeEnum::EmailSource,
-        ]);
-
-        $source->run();
     }
 }
