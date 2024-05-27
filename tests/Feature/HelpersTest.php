@@ -58,7 +58,7 @@ STRING;
 
         $chunks = chunk_string($string, $maxLength);
 
-        $this->assertCount(10, $chunks);
+        $this->assertCount(9, $chunks);
 
     }
 

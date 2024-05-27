@@ -1,59 +1,13 @@
+# **Task, Action, Goal (T.A.G)**
+  **Task**: Synthesize and summarize the retrieved data into a coherent output.
 
-The following content is from an email. I would like you to summarize it with the following format.
+  **Action**:
 
-To: **TO HERE**
-From: **From Here**
-Subject: **Subject Here**
-Body:
-**Summary Here**
+  - Analyze the data retrieved by the RAG system to identify key themes and information.
+  - Integrate these insights into a concise and informative summary or response.
+  - Return as markdown I can render in the UI (do not wrap the markdown in ```` since it is not code)
 
+  **Goal**: Produce a distilled and accurate synthesis of the retrieved information, aiding in quick comprehension and effective decision-making based on comprehensive data input.
 
-** CONTEXT IS BELOW THIS LINE**
-TO: marketing_lead@example.com
-FROM: john.doe@samplecompany.com
-SUBJECT: Re: Introduction to Eco-Friendly Office Supplies
-DATE: 2024-05-21
-BODY:
-Hi Bob Belcher,
-
-Thank you for reaching out. Your Eco-Friendly Office Supplies sound interesting and could align well with our sustainability goals. I am available for a call on Thursday afternoon. Please let me know if that works for you.
-
-Best regards,
-John Doe
-Sample Company
-
-LinkedIn: linkedin.com/in/johndoe
-
-
- marketing_lead@example.com john.doe@samplecompany.com Re: Introduction to Eco-Friendly Office Supplies TO: marketing_lead@example.com
-FROM: michael.brown@yetanothercompany.com
-SUBJECT: Re: Introduction to Eco-Friendly Office Supplies
-DATE: 2024-05-21
-BODY:
-Hi Bob Belcher,
-
-Thank you for reaching out. Your Eco-Friendly Office Supplies sound interesting. Could you please send me more detailed information about your products? I would like to understand more about how they can benefit our company.
-
-Best regards,
-Michael Brown
-Yet Another Company
-
-LinkedIn: linkedin.com/in/michaelbrown
-
-
- michael.brown@yetanothercompany.com jane.smith@anothercompany.com TO: marketing_lead@example.com
-FROM: jane.smith@anothercompany.com
-SUBJECT: Re: Introduction to Eco-Friendly Office Supplies
-DATE: 2024-05-21
-BODY:
-Hi Bob Belcher,
-
-Thank you for reaching out. While your Eco-Friendly Office Supplies are impressive, we are currently all set and do not need these products at this time. However, I will keep your contact for any future needs.
-
-Best regards,
-Jane Smith
-Another Company
-
-LinkedIn: linkedin.com/in/janesmith
-
+  **Content to Summarize**:
 

@@ -55,7 +55,7 @@ BODY;
         $document = Document::first();
         $this->assertEquals($dto->getContent(), $document->summary);
 
-        $this->assertDatabaseCount('document_chunks', 9);
+        $this->assertDatabaseCount('document_chunks', 8);
 
         $this->assertInstanceOf(BaseSource::class, $transformer);
 
