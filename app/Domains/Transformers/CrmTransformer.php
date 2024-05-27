@@ -2,7 +2,6 @@
 
 namespace App\Domains\Transformers;
 
-use App\Domains\Documents\ChildType;
 use App\Domains\Documents\StatusEnum;
 use App\Domains\Documents\TypesEnum;
 use App\Domains\EmailParser\MailDto;
@@ -12,6 +11,7 @@ use App\Domains\Sources\SourceTypeEnum;
 use App\Domains\Transformers\Dtos\ContactDto;
 use App\Domains\UnStructured\StructuredTypeEnum;
 use App\Models\Document;
+use App\Models\DocumentChunk;
 use Illuminate\Support\Facades\Log;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
 use LlmLaraHub\LlmDriver\Responses\CompletionResponse;
@@ -25,7 +25,7 @@ class CrmTransformer extends BaseTransformer
     ];
 
     public function transform(
-        BaseSource $baseSource): self
+        BaseSource $baseSource): BaseSource
     {
 
         Log::info('[LaraChain] Starting CrmTransformer ', [
@@ -33,7 +33,7 @@ class CrmTransformer extends BaseTransformer
         ]);
 
         if (! $this->supported($baseSource)) {
-            return $this;
+            return $baseSource;
         }
 
         $this->baseSource = $baseSource;
@@ -49,18 +49,18 @@ class CrmTransformer extends BaseTransformer
             $emailDocument = $baseSource->document;
             $mailDto = MailDto::from($emailDocument->meta_data);
 
-            $to = $this->makeTheToContact($mailDto, $emailDocument);
+            $this->makeTheToContact($mailDto, $emailDocument);
 
-            $from = $this->makeTheFromContact($mailDto, $emailDocument);
+            $this->makeTheFromContact($mailDto, $emailDocument);
 
         } else {
             //@TODO make a new one for Email?
         }
 
-        return $this;
+        return $this->baseSource;
     }
 
-    protected function makeContact(CompletionResponse $contactInfo, Document $emailDocument): Document
+    protected function makeContact(CompletionResponse $contactInfo, Document $emailDocument, StructuredTypeEnum $typeEnum): Document
     {
 
         $dto = ContactDto::from(json_decode($contactInfo->content, true));
@@ -94,6 +94,7 @@ CONTENT;
                 'subject' => $name,
                 'collection_id' => $this->baseSource->source->collection_id,
                 'parent_id' => $emailDocument->id,
+                'child_type' => $typeEnum,
             ],
             [
                 'status' => StatusEnum::Complete,
@@ -103,6 +104,7 @@ CONTENT;
                 'meta_data' => $dto->toArray(),
             ]
         );
+
     }
 
     protected function makeTheToContact(MailDto $mailDto, ?Document $emailDocument): ?Document
@@ -111,11 +113,9 @@ CONTENT;
         try {
             $contactInfo = $this->sendRequest($mailDto, 'TO');
 
-            $toDocument = $this->makeContact($contactInfo, $emailDocument);
+            $toDocument = $this->makeContact($contactInfo, $emailDocument, StructuredTypeEnum::EmailTo);
 
-            $toDocument->updateQuietly([
-                'child_type' => StructuredTypeEnum::EmailTo
-            ]);
+            $this->addDocumentChunk($toDocument, StructuredTypeEnum::EmailTo);
 
             return $toDocument;
 
@@ -127,16 +127,31 @@ CONTENT;
         }
     }
 
+    protected function addDocumentChunk(Document $document, StructuredTypeEnum $type): void
+    {
+
+        $document_chunk = DocumentChunk::updateOrCreate([
+            'document_id' => $document->id,
+            'sort_order' => 0,
+            'section_number' => 0,
+            'guid' => md5($document->summary),
+            'type' => $type,
+        ],
+            [
+                'content' => $document->summary,
+            ]);
+
+        $this->baseSource->addDocumentChunk($document_chunk);
+    }
+
     protected function makeTheFromContact(MailDto $mailDto, ?Document $emailDocument): ?Document
     {
         try {
             $contactInfo = $this->sendRequest($mailDto, 'FROM');
 
-            $fromDocument = $this->makeContact($contactInfo, $emailDocument);
+            $fromDocument = $this->makeContact($contactInfo, $emailDocument, StructuredTypeEnum::EmailFrom);
 
-            $fromDocument->updateQuietly([
-                'child_type' => StructuredTypeEnum::EmailFrom
-            ]);
+            $this->addDocumentChunk($fromDocument, StructuredTypeEnum::EmailFrom);
 
             return $fromDocument;
 
@@ -152,8 +167,6 @@ CONTENT;
     {
         $header = str($mailDto->header)->before('DKIM-Signature')->toString();
         $prompt = GetContactFromEmailPrompt::prompt($mailDto->body, $header, $type);
-
-        put_fixture('crm_prompt.txt', $prompt, false);
 
         return LlmDriverFacade::driver($this->baseSource->source->getDriver())
             ->completion($prompt);

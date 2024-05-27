@@ -11,7 +11,8 @@ class MailDto extends Data
         public ?string $from,
         public ?string $to,
         public ?string $body,
-        public ?string $header
+        public ?string $header,
+        public ?string $date
     ) {
     }
 
@@ -20,20 +21,18 @@ class MailDto extends Data
         $to = $this->to;
         $from = $this->from;
         $body = $this->body;
-        $header = $this->header;
+        $subject = $this->subject;
+        $date = $this->date;
 
         $content = <<<CONTENT
 TO: $to
 FROM: $from
+SUBJECT: $subject
+DATE: $date
 BODY:
 $body
 
-### END BODY
 
-HEADER:
-$header
-
-### END HEADER
 CONTENT;
 
         return $content;

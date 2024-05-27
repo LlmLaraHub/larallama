@@ -2,9 +2,12 @@
 
 namespace Tests\Feature;
 
+use App\Domains\Documents\TypesEnum;
 use App\Domains\EmailParser\MailDto;
 use App\Domains\Sources\SourceTypeEnum;
 use App\Domains\Transformers\TypeEnum;
+use App\Domains\UnStructured\StructuredTypeEnum;
+use App\Models\Document;
 use App\Models\Source;
 use App\Models\Transformer;
 use Facades\App\Domains\EmailParser\Client;
@@ -66,7 +69,7 @@ BODY;
 
         $this->assertDatabaseCount('documents', 1);
 
-        $this->assertDatabaseCount('document_chunks', 9);
+        $this->assertDatabaseCount('document_chunks', 8);
 
         Bus::assertBatchCount(1);
 
@@ -109,7 +112,7 @@ BODY;
                 'parent_id' => null,
                 'last_run' => null,
                 'active' => true,
-                'type' => TypeEnum::CrmTransformer
+                'type' => TypeEnum::CrmTransformer,
             ]
         );
 
@@ -124,11 +127,17 @@ BODY;
         $emailSource = new \App\Domains\Sources\EmailSource();
         $emailSource->setMailDto($dto)->handle($source);
 
-        $this->assertDatabaseCount('documents', 1);
+        $this->assertDatabaseCount('documents', 3);
 
-        $this->assertDatabaseCount('document_chunks', 9);
+        $this->assertDatabaseCount('document_chunks', 10);
 
         Bus::assertBatchCount(1);
 
+        $documentTo = Document::whereType(TypesEnum::Contact)->exists();
+        $this->assertTrue($documentTo);
+        $documentTo = Document::where('child_type', StructuredTypeEnum::EmailFrom)->exists();
+        $this->assertTrue($documentTo);
+        $documentTo = Document::where('child_type', StructuredTypeEnum::EmailTo)->exists();
+        $this->assertTrue($documentTo);
     }
 }

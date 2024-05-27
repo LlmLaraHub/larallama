@@ -2,7 +2,6 @@
 
 namespace Tests\Feature;
 
-use App\Domains\Documents\ChildType;
 use App\Domains\Documents\TypesEnum;
 use App\Domains\Recurring\RecurringTypeEnum;
 use App\Domains\UnStructured\StructuredTypeEnum;
@@ -59,21 +58,21 @@ class SendOutputEmailJobTest extends TestCase
         $parent = Document::factory()->create([
             'type' => TypesEnum::Email,
             'collection_id' => $collection->id,
-            'created_at' => now()
+            'created_at' => now(),
         ]);
 
         $childFrom = Document::factory()->create([
             'parent_id' => $parent->id,
             'collection_id' => $collection->id,
             'type' => TypesEnum::Contact,
-            'child_type' => StructuredTypeEnum::EmailTo
+            'child_type' => StructuredTypeEnum::EmailTo,
         ]);
 
         $childTo = Document::factory()->create([
             'parent_id' => $parent->id,
             'collection_id' => $collection->id,
             'type' => TypesEnum::Contact,
-            'child_type' => StructuredTypeEnum::EmailFrom
+            'child_type' => StructuredTypeEnum::EmailFrom,
         ]);
 
         LlmDriverFacade::shouldReceive('driver->completion')

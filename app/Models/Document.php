@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Domains\Documents\ChildType;
 use App\Domains\Documents\StatusEnum;
 use App\Domains\Documents\TypesEnum;
 use App\Domains\UnStructured\StructuredTypeEnum;

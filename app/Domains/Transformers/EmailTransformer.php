@@ -20,7 +20,7 @@ class EmailTransformer extends BaseTransformer
     ];
 
     public function transform(
-        BaseSource $baseSource): self
+        BaseSource $baseSource): BaseSource
     {
 
         /**
@@ -33,10 +33,12 @@ class EmailTransformer extends BaseTransformer
         ]);
 
         if (! $this->supported($baseSource)) {
-            return $this;
+            return $baseSource;
         }
 
-        $chunks = [];
+        $this->baseSource = $baseSource;
+
+        $mailDto = MailDto::from($baseSource->meta_data);
 
         $document = Document::updateOrCreate(
             [
@@ -48,6 +50,7 @@ class EmailTransformer extends BaseTransformer
             [
                 'status' => StatusEnum::Pending,
                 'file_path' => null,
+                'summary' => $mailDto->getContent(),
                 'status_summary' => StatusEnum::Pending,
                 'meta_data' => $baseSource->meta_data,
             ]
@@ -59,55 +62,52 @@ class EmailTransformer extends BaseTransformer
          * I should try to see how to pass in
          * exact objects but
          */
-        $mailDto = MailDto::from($baseSource->meta_data);
-
-        $chunks[] = $this->documentChunk(
+        $chunks = $this->documentChunk(
             $document,
             $mailDto->from,
             0,
             0,
             StructuredTypeEnum::EmailFrom
         );
+        $this->baseSource->addDocumentChunk($chunks);
 
-        $chunks[] = $this->documentChunk(
+        $chunks = $this->documentChunk(
             $document,
             $mailDto->to,
             1,
             0,
             StructuredTypeEnum::EmailTo
         );
+        $this->baseSource->addDocumentChunk($chunks);
 
-        $chunks[] = $this->documentChunk(
+        $chunks = $this->documentChunk(
             $document,
             $mailDto->subject,
             2,
             0,
             StructuredTypeEnum::EmailFrom
         );
-
-        $chunks[] = $this->documentChunk(
-            $document,
-            $mailDto->header,
-            3,
-            0,
-            StructuredTypeEnum::EmailHeader
-        );
+        $this->baseSource->addDocumentChunk($chunks);
 
         $chunked_content = $this->chunkContent($baseSource->content);
 
         foreach ($chunked_content as $chunkSection => $chunkContent) {
-            $chunks[] = $this->documentChunk(
+            $chunks = $this->documentChunk(
                 $document,
                 $chunkContent,
-                4,
+                3,
                 $chunkSection,
                 StructuredTypeEnum::EmailBody
             );
+            $this->baseSource->addDocumentChunk($chunks);
         }
 
-        $this->chunks = $chunks;
-        $this->document = $document;
+        /**
+         * @NOTE
+         * This is key only parent Transformers should do this
+         */
+        $this->baseSource->setDocument($document);
 
-        return $this;
+        return $this->baseSource;
     }
 }

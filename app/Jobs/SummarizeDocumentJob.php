@@ -6,6 +6,7 @@ use App\Domains\Agents\VerifyPromptInputDto;
 use App\Domains\Agents\VerifyPromptOutputDto;
 use App\Domains\Collections\CollectionStatusEnum;
 use App\Domains\Documents\StatusEnum;
+use App\Domains\Prompts\PromptMerge;
 use App\Domains\Prompts\SummarizeDocumentPrompt;
 use App\Models\Document;
 use Facades\App\Domains\Agents\VerifyResponseAgent;
@@ -17,7 +18,6 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
 use Laravel\Pennant\Feature;
-use LlmLaraHub\LlmDriver\Helpers\TrimText;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
 use LlmLaraHub\LlmDriver\Responses\CompletionResponse;
 
@@ -30,7 +30,7 @@ class SummarizeDocumentJob implements ShouldQueue
     /**
      * Create a new job instance.
      */
-    public function __construct(public Document $document)
+    public function __construct(public Document $document, public string $prompt = '')
     {
         //
     }
@@ -56,7 +56,7 @@ class SummarizeDocumentJob implements ShouldQueue
 
         foreach ($this->document->document_chunks as $chunkIndex => $chunk) {
             if ($chunkIndex % $divisor == 0) {
-                $content[] = (new TrimText())->handle($chunk->content);
+                $content[] = $chunk->content;
             }
         }
 
@@ -67,7 +67,17 @@ class SummarizeDocumentJob implements ShouldQueue
             'token_count_v1' => token_counter($content),
         ]);
 
-        $prompt = SummarizeDocumentPrompt::prompt($content);
+        if (empty($this->prompt)) {
+            $prompt = SummarizeDocumentPrompt::prompt($content);
+        } else {
+            $prompt = PromptMerge::merge([
+                '[CONTEXT]',
+            ], [
+                $content,
+            ], $this->prompt);
+        }
+
+        put_fixture('prompt_being_used_summary.txt', $prompt, false);
 
         /** @var CompletionResponse $results */
         $results = LlmDriverFacade::driver(

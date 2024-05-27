@@ -16,7 +16,6 @@ class EmailSource extends BaseSource
 
     public SourceTypeEnum $sourceTypeEnum = SourceTypeEnum::EmailSource;
 
-
     public function getMailDto(): MailDto
     {
         return $this->mailDto;
@@ -51,11 +50,8 @@ class EmailSource extends BaseSource
 
         try {
             Log::info('Do something!');
-            $transformed = EmailTransformer::transform(baseSource: $this);
-            $this->document = $transformed->document;
-            if ($source->transformers()->count() === 0) {
-                $this->batchTransformedSource($transformed, $source);
-            } else {
+            $baseSource = EmailTransformer::transform(baseSource: $this);
+            foreach ($source->transformers as $transformer) {
                 /**
                  * @NOTE
                  * Examples
@@ -72,22 +68,27 @@ class EmailSource extends BaseSource
                  *    and make Documents for each for those of type Contact
                  *    Relate those to the document (Type Email)
                  *    and now there are relations for later use
+                 *
+                 * @TODO
+                 * some transformers assume they are never 0 in the chain
+                 * like CRM assumes the one before was EmailTransformer
+                 * and the document is set
                  */
                 Log::info("[LaraChain] - Source has Transformers let's figure out which one to run");
 
-                foreach($source->transformers as $transformerChainLink) {
-                    $class = "\\App\\Domains\\Transformers\\" . $transformerChainLink->type->name;
-                    if(class_exists($class)) {
-                        $facade = "\\Facades\\App\\Domains\\Transformers\\" . $transformerChainLink->type->name;
-                        $transformed = $facade::transform($this);
+                foreach ($source->transformers as $transformerChainLink) {
+                    $class = '\\App\\Domains\\Transformers\\'.$transformerChainLink->type->name;
+                    if (class_exists($class)) {
+                        $facade = '\\Facades\\App\\Domains\\Transformers\\'.$transformerChainLink->type->name;
+                        $baseSource = $facade::transform($this);
                     } else {
-                        Log::info("[LaraChain] - No Class found ", [
-                            'class' => $class
+                        Log::info('[LaraChain] - No Class found ', [
+                            'class' => $class,
                         ]);
                     }
                 }
-                $this->batchTransformedSource($transformed, $source);
             }
+            $this->batchTransformedSource($baseSource, $source);
 
         } catch (\Exception $e) {
             Log::error('[LaraChain] - Error running Email Source', [
@@ -108,5 +109,24 @@ class EmailSource extends BaseSource
         }
 
         return null;
+    }
+
+    protected function getSummarizeDocumentPrompt(): string
+    {
+        return <<<'PROMPT'
+
+The following content is from an email. I would like you to summarize it with the following format.
+
+To: **TO HERE**
+From: **From Here**
+Subject: **Subject Here**
+Body:
+**Summary Here**
+
+
+** CONTEXT IS BELOW THIS LINE**
+[CONTEXT]
+PROMPT;
+
     }
 }

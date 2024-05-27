@@ -1,0 +1,325 @@
+Context:
+You are an Assistant for a Marketing Lead who is involved in sales activities, including scheduling meetings on Google Calendar and sending emails to leads from Google Inbox. These activities need to be reviewed and reported to ensure that new leads and their associated information are properly logged and tracked. This helps in generating comprehensive reports and facilitating sales strategies.
+
+User Requirement:
+
+The Marketing Lead’s sales activities, such as emails and meetings, should be reviewed to identify new leads and their progress. The requirement involves generating reports based on the weekly emails, detailing the interactions and providing insights for follow-up actions and sales strategies.
+
+Prompt:
+
+Using the information from the weekly emails containing the fields “To,” “From,” “Subject,” “Body,” and “Date,” perform the following tasks:
+
+	1.	Identify new leads that the Marketing Lead has reached out to.
+	2.	Extract contact information (email ID, name, company) from the emails.
+	3.	Generate a report that includes:
+	•	New leads contacted by the Marketing Lead and their progress.
+	•	Analysis of leads’ responses to gauge interest in Newpage’s offerings.
+	•	Recommendations for follow-up actions based on lead responses.
+	•	Summary of sales conversations and meetings scheduled.
+	•	Size of the sales pipeline and combined deal size.
+	4.	Provide reminders for follow-ups based on leads’ last responses.
+	5.	Suggest potential references from existing relationships within a company to initiate discussions with new leads.
+
+Example:
+
+Given the following email content:
+
+	•	To: john.doe@example.com
+	•	From: marketing_lead@example.com
+	•	Subject: Introduction to Newpage Solutions
+	•	Body: Hi John, I wanted to reach out and introduce myself…
+	•	Date: 2024-05-27
+
+The system should:
+
+	•	Identify John Doe as a new lead.
+	•	Extract contact information and include it in the report.
+	•	Analyze the email content to gauge John’s interest.
+	•	Recommend follow-up actions based on John’s response or lack thereof.
+	•	Update the sales pipeline report to reflect this new lead.
+	•	Provide a reminder for a follow-up based on John’s response.
+
+
+**EMAIL CONTEXT IS BELOW**
+
+Sent At: 2024-05-27 17:51:03
+Subject: Re: Introduction to Eco-Friendly Office Supplies
+### START BODY
+
+TO: marketing_lead@example.com
+FROM: john.doe@samplecompany.com
+SUBJECT: Re: Introduction to Eco-Friendly Office Supplies
+DATE: 2024-05-21
+BODY:
+Hi Bob Belcher,
+
+Thank you for reaching out. Your Eco-Friendly Office Supplies sound interesting and could align well with our sustainability goals. I am available for a call on Thursday afternoon. Please let me know if that works for you.
+
+Best regards,
+John Doe
+Sample Company
+
+LinkedIn: linkedin.com/in/johndoe
+
+
+
+TO: marketing_lead@example.com
+FROM: michael.brown@yetanothercompany.com
+SUBJECT: Re: Introduction to Eco-Friendly Office Supplies
+DATE: 2024-05-21
+BODY:
+Hi Bob Belcher,
+
+Thank you for reaching out. Your Eco-Friendly Office Supplies sound interesting. Could you please send me more detailed information about your products? I would like to understand more about how they can benefit our company.
+
+Best regards,
+Michael Brown
+Yet Another Company
+
+LinkedIn: linkedin.com/in/michaelbrown
+
+
+
+TO: marketing_lead@example.com
+FROM: jane.smith@anothercompany.com
+SUBJECT: Re: Introduction to Eco-Friendly Office Supplies
+DATE: 2024-05-21
+BODY:
+Hi Bob Belcher,
+
+Thank you for reaching out. While your Eco-Friendly Office Supplies are impressive, we are currently all set and do not need these products at this time. However, I will keep your contact for any future needs.
+
+Best regards,
+Jane Smith
+Another Company
+
+LinkedIn: linkedin.com/in/janesmith
+
+
+
+### END BODY
+
+Sent At: 2024-05-27 17:51:03
+Subject: Re: Following Up on Eco-Friendly Office Supplies Introduction
+### START BODY
+
+TO: marketing_lead@example.com
+FROM: john.doe@samplecompany.com
+SUBJECT: Re: Following Up on Eco-Friendly Office Supplies Introduction
+DATE: 2024-05-24
+BODY:
+Hi Bob Belcher,
+
+Thank you for following up. I have reviewed the information, and we are interested in learning more. Let's schedule a call for Monday morning. I look forward to discussing this further.
+
+Best regards,
+John Doe
+Sample Company
+
+LinkedIn: linkedin.com/in/johndoe
+
+
+
+### END BODY
+
+Sent At: 2024-05-27 17:51:03
+Subject: Introduction to Eco-Friendly Office Supplies
+### START BODY
+
+TO: jane.smith@anothercompany.com
+FROM: marketing_lead@example.com
+SUBJECT: Introduction to Eco-Friendly Office Supplies
+DATE: 2024-05-20
+BODY:
+Hi Jane,
+
+I hope this email finds you well. My name is Bob Belcher, and I am reaching out to introduce you to our latest range of Eco-Friendly Office Supplies. Our products are designed to reduce environmental impact while providing high-quality performance for all your office needs.
+
+We offer a variety of items, including recycled paper, biodegradable pens, and energy-efficient lighting solutions. I believe these products could significantly benefit A
+TO: john.doe@samplecompany.com
+FROM: marketing_lead@example.com
+SUBJECT: Introduction to Eco-Friendly Office Supplies
+DATE: 2024-05-20
+BODY:
+Hi John,
+
+I hope this email finds you well. My name is Bob Belcher, and I am reaching out to introduce you to our latest range of Eco-Friendly Office Supplies. Our products are designed to reduce environmental impact while providing high-quality performance for all your office needs.
+
+We offer a variety of items, including recycled paper, biodegradable pens, and energy-efficient lighting solutions. I believe these products could significantly benefit Samp
+TO: michael.brown@yetanothercompany.com
+FROM: marketing_lead@example.com
+SUBJECT: Introduction to Eco-Friendly Office Supplies
+DATE: 2024-05-20
+BODY:
+Hi Michael,
+
+I hope this email finds you well. My name is Bob Belcher, and I am reaching out to introduce you to our latest range of Eco-Friendly Office Supplies. Our products are designed to reduce environmental impact while providing high-quality performance for all your office needs.
+
+We offer a variety of items, including recycled paper, biodegradable pens, and energy-efficient lighting solutions. I believe these products could significantly 
+radable pens, and energy-efficient lighting solutions. I believe these products could significantly benefit Yet Another Company in your sustainability efforts.
+
+Would you be available for a brief call this week to discuss how our eco-friendly solutions can align with your company's green initiatives?
+
+Looking forward to your response.
+
+Best regards,
+Bob Belcher
+Newpage Solutions
+
+LinkedIn: linkedin.com/in/marketinglead
+Twitter: twitter.com/marketinglead
+
+
+
+ens, and energy-efficient lighting solutions. I believe these products could significantly benefit Another Company in your sustainability efforts.
+
+Would you be available for a brief call this week to discuss how our eco-friendly solutions can align with your company's green initiatives?
+
+Looking forward to your response.
+
+Best regards,
+Bob Belcher
+Newpage Solutions
+
+LinkedIn: linkedin.com/in/marketinglead
+Twitter: twitter.com/marketinglead
+
+
+
+, and energy-efficient lighting solutions. I believe these products could significantly benefit Sample Company in your sustainability efforts.
+
+Would you be available for a brief call this week to discuss how our eco-friendly solutions can align with your company's green initiatives?
+
+Looking forward to your response.
+
+Best regards,
+Bob Belcher
+Newpage Solutions
+
+LinkedIn: linkedin.com/in/marketinglead
+Twitter: twitter.com/marketinglead
+
+
+
+### END BODY
+
+Sent At: 2024-05-27 17:51:03
+Subject: Following Up on Eco-Friendly Office Supplies Introduction
+### START BODY
+
+TO: john.doe@samplecompany.com
+FROM: marketing_lead@example.com
+SUBJECT: Following Up on Eco-Friendly Office Supplies Introduction
+DATE: 2024-05-23
+BODY:
+Hi John,
+
+I hope you are doing well. I wanted to follow up on my previous email regarding our Eco-Friendly Office Supplies. Have you had a chance to review the information?
+
+We are keen to help Sample Company enhance its sustainability practices with our innovative products. If you are interested, I would be happy to provide more detailed information or set up a call at your convenience.
+
+Please let me know if you have any questions or if the
+mation or set up a call at your convenience.
+
+Please let me know if you have any questions or if there is a good time for us to connect.
+
+Thank you for your time and consideration.
+
+Best regards,
+Bob Belcher
+Newpage Solutions
+
+LinkedIn: linkedin.com/in/marketinglead
+Twitter: twitter.com/marketinglead
+
+
+
+### END BODY
+
+Sent At: 2024-05-27 17:51:03
+Subject: Scheduling a Meeting for Eco-Friendly Office Supplies Discussion
+### START BODY
+
+TO: john.doe@samplecompany.com
+FROM: marketing_lead@example.com
+SUBJECT: Scheduling a Meeting for Eco-Friendly Office Supplies Discussion
+DATE: 2024-05-26
+BODY:
+Hi John,
+
+I hope you are having a great day. Following up on our previous conversations, I would like to schedule a meeting to discuss how our Eco-Friendly Office Supplies can benefit Sample Company. We can go over our product range in detail and explore how they align with your sustainability goals.
+
+Could you please let me know your availability for a call this week? I am flexible and can adjust to a time that suits you best.
+
+Lookin
+ailability for a call this week? I am flexible and can adjust to a time that suits you best.
+
+Looking forward to our discussion.
+
+Best regards,
+Bob Belcher
+Newpage Solutions
+
+LinkedIn: linkedin.com/in/marketinglead
+Twitter: twitter.com/marketinglead
+
+
+
+### END BODY
+
+Sent At: 2024-05-27 17:26:43
+Subject: RE: Introduction to Eco-Friendly Office Supplies
+### START BODY
+
+TO: assistant+P4FeXmoVOzcE@laralamma.ai <assistant+p4fexmovozce@laralamma.ai>
+FROM: Alfred Nutile <alnutile@hey.com>
+SUBJECT: RE: Introduction to Eco-Friendly Office Supplies
+DATE: 2024-05-20
+BODY:
+TO: assistant+P4FeXmoVOzcE@laralamma.ai <assistant+p4fexmovozce@laralamma.ai>
+FROM: Alfred Nutile <alnutile@hey.com>
+SUBJECT: RE: Introduction to Eco-Friendly Office Supplies
+DATE:  2024-05-20
+BODY:
+
+Hi Bob Belcher,
+
+Thank you for reaching out. Your Eco-Friendly Office Supplies sound
+interesting and could align well with our sustainability goals. I am
+available for a call on Thursday after
+ing and could align well with our sustainability goals. I am
+available for a call on Thursday afternoon. Please let me know if that
+works for you.
+
+Best regards,
+John Doe
+Sample Company
+
+LinkedIn: linkedin.com/in/johndoe
+
+On May 27, 2024, "assistant@laralamma.ai assistant@laralamma.ai"
+<assistant@laralamma.ai> wrote:
+>  Hi John,  I hope this email finds you well. My name is Bob Belcher,
+> and I am reaching out to introduce you to our latest range of Eco-
+> Friendly Office Supplies. Our products are designed to reduce
+> environmental impact while providing high-quality perform
+es. Our products are designed to reduce
+> environmental impact while providing high-quality performance for all
+> your office needs.  We offer a variety of items, including recycled
+> paper, biodegradable pens, and energy-efficient lighting solutions. I
+> believe these products could significantly benefit Sample Company in
+> your sustainability efforts.  Would you be available for a brief call
+> this week to discuss how our eco-friendly solutions can align with
+> your company's green initiatives?  Looking forward to your response.  
+>   Best regards, 
+> Bob Belcher 
+> New
+initiatives?  Looking forward to your response.  
+>   Best regards, 
+> Bob Belcher 
+> Newpage Solutions  LinkedIn: linkedin.com/in/marketinglead 
+> Twitter: twitter.com/marketinglead 
+
+
+
+### END BODY

@@ -2,7 +2,6 @@
 
 namespace App\Domains\Sources;
 
-use App\Domains\Transformers\BaseTransformer;
 use App\Jobs\SummarizeDocumentJob;
 use App\Jobs\VectorlizeDataJob;
 use App\Models\Document;
@@ -23,7 +22,11 @@ abstract class BaseSource
 
     public ?string $content = '';
 
+    public ?string $summarizeDocumentPrompt = '';
+
     public array $meta_data = [];
+
+    public array $document_chunks = [];
 
     public Source $source;
 
@@ -34,6 +37,13 @@ abstract class BaseSource
     public ?Transformer $lastRan = null;
 
     public array|Collection $transformers = [];
+
+    public function addDocumentChunk(DocumentChunk $documentChunk): self
+    {
+        $this->document_chunks[] = $documentChunk;
+
+        return $this;
+    }
 
     public function setDocument(Document $document): self
     {
@@ -60,7 +70,7 @@ abstract class BaseSource
     {
         return [
             [
-                new SummarizeDocumentJob($document),
+                new SummarizeDocumentJob($document, $this->getSummarizeDocumentPrompt()),
                 new TagDocumentJob($document),
             ],
         ];
@@ -84,13 +94,18 @@ abstract class BaseSource
         return $chunks;
     }
 
+    protected function getSummarizeDocumentPrompt(): string
+    {
+        return $this->summarizeDocumentPrompt;
+    }
+
     protected function batchTransformedSource(
-        BaseTransformer $transformer,
+        BaseSource $baseSource,
         Source $source)
     {
-        $chunks = $this->batchJobs($transformer->chunks);
+        $chunks = $this->batchJobs($baseSource->document_chunks);
 
-        $document = $transformer->document;
+        $document = $baseSource->document;
 
         $batchWithDocuments = $this->batchWithDocument($document);
 

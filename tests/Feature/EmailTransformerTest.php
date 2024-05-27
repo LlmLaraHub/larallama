@@ -3,8 +3,9 @@
 namespace Tests\Feature;
 
 use App\Domains\EmailParser\MailDto;
+use App\Domains\Sources\BaseSource;
 use App\Domains\Sources\SourceTypeEnum;
-use App\Domains\Transformers\BaseTransformer;
+use App\Models\Document;
 use App\Models\Source;
 use Facades\App\Domains\Transformers\EmailTransformer;
 use Tests\TestCase;
@@ -51,9 +52,14 @@ BODY;
 
         $this->assertDatabaseCount('documents', 1);
 
+        $document = Document::first();
+        $this->assertEquals($dto->getContent(), $document->summary);
+
         $this->assertDatabaseCount('document_chunks', 9);
 
-        $this->assertInstanceOf(BaseTransformer::class, $transformer);
+        $this->assertInstanceOf(BaseSource::class, $transformer);
+
+        $this->assertCount(8, $transformer->document_chunks);
 
     }
 }

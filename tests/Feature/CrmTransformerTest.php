@@ -59,6 +59,7 @@ class CrmTransformerTest extends TestCase
         $results = $transformer->transform($emailSource);
 
         $this->assertDatabaseCount('documents', 3);
+        $this->assertCount(2, $results->document_chunks);
     }
 
     public function test_missing_names(): void

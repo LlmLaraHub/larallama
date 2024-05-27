@@ -21,6 +21,8 @@ abstract class BaseTransformer
 
     public ?Document $document = null;
 
+    abstract public function transform(BaseSource $baseSource): BaseSource;
+
     protected function chunkContent(string $content): array
     {
         $size = config('llmdriver.chunking.default_size');

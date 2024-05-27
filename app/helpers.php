@@ -54,14 +54,12 @@ if (! function_exists('calculate_dynamic_threshold')) {
     }
 }
 
-
 if (! function_exists('slug_from_email')) {
     function slug_from_email(string $email): string
     {
-        return str($email)->between('+', '@')->toString();
+        return str($email)->betweenFirst('+', '@')->toString();
     }
 }
-
 
 if (! function_exists('chunk_string')) {
     function chunk_string(string $string, int $maxTokenSize): array

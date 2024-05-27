@@ -10,17 +10,18 @@ class GenericTransformer extends BaseTransformer
     public TypeEnum $type = TypeEnum::GenericTransformer;
 
     public function transform(
-        BaseSource $baseSource): self
+        BaseSource $baseSource): BaseSource
     {
 
         Log::info('[LaraChain] Starting Generic Transformer ', [
             'source' => $baseSource->source->id,
         ]);
 
+        $this->baseSource = $baseSource;
         /**
          * TODO
          */
 
-        return $this;
+        return $this->baseSource;
     }
 }
