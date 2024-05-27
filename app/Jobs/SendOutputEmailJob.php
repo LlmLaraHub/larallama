@@ -35,6 +35,23 @@ class SendOutputEmailJob implements ShouldQueue
      */
     public function handle(): void
     {
+        /**
+         * @TODO
+         * The output model type has to have the
+         * ability to build it's own context
+         * since Output of type NewsSummary
+         * will be different then output of Type EmailReport
+         * etc
+         * In the end they are driven by the prompt in
+         * output->summary
+         * but the query for some things (email type)
+         * might need more finness
+         * So in this case $this->output()->getContext()
+         * @see app/Domains/Sources/EmailSource.php:79
+         * Find the Class
+         * then run the class returning string
+         * Right now it is just generic
+         */
         $to = $this->output->fromMetaData('to');
 
         $tos = explode(',', $to);
@@ -42,50 +59,24 @@ class SendOutputEmailJob implements ShouldQueue
         $title = $this->output->title;
         $title = 'Summary '.$title;
 
-        //get the latest documents to summarize
-        $documents = $this->output->collection
-            ->documents()
-            ->where('type', TypesEnum::Email)
-            ->when($this->output->last_run != null, function ($query) {
-                $query->whereDate('created_at', '>=', $this->output->last_run);
-            })
-            ->latest()
-            ->get();
-
-        if (empty($documents)) {
-            Log::info('LaraChain] - No Emails since the last run');
-
-            return;
-        }
-        $content = [];
-
-        foreach ($documents as $document) {
-            if (! empty($document->children)) {
-                foreach ($document->children as $child) {
-                    $content[] = $this->getContentFromChild($child);
-                }
-            } else {
-                //@TODO
-                // we get it from the chunks that are to and from
-                //and the summary
-            }
-            $content[] = 'Sent At: '.$document->created_at;
-            $content[] = 'Subject: '.$document->subject;
-
-            $content[] = "### START BODY\n";
-            $content[] = $this->getEmailSummary($document);
-            $content[] = "### END BODY\n";
-
-        }
-
+        $content = $this->output->getContext();
+        $content[] = '***below is the context***';
+        $content[] = '[CONTEXT]';
         $content = implode("\n", $content);
         $tokens = ['[CONTEXT]'];
         $content = [$content];
 
+        /**
+         * @NOTE
+         * The summary is the prompt of the output
+         * @TODO
+         * Introduce more tokens
+         */
         $prompt = PromptMerge::merge($tokens, $content, $this->output->summary);
 
         Log::info('[LaraChain] - Sending this prompt to LLM', [
             'prompt' => $prompt,
+            'content' => $content[0]
         ]);
 
         put_fixture('prompt_for_summary_report.txt', $prompt, false);
@@ -122,30 +113,4 @@ class SendOutputEmailJob implements ShouldQueue
         }
     }
 
-    protected function getContentFromChild(Document $document): string
-    {
-        $type = ($document->child_type === StructuredTypeEnum::EmailTo) ? 'To' : 'From';
-        $summary = $document->summary;
-
-        $message = <<<MESSAGE
-This email was $type the following Contact
-$summary
-MESSAGE;
-
-        return $message;
-    }
-
-    protected function getEmailSummary(Document $document): string
-    {
-        /** @phpstan-ignore-next-line */
-        $content = $document
-            ->document_chunks()
-            ->where('type', StructuredTypeEnum::EmailBody)
-            ->orderBy('section_number')
-            ->get()
-            ->pluck('content')
-            ->implode("\n");
-
-        return $content;
-    }
 }

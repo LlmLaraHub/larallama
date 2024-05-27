@@ -2,15 +2,19 @@
 
 namespace App\Domains\Sources;
 
+use App\Domains\Prompts\PromptMerge;
+use App\Domains\UnStructured\StructuredTypeEnum;
 use App\Jobs\SummarizeDocumentJob;
 use App\Jobs\VectorlizeDataJob;
 use App\Models\Document;
 use App\Models\DocumentChunk;
+use App\Models\Output;
 use App\Models\Source;
 use App\Models\Transformer;
 use Illuminate\Bus\Batch;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Bus;
+use Illuminate\Support\Facades\Log;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
 use LlmLaraHub\TagFunction\Jobs\TagDocumentJob;
 
@@ -127,5 +131,84 @@ abstract class BaseSource
         $source->updateQuietly([
             'last_run' => now(),
         ]);
+    }
+
+    public function getContext(Output $output) : string
+    {
+        $documents = $output->collection
+            ->documents()
+            ->when($output->last_run != null, function ($query) use ($output) {
+                $query->whereDate('created_at', '>=', $output->last_run);
+            }, function($query) {
+                $query->limit(5);
+            })
+            ->latest()
+            ->get();
+
+        if ($documents->count() === 0) {
+            Log::info('LaraChain] - No Emails since the last run');
+            return "";
+        }
+
+        $content = [];
+
+        foreach ($documents as $document) {
+            if (! empty($document->children)) {
+                foreach ($document->children as $child) {
+                    $content[] = $this->getContentFromChild($child);
+                }
+            } else {
+                //@TODO
+                // we get it from the chunks that are to and from
+                //and the summary
+            }
+            $content[] = 'Sent At: '.$document->created_at;
+            $content[] = 'Subject: '.$document->subject;
+
+            $content[] = "### START BODY\n";
+            $content[] = $this->getEmailSummary($document);
+            $content[] = "### END BODY\n";
+
+        }
+
+        $content = implode("\n", $content);
+        $tokens = ['[CONTEXT]'];
+        $content = [$content];
+
+        $prompt = PromptMerge::merge($tokens, $content, $output->summary);
+
+        Log::info('[LaraChain] - Sending this prompt to LLM', [
+            'prompt' => $prompt,
+        ]);
+
+        return $prompt;
+    }
+
+
+    protected function getContentFromChild(Document $document): string
+    {
+        $type = ($document->child_type === StructuredTypeEnum::EmailTo) ? 'To' : 'From';
+        $summary = $document->summary;
+
+        $message = <<<MESSAGE
+This email was $type the following Contact
+$summary
+MESSAGE;
+
+        return $message;
+    }
+
+    protected function getEmailSummary(Document $document): string
+    {
+        /** @phpstan-ignore-next-line */
+        $content = $document
+            ->document_chunks()
+            ->where('type', StructuredTypeEnum::EmailBody)
+            ->orderBy('section_number')
+            ->get()
+            ->pluck('content')
+            ->implode("\n");
+
+        return $content;
     }
 }

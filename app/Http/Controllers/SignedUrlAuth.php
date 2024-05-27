@@ -41,7 +41,6 @@ class SignedUrlAuth extends Controller
         try {
             $loginToken = LoginToken::query()
                 ->whereToken($token)
-                ->whereNull('consumed_at')
                 ->firstOrFail();
 
             $loginToken->consumed_at = now();
@@ -57,3 +56,4 @@ class SignedUrlAuth extends Controller
         }
     }
 }
+

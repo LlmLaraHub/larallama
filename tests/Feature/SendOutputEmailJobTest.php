@@ -9,6 +9,7 @@ use App\Jobs\SendOutputEmailJob;
 use App\Models\Collection;
 use App\Models\Document;
 use App\Models\Output;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Mail;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
 use LlmLaraHub\LlmDriver\Responses\CompletionResponse;
@@ -22,12 +23,23 @@ class SendOutputEmailJobTest extends TestCase
     public function test_sends(): void
     {
         Mail::fake();
+        Event::fake();
+        $collection = Collection::factory()->create();
         $output = Output::factory()->create([
             'recurring' => RecurringTypeEnum::HalfHour,
+            'last_run' => now()->subWeek(),
+            'collection_id' => $collection->id,
             'meta_data' => [
                 'to' => 'bob@bobsburgers.com',
             ],
         ]);
+
+        $parent = Document::factory()->create([
+            'type' => TypesEnum::Email,
+            'collection_id' => $collection->id,
+            'created_at' => now(),
+        ]);
+
 
         LlmDriverFacade::shouldReceive('driver->completion')
             ->once()->andReturn(

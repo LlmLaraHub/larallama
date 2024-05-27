@@ -7,8 +7,10 @@ use App\Models\Output;
 
 class EmailOutput extends BaseOutput
 {
-    public function handle(Output $output): void
+    public function handle(Output $output): array
     {
         SendOutputEmailJob::dispatch($output);
+
+        return [];
     }
 }
