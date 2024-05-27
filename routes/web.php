@@ -11,6 +11,10 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
+Route::get('/login/signed/{token}', [\App\Http\Controllers\SignedUrlAuth::class,
+    'signInWithToken'])
+    ->name('signed_url.login');
+
 Route::get('/', function () {
     if (auth()->check()) {
         return redirect()->route('dashboard');

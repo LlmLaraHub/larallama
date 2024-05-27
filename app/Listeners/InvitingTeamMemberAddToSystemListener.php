@@ -36,6 +36,5 @@ class InvitingTeamMemberAddToSystemListener
                 $invitedUser, ['role' => $event->role]
             );
         }
-
     }
 }

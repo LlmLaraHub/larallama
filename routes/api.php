@@ -14,3 +14,7 @@ Route::controller(\App\Http\Controllers\ApiOutputController::class)->group(
             ->middleware(\App\Http\Middleware\ApiOutputTokenIsValid::class);
     }
 );
+
+Route::post(
+    '/signed', [\App\Http\Controllers\SignedUrlAuth::class, 'create']
+)->name('signed_url.create');

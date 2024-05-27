@@ -66,6 +66,9 @@ const setActiveTab = (tab) => {
     </Head>
     <div class="bg-gray-900">
         <main>
+            <div class="flex justify-end p-2">
+                <Link class="btn btn-secondary link text-sm" href="/login">Login</Link>
+            </div>
             <!-- Hero section -->
             <div class="relative isolate overflow-hidden">
                 <svg class="absolute inset-0 -z-10 h-full w-full stroke-white/10 [mask-image:radial-gradient(100%_100%_at_top_right,white,transparent)]"
