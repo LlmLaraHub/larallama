@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Domains\Outputs\OutputTypeEnum;
+use App\Domains\Prompts\EmailPrompt;
+use App\Domains\Prompts\MarketingEmailPrompt;
 use App\Jobs\SendOutputEmailJob;
 use App\Models\Output;
 use Illuminate\Support\Facades\Log;
@@ -30,7 +32,7 @@ class EmailOutputController extends OutputController
                 return back();
             }
 
-            SendOutputEmailJob::dispatch($output);
+            SendOutputEmailJob::dispatch(output: $output, testRun: true);
 
             request()->session()->flash('Sending email now');
 
@@ -44,5 +46,13 @@ class EmailOutputController extends OutputController
             return back();
         }
 
+    }
+
+    public function getPrompts()
+    {
+        return [
+            'email' => EmailPrompt::prompt("[CONTEXT]"),
+            'marketing' => MarketingEmailPrompt::prompt("[CONTEXT]"),
+        ];
     }
 }

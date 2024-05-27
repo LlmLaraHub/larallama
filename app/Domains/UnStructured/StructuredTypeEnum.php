@@ -23,4 +23,5 @@ enum StructuredTypeEnum: string
     case Table = 'table';
     case Raw = 'raw';
 
+
 }

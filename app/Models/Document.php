@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use App\Domains\Documents\ChildType;
 use App\Domains\Documents\StatusEnum;
 use App\Domains\Documents\TypesEnum;
+use App\Domains\UnStructured\StructuredTypeEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -21,6 +23,7 @@ use LlmLaraHub\TagFunction\Models\Tag;
  * @property int $collection_id
  * @property string|null $summary
  * @property string|null $file_path
+ * @property StructuredTypeEnum $child_type
  */
 class Document extends Model implements HasDrivers, TaggableContract
 {
@@ -31,6 +34,7 @@ class Document extends Model implements HasDrivers, TaggableContract
 
     protected $casts = [
         'type' => TypesEnum::class,
+        'child_type' => StructuredTypeEnum::class,
         'status' => StatusEnum::class,
         'meta_data' => 'array',
         'summary_status' => StatusEnum::class,

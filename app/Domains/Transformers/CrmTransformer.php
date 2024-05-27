@@ -2,6 +2,7 @@
 
 namespace App\Domains\Transformers;
 
+use App\Domains\Documents\ChildType;
 use App\Domains\Documents\StatusEnum;
 use App\Domains\Documents\TypesEnum;
 use App\Domains\EmailParser\MailDto;
@@ -9,6 +10,7 @@ use App\Domains\Prompts\Transformers\GetContactFromEmailPrompt;
 use App\Domains\Sources\BaseSource;
 use App\Domains\Sources\SourceTypeEnum;
 use App\Domains\Transformers\Dtos\ContactDto;
+use App\Domains\UnStructured\StructuredTypeEnum;
 use App\Models\Document;
 use Illuminate\Support\Facades\Log;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
@@ -109,9 +111,11 @@ CONTENT;
         try {
             $contactInfo = $this->sendRequest($mailDto, 'TO');
 
-            put_fixture('crm_to_response.json', $contactInfo->toArray());
-
             $toDocument = $this->makeContact($contactInfo, $emailDocument);
+
+            $toDocument->updateQuietly([
+                'child_type' => StructuredTypeEnum::EmailTo
+            ]);
 
             return $toDocument;
 
@@ -128,9 +132,11 @@ CONTENT;
         try {
             $contactInfo = $this->sendRequest($mailDto, 'FROM');
 
-            put_fixture('crm_from_response.json', $contactInfo->toArray());
-
             $fromDocument = $this->makeContact($contactInfo, $emailDocument);
+
+            $fromDocument->updateQuietly([
+                'child_type' => StructuredTypeEnum::EmailFrom
+            ]);
 
             return $fromDocument;
 

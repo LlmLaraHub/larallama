@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
 /**
  * @property string $transformable_type
  * @property int $transformable_id
+ * @property TypeEnum $type
  */
 class Transformer extends Model
 {

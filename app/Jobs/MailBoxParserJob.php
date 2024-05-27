@@ -38,8 +38,7 @@ class MailBoxParserJob implements ShouldQueue
 
         try {
 
-            $slug = str($this->mailDto->to)->between('+', '@')->toString();
-
+            $slug = slug_from_email($this->mailDto->to);
             $source = EmailSource::getSourceFromSlug($slug);
 
             if (! $source) {

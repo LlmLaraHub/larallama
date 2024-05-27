@@ -5,6 +5,7 @@ namespace App\Domains\Sources;
 use App\Domains\EmailParser\MailDto;
 use App\Models\Document;
 use App\Models\Source;
+use App\Models\Transformer;
 use Facades\App\Domains\EmailParser\Client;
 use Facades\App\Domains\Transformers\EmailTransformer;
 use Illuminate\Support\Facades\Log;
@@ -14,6 +15,7 @@ class EmailSource extends BaseSource
     public ?MailDto $mailDto = null;
 
     public SourceTypeEnum $sourceTypeEnum = SourceTypeEnum::EmailSource;
+
 
     public function getMailDto(): MailDto
     {
@@ -49,13 +51,10 @@ class EmailSource extends BaseSource
 
         try {
             Log::info('Do something!');
-
+            $transformed = EmailTransformer::transform(baseSource: $this);
+            $this->document = $transformed->document;
             if ($source->transformers()->count() === 0) {
-
-                $transformer = EmailTransformer::transform(baseSource: $this);
-
-                $this->batchTransformedSource($transformer, $source);
-
+                $this->batchTransformedSource($transformed, $source);
             } else {
                 /**
                  * @NOTE
@@ -75,6 +74,19 @@ class EmailSource extends BaseSource
                  *    and now there are relations for later use
                  */
                 Log::info("[LaraChain] - Source has Transformers let's figure out which one to run");
+
+                foreach($source->transformers as $transformerChainLink) {
+                    $class = "\\App\\Domains\\Transformers\\" . $transformerChainLink->type->name;
+                    if(class_exists($class)) {
+                        $facade = "\\Facades\\App\\Domains\\Transformers\\" . $transformerChainLink->type->name;
+                        $transformed = $facade::transform($this);
+                    } else {
+                        Log::info("[LaraChain] - No Class found ", [
+                            'class' => $class
+                        ]);
+                    }
+                }
+                $this->batchTransformedSource($transformed, $source);
             }
 
         } catch (\Exception $e) {

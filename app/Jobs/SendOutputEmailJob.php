@@ -3,8 +3,13 @@
 namespace App\Jobs;
 
 use App\Domains\Collections\CollectionStatusEnum;
+use App\Domains\Documents\TypesEnum;
 use App\Domains\Prompts\EmailSummaryPrompt;
+use App\Domains\Prompts\PromptMerge;
+use App\Domains\UnStructured\StructuredTypeEnum;
 use App\Mail\OutputMail;
+use App\Models\Document;
+use App\Models\DocumentChunk;
 use App\Models\Output;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -22,7 +27,7 @@ class SendOutputEmailJob implements ShouldQueue
     /**
      * Create a new job instance.
      */
-    public function __construct(public Output $output)
+    public function __construct(public Output $output, public bool $testRun = false)
     {
         //
     }
@@ -39,15 +44,46 @@ class SendOutputEmailJob implements ShouldQueue
         $title = $this->output->title;
         $title = 'Summary '.$title;
 
+        //get the latest documents to summarize
+        $documents = $this->output->collection
+            ->documents()
+            ->where('type', TypesEnum::Email)
+            ->when($this->output->last_run != null, function($query) {
+                $query->whereDate("created_at", ">=", $this->output->last_run);
+            })
+            ->latest()
+            ->get();
+
+        if(empty($documents)) {
+            Log::info("LaraChain] - No Emails since the last run");
+            return;
+        }
         $content = [];
 
-        //get the latest documents to summarize
-        $documents = $this->output->collection->documents()->latest()->take(5)->get();
         foreach ($documents as $document) {
-            $content[] = $document->content;
+            if(!empty($document->children)) {
+                foreach($document->children as $child) {
+                    $content[] = $this->getContentFromChild($child);
+                }
+            } else {
+                //@TODO
+                // we get it from the chunks that are to and from
+                //and the summary
+            }
+            $content[] = "Sent At: " . $document->created_at;
+            $content[] = "Subject: " . $document->subject;
+
+            $content[] = "### START BODY\n";
+            $content[] = $this->getEmailSummary($document);
+            $content[] = "### END BODY\n";
+
         }
 
-        $prompt = EmailSummaryPrompt::prompt(implode("\n", $content), $this->output->summary);
+        $content = implode("\n", $content);
+        $tokens = ['CONTEXT'];
+        $content = [$content];
+
+        $prompt = PromptMerge::merge($tokens, $content, $this->output->summary);
 
         Log::info('[LaraChain] - Sending this prompt to LLM', [
             'prompt' => $prompt,
@@ -78,9 +114,36 @@ class SendOutputEmailJob implements ShouldQueue
             );
         }
 
-        $this->output->updateQuietly([
-            'last_run' => now(),
-        ]);
+        if(!$this->testRun) {
+            $this->output->updateQuietly([
+                'last_run' => now(),
+            ]);
+        }
+    }
 
+    protected function getContentFromChild(Document $document) : string
+    {
+        $type = ($document->child_type === StructuredTypeEnum::EmailTo) ? "To" : "From";
+        $summary = $document->summary;
+
+        $message = <<<MESSAGE
+This email was $type the following Contact
+$summary
+MESSAGE;
+
+        return $message;
+    }
+
+    protected function getEmailSummary(Document $document) : string
+    {
+        $content = $document
+            ->document_chunks()
+            ->where("type", StructuredTypeEnum::EmailBody)
+            ->orderBy("section_number")
+            ->get()
+            ->pluck("content")
+            ->implode("\n");
+
+        return $content;
     }
 }
