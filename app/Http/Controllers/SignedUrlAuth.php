@@ -56,4 +56,3 @@ class SignedUrlAuth extends Controller
         }
     }
 }
-

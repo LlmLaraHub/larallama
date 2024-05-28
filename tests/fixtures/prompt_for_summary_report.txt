@@ -1,1 +1,827 @@
-Eligendi quo eum quo fugiat. Id ut voluptas natus nemo. Pariatur eos omnis optio voluptas. Nam iste expedita nihil.
+["'***below is the context***'","Google announces Firebase Genkit with Ollama support
+May 20, 2024
+At Google IO 2024, Google announced Ollama support in Firebase Genkit, a new
+open-source framework for developers to build, deploy and monitor production-
+ready AI-powered apps.
+Llama 3 is not very censored
+April 19, 2024
+Compared to Llama 2, Llama 3 feels much less censored. Meta has substantially
+lowered false refusal rates. Llama 3 will refuse less than 1/3 of the prompts
+previously refused by Llama 2.
+Llama 3
+April 18, 2024
+Llama 3 is now available to run on Ollama. This model is the next generation of
+Meta's state-of-the-ar
+ama 3 is now available to run on Ollama. This model is the next generation of
+Meta's state-of-the-art large language model, and is the most capable openly
+available LLM to date.
+Embedding models
+April 8, 2024
+BlogDiscordGitHub	ModelsSign in Download 
+Embedding models are available in Ollama, making it easy to generate vector
+embeddings for use in search and retrieval augmented generation (RAG)
+applications.
+Ollama now supports AMD graphics cards
+March 14, 2024
+Ollama now supports AMD graphics cards in preview on Windows and Linux. All the
+features of Ollama can now be accelerated by AMD graphics cards on Ollama for
+Linux and Windows.
+Windows preview
+February 15, 2024
+Ollama is now available on Windows in preview, making it possible to pull, run and
+create large language models in a new native Windows experience. Ollama on
+Windows includes 
+run and
+create large language models in a new native Windows experience. Ollama on
+Windows includes built-in GPU acceleration, access to the full model library, and
+serves the Ollama API including OpenAI compatibility.
+OpenAI compatibility
+February 8, 2024
+Ollama now has initial compatibility with the OpenAI Chat Completions API, making
+it possible to use existing tooling built for OpenAI with local models via Ollama.
+Vision models
+February 2, 2024 
+New vision models are now available: LLaVA 1.6, in 7B, 13B and 34B parameter
+sizes. These models support higher resolution images, improved text recognition
+and logical reasoning.
+Python & JavaScript Libraries
+January 23, 2024
+The initial versions of the Ollama Python and JavaScript libraries are now available,
+making it easy to integrate your Python or JavaScript, or Typescript app with Ollama
+in a few lines of code. Both libraries include all the features of the Ollama REST API,
+are familiar in design, and compatible with new and previous versions of Ollama.
+Building LLM-Powered Web Apps wit
+n design, and compatible with new and previous versions of Ollama.
+Building LLM-Powered Web Apps with Client-Side Technology
+October 13, 2023
+Recreate one of the most popular LangChain use-cases with open source, locally
+running software - a chain that performs Retrieval-Augmented Generation, or RAG
+for short, and allows you to “chat with your documents”
+Ollama is now available as an official Docker image
+October 5, 2023
+Ollama can now run with Docker Desktop on the Mac, and run inside Docker
+containers with GPU acceleration on Linux.
+Leveraging LLMs in your Obsidian Notes
+September 21, 20
+r
+containers with GPU acceleration on Linux.
+Leveraging LLMs in your Obsidian Notes
+September 21, 2023
+This post walks through how you could incorporate a local LLM using Ollama in
+Obsidian, or potentially any note taking tool. 
+How to prompt Code Llama
+September 9, 2023
+This guide walks through the different ways to structure prompts for Code Llama
+and its different variations and features including instructions, code completion and
+fill-in-the-middle (FIM).
+Run Code Llama locally
+August 24, 2023
+Meta's Code Llama is now available on Ollama to try.
+Run WizardMath model for math problems
+August 14, 2023
+Run WizardMath model for math problems
+Run Llama 2 uncensored locally
+August 1, 2023
+This post will give some example comparisons running Llama 2 uncensored model
+versus its censored model.
+© 2024 Ollama	Blog Docs Git
+comparisons running Llama 2 uncensored model
+versus its censored model.
+© 2024 Ollama	Blog Docs GitHub Discord X (Twitter)Meetups 
+leased by Mistral AI, updated to version 0.2.
+7B
+Filter by name...
+BlogDiscordGitHub	ModelsSign in Download 
+ Tags Updated 3 months ago
+codegemma
+CodeGemma is a collection of powerful, lightweight models
+that can perform a variety of coding tasks like fill-in-the-
+middle code completion, code generation, natural language
+understanding, mathematical reasoning, and instruction
+following.
+2B 7B
+80.3K Pulls 85 Tags Updated 2 weeks ago
+command-r 
+eral-purpose model ranging from 3 billion parameters to
+70 billion, suitable for entry-level hardware.
+3B 7B 13B 65B
+98.8K Pulls 119 Tags Updated 6 months ago 
+er2 is the next generation of transparently trained
+open code LLMs that comes in three sizes: 3B, 7B and 15B
+parameters.
+3B 7B 16B
+62.2K Pulls 67 Tags Updated 2 weeks ago
+wizard-vicuna-uncensored
+Wizard Vicuna Uncensored is a 7B, 13B, and 30B parameter
+model based on Llama 2 uncensored by Eric Hartford.
+7B 13B 30B
+62K Pulls 49 Tags Updated 6 months ago 
+70B sizes by Eric
+Hartford based on Llama 3 that has a variety of instruction,
+conversational, and coding skills.
+8B 70B
+50.2K Pulls 54 Tags Updated 10 days ago
+yi
+Yi 1.5 is a high-performing, bilingual language model.
+6B 9B 34B
+49.6K Pulls 174 Tags Updated 8 days ago 
+ months ago
+mxbai-embed-large
+State-of-the-art large embedding model from mixedbread.ai
+334M
+44.2K Pulls 4 Tags Updated 2 weeks ago
+wizardcoder
+State-of-the-art code generation model
+7B 13B 33B 34B
+43.3K Pulls 67 Tags Updated 4 months ago 
+based model with support for a 16K
+context window.
+13B
+14.7K Pulls 18 Tags Updated 4 months ago
+meditron 
+Models
+Featured
+llama3
+Meta Llama 3: The most capable openly available LLM to date
+8B 70B
+1.4M Pulls 68 Tags Updated 14 hours ago
+phi3
+Phi-3 Mini is a 3.8B parameters, lightweight, state-of-the-art
+open model by Microsoft.
+4B
+207.9K Pulls 6 Tags Updated 3 weeks ago
+wizardlm2
+State of the art large language model from Microsoft AI with
+improved performance on complex chat, multilingual,
+reasoning and agent use cases.
+7B 141B
+53.8K Pulls 22 Tags Updated 4 weeks ago
+mistral
+The 7B model released by Mistral AI, updated to version 0.2.
+7B
+Filter by name...
+BlogDiscordGitHub	ModelsSign in D
+789.9K Pulls 68 Tags Updated 8 weeks ago
+gemma
+Gemma is a family of lightweight, state-of-the-art open
+models built by Google DeepMind. Updated to version 1.1
+2B 7B
+1.6M Pulls 102 Tags Updated 6 weeks ago
+mixtral
+A set of Mixture of Experts (MoE) model with open weights by
+Mistral AI in 8x7b and 8x22b parameter sizes.
+47B 141B
+246.1K Pulls 69 Tags Updated 4 days ago
+llama2
+Llama 2 is a collection of foundation language models ranging
+from 7B to 70B parameters.
+7B 13B 70B
+1.6M Pulls 102 Tags Updated 3 months ago
+codegemma
+CodeGemma is a collection of powerful, lightweight models
+tha
+Command R is a Large Language Model optimized for
+conversational interaction and long context tasks.
+35B
+37.4K Pulls 17 Tags Updated 7 weeks ago
+command-r-plus
+Command R+ is a powerful, scalable large language model
+purpose-built to excel at real-world enterprise use cases.
+104B
+30K Pulls 6 Tags Updated 4 weeks ago
+llava
+ LLaVA is a novel end-to-end trained large multimodal
+model that combines a vision encoder and Vicuna for
+general-purpose visual and language understanding.
+Updated to version 1.6.
+7B 13B 34B
+228.5K Pulls 98 Tags Updated 3 months ago
+dbrx
+DBRX is an open, genera
+to version 1.6.
+7B 13B 34B
+228.5K Pulls 98 Tags Updated 3 months ago
+dbrx
+DBRX is an open, general-purpose LLM created by
+Databricks.
+132B
+6,655 Pulls 7 Tags Updated 4 weeks ago
+codellama
+A large language model that can use text prompts to generate
+and discuss code.
+7B 13B 34B 69B
+461.2K Pulls 199 Tags Updated 10 days ago 
+qwen
+Qwen 1.5 is a series of large language models by Alibaba
+Cloud spanning from 0.5B to 110B parameters
+4B 8B 14B 32B 110B 0.5B 2B 72B
+372.5K Pulls 379 Tags Updated 3 weeks ago
+dolphin-mixtral
+Uncensored, 8x7b and 8x22b fine-tuned models based on
+the Mixtral mixture of experts models that excels at coding
+tasks. Created by Eric Hartford.
+47B 141B
+243.1K Pulls 87 Tags Updated 2 weeks ago
+llama2-uncensored
+Uncensored Llama 2 model by George Sung and Jarrad
+Hope.
+7B 65B
+192.3K Pulls 34 Tags Updated 6 months ago
+deepseek-coder
+DeepSeek Coder is a capable coding model trained on two
+tril
+gs Updated 6 months ago
+deepseek-coder
+DeepSeek Coder is a capable coding model trained on two
+trillion code and natural language tokens.
+1B 7B 33B
+144K Pulls 102 Tags Updated 4 months ago
+mistral-openorca
+Mistral OpenOrca is a 7 billion parameter model, fine-tuned
+on top of the Mistral 7B model using the OpenOrca dataset.
+7B
+124.6K Pulls 17 Tags Updated 7 months ago 
+nomic-embed-text
+A high-performing open embedding model with a large token
+context window.
+137M
+116.2K Pulls 3 Tags Updated 2 months ago
+dolphin-mistral
+The uncensored Dolphin model based on Mistral that excels
+at coding tasks. Updated to version 2.8.
+7B
+106.1K Pulls 120 Tags Updated 7 weeks ago
+phi
+Phi-2: a 2.7B language model by Microsoft Research that
+demonstrates outstanding reasoning and language
+understanding capabilities.
+3B
+102K Pulls 18 Tags Updated 3 months ago
+orca-mini
+A general-purpose model ranging from 3 billion parameters to
+70 billion, suitable for entry-level hardwar
+nous-hermes2
+The powerful family of models by Nous Research that excels
+at scientific discussion and coding tasks.
+11B 34B
+80.7K Pulls 33 Tags Updated 4 months ago
+zephyr
+Zephyr is a series of fine-tuned versions of the Mistral and
+Mixtral models that are trained to act as helpful assistants.
+7B 141B
+76.1K Pulls 40 Tags Updated 5 weeks ago
+llama2-chinese
+Llama 2 based model fine tuned to improve Chinese dialogue
+ability.
+7B 13B
+66.6K Pulls 35 Tags Updated 6 months ago
+starcoder2
+StarCoder2 is the next generation of transparently trained
+open code LLMs that comes in three sizes: 3B, 7B
+vicuna
+General use chat model based on Llama and Llama 2 with 2K
+to 16K context sizes.
+7B 13B 30B
+60.5K Pulls 111 Tags Updated 6 months ago
+tinyllama
+The TinyLlama project is an open endeavor to train a compact
+1.1B Llama model on 3 trillion tokens.
+1B
+53.4K Pulls 36 Tags Updated 4 months ago
+openhermes
+OpenHermes 2.5 is a 7B model fine-tuned by Teknium on
+Mistral with fully open datasets.
+7B
+51.4K Pulls 35 Tags Updated 4 months ago
+dolphin-llama3
+Dolphin 2.9 is a new model with 8B and 70B sizes by Eric
+Hartford based on Llama 3 that has a variety of instruction,
+conversational, and c
+starcoder
+StarCoder is a code generation model trained on 80+
+programming languages.
+1B 3B 7B 15B
+49.2K Pulls 100 Tags Updated 7 months ago
+openchat
+A family of open-source models trained on a wide variety of
+data, surpassing ChatGPT on various benchmarks. Updated
+to version 3.5-0106.
+7B
+48.4K Pulls 50 Tags Updated 4 months ago
+tinydolphin
+An experimental 1.1B parameter model trained on the new
+Dolphin 2.8 dataset by Eric Hartford and based on TinyLlama.
+1B
+44.5K Pulls 18 Tags Updated 3 months ago
+mxbai-embed-large
+State-of-the-art large embedding model from mixedbread.ai
+334M
+44.2K 
+stable-code
+Stable Code 3B is a coding model with instruct and code
+completion variants on par with models such as Code Llama
+7B that are 2.5x larger.
+3B
+43K Pulls 36 Tags Updated 8 weeks ago
+neural-chat
+A fine-tuned model based on Mistral with good coverage of
+domain and language.
+7B
+35.8K Pulls 50 Tags Updated 7 weeks ago
+phind-codellama
+Code generation model based on Code Llama.
+34B
+32.5K Pulls 49 Tags Updated 4 months ago
+wizard-math
+Model focused on math and logic problems
+7B 13B 65B
+32.1K Pulls 64 Tags Updated 5 months ago
+starling-lm
+Starling is a large language model traine
+5B
+32.1K Pulls 64 Tags Updated 5 months ago
+starling-lm
+Starling is a large language model trained by reinforcement
+learning from AI feedback focused on improving chatbot
+helpfulness.
+7B
+28.5K Pulls 36 Tags Updated 6 weeks ago 
+falcon
+A large language model built by the Technology Innovation
+Institute (TII) for use in summarization, text generation, and
+chat bots.
+7B 40B 180B
+27.1K Pulls 38 Tags Updated 6 months ago
+dolphincoder
+A 7B and 15B uncensored variant of the Dolphin model family
+that excels at coding, based on StarCoder2.
+7B 16B
+26.8K Pulls 35 Tags Updated 6 weeks ago
+nous-hermes
+General use models based on Llama and Llama 2 from Nous
+Research.
+7B 13B 65B
+26.3K Pulls 63 Tags Updated 6 months ago
+orca2
+Orca 2 is built by Microsoft research, and are a fine-tuned
+version of Meta's Llama 2 models. The m
+
+Orca 2 is built by Microsoft research, and are a fine-tuned
+version of Meta's Llama 2 models. The model is designed to
+excel particularly in reasoning.
+7B 13B
+25.7K Pulls 33 Tags Updated 6 months ago
+stablelm2
+Stable LM 2 is a state-of-the-art 1.6B and 12B parameter
+language model trained on multilingual data in English,
+Spanish, German, Italian, French, Portuguese, and Dutch.
+2B 12B 
+25.1K Pulls 84 Tags Updated 2 weeks ago
+sqlcoder
+SQLCoder is a code completion model fined-tuned on
+StarCoder for SQL generation tasks
+7B 15B 69B
+24.6K Pulls 48 Tags Updated 3 months ago
+dolphin-phi
+2.7B uncensored Dolphin model by Eric Hartford, based on
+the Phi language model by Microsoft Research.
+3B
+23.6K Pulls 15 Tags Updated 4 months ago
+solar
+A compact, yet powerful 10.7B large language model
+designed for single-turn conversation.
+11B
+22K Pulls 32 Tags Updated 5 months ago
+yarn-llama2
+An extension of Llama 2 that supports a context of up to 128k
+tokens.
+7B 13B
+21.1K Pulls 6
+n-llama2
+An extension of Llama 2 that supports a context of up to 128k
+tokens.
+7B 13B
+21.1K Pulls 67 Tags Updated 6 months ago
+deepseek-llm
+An advanced language model crafted with 2 trillion bilingual
+tokens.
+7B 67B 
+20.9K Pulls 64 Tags Updated 5 months ago
+codeqwen
+CodeQwen1.5 is a large language model pretrained on a large
+amount of code data.
+7B
+20.4K Pulls 21 Tags Updated 4 weeks ago
+llama3-gradient
+This model extends LLama-3 8B's context length from 8k to
+over 1m tokens.
+8B 70B
+19.2K Pulls 35 Tags Updated 2 weeks ago
+bakllava
+BakLLaVA is a multimodal model consisting of the Mistral 7B
+base model augmented with the LLaVA architecture.
+7B
+19.2K Pulls 17 Tags Updated 5 months ago
+all-minilm
+Embedding models on very large sentence level datasets.
+23M 33M
+19.1K Pulls 10 Tags Updated 2 weeks 
+edding models on very large sentence level datasets.
+23M 33M
+19.1K Pulls 10 Tags Updated 2 weeks ago 
+samantha-mistral
+A companion assistant trained in philosophy, psychology, and
+personal relationships. Based on Mistral.
+7B
+18.9K Pulls 49 Tags Updated 7 months ago
+medllama2
+Fine-tuned Llama 2 model to answer medical questions based
+on an open source medical dataset.
+7B
+18.2K Pulls 17 Tags Updated 6 months ago
+xwinlm
+Conversational model based on Llama 2 that performs
+competitively on various benchmarks.
+7B 13B 65B
+18.2K Pulls 80 Tags Updated 6 months ago
+wizardlm-uncensored
+Uncensored version of Wizard LM model
+13B
+17.6K Pulls 18 Tags Updated 6 months ago
+stable-beluga
+Llama 2 bas
+version of Wizard LM model
+13B
+17.6K Pulls 18 Tags Updated 6 months ago
+stable-beluga
+Llama 2 based model fine tuned on an Orca-style dataset.
+Originally called Free Willy.
+7B 13B 65B
+17.4K Pulls 49 Tags Updated 6 months ago 
+nous-hermes2-mixtral
+The Nous Hermes 2 model from Nous Research, now trained
+over Mixtral.
+47B
+17.3K Pulls 18 Tags Updated 4 months ago
+wizardlm
+General use model based on Llama 2.
+7B 13B 30B 65B
+16.7K Pulls 73 Tags Updated 5 weeks ago
+codeup
+Great code generation model based on Llama2.
+13B
+15.8K Pulls 19 Tags Updated 6 months ago
+yarn-mistral
+An extension of Mistral to support context windows of 64K or
+128K.
+7B
+15.3K Pulls 33 Tags Updated 4 months ago
+everythinglm
+Uncensored Llama2 based model with support for a 16K
+context window.
+13B
+14.7K Pulls 18 Tags Updated 4 months ago
+m
+Open-source medical large language model adapted from
+Llama 2 to the medical domain.
+7B 69B
+14.1K Pulls 22 Tags Updated 5 months ago
+llama-pro
+An expansion of Llama 2 that specializes in integrating both
+general language understanding and domain-specific
+knowledge, particularly in programming and mathematics.
+8B
+14.1K Pulls 33 Tags Updated 4 months ago
+magicoder
+ Magicoder is a family of 7B parameter models trained on
+75K synthetic instruction data using OSS-Instruct, a novel
+approach to enlightening LLMs with open-source code
+snippets.
+7B
+11.8K Pulls 18 Tags Updated 5 months ag
+h to enlightening LLMs with open-source code
+snippets.
+7B
+11.8K Pulls 18 Tags Updated 5 months ago
+llama3-chatqa
+A model from NVIDIA based on Llama 3 that excels at
+conversational question answering (QA) and retrieval-
+augmented generation (RAG).
+8B 70B
+11.8K Pulls 35 Tags Updated 10 days ago 
+nexusraven
+Nexus Raven is a 13B instruction tuned model for function
+calling tasks.
+13B
+11.7K Pulls 32 Tags Updated 4 months ago
+stablelm-zephyr
+A lightweight chat model allowing accurate, and responsive
+output without requiring high-end hardware.
+3B
+11.7K Pulls 17 Tags Updated 4 months ago
+codebooga
+A high-performing code instruct model created by merging
+two existing code models.
+34B
+11K Pulls 16 Tags Updated 6 months ago
+mistrallite
+MistralLite is a fine-tuned model based on Mistral with
+enhanced capabilities of processing long contexts.
+7B
+10.5K Pulls 17 Tags Updated 6 months a
+with
+enhanced capabilities of processing long contexts.
+7B
+10.5K Pulls 17 Tags Updated 6 months ago
+wizard-vicuna
+Wizard Vicuna is a 13B parameter model based on Llama 2
+trained by MelodysDreamj.
+13B
+9,833 Pulls 17 Tags Updated 6 months ago 
+llava-llama3
+A LLaVA model fine-tuned from Llama 3 Instruct with better
+scores in several benchmarks.
+8B
+8,963 Pulls 4 Tags Updated 13 days ago
+snowflake-arctic-embed
+A suite of text embedding models by Snowflake, optimized for
+performance.
+23M 33M 109M 137M 334M
+8,524 Pulls 16 Tags Updated 4 weeks ago
+moondream
+moondream2 is a small vision language model designed to
+run efficiently on edge devices.
+1B
+8,044 Pulls 18 Tags Updated 8 days ago
+goliath
+A language model created by combining two fine-tuned
+Llama 2 70B models into one.
+118B
+7,916 Pulls 16 Tags Updated 6 months ago
+open-or
+two fine-tuned
+Llama 2 70B models into one.
+118B
+7,916 Pulls 16 Tags Updated 6 months ago
+open-orca-platypus2
+Merge of the Open Orca OpenChat model and the Garage-
+bAInd Platypus 2 model. Designed for chat and code
+generation.
+13B
+7,854 Pulls 17 Tags Updated 6 months ago 
+duckdb-nsql
+7B parameter text-to-SQL model made by MotherDuck and
+Numbers Station.
+7B
+7,635 Pulls 17 Tags Updated 3 months ago
+notux
+A top-performing mixture of experts model, fine-tuned with
+high-quality data.
+47B
+7,458 Pulls 18 Tags Updated 4 months ago
+megadolphin
+MegaDolphin-2.2-120b is a transformation of Dolphin-2.2-
+70b created by interleaving the model with itself.
+120B
+7,386 Pulls 19 Tags Updated 4 months ago
+notus
+A 7B chat model fine-tuned with high-quality data and based
+on Zephyr.
+7B
+6,685 Pulls 18 Tags Updated 4 months ago
+alfred
+A robust conversational model designed
+Zephyr.
+7B
+6,685 Pulls 18 Tags Updated 4 months ago
+alfred
+A robust conversational model designed to be used for both
+chat and instruct use cases.
+42B
+5,345 Pulls 7 Tags Updated 6 months ago 
+llava-phi3
+A new small LLaVA model fine-tuned from Phi 3 Mini.
+4B
+5,067 Pulls 4 Tags Updated 13 days ago
+falcon2
+Falcon2 is an 11B parameters causal decoder-only model built
+by TII and trained over 5T tokens.
+11B
+3,709 Pulls 17 Tags Updated 7 days ago
+© 2024 Ollama	Blog Docs GitHub Discord X (Twitter)Meetups 
+Ollama
+Founded:
+Team Size:
+Location:Palo Alto
+    
+Active Founders
+Jeffrey Morgan
+Jeffrey Morgan
+Ollama
+  
+Michael Chiang
+https://github.com/ollama/ollama
+Michael Chiang
+Ollama
+   
+About
+What Happens at YC?ApplyYC Interview GuideFAQPeopleYC Blog
+Companies
+Startup DirectoryTop CompaniesFounder DirectoryLaunch YC
+Startup Jobs
+All Jobs◦ Engineering◦ Operations◦ Marketing◦ SalesPioneer Internship Program 2024Startup Job GuideCareer
+CoachingYC Startup Jobs Blog
+Find a Co-Founder
+Library
+SAFE
+Resources
+Startup SchoolNewsletterFor InvestorsHacker NewsBookface
+Open main menu
+Apply for S2024 batch.Apply
+Home›Companies›Ollama
+Ollama
+Get up and running with large language models, locally.
+W21
+Active
+artificial-intelligence
+developer-tools
+open-source
+Palo Alto
+Company
+J
+ models, locally.
+W21
+Active
+artificial-intelligence
+developer-tools
+open-source
+Palo Alto
+Company
+Jobs0
+News
+ 
+https://ollama.com
+Get up and running with large language models, locally.
+Latest News
+Ollama is now available as an official Docker image · Ollama Blog
+Oct 05, 2023
+Run Llama 2 uncensored locally · Ollama Blog
+Aug 01, 2023 
+Footer
+Y Combinator
+Programs
+YC Program
+Startup School
+Work at a Startup
+Co-Founder Matching
+Company
+YC Blog
+Contact
+Press
+People
+Careers
+Privacy Policy
+Notice at Collection
+Security
+Terms of Use
+Resources
+Startup Directory
+Startup Library
+Investors
+SAFE
+Hacker News
+Launch YC
+YC Deals
+Make something people want.
+Apply
+TwitterFacebookInstagramLinkedInYoutube
+© 2024 Y Combinator 
+Get up and running with large
+language models.
+Run Llama 3, Phi 3, Mistral, Gemma, and other
+models. Customize and create your own.
+Download ↓
+Available for macOS, Linux,
+and Windows (preview)
+BlogDiscordGitHub	ModelsSign in Download
+© 2024 Ollama	Blog Docs GitHub Discord X (Twitter)Meetups 
+amples with different open source models with
+different use-cases. This will help you to use any future open
+source LLM models with ease.
+So, lets get started with the first example!
+How to Run the LLama2 Model from Meta
+Llama 2 model is an open-source LLM model from Meta and we'll
+interact with it like we'd do with ChatGPT (free version), only text
+Learn to code — free 3,000-hour curriculum
+Forum Donate 
+APRIL 2, 2024/#LLMS
+How to Run Open Source LLMs
+Locally Using Ollama
+Sahil Mahapatra
+Learn to code — free 3,000-hour curriculum
+Forum Donate 
+This article will guide you through downloading and
+using Ollama, a powerful tool for interacting with
+open-source large language models (LLMs) on your
+local machine.
+Learn to code — free 3,000-hour curriculum
+Forum Donate 
+Unlike closed-source models like ChatGPT, Ollama offers
+transparency and customization, making it a valuable resource for
+developers and enthusiasts.
+We'll explore how to download Ollama and interact with two
+exciting open-source LLM models: LLaMA 2, a text-based model
+from Meta, and LLaVA, a multimodal model that can handle both
+text and images.
+How to Download Ollama
+To download Ollama, head on to the official website of Ollama and
+hit the download button.
+ollama homepage
+Learn to code — free 3,000-hour curriculum
+Forum Donate 
+Ollama supports 3 different operating systems, and the Windows
+version is in preview mode.
+ollama download page
+You can choose the executable file according to your OS and after
+successfully downloading the executable file, you can install it by
+running the executable file.
+For Linux users, you have to execute the command that is being
+shown on the screen instead of downloading an executable file.
+How to Run Ollama
+To show you the power of using open source LLMs locally, I'll
+present multiple examples with different open source models with
+different use-cases. This will help you to use any fut
+As a responsible AI language model, I am here to assist you with any quest
+with:
+1. Answering questions: I can provide information on a wide range of topic
+2. Generating ideas: I can help you brainstorm ideas for creative projects
+3. Writing assistance: I can help you with writing tasks such as proofread
+4. Translation: I can translate text from one language to another.
+5. Summarizing content: I can summarize long pieces of text, such as artic
+6. Creativity: I can help you generate creative ideas for stories, poems, 
+7. Language learning: I can assist you in learning a new language by provi
+8.
+s for stories, poems, 
+7. Language learning: I can assist you in learning a new language by provi
+8. Chatting: I'm here to chat with you and provide a response to any quest
+Please let me know if there is anything specific you would like me to help
+>>> Send a message (/? for help)
+So that is the response that I got from llama2.
+To exit the program, you can type /exit.
+Let's now run a multi-modal model where you can send an image
+and ask questions based on that.
+How to Run the LLaVA Model
+LLaVA is a open-source multi-modal LLM model. A multi-modal
+model can take input of multiple types and gener
+ a open-source multi-modal LLM model. A multi-modal
+model can take input of multiple types and generate a response
+accordingly.
+Using this model, we are now going to pass an image and ask a
+question based on that.
+So, first things first, lets download the model:
+Learn to code — free 3,000-hour curriculum
+Forum Donate 
+freeCodeCamp is a donor-supported tax-exempt 501(c)(3) charity organization (United States Federal Tax
+Identification Number: 82-0779546)
+Our mission: to help people learn to code for free. We accomplish this by creating thousands of videos,
+articles, and interactive coding lessons - all freely available to the public.
+Donations to freeCodeCamp go toward our education initiatives, and help pay for servers, services, and staff.
+You can make a tax-deductible donation here.
+Trending Guides
+Date Formatting in JS	Java Iterator Hashmap	Cancel a Merge in Git
+What is a Linked List?	Install Java in Ubu
+matting in JS	Java Iterator Hashmap	Cancel a Merge in Git
+What is a Linked List?	Install Java in Ubuntu	Python Ternary Operator
+Full Stack Career Guide Python Sort Dict by Key Smart Quotes Copy/Paste
+JavaScript Array Length Sets in Python	Kotlin vs Java
+SQL Temp Table	HTML Form Basics	Comments in YAML
+Pandas Count Rows	Python End Program	Python XOR Operator
+Python Dict Has Key	Python List to String	Exit Function in Python
+String to Array in Java	Python Import from File Parse a String in Python
+Python Merge Dictionaries Copy a Directory in Linux Reactive Programming Guide
+Center Text Vertically
+ython Merge Dictionaries Copy a Directory in Linux Reactive Programming Guide
+Center Text Vertically CSS What’s a Greedy Algorithm? Edit Commit Messages in Git
+Mobile App
+ADVERTISEMENT
+Conclusion
+That's it! With Ollama, you can experiment with powerful LLMs
+like LLaMA 2 and LLaVA on your own machine.
+Download Ollama and explore the exciting world of open-source
+large language models!
+Sahil Mahapatra
+Read more posts.
+If you read this far, thank the author to show them you care.
+Say Thanks
+Learn to code for free. freeCodeCamp's open source curriculum
+has helped more than 40,000 people get jobs
+ to code for free. freeCodeCamp's open source curriculum
+has helped more than 40,000 people get jobs as developers.
+Get started
+Learn to code — free 3,000-hour curriculum
+Forum Donate 
+Our Charity
+AboutAlumni NetworkOpen SourceShopSupportSponsorsAcademic HonestyCode of Conduct
+Privacy PolicyTerms of ServiceCopyright Policy
+Learn to code — free 3,000-hour curriculum
+Forum Donate ","Send me a summary of the articles making each article a title and TLDR"]

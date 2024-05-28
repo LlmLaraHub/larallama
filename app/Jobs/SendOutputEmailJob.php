@@ -3,18 +3,14 @@
 namespace App\Jobs;
 
 use App\Domains\Collections\CollectionStatusEnum;
-use App\Domains\Documents\TypesEnum;
 use App\Domains\Prompts\PromptMerge;
-use App\Domains\UnStructured\StructuredTypeEnum;
 use App\Mail\OutputMail;
-use App\Models\Document;
 use App\Models\Output;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
 
@@ -47,6 +43,7 @@ class SendOutputEmailJob implements ShouldQueue
          * but the query for some things (email type)
          * might need more finness
          * So in this case $this->output()->getContext()
+         *
          * @see app/Domains/Sources/EmailSource.php:79
          * Find the Class
          * then run the class returning string
@@ -60,26 +57,28 @@ class SendOutputEmailJob implements ShouldQueue
         $title = 'Summary '.$title;
 
         $content = $this->output->getContext();
-        $content[] = '***below is the context***';
-        $content[] = '[CONTEXT]';
-        $content = implode("\n", $content);
+
+        //put_fixture("latest_content.json", $content);
+
+        if (empty($content)) {
+            notify_collection_ui(
+                $this->output->collection,
+                CollectionStatusEnum::PROCESSED,
+                'No new content to send update for'
+            );
+
+            return;
+        }
+
+        $content = collect($content)
+            ->implode("\n");
+
         $tokens = ['[CONTEXT]'];
         $content = [$content];
+        $prompt = $this->output->getPrompt();
+        $prompt = PromptMerge::merge($tokens, $content, $prompt);
 
-        /**
-         * @NOTE
-         * The summary is the prompt of the output
-         * @TODO
-         * Introduce more tokens
-         */
-        $prompt = PromptMerge::merge($tokens, $content, $this->output->summary);
-
-        Log::info('[LaraChain] - Sending this prompt to LLM', [
-            'prompt' => $prompt,
-            'content' => $content[0]
-        ]);
-
-        put_fixture('prompt_for_summary_report.txt', $prompt, false);
+        put_fixture('latest_content_prompt.txt', $prompt, false);
 
         notify_collection_ui(
             $this->output->collection,
@@ -112,5 +111,4 @@ class SendOutputEmailJob implements ShouldQueue
             ]);
         }
     }
-
 }

@@ -2,10 +2,10 @@
 
 namespace App\Models;
 
-use Facades\App\Domains\Outputs\DefaultOutput;
 use App\Domains\Outputs\OutputTypeEnum;
 use App\Domains\Recurring\RecurringTypeEnum;
 use Carbon\Carbon;
+use Facades\App\Domains\Outputs\DefaultOutput;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -59,6 +59,20 @@ class Output extends Model
         $class->handle($this);
     }
 
+    public function getPrompt(): string
+    {
+        $prompt = $this->summary;
+
+        if (! str($prompt)->contains('[CONTEXT]')) {
+            $prompt = str($prompt)
+                ->append("\n***below is the context to use in your summary***")
+                ->append("\n[CONTEXT]")
+                ->toString();
+        }
+
+        return $prompt;
+    }
+
     /**
      * Get the route key for the model.
      */
@@ -79,17 +93,19 @@ class Output extends Model
         return data_get($meta_data, $key, false);
     }
 
-    public function getContext() : array
+    public function getContext(): array
     {
         $class = '\\App\\Domains\\Outputs\\'.$this->type->name;
         if (class_exists($class)) {
             $facade = '\\Facades\\App\\Domains\\Outputs\\'.$this->type->name;
-            return $facade::handle($this);
+
+            return $facade::getContext($this);
         } else {
             Log::info('[LaraChain] - No Class found ', [
                 'class' => $class,
             ]);
-            return DefaultOutput::handle($this);
+
+            return DefaultOutput::getContext($this);
         }
     }
 }

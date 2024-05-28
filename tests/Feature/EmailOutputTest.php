@@ -2,14 +2,14 @@
 
 namespace Tests\Feature;
 
-use App\Domains\Outputs\DefaultOutput;
+use App\Domains\Outputs\EmailOutput;
 use App\Models\Collection;
 use App\Models\Document;
 use App\Models\DocumentChunk;
 use App\Models\Output;
 use Tests\TestCase;
 
-class DefaultOutputTest extends TestCase
+class EmailOutputTest extends TestCase
 {
     /**
      * A basic feature test example.
@@ -31,9 +31,8 @@ class DefaultOutputTest extends TestCase
             ['document_id' => $document->id]
         );
 
-        $results = (new DefaultOutput())->getContext($output);
+        $results = (new EmailOutput())->getContext($output);
 
         $this->assertCount(5, $results);
-
     }
 }

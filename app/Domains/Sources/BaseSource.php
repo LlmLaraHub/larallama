@@ -133,13 +133,13 @@ abstract class BaseSource
         ]);
     }
 
-    public function getContext(Output $output) : string
+    public function getContext(Output $output): string
     {
         $documents = $output->collection
             ->documents()
             ->when($output->last_run != null, function ($query) use ($output) {
                 $query->whereDate('created_at', '>=', $output->last_run);
-            }, function($query) {
+            }, function ($query) {
                 $query->limit(5);
             })
             ->latest()
@@ -147,7 +147,8 @@ abstract class BaseSource
 
         if ($documents->count() === 0) {
             Log::info('LaraChain] - No Emails since the last run');
-            return "";
+
+            return '';
         }
 
         $content = [];
@@ -183,7 +184,6 @@ abstract class BaseSource
 
         return $prompt;
     }
-
 
     protected function getContentFromChild(Document $document): string
     {

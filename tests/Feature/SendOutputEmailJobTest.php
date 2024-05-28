@@ -2,12 +2,12 @@
 
 namespace Tests\Feature;
 
-use App\Domains\Documents\TypesEnum;
+use App\Domains\Outputs\OutputTypeEnum;
 use App\Domains\Recurring\RecurringTypeEnum;
-use App\Domains\UnStructured\StructuredTypeEnum;
 use App\Jobs\SendOutputEmailJob;
 use App\Models\Collection;
 use App\Models\Document;
+use App\Models\DocumentChunk;
 use App\Models\Output;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Mail;
@@ -24,22 +24,23 @@ class SendOutputEmailJobTest extends TestCase
     {
         Mail::fake();
         Event::fake();
+
         $collection = Collection::factory()->create();
+
         $output = Output::factory()->create([
             'recurring' => RecurringTypeEnum::HalfHour,
-            'last_run' => now()->subWeek(),
+            'type' => OutputTypeEnum::WebPage,
             'collection_id' => $collection->id,
-            'meta_data' => [
-                'to' => 'bob@bobsburgers.com',
-            ],
+            'last_run' => null,
         ]);
 
-        $parent = Document::factory()->create([
-            'type' => TypesEnum::Email,
+        $document = Document::factory()->create([
             'collection_id' => $collection->id,
-            'created_at' => now(),
         ]);
 
+        DocumentChunk::factory(5)->create(
+            ['document_id' => $document->id]
+        );
 
         LlmDriverFacade::shouldReceive('driver->completion')
             ->once()->andReturn(
@@ -58,34 +59,21 @@ class SendOutputEmailJobTest extends TestCase
     {
         Mail::fake();
         $collection = Collection::factory()->create();
+
         $output = Output::factory()->create([
             'recurring' => RecurringTypeEnum::HalfHour,
-            'last_run' => now()->subWeek(),
+            'type' => OutputTypeEnum::WebPage,
             'collection_id' => $collection->id,
-            'meta_data' => [
-                'to' => 'bob@bobsburgers.com',
-            ],
+            'last_run' => now()->subDay(),
         ]);
 
-        $parent = Document::factory()->create([
-            'type' => TypesEnum::Email,
+        $document = Document::factory()->create([
             'collection_id' => $collection->id,
-            'created_at' => now(),
         ]);
 
-        $childFrom = Document::factory()->create([
-            'parent_id' => $parent->id,
-            'collection_id' => $collection->id,
-            'type' => TypesEnum::Contact,
-            'child_type' => StructuredTypeEnum::EmailTo,
-        ]);
-
-        $childTo = Document::factory()->create([
-            'parent_id' => $parent->id,
-            'collection_id' => $collection->id,
-            'type' => TypesEnum::Contact,
-            'child_type' => StructuredTypeEnum::EmailFrom,
-        ]);
+        DocumentChunk::factory(5)->create(
+            ['document_id' => $document->id]
+        );
 
         LlmDriverFacade::shouldReceive('driver->completion')
             ->once()->andReturn(
