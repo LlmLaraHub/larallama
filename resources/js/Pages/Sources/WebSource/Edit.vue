@@ -16,22 +16,24 @@ const props = defineProps({
     source: {
         type: Object
     },
-    recurring: Object
+    recurring: Object,
+    info: String,
+    type: String
 });
 
 const form = useForm({
-    title: props.source.title,
-    details: props.source.details,
-    active: props.source.active,
-    recurring: props.source.recurring
+    title: props.source.data.title,
+    details: props.source.data.details,
+    active: props.source.data.active,
+    recurring: props.source.data.recurring
 });
 
 
 const submit = () => {
     form.put(
-        route('collections.sources.websearch.update', {
+        route('collections.sources.web_search_source.update', {
             collection: props.collection.data.id,
-            source: props.source.id
+            source: props.source.data.id
         }), {
             preserveScroll: true,
         });
@@ -42,7 +44,7 @@ const submit = () => {
     <AppLayout title=" Edit Web Source">
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Edit Web Source
+                {{ type}}
             </h2>
         </template>
 
@@ -50,10 +52,9 @@ const submit = () => {
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-5">
                     <Intro>
-                        Web Search Source
+                        {{ type }}
                         <template #description>
-                            Add a query below and you will be able to run it as a web search.
-                            This will add documents to your collection.
+                            {{ info }}
                         </template>
                     </Intro>
                     <form @submit.prevent="submit" class="p-10 ">

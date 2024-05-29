@@ -82,16 +82,29 @@ Route::middleware([
         }
     );
 
+    Route::controller(\App\Http\Controllers\Sources\EmailBoxSourceController::class)->group(
+        function () {
+            Route::get('/collections/{collection}/sources/email_box_source/create', 'create')
+                ->name('collections.sources.email_box_source.create');
+            Route::post('/collections/{collection}/sources/email_box_source', 'store')
+                ->name('collections.sources.email_box_source.store');
+            Route::get('/collections/{collection}/sources/email_box_source/{source}/edit', 'edit')
+                ->name('collections.sources.email_box_source.edit');
+            Route::put('/collections/{collection}/sources/email_box_source/{source}/update', 'update')
+                ->name('collections.sources.email_box_source.update');
+        }
+    );
+
     Route::controller(WebSourceController::class)->group(
         function () {
-            Route::get('/collections/{collection}/sources/websearch/create', 'create')
-                ->name('collections.sources.websearch.create');
-            Route::post('/collections/{collection}/sources/websearch', 'store')
-                ->name('collections.sources.websearch.store');
-            Route::get('/collections/{collection}/sources/websearch/{source}/edit', 'edit')
-                ->name('collections.sources.websearch.edit');
-            Route::put('/collections/{collection}/sources/websearch/{source}/update', 'update')
-                ->name('collections.sources.websearch.update');
+            Route::get('/collections/{collection}/sources/web_search_source/create', 'create')
+                ->name('collections.sources.web_search_source.create');
+            Route::post('/collections/{collection}/sources/web_search_source', 'store')
+                ->name('collections.sources.web_search_source.store');
+            Route::get('/collections/{collection}/sources/web_search_source/{source}/edit', 'edit')
+                ->name('collections.sources.web_search_source.edit');
+            Route::put('/collections/{collection}/sources/web_search_source/{source}/update', 'update')
+                ->name('collections.sources.web_search_source.update');
         }
     );
 

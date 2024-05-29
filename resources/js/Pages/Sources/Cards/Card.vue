@@ -47,7 +47,7 @@ const run = (source) => {
             </div>
             <div class="card-actions justify-end">
                 <button @click="run(source)" type="button" class="btn btn-primary rounded-none">Run</button>
-                <Link :href="route('collections.sources.websearch.edit', {
+                <Link :href="route('collections.sources.web_search_source.edit', {
                                     collection: source.collection_id,
                                     source: source.id
                                 })" class="btn btn-primary rounded-none">Edit</Link>

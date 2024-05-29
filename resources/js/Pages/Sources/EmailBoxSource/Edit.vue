@@ -7,46 +7,61 @@ import Intro from '@/Components/Intro.vue';
 import SecondaryLink from '@/Components/SecondaryLink.vue';
 import Resources from './Components/Resources.vue';
 import { useForm } from '@inertiajs/vue3';
+import { useToast } from 'vue-toastification';
+const toast = useToast();
 
 const props = defineProps({
     collection: {
         type: Object,
         required: true,
     },
-    sources: {
+    source: {
         type: Object
     },
-    recurring: {
-        type: Object
-    }
+    recurring: Object,
+    info: String,
+    type: String
 });
 
 const form = useForm({
-    title: '',
-    details: '',
-    recurring: 'not',
-    active: true
+    title: props.source.data.title,
+    details: props.source.data.details,
+    active: props.source.data.active,
+    recurring: props.source.data.recurring,
+    secrets: {
+        username: props.source.data.secrets.username,
+        password: props.source.data.secrets.password,
+        host: props.source.data.secrets.host,
+        email_box: props.source.data.secrets.email_box,
+        port: props.source.data.secrets.port,
+        delete: props.source.data.secrets.delete,
+    }
+
 });
 
 
 const submit = () => {
-    form.post(
-        route('collections.sources.web_search_source.store', {
-            collection: props.collection.data.id
+    form.put(
+        route('collections.sources.email_box_source.update', {
+            collection: props.collection.data.id,
+            source: props.source.data.id
         }), {
             preserveScroll: true,
             onSuccess: () => {
-                form.reset();
+                toast.success('Source updated');
+            },
+            onError: () => {
+                toast.error('Error updating source see validation errors or logs');
             }
         });
 }
 </script>
 
 <template>
-    <AppLayout title="Sources">
+    <AppLayout :title="type">
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Sources
+                {{ type}}
             </h2>
         </template>
 
@@ -54,14 +69,14 @@ const submit = () => {
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-5">
                     <Intro>
-                        Web Search Source
+                        {{ type }}
                         <template #description>
-                            Add a query below and you will be able to run it as a web search.
-                            This will add documents to your collection.
+                            {{ info }}
                         </template>
                     </Intro>
 
                     <form @submit.prevent="submit" class="p-10 ">
+
                         <Resources
                             :recurring="recurring"
                         v-model="form">
@@ -76,7 +91,7 @@ const submit = () => {
                                 collection: collection.data.id
 
                             })">
-                                Cancel
+                                Back
                             </SecondaryLink>
                         </div>
                     </form>

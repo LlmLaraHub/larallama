@@ -32,6 +32,12 @@ class SourceFactory extends Factory
                 'limit' => 5,
                 'api_key' => $this->faker->uuid,
             ],
+            'secrets' => [
+                'username' => $this->faker->name,
+                'password' => $this->faker->password,
+                'host' => $this->faker->url,
+                'email_box' => $this->faker->email,
+            ],
         ];
     }
 }

@@ -1,0 +1,84 @@
+{
+    "date_format": "d-M-Y",
+    "default": "default",
+    "accounts": {
+        "default": {
+            "host": "localhost",
+            "port": 993,
+            "protocol": "imap",
+            "encryption": "ssl",
+            "validate_cert": true,
+            "username": "root@example.com",
+            "password": "",
+            "authentication": null,
+            "proxy": {
+                "socket": null,
+                "request_fulluri": false,
+                "username": null,
+                "password": null
+            },
+            "timeout": 30,
+            "extensions": []
+        }
+    },
+    "options": {
+        "delimiter": "\/",
+        "fetch": 2,
+        "sequence": 1,
+        "fetch_body": true,
+        "fetch_flags": true,
+        "soft_fail": false,
+        "rfc822": true,
+        "debug": false,
+        "uid_cache": true,
+        "boundary": "\/boundary=(.*?(?=;)|(.*))\/i",
+        "message_key": "list",
+        "fetch_order": "asc",
+        "dispositions": [
+            "attachment",
+            "inline"
+        ],
+        "common_folders": {
+            "root": "INBOX",
+            "junk": "INBOX\/Junk",
+            "draft": "INBOX\/Drafts",
+            "sent": "INBOX\/Sent",
+            "trash": "INBOX\/Trash"
+        },
+        "decoder": {
+            "message": "utf-8",
+            "attachment": "utf-8"
+        },
+        "open": []
+    },
+    "flags": [
+        "recent",
+        "flagged",
+        "answered",
+        "deleted",
+        "seen",
+        "draft"
+    ],
+    "events": {
+        "message": {
+            "new": "Webklex\\PHPIMAP\\Events\\MessageNewEvent",
+            "moved": "Webklex\\PHPIMAP\\Events\\MessageMovedEvent",
+            "copied": "Webklex\\PHPIMAP\\Events\\MessageCopiedEvent",
+            "deleted": "Webklex\\PHPIMAP\\Events\\MessageDeletedEvent",
+            "restored": "Webklex\\PHPIMAP\\Events\\MessageRestoredEvent"
+        },
+        "folder": {
+            "new": "Webklex\\PHPIMAP\\Events\\FolderNewEvent",
+            "moved": "Webklex\\PHPIMAP\\Events\\FolderMovedEvent",
+            "deleted": "Webklex\\PHPIMAP\\Events\\FolderDeletedEvent"
+        },
+        "flag": {
+            "new": "Webklex\\PHPIMAP\\Events\\FlagNewEvent",
+            "deleted": "Webklex\\PHPIMAP\\Events\\FlagDeletedEvent"
+        }
+    },
+    "masks": {
+        "message": "Webklex\\PHPIMAP\\Support\\Masks\\MessageMask",
+        "attachment": "Webklex\\PHPIMAP\\Support\\Masks\\AttachmentMask"
+    }
+}

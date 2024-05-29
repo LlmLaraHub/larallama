@@ -22,6 +22,7 @@ class CrmTransformer extends BaseTransformer
 
     public array $compatible_sources = [
         SourceTypeEnum::EmailSource,
+        SourceTypeEnum::EmailBoxSource,
     ];
 
     public function transform(

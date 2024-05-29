@@ -27,6 +27,11 @@ class SourceTest extends TestCase
         $this->assertNotNull($model->collection->id);
         $this->assertNotNull($model->collection->sources()->first()->id);
 
+        $this->assertNotEmpty($model->secrets);
+        $this->assertArrayHasKey('username', $model->secrets);
+        $this->assertArrayHasKey('password', $model->secrets);
+        $this->assertArrayHasKey('host', $model->secrets);
+        $this->assertArrayHasKey('email_box', $model->secrets);
         $this->assertCount(3, $model->documents);
     }
 

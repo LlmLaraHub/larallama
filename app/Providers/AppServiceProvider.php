@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Domains\EmailParser\EmailClientWrapper;
 use App\Listeners\InvitingTeamMemberAddToSystemListener;
 use App\Models\User;
 use Illuminate\Support\Facades\Event;
@@ -17,7 +18,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->bind('email_client_facade', function ($app) {
+            return new EmailClientWrapper();
+        });
     }
 
     /**

@@ -7,6 +7,7 @@ use App\Domains\Sources\SourceTypeEnum;
 use App\Http\Resources\CollectionResource;
 use App\Http\Resources\DocumentResource;
 use App\Http\Resources\FilterResource;
+use App\Http\Resources\SourceEditResource;
 use App\Http\Resources\SourceResource;
 use App\Models\Collection;
 use App\Models\Document;
@@ -22,10 +23,16 @@ class BaseSourceController extends Controller
 
     protected string $create_path = 'Sources/WebSource/Create';
 
+    protected string $info = 'Your Source Info Here';
+
+    protected string $type = 'Base Source';
+
     public function create(Collection $collection)
     {
         return inertia($this->create_path, [
             'recurring' => RecurringTypeEnum::selectOptions(),
+            'info' => $this->info,
+            'type' => $this->type,
             'collection' => new CollectionResource($collection),
         ]);
     }
@@ -38,6 +45,8 @@ class BaseSourceController extends Controller
             'details' => 'required|string',
             'active' => ['boolean', 'required'],
             'recurring' => ['string', 'required'],
+            'meta_data' => ['nullable', 'array'],
+            'secrets' => ['nullable', 'array'],
         ]);
 
         $this->makeSource($validated, $collection);
@@ -67,7 +76,9 @@ class BaseSourceController extends Controller
     {
 
         return inertia($this->edit_path, [
-            'source' => $source,
+            'source' => new SourceEditResource($source),
+            'info' => $this->info,
+            'type' => $this->type,
             'recurring' => RecurringTypeEnum::selectOptions(),
             'collection' => new CollectionResource($source->collection),
         ]);
@@ -81,13 +92,20 @@ class BaseSourceController extends Controller
             'details' => 'required|string',
             'active' => ['boolean', 'required'],
             'recurring' => ['string', 'required'],
+            'meta_data' => ['nullable', 'array'],
+            'secrets' => ['nullable', 'array'],
         ]);
 
-        $source->update($validated);
+        $this->updateSource($source, $validated);
 
         request()->session()->flash('flash.banner', 'Updated');
 
         return back();
+    }
+
+    protected function updateSource(Source $source, array $validated): void
+    {
+        $source->update($validated);
     }
 
     public function index(Collection $collection)
@@ -102,27 +120,8 @@ class BaseSourceController extends Controller
                 ->where('collection_id', $collection->id)
                 ->latest('id')
                 ->get()),
-            'available_sources' => [
-                [
-                    'route' => route('collections.sources.websearch.create',
-                        [
-                            'collection' => $collection->id,
-                        ]
-                    ),
-                    'name' => 'Web Source',
-                    'active' => true,
-                ],
-                [
-                    'route' => route('collections.sources.email_source.create',
-                        [
-                            'collection' => $collection->id,
-                        ]
-                    ),
-                    'name' => 'Assistant Email Box',
-                    'active' => true,
-                ],
-            ],
-            'sources' => SourceResource::collection($collection->sources()->paginate(10)),
+            'available_sources' => SourceTypeEnum::getAvailableSources($collection),
+            'sources' => SourceResource::collection($collection->sources()->orderBy('id')->paginate(10)),
         ]);
     }
 

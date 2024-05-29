@@ -17,6 +17,10 @@ class AssistantEmailBoxSourceController extends BaseSourceController
 
     protected string $create_path = 'Sources/EmailSource/Create';
 
+    protected string $info = 'This is an email box you can forward email to that LaraLamma will provide';
+
+    protected string $type = 'Assistant Email Box Source';
+
     protected function makeSource(array $validated, Collection $collection): void
     {
         Source::create([

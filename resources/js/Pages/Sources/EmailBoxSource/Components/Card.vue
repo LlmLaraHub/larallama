@@ -38,15 +38,9 @@ const run = (source) => {
         <div class="card-body">
             <h2 class="card-title text-gray-600">{{ source.title }} <span class="text-sm">#{{source.id}}</span></h2>
             <Settings :source="source"/>
-
-            <div class="text-xs">
-                Assistant Email: <span class="font-bold text-gray-400">
-                    <Clipboard :content="email">{{ email}}</Clipboard>
-            </span>
-            </div>
             <div class="card-actions justify-end">
                 <button @click="run(source)" type="button" class="btn btn-primary rounded-none">Run</button>
-                <Link :href="route('collections.sources.email_source.edit', {
+                <Link :href="route('collections.sources.email_box_source.edit', {
                                     collection: source.collection_id,
                                     source: source.id
                                 })" class="btn btn-primary rounded-none">Edit</Link>

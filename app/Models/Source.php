@@ -23,6 +23,7 @@ class Source extends Model implements HasDrivers
 
     protected $casts = [
         'meta_data' => 'array',
+        'secrets' => 'encrypted:array',
         'active' => 'bool',
         'last_run' => 'datetime',
         'type' => SourceTypeEnum::class,

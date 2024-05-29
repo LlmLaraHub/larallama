@@ -20,7 +20,7 @@ class DocumentResource extends JsonResource
             'subject' => $this->subject,
             'link' => $this->link,
             'summary' => $this->summary,
-            'summary_markdown' => str($this->summary)->markdown(),
+            'summary_markdown' => ($this->summary) ? str($this->summary)->markdown() : null,
             'type' => str($this->type->name)->title()->toString(),
             'status' => str($this->status->name)->headline()->toString(),
             'document_chunks_count' => $this->document_chunks()->where('section_number', 0)->count(),

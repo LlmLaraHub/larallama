@@ -19,7 +19,7 @@ class WebSourceControllerTest extends TestCase
         $collection = Collection::factory()->create();
         $this->assertDatabaseCount('sources', 0);
         $response = $this->actingAs($user)
-            ->post(route('collections.sources.websearch.store', $collection), [
+            ->post(route('collections.sources.web_search_source.store', $collection), [
                 'title' => 'Test Title',
                 'active' => 1,
                 'recurring' => RecurringTypeEnum::Daily->value,
@@ -42,7 +42,7 @@ class WebSourceControllerTest extends TestCase
         $user = User::factory()->create();
 
         $this->actingAs($user)
-            ->put(route('collections.sources.websearch.update',
+            ->put(route('collections.sources.web_search_source.update',
                 [
                     'collection' => $source->collection->id,
                     'source' => $source->id,

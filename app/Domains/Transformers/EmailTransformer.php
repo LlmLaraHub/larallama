@@ -17,17 +17,13 @@ class EmailTransformer extends BaseTransformer
 
     public array $compatible_sources = [
         SourceTypeEnum::EmailSource,
+        SourceTypeEnum::EmailBoxSource,
     ];
 
     public function transform(
         BaseSource $baseSource): BaseSource
     {
 
-        /**
-         * @NOTE
-         * No need to queue this yet since
-         * it is not doing any LLM work
-         */
         Log::info('[LaraChain] Starting EmailTransformer ', [
             'source' => $baseSource->source->id,
         ]);
