@@ -77,8 +77,6 @@ class SummarizeDocumentJob implements ShouldQueue
             ], $this->prompt);
         }
 
-        put_fixture('prompt_being_used_summary.txt', $prompt, false);
-
         /** @var CompletionResponse $results */
         $results = LlmDriverFacade::driver(
             $this->document->getDriver()

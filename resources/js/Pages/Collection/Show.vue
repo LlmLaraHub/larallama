@@ -69,19 +69,7 @@ const closeEditCollectionSlideOut = () => {
     showEditCollection.value = false;
 };
 
-onMounted(() => {
-    Echo.private(`collection.${props.collection.data.id}`)
-        .listen('.status', (e) => {
-            console.log(e.status);
-            router.reload({ only: ['documents'] })
-            let message = e.message;
-            if (message) {
-                if(message !== 'Processing Document') {
-                    toast.info(message)
-                }
-            }
-        });
-});
+
 
 const reset = () => {
     //router.reload();

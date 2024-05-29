@@ -1,5 +1,5 @@
 <script setup>
-import {computed, ref} from 'vue';
+import {computed, onMounted, ref} from 'vue';
 import Tags from '@/Components/Tags.vue';
 import ShowDocument from '@/Pages/Collection/Components/ShowDocument.vue';
 import DocumentReset from '@/Pages/Collection/Components/DocumentReset.vue';
@@ -7,6 +7,10 @@ import ActionDeleteDocuments from "@/Pages/Collection/Components/ActionDeleteDoc
 import ActionCreateFilter from "@/Pages/Collection/Components/ActionCreateFilter.vue";
 import Filters from "@/Pages/Collection/Components/Filters.vue";
 import ManageFilters from "@/Pages/Collection/Components/ManageFilters.vue";
+import {router} from "@inertiajs/vue3";
+import {useToast} from "vue-toastification";
+
+const toast = useToast();
 
 const props = defineProps({
     collection: {
@@ -53,6 +57,19 @@ const emptyDocumentIds = () => {
     console.log("Resetting documents");
     selectedDocuments.value = new Set()
 }
+onMounted(() => {
+    Echo.private(`collection.${props.collection.id}`)
+        .listen('.status', (e) => {
+            console.log(e.status);
+            router.reload({ only: ['documents'] })
+            let message = e.message;
+            if (message) {
+                if(message !== 'Processing Document') {
+                    toast.info(message)
+                }
+            }
+        });
+});
 
 
 

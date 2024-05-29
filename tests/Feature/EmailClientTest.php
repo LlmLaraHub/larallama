@@ -7,7 +7,6 @@ use App\Domains\EmailParser\EmailClientFacade;
 use App\Domains\Sources\SourceTypeEnum;
 use App\Models\Source;
 use Tests\TestCase;
-use Webklex\PHPIMAP\ClientManager;
 use Webklex\PHPIMAP\Support\FolderCollection;
 
 class EmailClientTest extends TestCase

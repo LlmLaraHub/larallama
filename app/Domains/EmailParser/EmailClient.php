@@ -46,6 +46,10 @@ class EmailClient
 
         $foldersToCheck = explode(',', trim($source->secrets['email_box']));
 
+        $foldersToCheck = collect($foldersToCheck)->map(function ($folder) {
+            return str($folder)->lower()->toString();
+        })->toArray();
+
         $secrets = $source->secrets;
 
         $config = [
@@ -83,10 +87,14 @@ class EmailClient
 
             foreach ($folders as $folder) {
                 $full_name = data_get($folder, 'full_name');
+
                 Log::info('Checking folder', [
                     'full_name' => $full_name,
                     'folders_to_check' => $foldersToCheck,
                 ]);
+
+                $full_name = str($full_name)->lower()->toString();
+
                 if (in_array($full_name, $foldersToCheck)) {
                     $messages = $folder->messages()->all()->get();
                     logger('[LaraChain] - Email Box Count', [
