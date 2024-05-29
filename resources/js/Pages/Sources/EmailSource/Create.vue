@@ -3,7 +3,7 @@ import AppLayout from '@/Layouts/AppLayout.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
 import { ref } from 'vue';
-import Intro from './Components/Intro.vue';
+import Intro from '@/Components/Intro.vue';
 import SecondaryLink from '@/Components/SecondaryLink.vue';
 import Resources from './Components/Resources.vue';
 import { useForm } from '@inertiajs/vue3';
