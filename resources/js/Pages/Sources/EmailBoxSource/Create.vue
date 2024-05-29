@@ -27,11 +27,14 @@ const form = useForm({
     title: '',
     details: '',
     recurring: 'not',
-    email_box: "Inbox",
-    host: "",
-    username: "",
-    password: "",
-    delete: false,
+    secrets: {
+        username: "bob@bobsburgers.com",
+        password: "password",
+        host: "mail.bobsburgers.com",
+        email_box: "Inbox",
+        port: 993,
+        delete: true,
+    },
     active: true
 });
 
