@@ -81,14 +81,14 @@ class SearchAndSummarizeTest extends TestCase
             'body' => 'Results Before this one',
             'role' => RoleEnum::User,
             'is_chat_ignored' => false,
-            'chat_id'=> $chat->id
+            'chat_id' => $chat->id,
         ]);
 
         $messageAssistant = Message::factory()->create([
             'body' => 'Results Before this one',
             'role' => RoleEnum::Assistant,
             'is_chat_ignored' => false,
-            'chat_id'=> $chat->id
+            'chat_id' => $chat->id,
         ]);
 
         $document = Document::factory()->create([

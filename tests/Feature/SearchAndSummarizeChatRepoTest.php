@@ -24,7 +24,7 @@ class SearchAndSummarizeChatRepoTest extends TestCase
         $data = 'Foo bar';
         $dto = new \LlmLaraHub\LlmDriver\Responses\CompletionResponse($data);
 
-        LlmDriverFacade::shouldReceive('driver->completion')
+        LlmDriverFacade::shouldReceive('driver->chat')
             ->once()
             ->andReturn($dto);
 

@@ -29,8 +29,8 @@ class SearchAndSummarizeChatRepo
         ?Filter $filter = null): string
     {
         Log::info('[LaraChain] Search and Summarize Default Function', [
-            'note' => "Showing input since some system grab the last on the array",
-            'input' => $input
+            'note' => 'Showing input since some system grab the last on the array',
+            'input' => $input,
         ]);
 
         $originalPrompt = $input;
