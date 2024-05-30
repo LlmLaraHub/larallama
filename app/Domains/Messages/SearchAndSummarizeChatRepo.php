@@ -28,7 +28,10 @@ class SearchAndSummarizeChatRepo
         string $input,
         ?Filter $filter = null): string
     {
-        Log::info('[LaraChain] Search and Summarize Default Function');
+        Log::info('[LaraChain] Search and Summarize Default Function', [
+            'note' => "Showing input since some system grab the last on the array",
+            'input' => $input
+        ]);
 
         $originalPrompt = $input;
 
@@ -84,6 +87,7 @@ class SearchAndSummarizeChatRepo
         Log::info('[LaraChain] Getting the Summary', [
             'input' => $contentFlattened,
             'driver' => $chat->chatable->getDriver(),
+            'messages' => count($latestMessagesArray),
         ]);
 
         notify_ui($chat, 'Building Summary');
@@ -91,7 +95,7 @@ class SearchAndSummarizeChatRepo
         /** @var CompletionResponse $response */
         $response = LlmDriverFacade::driver(
             $chat->chatable->getDriver()
-        )->completion($contentFlattened);
+        )->chat($latestMessagesArray);
 
         $this->response = $response->content;
 

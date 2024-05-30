@@ -3,7 +3,7 @@ import AppLayout from '@/Layouts/AppLayout.vue';
 import Welcome from '@/Components/Welcome.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import SecondaryLink from '@/Components/SecondaryLink.vue';
-import { computed, onMounted, provide, ref } from 'vue';
+import {computed, onMounted, onUnmounted, provide, ref} from 'vue';
 import Nav from '@/Pages/Collection/Components/Nav.vue';
 import CollectionTags from './Components/CollectionTags.vue';
 import { useDropzone } from "vue3-dropzone";
@@ -57,6 +57,11 @@ onMounted(() => {
             });
     });
 });
+
+onUnmounted(() => {
+    Echo.leave(`collection.chat.${props.collection.data.id}.${props.chat.data.id}`);
+});
+
 </script>
 
 <template>

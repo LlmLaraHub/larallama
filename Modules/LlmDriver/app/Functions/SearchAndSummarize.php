@@ -6,6 +6,8 @@ use App\Domains\Agents\VerifyPromptInputDto;
 use App\Domains\Agents\VerifyPromptOutputDto;
 use App\Domains\Messages\RoleEnum;
 use App\Domains\Prompts\SummarizePrompt;
+use App\Models\Chat;
+use App\Models\Message;
 use App\Models\PromptHistory;
 use Facades\App\Domains\Agents\VerifyResponseAgent;
 use Facades\LlmLaraHub\LlmDriver\DistanceQuery;
@@ -108,10 +110,28 @@ class SearchAndSummarize extends FunctionContract
 
         notify_ui($model, 'Building Summary');
 
-        /** @var CompletionResponse $response */
-        $response = LlmDriverFacade::driver(
-            $model->getChatable()->getDriver()
-        )->completion($contentFlattened);
+
+        if(!get_class($model) === Chat::class) {
+            Log::info('[LaraChain] Using the Simple Completion', [
+                'input' => $contentFlattened,
+                'driver' => $model->getChatable()->getDriver(),
+            ]);
+            /** @var CompletionResponse $response */
+            $response = LlmDriverFacade::driver(
+                $model->getChatable()->getDriver()
+            )->completion($contentFlattened);
+        } else {
+            Log::info('[LaraChain] Using the Chat Completion', [
+                'input' => $contentFlattened,
+                'driver' => $model->getChatable()->getDriver(),
+            ]);
+            $messages = $model->getChat()->getChatResponse();
+
+            /** @var CompletionResponse $response */
+            $response = LlmDriverFacade::driver(
+                $model->getChatable()->getDriver()
+            )->chat($messages);
+        }
 
         $this->response = $response->content;
 

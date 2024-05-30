@@ -1,5 +1,5 @@
 <script setup>
-import {computed, onMounted, ref} from 'vue';
+import {computed, onMounted, onUnmounted, ref} from 'vue';
 import Tags from '@/Components/Tags.vue';
 import ShowDocument from '@/Pages/Collection/Components/ShowDocument.vue';
 import DocumentReset from '@/Pages/Collection/Components/DocumentReset.vue';
@@ -71,7 +71,9 @@ onMounted(() => {
         });
 });
 
-
+onUnmounted(() => {
+    Echo.leave(`collection.${props.collection.id}`);
+});
 
 </script>
 <template>

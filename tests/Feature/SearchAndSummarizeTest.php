@@ -3,10 +3,12 @@
 namespace Tests\Feature;
 
 use App\Domains\Agents\VerifyPromptOutputDto;
+use App\Domains\Messages\RoleEnum;
 use App\Models\Chat;
 use App\Models\Collection;
 use App\Models\Document;
 use App\Models\DocumentChunk;
+use App\Models\Message;
 use Facades\App\Domains\Agents\VerifyResponseAgent;
 use Facades\LlmLaraHub\LlmDriver\DistanceQuery;
 use LlmLaraHub\LlmDriver\Functions\ParametersDto;
@@ -54,7 +56,7 @@ class SearchAndSummarizeTest extends TestCase
             ]),
         ]);
 
-        LlmDriverFacade::shouldReceive('driver->completion')
+        LlmDriverFacade::shouldReceive('driver->chat')
             ->once()
             ->andReturn($dto);
 
@@ -73,6 +75,20 @@ class SearchAndSummarizeTest extends TestCase
 
         $chat = Chat::factory()->create([
             'chatable_id' => $collection->id,
+        ]);
+
+        $messageUser = Message::factory()->create([
+            'body' => 'Results Before this one',
+            'role' => RoleEnum::User,
+            'is_chat_ignored' => false,
+            'chat_id'=> $chat->id
+        ]);
+
+        $messageAssistant = Message::factory()->create([
+            'body' => 'Results Before this one',
+            'role' => RoleEnum::Assistant,
+            'is_chat_ignored' => false,
+            'chat_id'=> $chat->id
         ]);
 
         $document = Document::factory()->create([

@@ -54,6 +54,9 @@ onMounted(() => {
     });
 });
 
+onUnmounted(() => {
+    Echo.leave(`collection.chat.${props.chat.chatable_id}.${props.chat.id}`);
+});
 
 
 const save = () => {
