@@ -6,7 +6,6 @@ use App\Domains\Sources\WebSearch\Response\SearchResponseDto;
 use App\Domains\Sources\WebSearch\Response\VideoResponseDto;
 use App\Domains\Sources\WebSearch\Response\WebResponseDto;
 use Illuminate\Support\Facades\Http;
-use Laravel\Reverb\Loggers\Log;
 
 class BraveSearchClient extends BaseSearchClient
 {
@@ -16,19 +15,12 @@ class BraveSearchClient extends BaseSearchClient
 
         $last_run = data_get($options, 'last_run', null);
 
-        if($last_run) {
-            //last run is carbon object
-            //so if it is not null
-            //then I want to return
-            //YYYY-MM-DDtoYYYY-MM-DD
-            //the first date is from the last run
-            //the next is the current date
+        if ($last_run) {
             $last_run = $last_run->subDay()->format('Y-m-d');
             $from = $last_run;
             $to = now()->format('Y-m-d');
         } else {
-            //just make from yesterday to today
-            $from = now()->subDay()->format('Y-m-d');
+            $from = now()->subDays(7)->format('Y-m-d');
             $to = now()->format('Y-m-d');
         }
 
@@ -43,7 +35,6 @@ class BraveSearchClient extends BaseSearchClient
         ]);
 
         $response = $this->getClient()->get('web/search', $query);
-
 
         $video_dto = [];
         $web_dto = [];

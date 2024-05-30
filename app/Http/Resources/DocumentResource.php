@@ -15,9 +15,10 @@ class DocumentResource extends JsonResource
     public function toArray(Request $request): array
     {
         $summary = $this->summary;
-        if(!empty($summary)) {
+        if (! empty($summary)) {
             $summary = str($this->summary)->markdown();
         }
+
         return [
             'id' => $this->id,
             'file_path' => $this->file_path,
