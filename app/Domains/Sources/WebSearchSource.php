@@ -32,6 +32,7 @@ class WebSearchSource extends BaseSource
                 search: $search,
                 options: [
                     'limit' => $limit,
+                    'last_run' => $source->last_run,
                 ]
             );
 
