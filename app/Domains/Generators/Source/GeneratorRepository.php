@@ -7,11 +7,7 @@ use Facades\App\Domains\Generators\Source\ControllerSource;
 use Facades\App\Domains\Generators\Source\VueSource;
 use Facades\App\Domains\Generators\Source\SourceTypeEnum;
 use Facades\App\Domains\Generators\Source\RoutesSource;
-//use Facades\App\Generators\Source\EnumSource;
-//use Facades\App\Generators\Source\LarachainConfigSource;
-//use Facades\App\Generators\Source\RoutesSource;
-//use Facades\App\Generators\Source\SourceClassTransformer;
-//use Facades\App\Generators\Source\VueSource;
+use Facades\App\Domains\Generators\Source\CoreSourceClass;
 
 class GeneratorRepository extends BaseRepository
 {
@@ -21,7 +17,7 @@ class GeneratorRepository extends BaseRepository
         VueSource::handle($this);
         RoutesSource::handle($this);
         SourceTypeEnum::handle($this);
-//        SourceClassTransformer::handle($this);
+        CoreSourceClass::handle($this);
 
         return $this;
     }

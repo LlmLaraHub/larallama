@@ -59,7 +59,7 @@ abstract class Base
 
     protected function makeCoreClass()
     {
-        $generatorNameAndPath = sprintf('STUBS/%s/Stub.php', $this->generatorName);
+        $generatorNameAndPath = sprintf('%s/Stub.php', $this->generatorName);
         $content = $this->getContents($generatorNameAndPath);
 
         $transformed = TokenReplacer::handle($this->generatorRepository, $content);
@@ -68,7 +68,7 @@ abstract class Base
             $this->generatorRepository->getClassName()
         );
         $destination = base_path(sprintf('app/Domains/%s/%s',
-            $this->generatorName,
+            str($this->generatorName)->plural()->toString(),
             $name)
         );
 

@@ -33,8 +33,10 @@ class VueGenerator extends Base
             $content = File::get($file->getPathname());
             $transformed = TokenReplacer::handle($this->generatorRepository, $content);
 
-            if ($file->getFilename() === 'ResourceForm.vue') {
-                $destination = $rootPath.'/Partials/ResourceForm.vue';
+            if (in_array($file->getFilename(), [
+                'ResourceForm.vue', 'Card.vue'
+            ])) {
+                $destination = $rootPath.'/Components/' . $file->getFilename();
             } else {
                 $destination = sprintf('%s/%s',
                     $rootPath,
