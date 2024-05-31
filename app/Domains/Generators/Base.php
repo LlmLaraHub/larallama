@@ -31,11 +31,11 @@ abstract class Base
 
     protected function makeTest()
     {
-        $generatorNameAndPath = sprintf('/Tests/%sControllerTest.php', $this->generatorName);
+        $generatorNameAndPath = sprintf('/Tests/%sControllerTest.php', $this->generatorRepository->getClassName());
         $content = $this->getContents($generatorNameAndPath);
         $transformed = TokenReplacer::handle($this->generatorRepository, $content);
         $name = sprintf('%sControllerTest.php',
-            $this->generatorName,
+            $this->generatorRepository->name,
         );
         $basePath = base_path('tests/Feature/Http/Controllers/');
         File::makeDirectory($basePath, 0755, true, true);
@@ -45,7 +45,7 @@ abstract class Base
 
     protected function makeController()
     {
-        $generatorNameAndPath = sprintf('Controllers/%sController.php', $this->generatorName);
+        $generatorNameAndPath = sprintf('Controllers/%sController.php', $this->generatorRepository->getClassName());
         $content = $this->getContents($generatorNameAndPath);
 
         $transformed = TokenReplacer::handle($this->generatorRepository, $content);
