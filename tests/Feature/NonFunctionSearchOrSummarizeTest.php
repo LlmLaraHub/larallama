@@ -4,7 +4,7 @@ namespace Tests\Feature;
 
 use App\Models\DocumentChunk;
 use App\Models\Output;
-use Facades\LlmLaraHub\LlmDriver\DistanceQuery;
+use LlmLaraHub\LlmDriver\DistanceQuery\DistanceQueryFacade;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
 use LlmLaraHub\LlmDriver\NonFunctionSearchOrSummarize;
 use LlmLaraHub\LlmDriver\Responses\CompletionResponse;
@@ -19,7 +19,7 @@ class NonFunctionSearchOrSummarizeTest extends TestCase
 
         $documentChunk = DocumentChunk::factory()->create();
 
-        DistanceQuery::shouldReceive('distance')->once()->andReturn(DocumentChunk::all());
+        DistanceQueryFacade::shouldReceive('cosineDistance')->once()->andReturn(DocumentChunk::all());
 
         $output = Output::factory()->create([
             'active' => true,
@@ -58,7 +58,7 @@ class NonFunctionSearchOrSummarizeTest extends TestCase
     {
         $documentChunk = DocumentChunk::factory()->create();
 
-        DistanceQuery::shouldReceive('distance')->once()->andReturn(DocumentChunk::all());
+        DistanceQueryFacade::shouldReceive('cosineDistance')->once()->andReturn(DocumentChunk::all());
 
         $output = Output::factory()->create([
             'active' => true,
@@ -95,7 +95,7 @@ class NonFunctionSearchOrSummarizeTest extends TestCase
 
         DocumentChunk::factory()->create();
 
-        DistanceQuery::shouldReceive('distance')->once()->andReturn(DocumentChunk::all());
+        DistanceQueryFacade::shouldReceive('cosineDistance')->once()->andReturn(DocumentChunk::all());
 
         $output = Output::factory()->create([
             'active' => true,

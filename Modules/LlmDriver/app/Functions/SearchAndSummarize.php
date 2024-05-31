@@ -9,9 +9,9 @@ use App\Domains\Prompts\SummarizePrompt;
 use App\Models\Chat;
 use App\Models\PromptHistory;
 use Facades\App\Domains\Agents\VerifyResponseAgent;
-use Facades\LlmLaraHub\LlmDriver\DistanceQuery;
 use Illuminate\Support\Facades\Log;
 use Laravel\Pennant\Feature;
+use LlmLaraHub\LlmDriver\DistanceQuery\DistanceQueryFacade;
 use LlmLaraHub\LlmDriver\HasDrivers;
 use LlmLaraHub\LlmDriver\Helpers\CreateReferencesTrait;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
@@ -61,7 +61,7 @@ class SearchAndSummarize extends FunctionContract
 
         notify_ui($model, 'Searching documents');
 
-        $documentChunkResults = DistanceQuery::distance(
+        $documentChunkResults = DistanceQueryFacade::cosineDistance(
             $embeddingSize,
             $model->getChatable()->id,
             $embedding->embedding,

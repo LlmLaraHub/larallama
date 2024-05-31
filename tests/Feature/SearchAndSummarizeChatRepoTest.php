@@ -9,7 +9,7 @@ use App\Models\Collection;
 use App\Models\Document;
 use App\Models\DocumentChunk;
 use Facades\App\Domains\Agents\VerifyResponseAgent;
-use Facades\LlmLaraHub\LlmDriver\DistanceQuery;
+use LlmLaraHub\LlmDriver\DistanceQuery\DistanceQueryFacade;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
 use Tests\TestCase;
 
@@ -65,7 +65,7 @@ class SearchAndSummarizeChatRepoTest extends TestCase
             'document_id' => $document->id,
         ]);
 
-        DistanceQuery::shouldReceive('distance')
+        DistanceQueryFacade::shouldReceive('cosineDistance')
             ->once()
             ->andReturn(DocumentChunk::all());
 

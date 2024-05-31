@@ -1,17 +1,63 @@
 <?php
 
-namespace Tests\Feature;
+namespace LlmLaraHub\LlmDriver\Tests\Feature;
 
 use App\Models\Document;
 use App\Models\DocumentChunk;
 use App\Models\Filter;
 use Illuminate\Support\Facades\File;
-use LlmLaraHub\LlmDriver\DistanceQuery;
+use LlmLaraHub\LlmDriver\DistanceQuery\DistanceQueryFacade;
+use LlmLaraHub\LlmDriver\DistanceQuery\Drivers\PostGres;
 use Pgvector\Laravel\Vector;
 use Tests\TestCase;
 
-class DistanceQueryTest extends TestCase
+class DistanceQueryClientTest extends TestCase
 {
+    /**
+     * A basic feature test example.
+     */
+    public function test_distance_query(): void
+    {
+
+        $results = DistanceQueryFacade::driver('post_gres');
+
+        $this->assertInstanceOf(PostGres::class, $results);
+
+    }
+
+    public function test_mock_results()
+    {
+        $files = File::files(base_path('tests/fixtures/document_chunks'));
+
+        $document = Document::factory()->create([
+            'id' => 31,
+        ]);
+
+        foreach ($files as $file) {
+            $data = json_decode(File::get($file), true);
+            DocumentChunk::factory()->create($data);
+        }
+
+        $filter = Filter::factory()->create([
+            'collection_id' => $document->collection_id,
+        ]);
+
+        $filter->documents()->attach($document->id);
+
+        $question = get_fixture('embedding_question_distance.json');
+
+        $vector = new Vector($question);
+
+        $results = DistanceQueryFacade::driver('mock')->cosineDistance(
+            'embedding_1024',
+            $document->collection_id,
+            $vector,
+            $filter);
+
+        $this->assertCount(1, $results);
+
+    }
+
     public function test_results()
     {
         $files = File::files(base_path('tests/fixtures/document_chunks'));
@@ -35,7 +81,7 @@ class DistanceQueryTest extends TestCase
 
         $vector = new Vector($question);
 
-        $results = (new DistanceQuery())->distance(
+        $results = DistanceQueryFacade::cosineDistance(
             'embedding_1024',
             $document->collection_id,
             $vector,
@@ -70,7 +116,7 @@ class DistanceQueryTest extends TestCase
 
         $vector = new Vector($question);
 
-        $results = (new DistanceQuery())->distance(
+        $results = DistanceQueryFacade::cosineDistance(
             'embedding_1024',
             $document->collection_id,
             $vector,
@@ -109,7 +155,7 @@ class DistanceQueryTest extends TestCase
 
         $vector = new Vector($question);
 
-        $results = (new DistanceQuery())->distance(
+        $results = DistanceQueryFacade::cosineDistance(
             'embedding_1024',
             $document->collection_id,
             $vector);
@@ -154,7 +200,7 @@ class DistanceQueryTest extends TestCase
 
         $vector = new Vector($question);
 
-        $results = (new DistanceQuery())->distance(
+        $results = DistanceQueryFacade::cosineDistance(
             'embedding_1024',
             $document->collection_id,
             $vector);

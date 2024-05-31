@@ -3,6 +3,7 @@
 namespace LlmLaraHub\LlmDriver;
 
 use Illuminate\Support\ServiceProvider;
+use LlmLaraHub\LlmDriver\DistanceQuery\DistanceQueryClient;
 use LlmLaraHub\LlmDriver\Functions\SearchAndSummarize;
 use LlmLaraHub\LlmDriver\Functions\SummarizeCollection;
 
@@ -23,6 +24,10 @@ class LlmServiceProvider extends ServiceProvider
     {
         $this->app->bind('llm_driver', function () {
             return new LlmDriverClient();
+        });
+
+        $this->app->bind('distance_query_driver', function () {
+            return new DistanceQueryClient();
         });
 
         $this->app->bind('summarize_collection', function () {

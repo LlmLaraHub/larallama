@@ -9,8 +9,8 @@ use App\Domains\Prompts\SummarizePrompt;
 use App\Models\Collection;
 use App\Models\DocumentChunk;
 use App\Models\Filter;
-use Facades\LlmLaraHub\LlmDriver\DistanceQuery;
 use Illuminate\Support\Facades\Log;
+use LlmLaraHub\LlmDriver\DistanceQuery\DistanceQueryFacade;
 use LlmLaraHub\LlmDriver\Responses\NonFunctionResponseDto;
 
 class NonFunctionSearchOrSummarize
@@ -52,7 +52,7 @@ class NonFunctionSearchOrSummarize
 
             $embeddingSize = get_embedding_size($collection->getEmbeddingDriver());
 
-            $documentChunkResults = DistanceQuery::distance(
+            $documentChunkResults = DistanceQueryFacade::cosineDistance(
                 $embeddingSize,
                 $collection->id,
                 $embedding->embedding,
@@ -143,7 +143,7 @@ class NonFunctionSearchOrSummarize
 
             $embeddingSize = get_embedding_size($collection->getEmbeddingDriver());
 
-            $documentChunkResults = DistanceQuery::distance(
+            $documentChunkResults = DistanceQueryFacade::cosineDistance(
                 $embeddingSize,
                 $collection->id,
                 $embedding->embedding

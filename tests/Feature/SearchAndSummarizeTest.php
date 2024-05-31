@@ -10,7 +10,7 @@ use App\Models\Document;
 use App\Models\DocumentChunk;
 use App\Models\Message;
 use Facades\App\Domains\Agents\VerifyResponseAgent;
-use Facades\LlmLaraHub\LlmDriver\DistanceQuery;
+use LlmLaraHub\LlmDriver\DistanceQuery\DistanceQueryFacade;
 use LlmLaraHub\LlmDriver\Functions\ParametersDto;
 use LlmLaraHub\LlmDriver\Functions\PropertyDto;
 use LlmLaraHub\LlmDriver\Functions\SearchAndSummarize;
@@ -99,7 +99,7 @@ class SearchAndSummarizeTest extends TestCase
             'document_id' => $document->id,
         ]);
 
-        DistanceQuery::shouldReceive('distance')
+        DistanceQueryFacade::shouldReceive('cosineDistance')
             ->once()
             ->andReturn(DocumentChunk::all());
 

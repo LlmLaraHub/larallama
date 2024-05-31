@@ -10,9 +10,9 @@ use App\Models\DocumentChunk;
 use App\Models\Filter;
 use App\Models\PromptHistory;
 use Facades\App\Domains\Agents\VerifyResponseAgent;
-use Facades\LlmLaraHub\LlmDriver\DistanceQuery;
 use Illuminate\Support\Facades\Log;
 use Laravel\Pennant\Feature;
+use LlmLaraHub\LlmDriver\DistanceQuery\DistanceQueryFacade;
 use LlmLaraHub\LlmDriver\Helpers\CreateReferencesTrait;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
 use LlmLaraHub\LlmDriver\Responses\CompletionResponse;
@@ -48,7 +48,8 @@ class SearchAndSummarizeChatRepo
 
         $embeddingSize = get_embedding_size($chat->chatable->getEmbeddingDriver());
 
-        $documentChunkResults = DistanceQuery::distance(
+        /** @phpstan-ignore-next-line */
+        $documentChunkResults = DistanceQueryFacade::cosineDistance(
             $embeddingSize,
             /** @phpstan-ignore-next-line */
             $chat->getChatable()->id,

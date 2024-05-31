@@ -7,8 +7,8 @@ use App\Models\Document;
 use App\Models\DocumentChunk;
 use App\Models\Output;
 use App\Models\User;
-use Facades\LlmLaraHub\LlmDriver\DistanceQuery;
 use Facades\LlmLaraHub\LlmDriver\NonFunctionSearchOrSummarize;
+use LlmLaraHub\LlmDriver\DistanceQuery\DistanceQueryFacade;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
 use LlmLaraHub\LlmDriver\Responses\CompletionResponse;
 use LlmLaraHub\LlmDriver\Responses\NonFunctionResponseDto;
@@ -43,7 +43,7 @@ class WebPageOutputControllerTest extends TestCase
 
         DocumentChunk::factory()->create();
 
-        DistanceQuery::shouldReceive('distance')->never();
+        DistanceQueryFacade::shouldReceive('cosineDistance')->never();
 
         LlmDriverFacade::shouldReceive('driver->embedData')
             ->never();
