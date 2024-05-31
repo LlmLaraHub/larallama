@@ -203,3 +203,42 @@ Route::post('/pages/{output:id}/chat', [
     \App\Http\Controllers\WebPageOutputController::class, 'chat',
 ])
     ->name('collections.outputs.web_page.chat');
+
+    Route::controller(\App\Http\Controllers\Sources\FooBarSourceController::class)->group(
+        function () {
+            Route::get('/collections/{collection}/sources/foo_bar_source/create', 'create')
+                ->name('collections.sources.foo_bar_source.create');
+            Route::post('/collections/{collection}/sources/foo_bar_source', 'store')
+                ->name('collections.sources.foo_bar_source.store');
+            Route::get('/collections/{collection}/sources/foo_bar_source/{source}/edit', 'edit')
+                ->name('collections.sources.foo_bar_source.edit');
+            Route::put('/collections/{collection}/sources/foo_bar_source/{source}/update', 'update')
+                ->name('collections.sources.foo_bar_source.update');
+        }
+    );
+
+    Route::controller(\App\Http\Controllers\Sources\FooBarSourceController::class)->group(
+        function () {
+            Route::get('/collections/{collection}/sources/foo_bar_source/create', 'create')
+                ->name('collections.sources.foo_bar_source.create');
+            Route::post('/collections/{collection}/sources/foo_bar_source', 'store')
+                ->name('collections.sources.foo_bar_source.store');
+            Route::get('/collections/{collection}/sources/foo_bar_source/{source}/edit', 'edit')
+                ->name('collections.sources.foo_bar_source.edit');
+            Route::put('/collections/{collection}/sources/foo_bar_source/{source}/update', 'update')
+                ->name('collections.sources.foo_bar_source.update');
+        }
+    );
+
+    Route::controller(\App\Http\Controllers\Sources\FooBarSourceController::class)->group(
+        function () {
+            Route::get('/collections/{collection}/sources/foo_bar_source/create', 'create')
+                ->name('collections.sources.foo_bar_source.create');
+            Route::post('/collections/{collection}/sources/foo_bar_source', 'store')
+                ->name('collections.sources.foo_bar_source.store');
+            Route::get('/collections/{collection}/sources/foo_bar_source/{source}/edit', 'edit')
+                ->name('collections.sources.foo_bar_source.edit');
+            Route::put('/collections/{collection}/sources/foo_bar_source/{source}/update', 'update')
+                ->name('collections.sources.foo_bar_source.update');
+        }
+    );

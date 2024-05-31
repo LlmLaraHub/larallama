@@ -12,8 +12,8 @@ enum SourceTypeEnum: string
     case WebSearchSource = 'web_search_source';
     case EmailSource = 'email_source';
     case EmailBoxSource = 'email_box_source';
-
     case GenericSource = 'generic_source';
+    //leave for scripting
 
     public static function ignore(): array
     {
