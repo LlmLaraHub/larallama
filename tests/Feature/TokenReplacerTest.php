@@ -68,4 +68,36 @@ class TokenReplacerTest extends TestCase
 
         $this->assertStringContainsString('collections.sources.foo_bar_source.store', $results);
     }
+
+    public function test_routes()
+    {
+        $generator = new GeneratorRepository();
+        $generator->setup('FooBarSource',
+            'Some Response Type',
+            'Some Description',
+            false);
+
+        $content =         $routes = <<<'EOD'
+
+    Route::controller(\App\Http\Controllers\Sources\[RESOURCE_CLASS_NAME]Controller::class)->group(
+        function () {
+            Route::get('/collections/{collection}/sources/[RESOURCE_KEY]/create', 'create')
+                ->name('collections.sources.[RESOURCE_KEY].create');
+            Route::post('/collections/{collection}/sources/[RESOURCE_KEY]', 'store')
+                ->name('collections.sources.[RESOURCE_KEY].store');
+            Route::get('/collections/{collection}/sources/[RESOURCE_KEY]/{source}/edit', 'edit')
+                ->name('collections.sources.[RESOURCE_KEY].edit');
+            Route::put('/collections/{collection}/sources/[RESOURCE_KEY]/{source}/update', 'update')
+                ->name('collections.sources.[RESOURCE_KEY].update');
+        }
+    );
+
+EOD;
+
+        $tokenReplacer = new TokenReplacer();
+
+        $results = $tokenReplacer->handle($generator, $content);
+
+        $this->assertStringContainsString('collections.sources.foo_bar_source.store', $results);
+    }
 }
