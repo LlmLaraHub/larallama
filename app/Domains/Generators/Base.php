@@ -31,7 +31,7 @@ abstract class Base
 
     protected function makeTest()
     {
-        $generatorNameAndPath = sprintf('/Tests/%sControllerTest.php', $this->generatorRepository->getClassName());
+        $generatorNameAndPath = sprintf('/Tests/%sControllerTest.php', $this->generatorName);
         $content = $this->getContents($generatorNameAndPath);
         $transformed = TokenReplacer::handle($this->generatorRepository, $content);
         $name = sprintf('%sControllerTest.php',
@@ -45,7 +45,7 @@ abstract class Base
 
     protected function makeController()
     {
-        $generatorNameAndPath = sprintf('Controllers/%sController.php', $this->generatorRepository->getClassName());
+        $generatorNameAndPath = sprintf('Controllers/%sController.php', $this->generatorName);
         $content = $this->getContents($generatorNameAndPath);
 
         $transformed = TokenReplacer::handle($this->generatorRepository, $content);

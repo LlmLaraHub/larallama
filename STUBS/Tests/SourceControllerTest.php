@@ -26,7 +26,7 @@ class [RESOURCE_CLASS_NAME]ControllerTest extends TestCase
                 'recurring' => RecurringTypeEnum::Daily->value,
                 'details' => 'Test Details',
                 'secrets' => [],
-            ]);
+            ])->assertSessionHasNoErrors();
         $response->assertSessionHas('flash.banner', 'Source added successfully');
 
         $this->assertDatabaseCount('sources', 1);
