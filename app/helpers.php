@@ -57,8 +57,7 @@ if (! function_exists('calculate_dynamic_threshold')) {
 
 if (! function_exists('get_latest_user_content')) {
     /**
-     * @param MessageInDto[] $messageArray
-     * @return string
+     * @param  MessageInDto[]  $messageArray
      */
     function get_latest_user_content(array $messageArray): string
     {

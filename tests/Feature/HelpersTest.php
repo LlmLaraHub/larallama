@@ -91,7 +91,8 @@ STRING;
         $this->assertEquals(3.25, $threshold);
     }
 
-    public function test_get_latest_user_content(): void {
+    public function test_get_latest_user_content(): void
+    {
         $messageArray = [
             MessageInDto::from([
                 'role' => 'user',
