@@ -4,7 +4,6 @@ namespace Tests\Feature;
 
 use App\Domains\Generators\Source\GeneratorRepository;
 use App\Domains\Generators\TokenReplacer;
-use App\Domains\Sources\SourceTypeEnum;
 use Illuminate\Support\Facades\File;
 use Tests\TestCase;
 
@@ -77,7 +76,7 @@ class TokenReplacerTest extends TestCase
             'Some Description',
             false);
 
-        $content =         $routes = <<<'EOD'
+        $content = $routes = <<<'EOD'
 
     Route::controller(\App\Http\Controllers\Sources\[RESOURCE_CLASS_NAME]Controller::class)->group(
         function () {

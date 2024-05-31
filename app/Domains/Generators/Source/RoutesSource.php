@@ -3,11 +3,10 @@
 namespace App\Domains\Generators\Source;
 
 use App\Domains\Generators\Base;
-use Illuminate\Support\Facades\File;
 use App\Domains\Generators\BaseRepository;
-use Facades\App\Domains\Generators\Source\ControllerSource;
-use Facades\App\Domains\Generators\Source\VueSource;
 use Facades\App\Domains\Generators\TokenReplacer;
+use Illuminate\Support\Facades\File;
+
 class RoutesSource extends Base
 {
     public function handle(BaseRepository $generatorRepository): void

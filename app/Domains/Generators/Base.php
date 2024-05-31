@@ -2,9 +2,8 @@
 
 namespace App\Domains\Generators;
 
-use Illuminate\Support\Facades\File;
-
 use Facades\App\Domains\Generators\TokenReplacer;
+use Illuminate\Support\Facades\File;
 
 abstract class Base
 {

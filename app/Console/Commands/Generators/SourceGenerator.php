@@ -25,7 +25,7 @@ class SourceGenerator extends Command
             exit();
         }
 
-        if(!str($name)->endsWith('Source')) {
+        if (! str($name)->endsWith('Source')) {
             $this->error('The name must end with Source eg FooBarSource');
             exit();
         }
@@ -39,7 +39,7 @@ class SourceGenerator extends Command
 
         GeneratorRepository::setup($name, $description, false)->run();
 
-        $this->comment('All done, check your git status and update the app/Domains/Sources/SourceTypeEnum.php to have ' . $name , ' and value ' . str($name)->snake()->toString() );
+        $this->comment('All done, check your git status and update the app/Domains/Sources/SourceTypeEnum.php to have '.$name, ' and value '.str($name)->snake()->toString());
 
         return self::SUCCESS;
     }

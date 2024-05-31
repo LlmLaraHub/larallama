@@ -3,6 +3,7 @@
 use App\Models\Outbound;
 use App\Models\ResponseType;
 use App\Models\User;
+
 use function Pest\Laravel\actingAs;
 use function Pest\Laravel\assertDatabaseCount;
 

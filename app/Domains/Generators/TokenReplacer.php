@@ -2,7 +2,6 @@
 
 namespace App\Domains\Generators;
 
-
 class TokenReplacer
 {
     public function handle(BaseRepository $generatorRepository, string $content): string
