@@ -43,6 +43,38 @@ abstract class Base
         $this->generatorRepository->putFile($destination, $transformed);
     }
 
+    protected function makeCoreTest()
+    {
+        $generatorNameAndPath = sprintf('/Tests/%sTest.php', $this->generatorName);
+        $content = $this->getContents($generatorNameAndPath);
+        $transformed = TokenReplacer::handle($this->generatorRepository, $content);
+        $name = sprintf('%sTest.php',
+            $this->generatorRepository->name,
+        );
+        $basePath = base_path('tests/Feature/');
+        File::makeDirectory($basePath, 0755, true, true);
+        $destination = $basePath.$name;
+        $this->generatorRepository->putFile($destination, $transformed);
+    }
+
+    protected function makeCoreClass()
+    {
+        $generatorNameAndPath = sprintf('STUBS/%s/Stub.php', $this->generatorName);
+        $content = $this->getContents($generatorNameAndPath);
+
+        $transformed = TokenReplacer::handle($this->generatorRepository, $content);
+
+        $name = sprintf('%s.php',
+            $this->generatorRepository->getClassName()
+        );
+        $destination = base_path(sprintf('app/Domains/%s/%s',
+            $this->generatorName,
+            $name)
+        );
+
+        $this->generatorRepository->putFile($destination, $transformed);
+    }
+
     protected function makeController()
     {
         $generatorNameAndPath = sprintf('Controllers/%sController.php', $this->generatorName);

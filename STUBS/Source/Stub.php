@@ -1,56 +1,31 @@
 <?php
 
-namespace App\Source\Types;
+namespace App\Domains\Sources;
 
-use App\Exceptions\SourceMissingRequiredMetaDataException;
-use App\Ingress\StatusEnum;
-use App\Models\Document;
-use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Storage;
+use App\Models\Source;
+use Illuminate\Support\Facades\Log;
 
-class [RESOURCE_CLASS_NAME] extends BaseSourceType
+class [RESOURCE_NAME] extends BaseSource
 {
-    public function handle(): Document
+    public SourceTypeEnum $sourceTypeEnum = SourceTypeEnum::[RESOURCE_NAME];
+
+    public static string $description = '[RESOURCE_DESCRIPTION]';
+
+    /**
+     * Here you can add content coming in from an API,
+     * Email etc to documents. or you can React to the data coming in and for example
+     * reply to it from the collection of data in the system eg
+     * API hits source with article added to CMS
+     * Source triggers Reaction via Output that sends the results of the LLM
+     * looking in the collection of data for related content
+     *
+     * @param Source $source
+     * @return void
+     */
+    public function handle(Source $source): void
     {
-        /**
-         * @NOTE This is one example
-         * This example will get a file off the web
-         * When this runs the handle is called
-         * You could pull in your own classes or put your code here
-         */
-        $url = data_get($this->source->meta_data, 'url');
 
-        $fileName = str($url)->afterLast('/')->toString();
+        Log::info('[LaraChain] - [RESOURCE_NAME] Doing something');
 
-        if (! $url) {
-            throw new SourceMissingRequiredMetaDataException();
-        }
-
-        $fileContents = Http::get($url)->body();
-
-        $path = $this->getPath($fileName);
-
-        Storage::disk('projects')
-            ->put($path, $fileContents);
-
-        return Document::where('guid', $fileName)
-            ->where('source_id', $this->source->id)
-            ->where('type', $this->source->type->value)
-            ->firstOrCreate(
-                [
-                    'guid' => $fileName,
-                    'source_id' => $this->source->id,
-                ],
-                [
-                    'status' => StatusEnum::Complete,
-                    'type' => $this->source->type->value,
-                ]
-            );
-    }
-
-    protected function getPath($fileName)
-    {
-        return sprintf('%d/sources/%d/%s',
-        $this->source->project_id, $this->source->id, $fileName);
     }
 }
