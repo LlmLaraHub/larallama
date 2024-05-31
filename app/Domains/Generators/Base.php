@@ -34,8 +34,7 @@ abstract class Base
         $generatorNameAndPath = sprintf('/Tests/%sControllerTest.php', $this->generatorName);
         $content = $this->getContents($generatorNameAndPath);
         $transformed = TokenReplacer::handle($this->generatorRepository, $content);
-        $name = sprintf('%s%sControllerTest.php',
-            str($this->generatorRepository->getClassName())->plural()->toString(),
+        $name = sprintf('%sControllerTest.php',
             $this->generatorName,
         );
         $basePath = base_path('tests/Feature/Http/Controllers/');
