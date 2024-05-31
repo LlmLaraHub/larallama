@@ -9,10 +9,9 @@ class SearchPrompt
     public static function prompt(string $originalPrompt): string
     {
 
-        Log::info('[LaraChain] - SearchPrompt');
+        Log::info('[LaraChain] - SearchPrompt 0.0.1');
 
         return <<<PROMPT
-### Context, Action, Result, Example (C.A.R.E.)
 **Context**: The system processes various web search queries that require specific refinements to ensure that the search results are relevant and focused. These refinements include emphasizing key terms.
 **Action**: Modify the original search query by emphasizing keywords relevant to the query's intent applying the format adjustments as required.
 **Result**: The refined search queries effectively filter   highlight pertinent information, leading to cleaner and more relevant search results.

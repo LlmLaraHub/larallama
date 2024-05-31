@@ -25,7 +25,7 @@ class NonFunctionSearchOrSummarize
             throw new \Exception('Can only do Collection class right now');
         }
 
-        Log::info('[LaraChain] - Using the Non Function Search and Summarize Prompt', [
+        Log::info('[LaraChain] - Using the NonFunctionSearchOrSummarize Search and Summarize Prompt', [
             'collection' => $collection->id,
             'input' => $input,
             'filters' => $filter?->toArray(),
@@ -37,7 +37,7 @@ class NonFunctionSearchOrSummarize
             $collection->getDriver()
         )->completion($prompt);
 
-        Log::info('[LaraChain] - Results from search or summarize', [
+        Log::info('[LaraChain] - Results from NonFunctionSearchOrSummarize from search or summarize ', [
             'results' => $response->content,
         ]);
 
@@ -69,10 +69,6 @@ class NonFunctionSearchOrSummarize
 
             $context = implode(' ', $content);
 
-            Log::info('[LaraChain] - Content Found', [
-                'content' => $content,
-            ]);
-
             $contentFlattened = SummarizePrompt::prompt(
                 originalPrompt: $input,
                 context: $context
@@ -82,6 +78,9 @@ class NonFunctionSearchOrSummarize
                 'prompt' => $contentFlattened,
             ]);
 
+            /**
+             * @TODO Make this chat
+             */
             $response = LlmDriverFacade::driver(
                 $collection->getDriver()
             )->completion($contentFlattened);
@@ -169,6 +168,9 @@ class NonFunctionSearchOrSummarize
                 context: $context
             );
 
+            /**
+             * @TODO Make this chat
+             */
             $response = LlmDriverFacade::driver(
                 $collection->getDriver()
             )->completion($contentFlattened);

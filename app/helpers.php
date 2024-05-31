@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
 use LlmLaraHub\LlmDriver\HasDrivers;
 use LlmLaraHub\LlmDriver\Helpers\TrimText;
+use LlmLaraHub\LlmDriver\Requests\MessageInDto;
 use SundanceSolutions\LarachainTokenCount\Facades\LarachainTokenCount;
 
 if (! function_exists('put_fixture')) {
@@ -51,6 +52,24 @@ if (! function_exists('calculate_dynamic_threshold')) {
 
         return $threshold;
 
+    }
+}
+
+if (! function_exists('get_latest_user_content')) {
+    /**
+     * @param MessageInDto[] $messageArray
+     * @return string
+     */
+    function get_latest_user_content(array $messageArray): string
+    {
+        return collect($messageArray)
+            ->filter(function (MessageInDto $message) {
+                return $message->role === 'user';
+            })
+            ->map(function (MessageInDto $message) {
+                return $message->content;
+            })
+            ->last();
     }
 }
 

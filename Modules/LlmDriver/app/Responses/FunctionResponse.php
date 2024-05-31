@@ -17,6 +17,7 @@ class FunctionResponse extends \Spatie\LaravelData\Data
         public bool $requires_follow_up_prompt = false,
         public bool $save_to_message = true,
         public ?Collection $documentChunks = null,
+        public ?Collection $documents = null,
     ) {
     }
 }

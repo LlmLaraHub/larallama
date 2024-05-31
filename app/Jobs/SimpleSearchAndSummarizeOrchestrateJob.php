@@ -38,7 +38,7 @@ class SimpleSearchAndSummarizeOrchestrateJob implements ShouldQueue
      */
     public function handle(): void
     {
-        Log::info('[LaraChain] Skipping over functions doing search and summarize');
+        Log::info('[LaraChain] Skipping over functions doing SimpleSearchAndSummarizeOrchestrateJob');
 
         notify_ui(
             $this->chat->getChatable(),

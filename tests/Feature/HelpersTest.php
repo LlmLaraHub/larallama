@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\DocumentChunk;
+use LlmLaraHub\LlmDriver\Requests\MessageInDto;
 use Tests\TestCase;
 
 class HelpersTest extends TestCase
@@ -88,5 +89,24 @@ STRING;
         $threshold = calculate_dynamic_threshold($distances);
 
         $this->assertEquals(3.25, $threshold);
+    }
+
+    public function test_get_latest_user_content(): void {
+        $messageArray = [
+            MessageInDto::from([
+                'role' => 'user',
+                'content' => 'test',
+            ]),
+            MessageInDto::from([
+                'role' => 'assistant',
+                'content' => 'test2',
+            ]),
+            MessageInDto::from([
+                'role' => 'user',
+                'content' => 'test3',
+            ]),
+        ];
+
+        $this->assertEquals('test3', get_latest_user_content($messageArray));
     }
 }

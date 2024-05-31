@@ -27,7 +27,9 @@ class SummarizeCollection extends FunctionContract
         HasDrivers $model,
         FunctionCallDto $functionCallDto): FunctionResponse
     {
-        Log::info('[LaraChain] SummarizeCollection function called');
+        Log::info('[LaraChain] SummarizeCollection Function called');
+
+        $usersInput = get_latest_user_content($messageArray);
 
         $summary = collect([]);
 
@@ -44,7 +46,7 @@ class SummarizeCollection extends FunctionContract
             'token_count_v1' => token_counter($summary),
         ]);
 
-        $prompt = SummarizeCollectionPrompt::prompt($summary);
+        $prompt = SummarizeCollectionPrompt::prompt($summary, $usersInput);
 
         $messagesArray = [];
 

@@ -43,8 +43,8 @@ const props = defineProps({
                         <Tab as="div" v-slot="{ selected }">
                             <div :class="{ 'underline text-gray-800': selected }" class="hover:cursor-pointer m4-2 text-gray-500">Message</div>
                         </Tab>
-                        <Tab as="div" v-slot="{ selected }" :disabled="message?.message_document_references.length === 0" class="disabled:opacity-45 disabled:cursor-not-allowed">
-                            <div :class="{ 'underline text-gray-800': selected }" class="hover:cursor-pointer 
+                        <Tab as="div" v-slot="{ selected }"  class="disabled:opacity-45 disabled:cursor-not-allowed">
+                            <div :class="{ 'underline text-gray-800': selected }" class="hover:cursor-pointer
                             text-gray-500 flex justify-start gap-2 items-center">
                                 <span>Sources</span> <div class="text-xs text-white rounded-full bg-indigo-600 h-4 w-6 text-center">{{ message?.message_document_references.length}}</div>
                             </div>
@@ -72,7 +72,7 @@ const props = defineProps({
                             <div class="min-w-full border border-gray-400 p-4 mt-2 shadow-lg rounded-md">
                                 <div>
                                     <div class="overflow-x-auto">
-                                        <ReferenceTable :message="message" />   
+                                        <ReferenceTable :message="message" />
                                     </div>
                                 </div>
                             </div>

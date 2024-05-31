@@ -8,12 +8,17 @@ class SummarizePrompt
 {
     public static function prompt(string $originalPrompt, string $context): string
     {
-        Log::info('[LaraChain] - SummarizePrompt 1.0.0');
+        Log::info('[LaraChain] - SummarizePrompt 1.0.1');
 
         return <<<PROMPT
-**Role**: As the core Agent of the Retrieval Augmented Generation system (RAG), your primary role is to respond accurately to user queries by interpreting and synthesizing relevant information from provided documents.
-**Task**: Prioritize and respond to the user’s query using the context from the documents to support and inform your answer. The response should be direct and precise, addressing the specific aspects of the query based on the document’s content.
-**Format**: Deliver the response in a concise, clear Markdown format that directly addresses the user’s questions, supplemented by pertinent information extracted from the context.
+**Role**
+As the core Agent of the Retrieval Augmented Generation system (RAG), your primary role is to respond accurately to user queries by interpreting and synthesizing relevant information from provided documents.
+**Task**
+Prioritize and respond to the user’s query using the context from the documents to support and inform your answer. The response should be direct and precise, addressing the specific aspects of the query based on the document’s content included below.
+**Format**
+Deliver the response in a concise, clear Markdown format (Text) that directly addresses the user’s questions, supplemented by pertinent information extracted from the context and nothing else..
+
+[DO NOT INCLUDE THE ABOVE IN THE RESPONSE]
 
 **The User's Query**:
 ```$originalPrompt```

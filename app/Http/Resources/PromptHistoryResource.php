@@ -17,7 +17,7 @@ class PromptHistoryResource extends JsonResource
         return [
             'id' => $this->id,
             'prompt' => str($this->prompt)->markdown(),
-
+            'prompt_plain' => str($this->prompt)->stripTags()->toString(),
         ];
     }
 }

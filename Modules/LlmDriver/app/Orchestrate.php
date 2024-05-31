@@ -71,6 +71,11 @@ class Orchestrate
                 /** @var FunctionResponse $response */
                 $response = $functionClass->handle($messagesArray, $chat, $functionDto);
 
+                Log::info('[LaraChain] - Function Response', [
+                    'function' => $functionName,
+                    'response' => $response,
+                ]);
+
                 $message = null;
                 if ($response->save_to_message) {
 
