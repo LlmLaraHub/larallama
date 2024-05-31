@@ -12,7 +12,7 @@ use Illuminate\Support\Str;
 class [RESOURCE_CLASS_NAME]Controller extends BaseSourceController
 {
 
-    protected SourceTypeEnum $sourceTypeEnum = SourceTypeEnum::EmailBoxSource;
+    protected SourceTypeEnum $sourceTypeEnum = SourceTypeEnum::[RESOURCE_CLASS_NAME];
 
     protected string $edit_path = 'Sources/[RESOURCE_CLASS_NAME]/Edit';
 
@@ -22,7 +22,7 @@ class [RESOURCE_CLASS_NAME]Controller extends BaseSourceController
 
     protected string $info = '[RESOURCE_DESCRIPTION]';
 
-    protected string $type = '[RESOURCE_NAME]';
+    protected string $type = '[RESOURCE_TITLE_NAME]';
 
 
 }

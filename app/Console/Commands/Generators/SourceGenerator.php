@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands\Generators;
 
-use App\Domains\Generators\Source\GeneratorRepository;
+use Facades\App\Domains\Generators\Source\GeneratorRepository;
 use Illuminate\Console\Command;
 
 class SourceGenerator extends Command
@@ -16,10 +16,9 @@ class SourceGenerator extends Command
         $name = $this->ask('What is the name of this Source type, example WebFile');
         $description = $this->ask('A description to let the user know what it is for');
 
-        $results = sprintf("Does this look right, the name is %s, the description is %s and requires settings '%s'.",
+        $results = sprintf("Does this look right, the name is %s, the description is %s'.",
             $name,
-            $description,
-            false);
+            $description);
 
         if (! $this->confirm($results)) {
             $this->error('Ok try again');
@@ -40,7 +39,7 @@ class SourceGenerator extends Command
 
         GeneratorRepository::setup($name, $description, false)->run();
 
-        $this->comment('All done, check your git status');
+        $this->comment('All done, check your git status and update the app/Domains/Sources/SourceTypeEnum.php to have ' . $name , ' and value ' . str($name)->snake()->toString() );
 
         return self::SUCCESS;
     }

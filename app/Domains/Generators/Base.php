@@ -46,14 +46,13 @@ abstract class Base
 
     protected function makeController()
     {
-        $generatorNameAndPath = sprintf('Controllers/%sController.php', $this->generatorName);
+        $generatorNameAndPath = sprintf('Controllers/%s.php', $this->generatorName);
         $content = $this->getContents($generatorNameAndPath);
 
         $transformed = TokenReplacer::handle($this->generatorRepository, $content);
 
-        $name = sprintf('%s%sController.php',
-            $this->generatorRepository->getClassName(),
-            $this->generatorName,
+        $name = sprintf('%sController.php',
+            $this->generatorRepository->getClassName()
         );
         $destination = base_path(sprintf('app/Http/Controllers/%s/%s',
             str($this->generatorName)->plural()->toString(),

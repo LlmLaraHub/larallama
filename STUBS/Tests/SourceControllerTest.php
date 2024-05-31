@@ -1,134 +1,64 @@
 <?php
 
-use App\Jobs\ProcessSourceJob;
-use App\Models\Project;
+namespace Tests\Feature\Http\Controllers;
+
+use App\Domains\Recurring\RecurringTypeEnum;
+use App\Domains\Sources\SourceTypeEnum;
+use App\Models\Collection;
 use App\Models\Source;
 use App\Models\User;
-use Illuminate\Support\Facades\Queue;
-use function Pest\Laravel\assertDatabaseCount;
+use Tests\TestCase;
 
-it('should show the form for URL Source [RESOURCE_NAME]', function () {
-    $user = User::factory()->withPersonalTeam()
-        ->create();
+class [RESOURCE_CLASS_NAME]ControllerTest extends TestCase
+{
+    /**
+     * A basic feature test example.
+     */
+    public function test_store(): void
+    {
+        $user = User::factory()->create();
+        $collection = Collection::factory()->create();
+        $this->assertDatabaseCount('sources', 0);
+        $response = $this->actingAs($user)
+            ->post(route('collections.sources.[RESOURCE_KEY].store', $collection), [
+                'title' => 'Test Title',
+                'active' => 1,
+                'recurring' => RecurringTypeEnum::Daily->value,
+                'details' => 'Test Details',
+                'secrets' => [],
+            ]);
+        $response->assertSessionHas('flash.banner', 'Source added successfully');
 
-    $user = $this->createTeam($user);
+        $this->assertDatabaseCount('sources', 1);
 
-    $project = Project::factory()->create([
-        'team_id' => $user->current_team_id,
-    ]);
+        $source = Source::first();
 
-    $this->actingAs($user)
-        ->get(route('sources.[RESOURCE_KEY].create', [
-            'project' => $project->id,
-        ]))
-        ->assertOk();
-});
+        $this->assertEquals(SourceTypeEnum::[RESOURCE_NAME], $source->type);
 
-it('should allow you to edit [RESOURCE_NAME]', function () {
-    $user = User::factory()->withPersonalTeam()
-        ->create();
+        $this->assertTrue($source->active, true);
+    }
 
-    $user = $this->createTeam($user);
+    public function test_update()
+    {
+        $source = Source::factory()->create();
 
-    $project = Project::factory()->create([
-        'team_id' => $user->current_team_id,
-    ]);
+        $user = User::factory()->create();
 
-    $source = Source::factory()->create([
-        'project_id' => $project->id,
-    ]);
+        $this->actingAs($user)
+            ->put(route('collections.sources.[RESOURCE_KEY].update',
+                [
+                    'collection' => $source->collection->id,
+                    'source' => $source->id,
+                ]
+            ), [
+                'title' => 'Test Title',
+                'active' => 1,
+                'recurring' => RecurringTypeEnum::Daily->value,
+                'details' => 'Test Details',
+            ])
+            ->assertSessionHasNoErrors()
+            ->assertStatus(302);
 
-    $this->actingAs($user)
-        ->get(route('sources.[RESOURCE_KEY].edit', [
-            'project' => $project->id,
-            'source' => $source->id,
-        ]))
-        ->assertOk();
-});
-
-it('should run [RESOURCE_NAME]', function () {
-    Queue::fake();
-    $user = User::factory()->withPersonalTeam()
-        ->create();
-
-    $user = $this->createTeam($user);
-
-    $project = Project::factory()->create([
-        'team_id' => $user->current_team_id,
-    ]);
-
-    $source = Source::factory()->create([
-        'project_id' => $project->id,
-    ]);
-
-    $this->actingAs($user)
-        ->post(route('sources.[RESOURCE_KEY].run', [
-            'project' => $project->id,
-            'source' => $source->id,
-        ]))
-        ->assertRedirectToRoute('projects.show', [
-            'project' => $project->id,
-        ]);
-
-    Queue::assertPushed(ProcessSourceJob::class);
-});
-
-it('should allow you to update [RESOURCE_NAME]', function () {
-    $user = User::factory()->withPersonalTeam()
-        ->create();
-
-    $user = $this->createTeam($user);
-
-    $project = Project::factory()->create([
-        'team_id' => $user->current_team_id,
-    ]);
-
-    $source = Source::factory()->create([
-        'project_id' => $project->id,
-    ]);
-
-    $this->actingAs($user)
-        ->put(route('sources.[RESOURCE_KEY].update', [
-            'project' => $project->id,
-            'source' => $source->id,
-        ]), [
-            'name' => 'Foo',
-            'meta_data' => [
-                'url' => 'https://foo.bar',
-            ],
-            'description' => 'Bar',
-        ])
-        ->assertRedirectToRoute('projects.show', [
-            'project' => $project->id,
-        ]);
-
-    expect($source->refresh()->name)->toBe('Foo');
-});
-
-it('should create [RESOURCE_NAME]', function () {
-    $user = User::factory()->withPersonalTeam()
-        ->create();
-
-    $user = $this->createTeam($user);
-
-    $project = Project::factory()->create([
-        'team_id' => $user->current_team_id,
-    ]);
-
-    assertDatabaseCount('sources', 0);
-
-    $this->actingAs($user)
-        ->post(route('sources.[RESOURCE_KEY].store', [
-            'project' => $project->id,
-        ]), [
-            'name' => 'Foo',
-            'description' => 'Bar',
-            'meta_data' => [
-                'url' => 'https://foo.bar',
-            ],
-        ])
-        ->assertRedirectToRoute('projects.show', [
-            'project' => $project->id,
-        ]);
-    assertDatabaseCount('sources', 1);
-});
+        $this->assertTrue($source->refresh()->active, true);
+    }
+}

@@ -11,11 +11,13 @@ class TokenReplacer
             ->replace([
                 '[RESOURCE_KEY]',
                 '[RESOURCE_NAME]',
+                '[RESOURCE_TITLE_NAME]',
                 '[RESOURCE_CLASS_NAME]',
                 '[RESOURCE_DESCRIPTION]',
             ], [
                 $generatorRepository->getKey(),
                 $generatorRepository->name,
+                str($generatorRepository->name)->headline(),
                 str($generatorRepository->name)->studly(),
                 $generatorRepository->description,
             ])->toString();
