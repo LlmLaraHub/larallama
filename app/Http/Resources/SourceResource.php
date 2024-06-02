@@ -32,6 +32,7 @@ class SourceResource extends JsonResource
             'last_run' => $lastRun,
             'type_key' => $this->type->value,
             'meta_data' => $this->meta_data,
+            'secrets' => $this->secrets,
             'type' => str($this->type->name)->headline()->toString(),
         ];
     }
