@@ -9,8 +9,7 @@ const props = defineProps({
     <div class="text-xs">
         Type: <span class="font-bold text-gray-600">{{ source.type }}</span>
     </div>
-    <div class="text-xs">
-        Details: <span class="font-bold text-gray-600">{{ source.details }}</span>
+    <div class="text-xs w-full truncate ellipsis overflow-hidden whitespace-pre-wrap h-24">Details: <span class="font-bold text-gray-600">{{ source.details }}</span>
     </div>
     <div class="text-xs">
         Active: <span class="font-bold text-gray-600">{{ source.active }}</span>
