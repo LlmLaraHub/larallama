@@ -18,6 +18,18 @@ class HelpersTest extends TestCase
 
     }
 
+    public function test_append_prompt(): void
+    {
+        $prompt = 'Foobar';
+        $this->assertStringContainsString(
+            '[TOKEN]',
+            append_prompt('[TOKEN]', $prompt)
+        );
+
+        $prompt = 'Foobar [TOKEN]';
+        $this->assertEquals($prompt, append_prompt('[TOKEN]', $prompt));
+    }
+
     public function test_email_slug()
     {
 

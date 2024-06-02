@@ -30,6 +30,17 @@ if (! function_exists('put_fixture')) {
     }
 }
 
+if (! function_exists('append_prompt')) {
+    function append_prompt(string $token, string $prompt): string
+    {
+        if (! str($prompt)->contains($token)) {
+            return str($prompt)->append("\n".$token)->toString();
+        }
+
+        return $prompt;
+    }
+}
+
 if (! function_exists('calculate_dynamic_threshold')) {
     function calculate_dynamic_threshold(array $distances, int $percentile = 90): float
     {

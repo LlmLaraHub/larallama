@@ -49,8 +49,6 @@ class WebhookSourceController extends BaseSourceController
                 'source' => $source->id,
             ]);
 
-            //put_fixture("github_payload_real.json", request()->all());
-
             $webhookSource = (new WebhookSource())->payload(request()->all());
 
             WebhookSourceJob::dispatch(
@@ -71,7 +69,7 @@ class WebhookSourceController extends BaseSourceController
     public function getPrompts(): array
     {
         return [
-            'email' => GithubTransformer::prompt('[CONTEXT]'),
+            'json_to_text' => GithubTransformer::prompt('[CONTEXT]'),
         ];
     }
 }

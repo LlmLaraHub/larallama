@@ -4,7 +4,7 @@ namespace App\Domains\Sources;
 
 use App\Domains\Documents\StatusEnum;
 use App\Domains\Documents\TypesEnum;
-use App\Domains\Prompts\Transformers\GithubTransformer;
+use App\Domains\Prompts\PromptMerge;
 use App\Jobs\DocumentProcessingCompleteJob;
 use App\Jobs\VectorlizeDataJob;
 use App\Models\Document;
@@ -47,9 +47,11 @@ class WebhookSource extends BaseSource
 
         $encoded = json_encode($this->payload, 128);
 
-        $prompt = GithubTransformer::prompt($encoded);
-
-        put_fixture('prompt_and_payload.txt', $prompt, false);
+        $prompt = PromptMerge::merge([
+            '[CONTEXT]',
+        ], [
+            $encoded,
+        ], $source->details);
 
         $results = LlmDriverFacade::driver(
             $source->getDriver()

@@ -67,13 +67,12 @@ const submit = () => {
 
                     <form @submit.prevent="submit" class="p-10 ">
                         <div class="flex">
-                            <div class="w-3/4">
+                            <div class="w-3/4 border border-gray-300 p-5 rounded-lg">
                                 <Resources
                                     :recurring="recurring"
                                     v-model="form">
 
                                 </Resources>
-
 
 
                                 <div class="flex justify-end items-center gap-4">
