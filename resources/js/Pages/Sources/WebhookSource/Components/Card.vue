@@ -13,7 +13,11 @@ const props = defineProps({
 
 const form = useForm({})
 
-
+const source_url = computed(() => {
+    return route('collections.sources.webhook_source.api', {
+        'source': props.source.slug,
+    });
+});
 
 const run = (source) => {
     form.post(route('collections.sources.run', {
@@ -36,6 +40,13 @@ const run = (source) => {
         <div class="card-body">
             <h2 class="card-title text-gray-600">{{ source.title }} <span class="text-sm">#{{source.id}}</span></h2>
             <Settings :source="source"/>
+
+            <div class="text-xs border-gray-300 p-2 border">
+                URL: <span class="font-bold text-gray-600">
+                <Clipboard :content="source_url">{{ source_url}}</Clipboard>
+                </span>
+            </div>
+
             <div class="card-actions justify-end">
                 <button @click="run(source)" type="button" class="btn btn-primary rounded-none">Run</button>
                 <Link :href="route('collections.sources.webhook_source.edit', {

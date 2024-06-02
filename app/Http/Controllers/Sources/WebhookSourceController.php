@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers\Sources;
 
+use App\Domains\Prompts\EmailPrompt;
+use App\Domains\Prompts\MarketingEmailPrompt;
+use App\Domains\Prompts\Transformers\GithubTransformer;
 use App\Domains\Sources\SourceTypeEnum;
 use App\Http\Controllers\BaseSourceController;
+use App\Jobs\WebhookSourceJob;
 use App\Models\Collection;
 use App\Models\Source;
-use Facades\App\Domains\Sources\WebhookSource;
+use App\Domains\Sources\WebhookSource;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
@@ -43,10 +47,18 @@ class WebhookSourceController extends BaseSourceController
     public function api(Source $source)
     {
         try {
+            Log::info('[LaraChain] - WebhookSourceController', [
+                'source' => $source->id,
+            ]);
 
-            WebhookSource::payload(
-                request()->all()
-            )->handle($source);
+            //put_fixture("github_payload_real.json", request()->all());
+
+            $webhookSource = (new WebhookSource())->payload(request()->all());
+
+            WebhookSourceJob::dispatch(
+                $webhookSource,
+                $source
+            );
 
             return response()->json(['message' => 'ok']);
         } catch (\Exception $e) {
@@ -56,5 +68,12 @@ class WebhookSourceController extends BaseSourceController
 
             return response()->json(['message' => $e->getMessage()], 400);
         }
+    }
+
+    public function getPrompts()
+    {
+        return [
+            'email' => GithubTransformer::prompt('[CONTEXT]'),
+        ];
     }
 }

@@ -8,6 +8,7 @@ import SecondaryLink from '@/Components/SecondaryLink.vue';
 import Resources from './Components/Resources.vue';
 import { useForm } from '@inertiajs/vue3';
 import { useToast } from 'vue-toastification';
+import Templates from "@/Components/Templates.vue";
 const toast = useToast();
 
 const props = defineProps({
@@ -18,6 +19,7 @@ const props = defineProps({
     source: {
         type: Object
     },
+    prompts: Object,
     recurring: Object,
     info: String,
     type: String
@@ -50,6 +52,11 @@ const submit = () => {
             }
         });
 }
+
+const choosePrompt = (prompt) => {
+    form.details = prompt;
+}
+
 </script>
 
 <template>
@@ -77,6 +84,10 @@ const submit = () => {
                         v-model="form">
 
                         </Resources>
+                        <Templates
+                            @choosePrompt="choosePrompt"
+                            :prompts="prompts"/>
+
 
                         <div class="flex justify-end items-center gap-4">
                             <PrimaryButton type="submit">

@@ -7,6 +7,7 @@ import Intro from '@/Components/Intro.vue';
 import SecondaryLink from '@/Components/SecondaryLink.vue';
 import Resources from './Components/Resources.vue';
 import { useForm } from '@inertiajs/vue3';
+import Templates from "@/Components/Templates.vue";
 
 const props = defineProps({
     collection: {
@@ -19,6 +20,7 @@ const props = defineProps({
     recurring: {
         type: Object
     },
+    prompts: Object,
     info: String,
     type: String
 });
@@ -33,6 +35,9 @@ const form = useForm({
     active: true
 });
 
+const choosePrompt = (prompt) => {
+    form.details = prompt;
+}
 
 const submit = () => {
     form.post(
@@ -61,22 +66,31 @@ const submit = () => {
                     <Intro></Intro>
 
                     <form @submit.prevent="submit" class="p-10 ">
-                        <Resources
-                            :recurring="recurring"
-                        v-model="form">
+                        <div class="flex">
+                            <div class="w-3/4">
+                                <Resources
+                                    :recurring="recurring"
+                                    v-model="form">
 
-                        </Resources>
+                                </Resources>
 
-                        <div class="flex justify-end items-center gap-4">
-                            <PrimaryButton type="submit">
-                                Save
-                            </PrimaryButton>
-                            <SecondaryLink :href="route('collections.sources.index', {
+
+
+                                <div class="flex justify-end items-center gap-4">
+                                    <PrimaryButton type="submit">
+                                        Save
+                                    </PrimaryButton>
+                                    <SecondaryLink :href="route('collections.sources.index', {
                                 collection: collection.data.id
 
                             })">
-                                Cancel
-                            </SecondaryLink>
+                                        Cancel
+                                    </SecondaryLink>
+                                </div>
+                            </div>
+                            <Templates
+                                @choosePrompt="choosePrompt"
+                                :prompts="prompts"/>
                         </div>
                     </form>
 

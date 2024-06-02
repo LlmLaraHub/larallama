@@ -33,6 +33,7 @@ class BaseSourceController extends Controller
             'recurring' => RecurringTypeEnum::selectOptions(),
             'info' => $this->info,
             'type' => $this->type,
+            'prompts' => $this->getPrompts(),
             'collection' => new CollectionResource($collection),
         ]);
     }
@@ -78,6 +79,7 @@ class BaseSourceController extends Controller
         return inertia($this->edit_path, [
             'source' => new SourceEditResource($source),
             'info' => $this->info,
+            'prompts' => $this->getPrompts(),
             'type' => $this->type,
             'recurring' => RecurringTypeEnum::selectOptions(),
             'collection' => new CollectionResource($source->collection),

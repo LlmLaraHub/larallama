@@ -8,9 +8,11 @@
         </div>
 
         <div>
-            <InputLabel value="Details"/>
-            <textarea v-model="modelValue.details" class="rounded-none textarea textarea-bordered w-full mb-5"
-                placeholder="This can assist the LLM to process your messages later."></textarea>
+            <InputLabel value="Prompt to be used for Transformation"/>
+            <textarea
+                rows="5"
+                v-model="modelValue.details" class="rounded-none textarea textarea-bordered w-full mb-5"
+                placeholder="The data will be passed to the LLM with your Prompt to transform the data."></textarea>
             <InputError :message="modelValue.errors.details" />
         </div>
 

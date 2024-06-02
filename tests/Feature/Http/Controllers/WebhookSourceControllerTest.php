@@ -2,8 +2,10 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use Amp\Pipeline\Queue;
 use App\Domains\Recurring\RecurringTypeEnum;
 use App\Domains\Sources\SourceTypeEnum;
+use App\Jobs\WebhookSourceJob;
 use App\Models\Collection;
 use App\Models\Source;
 use App\Models\User;
@@ -70,8 +72,7 @@ class WebhookSourceControllerTest extends TestCase
 
     public function test_api()
     {
-        WebhookSource::shouldReceive('payload->handle')->once();
-
+        \Illuminate\Support\Facades\Queue::fake();
         $source = Source::factory()->create();
 
         $url = route('collections.sources.webhook_source.api', [
@@ -81,5 +82,6 @@ class WebhookSourceControllerTest extends TestCase
         $data = [];
         $data['token'] = 'bazboo';
         $this->post($url, $data)->assertStatus(200);
+        \Illuminate\Support\Facades\Queue::assertPushed(WebhookSourceJob::class);
     }
 }

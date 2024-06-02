@@ -4,6 +4,7 @@ namespace App\Domains\Sources;
 
 use App\Domains\Documents\StatusEnum;
 use App\Domains\Documents\TypesEnum;
+use App\Domains\Prompts\Transformers\GithubTransformer;
 use App\Helpers\TextChunker;
 use App\Jobs\SummarizeDocumentJob;
 use App\Jobs\VectorlizeDataJob;
@@ -42,63 +43,80 @@ class WebhookSource extends BaseSource
      */
     public function handle(Source $source): void
     {
-        Log::info('[LaraChain] - WebhookSource Doing something');
-        //@TDODO
-        //LLM can use the source promot to transfor the data.
+        Log::info('[LaraChain] - WebhookSource');
+
+        $chunks = [];
+
         $encoded = json_encode($this->payload, 128);
 
-        $document = Document::create([
-            'type' => TypesEnum::WebHook,
-            'status' => StatusEnum::Pending,
-            'source_id' => $source->id,
-            'meta_data' => $this->payload,
-            'collection_id' => $source->collection_id,
-            'status_summary' => StatusEnum::Pending,
-            'subject' => 'Webhook '.Str::random(12),
+        $prompt = GithubTransformer::prompt($encoded);
+
+        put_fixture('prompt_and_payload.txt', $prompt, false);
+
+        $results = LlmDriverFacade::driver(
+            $source->getDriver()
+        )->completion($prompt);
+
+        Log::info('[LaraChain] - WebhookSource Transformation Results', [
+            'results' => $results
         ]);
 
-        $this->document = $document;
+        $content = $results->content;
+        $content = str($content)
+            ->replace("```json", "")
+            ->replaceLast("```", "")
+            ->toString();
 
-        $size = config('llmdriver.chunking.default_size');
-        $chunked_chunks = TextChunker::handle($encoded, $size);
-        $page_number = 1;
-        $chunks = [];
-        foreach ($chunked_chunks as $chunkSection => $chunkContent) {
-            $guid = md5($chunkContent);
-            $DocumentChunk = DocumentChunk::updateOrCreate(
-                [
-                    'document_id' => $document->id,
-                    'sort_order' => $page_number,
-                    'section_number' => $chunkSection,
-                ],
-                [
-                    'guid' => $guid,
-                    'content' => $chunkContent,
-                ]
-            );
-            $page_number++;
-            $chunks[] = [
-                new VectorlizeDataJob($DocumentChunk),
-            ];
+        try {
+            $results = json_decode($content, true);
 
-        }
+            foreach($results as $index => $result) {
+                $id = data_get($result, 'commit_id', Str::random(12));
+                $result = data_get($result, 'message', $result);
+                $document = Document::updateOrCreate([
+                    'type' => TypesEnum::WebHook,
+                    'source_id' => $source->id,
+                    'subject' => 'Commit ID: '. $id,
+                ],[
+                    'status' => StatusEnum::Pending,
+                    'meta_data' => $this->payload,
+                    'collection_id' => $source->collection_id,
+                    'status_summary' => StatusEnum::Pending,
+                    'summary' => $result,
+                ]);
 
-        Bus::batch($chunks)
-            ->name("Chunking Document from Webhook - {$this->document->id} {$this->document->file_path}")
-            ->finally(function (Batch $batch) use ($document) {
-                Bus::batch([
+                $this->document = $document;
+
+                $DocumentChunk = DocumentChunk::updateOrCreate(
                     [
-                        new SummarizeDocumentJob($document),
-                        new TagDocumentJob($document),
+                        'document_id' => $document->id,
+                        'sort_order' => $index + 1,
+                        'section_number' => 0,
                     ],
-                ])
-                    ->name("Summarizing and Tagging Document from Webhook - {$document->id}")
+                    [
+                        'guid' => md5($result),
+                        'content' => $result,
+                    ]
+                );
+
+                $chunks[] = [
+                    new VectorlizeDataJob($DocumentChunk),
+                ];
+
+                Bus::batch($chunks)
+                    ->name("Chunking Document from Webhook - {$this->document->id} {$this->document->file_path}")
                     ->allowFailures()
                     ->onQueue(LlmDriverFacade::driver($document->getDriver())->onQueue())
                     ->dispatch();
-            })
-            ->allowFailures()
-            ->onQueue(LlmDriverFacade::driver($document->getDriver())->onQueue())
-            ->dispatch();
+            }
+        } catch (\Exception $e) {
+            Log::error('[LaraChain] - Error running WebhookSource', [
+                'error' => $e->getMessage(),
+                'results' => $results,
+            ]);
+        }
+
+
+
     }
 }

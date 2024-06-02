@@ -105,12 +105,37 @@
             "id": "1f32c2e9e6b8f29206c1b6e72c5f3a85b35c7087",
             "tree_id": "c6a6141b793c1196ab4e0a59bfc49ccf0c8e9bff",
             "distinct": true,
-            "message": "Commit message",
+            "message": "Update the controller to handle the webhook",
             "timestamp": "2024-06-01T12:34:56Z",
             "url": "https://github.com/username/your-repo-name/commit/1f32c2e9e6b8f29206c1b6e72c5f3a85b35c7087",
             "author": {
-                "name": "Author Name",
+                "name": "Alfred Nutile",
                 "email": "author@example.com"
+            },
+            "committer": {
+                "name": "Committer Name",
+                "email": "committer@example.com"
+            },
+            "added": [
+                "newfile.txt"
+            ],
+            "removed": [
+                "oldfile.txt"
+            ],
+            "modified": [
+                "modifiedfile.txt"
+            ]
+        },
+        {
+            "id": "1f32c2e9e6b8f29206c1b6e72c5f3a85b35c7088",
+            "tree_id": "c6a6141b793c1196ab4e0a59bfc49ccf0c8e9bff",
+            "distinct": true,
+            "message": "Fix bug with payment system",
+            "timestamp": "2024-06-04T12:34:56Z",
+            "url": "https://github.com/username/your-repo-name/commit/1f32c2e9e6b8f29206c1b6e72c5f3a85b35c7088",
+            "author": {
+                "name": "Bob Belcher",
+                "email": "bob@bobsburgers.com"
             },
             "committer": {
                 "name": "Committer Name",
