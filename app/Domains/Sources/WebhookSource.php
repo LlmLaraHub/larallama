@@ -5,10 +5,12 @@ namespace App\Domains\Sources;
 use App\Domains\Documents\StatusEnum;
 use App\Domains\Documents\TypesEnum;
 use App\Domains\Prompts\Transformers\GithubTransformer;
+use App\Jobs\DocumentProcessingCompleteJob;
 use App\Jobs\VectorlizeDataJob;
 use App\Models\Document;
 use App\Models\DocumentChunk;
 use App\Models\Source;
+use Illuminate\Bus\Batch;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
@@ -102,6 +104,9 @@ class WebhookSource extends BaseSource
                 Bus::batch($chunks)
                     ->name("Chunking Document from Webhook - {$this->document->id} {$this->document->file_path}")
                     ->allowFailures()
+                    ->finally(function (Batch $batch) use ($document) {
+                        DocumentProcessingCompleteJob::dispatch($document);
+                    })
                     ->onQueue(LlmDriverFacade::driver($document->getDriver())->onQueue())
                     ->dispatch();
             }

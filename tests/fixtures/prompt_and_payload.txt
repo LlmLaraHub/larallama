@@ -25,5 +25,182 @@ commits.*.timestamp
 
 **Context from the database search of emails for used context**:
 {
-    "payload": "{\"ref\":\"refs\/heads\/main\",\"before\":\"3ee38bc1a01cf845f365cf36ad037db19529e81f\",\"after\":\"921afe330a2409d9440081bc2eb5038036744c93\",\"repository\":{\"id\":776992217,\"node_id\":\"R_kgDOLk_12Q\",\"name\":\"laralamma\",\"full_name\":\"LlmLaraHub\/laralamma\",\"private\":false,\"owner\":{\"name\":\"LlmLaraHub\",\"email\":\"info@sundancesolutions.io\",\"login\":\"LlmLaraHub\",\"id\":164745521,\"node_id\":\"O_kgDOCdHRMQ\",\"avatar_url\":\"https:\/\/avatars.githubusercontent.com\/u\/164745521?v=4\",\"gravatar_id\":\"\",\"url\":\"https:\/\/api.github.com\/users\/LlmLaraHub\",\"html_url\":\"https:\/\/github.com\/LlmLaraHub\",\"followers_url\":\"https:\/\/api.github.com\/users\/LlmLaraHub\/followers\",\"following_url\":\"https:\/\/api.github.com\/users\/LlmLaraHub\/following{\/other_user}\",\"gists_url\":\"https:\/\/api.github.com\/users\/LlmLaraHub\/gists{\/gist_id}\",\"starred_url\":\"https:\/\/api.github.com\/users\/LlmLaraHub\/starred{\/owner}{\/repo}\",\"subscriptions_url\":\"https:\/\/api.github.com\/users\/LlmLaraHub\/subscriptions\",\"organizations_url\":\"https:\/\/api.github.com\/users\/LlmLaraHub\/orgs\",\"repos_url\":\"https:\/\/api.github.com\/users\/LlmLaraHub\/repos\",\"events_url\":\"https:\/\/api.github.com\/users\/LlmLaraHub\/events{\/privacy}\",\"received_events_url\":\"https:\/\/api.github.com\/users\/LlmLaraHub\/received_events\",\"type\":\"Organization\",\"site_admin\":false},\"html_url\":\"https:\/\/github.com\/LlmLaraHub\/laralamma\",\"description\":\"This is version 2 off LaraChain.io\",\"fork\":false,\"url\":\"https:\/\/github.com\/LlmLaraHub\/laralamma\",\"forks_url\":\"https:\/\/api.github.com\/repos\/LlmLaraHub\/laralamma\/forks\",\"keys_url\":\"https:\/\/api.github.com\/repos\/LlmLaraHub\/laralamma\/keys{\/key_id}\",\"collaborators_url\":\"https:\/\/api.github.com\/repos\/LlmLaraHub\/laralamma\/collaborators{\/collaborator}\",\"teams_url\":\"https:\/\/api.github.com\/repos\/LlmLaraHub\/laralamma\/teams\",\"hooks_url\":\"https:\/\/api.github.com\/repos\/LlmLaraHub\/laralamma\/hooks\",\"issue_events_url\":\"https:\/\/api.github.com\/repos\/LlmLaraHub\/laralamma\/issues\/events{\/number}\",\"events_url\":\"https:\/\/api.github.com\/repos\/LlmLaraHub\/laralamma\/events\",\"assignees_url\":\"https:\/\/api.github.com\/repos\/LlmLaraHub\/laralamma\/assignees{\/user}\",\"branches_url\":\"https:\/\/api.github.com\/repos\/LlmLaraHub\/laralamma\/branches{\/branch}\",\"tags_url\":\"https:\/\/api.github.com\/repos\/LlmLaraHub\/laralamma\/tags\",\"blobs_url\":\"https:\/\/api.github.com\/repos\/LlmLaraHub\/laralamma\/git\/blobs{\/sha}\",\"git_tags_url\":\"https:\/\/api.github.com\/repos\/LlmLaraHub\/laralamma\/git\/tags{\/sha}\",\"git_refs_url\":\"https:\/\/api.github.com\/repos\/LlmLaraHub\/laralamma\/git\/refs{\/sha}\",\"trees_url\":\"https:\/\/api.github.com\/repos\/LlmLaraHub\/laralamma\/git\/trees{\/sha}\",\"statuses_url\":\"https:\/\/api.github.com\/repos\/LlmLaraHub\/laralamma\/statuses\/{sha}\",\"languages_url\":\"https:\/\/api.github.com\/repos\/LlmLaraHub\/laralamma\/languages\",\"stargazers_url\":\"https:\/\/api.github.com\/repos\/LlmLaraHub\/laralamma\/stargazers\",\"contributors_url\":\"https:\/\/api.github.com\/repos\/LlmLaraHub\/laralamma\/contributors\",\"subscribers_url\":\"https:\/\/api.github.com\/repos\/LlmLaraHub\/laralamma\/subscribers\",\"subscription_url\":\"https:\/\/api.github.com\/repos\/LlmLaraHub\/laralamma\/subscription\",\"commits_url\":\"https:\/\/api.github.com\/repos\/LlmLaraHub\/laralamma\/commits{\/sha}\",\"git_commits_url\":\"https:\/\/api.github.com\/repos\/LlmLaraHub\/laralamma\/git\/commits{\/sha}\",\"comments_url\":\"https:\/\/api.github.com\/repos\/LlmLaraHub\/laralamma\/comments{\/number}\",\"issue_comment_url\":\"https:\/\/api.github.com\/repos\/LlmLaraHub\/laralamma\/issues\/comments{\/number}\",\"contents_url\":\"https:\/\/api.github.com\/repos\/LlmLaraHub\/laralamma\/contents\/{+path}\",\"compare_url\":\"https:\/\/api.github.com\/repos\/LlmLaraHub\/laralamma\/compare\/{base}...{head}\",\"merges_url\":\"https:\/\/api.github.com\/repos\/LlmLaraHub\/laralamma\/merges\",\"archive_url\":\"https:\/\/api.github.com\/repos\/LlmLaraHub\/laralamma\/{archive_format}{\/ref}\",\"downloads_url\":\"https:\/\/api.github.com\/repos\/LlmLaraHub\/laralamma\/downloads\",\"issues_url\":\"https:\/\/api.github.com\/repos\/LlmLaraHub\/laralamma\/issues{\/number}\",\"pulls_url\":\"https:\/\/api.github.com\/repos\/LlmLaraHub\/laralamma\/pulls{\/number}\",\"milestones_url\":\"https:\/\/api.github.com\/repos\/LlmLaraHub\/laralamma\/milestones{\/number}\",\"notifications_url\":\"https:\/\/api.github.com\/repos\/LlmLaraHub\/laralamma\/notifications{?since,all,participating}\",\"labels_url\":\"https:\/\/api.github.com\/repos\/LlmLaraHub\/laralamma\/labels{\/name}\",\"releases_url\":\"https:\/\/api.github.com\/repos\/LlmLaraHub\/laralamma\/releases{\/id}\",\"deployments_url\":\"https:\/\/api.github.com\/repos\/LlmLaraHub\/laralamma\/deployments\",\"created_at\":1711329276,\"updated_at\":\"2024-06-02T02:00:23Z\",\"pushed_at\":1717350097,\"git_url\":\"git:\/\/github.com\/LlmLaraHub\/laralamma.git\",\"ssh_url\":\"git@github.com:LlmLaraHub\/laralamma.git\",\"clone_url\":\"https:\/\/github.com\/LlmLaraHub\/laralamma.git\",\"svn_url\":\"https:\/\/github.com\/LlmLaraHub\/laralamma\",\"homepage\":null,\"size\":55689,\"stargazers_count\":47,\"watchers_count\":47,\"language\":\"HTML\",\"has_issues\":true,\"has_projects\":true,\"has_downloads\":true,\"has_wiki\":false,\"has_pages\":false,\"has_discussions\":true,\"forks_count\":8,\"mirror_url\":null,\"archived\":false,\"disabled\":false,\"open_issues_count\":7,\"license\":{\"key\":\"mit\",\"name\":\"MIT License\",\"spdx_id\":\"MIT\",\"url\":\"https:\/\/api.github.com\/licenses\/mit\",\"node_id\":\"MDc6TGljZW5zZTEz\"},\"allow_forking\":true,\"is_template\":false,\"web_commit_signoff_required\":false,\"topics\":[],\"visibility\":\"public\",\"forks\":8,\"open_issues\":7,\"watchers\":47,\"default_branch\":\"main\",\"stargazers\":47,\"master_branch\":\"main\",\"organization\":\"LlmLaraHub\",\"custom_properties\":{}},\"pusher\":{\"name\":\"alnutile\",\"email\":\"365385+alnutile@users.noreply.github.com\"},\"organization\":{\"login\":\"LlmLaraHub\",\"id\":164745521,\"node_id\":\"O_kgDOCdHRMQ\",\"url\":\"https:\/\/api.github.com\/orgs\/LlmLaraHub\",\"repos_url\":\"https:\/\/api.github.com\/orgs\/LlmLaraHub\/repos\",\"events_url\":\"https:\/\/api.github.com\/orgs\/LlmLaraHub\/events\",\"hooks_url\":\"https:\/\/api.github.com\/orgs\/LlmLaraHub\/hooks\",\"issues_url\":\"https:\/\/api.github.com\/orgs\/LlmLaraHub\/issues\",\"members_url\":\"https:\/\/api.github.com\/orgs\/LlmLaraHub\/members{\/member}\",\"public_members_url\":\"https:\/\/api.github.com\/orgs\/LlmLaraHub\/public_members{\/member}\",\"avatar_url\":\"https:\/\/avatars.githubusercontent.com\/u\/164745521?v=4\",\"description\":\"Open-Source RAG system built with Laravel\"},\"sender\":{\"login\":\"alnutile\",\"id\":365385,\"node_id\":\"MDQ6VXNlcjM2NTM4NQ==\",\"avatar_url\":\"https:\/\/avatars.githubusercontent.com\/u\/365385?v=4\",\"gravatar_id\":\"\",\"url\":\"https:\/\/api.github.com\/users\/alnutile\",\"html_url\":\"https:\/\/github.com\/alnutile\",\"followers_url\":\"https:\/\/api.github.com\/users\/alnutile\/followers\",\"following_url\":\"https:\/\/api.github.com\/users\/alnutile\/following{\/other_user}\",\"gists_url\":\"https:\/\/api.github.com\/users\/alnutile\/gists{\/gist_id}\",\"starred_url\":\"https:\/\/api.github.com\/users\/alnutile\/starred{\/owner}{\/repo}\",\"subscriptions_url\":\"https:\/\/api.github.com\/users\/alnutile\/subscriptions\",\"organizations_url\":\"https:\/\/api.github.com\/users\/alnutile\/orgs\",\"repos_url\":\"https:\/\/api.github.com\/users\/alnutile\/repos\",\"events_url\":\"https:\/\/api.github.com\/users\/alnutile\/events{\/privacy}\",\"received_events_url\":\"https:\/\/api.github.com\/users\/alnutile\/received_events\",\"type\":\"User\",\"site_admin\":false},\"created\":false,\"deleted\":false,\"forced\":false,\"base_ref\":null,\"compare\":\"https:\/\/github.com\/LlmLaraHub\/laralamma\/compare\/3ee38bc1a01c...921afe330a24\",\"commits\":[{\"id\":\"921afe330a2409d9440081bc2eb5038036744c93\",\"tree_id\":\"3fb026840c62421189352bac33c520810dc53b91\",\"distinct\":true,\"message\":\"Testing webhook integration\\n\\nTesting the integration between the two systems\",\"timestamp\":\"2024-06-02T13:41:37-04:00\",\"url\":\"https:\/\/github.com\/LlmLaraHub\/laralamma\/commit\/921afe330a2409d9440081bc2eb5038036744c93\",\"author\":{\"name\":\"Alfred Nutile\",\"email\":\"365385+alnutile@users.noreply.github.com\",\"username\":\"alnutile\"},\"committer\":{\"name\":\"GitHub\",\"email\":\"noreply@github.com\",\"username\":\"web-flow\"},\"added\":[],\"removed\":[],\"modified\":[\"README.md\"]}],\"head_commit\":{\"id\":\"921afe330a2409d9440081bc2eb5038036744c93\",\"tree_id\":\"3fb026840c62421189352bac33c520810dc53b91\",\"distinct\":true,\"message\":\"Testing webhook integration\\n\\nTesting the integration between the two systems\",\"timestamp\":\"2024-06-02T13:41:37-04:00\",\"url\":\"https:\/\/github.com\/LlmLaraHub\/laralamma\/commit\/921afe330a2409d9440081bc2eb5038036744c93\",\"author\":{\"name\":\"Alfred Nutile\",\"email\":\"365385+alnutile@users.noreply.github.com\",\"username\":\"alnutile\"},\"committer\":{\"name\":\"GitHub\",\"email\":\"noreply@github.com\",\"username\":\"web-flow\"},\"added\":[],\"removed\":[],\"modified\":[\"README.md\"]}}"
+    "ref": "refs\/heads\/main",
+    "before": "957de67df834b7d7a4a91ae35949cf8c18c80915",
+    "after": "1f32c2e9e6b8f29206c1b6e72c5f3a85b35c7087",
+    "repository": {
+        "id": 12345678,
+        "node_id": "MDEwOlJlcG9zaXRvcnkxMjM0NTY3OA==",
+        "name": "your-repo-name",
+        "full_name": "username\/your-repo-name",
+        "private": false,
+        "owner": {
+            "name": "username",
+            "email": "username@example.com",
+            "login": "username",
+            "id": 1234567,
+            "node_id": "MDQ6VXNlcjEyMzQ1Njc=",
+            "avatar_url": "https:\/\/github.com\/images\/error\/username_happy.gif",
+            "gravatar_id": null,
+            "url": "https:\/\/api.github.com\/users\/username",
+            "html_url": "https:\/\/github.com\/username",
+            "followers_url": "https:\/\/api.github.com\/users\/username\/followers",
+            "following_url": "https:\/\/api.github.com\/users\/username\/following{\/other_user}",
+            "gists_url": "https:\/\/api.github.com\/users\/username\/gists{\/gist_id}",
+            "starred_url": "https:\/\/api.github.com\/users\/username\/starred{\/owner}{\/repo}",
+            "subscriptions_url": "https:\/\/api.github.com\/users\/username\/subscriptions",
+            "organizations_url": "https:\/\/api.github.com\/users\/username\/orgs",
+            "repos_url": "https:\/\/api.github.com\/users\/username\/repos",
+            "events_url": "https:\/\/api.github.com\/users\/username\/events{\/privacy}",
+            "received_events_url": "https:\/\/api.github.com\/users\/username\/received_events",
+            "type": "User",
+            "site_admin": false
+        },
+        "html_url": "https:\/\/github.com\/username\/your-repo-name",
+        "description": "This is your repository",
+        "fork": false,
+        "url": "https:\/\/api.github.com\/repos\/username\/your-repo-name",
+        "forks_url": "https:\/\/api.github.com\/repos\/username\/your-repo-name\/forks",
+        "keys_url": "https:\/\/api.github.com\/repos\/username\/your-repo-name\/keys{\/key_id}",
+        "collaborators_url": "https:\/\/api.github.com\/repos\/username\/your-repo-name\/collaborators{\/collaborator}",
+        "teams_url": "https:\/\/api.github.com\/repos\/username\/your-repo-name\/teams",
+        "hooks_url": "https:\/\/api.github.com\/repos\/username\/your-repo-name\/hooks",
+        "issue_events_url": "https:\/\/api.github.com\/repos\/username\/your-repo-name\/issues\/events{\/number}",
+        "events_url": "https:\/\/api.github.com\/repos\/username\/your-repo-name\/events",
+        "assignees_url": "https:\/\/api.github.com\/repos\/username\/your-repo-name\/assignees{\/user}",
+        "branches_url": "https:\/\/api.github.com\/repos\/username\/your-repo-name\/branches{\/branch}",
+        "tags_url": "https:\/\/api.github.com\/repos\/username\/your-repo-name\/tags",
+        "blobs_url": "https:\/\/api.github.com\/repos\/username\/your-repo-name\/git\/blobs{\/sha}",
+        "git_tags_url": "https:\/\/api.github.com\/repos\/username\/your-repo-name\/git\/tags{\/sha}",
+        "git_refs_url": "https:\/\/api.github.com\/repos\/username\/your-repo-name\/git\/refs{\/sha}",
+        "trees_url": "https:\/\/api.github.com\/repos\/username\/your-repo-name\/git\/trees{\/sha}",
+        "statuses_url": "https:\/\/api.github.com\/repos\/username\/your-repo-name\/statuses\/{sha}",
+        "languages_url": "https:\/\/api.github.com\/repos\/username\/your-repo-name\/languages",
+        "stargazers_url": "https:\/\/api.github.com\/repos\/username\/your-repo-name\/stargazers",
+        "contributors_url": "https:\/\/api.github.com\/repos\/username\/your-repo-name\/contributors",
+        "subscribers_url": "https:\/\/api.github.com\/repos\/username\/your-repo-name\/subscribers",
+        "subscription_url": "https:\/\/api.github.com\/repos\/username\/your-repo-name\/subscription",
+        "commits_url": "https:\/\/api.github.com\/repos\/username\/your-repo-name\/commits{\/sha}",
+        "git_commits_url": "https:\/\/api.github.com\/repos\/username\/your-repo-name\/git\/commits{\/sha}",
+        "comments_url": "https:\/\/api.github.com\/repos\/username\/your-repo-name\/comments{\/number}",
+        "issue_comment_url": "https:\/\/api.github.com\/repos\/username\/your-repo-name\/issues\/comments{\/number}",
+        "contents_url": "https:\/\/api.github.com\/repos\/username\/your-repo-name\/contents\/{+path}",
+        "compare_url": "https:\/\/api.github.com\/repos\/username\/your-repo-name\/compare\/{base}...{head}",
+        "merges_url": "https:\/\/api.github.com\/repos\/username\/your-repo-name\/merges",
+        "archive_url": "https:\/\/api.github.com\/repos\/username\/your-repo-name\/{archive_format}{\/ref}",
+        "downloads_url": "https:\/\/api.github.com\/repos\/username\/your-repo-name\/downloads",
+        "issues_url": "https:\/\/api.github.com\/repos\/username\/your-repo-name\/issues{\/number}",
+        "pulls_url": "https:\/\/api.github.com\/repos\/username\/your-repo-name\/pulls{\/number}",
+        "milestones_url": "https:\/\/api.github.com\/repos\/username\/your-repo-name\/milestones{\/number}",
+        "notifications_url": "https:\/\/api.github.com\/repos\/username\/your-repo-name\/notifications{?since,all,participating}",
+        "labels_url": "https:\/\/api.github.com\/repos\/username\/your-repo-name\/labels{\/name}",
+        "releases_url": "https:\/\/api.github.com\/repos\/username\/your-repo-name\/releases{\/id}",
+        "deployments_url": "https:\/\/api.github.com\/repos\/username\/your-repo-name\/deployments"
+    },
+    "pusher": {
+        "name": "username",
+        "email": "username@example.com"
+    },
+    "sender": {
+        "login": "username",
+        "id": 1234567,
+        "node_id": "MDQ6VXNlcjEyMzQ1Njc=",
+        "avatar_url": "https:\/\/github.com\/images\/error\/username_happy.gif",
+        "gravatar_id": null,
+        "url": "https:\/\/api.github.com\/users\/username",
+        "html_url": "https:\/\/github.com\/username",
+        "followers_url": "https:\/\/api.github.com\/users\/username\/followers",
+        "following_url": "https:\/\/api.github.com\/users\/username\/following{\/other_user}",
+        "gists_url": "https:\/\/api.github.com\/users\/username\/gists{\/gist_id}",
+        "starred_url": "https:\/\/api.github.com\/users\/username\/starred{\/owner}{\/repo}",
+        "subscriptions_url": "https:\/\/api.github.com\/users\/username\/subscriptions",
+        "organizations_url": "https:\/\/api.github.com\/users\/username\/orgs",
+        "repos_url": "https:\/\/api.github.com\/users\/username\/repos",
+        "events_url": "https:\/\/api.github.com\/users\/username\/events{\/privacy}",
+        "received_events_url": "https:\/\/api.github.com\/users\/username\/received_events",
+        "type": "User",
+        "site_admin": false
+    },
+    "created": false,
+    "deleted": false,
+    "forced": false,
+    "base_ref": null,
+    "compare": "https:\/\/github.com\/username\/your-repo-name\/compare\/957de67df834...1f32c2e9e6b8",
+    "commits": [
+        {
+            "id": "b91e4dc4-036d-401f-9d84-b89352d3d0e2",
+            "tree_id": "c6a6141b793c1196ab4e0a59bfc49ccf0c8e9bff",
+            "distinct": true,
+            "message": "Update the controller to handle the webhook",
+            "timestamp": "Mon Dec 11 2023 13:51:38 GMT-0500 (Eastern Standard Time)",
+            "url": "https:\/\/github.com\/username\/your-repo-name\/commit\/1f32c2e9e6b8f29206c1b6e72c5f3a85b35c70497",
+            "author": {
+                "name": "Carrie Lueilwitz",
+                "email": "Russell_Price8@hotmail.com"
+            },
+            "committer": {
+                "name": "Committer Name",
+                "email": "committer@example.com"
+            },
+            "added": [
+                "newfile.txt"
+            ],
+            "removed": [
+                "oldfile.txt"
+            ],
+            "modified": [
+                "modifiedfile.txt"
+            ]
+        },
+        {
+            "id": "a7bd275f-02ea-4bc9-beaa-93afada3fb8b",
+            "tree_id": "c6a6141b793c1196ab4e0a59bfc49ccf0c8e9bff",
+            "distinct": true,
+            "message": "Fix bug with payment system",
+            "timestamp": "Thu Oct 26 2023 00:02:08 GMT-0400 (Eastern Daylight Time)",
+            "url": "https:\/\/github.com\/username\/your-repo-name\/commit\/1f32c2e9e6b8f29206c1b6e72c5f3a85b35c7098",
+            "author": {
+                "name": "Kim Haag",
+                "email": "Ella3@gmail.com"
+            },
+            "committer": {
+                "name": "Committer Name",
+                "email": "committer@example.com"
+            },
+            "added": [
+                "newfile.txt"
+            ],
+            "removed": [
+                "oldfile.txt"
+            ],
+            "modified": [
+                "modifiedfile.txt"
+            ]
+        }
+    ],
+    "head_commit": {
+        "id": "1f32c2e9e6b8f29206c1b6e72c5f3a85b35c7087",
+        "tree_id": "c6a6141b793c1196ab4e0a59bfc49ccf0c8e9bff",
+        "distinct": true,
+        "message": "Commit message",
+        "timestamp": "2024-06-01T12:34:56Z",
+        "url": "https:\/\/github.com\/username\/your-repo-name\/commit\/1f32c2e9e6b8f29206c1b6e72c5f3a85b35c7087",
+        "author": {
+            "name": "Author Name",
+            "email": "author@example.com"
+        },
+        "committer": {
+            "name": "Committer Name",
+            "email": "committer@example.com"
+        },
+        "added": [
+            "newfile.txt"
+        ],
+        "removed": [
+            "oldfile.txt"
+        ],
+        "modified": [
+            "modifiedfile.txt"
+        ]
+    }
 }
