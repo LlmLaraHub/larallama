@@ -134,4 +134,9 @@ class BaseSourceController extends Controller
 
         return back();
     }
+
+    public function getPrompts(): array
+    {
+        return [];
+    }
 }

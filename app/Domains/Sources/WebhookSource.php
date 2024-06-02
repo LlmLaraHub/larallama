@@ -5,18 +5,14 @@ namespace App\Domains\Sources;
 use App\Domains\Documents\StatusEnum;
 use App\Domains\Documents\TypesEnum;
 use App\Domains\Prompts\Transformers\GithubTransformer;
-use App\Helpers\TextChunker;
-use App\Jobs\SummarizeDocumentJob;
 use App\Jobs\VectorlizeDataJob;
 use App\Models\Document;
 use App\Models\DocumentChunk;
 use App\Models\Source;
-use Illuminate\Bus\Batch;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
-use LlmLaraHub\TagFunction\Jobs\TagDocumentJob;
 
 class WebhookSource extends BaseSource
 {
@@ -58,26 +54,26 @@ class WebhookSource extends BaseSource
         )->completion($prompt);
 
         Log::info('[LaraChain] - WebhookSource Transformation Results', [
-            'results' => $results
+            'results' => $results,
         ]);
 
         $content = $results->content;
         $content = str($content)
-            ->replace("```json", "")
-            ->replaceLast("```", "")
+            ->replace('```json', '')
+            ->replaceLast('```', '')
             ->toString();
 
         try {
             $results = json_decode($content, true);
 
-            foreach($results as $index => $result) {
+            foreach ($results as $index => $result) {
                 $id = data_get($result, 'commit_id', Str::random(12));
                 $result = data_get($result, 'message', $result);
                 $document = Document::updateOrCreate([
                     'type' => TypesEnum::WebHook,
                     'source_id' => $source->id,
-                    'subject' => 'Commit ID: '. $id,
-                ],[
+                    'subject' => 'Commit ID: '.$id,
+                ], [
                     'status' => StatusEnum::Pending,
                     'meta_data' => $this->payload,
                     'collection_id' => $source->collection_id,
@@ -115,8 +111,6 @@ class WebhookSource extends BaseSource
                 'results' => $results,
             ]);
         }
-
-
 
     }
 }

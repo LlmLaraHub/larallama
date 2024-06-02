@@ -2,15 +2,13 @@
 
 namespace App\Http\Controllers\Sources;
 
-use App\Domains\Prompts\EmailPrompt;
-use App\Domains\Prompts\MarketingEmailPrompt;
 use App\Domains\Prompts\Transformers\GithubTransformer;
 use App\Domains\Sources\SourceTypeEnum;
+use App\Domains\Sources\WebhookSource;
 use App\Http\Controllers\BaseSourceController;
 use App\Jobs\WebhookSourceJob;
 use App\Models\Collection;
 use App\Models\Source;
-use App\Domains\Sources\WebhookSource;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
@@ -70,7 +68,7 @@ class WebhookSourceController extends BaseSourceController
         }
     }
 
-    public function getPrompts()
+    public function getPrompts(): array
     {
         return [
             'email' => GithubTransformer::prompt('[CONTEXT]'),

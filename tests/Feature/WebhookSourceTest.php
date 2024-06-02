@@ -4,7 +4,6 @@ namespace Tests\Feature;
 
 use App\Models\Source;
 use Illuminate\Support\Facades\Bus;
-use Illuminate\Support\Facades\Http;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
 use LlmLaraHub\LlmDriver\Responses\CompletionResponse;
 use Tests\TestCase;

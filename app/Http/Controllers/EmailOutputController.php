@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Domains\Outputs\OutputTypeEnum;
 use App\Domains\Prompts\EmailPrompt;
-use App\Domains\Prompts\MarketingEmailPrompt;
 use App\Jobs\SendOutputEmailJob;
 use App\Models\Output;
 use Illuminate\Support\Facades\Log;
