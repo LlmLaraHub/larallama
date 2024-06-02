@@ -203,3 +203,16 @@ Route::post('/pages/{output:id}/chat', [
     \App\Http\Controllers\WebPageOutputController::class, 'chat',
 ])
     ->name('collections.outputs.web_page.chat');
+
+Route::controller(\App\Http\Controllers\Sources\WebhookSourceController::class)->group(
+    function () {
+        Route::get('/collections/{collection}/sources/webhook_source/create', 'create')
+            ->name('collections.sources.webhook_source.create');
+        Route::post('/collections/{collection}/sources/webhook_source', 'store')
+            ->name('collections.sources.webhook_source.store');
+        Route::get('/collections/{collection}/sources/webhook_source/{source}/edit', 'edit')
+            ->name('collections.sources.webhook_source.edit');
+        Route::put('/collections/{collection}/sources/webhook_source/{source}/update', 'update')
+            ->name('collections.sources.webhook_source.update');
+    }
+);

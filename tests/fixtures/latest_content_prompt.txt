@@ -1,7 +1,11 @@
-Aliquam hic asperiores rem porro impedit ad. Sit numquam consequatur dolorum. Quidem cumque quisquam ipsa veritatis minima. Rerum sapiente cum necessitatibus rerum illum dolorem dolor.
+The following content is commit messages. Your task is. to make a changelog type summary so it is in order and in markdown format as follows
+
+## [date]
+[message]
+By: [author]
+
+
+The return output will be markdown
 ***below is the context to use in your summary***
-Fugiat amet a reiciendis tempore asperiores et illum dolore fuga et vel.
-Voluptatem qui recusandae qui rem animi laudantium.
-Quo quis culpa sequi mollitia quis quod dolorum incidunt ea.
-Rerum molestiae debitis culpa numquam placeat quos aspernatur ab.
-Nam accusantium sed sequi molestiae molestiae est fugiat consectetur cumque nostrum ad voluptate.
+Fix bug with payment system by Bob Belcher on 2024-06-04 12:34
+Update the controller to handle the webhook by Alfred Nutile on 2024-06-01 12:34

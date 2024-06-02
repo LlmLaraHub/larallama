@@ -12,6 +12,7 @@ import { useToast } from 'vue-toastification';
 import Card from "@/Pages/Sources/Cards/Card.vue";
 import EmailCard from "@/Pages/Sources/EmailSource/Components/Card.vue";
 import EmailBoxCard from "@/Pages/Sources/EmailBoxSource/Components/Card.vue";
+import WebhookSource from "@/Pages/Sources/WebhookSource/Components/Card.vue";
 
 const toast = useToast();
 
@@ -60,6 +61,7 @@ const props = defineProps({
 
                  </Intro>
 
+
                   <div class="border border-gray-200 p-5 mt-5 flex">
                     <div v-if="sources.data.length === 0" class="text-center w-full">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mx-auto text-gray-400">
@@ -70,6 +72,7 @@ const props = defineProps({
                       <template v-else  v-for="source in sources.data" :key="source.id">
                           <EmailCard v-if="source.type_key === 'email_source'" :source="source"></EmailCard>
                           <EmailBoxCard v-else-if="source.type_key === 'email_box_source'" :source="source"></EmailBoxCard>
+                          <WebhookSource v-else-if="source.type_key === 'webhook_source'" :source="source"></WebhookSource>
                           <Card v-else :source="source"></Card>
                       </template>
 

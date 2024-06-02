@@ -5,47 +5,43 @@ import SecondaryButton from '@/Components/SecondaryButton.vue';
 import { ref } from 'vue';
 import Intro from '@/Components/Intro.vue';
 import SecondaryLink from '@/Components/SecondaryLink.vue';
-import Templates from '@/Components/Templates.vue';
 import Resources from './Components/Resources.vue';
 import { useForm } from '@inertiajs/vue3';
-import Generate from "@/Pages/Outputs/WebPage/Components/Generate.vue";
+import Templates from "@/Components/Templates.vue";
 
 const props = defineProps({
     collection: {
         type: Object,
         required: true,
     },
-    recurring: Object,
+    source: {
+        type: Object
+    },
+    recurring: {
+        type: Object
+    },
     prompts: Object,
+    info: String,
+    type: String
 });
 
 const form = useForm({
-    title: 'Daily Email Summary',
-    summary: props.prompts.email,
-    active: 1,
-    recurring: "not",
-    meta_data: {
-        to: "your@mail.test,bob@email.test"
+    title: '',
+    details: '',
+    recurring: 'not',
+    secrets: {
+        token: "",
     },
-    to_emails: "",
+    active: true
 });
 
 const choosePrompt = (prompt) => {
-    form.summary = prompt;
+    form.details = prompt;
 }
 
-const to_emails = ref("")
-
 const submit = () => {
-    form.
-        transform((data) => ({
-            ...data,
-            meta_data: {
-                to: form.to_emails
-            },
-        }))
-        .post(
-        route('collections.outputs.email_output.store', {
+    form.post(
+        route('collections.sources.webhook_source.store', {
             collection: props.collection.data.id
         }), {
             preserveScroll: true,
@@ -57,26 +53,17 @@ const submit = () => {
 </script>
 
 <template>
-    <AppLayout title="Email Output">
+    <AppLayout title="Sources">
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Email Output
+                {{ type}}
             </h2>
         </template>
 
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-5">
-                    <Intro>
-                        Email
-                        <template #description>
-                            You can send an email summary of the collection or filter of the collection below.
-                            You can alter the "Prompt" below to tell the system what to do when the latest content.
-                            It will start with a default email prompt but you can choose from others.
-
-                            Just make sure to leave [CONTEXT] as the token for it to replace with the data from the system.
-                        </template>
-                    </Intro>
+                    <Intro></Intro>
 
                     <form @submit.prevent="submit" class="p-10 ">
                         <div class="flex">
@@ -86,22 +73,24 @@ const submit = () => {
                                     v-model="form">
 
                                 </Resources>
+
+
+
+                                <div class="flex justify-end items-center gap-4">
+                                    <PrimaryButton type="submit">
+                                        Save
+                                    </PrimaryButton>
+                                    <SecondaryLink :href="route('collections.sources.index', {
+                                collection: collection.data.id
+
+                            })">
+                                        Cancel
+                                    </SecondaryLink>
+                                </div>
                             </div>
                             <Templates
                                 @choosePrompt="choosePrompt"
                                 :prompts="prompts"/>
-                        </div>
-
-                        <div class="flex justify-end items-center gap-4">
-                            <PrimaryButton type="submit">
-                                Save
-                            </PrimaryButton>
-                            <SecondaryLink :href="route('collections.outputs.index', {
-                                collection: collection.data.id
-
-                            })">
-                                Cancel
-                            </SecondaryLink>
                         </div>
                     </form>
 

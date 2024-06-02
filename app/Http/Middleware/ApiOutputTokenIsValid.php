@@ -24,6 +24,7 @@ class ApiOutputTokenIsValid
         if ($request->bearerToken()) {
             $tokenPassedIn = $request->bearerToken();
         }
+
         Log::info('ApiOutput Request', [
             '$tokenPassedIn' => $tokenPassedIn,
             '$token' => $token,
