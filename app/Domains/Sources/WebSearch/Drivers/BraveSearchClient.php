@@ -13,21 +13,9 @@ class BraveSearchClient extends BaseSearchClient
     {
         $count = data_get($options, 'limit', 5);
 
-        $last_run = data_get($options, 'last_run', null);
-
-        if ($last_run) {
-            $last_run = $last_run->subDay()->format('Y-m-d');
-            $from = $last_run;
-            $to = now()->format('Y-m-d');
-        } else {
-            $from = now()->subDays(7)->format('Y-m-d');
-            $to = now()->format('Y-m-d');
-        }
-
         $query = [
             'q' => urlencode($search),
-            'count' => $count,
-            'freshness' => sprintf('%sto%s', $from, $to),
+            'count' => $count
         ];
 
         \Illuminate\Support\Facades\Log::info('[LaraChain] Brave Search Query', [
