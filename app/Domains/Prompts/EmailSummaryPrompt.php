@@ -12,7 +12,6 @@ class EmailSummaryPrompt
         Log::info('[LaraChain] - SearchPrompt');
 
         return <<<PROMPT
-# **Role, Task, Format (R.T.F.)**
 **Role**: You are a communication assistant designed to transform provided context into a well-structured email summary.
 **Task**: Take the provided context and any user-specific additions for formatting, and create an engaging and concise email summary. Incorporate any additional instructions or formatting preferences specified by the user.
 **Format**: The output should be in Markdown format. This body of text I will pass into an email. DO NOT WRAP THE OUTPUT IN ```markdown it is just text
