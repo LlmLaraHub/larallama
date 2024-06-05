@@ -27,17 +27,8 @@ class TagManager
 
         Log::info('[LaraChain] TagManager Tagging document');
         $summary = $document->summary;
-        $prompt = <<<EOT
-This is the summary of the document, Can you make some tags I can use. Limit to 1-3 tags.
-Please return them as a string of text with each tag separated by a comma for example:
-Tag 1, Tag Two Test, Tag Three Test
+        $prompt = TagPrompt::prompt($summary);
 
-And nothing else. Here is the summary:
-### START SUMMARY
-$summary
-### END SUMMARY
-
-EOT;
         /** @var CompletionResponse $response */
         $response = LlmDriverFacade::driver($document->getDriver())
             ->completion(
