@@ -99,6 +99,6 @@ class WebhookSourceControllerTest extends TestCase
         $data = [];
         $data['token'] = 'bazboo';
         $this->post($url, $data)->assertStatus(200);
-        \Illuminate\Support\Facades\Queue::assertNOthingPushed();
+        \Illuminate\Support\Facades\Queue::assertNothingPushed();
     }
 }
