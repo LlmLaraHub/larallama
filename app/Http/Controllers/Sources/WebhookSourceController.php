@@ -49,6 +49,15 @@ class WebhookSourceController extends BaseSourceController
                 'source' => $source->id,
             ]);
 
+            if ($source->active === false) {
+                Log::info('[LaraChain] - WebhookSourceController not active', [
+                    'source' => $source->id,
+                    'is active' => $source->active,
+                ]);
+
+                return response()->json(['message' => 'ok']);
+            }
+
             $webhookSource = (new WebhookSource())->payload(request()->all());
 
             WebhookSourceJob::dispatch(

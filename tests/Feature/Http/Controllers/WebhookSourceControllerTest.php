@@ -71,7 +71,9 @@ class WebhookSourceControllerTest extends TestCase
     public function test_api()
     {
         \Illuminate\Support\Facades\Queue::fake();
-        $source = Source::factory()->create();
+        $source = Source::factory()->create(
+            ['active' => true]
+        );
 
         $url = route('collections.sources.webhook_source.api', [
             'source' => $source->slug,
@@ -81,5 +83,22 @@ class WebhookSourceControllerTest extends TestCase
         $data['token'] = 'bazboo';
         $this->post($url, $data)->assertStatus(200);
         \Illuminate\Support\Facades\Queue::assertPushed(WebhookSourceJob::class);
+    }
+
+    public function test_api_no_job()
+    {
+        \Illuminate\Support\Facades\Queue::fake();
+        $source = Source::factory()->create(
+            ['active' => false]
+        );
+
+        $url = route('collections.sources.webhook_source.api', [
+            'source' => $source->slug,
+        ]);
+
+        $data = [];
+        $data['token'] = 'bazboo';
+        $this->post($url, $data)->assertStatus(200);
+        \Illuminate\Support\Facades\Queue::assertNOthingPushed();
     }
 }

@@ -15,7 +15,7 @@ class BraveSearchClient extends BaseSearchClient
 
         $query = [
             'q' => urlencode($search),
-            'count' => $count
+            'count' => $count,
         ];
 
         \Illuminate\Support\Facades\Log::info('[LaraChain] Brave Search Query', [
