@@ -223,3 +223,16 @@ Route::controller(\App\Http\Controllers\Sources\WebhookSourceController::class)-
             ->name('collections.sources.webhook_source.update');
     }
 );
+
+    Route::controller(\App\Http\Controllers\Sources\JsonSourceController::class)->group(
+        function () {
+            Route::get('/collections/{collection}/sources/json_source/create', 'create')
+                ->name('collections.sources.json_source.create');
+            Route::post('/collections/{collection}/sources/json_source', 'store')
+                ->name('collections.sources.json_source.store');
+            Route::get('/collections/{collection}/sources/json_source/{source}/edit', 'edit')
+                ->name('collections.sources.json_source.edit');
+            Route::put('/collections/{collection}/sources/json_source/{source}/update', 'update')
+                ->name('collections.sources.json_source.update');
+        }
+    );

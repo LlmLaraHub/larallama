@@ -14,7 +14,9 @@ enum SourceTypeEnum: string
     case EmailBoxSource = 'email_box_source';
     case GenericSource = 'generic_source';
     case WebhookSource = 'webhook_source';
+    case JsonSource = 'json_source';
     //leave for scripting
+
 
     public static function ignore(): array
     {

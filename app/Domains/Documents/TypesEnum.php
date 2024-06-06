@@ -26,5 +26,6 @@ enum TypesEnum: string
 
     case Email = 'email';
     case Contact = 'contact';
+    case JSON = 'json';
 
 }

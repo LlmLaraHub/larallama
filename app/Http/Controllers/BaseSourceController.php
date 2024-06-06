@@ -42,14 +42,7 @@ class BaseSourceController extends Controller
     public function store(Collection $collection)
     {
 
-        $validated = request()->validate([
-            'title' => 'required|string',
-            'details' => 'required|string',
-            'active' => ['boolean', 'required'],
-            'recurring' => ['string', 'required'],
-            'meta_data' => ['nullable', 'array'],
-            'secrets' => ['nullable', 'array'],
-        ]);
+        $validated = request()->validate($this->getValidationRules());
 
         $this->makeSource($validated, $collection);
 
@@ -90,14 +83,7 @@ class BaseSourceController extends Controller
     public function update(Collection $collection, Source $source)
     {
 
-        $validated = request()->validate([
-            'title' => 'required|string',
-            'details' => 'required|string',
-            'active' => ['boolean', 'required'],
-            'recurring' => ['string', 'required'],
-            'meta_data' => ['nullable', 'array'],
-            'secrets' => ['nullable', 'array'],
-        ]);
+        $validated = request()->validate($this->getValidationRules());
 
         $this->updateSource($source, $validated);
 
@@ -151,5 +137,17 @@ class BaseSourceController extends Controller
     public function getPrompts(): array
     {
         return [];
+    }
+
+    protected function getValidationRules(): array
+    {
+        return [
+            'title' => 'required|string',
+            'details' => 'required|string',
+            'active' => ['boolean', 'required'],
+            'recurring' => ['string', 'required'],
+            'meta_data' => ['nullable', 'array'],
+            'secrets' => ['nullable', 'array'],
+        ];
     }
 }
