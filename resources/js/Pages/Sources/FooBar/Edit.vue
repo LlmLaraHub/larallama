@@ -7,7 +7,8 @@ import Intro from '@/Components/Intro.vue';
 import SecondaryLink from '@/Components/SecondaryLink.vue';
 import Resources from './Components/Resources.vue';
 import { useForm } from '@inertiajs/vue3';
-import Delete from "@/Pages/Sources/Components/Delete.vue";
+import { useToast } from 'vue-toastification';
+const toast = useToast();
 
 const props = defineProps({
     collection: {
@@ -26,17 +27,27 @@ const form = useForm({
     title: props.source.data.title,
     details: props.source.data.details,
     active: props.source.data.active,
-    recurring: props.source.data.recurring
+    recurring: props.source.data.recurring,
+    meta_data: {
+        example: props.source.data.meta_data.example
+    }
+
 });
 
 
 const submit = () => {
     form.put(
-        route('collections.sources.web_search_source.update', {
+        route('collections.sources.foo_bar.update', {
             collection: props.collection.data.id,
             source: props.source.data.id
         }), {
             preserveScroll: true,
+            onSuccess: () => {
+                toast.success('Source updated');
+            },
+            onError: () => {
+                toast.error('Error updating source see validation errors or logs');
+            }
         });
 }
 </script>
@@ -58,7 +69,9 @@ const submit = () => {
                             {{ info }}
                         </template>
                     </Intro>
+
                     <form @submit.prevent="submit" class="p-10 ">
+
                         <Resources
                             :recurring="recurring"
                         v-model="form">
@@ -75,8 +88,6 @@ const submit = () => {
                             })">
                                 Back
                             </SecondaryLink>
-
-                            <Delete :source="source.data"></Delete>
                         </div>
                     </form>
 

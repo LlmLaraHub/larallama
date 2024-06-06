@@ -7,6 +7,7 @@ import Intro from '@/Components/Intro.vue';
 import SecondaryLink from '@/Components/SecondaryLink.vue';
 import Resources from './Components/Resources.vue';
 import { useForm } from '@inertiajs/vue3';
+import Delete from "@/Pages/Sources/Components/Delete.vue";
 
 const props = defineProps({
     collection: {
@@ -74,6 +75,7 @@ const submit = () => {
                             })">
                                 Back
                             </SecondaryLink>
+                            <Delete :source="source.data"></Delete>
                         </div>
                     </form>
 

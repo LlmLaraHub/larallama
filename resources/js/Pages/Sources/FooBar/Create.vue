@@ -7,7 +7,6 @@ import Intro from '@/Components/Intro.vue';
 import SecondaryLink from '@/Components/SecondaryLink.vue';
 import Resources from './Components/Resources.vue';
 import { useForm } from '@inertiajs/vue3';
-import Delete from "@/Pages/Sources/Components/Delete.vue";
 
 const props = defineProps({
     collection: {
@@ -17,32 +16,39 @@ const props = defineProps({
     source: {
         type: Object
     },
-    recurring: Object,
+    recurring: {
+        type: Object
+    },
     info: String,
     type: String
 });
 
 const form = useForm({
-    title: props.source.data.title,
-    details: props.source.data.details,
-    active: props.source.data.active,
-    recurring: props.source.data.recurring
+    title: '',
+    details: '',
+    recurring: 'not',
+    meta_data: {
+        example: "bob@bobsburgers.com",
+    },
+    active: true
 });
 
 
 const submit = () => {
-    form.put(
-        route('collections.sources.web_search_source.update', {
-            collection: props.collection.data.id,
-            source: props.source.data.id
+    form.post(
+        route('collections.sources.foo_bar.store', {
+            collection: props.collection.data.id
         }), {
             preserveScroll: true,
+            onSuccess: () => {
+                form.reset();
+            }
         });
 }
 </script>
 
 <template>
-    <AppLayout :title="type">
+    <AppLayout title="Sources">
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 {{ type}}
@@ -52,12 +58,8 @@ const submit = () => {
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-5">
-                    <Intro>
-                        {{ type }}
-                        <template #description>
-                            {{ info }}
-                        </template>
-                    </Intro>
+                    <Intro></Intro>
+
                     <form @submit.prevent="submit" class="p-10 ">
                         <Resources
                             :recurring="recurring"
@@ -73,10 +75,8 @@ const submit = () => {
                                 collection: collection.data.id
 
                             })">
-                                Back
+                                Cancel
                             </SecondaryLink>
-
-                            <Delete :source="source.data"></Delete>
                         </div>
                     </form>
 

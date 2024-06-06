@@ -9,6 +9,7 @@ use Facades\App\Domains\Outputs\DefaultOutput;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Log;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
@@ -24,6 +25,7 @@ class Output extends Model
 {
     use HasFactory;
     use HasSlug;
+    use SoftDeletes;
 
     protected $guarded = [];
 

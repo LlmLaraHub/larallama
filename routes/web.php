@@ -34,6 +34,17 @@ Route::middleware([
     'verified',
 ])->group(function () {
 
+    Route::controller(\App\Http\Controllers\OutputController::class)->group(
+        function () {
+            Route::delete('/outputs/{output}/delete', 'delete')
+                ->name('collections.outputs.delete');
+
+            Route::get('/collections/{collection}/outputs', 'index')
+                ->name('collections.outputs.index');
+
+        }
+    );
+
     Route::controller(DownloadController::class)->group(
         function () {
             Route::get('/collections/{collection}/download', 'download')
@@ -52,12 +63,7 @@ Route::middleware([
         }
     );
 
-    Route::controller(\App\Http\Controllers\OutputController::class)->group(
-        function () {
-            Route::get('/collections/{collection}/outputs', 'index')
-                ->name('collections.outputs.index');
-        }
-    );
+
 
     Route::controller(SourceController::class)->group(
         function () {
@@ -66,6 +72,9 @@ Route::middleware([
 
             Route::post('/sources/{source}/run', 'run')
                 ->name('collections.sources.run');
+
+            Route::delete('/sources/{source}/delete', 'delete')
+                ->name('collections.sources.delete');
         }
     );
 
@@ -216,3 +225,4 @@ Route::controller(\App\Http\Controllers\Sources\WebhookSourceController::class)-
             ->name('collections.sources.webhook_source.update');
     }
 );
+

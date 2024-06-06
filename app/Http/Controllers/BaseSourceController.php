@@ -12,6 +12,7 @@ use App\Http\Resources\SourceResource;
 use App\Models\Collection;
 use App\Models\Document;
 use App\Models\Source;
+use Illuminate\Support\Facades\Gate;
 
 class BaseSourceController extends Controller
 {
@@ -133,6 +134,18 @@ class BaseSourceController extends Controller
         request()->session()->flash('flash.banner', 'Source is running');
 
         return back();
+    }
+
+    public function delete(Source $source)
+    {
+        if (! Gate::allows('delete', $source)) {
+            abort(403);
+        }
+        $collection = $source->collection;
+        $source->delete();
+        request()->session()->flash('flash.banner', 'Source deleted');
+
+        return to_route('collections.sources.index', $collection);
     }
 
     public function getPrompts(): array

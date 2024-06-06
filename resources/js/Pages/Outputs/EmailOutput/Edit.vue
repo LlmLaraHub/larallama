@@ -9,6 +9,7 @@ import Resources from './Components/Resources.vue';
 import { useForm } from '@inertiajs/vue3';
 import {useToast} from "vue-toastification";
 import Generate from "@/Pages/Outputs/WebPage/Components/Generate.vue";
+import Delete from "@/Pages/Outputs/Components/Delete.vue";
 
 const toast = useToast();
 
@@ -101,6 +102,9 @@ const submit = () => {
                             })">
                                 Back
                             </SecondaryLink>
+
+
+                            <Delete :output="output"></Delete>
                         </div>
                     </form>
 

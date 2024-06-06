@@ -24,4 +24,27 @@ class OutputControllerTest extends TestCase
             ->get(route('collections.outputs.index', $collection))
             ->assertOk();
     }
+
+    public function test_delete_no_access(): void
+    {
+        $output = Output::factory()->create();
+        $this->actingAs(User::factory()->create([
+            'is_admin' => false,
+        ]))
+            ->delete(route('collections.outputs.delete', $output))
+            ->assertRedirectToRoute('collections.outputs.index', $output->collection);
+    }
+
+    public function test_delete_with_access(): void
+    {
+        $output = Output::factory()->create();
+        $user = User::factory()->create([
+            'is_admin' => false,
+        ]);
+        $team = $output->collection->team;
+        $user->teams()->attach($team);
+        $this->actingAs($user)
+            ->delete(route('collections.outputs.delete', $output))
+            ->assertRedirectToRoute('collections.outputs.index', $output->collection);
+    }
 }
