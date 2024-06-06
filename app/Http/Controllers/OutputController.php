@@ -187,7 +187,7 @@ class OutputController extends Controller
 
     public function delete(Output $output)
     {
-        if(!Gate::allows('delete', $output)) {
+        if (! Gate::allows('delete', $output)) {
             abort(403);
         }
 

@@ -63,8 +63,6 @@ Route::middleware([
         }
     );
 
-
-
     Route::controller(SourceController::class)->group(
         function () {
             Route::get('/collections/{collection}/sources', 'index')
@@ -225,4 +223,3 @@ Route::controller(\App\Http\Controllers\Sources\WebhookSourceController::class)-
             ->name('collections.sources.webhook_source.update');
     }
 );
-

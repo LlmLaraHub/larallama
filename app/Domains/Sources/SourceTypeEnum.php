@@ -16,7 +16,6 @@ enum SourceTypeEnum: string
     case WebhookSource = 'webhook_source';
     //leave for scripting
 
-
     public static function ignore(): array
     {
         return [
