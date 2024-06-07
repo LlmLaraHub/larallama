@@ -40,7 +40,7 @@ Route::middleware([
             Route::get('/collections/{collection}/outputs', 'index')
                 ->name('collections.outputs.index');
 
-            Route::delete('/outputs/{output}/delete', 'delete')
+            Route::delete('/outputs/{output:id}/delete', 'delete')
                 ->name('collections.outputs.delete');
 
         }
@@ -237,3 +237,42 @@ Route::controller(\App\Http\Controllers\Sources\JsonSourceController::class)->gr
             ->name('collections.sources.json_source.update');
     }
 );
+
+    Route::controller(\App\Http\Controllers\Sources\FooBarController::class)->group(
+        function () {
+            Route::get('/collections/{collection}/sources/foo_bar/create', 'create')
+                ->name('collections.sources.foo_bar.create');
+            Route::post('/collections/{collection}/sources/foo_bar', 'store')
+                ->name('collections.sources.foo_bar.store');
+            Route::get('/collections/{collection}/sources/foo_bar/{source}/edit', 'edit')
+                ->name('collections.sources.foo_bar.edit');
+            Route::put('/collections/{collection}/sources/foo_bar/{source}/update', 'update')
+                ->name('collections.sources.foo_bar.update');
+        }
+    );
+
+    Route::controller(\App\Http\Controllers\Sources\FooBarController::class)->group(
+        function () {
+            Route::get('/collections/{collection}/sources/foo_bar/create', 'create')
+                ->name('collections.sources.foo_bar.create');
+            Route::post('/collections/{collection}/sources/foo_bar', 'store')
+                ->name('collections.sources.foo_bar.store');
+            Route::get('/collections/{collection}/sources/foo_bar/{source}/edit', 'edit')
+                ->name('collections.sources.foo_bar.edit');
+            Route::put('/collections/{collection}/sources/foo_bar/{source}/update', 'update')
+                ->name('collections.sources.foo_bar.update');
+        }
+    );
+
+    Route::controller(\App\Http\Controllers\Sources\FooBarController::class)->group(
+        function () {
+            Route::get('/collections/{collection}/sources/foo_bar/create', 'create')
+                ->name('collections.sources.foo_bar.create');
+            Route::post('/collections/{collection}/sources/foo_bar', 'store')
+                ->name('collections.sources.foo_bar.store');
+            Route::get('/collections/{collection}/sources/foo_bar/{source}/edit', 'edit')
+                ->name('collections.sources.foo_bar.edit');
+            Route::put('/collections/{collection}/sources/foo_bar/{source}/update', 'update')
+                ->name('collections.sources.foo_bar.update');
+        }
+    );
