@@ -32,7 +32,7 @@ class OutputControllerTest extends TestCase
             'is_admin' => false,
         ]))
             ->delete(route('collections.outputs.delete', $output))
-            ->assertRedirectToRoute('collections.outputs.index', $output->collection);
+            ->assertStatus(403);
     }
 
     public function test_delete_with_access(): void
