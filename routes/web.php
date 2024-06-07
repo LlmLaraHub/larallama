@@ -40,7 +40,7 @@ Route::middleware([
             Route::get('/collections/{collection}/outputs', 'index')
                 ->name('collections.outputs.index');
 
-            Route::delete('/outputs/{output}/delete', 'delete')
+            Route::delete('/outputs/{output:id}/delete', 'delete')
                 ->name('collections.outputs.delete');
 
         }
