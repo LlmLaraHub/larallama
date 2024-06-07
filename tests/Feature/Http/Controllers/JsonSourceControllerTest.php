@@ -29,7 +29,7 @@ class JsonSourceControllerTest extends TestCase
                 'active' => 1,
                 'recurring' => RecurringTypeEnum::Daily->value,
                 'details' => 'Test Details',
-                'meta_data' => $data
+                'meta_data' => $data,
             ])->assertSessionHasNoErrors();
 
         $response->assertSessionHas('flash.banner', 'Source added successfully');
@@ -72,6 +72,64 @@ class JsonSourceControllerTest extends TestCase
         $this->assertEquals($data_json, $source->refresh()->meta_data);
 
         $this->assertDatabaseCount('documents', 20);
-        Bus::assertBatchCount(20);
+
+        $this->actingAs($user)
+            ->put(route('collections.sources.json_source.update',
+                [
+                    'collection' => $source->collection->id,
+                    'source' => $source->id,
+                ]
+            ), [
+                'title' => 'Test Title',
+                'active' => 1,
+                'meta_data' => $data,
+                'recurring' => RecurringTypeEnum::Daily->value,
+                'details' => 'Test Details',
+            ])
+            ->assertSessionHasNoErrors()
+            ->assertStatus(302);
+
+        $this->assertEquals($data_json, $source->refresh()->meta_data);
+
+        //Test no duplicates
+        $this->assertDatabaseCount('documents', 20);
+
+        Bus::assertBatchCount(40);
+    }
+
+    public function test_will_not_update_if_not_changed()
+    {
+        Bus::fake();
+
+        $user = User::factory()->create();
+        $data = get_fixture('example_instructions.json', false);
+        $data_json = get_fixture('example_instructions.json');
+        $source = Source::factory()->create(
+            [
+                'meta_data' => $data_json,
+            ]
+        );
+
+        $this->actingAs($user)
+            ->put(route('collections.sources.json_source.update',
+                [
+                    'collection' => $source->collection->id,
+                    'source' => $source->id,
+                ]
+            ), [
+                'title' => 'Test Title',
+                'active' => 1,
+                'meta_data' => $data,
+                'recurring' => RecurringTypeEnum::Daily->value,
+                'details' => 'Test Details',
+            ])
+            ->assertSessionHasNoErrors()
+            ->assertStatus(302);
+
+        $this->assertEquals($data_json, $source->refresh()->meta_data);
+
+        $this->assertDatabaseCount('documents', 0);
+
+        Bus::assertBatchCount(0);
     }
 }

@@ -11,7 +11,6 @@ class SummarizeDocumentPrompt
         Log::info('[LaraChain] - SummarizeDocumentPrompt');
 
         return <<<PROMPT
-# **Task, Action, Goal (T.A.G)**
   **Task**: Synthesize and summarize the retrieved data into a coherent output.
 
   **Action**:

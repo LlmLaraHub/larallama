@@ -10,6 +10,7 @@ import { useForm } from '@inertiajs/vue3';
 import {useToast} from "vue-toastification";
 import Generate from "@/Pages/Outputs/WebPage/Components/Generate.vue";
 import Delete from "@/Pages/Outputs/Components/Delete.vue";
+import Templates from "@/Components/Templates.vue";
 
 const toast = useToast();
 
@@ -21,6 +22,7 @@ const props = defineProps({
     output: {
         type: Object
     },
+    prompts: Object,
     recurring: Object
 });
 
@@ -40,6 +42,9 @@ onMounted(() => {
     form.token = props.output.meta_data?.token
 })
 
+const choosePrompt = (prompt) => {
+    form.summary = prompt;
+}
 
 const submit = () => {
     form
@@ -80,10 +85,18 @@ const submit = () => {
                     </Intro>
 
                     <form @submit.prevent="submit" class="p-10 ">
+                        <div class="flex">
+                            <div class="w-3/4">
                         <Resources
                             :recurring="recurring"
                         v-model="form">
                         </Resources>
+                            </div>
+
+                        <Templates
+                            @choosePrompt="choosePrompt"
+                            :prompts="prompts"/>
+                        </div>
 
                         <div class="flex justify-end items-center gap-4">
                             <PrimaryButton type="submit">

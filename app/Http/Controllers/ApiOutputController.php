@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Domains\Outputs\OutputTypeEnum;
+use App\Domains\Prompts\ChatBotPrompt;
+use App\Domains\Prompts\PromptMerge;
+use App\Domains\Prompts\SupportChatBotPrompt;
 use App\Models\Output;
 use Facades\LlmLaraHub\LlmDriver\NonFunctionSearchOrSummarize;
 use Illuminate\Support\Facades\Log;
@@ -30,8 +33,19 @@ class ApiOutputController extends OutputController
 
         $input = data_get($validate, 'messages.0.content');
 
+        $prompt = $output->summary;
+
+        $prompt = PromptMerge::merge([
+            '[USER_INPUT]',
+        ], [
+            $input,
+        ], $prompt);
+
         /** @var NonFunctionResponseDto $results */
-        $results = NonFunctionSearchOrSummarize::handle($input, $output->collection);
+        $results = NonFunctionSearchOrSummarize::setPrompt($prompt)
+            ->handle(
+                $input,
+                $output->collection);
 
         return response()->json([
             'choices' => [
@@ -42,5 +56,13 @@ class ApiOutputController extends OutputController
                 ],
             ],
         ]);
+    }
+
+    public function getPrompts(): array
+    {
+        return [
+            'chat_bot_prompt' => ChatBotPrompt::prompt('[CONTEXT]', '[USER_INPUT]'),
+            'support_chat_bot_prompt' => SupportChatBotPrompt::prompt('[CONTEXT]', '[USER_INPUT]'),
+        ];
     }
 }

@@ -3,6 +3,7 @@
 namespace LlmLaraHub\LlmDriver;
 
 use App\Domains\Prompts\DefaultPrompt;
+use App\Domains\Prompts\PromptMerge;
 use App\Domains\Prompts\SearchOrSummarize;
 use App\Domains\Prompts\SummarizeDocumentPrompt;
 use App\Domains\Prompts\SummarizePrompt;
@@ -15,6 +16,15 @@ use LlmLaraHub\LlmDriver\Responses\NonFunctionResponseDto;
 
 class NonFunctionSearchOrSummarize
 {
+    protected string $prompt = '';
+
+    public function setPrompt(string $prompt): self
+    {
+        $this->prompt = $prompt;
+
+        return $this;
+    }
+
     public function handle(string $input,
         HasDrivers $collection,
         ?Filter $filter = null): NonFunctionResponseDto
@@ -29,6 +39,7 @@ class NonFunctionSearchOrSummarize
             'collection' => $collection->id,
             'input' => $input,
             'filters' => $filter?->toArray(),
+            'prompt' => $this->prompt,
         ]);
 
         $prompt = SearchOrSummarize::prompt($input);
@@ -69,10 +80,18 @@ class NonFunctionSearchOrSummarize
 
             $context = implode(' ', $content);
 
-            $contentFlattened = SummarizePrompt::prompt(
-                originalPrompt: $input,
-                context: $context
-            );
+            if ($this->prompt !== '') {
+                $contentFlattened = PromptMerge::merge([
+                    '[CONTEXT]',
+                ], [
+                    $context,
+                ], $this->prompt);
+            } else {
+                $contentFlattened = SummarizePrompt::prompt(
+                    originalPrompt: $input,
+                    context: $context
+                );
+            }
 
             Log::info('[LaraChain] - Prompt with Context', [
                 'prompt' => $contentFlattened,
@@ -108,18 +127,26 @@ class NonFunctionSearchOrSummarize
                 $content[] = $contentString; //reduce_text_size seem to mess up Claude?
             }
 
-            $contentFlattened = implode(' ', $content);
+            $context = implode(' ', $content);
+
+            if ($this->prompt !== '') {
+                $contentFlattened = PromptMerge::merge([
+                    '[CONTEXT]',
+                ], [
+                    $context,
+                ], $this->prompt);
+            } else {
+                $contentFlattened = $prompt = SummarizeDocumentPrompt::prompt($context);
+            }
 
             Log::info('[LaraChain] - Documents Flattened', [
                 'collection' => $collection->id,
                 'content' => $content]
             );
 
-            $prompt = SummarizeDocumentPrompt::prompt($contentFlattened);
-
             $response = LlmDriverFacade::driver(
                 $collection->getDriver()
-            )->completion($prompt);
+            )->completion($contentFlattened);
 
             if ($collection->getChat()) {
                 notify_ui($collection->getChat(), 'Complete');

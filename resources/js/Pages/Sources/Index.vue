@@ -13,6 +13,7 @@ import Card from "@/Pages/Sources/Cards/Card.vue";
 import EmailCard from "@/Pages/Sources/EmailSource/Components/Card.vue";
 import EmailBoxCard from "@/Pages/Sources/EmailBoxSource/Components/Card.vue";
 import WebhookSource from "@/Pages/Sources/WebhookSource/Components/Card.vue";
+import JsonSource from "@/Pages/Sources/JsonSource/Components/Card.vue";
 
 const toast = useToast();
 
@@ -73,6 +74,7 @@ const props = defineProps({
                           <EmailCard v-if="source.type_key === 'email_source'" :source="source"></EmailCard>
                           <EmailBoxCard v-else-if="source.type_key === 'email_box_source'" :source="source"></EmailBoxCard>
                           <WebhookSource v-else-if="source.type_key === 'webhook_source'" :source="source"></WebhookSource>
+                          <JsonSource v-else-if="source.type_key === 'json_source'" :source="source"></JsonSource>
                           <Card v-else :source="source"></Card>
                       </template>
 

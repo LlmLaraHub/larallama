@@ -8,18 +8,20 @@ import SecondaryLink from '@/Components/SecondaryLink.vue';
 import Resources from './Components/Resources.vue';
 import { useForm } from '@inertiajs/vue3';
 import Generate from "@/Pages/Outputs/WebPage/Components/Generate.vue";
+import Templates from "@/Components/Templates.vue";
 
 const props = defineProps({
     collection: {
         type: Object,
         required: true,
     },
+    prompts: Object,
     recurring: Object
 });
 
 const form = useForm({
     title: 'Name of the API',
-    summary: 'Describe the API so others know what it does',
+    summary: 'Choose a prompt from the right or make your own',
     active: 1,
     recurring: "not",
     meta_data: {
@@ -29,6 +31,10 @@ const form = useForm({
 });
 
 const token = ref("")
+
+const choosePrompt = (prompt) => {
+    form.summary = prompt;
+}
 
 const submit = () => {
     form.
@@ -69,10 +75,18 @@ const submit = () => {
                     </Intro>
 
                     <form @submit.prevent="submit" class="p-10 ">
-                        <Resources
-                            :recurring="recurring"
-                            v-model="form">
-                        </Resources>
+                        <div class="flex">
+                            <div class="w-3/4">
+                                <Resources
+                                    :recurring="recurring"
+                                    v-model="form">
+                                </Resources>
+                            </div>
+
+                            <Templates
+                                @choosePrompt="choosePrompt"
+                                :prompts="prompts"/>
+                        </div>
 
                         <div class="flex justify-end items-center gap-4">
                             <PrimaryButton type="submit">

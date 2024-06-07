@@ -8,7 +8,7 @@
         </div>
 
         <div>
-            <InputLabel value="Summary"/>
+            <InputLabel value="Prompt used for response"/>
             <textarea v-model="modelValue.summary" class="rounded-none textarea textarea-bordered w-full mb-5"
                 placeholder="Just a bit describing the api" rows="25"></textarea>
             <InputError :message="modelValue.errors.summary" />

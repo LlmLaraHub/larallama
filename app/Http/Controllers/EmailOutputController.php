@@ -47,7 +47,7 @@ class EmailOutputController extends OutputController
 
     }
 
-    public function getPrompts()
+    public function getPrompts(): array
     {
         return [
             'transform_github_json' => EmailPrompt::prompt('[CONTEXT]'),

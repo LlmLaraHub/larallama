@@ -7,6 +7,8 @@ use App\Models\Collection;
 use App\Models\Document;
 use App\Models\Output;
 use App\Models\User;
+use Facades\LlmLaraHub\LlmDriver\NonFunctionSearchOrSummarize;
+use LlmLaraHub\LlmDriver\Responses\NonFunctionResponseDto;
 use Tests\TestCase;
 
 class ApiOutputControllerTest extends TestCase
@@ -95,6 +97,15 @@ class ApiOutputControllerTest extends TestCase
 
     public function test_api_url()
     {
+        NonFunctionSearchOrSummarize::shouldReceive('setPrompt->handle')
+            ->twice()
+            ->andReturn(NonFunctionResponseDto::from(
+                [
+                    'documentChunks' => collect(),
+                    'response' => 'Foobar',
+                    'prompt' => 'Foobar',
+                ]
+            ));
         $output = Output::factory()->create([
             'meta_data' => [
                 'token' => 'foobar',

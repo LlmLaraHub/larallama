@@ -172,9 +172,8 @@ onUnmounted(() => {
                                         </td>
                                         <td
                                             class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-3">
-
-
-                                                <div v-if="document.subject">
+                                                <div v-if="document.type === 'Json'" class="truncate w-80">{{ document.subject }}</div>
+                                                <div v-else-if="document.subject">
                                                     <div class="truncate max-w-2xl">
                                                         <div v-if="!document.link">
                                                             {{ document.subject }}

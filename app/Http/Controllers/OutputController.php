@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Domains\Outputs\OutputTypeEnum;
 use App\Domains\Prompts\AnonymousChat;
+use App\Domains\Prompts\EmailPrompt;
 use App\Domains\Recurring\RecurringTypeEnum;
 use App\Http\Resources\CollectionResource;
 use App\Http\Resources\DocumentResource;
@@ -104,6 +105,7 @@ class OutputController extends Controller
             'output' => $output,
             'recurring' => RecurringTypeEnum::selectOptions(),
             'collection' => new CollectionResource($collection),
+            'prompts' => $this->getPrompts(),
         ]);
     }
 
@@ -198,8 +200,10 @@ class OutputController extends Controller
         return to_route('collections.outputs.index', $output->collection);
     }
 
-    public function getPrompts()
+    public function getPrompts(): array
     {
-        return [];
+        return [
+            'example_prompt' => EmailPrompt::prompt('[CONTEXT]'),
+        ];
     }
 }

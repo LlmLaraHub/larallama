@@ -126,4 +126,41 @@ class NonFunctionSearchOrSummarizeTest extends TestCase
         $this->assertNotNull($results->response);
 
     }
+
+    public function test_with_prompt()
+    {
+
+        DocumentChunk::factory()->create();
+
+        DistanceQueryFacade::shouldReceive('cosineDistance')->once()->andReturn(DocumentChunk::all());
+
+        $output = Output::factory()->create([
+            'active' => true,
+            'public' => true,
+        ]);
+
+        $question = get_fixture('embedding_question_distance.json');
+
+        $vector = new Vector($question);
+
+        LlmDriverFacade::shouldReceive('driver->embedData')
+            ->once()
+            ->andReturn(EmbeddingsResponseDto::from(
+                [
+                    'embedding' => $vector,
+                    'token_count' => 2,
+                ]
+            ));
+
+        LlmDriverFacade::shouldReceive('driver->completion')
+            ->twice()
+            ->andReturn(CompletionResponse::from([
+                'content' => 'not sure :(',
+            ]));
+
+        $results = (new NonFunctionSearchOrSummarize())->setPrompt('Foobar')->handle('Search for foo', $output->collection);
+
+        $this->assertNotNull($results->response);
+
+    }
 }

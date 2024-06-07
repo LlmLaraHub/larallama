@@ -28,10 +28,7 @@ const form = useForm({
     details: props.source.data.details,
     active: props.source.data.active,
     recurring: props.source.data.recurring,
-    meta_data: {
-        example: props.source.data.meta_data.example
-    }
-
+    meta_data: props.source.data.meta_data_encoded,
 });
 
 

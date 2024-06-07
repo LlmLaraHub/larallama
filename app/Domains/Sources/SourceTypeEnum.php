@@ -17,7 +17,6 @@ enum SourceTypeEnum: string
     case JsonSource = 'json_source';
     //leave for scripting
 
-
     public static function ignore(): array
     {
         return [
