@@ -94,7 +94,7 @@ class JsonSourceControllerTest extends TestCase
         //Test no duplicates
         $this->assertDatabaseCount('documents', 20);
 
-        Bus::assertBatchCount(40);
+        Bus::assertBatchCount(20);
     }
 
     public function test_will_not_update_if_not_changed()

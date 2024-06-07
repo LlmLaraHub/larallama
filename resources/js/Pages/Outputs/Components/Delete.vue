@@ -6,22 +6,22 @@ const props = defineProps({
     output: Object
 })
 
+const url = route('collections.outputs.delete',
+    {output: props.output.id}
+);
+
 const form = useForm({})
 const submit = () => {
-    form.delete(route('collections.outputs.delete', {
-        output: props.output.id
-    }), {
+    form.delete(url, {
         preserveScroll: true,
     });
 }
 </script>
 
 <template>
-    <form @submit.prevent="submit">
         <div class="flex justify-center">
-            <button type="submit" class="btn btn-warning btn-sm">Delete</button>
+            <button type="button" @click="submit" class="btn btn-warning btn-sm">Delete</button>
         </div>
-    </form>
 </template>
 
 <style scoped>

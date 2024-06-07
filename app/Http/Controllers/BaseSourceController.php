@@ -127,6 +127,7 @@ class BaseSourceController extends Controller
         if (! Gate::allows('delete', $source)) {
             abort(403);
         }
+
         $collection = $source->collection;
         $source->delete();
         request()->session()->flash('flash.banner', 'Source deleted');

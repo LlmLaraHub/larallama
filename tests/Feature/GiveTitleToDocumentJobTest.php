@@ -27,6 +27,6 @@ class GiveTitleToDocumentJobTest extends TestCase
         $job = new GiveTitleToDocumentJob($document);
         $job->handle();
 
-        $this->assertEquals($document->refresh()->subject, 'foo bar');
+        $this->assertEquals($document->refresh()->subject, str('foo bar')->headline()->toString());
     }
 }

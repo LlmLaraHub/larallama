@@ -36,11 +36,12 @@ Route::middleware([
 
     Route::controller(\App\Http\Controllers\OutputController::class)->group(
         function () {
-            Route::delete('/outputs/{output}/delete', 'delete')
-                ->name('collections.outputs.delete');
 
             Route::get('/collections/{collection}/outputs', 'index')
                 ->name('collections.outputs.index');
+
+            Route::delete('/outputs/{output}/delete', 'delete')
+                ->name('collections.outputs.delete');
 
         }
     );

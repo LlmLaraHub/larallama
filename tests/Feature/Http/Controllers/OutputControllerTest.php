@@ -46,5 +46,7 @@ class OutputControllerTest extends TestCase
         $this->actingAs($user)
             ->delete(route('collections.outputs.delete', $output))
             ->assertRedirectToRoute('collections.outputs.index', $output->collection);
+
+        $this->assertSoftDeleted($output);
     }
 }

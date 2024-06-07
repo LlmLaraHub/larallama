@@ -15,6 +15,7 @@ use App\Models\Document;
 use App\Models\Output;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Log;
 use LlmLaraHub\LlmDriver\Requests\MessageInDto;
 
 class OutputController extends Controller
@@ -193,11 +194,12 @@ class OutputController extends Controller
             abort(403);
         }
 
+        $collection = $output->collection;
         $output->delete();
 
         request()->session()->flash('flash.banner', 'Output deleted');
 
-        return to_route('collections.outputs.index', $output->collection);
+        return to_route('collections.outputs.index', $collection);
     }
 
     public function getPrompts(): array
