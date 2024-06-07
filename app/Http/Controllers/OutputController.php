@@ -15,7 +15,6 @@ use App\Models\Document;
 use App\Models\Output;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Log;
 use LlmLaraHub\LlmDriver\Requests\MessageInDto;
 
 class OutputController extends Controller
