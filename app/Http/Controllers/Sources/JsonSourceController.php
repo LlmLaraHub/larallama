@@ -46,7 +46,7 @@ class JsonSourceController extends BaseSourceController
             'collection_id' => $collection->id,
             'slug' => str(Str::random(16))->toString(),
             'type' => $this->sourceTypeEnum,
-            'meta_data' => json_decode($validated['meta_data'], 128),
+            'meta_data' => json_decode($validated['meta_data'], true, 512),
             'secrets' => [],
         ]
         );
@@ -64,7 +64,7 @@ class JsonSourceController extends BaseSourceController
             'active' => $validated['active'],
             'slug' => str(Str::random(16))->toString(),
             'type' => $this->sourceTypeEnum,
-            'meta_data' => json_decode($validated['meta_data'], 128),
+            'meta_data' => json_decode($validated['meta_data'], true, 512),
             'secrets' => [],
         ]
         );
