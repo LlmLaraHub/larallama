@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Domains\Messages\RoleEnum;
+use App\Events\MessageCreatedEvent;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -17,6 +18,10 @@ class Message extends Model
         'role',
         'in_out',
         'is_chat_ignored',
+    ];
+
+    protected $dispatchesEvents = [
+        'created' => MessageCreatedEvent::class,
     ];
 
     protected $casts = [

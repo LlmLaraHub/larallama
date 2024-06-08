@@ -84,9 +84,9 @@ const submit = () => {
                         </template>
                     </Intro>
 
-                    <form @submit.prevent="submit" class="p-10 ">
+                    <form @submit.prevent="submit" class="">
                         <div class="flex">
-                            <div class="w-3/4">
+                            <div class="w-3/4 border-gray-300 border rounded-lg p-4">
                         <Resources
                             :recurring="recurring"
                         v-model="form">

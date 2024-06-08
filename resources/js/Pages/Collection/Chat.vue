@@ -10,6 +10,7 @@ import { useDropzone } from "vue3-dropzone";
 import { router, useForm } from '@inertiajs/vue3';
 import FileUploader from './Components/FileUploader.vue';
 import ChatUi from '@/Pages/Chat/ChatUi.vue';
+import ChatSideNav from './Components/ChatSideNav.vue';
 import { DocumentTextIcon } from '@heroicons/vue/24/outline';
 import { useToast } from 'vue-toastification';
 
@@ -24,6 +25,9 @@ const props = defineProps({
         required: true,
     },
     chat: {
+        type: Object,
+    },
+    chats: {
         type: Object,
     },
     messages: {
@@ -75,28 +79,29 @@ onUnmounted(() => {
         <Nav :collection="collection.data" :chat="chat?.data"></Nav>
 
         <div class="py-12">
-
-
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-
-
-                <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-                    <!-- Top area -->
-
-                    <div class="border-b px-3 py-4">
-                        <div class="flex justify-between items-center">
-                            <div>
-                                <h3 class="text-base font-semibold leading-6 text-gray-900">{{ collection.data.name }}</h3>
-                                <p class="mt-2 max-w-4xl text-sm text-gray-500">
-                                    {{ collection.data.description }}
-                                </p>
-
-                            </div>
-                            <CollectionTags :collection="collection.data"></CollectionTags>
-                        </div>
+            <div class="max-w-9xl mx-auto sm:px-6 lg:px-8">
+                <div class="grid grid-cols-12 gap-2">
+                    <div class="col-span-4">
+                        <ChatSideNav :chats="chats"></ChatSideNav>
                     </div>
-                    <div class="p-10">
-                        <ChatUi :chat="chat" :messages="messages"></ChatUi>
+                    <div class="col-span-8">
+                        <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
+                            <div class="border-b px-3 py-4">
+                                <div class="flex justify-between items-center">
+                                    <div>
+                                        <h3 class="text-base font-semibold leading-6 text-gray-900">{{ collection.data.name }}</h3>
+                                        <p class="mt-2 max-w-4xl text-sm text-gray-500">
+                                            {{ collection.data.description }}
+                                        </p>
+
+                                    </div>
+                                    <CollectionTags :collection="collection.data"></CollectionTags>
+                                </div>
+                            </div>
+                            <div class="p-10">
+                                <ChatUi :chat="chat" :messages="messages"></ChatUi>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

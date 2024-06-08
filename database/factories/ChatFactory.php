@@ -20,6 +20,7 @@ class ChatFactory extends Factory
     {
         return [
             'user_id' => User::factory(),
+            'title' => 'Test Title',
             'chatable_id' => Collection::factory(),
             'chatable_type' => Collection::class,
         ];

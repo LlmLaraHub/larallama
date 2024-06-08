@@ -43,6 +43,7 @@ class ChatController extends Controller
         return inertia('Collection/Chat', [
             'collection' => new CollectionResource($collection),
             'chat' => new ChatResource($chat),
+            'chats' => ChatResource::collection($collection->chats()->paginate(20)),
             'filters' => FilterResource::collection($collection->filters),
             'system_prompt' => $collection->systemPrompt(),
             'settings' => [
