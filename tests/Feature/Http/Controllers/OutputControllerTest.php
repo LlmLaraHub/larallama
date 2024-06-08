@@ -49,4 +49,16 @@ class OutputControllerTest extends TestCase
 
         $this->assertSoftDeleted($output);
     }
+
+    public function test_delete_sending_id(): void
+    {
+        $output = Output::factory()->create();
+
+        $this->actingAs(User::factory()->create([
+            'is_admin' => true,
+        ]));
+
+        $response = $this->delete(route('collections.outputs.delete', $output->id));
+        $response->assertRedirectToRoute('collections.outputs.index', $output->collection);
+    }
 }
