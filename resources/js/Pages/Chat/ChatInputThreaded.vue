@@ -112,11 +112,11 @@ const setQuestion = (question) => {
                 <textarea
                 rows="2"
                 type="text"
-                autofocus="true"
+                autofocus
                 class="caret caret-indigo-400 caret-opacity-50
                 disabled:opacity-40
-                bg-transparent block w-full border-0 py-1.5 ring-0 ring-inset
-                ring-indigo-500 placeholder:text-gray-400 focus:ring-2
+                bg-transparent block w-full border-0 py-1.5 ring-inset
+                ring-indigo-500 placeholder:text-gray-400 ring-2
                 focus:ring-indigo-500 sm:text-sm sm:leading-6"
                 v-model="form.input" placeholder="Chat about your Collection"/>
 
@@ -145,7 +145,7 @@ const setQuestion = (question) => {
                     </svg>
                 </button>
             </div>
-            <div class="flex justify-between">
+            <div class="flex justify-start ml-2">
                 <div>
                     <SwitchGroup
                         v-if="!usePage().props.settings.supports_functions"

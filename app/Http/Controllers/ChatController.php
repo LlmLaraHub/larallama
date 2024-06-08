@@ -53,6 +53,8 @@ class ChatController extends Controller
         ]);
     }
 
+
+
     public function chat(Chat $chat)
     {
         $validated = request()->validate([

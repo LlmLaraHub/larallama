@@ -81,10 +81,12 @@ onUnmounted(() => {
         <div class="py-12">
             <div class="max-w-9xl mx-auto sm:px-6 lg:px-8">
                 <div class="grid grid-cols-12 gap-2">
-                    <div class="col-span-4">
-                        <ChatSideNav :chats="chats"></ChatSideNav>
+                    <div class="col-span-2">
+                        <ChatSideNav
+                            :collection="collection.data"
+                            :chats="chats"></ChatSideNav>
                     </div>
-                    <div class="col-span-8">
+                    <div class="col-span-10">
                         <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                             <div class="border-b px-3 py-4">
                                 <div class="flex justify-between items-center">

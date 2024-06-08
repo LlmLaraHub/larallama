@@ -40,6 +40,13 @@ class GiveTitleToDocumentJob implements ShouldQueue
             'document' => $this->document->id,
         ]);
 
+        if(is_null($this->document->summary)) {
+            Log::info('[LaraChain] Document has no summary', [
+                'document' => $this->document->id,
+            ]);
+            return;
+        }
+
         $prompt = TitlePrompt::prompt($this->document->summary);
 
         /** @var CompletionResponse $results */

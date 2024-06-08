@@ -24,7 +24,7 @@ const getFilter = (filter) => {
 <template>
     <details class="dropdown dropdown-top">
         <summary class="m-1 btn btn-neutral">Filters</summary>
-        <ul class="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-48 -ml-24">
+        <ul class="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-48 ">
             <li v-for="filter in filters" :key="filter.id">
                 <button type="button" @click="getFilter(filter)">{{ filter.name }}</button>
             </li>
