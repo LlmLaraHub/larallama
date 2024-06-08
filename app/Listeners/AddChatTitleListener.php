@@ -2,10 +2,10 @@
 
 namespace App\Listeners;
 
-use Facades\App\Domains\Chat\TitleRepo;
+use App\Domains\Chat\UiStatusEnum;
 use App\Events\MessageCreatedEvent;
+use Facades\App\Domains\Chat\TitleRepo;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
 
 class AddChatTitleListener implements ShouldQueue
 {
@@ -23,5 +23,7 @@ class AddChatTitleListener implements ShouldQueue
     public function handle(MessageCreatedEvent $event): void
     {
         TitleRepo::handle($event->message);
+        notify_ui($event->message->chat, 'Chat Title Updated');
+        notify_ui($event->message->chat, UiStatusEnum::Complete->name);
     }
 }

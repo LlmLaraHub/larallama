@@ -8,23 +8,24 @@ use App\Models\Message;
 
 class TitleRepo
 {
-
-    public function updateAllTitles(): void {
-        foreach(Chat::whereNull('title')
-                    ->get() as $chat) {
+    public function updateAllTitles(): void
+    {
+        foreach (Chat::whereNull('title')
+            ->get() as $chat) {
             $message = $chat->messages()->where('role', RoleEnum::User)->first();
-            if($message) {
+            if ($message) {
                 $this->handle($message);
             }
         }
     }
 
-    public function handle(Message $message): void {
-        if($message->role !== RoleEnum::User) {
+    public function handle(Message $message): void
+    {
+        if ($message->role !== RoleEnum::User) {
             return;
         }
 
-        if(!is_null($message->chat->title)) {
+        if (! is_null($message->chat->title)) {
             return;
         }
 

@@ -7,8 +7,6 @@ use App\Events\MessageCreatedEvent;
 use App\Listeners\AddChatTitleListener;
 use App\Models\Chat;
 use App\Models\Message;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Event;
 use Tests\TestCase;
 
@@ -30,7 +28,6 @@ class AddChatTitleListenerTest extends TestCase
             'body' => 'Test Message',
             'role' => RoleEnum::User,
         ]);
-
 
         $event = new MessageCreatedEvent($message);
 

@@ -2,12 +2,10 @@
 
 namespace Tests\Feature;
 
-use Facades\App\Domains\Chat\TitleRepo;
 use App\Domains\Messages\RoleEnum;
 use App\Models\Chat;
 use App\Models\Message;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
+use Facades\App\Domains\Chat\TitleRepo;
 use Illuminate\Support\Facades\Event;
 use Tests\TestCase;
 
@@ -30,7 +28,6 @@ class TitleRepoTest extends TestCase
             'role' => RoleEnum::User,
         ]);
 
-
         TitleRepo::handle($message);
 
         $this->assertEquals('Test Message',
@@ -39,7 +36,7 @@ class TitleRepoTest extends TestCase
     }
 
     public function test_updates_all_titles(): void
-   {
+    {
         Event::fake();
 
         $chat = Chat::factory()->create([
