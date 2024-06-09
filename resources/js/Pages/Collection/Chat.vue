@@ -80,12 +80,12 @@ onUnmounted(() => {
         <div class="py-12">
             <div class="max-w-9xl mx-auto sm:px-6 lg:px-8">
                 <div class="grid grid-cols-12 gap-2">
-                    <div class="col-span-2">
+                    <div class="hidden sm:col-span-2 sm:flex">
                         <ChatSideNav
                             :collection="collection.data"
                             :chats="chats"></ChatSideNav>
                     </div>
-                    <div class="col-span-10">
+                    <div class="col-span-12 sm:col-span-10">
                         <div class="overflow-hidden shadow-xl sm:rounded-lg">
                             <div class="px-3">
                                 <div class="flex justify-between items-center">
@@ -100,6 +100,12 @@ onUnmounted(() => {
                             </div>
                             <ChatUi :chat="chat" :messages="messages"></ChatUi>
                         </div>
+                    </div>
+
+                    <div class="col-span-12 sm:hidden px-4 mt-4">
+                        <ChatSideNav
+                            :collection="collection.data"
+                            :chats="chats"></ChatSideNav>
                     </div>
                 </div>
             </div>

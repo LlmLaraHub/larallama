@@ -16,7 +16,7 @@ const props = defineProps({
 </script>
 
 <template>
-    <div class="flex-1 flex flex-col shadow-sm mx-10  overflow-hidden ">
+    <div class="flex-1 flex flex-col shadow-sm mx-2 sm:mx-5  overflow-hidden ">
             <div class="mb-2">
                 <ChatMessage
                 :chat="chat.data" :messages="messages.data">
