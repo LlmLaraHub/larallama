@@ -4,7 +4,7 @@
 
 [![CI-CD](https://github.com/LlmLaraHub/laralamma/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/LlmLaraHub/laralamma/actions/workflows/ci-cd.yml)
 
-See the docs here https://laralamma-docs.readthedocs.io/en/latest/index.html
+See the docs here https://docs.larallama.io/
 
 
 
