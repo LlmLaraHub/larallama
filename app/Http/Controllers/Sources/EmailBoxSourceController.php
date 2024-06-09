@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Sources;
 
+use App\Domains\Prompts\EmailToDocumentSummary;
 use App\Domains\Sources\SourceTypeEnum;
 use App\Http\Controllers\BaseSourceController;
 use App\Models\Collection;
@@ -76,5 +77,12 @@ class EmailBoxSourceController extends BaseSourceController
             'recurring' => $validated['recurring'],
             'active' => $validated['active'],
         ]);
+    }
+
+    public function getPrompts(): array
+    {
+        return [
+            'summarize_email' => EmailToDocumentSummary::prompt('[CONTEXT]'),
+        ];
     }
 }
