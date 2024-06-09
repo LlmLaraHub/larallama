@@ -1,9 +1,10 @@
 <template>
-    <div class="grid grid-cols-6 gap-4">
+    <div class="grid grid-cols-6 gap-4 ">
 
         <div class="col-span-6 sm:col-span-6">
             <InputLabel value="Name" />
-            <TextInput v-model="modelValue.name" type="text" class="mt-1 block w-full" />
+            <TextInput v-model="modelValue.name" type="text" class="mt-1 block w-full"
+            />
             <InputError :message="modelValue.errors.name" class="mt-2" />
         </div>
         <div class="col-span-6 sm:col-span-6">
@@ -11,7 +12,7 @@
             <TextArea v-model="modelValue.description" type="text" class="mt-1 block w-full" />
             <InputError :message="modelValue.errors.description" class="mt-2" />
         </div>
-        <div class="col-span-6 sm:col-span-6">
+        <div class="col-span-6 sm:col-span-6 ">
             <div>Choose the system to Interact with the data</div>
             <LlmType
             :default="modelValue.driver"
