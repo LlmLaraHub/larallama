@@ -9,6 +9,7 @@ import Resources from './Components/Resources.vue';
 import { useForm } from '@inertiajs/vue3';
 import { useToast } from 'vue-toastification';
 import Templates from "@/Components/Templates.vue";
+import Delete from "@/Pages/Sources/Components/Delete.vue";
 const toast = useToast();
 
 const props = defineProps({
@@ -61,15 +62,10 @@ const choosePrompt = (prompt) => {
 
 <template>
     <AppLayout :title="type">
-        <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                {{ type}}
-            </h2>
-        </template>
 
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-5">
+                <div class="overflow-hidden shadow-xl sm:rounded-lg p-5">
                     <Intro>
                         {{ type }}
                         <template #description>
@@ -79,7 +75,7 @@ const choosePrompt = (prompt) => {
 
                     <form @submit.prevent="submit" class="p-10 ">
                         <div class="flex">
-                            <div class="w-3/4 border border-gray-300 p-5 rounded-lg">
+                            <div class="w-3/4 border border-secondary p-5 rounded-lg">
                         <Resources
                             :recurring="recurring"
                         v-model="form">
@@ -96,6 +92,7 @@ const choosePrompt = (prompt) => {
                             })">
                                 Back
                             </SecondaryLink>
+                            <Delete :source="source.data"></Delete>
                             </div>
                             </div>
                             <Templates

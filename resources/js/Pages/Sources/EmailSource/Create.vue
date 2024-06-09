@@ -6,7 +6,8 @@ import { ref } from 'vue';
 import Intro from '@/Components/Intro.vue';
 import SecondaryLink from '@/Components/SecondaryLink.vue';
 import Resources from './Components/Resources.vue';
-import { useForm } from '@inertiajs/vue3';
+import {useForm, usePage} from '@inertiajs/vue3';
+import Templates from "@/Components/Templates.vue";
 
 const props = defineProps({
     collection: {
@@ -14,6 +15,9 @@ const props = defineProps({
         required: true,
     },
     sources: {
+        type: Object
+    },
+    prompts: {
         type: Object
     },
     recurring: {
@@ -40,38 +44,46 @@ const submit = () => {
             }
         });
 }
+
+const choosePrompt = (prompt) => {
+    form.details = prompt;
+}
+
 </script>
 
 <template>
     <AppLayout title="Sources">
-        <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Sources
-            </h2>
-        </template>
 
         <div class="py-12">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-5">
+            <div class="max-w-7xl mx-auto sm:px-2 lg:px-2">
+                <div class="overflow-hidden shadow-xl sm:rounded-lg p-5">
                     <Intro></Intro>
 
-                    <form @submit.prevent="submit" class="p-10 ">
-                        <Resources
-                            :recurring="recurring"
-                        v-model="form">
+                    <form @submit.prevent="submit" class="p-5">
+                        <div class="flex">
+                            <div class="w-3/4 border border-secondary p-5">
+                                <Resources
+                                    :recurring="recurring"
+                                    v-model="form">
 
-                        </Resources>
+                                </Resources>
 
-                        <div class="flex justify-end items-center gap-4">
-                            <PrimaryButton type="submit">
-                                Save
-                            </PrimaryButton>
-                            <SecondaryLink :href="route('collections.sources.index', {
+
+                                <div class="flex justify-end items-center gap-4">
+                                    <PrimaryButton type="submit">
+                                        Save
+                                    </PrimaryButton>
+                                    <SecondaryLink :href="route('collections.sources.index', {
                                 collection: collection.data.id
 
                             })">
-                                Cancel
-                            </SecondaryLink>
+                                        Cancel
+                                    </SecondaryLink>
+                                </div>
+                            </div>
+                            <Templates
+                                @choosePrompt="choosePrompt"
+                                :prompts="prompts"/>
                         </div>
                     </form>
 

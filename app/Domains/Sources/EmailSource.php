@@ -51,7 +51,6 @@ class EmailSource extends BaseSource
         Log::info('[LaraChain] - Running Email Source');
 
         try {
-            Log::info('Do something!');
             $baseSource = EmailTransformer::transform(baseSource: $this);
             /**
              * @NOTE
@@ -113,6 +112,10 @@ class EmailSource extends BaseSource
 
     protected function getSummarizeDocumentPrompt(): string
     {
+        if(str($this->source->details)->contains('[CONTEXT]')) {
+            return $this->source->details;
+        }
+
         return <<<'PROMPT'
 
 The following content is from an email. I would like you to summarize it with the following format.

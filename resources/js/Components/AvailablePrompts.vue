@@ -9,11 +9,11 @@ import Clipboard from "@/Components/Clipboard.vue";
             <div class="flex justify-start gap-2 items-center">[CONTEXT] <Clipboard content="[CONTEXT]"></Clipboard>
 
             </div>
-            <div class="p-2 text-gray-500">this is all the data the system finds to answer the users question</div>
+            <div class="p-2">this is all the data the system finds to answer the users question</div>
         </div>
         <div>
             <div class="flex justify-start gap-2 items-center">[USER_INPUT] <Clipboard content="[USER_INPUT]"></Clipboard></div>
-            <div class="p-2 text-gray-500">this is all the data the system finds to answer the users question</div>
+            <div class="p-2">this is all the data the system finds to answer the users question</div>
         </div>
     </div>
 </template>

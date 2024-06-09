@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Domains\Prompts\EmailToDocumentSummary;
 use App\Domains\Sources\SourceTypeEnum;
 use App\Models\Collection;
 use App\Models\Source;
@@ -33,5 +34,12 @@ class AssistantEmailBoxSourceController extends BaseSourceController
             'slug' => str(Str::random(12))->remove('+')->toString(),
             'meta_data' => [],
         ]);
+    }
+
+    public function getPrompts(): array
+    {
+        return [
+            'summarize_email' => EmailToDocumentSummary::prompt('[CONTEXT]'),
+        ];
     }
 }

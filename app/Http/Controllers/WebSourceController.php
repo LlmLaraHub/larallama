@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Domains\Prompts\WebSearchPrompt;
 use App\Domains\Sources\SourceTypeEnum;
 
 class WebSourceController extends BaseSourceController
@@ -21,4 +22,11 @@ class WebSourceController extends BaseSourceController
     ";
 
     protected string $type = 'Web Search';
+
+    public function getPrompts(): array
+    {
+        return [
+            'web_search' => WebSearchPrompt::prompt('[USER_INPUT]'),
+        ];
+    }
 }

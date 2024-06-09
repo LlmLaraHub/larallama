@@ -19,7 +19,7 @@ const submit = () => {
 <template>
     <form @submit.prevent="submit">
         <div class="flex justify-center">
-            <button type="submit" class="btn btn-warning btn-sm">Delete</button>
+            <button type="submit" class="btn btn-warning rounded-none">Delete</button>
         </div>
     </form>
 </template>

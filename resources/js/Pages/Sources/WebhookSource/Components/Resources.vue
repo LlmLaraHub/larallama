@@ -10,8 +10,9 @@
         <div>
             <InputLabel value="Prompt to be used for Transformation"/>
             <textarea
+                class="textarea textarea-bordered w-full"
                 rows="5"
-                v-model="modelValue.details" class="rounded-none textarea textarea-bordered w-full mb-5"
+                v-model="modelValue.details"
                 placeholder="The data will be passed to the LLM with your Prompt to transform the data."></textarea>
             <InputError :message="modelValue.errors.details" />
         </div>
@@ -33,7 +34,7 @@
 
         <div>
             <InputLabel value="Recurring"/>
-            <select v-model="modelValue.recurring">
+            <select class="select select-bordered w-full max-w-xs mt-2" v-model="modelValue.recurring">
                 <option disabled selected>Types</option>
                 <option v-for="option in recurring" :key="option.id" :value="option.id">
                     {{option.name}}

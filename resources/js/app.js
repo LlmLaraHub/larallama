@@ -24,8 +24,11 @@ createInertiaApp({
             .use(autoAnimatePlugin)
             .use(Toast, {
                 transition: "Vue-Toastification__bounce",
+                pauseOnFocusLoss: false,
                 maxToasts: 1,
-                newestOnTop: true
+                timeout: 2000,
+                hideProgressBar: true,
+                newestOnTop: true,
               })
             .use(ZiggyVue)
             .mount(el);

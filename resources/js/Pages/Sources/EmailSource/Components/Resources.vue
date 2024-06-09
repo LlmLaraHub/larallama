@@ -23,7 +23,9 @@
 
         <div>
             <InputLabel value="Recurring"/>
-            <select v-model="modelValue.recurring">
+            <select
+                class="select select-bordered w-full max-w-xs mt-2"
+                v-model="modelValue.recurring">
                 <option disabled selected>Types</option>
                 <option v-for="option in recurring" :key="option.id" :value="option.id">
                     {{option.name}}
