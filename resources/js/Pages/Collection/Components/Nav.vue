@@ -21,7 +21,7 @@
         >Chat with your Collection</NavButton>
         <CreateChat
             class-value=" btn btn-sm"
-            v-else collection="collection" />
+            v-else :collection="collection" />
         <NavButton
             name="collections.sources.index"
                    :href="route('collections.sources.index', {
