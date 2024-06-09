@@ -16,7 +16,7 @@ class ChatResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'title' => $this->title ?? "Chat #" . $this->id,
+            'title' => $this->title ?? 'Chat #'.$this->id,
             'chatable_id' => $this->chatable_id,
             'user_id' => new UserResource($this->user),
         ];

@@ -3,7 +3,7 @@ import AppLayout from '@/Layouts/AppLayout.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
 import { computed, onMounted, ref } from 'vue';
 
-import CollectionHeader from './Components/CollectionHeader.vue';
+import CollectionHeader from '@/Pages/Collection/Components/CollectionHeader.vue';
 import Documents from '@/Pages/Collection/Components/Documents.vue';
 
 import EditCollection from './Edit.vue';
@@ -80,17 +80,11 @@ const reset = () => {
 
 <template>
     <AppLayout title="Collection">
-        <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Collection
-            </h2>
-        </template>
-
         <Nav :collection="collection.data" :chat="chat?.data"></Nav>
 
         <div class="py-12" v-auto-animate>
             <div class="max-w-9xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
+                <div class="overflow-hidden shadow-xl sm:rounded-lg">
                     <CollectionHeader
                     @toggleReindexCollection="toggleReindexCollection"
                     @showEditCollectionSlideOut="showEditCollectionSlideOut"
@@ -102,10 +96,10 @@ const reset = () => {
                     <div class="mx-auto max-7xl flex justify-center">
                         <div role="tablist" class="tabs tabs-bordered gap-4">
                             <button @click="changeSourceView('file_upload')" type="button" role="tab" class="tab"
-                                :class="{ 'tab-active text-indigo-700 font-bold border-indigo-700': sourceView === 'file_upload' }">Upload
+                                :class="{ 'tab-active font-bold': sourceView === 'file_upload' }">Upload
                                 Files</button>
                             <button @click="changeSourceView('text')" type="button" role="tab" class="tab"
-                                :class="{ 'tab-active text-indigo-700 font-bold border-indigo-700': sourceView === 'text' }">
+                                :class="{ 'tab-active font-bold': sourceView === 'text' }">
                                 Other Integrations
                             </button>
                         </div>
@@ -114,17 +108,20 @@ const reset = () => {
                     <FileUploader :collection="collection" v-show="sourceView === 'file_upload'" />
 
                     <div v-show="sourceView === 'text'" class="grid grid-cols-3 max-w-4xl mt-10 mb-10 mx-auto">
-                        <button @click="toggleShowSlideOut('textDocument')" type="button"
-                            class="px-5 py-5 border border-gray-300 rounded shadow-md flex-col text-center mx-auto justify-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                                stroke="currentColor" class="w-10 h-10 text-gray-400 mx-auto">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
-                            </svg>
-                            <div class="text-gray-500 text-md font-semibold">
-                                Add Document using Text Editor
+                        <div class="card w-96 bg-base-100 shadow-xl">
+                            <div class="card-body">
+                                <button class="btn btn-ghost" type="button"
+                                        @click="toggleShowSlideOut('textDocument')"
+                                >
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                         stroke="currentColor" class="w-10 h-10">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                              d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
+                                    </svg>
+                                    Add Document using Text Editor
+                                </button>
                             </div>
-                        </button>
+                        </div>
                     </div>
 
                     <!-- show related files -->

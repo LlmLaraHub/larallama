@@ -14,8 +14,8 @@ const props = defineProps({
 
     <Link
         :href="href"
-        class="text-neutral btn btn-sm"
-        :class="{ 'active btn-accent': route().current(name) }">
+        class="btn btn-sm rounded-none"
+        :class="{ 'active btn-secondary': route().current(name) }">
         <slot></slot>
     </Link>
 </template>

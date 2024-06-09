@@ -1,6 +1,5 @@
 <script setup>
 import AppLayout from '@/Layouts/AppLayout.vue';
-import Welcome from '@/Components/Welcome.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import SecondaryLink from '@/Components/SecondaryLink.vue';
 import {computed, onMounted, onUnmounted, provide, ref} from 'vue';
@@ -87,22 +86,19 @@ onUnmounted(() => {
                             :chats="chats"></ChatSideNav>
                     </div>
                     <div class="col-span-10">
-                        <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-                            <div class="border-b px-3 py-4">
+                        <div class="overflow-hidden shadow-xl sm:rounded-lg">
+                            <div class="px-3">
                                 <div class="flex justify-between items-center">
                                     <div>
-                                        <h3 class="text-base font-semibold leading-6 text-gray-900">{{ collection.data.name }}</h3>
-                                        <p class="mt-2 max-w-4xl text-sm text-gray-500">
+                                        <h3 class="text-base font-semibold leading-6">{{ collection.data.name }}</h3>
+                                        <p class="mt-2 max-w-4xl text-sm ">
                                             {{ collection.data.description }}
                                         </p>
-
                                     </div>
                                     <CollectionTags :collection="collection.data"></CollectionTags>
                                 </div>
                             </div>
-                            <div class="p-10">
-                                <ChatUi :chat="chat" :messages="messages"></ChatUi>
-                            </div>
+                            <ChatUi :chat="chat" :messages="messages"></ChatUi>
                         </div>
                     </div>
                 </div>

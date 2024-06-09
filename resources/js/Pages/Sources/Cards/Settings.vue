@@ -6,19 +6,21 @@ const props = defineProps({
 </script>
 
 <template>
+    <h2 class="card-title">{{ source.title }} <span class="text-sm">#{{source.id}}</span></h2>
+
     <div class="text-xs">
-        Type: <span class="font-bold text-gray-600">{{ source.type }}</span>
+        Type: <span class="font-bold">{{ source.type }}</span>
     </div>
-    <div class="text-xs w-full truncate ellipsis overflow-hidden whitespace-pre-wrap h-24">Details: <span class="font-bold text-gray-600">{{ source.details }}</span>
-    </div>
-    <div class="text-xs">
-        Active: <span class="font-bold text-gray-600">{{ source.active }}</span>
-    </div>
-    <div class="text-xs">
-        Recurring: <span class="font-bold text-gray-600">{{ source.recurring }}</span>
+    <div class="text-xs w-full truncate ellipsis overflow-hidden whitespace-pre-wrap h-24">Details: <span class="font-bold">{{ source.details }}</span>
     </div>
     <div class="text-xs">
-        Last Run: <span class="font-bold text-gray-600">{{ source.last_run }}</span>
+        Active: <span class="font-bold">{{ source.active }}</span>
+    </div>
+    <div class="text-xs">
+        Recurring: <span class="font-bold">{{ source.recurring }}</span>
+    </div>
+    <div class="text-xs">
+        Last Run: <span class="font-bold">{{ source.last_run }}</span>
     </div>
 </template>
 

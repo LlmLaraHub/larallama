@@ -32,9 +32,8 @@ const run = (source) => {
 </script>
 
 <template>
-    <div class="card rounded-none w-96 bg-base-100 shadow-xl" :key="source.id">
+    <div class="card rounded-none w-96 bg-neutral shadow-xl" :key="source.id">
         <div class="card-body">
-            <h2 class="card-title text-gray-600">{{ source.title }} <span class="text-sm">#{{source.id}}</span></h2>
             <Settings :source="source"/>
             <div class="card-actions justify-end">
                 <button @click="run(source)" type="button" class="btn btn-primary rounded-none">Run</button>

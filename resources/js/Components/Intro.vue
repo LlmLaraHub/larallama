@@ -1,9 +1,9 @@
 <template>
-<h3 class="text-base font-semibold leading-6 text-gray-900">
+<h3 class="font-semibold leading-6">
     <slot></slot>
 </h3>
 
-<div class="mt-2 max-w-4xl text-sm text-gray-500">
+<div class="mt-2 max-w-4xl text-sm">
           <slot name="description"></slot>
 </div>
 </template>

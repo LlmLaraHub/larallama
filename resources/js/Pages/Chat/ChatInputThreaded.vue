@@ -103,7 +103,7 @@ const setQuestion = (question) => {
                 </div>
             </div>
         </div>
-    <div class="w-full bg-gray-50">
+    <div class="w-full">
 
         <form @submit.prevent="save"  autocomplete="off"
               class="relative p-4 flex-col max-container mx-auto w-full" v-auto-animate>
@@ -116,7 +116,7 @@ const setQuestion = (question) => {
                 class="caret caret-indigo-400 caret-opacity-50
                 disabled:opacity-40
                 bg-transparent block w-full border-0 py-1.5 ring-inset
-                ring-indigo-500 placeholder:text-gray-400 ring-2
+                ring-secondary placeholder:text-gray-400 ring-2
                 focus:ring-indigo-500 sm:text-sm sm:leading-6"
                 v-model="form.input" placeholder="Chat about your Collection"/>
 

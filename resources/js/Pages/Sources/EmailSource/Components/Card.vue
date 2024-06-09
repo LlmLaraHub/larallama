@@ -34,13 +34,12 @@ const run = (source) => {
 </script>
 
 <template>
-    <div class="card rounded-none w-96 bg-base-100 shadow-xl" :key="source.id">
+    <div class="card rounded-none w-96 dark:bg-neutral shadow-xl" :key="source.id">
         <div class="card-body">
-            <h2 class="card-title text-gray-600">{{ source.title }} <span class="text-sm">#{{source.id}}</span></h2>
             <Settings :source="source"/>
 
             <div class="text-xs">
-                Assistant Email: <span class="font-bold text-gray-400">
+                Assistant Email: <span class="font-bold ">
                     <Clipboard :content="email">{{ email}}</Clipboard>
             </span>
             </div>

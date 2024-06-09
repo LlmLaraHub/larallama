@@ -1,6 +1,6 @@
 <template>
-    <div class="shadow-inner-top navbar bg-neutral flex justify-center gap-4">
-        <Link class="btn btn-circle btn-secondary btn-sm" :href="route('collections.index')">
+    <div class="shadow-inner-top navbar flex justify-center gap-4 shadow shadow-bottom">
+        <Link class="btn btn-circle btn-outline btn-sm" :href="route('collections.index')">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
                 class="w-5 h-5">
                 <path stroke-linecap="round" stroke-linejoin="round"

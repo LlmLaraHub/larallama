@@ -28,6 +28,7 @@
         "@heroicons/vue": "^2.1.1",
         "apexcharts": "^3.47.0",
         "puppeteer": "^22.7.1",
+        "theme-change": "^2.5.0",
         "vue-apexcharts": "^1.6.2",
         "vue-toastification": "^2.0.0-rc.5",
         "vue-upload-component": "^3.1.15",

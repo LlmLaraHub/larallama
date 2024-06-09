@@ -38,18 +38,13 @@ const props = defineProps({
 </script>
 
 <template>
-    <AppLayout title="Sources">
-        <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Sources
-            </h2>
-        </template>
+    <AppLayout title="Outputs">
 
         <Nav :collection="collection.data" :chat="chat?.data"></Nav>
 
         <div class="py-6">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-2">
+                <div class="overflow-hidden shadow-xl sm:rounded-lg p-2">
                  <Intro>
                     Manage Outputs
                     <template #description>
@@ -59,12 +54,12 @@ const props = defineProps({
 
                  </Intro>
 
-                  <div class="border border-gray-200 p-5 mt-5 flex">
+                  <div class="border border-secondary p-5 mt-5 flex">
                     <div v-if="outputs.data.length === 0" class="text-center w-full">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mx-auto text-gray-400">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M9 8.25H7.5a2.25 2.25 0 0 0-2.25 2.25v9a2.25 2.25 0 0 0 2.25 2.25h9a2.25 2.25 0 0 0 2.25-2.25v-9a2.25 2.25 0 0 0-2.25-2.25H15M9 12l3 3m0 0 3-3m-3 3V2.25" />
                         </svg>
-                        <div class="text-xl text-gray-600">No Outputs yet. Choose one below</div>
+                        <div class="text-xl">No Outputs yet. Choose one below</div>
                     </div>
                     <div v-else  class="grid grid-cols-1 sm:grid-cols-3 gap-2">
                         <template
@@ -77,18 +72,18 @@ const props = defineProps({
                   </div>
 
                   <div class="mt-5 mx-10">
-                        <h3 class="font-bold text-gray-700">Available Outputs</h3>
+                        <h3 class="font-bold mb-2">Available Outputs</h3>
                         <div class="flex justify-start items-center gap-2">
 
                             <template v-for="available in available_outputs" :key="available.name">
                                 <Link
                                     v-if="available.active"
-                                    class="btn btn-gray rounded-none"
+                                    class="btn btn-secondary rounded-none"
                                     :href="available.route"
                                 >{{ available.name}}</Link>
                                 <div
 
-                                    class="btn btn-gray rounded-none"
+                                    class="btn rounded-none"
                                     v-else>{{available.name}} (coming soon..)</div>
                             </template>
 

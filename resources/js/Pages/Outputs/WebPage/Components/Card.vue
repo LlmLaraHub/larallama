@@ -9,14 +9,8 @@ const props = defineProps({
 </script>
 
 <template>
-    <div class="card rounded-none w-96 bg-base-100 shadow-xl">
-        <div class="card-body">
-            <h2 class="card-title text-gray-600">{{ output.title }} <span class="text-sm">#{{output.id}}</span></h2>
-
-            <div class="overflow-hidden">
-                <span class="font-bold text-gray-600 text-xs" v-html="output.summary_truncated"></span>
-            </div>
-
+    <div class="card rounded-none w-96 dark:bg-neutral shadow-xl">
+    <div class="card-body">
             <Settings :output="output"/>
 
             <div class="card-actions justify-between flex items-center">

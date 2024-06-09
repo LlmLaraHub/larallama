@@ -1,5 +1,5 @@
 <template>
-    <div class="grid grid-cols-6 gap-4 text-gray-900 dark:text-gray-400">
+    <div class="grid grid-cols-6 gap-4">
 
         <div class="col-span-6 sm:col-span-6">
             <InputLabel value="Name" />
@@ -19,8 +19,8 @@
         </div>
         <div class="col-span-6 sm:col-span-6">
             <div>Choose the system to Embed the data</div>
-            <EmbeddingType 
-            
+            <EmbeddingType
+
             :default="modelValue.embedding_driver"
             @embeddingTypeChosen="embeddingTypeChosen" />
         </div>

@@ -36,13 +36,12 @@ const run = (source) => {
 </script>
 
 <template>
-    <div class="card rounded-none w-96 bg-base-100 shadow-xl" :key="source.id">
+    <div class="card rounded-none w-96 dark:bg-neutral shadow-xl" :key="source.id">
         <div class="card-body">
-            <h2 class="card-title text-gray-600">{{ source.title }} <span class="text-sm">#{{source.id}}</span></h2>
             <Settings :source="source"/>
 
             <div class="text-xs border-gray-300 p-2 border">
-                URL: <span class="font-bold text-gray-600">
+                URL: <span class="font-bold">
                 <Clipboard :content="source_url">{{ source_url}}</Clipboard>
                 </span>
             </div>

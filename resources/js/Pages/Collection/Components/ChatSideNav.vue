@@ -12,7 +12,7 @@ const props = defineProps({
     <div>
         <div>
             <CreateChat
-                class-value="btn btn-primary w-full"
+                class-value="btn btn-neutral w-full rounded-none"
                  :collection="collection" >
                 <template #default>
                     <div class="flex items-center gap-2">
@@ -21,7 +21,6 @@ const props = defineProps({
                     </div>
                 </template>
 
-
             </CreateChat>
         </div>
     </div>
@@ -29,11 +28,11 @@ const props = defineProps({
         <div v-if="chats.data.length === 0">
             No chats yet
         </div>
-        <div class="flex flex-col gap-2">
+        <div class="flex flex-col gap-2 overflow-hidden">
             <template v-for="chat in chats.data" :key="chat.id">
             <Link
                 class="
-                rounded-sm hover:bg-secondary
+                rounded-none hover:bg-secondary
                 hover:text-neutral-50
                 px-2 py-1
                 text-sm w-full text-left"

@@ -82,8 +82,8 @@ onUnmounted(() => {
         <div class="flex justify-end mx-10 ">
             <ManageFilters :collection="collection" :filters="filters"></ManageFilters>
         </div>
-        <h1 class="text-base font-semibold leading-6 text-gray-900">Related Documents</h1>
-        <p class="mt-2 text-sm text-gray-700">Thsee are a list of documents you uploaded or imported
+        <h1 class="text-base font-semibold leading-6">Related Documents</h1>
+        <p class="mt-2 text-sm ">These are a list of documents you uploaded or imported
             into this
             Collection and the status of their processing</p>
     </div>
@@ -104,7 +104,7 @@ onUnmounted(() => {
                            <div v-if="selectedDocumentsToArray.length > 0"
                            >
                                <div  class="flex justify-start gap-2 items-center">
-                                   <div class="text-gray-600 font-bold ">Actions:</div>
+                                   <div class="font-bold text-secondary">Actions:</div>
                                    <ActionDeleteDocuments
                                        @deleted="emptyDocumentIds"
                                        :document-ids="selectedDocumentsToArray"></ActionDeleteDocuments>
@@ -116,160 +116,135 @@ onUnmounted(() => {
                            </div>
                        </Transition>
                         <div v-if="documents.length === 0"
-                            class="text-center text-sm font-medium text-gray-900 px-10 py-10">
+                            class="text-center text-sm font-medium px-10 py-10">
                             No Documents uploaded yet please upload some documents to get started.
                         </div>
-                        <table class="min-w-full divide-y divide-gray-300 mb-10 " v-else>
-                            <thead>
-                                <tr>
-                                    <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                        <div class="overflow-x-auto" v-else>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>
 
-                                    </th>
-                                    <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                        ID
-                                    </th>
+                                        </th>
+                                        <th>
+                                            ID
+                                        </th>
 
-                                    <th scope="col"
-                                        class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-3">
-                                        Type</th>
-                                    <th scope="col"
-                                        class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-3">
-                                        Name</th>
-                                    <th scope="col"
-                                        class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-3">
-                                        Children</th>
-                                    <th scope="col"
-                                        class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-3">
-                                        Parent Id</th>
-                                    <th scope="col"
-                                        class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-3">
-                                        Pages</th>
-                                    <th scope="col"
-                                        class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-3">
-                                        Tags</th>
-                                    <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                        Status
-                                    </th>
-                                    <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                        Actions
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody class="bg-white">
-                                <template v-for="document in documents" :key="document.id">
-                                    <tr class="even:bg-gray-50">
-                                        <td
-                                            class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-3">
-                                            <input type="checkbox"  @change="checked(document.id)"/>
-                                        </td>
-                                        <td
-                                            class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-3">
-                                            {{ document.id }}
-                                        </td>
-                                        <td
-                                            class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-3">
-                                            {{ document.type }}
-                                        </td>
-                                        <td
-                                            class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-3">
-                                                <div v-if="document.type === 'Json'" class="truncate w-80">{{ document.subject }}</div>
-                                                <div v-else-if="document.subject">
-                                                    <div class="truncate max-w-2xl">
-                                                        <div v-if="!document.link">
-                                                            {{ document.subject }}
-                                                        </div>
-                                                        <div v-else>
-                                                            <a class="underline" target="_blank" :href="document.link">
+                                        <th>
+                                            Type</th>
+                                        <th>
+                                            Name</th>
+                                        <th>
+                                            Children</th>
+                                        <th>
+                                            Parent Id</th>
+                                        <th>
+                                            Pages</th>
+                                        <th>
+                                            Tags</th>
+                                        <th>
+                                            Status
+                                        </th>
+                                        <th>
+                                            Actions
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <template v-for="document in documents" :key="document.id">
+                                        <tr class="even:bg-base-200">
+                                            <td>
+                                                <input type="checkbox"  @change="checked(document.id)"/>
+                                            </td>
+                                            <td>
+                                                {{ document.id }}
+                                            </td>
+                                            <td>
+                                                {{ document.type }}
+                                            </td>
+                                            <td>
+                                                    <div v-if="document.type === 'Json'" class="truncate w-80">{{ document.subject }}</div>
+                                                    <div v-else-if="document.subject">
+                                                        <div class="truncate max-w-2xl">
+                                                            <div v-if="!document.link">
                                                                 {{ document.subject }}
+                                                            </div>
+                                                            <div v-else>
+                                                                <a class="underline" target="_blank" :href="document.link">
+                                                                    {{ document.subject }}
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="text-gray-400 text-sm">
+                                                            <a class="underline" target="_blank" :href="route('download.document', {
+                                                                    collection: collection.id,
+                                                                    document_name: document.file_path
+                                                                })">
+                                                                {{ document.file_path }}
                                                             </a>
                                                         </div>
                                                     </div>
-                                                    <div class="text-gray-400 text-sm">
+                                                    <div v-else>
                                                         <a class="underline" target="_blank" :href="route('download.document', {
-                                                                collection: collection.id,
-                                                                document_name: document.file_path
-                                                            })">
+                                                            collection: collection.id,
+                                                            document_name: document.file_path
+                                                        })">
                                                             {{ document.file_path }}
                                                         </a>
                                                     </div>
-                                                </div>
-                                                <div v-else>
-                                                    <a class="underline" target="_blank" :href="route('download.document', {
-                                                        collection: collection.id,
-                                                        document_name: document.file_path
-                                                    })">
-                                                        {{ document.file_path }}
-                                                    </a>
-                                                </div>
-                                        </td>
+                                            </td>
 
-                                        <td
-                                            class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-3">
-                                            {{ document.children_count }}
-                                        </td>
+                                            <td>
+                                                {{ document.children_count }}
+                                            </td>
 
-                                        <td
-                                            class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-3">
-                                            {{ document.parent_id }}
-                                        </td>
-                                        <td
-                                            class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-3">
-                                            {{ document.document_chunks_count }}
-                                        </td>
-                                        <td
-                                            class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-3">
-                                            {{ document.tags_count }}
-                                        </td>
-                                        <td
-                                            class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-3">
-                                            <span v-if="document.status !== 'Pending'"
-                                                class="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
-                                                {{ document.status }}
-                                            </span>
-                                            <span v-else class="flex justify-left pl-6">
-                                                <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-gray-400"
-                                                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                                    <circle class="opacity-25" cx="12" cy="12" r="10"
-                                                        stroke="currentColor" stroke-width="4"></circle>
-                                                    <path class="opacity-75" fill="currentColor"
-                                                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
-                                                    </path>
-                                                </svg>
-                                            </span>
-                                        </td>
-                                        <td>
-                                            <ul>
-                                                <li>
-                                                    <button type="button"
-                                                        class="text-gray-500 text-sm flex justify-start gap-2 items-center flex justify-start gap-2 items-center"
-                                                        @click="showDocumentButton(document)">
-                                                        <span>view</span>
+                                            <td>
+                                                {{ document.parent_id }}
+                                            </td>
+                                            <td>
+                                                {{ document.document_chunks_count }}
+                                            </td>
+                                            <td>
+                                                {{ document.tags_count }}
+                                            </td>
+                                            <td>
+                                                <div v-if="document.status !== 'Pending'" class="badge badge-secondary">{{ document.status }}</div>
+                                                <span v-else class="loading loading-infinity loading-sm"></span>
+                                            </td>
+                                            <td>
+                                                <ul>
+                                                    <li>
+                                                        <button type="button"
+                                                            class="text-gray-500 text-sm flex justify-start gap-2 items-center flex justify-start gap-2 items-center"
+                                                            @click="showDocumentButton(document)">
+                                                            <span>view</span>
 
-                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none"
-                                                            viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-                                                            class="w-4 h-4">
-                                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                                d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
-                                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                                d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-                                                        </svg>
-                                                    </button>
-                                                </li>
-                                                <li>
-                                                    <DocumentReset :collection="collection" :document="document"
-                                                        @reset="reset" />
-                                                </li>
-                                            </ul>
-                                        </td>
-                                    </tr>
-                                    <tr v-if="false" class="justify-center gap-2 items-center">
-                                        <td colspan="6" class="w-full">
-                                            <Tags :document="document"></Tags>
-                                        </td>
-                                    </tr>
-                                </template>
-                            </tbody>
-                        </table>
+                                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                                viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                                                                class="w-4 h-4">
+                                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                                    d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
+                                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                                    d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                                                            </svg>
+                                                        </button>
+                                                    </li>
+                                                    <li>
+                                                        <DocumentReset :collection="collection" :document="document"
+                                                            @reset="reset" />
+                                                    </li>
+                                                </ul>
+                                            </td>
+                                        </tr>
+                                        <tr v-if="false" class="justify-center gap-2 items-center">
+                                            <td colspan="6" class="w-full">
+                                                <Tags :document="document"></Tags>
+                                            </td>
+                                        </tr>
+                                    </template>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
