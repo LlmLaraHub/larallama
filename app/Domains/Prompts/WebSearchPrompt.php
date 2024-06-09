@@ -10,7 +10,7 @@ class WebSearchPrompt
     {
         Log::info('[LaraChain] - Web Search Prompt');
 
-        return <<<PROMPT
+        return <<<'PROMPT'
 GenAI News
 
 

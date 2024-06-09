@@ -112,7 +112,7 @@ class EmailSource extends BaseSource
 
     protected function getSummarizeDocumentPrompt(): string
     {
-        if(str($this->source->details)->contains('[CONTEXT]')) {
+        if (str($this->source->details)->contains('[CONTEXT]')) {
             return $this->source->details;
         }
 
