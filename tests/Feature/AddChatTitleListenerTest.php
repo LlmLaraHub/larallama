@@ -35,7 +35,7 @@ class AddChatTitleListenerTest extends TestCase
 
         $listener->handle($event);
 
-        $this->assertEquals('Foo bar',
+        $this->assertEquals('Test Message',
             $chat->refresh()->title);
 
     }
