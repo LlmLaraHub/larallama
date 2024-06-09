@@ -70,13 +70,15 @@ const props = defineProps({
                         </svg>
                         <div class="text-xl">No sources yet. Choose one below</div>
                     </div>
-                      <template v-else  v-for="source in sources.data" :key="source.id">
-                          <EmailCard v-if="source.type_key === 'email_source'" :source="source"></EmailCard>
-                          <EmailBoxCard v-else-if="source.type_key === 'email_box_source'" :source="source"></EmailBoxCard>
-                          <WebhookSource v-else-if="source.type_key === 'webhook_source'" :source="source"></WebhookSource>
-                          <JsonSource v-else-if="source.type_key === 'json_source'" :source="source"></JsonSource>
-                          <Card v-else :source="source"></Card>
-                      </template>
+                      <div v-else class="grid grid-cols-1 gap-x-4 gap-y-10 lg:grid-cols-3 lg:gap-x-8 lg:gap-y-16">
+                          <template  v-for="source in sources.data" :key="source.id">
+                              <EmailCard v-if="source.type_key === 'email_source'" :source="source"></EmailCard>
+                              <EmailBoxCard v-else-if="source.type_key === 'email_box_source'" :source="source"></EmailBoxCard>
+                              <WebhookSource v-else-if="source.type_key === 'webhook_source'" :source="source"></WebhookSource>
+                              <JsonSource v-else-if="source.type_key === 'json_source'" :source="source"></JsonSource>
+                              <Card v-else :source="source"></Card>
+                          </template>
+                      </div>
 
                   </div>
 

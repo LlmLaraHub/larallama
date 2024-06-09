@@ -8,12 +8,16 @@ import SecondaryLink from '@/Components/SecondaryLink.vue';
 import Resources from './Components/Resources.vue';
 import { useForm } from '@inertiajs/vue3';
 import Generate from "@/Pages/Outputs/WebPage/Components/Generate.vue";
+import Templates from "@/Components/Templates.vue";
 
 const props = defineProps({
     collection: {
         type: Object,
         required: true,
-    }
+    },
+    prompts: {
+        type: Object
+    },
 });
 
 const form = useForm({
@@ -43,26 +47,18 @@ const submit = () => {
 </script>
 
 <template>
-    <AppLayout title="Sources">
-        <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Sources
-            </h2>
-        </template>
+    <AppLayout title="Create Web Page">
 
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-5">
-                    <Intro>
-                        Web Search Source
-                        <template #description>
-                            Add a query below and you will be able to run it as a web search.
-                            This will add documents to your collection.
-                        </template>
-                    </Intro>
+                <div class="overflow-hidden shadow-xl rounded-none p-5">
+                    <Intro></Intro>
 
                     <form @submit.prevent="submit" class="p-10 ">
-                        <Resources
+                        <div class="flex">
+                            <div class="w-3/4 border border-secondary rounded-none p-5">
+
+                            <Resources
                             :collection="collection.data"
                         v-model="form">
 
@@ -82,6 +78,11 @@ const submit = () => {
                                 Cancel
                             </SecondaryLink>
                         </div>
+                            </div>
+                            <Templates
+                                @choosePrompt="choosePrompt"
+                                :prompts="prompts"/>
+                            </div>
                     </form>
 
                 </div>

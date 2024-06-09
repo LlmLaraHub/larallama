@@ -58,29 +58,31 @@ const submit = () => {
 
 <template>
     <AppLayout title="Email Output">
-        <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Api
-            </h2>
-        </template>
-
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-5">
-                    <Intro>
-                        Api
-                        <template #description>
-                            This will create a secure read only api to allow other systems to chat with the data.
-                        </template>
-                    </Intro>
+                <div class="overflow-hidden shadow-xl rounded-none p-5">
+                    <Intro></Intro>
 
                     <form @submit.prevent="submit" class="p-10 ">
                         <div class="flex">
-                            <div class="w-3/4">
+                            <div class="w-3/4 border border-secondary rounded-none p-5">
+
                                 <Resources
                                     :recurring="recurring"
                                     v-model="form">
                                 </Resources>
+
+                                <div class="flex justify-end items-center gap-4">
+                                    <PrimaryButton type="submit">
+                                        Save
+                                    </PrimaryButton>
+                                    <SecondaryLink :href="route('collections.outputs.index', {
+                                collection: collection.data.id
+
+                            })">
+                                        Cancel
+                                    </SecondaryLink>
+                                </div>
                             </div>
 
                             <Templates
@@ -88,17 +90,6 @@ const submit = () => {
                                 :prompts="prompts"/>
                         </div>
 
-                        <div class="flex justify-end items-center gap-4">
-                            <PrimaryButton type="submit">
-                                Save
-                            </PrimaryButton>
-                            <SecondaryLink :href="route('collections.outputs.index', {
-                                collection: collection.data.id
-
-                            })">
-                                Cancel
-                            </SecondaryLink>
-                        </div>
                     </form>
 
                 </div>

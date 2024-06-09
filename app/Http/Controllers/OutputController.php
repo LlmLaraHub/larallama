@@ -27,12 +27,17 @@ class OutputController extends Controller
 
     protected string $create_path = 'Outputs/WebPage/Create';
 
+    protected string $info = 'Here you can make a web page for internal or external use';
+
+    protected string $type = 'Make a Web Page';
+
     public function index(Collection $collection)
     {
         $chatResource = $chatResource = $this->getChatResource($collection);
 
         return inertia('Outputs/Index', [
             'chat' => $chatResource,
+            'prompts' => $this->getPrompts(),
             'collection' => new CollectionResource($collection),
             'documents' => DocumentResource::collection(Document::query()
                 ->where('collection_id', $collection->id)
@@ -138,6 +143,8 @@ class OutputController extends Controller
         }
 
         return inertia($this->show_path, [
+            'info' => $this->info,
+            'type' => $this->type,
             'output' => new PublicOutputResource($output),
             'messages' => data_get($this->getChatMessages(), 'messages', []),
         ]);
@@ -146,6 +153,8 @@ class OutputController extends Controller
     public function create(Collection $collection)
     {
         return inertia($this->create_path, [
+            'info' => $this->info,
+            'type' => $this->type,
             'recurring' => RecurringTypeEnum::selectOptions(),
             'collection' => new CollectionResource($collection),
             'prompts' => $this->getPrompts(),
@@ -204,7 +213,7 @@ class OutputController extends Controller
     public function getPrompts(): array
     {
         return [
-            'example_prompt' => EmailPrompt::prompt('[CONTEXT]'),
+            //'example_prompt' => EmailPrompt::prompt('[CONTEXT]'),
         ];
     }
 }

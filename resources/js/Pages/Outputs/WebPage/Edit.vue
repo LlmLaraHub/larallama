@@ -10,6 +10,7 @@ import { useForm } from '@inertiajs/vue3';
 import {useToast} from "vue-toastification";
 import Generate from "@/Pages/Outputs/WebPage/Components/Generate.vue";
 import Delete from "@/Pages/Outputs/Components/Delete.vue";
+import Templates from "@/Components/Templates.vue";
 
 const toast = useToast();
 
@@ -20,7 +21,10 @@ const props = defineProps({
     },
     output: {
         type: Object
-    }
+    },
+    prompts: {
+        type: Object
+    },
 });
 
 const form = useForm({
@@ -50,25 +54,17 @@ const submit = () => {
 </script>
 
 <template>
-    <AppLayout title=" Edit Web Page">
-        <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Edit Web Page
-            </h2>
-        </template>
-
+    <AppLayout title="Edit Web Page">
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-5">
-                    <Intro>
-                        Web Page
-                        <template #description>
-                            You can edit the web page as needed
-                        </template>
-                    </Intro>
+                <div class="overflow-hidden shadow-xl rounded-none p-5">
+                    <Intro></Intro>
 
                     <form @submit.prevent="submit" class="p-10 ">
-                        <Resources
+                        <div class="flex">
+                            <div class="w-3/4 border border-secondary rounded-none p-5 rounded-lg">
+
+                            <Resources
                         v-model="form">
                             <Generate :collection="collection.data"
                                       @generated="updateSummary"
@@ -86,6 +82,11 @@ const submit = () => {
                                 Back
                             </SecondaryLink>
                             <Delete :output="output"></Delete>
+                        </div>
+                            </div>
+                            <Templates
+                                @choosePrompt="choosePrompt"
+                                :prompts="prompts"/>
                         </div>
                     </form>
 

@@ -29,7 +29,7 @@ const generateSummary = () => {
         Generate Summary from Collection
         <button type="button"
                 :disabled="loading"
-                class="btn btn-accent flex items-center"
+                class="btn btn-secondary flex items-center rounded-none"
                 @click="generateSummary">
             generate
             <span v-if="loading" class="loading loading-dots loading-sm"></span>

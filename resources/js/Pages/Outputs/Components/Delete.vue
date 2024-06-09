@@ -20,7 +20,7 @@ const submit = () => {
 
 <template>
         <div class="flex justify-center">
-            <button type="button" @click="submit" class="btn btn-warning btn-sm">Delete</button>
+            <button type="button" @click="submit" class="btn btn-warning rounded-none">Delete</button>
         </div>
 </template>
 

@@ -21,7 +21,8 @@
                 <span class="label-text">Active</span>
                 <input type="checkbox"
                        v-model="modelValue.active"
-                       :checked="modelValue.active" class="checkbox" />
+                       :checked="modelValue.active"
+                       class="checkbox" />
             </label>
             <InputError :message="modelValue.errors.active" />
         </div>

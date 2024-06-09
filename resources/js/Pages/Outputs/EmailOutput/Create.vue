@@ -58,50 +58,37 @@ const submit = () => {
 
 <template>
     <AppLayout title="Email Output">
-        <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Email Output
-            </h2>
-        </template>
-
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-5">
-                    <Intro>
-                        Email
-                        <template #description>
-                            You can send an email summary of the collection or filter of the collection below.
-                            You can alter the "Prompt" below to tell the system what to do when the latest content.
-                            It will start with a default email prompt but you can choose from others.
-
-                            Just make sure to leave [CONTEXT] as the token for it to replace with the data from the system.
-                        </template>
-                    </Intro>
+                <div class="overflow-hidden shadow-xl rounded-none p-5">
+                    <Intro></Intro>
 
                     <form @submit.prevent="submit" class="p-10 ">
                         <div class="flex">
-                            <div class="w-3/4">
+                            <div class="w-3/4 border border-secondary rounded-none p-5">
+
                                 <Resources
                                     :recurring="recurring"
                                     v-model="form">
 
                                 </Resources>
+
+
+                                <div class="flex justify-end items-center gap-4">
+                                    <PrimaryButton type="submit">
+                                        Save
+                                    </PrimaryButton>
+                                    <SecondaryLink :href="route('collections.outputs.index', {
+                                collection: collection.data.id
+
+                            })">
+                                        Cancel
+                                    </SecondaryLink>
+                                </div>
                             </div>
                             <Templates
                                 @choosePrompt="choosePrompt"
                                 :prompts="prompts"/>
-                        </div>
-
-                        <div class="flex justify-end items-center gap-4">
-                            <PrimaryButton type="submit">
-                                Save
-                            </PrimaryButton>
-                            <SecondaryLink :href="route('collections.outputs.index', {
-                                collection: collection.data.id
-
-                            })">
-                                Cancel
-                            </SecondaryLink>
                         </div>
                     </form>
 

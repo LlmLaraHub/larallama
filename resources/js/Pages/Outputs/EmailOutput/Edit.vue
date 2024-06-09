@@ -10,6 +10,7 @@ import { useForm } from '@inertiajs/vue3';
 import {useToast} from "vue-toastification";
 import Generate from "@/Pages/Outputs/WebPage/Components/Generate.vue";
 import Delete from "@/Pages/Outputs/Components/Delete.vue";
+import Templates from "@/Components/Templates.vue";
 
 const toast = useToast();
 
@@ -18,6 +19,7 @@ const props = defineProps({
         type: Object,
         required: true,
     },
+    prompts: Object,
     output: {
         type: Object
     },
@@ -67,27 +69,16 @@ const submit = () => {
 
 <template>
     <AppLayout title="Email Output">
-        <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Email Output
-            </h2>
-        </template>
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-5">
-                    <Intro>
-                        Email
-                        <template #description>
-                            You can send an email summary of the collection or filter of the collection below.
-                            You can alter the "Prompt" below to tell the system what to do when the latest content.
-                            For example "Send me a summary of the articles making each article a title and TLDR"
-
-                            It will then send any articles from the day that came in.
-                        </template>
-                    </Intro>
+                <div class="overflow-hidden shadow-xl rounded-none p-5">
+                    <Intro></Intro>
 
                     <form @submit.prevent="submit" class="p-10 ">
-                        <Resources
+                        <div class="flex">
+                            <div class="w-3/4 border border-secondary rounded-none p-5">
+
+                            <Resources
                             :recurring="recurring"
                         v-model="form">
                         </Resources>
@@ -106,6 +97,11 @@ const submit = () => {
 
                             <Delete :output="output"></Delete>
                         </div>
+                            </div>
+                                <Templates
+                                    @choosePrompt="choosePrompt"
+                                    :prompts="prompts"/>
+                            </div>
                     </form>
 
                 </div>

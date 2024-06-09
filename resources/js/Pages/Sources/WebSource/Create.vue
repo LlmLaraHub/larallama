@@ -55,13 +55,7 @@ const submit = () => {
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="overflow-hidden shadow-xl sm:rounded-lg p-5">
-                    <Intro>
-                        Web Search Source
-                        <template #description>
-                            Add a query below and you will be able to run it as a web search.
-                            This will add documents to your collection.
-                        </template>
-                    </Intro>
+                    <Intro></Intro>
 
                     <form @submit.prevent="submit" class="p-10 ">
                         <div class="flex">
