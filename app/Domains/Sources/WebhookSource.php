@@ -5,6 +5,7 @@ namespace App\Domains\Sources;
 use App\Domains\Documents\StatusEnum;
 use App\Domains\Documents\TypesEnum;
 use App\Domains\Prompts\PromptMerge;
+use App\Helpers\TextChunker;
 use App\Jobs\DocumentProcessingCompleteJob;
 use App\Jobs\VectorlizeDataJob;
 use App\Models\Document;
@@ -84,13 +85,24 @@ class WebhookSource extends BaseSource
                 $results = Arr::wrap($content);
             }
 
+            /**
+             * @NOTE
+             * hmm did not fail on server
+             * php version?
+             */
+            if (is_null($results) && ! is_null($content)) {
+                $results = Arr::wrap($content);
+            }
+
+            $page_number = 0;
             foreach ($results as $index => $result) {
                 $id = data_get($result, 'commit_id', Str::random(12));
                 $result = data_get($result, 'message', $result);
+
                 $document = Document::updateOrCreate([
                     'type' => TypesEnum::WebHook,
                     'source_id' => $source->id,
-                    'subject' => 'Commit ID: '.$id,
+                    'subject' => 'Webhook: '.$id,
                 ], [
                     'status' => StatusEnum::Pending,
                     'meta_data' => $this->payload,
@@ -101,21 +113,30 @@ class WebhookSource extends BaseSource
 
                 $this->document = $document;
 
-                $DocumentChunk = DocumentChunk::updateOrCreate(
-                    [
-                        'document_id' => $document->id,
-                        'sort_order' => $index + 1,
-                        'section_number' => 0,
-                    ],
-                    [
-                        'guid' => md5($result),
-                        'content' => $result,
-                    ]
-                );
+                $page_number = $page_number + 1;
+                $pageContent = $result;
+                $size = config('llmdriver.chunking.default_size');
+                $chunked_chunks = TextChunker::handle($pageContent, $size);
 
-                $chunks[] = [
-                    new VectorlizeDataJob($DocumentChunk),
-                ];
+                foreach ($chunked_chunks as $chunkSection => $chunkContent) {
+                    $guid = md5($chunkContent);
+
+                    $DocumentChunk = DocumentChunk::updateOrCreate(
+                        [
+                            'document_id' => $document->id,
+                            'sort_order' => $page_number,
+                            'section_number' => $chunkSection,
+                        ],
+                        [
+                            'guid' => $guid,
+                            'content' => to_utf8($chunkContent),
+                        ]
+                    );
+
+                    $chunks[] = [
+                        new VectorlizeDataJob($DocumentChunk),
+                    ];
+                }
 
                 Bus::batch($chunks)
                     ->name("Chunking Document from Webhook - {$this->document->id} {$this->document->file_path}")
@@ -125,6 +146,7 @@ class WebhookSource extends BaseSource
                     })
                     ->onQueue(LlmDriverFacade::driver($document->getDriver())->onQueue())
                     ->dispatch();
+
             }
         } catch (\Exception $e) {
             Log::error('[LaraChain] - Error running WebhookSource Job Level', [
