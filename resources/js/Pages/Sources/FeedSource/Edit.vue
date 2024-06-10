@@ -8,6 +8,8 @@ import SecondaryLink from '@/Components/SecondaryLink.vue';
 import Resources from './Components/Resources.vue';
 import { useForm } from '@inertiajs/vue3';
 import { useToast } from 'vue-toastification';
+import Delete from "@/Pages/Sources/Components/Delete.vue";
+import Templates from "@/Components/Templates.vue";
 const toast = useToast();
 
 const props = defineProps({
@@ -16,6 +18,9 @@ const props = defineProps({
         required: true,
     },
     source: {
+        type: Object
+    },
+    prompts: {
         type: Object
     },
     recurring: Object,
@@ -29,11 +34,15 @@ const form = useForm({
     active: props.source.data.active,
     recurring: props.source.data.recurring,
     meta_data: {
-        example: props.source.data.meta_data.example
+        feed_url: props.source.data.meta_data.feed_url
     }
 
 });
 
+
+const choosePrompt = (prompt) => {
+    form.details = prompt;
+}
 
 const submit = () => {
     form.put(
@@ -54,40 +63,38 @@ const submit = () => {
 
 <template>
     <AppLayout :title="type">
-        <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                {{ type}}
-            </h2>
-        </template>
-
         <div class="py-12">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-5">
-                    <Intro>
-                        {{ type }}
-                        <template #description>
-                            {{ info }}
-                        </template>
-                    </Intro>
+            <div class="max-w-7xl mx-auto sm:px-2 lg:px-2">
+                <div class="overflow-hidden shadow-xl sm:rounded-lg p-5">
+                    <Intro></Intro>
+
 
                     <form @submit.prevent="submit" class="p-10 ">
 
-                        <Resources
-                            :recurring="recurring"
-                        v-model="form">
+                        <div class="flex">
+                            <div class="w-3/4 border border-secondary p-5">
+                                <Resources
+                                    :recurring="recurring"
+                                    v-model="form">
 
-                        </Resources>
+                                </Resources>
 
-                        <div class="flex justify-end items-center gap-4">
-                            <PrimaryButton type="submit">
-                                Save
-                            </PrimaryButton>
-                            <SecondaryLink :href="route('collections.sources.index', {
+                                <div class="flex justify-end items-center gap-4">
+                                    <PrimaryButton type="submit">
+                                        Save
+                                    </PrimaryButton>
+                                    <SecondaryLink :href="route('collections.sources.index', {
                                 collection: collection.data.id
 
                             })">
-                                Back
-                            </SecondaryLink>
+                                        Back
+                                    </SecondaryLink>
+                                    <Delete :source="source.data"></Delete>
+                                </div>
+                            </div>
+                            <Templates
+                                @choosePrompt="choosePrompt"
+                                :prompts="prompts"/>
                         </div>
                     </form>
 

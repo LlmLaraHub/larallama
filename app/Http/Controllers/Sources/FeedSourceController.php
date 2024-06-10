@@ -3,19 +3,14 @@
 namespace App\Http\Controllers\Sources;
 
 use App\Domains\Prompts\FeedPrompt;
-use Facades\App\Domains\Sources\FeedSource;
 use App\Domains\Sources\SourceTypeEnum;
 use App\Http\Controllers\BaseSourceController;
 use App\Models\Collection;
 use App\Models\Source;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Str;
-use SimplePie\SimplePie;
-use Vedmant\FeedReader\Facades\FeedReader;
+use Facades\App\Domains\Sources\FeedSource;
 
 class FeedSourceController extends BaseSourceController
 {
-
     protected SourceTypeEnum $sourceTypeEnum = SourceTypeEnum::FeedSource;
 
     protected string $edit_path = 'Sources/FeedSource/Edit';
@@ -28,15 +23,12 @@ class FeedSourceController extends BaseSourceController
 
     protected string $type = 'Feed Source';
 
-
     public function getPrompts(): array
     {
         return [
             'page_to_document' => FeedPrompt::prompt('[CONTEXT]'),
         ];
     }
-
-
 
     protected function getValidationRules(): array
     {
@@ -60,10 +52,9 @@ class FeedSourceController extends BaseSourceController
             'active' => $validated['active'],
             'collection_id' => $collection->id,
             'type' => $this->sourceTypeEnum,
-            'meta_data' => $validated['meta_data']
+            'meta_data' => $validated['meta_data'],
         ]);
     }
-
 
     public function testFeed()
     {
@@ -72,7 +63,6 @@ class FeedSourceController extends BaseSourceController
         ]);
 
         $items = FeedSource::getFeedFromUrl($validated['url']);
-
 
         return response()->json([
             'count' => count($items),
