@@ -1,0 +1,1 @@
+To create a new document in Microsoft Word, start by opening the Word application. Click on 'File' in the top left corner and select 'New'. You can choose a blank document or select from a variety of templates. Once your document is open, you can begin typing your content.

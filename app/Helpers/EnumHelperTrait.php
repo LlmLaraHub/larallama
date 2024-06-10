@@ -19,6 +19,8 @@ trait EnumHelperTrait
         return $keyValueArray;
     }
 
+
+
     public static function values(): array
     {
         return collect(self::cases())->map(

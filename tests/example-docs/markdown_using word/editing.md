@@ -1,0 +1,1 @@
+Editing text in Word is straightforward. Simply click where you want to edit in the document and start typing. You can select text by clicking and dragging your mouse over the desired section. Use the 'Home' tab to find tools for cutting, copying, and pasting text, as well as changing fonts and text size.

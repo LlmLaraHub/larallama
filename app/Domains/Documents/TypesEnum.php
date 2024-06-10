@@ -27,5 +27,26 @@ enum TypesEnum: string
     case Email = 'email';
     case Contact = 'contact';
     case JSON = 'json';
+    case Pending = 'pending';
+
+
+    public static function mimeTypeToType(string $mimeType): TypesEnum
+    {
+
+        return match ($mimeType) {
+            'application/pdf' => TypesEnum::PDF,
+            'application/vnd.openxmlformats-officedocument.wordprocessingml.document' => TypesEnum::Docx,
+            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' => TypesEnum::Xlsx,
+            'application/vnd.openxmlformats-officedocument.presentationml.presentation' => TypesEnum::Pptx,
+            'application/vnd.openxmlformats-officedocument.wordprocessingml.document' => TypesEnum::Docx,
+            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' => TypesEnum::Xlsx,
+            'application/vnd.ms-excel' => TypesEnum::Xls,
+            'application/vnd.ms-powerpoint' => TypesEnum::Ppt,
+            'text/plain' => TypesEnum::Txt,
+            'text/html' => TypesEnum::HTML,
+            default => TypesEnum::PDF,
+        };
+
+    }
 
 }

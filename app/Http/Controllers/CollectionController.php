@@ -94,19 +94,13 @@ class CollectionController extends Controller
             //if pptx
             Log::info($mimetype);
 
-            if ($mimetype === 'application/vnd.openxmlformats-officedocument.presentationml.presentation') {
-                $document = Document::create([
-                    'collection_id' => $collection->id,
-                    'file_path' => $file->getClientOriginalName(),
-                    'type' => TypesEnum::Pptx,
-                ]);
-            } else {
-                $document = Document::create([
-                    'collection_id' => $collection->id,
-                    'file_path' => $file->getClientOriginalName(),
-                    'type' => TypesEnum::PDF,
-                ]);
-            }
+            $mimeType = TypesEnum::mimeTypeToType($mimetype);
+
+            $document = Document::create([
+                'collection_id' => $collection->id,
+                'file_path' => $file->getClientOriginalName(),
+                'type' => $mimeType,
+            ]);
 
             $file->storeAs(
                 path: $collection->id,
