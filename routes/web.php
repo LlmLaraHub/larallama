@@ -238,45 +238,6 @@ Route::controller(\App\Http\Controllers\Sources\JsonSourceController::class)->gr
     }
 );
 
-Route::controller(\App\Http\Controllers\Sources\FooBarController::class)->group(
-    function () {
-        Route::get('/collections/{collection}/sources/foo_bar/create', 'create')
-            ->name('collections.sources.foo_bar.create');
-        Route::post('/collections/{collection}/sources/foo_bar', 'store')
-            ->name('collections.sources.foo_bar.store');
-        Route::get('/collections/{collection}/sources/foo_bar/{source}/edit', 'edit')
-            ->name('collections.sources.foo_bar.edit');
-        Route::put('/collections/{collection}/sources/foo_bar/{source}/update', 'update')
-            ->name('collections.sources.foo_bar.update');
-    }
-);
-
-Route::controller(\App\Http\Controllers\Sources\FooBarController::class)->group(
-    function () {
-        Route::get('/collections/{collection}/sources/foo_bar/create', 'create')
-            ->name('collections.sources.foo_bar.create');
-        Route::post('/collections/{collection}/sources/foo_bar', 'store')
-            ->name('collections.sources.foo_bar.store');
-        Route::get('/collections/{collection}/sources/foo_bar/{source}/edit', 'edit')
-            ->name('collections.sources.foo_bar.edit');
-        Route::put('/collections/{collection}/sources/foo_bar/{source}/update', 'update')
-            ->name('collections.sources.foo_bar.update');
-    }
-);
-
-Route::controller(\App\Http\Controllers\Sources\FooBarController::class)->group(
-    function () {
-        Route::get('/collections/{collection}/sources/foo_bar/create', 'create')
-            ->name('collections.sources.foo_bar.create');
-        Route::post('/collections/{collection}/sources/foo_bar', 'store')
-            ->name('collections.sources.foo_bar.store');
-        Route::get('/collections/{collection}/sources/foo_bar/{source}/edit', 'edit')
-            ->name('collections.sources.foo_bar.edit');
-        Route::put('/collections/{collection}/sources/foo_bar/{source}/update', 'update')
-            ->name('collections.sources.foo_bar.update');
-    }
-);
-
     Route::controller(\App\Http\Controllers\Sources\FeedSourceController::class)->group(
         function () {
             Route::get('/collections/{collection}/sources/feed_source/create', 'create')
@@ -287,5 +248,6 @@ Route::controller(\App\Http\Controllers\Sources\FooBarController::class)->group(
                 ->name('collections.sources.feed_source.edit');
             Route::put('/collections/{collection}/sources/feed_source/{source}/update', 'update')
                 ->name('collections.sources.feed_source.update');
+            Route::post('/sources/feed_source/test_feed', 'testFeed')->name('sources.feed_source.test_feed');
         }
     );

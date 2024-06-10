@@ -36,6 +36,7 @@
         "symfony/http-client": "^7.1@RC",
         "symfony/postmark-mailer": "^7.1@RC",
         "tightenco/ziggy": "^2.0",
+        "vedmant/laravel-feed-reader": "^1.6",
         "voku/stop-words": "^2.0",
         "wamania/php-stemmer": "^3.0",
         "webklex/laravel-imap": "^4.1",

@@ -25,7 +25,9 @@ class FeedSourceControllerTest extends TestCase
                 'active' => 1,
                 'recurring' => RecurringTypeEnum::Daily->value,
                 'details' => 'Test Details',
-                'secrets' => [],
+                'meta_data' => [
+                    'feed_url' => 'https://www.larallama.io/feed',
+                ],
             ])->assertSessionHasNoErrors();
         $response->assertSessionHas('flash.banner', 'Source added successfully');
 
@@ -35,7 +37,7 @@ class FeedSourceControllerTest extends TestCase
 
         $this->assertEquals(SourceTypeEnum::FeedSource, $source->type);
 
-        $this->assertTrue($source->active, true);
+        $this->assertEquals($source->meta_data['feed_url'], 'https://www.larallama.io/feed');
     }
 
     public function test_update()
@@ -55,10 +57,14 @@ class FeedSourceControllerTest extends TestCase
                 'active' => 1,
                 'recurring' => RecurringTypeEnum::Daily->value,
                 'details' => 'Test Details',
+                'meta_data' => [
+                    'feed_url' => 'https://www.larallama.io/feed',
+                ],
             ])
             ->assertSessionHasNoErrors()
             ->assertStatus(302);
 
         $this->assertTrue($source->refresh()->active, true);
+        $this->assertEquals($source->meta_data['feed_url'], 'https://www.larallama.io/feed');
     }
 }

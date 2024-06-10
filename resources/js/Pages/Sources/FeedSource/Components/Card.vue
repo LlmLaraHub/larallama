@@ -32,9 +32,17 @@ const run = (source) => {
 </script>
 
 <template>
-    <div class="card rounded-none w-96 bg-neutral shadow-xl" :key="source.id">
+    <div class="card rounded-none w-96 dark:bg-neutral shadow-xl" :key="source.id">
         <div class="card-body">
             <Settings :source="source"/>
+            <div class="text-xs">
+                Feed URL: <span class="font-bold ">
+                    <Clipboard :content="source.meta_data.feed_url">
+                        {{ source.meta_data.feed_url}}
+                    </Clipboard>
+            </span>
+            </div>
+
             <div class="card-actions justify-end">
                 <button @click="run(source)" type="button" class="btn btn-primary rounded-none">Run</button>
                 <Link :href="route('collections.sources.feed_source.edit', {

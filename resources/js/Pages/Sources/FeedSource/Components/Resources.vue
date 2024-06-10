@@ -16,14 +16,38 @@
             <InputError :message="modelValue.errors.details" />
         </div>
 
-        <div class="border-gray-300 border border-secondary rounded p-10">
+        <div class="border border-secondary rounded p-10">
             <h2>This is meta data</h2>
 
             <div>
                 <InputLabel value="Example"/>
-                <input v-model="modelValue.meta_data.example" type="text" placeholder="bob@bobsburgers.com"
+                <input v-model="modelValue.meta_data.feed_url" type="text" placeholder="https://www.larallama.io/feed"
                        class="rounded-none input input-bordered w-full " />
-                <InputError :message="modelValue.errors?.meta_data?.example" />
+                <InputError :message="modelValue.errors?.meta_data?.feed_url" />
+
+                <div>
+                    <div class="flex w-full justify-end">
+                        <button
+                            :disabled="gettingFeed || !modelValue.meta_data.feed_url"
+                            type="button" class="btn btn-sm btn-outline rounded-none mt-2" @click="testFeed">
+                            Test Feed
+                        </button>
+                    </div>
+                    <div>
+                        Count: {{ feedResults.count }}
+
+                        <div>
+                            <div v-for="item in feedResults.items" :key="item.id">
+
+                                <a
+                                    class="link"
+                                    target="_blank"
+                                    :href="item.link">{{ item.title }}</a>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
         </div>
@@ -58,6 +82,11 @@
 import InputError from "@/Components/InputError.vue";
 import InputLabel from "@/Components/InputLabel.vue";
 import InfoBox from "@/Components/InfoBox.vue";
+import {useForm} from "@inertiajs/vue3";
+import {ref} from "vue";
+import {useToast} from "vue-toastification";
+
+const toast = useToast();
 
 const emit = defineEmits(['update:modelValue'])
 
@@ -65,4 +94,30 @@ const props = defineProps({
     modelValue: Object,
     recurring: Object
 })
+
+
+const form = useForm({url: ""});
+
+const feedResults = ref([]);
+
+const gettingFeed = ref(false);
+
+const testFeed = () => {
+    gettingFeed.value = true;
+    toast('Getting', {position: "bottom-right"});
+    form.url = props.modelValue.meta_data.feed_url;
+    axios.post(route('sources.feed_source.test_feed'), {
+        url: form.url
+    }).then(response => {
+        gettingFeed.value = false;
+        console.log(response.data);
+        feedResults.value = response.data;
+        toast('Got feed', {position: "bottom-right"});
+    }).catch(error => {
+        gettingFeed.value = false;
+        toast.error('Error getting feed', {position: "bottom-right"});
+        console.log(error);
+    })
+}
+
 </script>

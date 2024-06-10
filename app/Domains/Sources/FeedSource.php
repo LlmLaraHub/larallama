@@ -4,6 +4,8 @@ namespace App\Domains\Sources;
 
 use App\Models\Source;
 use Illuminate\Support\Facades\Log;
+use SimplePie\SimplePie;
+use Vedmant\FeedReader\Facades\FeedReader;
 
 class FeedSource extends BaseSource
 {
@@ -27,5 +29,28 @@ class FeedSource extends BaseSource
 
         Log::info('[LaraChain] - FeedSource Doing something');
 
+
+    }
+
+    public function getFeedFromUrl(string $url): array
+    {
+        /** @var SimplePie $results */
+        $results = FeedReader::read($url);
+
+        $items = collect($results->get_items())
+            ->transform(
+                function ($item) {
+                    return [
+                        'title' => $item->get_title(),
+                        'link' => $item->get_link(),
+                        'description' => $item->get_description(),
+                        'date' => $item->get_date('Y-m-d H:i:s'),
+                        'category' => $item->get_category(),
+                        'content' => $item->get_content(),
+                    ];
+                }
+            )->toArray();
+
+        return $items;
     }
 }

@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers\Sources;
 
+use App\Domains\Prompts\FeedPrompt;
+use Facades\App\Domains\Sources\FeedSource;
 use App\Domains\Sources\SourceTypeEnum;
 use App\Http\Controllers\BaseSourceController;
 use App\Models\Collection;
 use App\Models\Source;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
+use SimplePie\SimplePie;
+use Vedmant\FeedReader\Facades\FeedReader;
 
 class FeedSourceController extends BaseSourceController
 {
@@ -25,4 +29,54 @@ class FeedSourceController extends BaseSourceController
     protected string $type = 'Feed Source';
 
 
+    public function getPrompts(): array
+    {
+        return [
+            'page_to_document' => FeedPrompt::prompt('[CONTEXT]'),
+        ];
+    }
+
+
+
+    protected function getValidationRules(): array
+    {
+        return [
+            'title' => 'required|string',
+            'details' => 'required|string',
+            'active' => ['boolean', 'required'],
+            'recurring' => ['string', 'required'],
+            'meta_data' => ['required', 'array'],
+            'meta_data.feed_url' => ['required', 'string'],
+            'secrets' => ['nullable', 'array'],
+        ];
+    }
+
+    protected function makeSource(array $validated, Collection $collection): void
+    {
+        Source::create([
+            'title' => $validated['title'],
+            'details' => $validated['details'],
+            'recurring' => $validated['recurring'],
+            'active' => $validated['active'],
+            'collection_id' => $collection->id,
+            'type' => $this->sourceTypeEnum,
+            'meta_data' => $validated['meta_data']
+        ]);
+    }
+
+
+    public function testFeed()
+    {
+        $validated = request()->validate([
+            'url' => 'required|string',
+        ]);
+
+        $items = FeedSource::getFeedFromUrl($validated['url']);
+
+
+        return response()->json([
+            'count' => count($items),
+            'items' => $items,
+        ]);
+    }
 }

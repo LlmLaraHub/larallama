@@ -32,7 +32,7 @@ const run = (source) => {
 </script>
 
 <template>
-    <div class="card rounded-none w-96 bg-neutral shadow-xl" :key="source.id">
+    <div class="card rounded-none w-96 dark:bg-neutral shadow-xl" :key="source.id">
         <div class="card-body">
             <Settings :source="source"/>
             <div class="card-actions justify-end">
