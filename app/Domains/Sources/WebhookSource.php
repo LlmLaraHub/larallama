@@ -43,7 +43,7 @@ class WebhookSource extends BaseSource
     public function handle(Source $source): void
     {
         Log::info('[LaraChain] - WebhookSource', [
-            'payload' => $this->payload
+            'payload' => $this->payload,
         ]);
 
         $chunks = [];
@@ -83,8 +83,6 @@ class WebhookSource extends BaseSource
             } catch (\Exception $e) {
                 $results = Arr::wrap($content);
             }
-
-
 
             foreach ($results as $index => $result) {
                 $id = data_get($result, 'commit_id', Str::random(12));

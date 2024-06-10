@@ -51,7 +51,7 @@ class WebhookSourceTest extends TestCase
         LlmDriverFacade::shouldReceive('driver->completion')
             ->once()->andReturn(
                 CompletionResponse::from([
-                    'content' => "Foo Bar",
+                    'content' => 'Foo Bar',
                 ])
             );
 
