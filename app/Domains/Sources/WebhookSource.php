@@ -11,6 +11,7 @@ use App\Models\Document;
 use App\Models\DocumentChunk;
 use App\Models\Source;
 use Illuminate\Bus\Batch;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
@@ -41,7 +42,9 @@ class WebhookSource extends BaseSource
      */
     public function handle(Source $source): void
     {
-        Log::info('[LaraChain] - WebhookSource');
+        Log::info('[LaraChain] - WebhookSource', [
+            'payload' => $this->payload
+        ]);
 
         $chunks = [];
 
@@ -62,13 +65,26 @@ class WebhookSource extends BaseSource
         ]);
 
         $content = $results->content;
+
+        /**
+         * @TODO
+         * There is too big of an assumption here
+         * The user might just make this TEXT it is their
+         * prompt to do what they want
+         */
         $content = str($content)
             ->replace('```json', '')
             ->replaceLast('```', '')
             ->toString();
 
         try {
-            $results = json_decode($content, true);
+            try {
+                $results = json_decode($content, true, 512, JSON_THROW_ON_ERROR);
+            } catch (\Exception $e) {
+                $results = Arr::wrap($content);
+            }
+
+
 
             foreach ($results as $index => $result) {
                 $id = data_get($result, 'commit_id', Str::random(12));
@@ -113,7 +129,7 @@ class WebhookSource extends BaseSource
                     ->dispatch();
             }
         } catch (\Exception $e) {
-            Log::error('[LaraChain] - Error running WebhookSource', [
+            Log::error('[LaraChain] - Error running WebhookSource Job Level', [
                 'error' => $e->getMessage(),
                 'results' => $results,
             ]);

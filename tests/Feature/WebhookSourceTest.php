@@ -38,4 +38,33 @@ class WebhookSourceTest extends TestCase
         Bus::assertBatchCount(2);
 
     }
+
+    public function test_non_json()
+    {
+        Bus::fake();
+
+        $payload = get_fixture('example_github.json');
+
+        LlmDriverFacade::shouldReceive('driver->onQueue')
+            ->once()->andReturn('default');
+
+        LlmDriverFacade::shouldReceive('driver->completion')
+            ->once()->andReturn(
+                CompletionResponse::from([
+                    'content' => "Foo Bar",
+                ])
+            );
+
+        $source = Source::factory()->create();
+
+        (new \App\Domains\Sources\WebhookSource())
+            ->payload($payload)
+            ->handle($source);
+
+        $this->assertDatabaseCount('documents', 1);
+        $this->assertDatabaseCount('document_chunks', 1);
+
+        Bus::assertBatchCount(1);
+
+    }
 }

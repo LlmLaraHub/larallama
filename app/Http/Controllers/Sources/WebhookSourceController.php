@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Sources;
 
+use App\Domains\Prompts\Transformers\CMSToText;
 use App\Domains\Prompts\Transformers\GithubTransformer;
 use App\Domains\Sources\SourceTypeEnum;
 use App\Domains\Sources\WebhookSource;
@@ -67,7 +68,7 @@ class WebhookSourceController extends BaseSourceController
 
             return response()->json(['message' => 'ok']);
         } catch (\Exception $e) {
-            Log::error('Error running WebhookSource', [
+            Log::error('Error running WebhookSource Controller Level', [
                 'error' => $e->getMessage(),
             ]);
 
@@ -79,6 +80,7 @@ class WebhookSourceController extends BaseSourceController
     {
         return [
             'json_to_text' => GithubTransformer::prompt('[CONTEXT]'),
+            'cms_to_text' => CMSToText::prompt('[CONTEXT]'),
         ];
     }
 }
