@@ -41,6 +41,12 @@ const run = (source) => {
             <Settings :source="source"/>
 
             <div class="text-xs border-gray-300 p-2 border">
+                Token: <span class="font-bold">
+                <Clipboard :content="source.secrets.token">{{ source.secrets.token}}</Clipboard>
+                </span>
+            </div>
+
+            <div class="text-xs border-gray-300 p-2 border">
                 URL: <span class="font-bold">
                 <Clipboard :content="source_url">{{ source_url}}</Clipboard>
                 </span>
