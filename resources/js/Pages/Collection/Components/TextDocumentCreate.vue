@@ -94,6 +94,7 @@ const submit = () => {
         collection: props.collection.id
     }), {
         onSuccess: () => {
+            form.reset();
             closeSlideOut()
         }
     })

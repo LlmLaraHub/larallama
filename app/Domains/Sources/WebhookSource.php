@@ -15,7 +15,6 @@ use Illuminate\Bus\Batch;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Str;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
 
 class WebhookSource extends BaseSource
@@ -79,25 +78,17 @@ class WebhookSource extends BaseSource
             ->toString();
 
         try {
-            try {
-                $results = json_decode($content, true, 512, JSON_THROW_ON_ERROR);
-            } catch (\Exception $e) {
-                $results = Arr::wrap($content);
-            }
 
-            /**
-             * @NOTE
-             * hmm did not fail on server
-             * php version?
-             */
-            if (is_null($results) && ! is_null($content)) {
-                $results = Arr::wrap($content);
-            }
+            $results = $this->checkIfJsonOrJustText($results, $content);
 
             $page_number = 0;
+
             foreach ($results as $index => $result) {
-                $id = data_get($result, 'commit_id', Str::random(12));
-                $result = data_get($result, 'message', $result);
+                if (is_array($result)) {
+                    $result = json_encode($result);
+                }
+
+                $id = $this->getIdFromPayload($result);
 
                 $document = Document::updateOrCreate([
                     'type' => TypesEnum::WebHook,
@@ -155,5 +146,46 @@ class WebhookSource extends BaseSource
             ]);
         }
 
+    }
+
+    protected function checkIfJsonOrJustText($results, $content): array
+    {
+
+        try {
+            $results = json_decode($content, true, 512, JSON_THROW_ON_ERROR);
+        } catch (\Exception $e) {
+            $results = Arr::wrap($content);
+        }
+
+        /**
+         * @NOTE
+         * I do this extra check due to a fail on
+         * a PHP version
+         */
+        if (is_null($results) && ! is_null($content)) {
+            $results = Arr::wrap($content);
+        }
+
+        return $results;
+    }
+
+    protected function getIdFromPayload($result): string
+    {
+        if (data_get(Arr::wrap($this->payload), 'id', false)) {
+            /**
+             * @NOTE
+             * You can pass in as a key in the payload
+             * for example
+             * {
+             *     "id": "commit_id",
+             *     "content": "Test Message"
+             * }
+             */
+            $id = data_get($this->payload, 'id');
+        } else {
+            $id = md5($result);
+        }
+
+        return $id;
     }
 }
