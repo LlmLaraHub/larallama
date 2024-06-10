@@ -276,3 +276,16 @@ Route::controller(\App\Http\Controllers\Sources\FooBarController::class)->group(
             ->name('collections.sources.foo_bar.update');
     }
 );
+
+    Route::controller(\App\Http\Controllers\Sources\FeedSourceController::class)->group(
+        function () {
+            Route::get('/collections/{collection}/sources/feed_source/create', 'create')
+                ->name('collections.sources.feed_source.create');
+            Route::post('/collections/{collection}/sources/feed_source', 'store')
+                ->name('collections.sources.feed_source.store');
+            Route::get('/collections/{collection}/sources/feed_source/{source}/edit', 'edit')
+                ->name('collections.sources.feed_source.edit');
+            Route::put('/collections/{collection}/sources/feed_source/{source}/update', 'update')
+                ->name('collections.sources.feed_source.update');
+        }
+    );
