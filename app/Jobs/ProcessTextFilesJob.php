@@ -1,42 +1,62 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Jobs;
 
 use App\Domains\Collections\CollectionStatusEnum;
-use App\Domains\Documents\StatusEnum;
-use App\Domains\Documents\TypesEnum;
 use App\Events\CollectionStatusEvent;
 use App\Helpers\TextChunker;
-use App\Jobs\VectorlizeDataJob;
-use App\Models\Collection;
 use App\Models\Document;
 use App\Models\DocumentChunk;
 use Illuminate\Bus\Batch;
-use Illuminate\Http\Request;
+use Illuminate\Bus\Batchable;
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Bus;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
 use LlmLaraHub\TagFunction\Jobs\TagDocumentJob;
 
-class TextDocumentController extends Controller
+class ProcessTextFilesJob implements ShouldQueue
 {
-    public function store(Collection $collection, Request $request)
-    {
-        $validated = $request->validate([
-            'content' => 'required|string',
-            'name' => 'required|string',
-        ]);
+    use Batchable;
+    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-        $document = Document::create([
-            'file_path' => $validated['name'],
-            'collection_id' => $collection->id,
-            'type' => TypesEnum::Txt,
-            'summary' => StatusEnum::Pending,
-            'status_summary' => StatusEnum::Pending,
+    /**
+     * Create a new job instance.
+     */
+    public function __construct(public Document $document)
+    {
+        //
+    }
+
+    /**
+     * Execute the job.
+     */
+    public function handle(): void
+    {
+        if ($this->batch()->cancelled()) {
+            // Determine if the batch has been cancelled...
+
+            return;
+        }
+        $document = $this->document;
+
+        $filePath = $this->document->pathToFile();
+
+        $content = File::get($filePath);
+
+        $document->update([
+            'summary' => $content,
         ]);
 
         $jobs = [];
+
         $page_number = 1;
-        $chunked_chunks = TextChunker::handle($validated['content']);
+        $chunked_chunks = TextChunker::handle($content);
+
         foreach ($chunked_chunks as $chunkSection => $chunkContent) {
 
             try {
@@ -69,12 +89,10 @@ class TextDocumentController extends Controller
             ->name("Chunking Document - $document->file_path")
             ->finally(function (Batch $batch) use ($document) {
                 TagDocumentJob::dispatch($document);
+                DocumentProcessingCompleteJob::dispatch($document);
             })
             ->allowFailures()
             ->dispatch();
 
-        $request->session()->flash('flash.banner', 'Document created successfully!');
-
-        return back();
     }
 }

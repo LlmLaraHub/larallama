@@ -56,6 +56,18 @@ class ProcessFileJob implements ShouldQueue
                 ->onQueue(LlmDriverFacade::driver($document->getDriver())->onQueue())
                 ->dispatch();
 
+        } elseif ($document->type === TypesEnum::Txt) {
+            Log::info('Processing Text Document');
+            Bus::batch([
+                new ProcessTextFilesJob($this->document),
+            ])
+                ->name('Processing Text Document - '.$document->id)
+                ->finally(function (Batch $batch) {
+                    //@NOTE hmm should I make this an event other things should listen to?
+                })
+                ->allowFailures()
+                ->onQueue(LlmDriverFacade::driver($document->getDriver())->onQueue())
+                ->dispatch();
         } elseif ($document->type === TypesEnum::PDF) {
             Log::info('Processing PDF Document');
             Bus::batch([

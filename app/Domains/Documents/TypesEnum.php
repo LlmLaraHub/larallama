@@ -29,7 +29,6 @@ enum TypesEnum: string
     case JSON = 'json';
     case Pending = 'pending';
 
-
     public static function mimeTypeToType(string $mimeType): TypesEnum
     {
 
@@ -48,5 +47,4 @@ enum TypesEnum: string
         };
 
     }
-
 }

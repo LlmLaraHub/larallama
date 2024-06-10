@@ -3,8 +3,6 @@
 namespace Tests\Feature;
 
 use App\Domains\Documents\TypesEnum;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class TypesEnumTest extends TestCase
@@ -16,7 +14,6 @@ class TypesEnumTest extends TestCase
     {
         $results = TypesEnum::mimeTypeToType(
             'application/vnd.openxmlformats-officedocument.presentationml.presentation');
-
 
         $this->assertEquals(TypesEnum::Pptx, $results);
     }
