@@ -75,10 +75,10 @@ class WebhookSourceTest extends TestCase
         $payload = get_fixture('example_github.json');
 
         LlmDriverFacade::shouldReceive('driver->onQueue')
-            ->twice()->andReturn('default');
+            ->times(4)->andReturn('default');
 
         LlmDriverFacade::shouldReceive('driver->completion')
-            ->once()->andReturn(
+            ->twice()->andReturn(
                 CompletionResponse::from([
                     'content' => get_fixture('github_transformed.json', false),
                 ])

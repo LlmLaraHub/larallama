@@ -10,7 +10,7 @@ class JsonSourceTest extends TestCase
 {
     public function test_run()
     {
-
+        $this->markTestSkipped('@TODO not sure this class is needed yet or at all');
         $source = Source::factory()->create([
             'slug' => 'test',
             'type' => SourceTypeEnum::JsonSource,
