@@ -23,7 +23,8 @@ class Setting extends Model
         return $this->belongsTo(User::class);
     }
 
-    public static function createNewSetting() : Setting {
+    public static function createNewSetting(): Setting
+    {
         if (! Setting::exists()) {
             $setting = Setting::create([
                 'user_id' => auth()->user()->id,
@@ -64,12 +65,12 @@ class Setting extends Model
         string $driver
     ) {
         $setting = Setting::first();
-        if(! $setting) {
+        if (! $setting) {
             /**
              * @TODO
              * Throw an exception here
              */
-            return config('llmdriver.drivers.' . $driver);
+            return config('llmdriver.drivers.'.$driver);
         }
 
         return data_get($setting->secrets, $driver, null);

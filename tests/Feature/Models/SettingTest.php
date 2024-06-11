@@ -22,7 +22,6 @@ class SettingTest extends TestCase
         $this->assertNotNull($model->user->id);
     }
 
-
     public function test_creates(): void
     {
 
@@ -34,8 +33,6 @@ class SettingTest extends TestCase
         $this->assertNotNull($model->user_id);
         $this->assertNotNull($model->user->id);
     }
-
-
 
     public function test_get_secret(): void
     {

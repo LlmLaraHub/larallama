@@ -78,7 +78,7 @@ onUnmounted(() => {
         <Nav :collection="collection.data" :chat="chat?.data"></Nav>
 
         <div class="py-12">
-            <div class="max-w-9xl mx-auto sm:px-6 lg:px-8">
+            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="grid grid-cols-12 gap-2">
                     <div class="hidden sm:col-span-2 sm:flex overflow-hidden">
                         <ChatSideNav
