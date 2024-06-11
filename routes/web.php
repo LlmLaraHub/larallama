@@ -117,6 +117,21 @@ Route::middleware([
         }
     );
 
+    Route::controller(\App\Http\Controllers\SettingController::class)->group(
+        function () {
+            Route::get('/settings', 'show')
+                ->name('settings.show');
+            Route::put('/settings/{setting}/open_ai', 'updateOpenAi')
+                ->name('settings.update.open_ai');
+            Route::put('/settings/{setting}/claude', 'updateClaude')
+                ->name('settings.update.claude');
+            Route::put('/settings/{setting}/ollama', 'updateOllama')
+                ->name('settings.update.ollama');
+            Route::put('/settings/{setting}/groq', 'updateGroq')
+                ->name('settings.update.groq');
+        }
+    );
+
     Route::controller(WebSourceController::class)->group(
         function () {
             Route::get('/collections/{collection}/sources/web_search_source/create', 'create')
