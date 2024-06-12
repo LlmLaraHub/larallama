@@ -140,6 +140,21 @@ if (! function_exists('token_counter_v2')) {
     }
 }
 
+if (! function_exists('notify_ui_complete')) {
+    function notify_ui_complete(HasDrivers $model)
+    {
+        try {
+            ChatUiUpdateEvent::dispatch(
+                $model->getChatable(),
+                $model->getChat(),
+                \App\Domains\Documents\StatusEnum::Complete->name
+            );
+        } catch (\Exception $e) {
+            Log::error('Error notifying UI', ['error' => $e->getMessage()]);
+        }
+    }
+}
+
 if (! function_exists('notify_ui')) {
     function notify_ui(HasDrivers $model, string $message)
     {

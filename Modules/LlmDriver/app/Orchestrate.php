@@ -2,6 +2,7 @@
 
 namespace LlmLaraHub\LlmDriver;
 
+use App\Domains\Documents\StatusEnum;
 use App\Domains\Messages\RoleEnum;
 use App\Models\Chat;
 use App\Models\Filter;
@@ -157,6 +158,7 @@ class Orchestrate
 
         $this->requiresFollowUp($messagesArray, $chat);
 
+        notify_ui_complete($chat);
         return $this->response;
     }
 

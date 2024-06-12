@@ -6,6 +6,7 @@ use App\Domains\Collections\CollectionStatusEnum;
 use App\Domains\Documents\StatusEnum;
 use App\Domains\Documents\TypesEnum;
 use App\Helpers\TextChunker;
+use App\Jobs\DocumentProcessingCompleteJob;
 use App\Jobs\VectorlizeDataJob;
 use App\Models\Collection;
 use App\Models\Document;
@@ -69,6 +70,7 @@ class TextDocumentController extends Controller
             ->name("Chunking Document - $document->file_path")
             ->finally(function (Batch $batch) use ($document) {
                 TagDocumentJob::dispatch($document);
+                DocumentProcessingCompleteJob::dispatch($document);
             })
             ->allowFailures()
             ->dispatch();

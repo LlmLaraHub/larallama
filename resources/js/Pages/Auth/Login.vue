@@ -68,12 +68,13 @@ const submit = () => {
                 <div>
                     <InputLabel for="email" value="Email" />
                     <TextInput
-                        id="email" type="email" class="input input-secondary" v-model="form.email" required autofocus autocomplete="username" />
+                        id="email" type="email" class="w-full  input input-secondary" v-model="form.email" required autofocus autocomplete="username" />
                     <InputError class="mt-2" :message="form.errors.email" />
                 </div>
                 <div class="mt-4" v-if="usePassword">
                     <InputLabel for="password" value="Password" />
-                    <TextInput id="password" type="password" class="input input-secondary" v-model="form.password" required autocomplete="current-password" />
+                    <TextInput id="password" type="password"
+                               class="w-full input input-secondary" v-model="form.password" required autocomplete="current-password" />
                     <InputError class="mt-2" :message="form.errors.password" />
 
 
