@@ -3,6 +3,7 @@
 namespace LlmLaraHub\LlmDriver;
 
 use LlmLaraHub\LlmDriver\Functions\SearchAndSummarize;
+use LlmLaraHub\LlmDriver\Functions\StandardsChecker;
 use LlmLaraHub\LlmDriver\Functions\SummarizeCollection;
 
 class LlmDriverClient
@@ -57,6 +58,7 @@ class LlmDriverClient
         return [
             (new SummarizeCollection())->getFunction(),
             (new SearchAndSummarize())->getFunction(),
+            (new StandardsChecker())->getFunction(),
         ];
     }
 
