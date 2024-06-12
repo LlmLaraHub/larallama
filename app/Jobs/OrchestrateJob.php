@@ -23,8 +23,6 @@ class OrchestrateJob implements ShouldQueue
      */
     public $tries = 1;
 
-
-
     /**
      * Create a new job instance.
      */
@@ -51,7 +49,7 @@ class OrchestrateJob implements ShouldQueue
      */
     public function middleware(): array
     {
-        return [new WithoutOverlapping($this->chat->id)];
+        return [new WithoutOverlapping(sprintf('orchestrate_chat_id_%d', $this->chat->id))];
     }
 
     /**
@@ -61,5 +59,4 @@ class OrchestrateJob implements ShouldQueue
     {
         return now()->addMinutes(10);
     }
-
 }

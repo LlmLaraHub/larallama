@@ -12,7 +12,7 @@ const props = defineProps({
 <template>
 
 
-    <div class="message-container mx-auto max-container flex items-start gap-x-4"
+    <div class="mx-auto max-container flex items-start gap-x-4"
         :class="message.from_ai ? 'flex-row-reverse' : 'flex-row'">
 
         <div>
@@ -79,7 +79,7 @@ const props = defineProps({
                 </TabGroup>
             </div>
             <div v-else
-                class="bg-base-100 flex rounded-md shadow-lg shadow-inner-custom  p-4 prose w-3/4 ml-52"
+                class="bg-base-100 flex rounded-md shadow-lg shadow-inner-custom  p-4 prose "
                 :class="message.from_ai ? 'rounded-tr-none' : 'flex-row-reverse'">
                 <div class="grow"
                      :class="message.from_ai ? 'rounded-tr-none' : 'rounded-tl-none'"

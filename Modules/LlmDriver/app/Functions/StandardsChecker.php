@@ -36,7 +36,7 @@ class StandardsChecker extends FunctionContract
 
         $this->results = [];
 
-        foreach ($documents->chunk(3) as $chunk) {
+        foreach ($documents->chunk(3) as $index => $chunk) {
             notify_ui($model->getChat(), sprintf('About to compare document to %d documents in the Collection', count($chunk)));
 
             $prompts = [];
@@ -52,13 +52,20 @@ class StandardsChecker extends FunctionContract
                 $prompts[] = $prompt;
             }
 
-            $results = LlmDriverFacade::driver($model->getDriver())
-                ->completionPool($prompts);
+            try {
+                $results = LlmDriverFacade::driver($model->getDriver())
+                    ->completionPool($prompts);
 
-            notify_ui($model->getChat(), 'Got some results will check the next set of documents in the Collection');
+                notify_ui($model->getChat(), 'Got some results will check the next set of documents in the Collection');
 
-            foreach ($results as $result) {
-                $this->results[] = $result->content;
+                foreach ($results as $result) {
+                    $this->results[] = $result->content;
+                }
+            } catch (\Exception $e) {
+                Log::error('Error running Standards Checker', [
+                    'error' => $e->getMessage(),
+                    'index' => $index,
+                ]);
             }
         }
 
