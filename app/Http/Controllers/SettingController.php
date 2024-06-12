@@ -17,8 +17,6 @@ class SettingController extends Controller
         ]);
     }
 
-
-
     public function updateClaude(Request $request, Setting $setting)
     {
         $validated = $request->validate([

@@ -111,7 +111,7 @@ class ClaudeClient extends BaseClient
 
     protected function getClient()
     {
-        $api_token = Setting::getSecret('openai', 'api_key');;
+        $api_token = Setting::getSecret('openai', 'api_key');
 
         if (! $api_token) {
             throw new \Exception('Claude API Token not found');

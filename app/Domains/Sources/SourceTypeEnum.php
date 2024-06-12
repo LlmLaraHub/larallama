@@ -18,7 +18,6 @@ enum SourceTypeEnum: string
     case FeedSource = 'feed_source';
     //leave for scripting
 
-
     public static function ignore(): array
     {
         return [

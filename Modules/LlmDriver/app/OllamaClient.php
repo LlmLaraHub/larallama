@@ -120,7 +120,7 @@ class OllamaClient extends BaseClient
 
     protected function getClient()
     {
-        $api_token =  Setting::getSecret('openai', 'api_key');;
+        $api_token = Setting::getSecret('openai', 'api_key');
         $baseUrl = Setting::getSecret('openai', 'api_url');
 
         if (! $api_token || ! $baseUrl) {

@@ -63,13 +63,15 @@ class Setting extends Model
         return $setting;
     }
 
-    public static function getDrivers() : array {
+    public static function getDrivers(): array
+    {
         $settings = Setting::createNewSetting();
 
         return [];
     }
 
-    public static function secretsConfigured() : bool {
+    public static function secretsConfigured(): bool
+    {
         $settings = Setting::createNewSetting();
 
         return data_get($settings->steps, 'setup_secrets', false);

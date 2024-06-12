@@ -92,7 +92,7 @@ class CollectionController extends Controller
             $mimetype = $file->getMimeType();
 
             //if pptx
-            Log::info("[LaraChain] - Mimetype", [
+            Log::info('[LaraChain] - Mimetype', [
                 'mimetype' => $mimetype,
             ]);
 

@@ -10,7 +10,6 @@ use LlmLaraHub\LlmDriver\Functions\SearchAndSummarize;
 use LlmLaraHub\LlmDriver\Functions\SummarizeCollection;
 use OpenAI\Client;
 use OpenAI\Contracts\ClientContract;
-use OpenAI\Laravel\Exceptions\ApiKeyIsMissing;
 
 class LlmServiceProvider extends ServiceProvider
 {
@@ -20,7 +19,7 @@ class LlmServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->singleton(ClientContract::class, static function (): Client {
-            Log::info("Using Overridden OpenAI Client");
+            Log::info('Using Overridden OpenAI Client');
 
             $apiKey = Setting::getSecret('openai', 'api_key');
             $organization = Setting::getSecret('openai', 'organization');
@@ -63,8 +62,6 @@ class LlmServiceProvider extends ServiceProvider
         $this->app->bind('search_and_summarize', function () {
             return new SearchAndSummarize();
         });
-
-
 
     }
 
