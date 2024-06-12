@@ -15,7 +15,6 @@ const props = defineProps({
     <div class="message-container mx-auto max-container flex items-start gap-x-4"
         :class="message.from_ai ? 'flex-row-reverse' : 'flex-row'">
 
-
         <div>
             <div class="text-xs mb-1 w-full flex gap-x-2" :class="message.from_ai ? 'flex-row-reverse' : ''">
                 <span class="font-semibold" v-if="message.from_ai">
@@ -80,11 +79,11 @@ const props = defineProps({
                 </TabGroup>
             </div>
             <div v-else
-                class="bg-base-100 flex rounded-md relative shadow-lg shadow-inner-custom  p-4 prose space-y-4l "
+                class="bg-base-100 flex rounded-md relative shadow-lg shadow-inner-custom  p-4 prose space-y-41 overflow-scroll"
                 :class="message.from_ai ? 'rounded-tr-none' : 'flex-row-reverse'">
 
                 <div v-if="message.type !== 'image'" class="message-content grow "
-                    :class="message.from_ai ? 'rounded-tr-none' : 'rounded-tl-none'" v-html="message.body_markdown">
+                     :class="message.from_ai ? 'rounded-tr-none' : 'rounded-tl-none'" v-html="message.body_markdown">
                 </div>
 
                 <div v-if="message.type === 'image'">
