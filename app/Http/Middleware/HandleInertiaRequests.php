@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Setting;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 use Laravel\Pennant\Feature;
@@ -37,6 +38,8 @@ class HandleInertiaRequests extends Middleware
     public function share(Request $request): array
     {
         return array_merge(parent::share($request), [
+            'steps' => Setting::createNewSetting()->steps,
+            'drivers' => Setting::getDrivers(),
             'app_name' => config('app.name'),
             'features' => Feature::all(),
         ]);

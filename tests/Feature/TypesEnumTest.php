@@ -17,4 +17,12 @@ class TypesEnumTest extends TestCase
 
         $this->assertEquals(TypesEnum::Pptx, $results);
     }
+
+    public function test_text_plain(): void
+    {
+        $results = TypesEnum::mimeTypeToType(
+            'text/plain');
+
+        $this->assertEquals(TypesEnum::Txt, $results);
+    }
 }

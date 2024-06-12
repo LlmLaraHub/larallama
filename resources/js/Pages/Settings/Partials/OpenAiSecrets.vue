@@ -17,6 +17,8 @@ const form = useForm({
     _method: 'PUT',
     api_key: props.setting.secrets?.openai?.api_key,
     api_url: props.setting.secrets?.openai?.api_url,
+    organization: props.setting.secrets?.openai?.organization,
+    request_timeout: props.setting.secrets?.openai?.request_timeout,
 });
 
 
@@ -73,6 +75,28 @@ const updateSecrets = () => {
                     required
                 />
                 <InputError :message="form.errors.api_url" class="mt-2" />
+            </div>
+
+            <div class="col-span-6 sm:col-span-4">
+                <InputLabel for="organization" value="Organization" />
+                <TextInput
+                    id="name"
+                    v-model="form.organization"
+                    type="text"
+                    class="mt-1 block w-full"
+                />
+                <InputError :message="form.errors.organization" class="mt-2" />
+            </div>
+
+            <div class="col-span-6 sm:col-span-4">
+                <InputLabel for="organization" value="RequestTimeout" />
+                <TextInput
+                    id="name"
+                    v-model="form.request_timeout"
+                    type="text"
+                    class="mt-1 block w-full"
+                />
+                <InputError :message="form.errors.request_timeout" class="mt-2" />
             </div>
         </template>
 

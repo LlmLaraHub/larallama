@@ -2,6 +2,7 @@
 
 namespace LlmLaraHub\LlmDriver;
 
+use App\Models\Setting;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
@@ -119,8 +120,9 @@ class OllamaClient extends BaseClient
 
     protected function getClient()
     {
-        $api_token = $this->getConfig('ollama')['api_key'];
-        $baseUrl = $this->getConfig('ollama')['api_url'];
+        $api_token =  Setting::getSecret('openai', 'api_key');;
+        $baseUrl = Setting::getSecret('openai', 'api_url');
+
         if (! $api_token || ! $baseUrl) {
             throw new \Exception('Ollama API Base URL or Token not found');
         }

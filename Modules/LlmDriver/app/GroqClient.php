@@ -98,6 +98,7 @@ class GroqClient extends BaseClient
     protected function getClient()
     {
         $api_token = $this->getConfig('groq')['api_key'];
+
         if (! $api_token) {
             throw new \Exception('Groq API Token not found');
         }

@@ -2,6 +2,7 @@
 
 namespace LlmLaraHub\LlmDriver;
 
+use App\Models\Setting;
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
@@ -110,7 +111,8 @@ class ClaudeClient extends BaseClient
 
     protected function getClient()
     {
-        $api_token = $this->getConfig('claude')['api_key'];
+        $api_token = Setting::getSecret('openai', 'api_key');;
+
         if (! $api_token) {
             throw new \Exception('Claude API Token not found');
         }

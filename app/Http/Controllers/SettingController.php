@@ -17,15 +17,7 @@ class SettingController extends Controller
         ]);
     }
 
-    protected function updateStep(Setting $setting): Setting
-    {
-        $steps = $setting->steps;
-        $steps['setup_secrets'] = true;
-        $setting->steps = $steps;
-        $setting->save();
 
-        return $setting;
-    }
 
     public function updateClaude(Request $request, Setting $setting)
     {
@@ -37,7 +29,7 @@ class SettingController extends Controller
         $secrets['claude'] = $validated;
         $setting->secrets = $secrets;
         $setting->save();
-        $this->updateStep($setting);
+        $setting->updateStep($setting);
 
         return back();
     }
@@ -53,7 +45,7 @@ class SettingController extends Controller
         $secrets['ollama'] = $validated;
         $setting->secrets = $secrets;
         $setting->save();
-        $this->updateStep($setting);
+        $setting->updateStep($setting);
 
         return back();
     }
@@ -69,7 +61,7 @@ class SettingController extends Controller
         $secrets['groq'] = $validated;
         $setting->secrets = $secrets;
         $setting->save();
-        $this->updateStep($setting);
+        $setting->updateStep($setting);
 
         return back();
     }
@@ -79,13 +71,15 @@ class SettingController extends Controller
         $validated = $request->validate([
             'api_key' => 'string|required',
             'api_url' => 'string|required',
+            'organization' => 'string|nullable',
+            'request_timeout' => 'nullable',
         ]);
 
         $secrets = $setting->secrets;
         $secrets['openai'] = $validated;
         $setting->secrets = $secrets;
         $setting->save();
-        $this->updateStep($setting);
+        $setting->updateStep($setting);
 
         return back();
     }

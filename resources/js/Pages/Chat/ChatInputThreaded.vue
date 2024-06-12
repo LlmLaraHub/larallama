@@ -113,11 +113,11 @@ const setQuestion = (question) => {
                 rows="2"
                 type="text"
                 autofocus
-                class="caret caret-indigo-400 caret-opacity-50
+                class="caret caret-pink-400 caret-opacity-50
                 disabled:opacity-40
                 bg-transparent block w-full border-0 py-1.5 ring-inset
                 ring-secondary placeholder:text-gray-400 ring-2
-                focus:ring-indigo-500 sm:text-sm sm:leading-6"
+                focus:ring-pink-500 sm:text-sm sm:leading-6"
                 v-model="form.input" placeholder="Chat about your Collection"/>
 
                 <span
@@ -145,18 +145,16 @@ const setQuestion = (question) => {
                     </svg>
                 </button>
             </div>
-            <div class="flex justify-start ml-2">
+            <div class="flex justify-between gap-4 items-center ml-2">
                 <div>
                     <SwitchGroup
-                        v-if="!usePage().props.settings.supports_functions"
                         as="div" class="flex items-center">
-                        <Switch v-model="form.completion" :class="[form.completion ? 'bg-indigo-600' : 'bg-gray-200', 'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2']">
-                            <span aria-hidden="true" :class="[form.completion ? 'translate-x-5' : 'translate-x-0', 'pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out']" />
+                        <Switch v-model="form.completion" :class="[form.completion ? 'bg-pink-600' : 'bg-slate-500', 'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-pink-600 focus:ring-offset-2']">
+                            <span aria-hidden="true" :class="[form.completion ? 'translate-x-5' : 'translate-x-0', 'pointer-events-none inline-block h-5 w-5 transform rounded-full bg-slate-400 shadow ring-0 transition duration-200 ease-in-out']" />
                         </Switch>
                         <SwitchLabel as="span" class="ml-3 text-sm">
-                            <span class="font-medium text-gray-900">Completion</span>
+                            <span class="font-medium">Raw Prompt (like with ChatGPT) it will not search collection</span>
                             {{ ' ' }}
-                            <span class="text-gray-500">(Your LLM does not support functions)</span>
                         </SwitchLabel>
                     </SwitchGroup>
                 </div>

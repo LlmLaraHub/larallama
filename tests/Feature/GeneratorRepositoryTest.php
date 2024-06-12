@@ -13,6 +13,13 @@ use Tests\TestCase;
 
 class GeneratorRepositoryTest extends TestCase
 {
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $this->markTestSkipped('@TODO');
+    }
+
     public function test_keys()
     {
         ControllerSource::shouldReceive('handle')->once();

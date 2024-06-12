@@ -40,6 +40,8 @@ class Setting extends Model
                     'openai' => [
                         'api_key' => null,
                         'api_url' => 'https://api.openai.com/v1',
+                        'request_timeout' => 120,
+                        'organization' => null,
                     ],
                     'claude' => [
                         'api_key' => null,
@@ -61,10 +63,35 @@ class Setting extends Model
         return $setting;
     }
 
+    public static function getDrivers() : array {
+        $settings = Setting::createNewSetting();
+
+        return [];
+    }
+
+    public static function secretsConfigured() : bool {
+        $settings = Setting::createNewSetting();
+
+        return data_get($settings->steps, 'setup_secrets', false);
+    }
+
+    public static function updateStep(Setting $setting): Setting
+    {
+        $steps = $setting->steps;
+        $steps['setup_secrets'] = true;
+        $setting->steps = $steps;
+        $setting->save();
+
+        return $setting;
+    }
+
     public static function getSecret(
-        string $driver
+        string $driver,
+        ?string $key = null,
+        ?string $default = null
     ) {
         $setting = Setting::first();
+
         if (! $setting) {
             /**
              * @TODO
@@ -73,6 +100,12 @@ class Setting extends Model
             return config('llmdriver.drivers.'.$driver);
         }
 
-        return data_get($setting->secrets, $driver, null);
+        $secrets = data_get($setting->secrets, $driver, null);
+
+        if (! $key) {
+            return $secrets;
+        }
+
+        return data_get($secrets, $key, $default);
     }
 }

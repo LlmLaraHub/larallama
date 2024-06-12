@@ -88,7 +88,8 @@ class ChatController extends Controller
 
                 notify_ui($chat, 'We are running a completion back shortly');
 
-                $response = LlmDriverFacade::driver($chat->getDriver())->completion($prompt);
+                $messages = $chat->getChatResponse();
+                $response = LlmDriverFacade::driver($chat->getDriver())->chat($messages);
                 $response = $response->content;
 
                 if (Feature::active('verification_prompt')) {

@@ -2,6 +2,7 @@
 
 namespace LlmLaraHub\LlmDriver;
 
+use App\Models\Setting;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use LlmLaraHub\LlmDriver\Requests\MessageInDto;
@@ -57,8 +58,7 @@ class OpenAiClient extends BaseClient
 
     public function completion(string $prompt, int $temperature = 0): CompletionResponse
     {
-
-        $token = config('llmdriver.drivers.openai.api_key');
+        $token = Setting::getSecret('openai', 'api_key');
 
         if (is_null($token)) {
             throw new \Exception('Missing open ai api key');

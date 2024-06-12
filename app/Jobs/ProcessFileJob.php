@@ -68,6 +68,7 @@ class ProcessFileJob implements ShouldQueue
                 ->allowFailures()
                 ->onQueue(LlmDriverFacade::driver($document->getDriver())->onQueue())
                 ->dispatch();
+
         } elseif ($document->type === TypesEnum::PDF) {
             Log::info('Processing PDF Document');
             Bus::batch([

@@ -49,7 +49,7 @@ class ChatControllerTest extends TestCase
             'content' => 'test',
         ]);
 
-        LlmDriverFacade::shouldReceive('driver->completion')->once()->andReturn($firstResponse);
+        LlmDriverFacade::shouldReceive('driver->chat')->once()->andReturn($firstResponse);
 
         VerifyResponseAgent::shouldReceive('verify')->never()->andReturn(
             VerifyPromptOutputDto::from(

@@ -58,7 +58,6 @@ const updateSecrets = () => {
                     v-model="form.api_key"
                     type="text"
                     class="mt-1 block w-full"
-                    required
                 />
                 <InputError :message="form.errors.api_key" class="mt-2" />
             </div>
@@ -70,7 +69,6 @@ const updateSecrets = () => {
                     v-model="form.api_url"
                     type="text"
                     class="mt-1 block w-full"
-                    required
                 />
                 <InputError :message="form.errors.api_url" class="mt-2" />
             </div>

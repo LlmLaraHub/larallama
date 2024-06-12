@@ -11,6 +11,7 @@ import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 import MainMenu from "@/Layouts/MainMenu.vue";
 
 import { themeChange } from 'theme-change'
+import SettingsWarning from "@/Components/SettingsWarning.vue";
 
 defineProps({
     title: String,
@@ -30,6 +31,7 @@ const theme = ref('dark')
         <Head :title="title" />
 
         <Banner />
+        <SettingsWarning />
 
         <div class="min-h-screen">
             <nav class="navbar bg-base-100 shadow shadow-bottom">

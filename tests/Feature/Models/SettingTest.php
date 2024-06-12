@@ -42,5 +42,28 @@ class SettingTest extends TestCase
         $openai = Setting::getSecret('openai');
         $this->assertNotNull($openai);
         $this->assertEquals('https://api.openai.com/v1', $openai['api_url']);
+
+        $openai = Setting::getSecret('openai', 'api_url');
+        $this->assertNotNull($openai);
+        $this->assertEquals('https://api.openai.com/v1', $openai);
+    }
+
+    public function test_get_settings(): void
+    {
+        $this->be(User::factory()->create());
+        $model = Setting::createNewSetting();
+        $this->assertFalse(Setting::secretsConfigured());
+        $model->updateStep($model);
+        $this->assertTrue(Setting::secretsConfigured());
+    }
+
+    public function test_get_drivers(): void
+    {
+        $this->markTestSkipped('@TODO had to pivot');
+        $this->be(User::factory()->create());
+        $model = Setting::createNewSetting();
+        $this->assertFalse(Setting::secretsConfigured());
+        $model->updateStep($model);
+        $this->assertTrue(Setting::secretsConfigured());
     }
 }

@@ -60,6 +60,10 @@ const logout = () => {
             <ul class="p-2">
                 <li><Link :href="route('profile.show')">Profile</Link></li>
                 <li><a :href="route('horizon.index')">Queue</a></li>
+
+                <li>
+                    <Link :href="route('settings.show')">Settings</Link>
+                </li>
                 <li>
                     <Link v-if=false :href="route('api-tokens.index')">API Tokens</Link>
                 </li>
