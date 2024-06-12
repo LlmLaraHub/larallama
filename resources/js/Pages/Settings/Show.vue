@@ -14,7 +14,13 @@ const props = defineProps({
 <template>
     <AppLayout title="Settings">
 
-        <div class="py-12">
+        <div class="mb-4 prose font-bold border mx-auto p-10 border-secondary
+        bg-base-100 dark:bg-base-200 shadow-xl rounded-lg w-full">
+            You can add as many services as you want from below and then use different
+            services for different Collections.
+        </div>
+
+        <div class="py-12 max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                <div>
                    <OpenAiSecrets :setting="setting.data"/>
