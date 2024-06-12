@@ -27,7 +27,7 @@ class Setting extends Model
     {
         if (! Setting::exists()) {
             $setting = Setting::create([
-                'user_id' => auth()->user()->id,
+                'user_id' => auth()->user()?->id,
                 'steps' => [
                     'setup_secrets' => false,
                 ],
