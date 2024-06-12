@@ -2,7 +2,6 @@
 
 namespace App\Listeners;
 
-use App\Domains\Chat\UiStatusEnum;
 use App\Events\MessageCreatedEvent;
 use Facades\App\Domains\Chat\TitleRepo;
 use Illuminate\Contracts\Queue\ShouldQueue;

@@ -42,7 +42,7 @@ class StandardsChecker extends FunctionContract
             $prompts = [];
 
             foreach ($chunk as $document) {
-                if($document->summary) {
+                if ($document->summary) {
                     $prompt = StandardsCheckerPrompt::prompt(
                         $document->summary, $usersInput
                     );
