@@ -30,7 +30,7 @@ class TitleRepo
         }
 
         $chat = Chat::find($message->chat_id);
-        $chat->title = $message->body;
+        $chat->title = str($message->body)->limit(125)->toString();
         $chat->save();
 
     }
