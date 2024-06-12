@@ -25,7 +25,7 @@ createInertiaApp({
             .use(Toast, {
                 transition: "Vue-Toastification__bounce",
                 pauseOnFocusLoss: false,
-                maxToasts: 1,
+                maxToasts: 2,
                 timeout: 2000,
                 hideProgressBar: true,
                 newestOnTop: true,

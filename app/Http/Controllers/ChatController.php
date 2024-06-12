@@ -89,8 +89,6 @@ class ChatController extends Controller
                 $response = LlmDriverFacade::driver($chat->getDriver())->chat($messages);
                 $response = $response->content;
 
-                notify_ui($chat, 'We are verifying the completion back shortly');
-
                 $chat->addInput(
                     message: $response,
                     role: RoleEnum::Assistant,
