@@ -37,29 +37,30 @@ class StandardsChecker extends FunctionContract
         $this->results = [];
 
         foreach ($documents->chunk(3) as $index => $chunk) {
-            notify_ui($model->getChat(), sprintf('About to compare document to %d documents in the Collection', count($chunk)));
+            try {
 
-            $prompts = [];
+                notify_ui($model->getChat(), sprintf('About to compare document to %d documents in the Collection', count($chunk)));
 
-            foreach ($chunk as $document) {
-                if ($document->summary) {
-                    $prompt = StandardsCheckerPrompt::prompt(
-                        $document->summary, $usersInput
-                    );
-                    $title = sprintf('Using Document %s as context', $document->subject);
-                    $this->promptHistory[] = StandardsCheckerPrompt::prompt(
-                        $title, $usersInput
-                    );
-                    $prompts[] = $prompt;
-                } else {
-                    Log::info('[LaraChain] No Summary for Document', [
-                        'document' => $document->id,
-                    ]);
+                $prompts = [];
+
+                foreach ($chunk as $document) {
+                    if ($document->summary) {
+                        $prompt = StandardsCheckerPrompt::prompt(
+                            $document->summary, $usersInput
+                        );
+                        $title = sprintf('Using Document %s as context', $document->subject);
+                        $this->promptHistory[] = StandardsCheckerPrompt::prompt(
+                            $title, $usersInput
+                        );
+                        $prompts[] = $prompt;
+                    } else {
+                        Log::info('[LaraChain] No Summary for Document', [
+                            'document' => $document->id,
+                        ]);
+                    }
+
                 }
 
-            }
-
-            try {
                 $results = LlmDriverFacade::driver($model->getDriver())
                     ->completionPool($prompts);
 

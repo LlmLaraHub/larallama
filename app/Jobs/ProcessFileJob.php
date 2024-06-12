@@ -57,13 +57,14 @@ class ProcessFileJob implements ShouldQueue
                 ->dispatch();
 
         } elseif ($document->type === TypesEnum::Txt) {
+
             Log::info('Processing Text Document');
             Bus::batch([
                 new ProcessTextFilesJob($this->document),
             ])
                 ->name('Processing Text Document - '.$document->id)
-                ->finally(function (Batch $batch) {
-                    //@NOTE hmm should I make this an event other things should listen to?
+                ->finally(function (Batch $batch) use ($document) {
+                    DocumentProcessingCompleteJob::dispatch($document);
                 })
                 ->allowFailures()
                 ->onQueue(LlmDriverFacade::driver($document->getDriver())->onQueue())

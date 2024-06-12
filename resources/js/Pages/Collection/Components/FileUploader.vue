@@ -64,6 +64,7 @@ const submitFiles = () => {
 const onDrop = (acceptFiles, rejectReasons) => {
     saveFiles(acceptFiles);
     console.log(rejectReasons)
+    submitFiles()
 }
 
 const dragOver = ref(false);
