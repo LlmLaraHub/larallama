@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Domains\Collections\CollectionStatusEnum;
 use App\Domains\Documents\StatusEnum;
 use App\Domains\Documents\TypesEnum;
-use App\Events\CollectionStatusEvent;
 use App\Helpers\TextChunker;
 use App\Jobs\VectorlizeDataJob;
 use App\Models\Collection;
@@ -30,7 +29,8 @@ class TextDocumentController extends Controller
             'file_path' => $validated['name'],
             'collection_id' => $collection->id,
             'type' => TypesEnum::Txt,
-            'summary' => StatusEnum::Pending,
+            'subject' => str($validated['content'])->limit(256)->toString(),
+            'summary' => $validated['content'],
             'status_summary' => StatusEnum::Pending,
         ]);
 
@@ -58,7 +58,7 @@ class TextDocumentController extends Controller
                     new VectorlizeDataJob($DocumentChunk),
                 ];
 
-                CollectionStatusEvent::dispatch($document->collection, CollectionStatusEnum::PROCESSING);
+                notify_collection_ui($document->collection, CollectionStatusEnum::PROCESSING, 'Document Created working on pages');
             } catch (\Exception $e) {
                 Log::error('Error parsing PDF', ['error' => $e->getMessage()]);
             }

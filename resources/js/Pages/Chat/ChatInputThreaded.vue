@@ -25,6 +25,7 @@ const errors = ref({})
 const form = useForm({
     input: "",
     completion: false,
+    tool: "",
     filter: null
 })
 
@@ -64,12 +65,14 @@ const save = () => {
     let message = form.input
     let completion = form.completion
     let filter = form.filter
+    let tool = form.tool
     form.reset();
     axios.post(route('chats.messages.create', {
         chat: props.chat.id
     }), {
         input: message,
         completion: completion,
+        tool: tool,
         filter: filter
     }).catch(error => {
         getting_results.value = false
@@ -110,7 +113,7 @@ const setQuestion = (question) => {
 
             <div class="relative p-4 flex max-container mx-auto w-full" >
                 <textarea
-                rows="2"
+                rows="15"
                 type="text"
                 autofocus
                 class="caret caret-pink-400 caret-opacity-50
@@ -146,18 +149,7 @@ const setQuestion = (question) => {
                 </button>
             </div>
             <div class="flex justify-between gap-4 items-center ml-2">
-                <div>
-                    <SwitchGroup
-                        as="div" class="flex items-center">
-                        <Switch v-model="form.completion" :class="[form.completion ? 'bg-pink-600' : 'bg-slate-500', 'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-pink-600 focus:ring-offset-2']">
-                            <span aria-hidden="true" :class="[form.completion ? 'translate-x-5' : 'translate-x-0', 'pointer-events-none inline-block h-5 w-5 transform rounded-full bg-slate-400 shadow ring-0 transition duration-200 ease-in-out']" />
-                        </Switch>
-                        <SwitchLabel as="span" class="ml-3 text-sm">
-                            <span class="font-medium">Raw Prompt (like with ChatGPT) it will not search collection</span>
-                            {{ ' ' }}
-                        </SwitchLabel>
-                    </SwitchGroup>
-                </div>
+
 
                 <div class="flex justify-start gap-2 items-center">
                     <div v-if="filterChosen?.name" class="flex justify-start gap-1 items-center">
@@ -176,7 +168,48 @@ const setQuestion = (question) => {
                 </div>
             </div>
 
+            <div>
+                <h2
+                class="text-lg font-medium prose mt-4 px-2 mb-4 items-center justify-start flex gap-4"
+                >
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-10
+text-secondary">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 18v-5.25m0 0a6.01 6.01 0 0 0 1.5-.189m-1.5.189a6.01 6.01 0 0 1-1.5-.189m3.75 7.478a12.06 12.06 0 0 1-4.5 0m3.75 2.383a14.406 14.406 0 0 1-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 1 0-7.517 0c.85.493 1.509 1.333 1.509 2.316V18" />
+                    </svg>
 
+                    Click a button below to choose a focus for your chat. This will help the system to be more specific on how it integrates your Collection and the Prompt.</h2>
+                <div class="flex justify-center items-center gap-3">
+                        <div class="tooltip" data-tip="This will take your prompt and compare it to each document in your collection. The results will be the summary of all the comments the LLM has.">
+                        <button
+                            class="btn btn-secondary rounded-none"
+                            :class="{ 'opacity-50': form.tool !== 'standards_checker' && form.tool !== '' }"
+                        type="button"
+                        @click="form.tool = 'standards_checker'"
+                        >
+                            Standards Checker
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-4">
+                                <path fill-rule="evenodd" d="M15 8A7 7 0 1 1 1 8a7 7 0 0 1 14 0Zm-6 3.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0ZM7.293 5.293a1 1 0 1 1 .99 1.667c-.459.134-1.033.566-1.033 1.29v.25a.75.75 0 1 0 1.5 0v-.115a2.5 2.5 0 1 0-2.518-4.153.75.75 0 1 0 1.061 1.06Z" clip-rule="evenodd" />
+                            </svg>
+
+                        </button>
+                        </div>
+
+                        <div class="tooltip" data-tip="This is more like Chat GPT it will not search your collection. It will just take your prompt and the history of the chat and return the response.">
+                            <button
+                                class="btn btn-secondary rounded-none"
+                                type="button"
+                                :class="{ 'opacity-50': form.tool !== 'completion' && form.tool !== '' }"
+                                @click="form.tool = 'completion'"
+                            >
+                                Raw Prompt
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-4">
+                                    <path fill-rule="evenodd" d="M15 8A7 7 0 1 1 1 8a7 7 0 0 1 14 0Zm-6 3.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0ZM7.293 5.293a1 1 0 1 1 .99 1.667c-.459.134-1.033.566-1.033 1.29v.25a.75.75 0 1 0 1.5 0v-.115a2.5 2.5 0 1 0-2.518-4.153.75.75 0 1 0 1.061 1.06Z" clip-rule="evenodd" />
+                                </svg>
+
+                            </button>
+                        </div>
+                    </div>
+                </div>
         </form>
     </div>
 </div>

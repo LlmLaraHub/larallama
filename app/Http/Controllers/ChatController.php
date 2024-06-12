@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Domains\Agents\VerifyPromptInputDto;
-use App\Domains\Agents\VerifyPromptOutputDto;
 use App\Domains\Messages\RoleEnum;
 use App\Http\Resources\ChatResource;
 use App\Http\Resources\CollectionResource;
@@ -14,9 +12,7 @@ use App\Jobs\SimpleSearchAndSummarizeOrchestrateJob;
 use App\Models\Chat;
 use App\Models\Collection;
 use App\Models\Filter;
-use Facades\App\Domains\Agents\VerifyResponseAgent;
 use Illuminate\Support\Facades\Log;
-use Laravel\Pennant\Feature;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
 use LlmLaraHub\LlmDriver\Requests\MessageInDto;
 
@@ -58,6 +54,7 @@ class ChatController extends Controller
         $validated = request()->validate([
             'input' => 'required|string',
             'completion' => 'boolean',
+            'tool' => ['nullable', 'string'],
             'filter' => ['nullable', 'integer'],
         ]);
 
@@ -82,7 +79,7 @@ class ChatController extends Controller
                 $filter = Filter::find($filter);
             }
 
-            if (data_get($validated, 'completion', false)) {
+            if (data_get($validated, 'tool', null) === 'completion') {
                 Log::info('[LaraChain] Running Simple Completion');
                 $prompt = $validated['input'];
 
@@ -92,22 +89,6 @@ class ChatController extends Controller
                 $response = LlmDriverFacade::driver($chat->getDriver())->chat($messages);
                 $response = $response->content;
 
-                if (Feature::active('verification_prompt')) {
-                    $dto = VerifyPromptInputDto::from(
-                        [
-                            'chattable' => $chat,
-                            'originalPrompt' => $prompt,
-                            'context' => $prompt,
-                            'llmResponse' => $response,
-                            'verifyPrompt' => 'This is a completion so the users prompt was past directly to the llm with all the context. That is why ORIGINAL PROMPT is the same as CONTEXT. Keep the format as Markdown.',
-                        ]
-                    );
-
-                    /** @var VerifyPromptOutputDto $response */
-                    $response = VerifyResponseAgent::verify($dto);
-                    $response = $response->response;
-                }
-
                 notify_ui($chat, 'We are verifying the completion back shortly');
 
                 $chat->addInput(
@@ -115,12 +96,19 @@ class ChatController extends Controller
                     role: RoleEnum::Assistant,
                     show_in_thread: true);
 
+            } elseif (data_get($validated, 'tool', null) === 'standards_checker') {
+                Log::info('[LaraChain] Running Standards Checker');
+                notify_ui($chat, 'Running Standards Checker');
+                /**
+                 * @TODO
+                 * Move this into OrchestrateJob
+                 */
+                OrchestrateJob::dispatch($messagesArray, $chat, $filter, 'standards_checker');
             } elseif (LlmDriverFacade::driver($chat->getDriver())->hasFunctions()) {
                 Log::info('[LaraChain] Running Orchestrate added to queue');
                 OrchestrateJob::dispatch($messagesArray, $chat, $filter);
             } else {
                 Log::info('[LaraChain] Simple Search and Summarize added to queue');
-
                 SimpleSearchAndSummarizeOrchestrateJob::dispatch($validated['input'], $chat, $filter);
             }
 

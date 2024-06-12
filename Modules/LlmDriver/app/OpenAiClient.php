@@ -3,6 +3,7 @@
 namespace LlmLaraHub\LlmDriver;
 
 use App\Models\Setting;
+use Illuminate\Http\Client\Pool;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use LlmLaraHub\LlmDriver\Requests\MessageInDto;
@@ -54,6 +55,67 @@ class OpenAiClient extends BaseClient
             'embedding' => $results,
             'token_count' => $response->usage->totalTokens,
         ]);
+    }
+
+    /**
+     * @return CompletionResponse[]
+     *
+     * @throws \Exception
+     */
+    public function completionPool(array $prompts, int $temperature = 0): array
+    {
+        $token = Setting::getSecret('openai', 'api_key');
+
+        if (is_null($token)) {
+            throw new \Exception('Missing open ai api key');
+        }
+
+        $responses = Http::pool(function (Pool $pool) use ($prompts, $token) {
+            foreach ($prompts as $prompt) {
+                $pool->withHeaders([
+                    'content-type' => 'application/json',
+                    'Authorization' => 'Bearer '.$token,
+                ])->withToken($token)
+                    ->baseUrl($this->baseUrl)
+                    ->timeout(240)
+                    ->retry(3, function (int $attempt, \Exception $exception) {
+                        Log::info('OpenAi API Error going to retry', [
+                            'attempt' => $attempt,
+                            'error' => $exception->getMessage(),
+                        ]);
+
+                        return 60000;
+                    })
+                    ->post('/chat/completions', [
+                        'model' => $this->getConfig('openai')['models']['completion_model'],
+                        'messages' => [
+                            ['role' => 'user', 'content' => $prompt],
+                        ],
+                    ]);
+            }
+
+        });
+
+        $results = [];
+
+        foreach ($responses as $index => $response) {
+            if ($response->ok()) {
+                $response = $response->json();
+                foreach (data_get($response, 'choices', []) as $result) {
+                    $result = data_get($result, 'message.content', '');
+                    $results[] = CompletionResponse::from([
+                        'content' => $result,
+                    ]);
+                }
+            } else {
+                Log::error('OpenAi API Error ', [
+                    'index' => $index,
+                    'error' => $result->body(),
+                ]);
+            }
+        }
+
+        return $results;
     }
 
     public function completion(string $prompt, int $temperature = 0): CompletionResponse

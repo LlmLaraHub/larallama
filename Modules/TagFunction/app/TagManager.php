@@ -64,9 +64,10 @@ class TagManager
 
         $this->tags = collect(explode(',', $this->tagsAsString));
 
-        $this->tags->map(function ($tag) use ($document) {
-            $document->addTag($tag);
-        });
+        $this->tags->take(3)
+            ->map(function ($tag) use ($document) {
+                $document->addTag($tag);
+            });
 
         notify_collection_ui($document->collection, CollectionStatusEnum::PROCESSING, 'Tags added');
     }

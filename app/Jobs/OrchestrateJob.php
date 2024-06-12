@@ -20,8 +20,9 @@ class OrchestrateJob implements ShouldQueue
      */
     public function __construct(public array $messagesArray,
         public Chat $chat,
-        public ?Filter $filter = null)
-    {
+        public ?Filter $filter = null,
+        public string $tool = ''
+    ) {
         //
     }
 
@@ -30,6 +31,6 @@ class OrchestrateJob implements ShouldQueue
      */
     public function handle(): void
     {
-        Orchestrate::handle($this->messagesArray, $this->chat, $this->filter);
+        Orchestrate::handle($this->messagesArray, $this->chat, $this->filter, $this->tool);
     }
 }

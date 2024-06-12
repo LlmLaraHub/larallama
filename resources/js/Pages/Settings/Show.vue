@@ -14,7 +14,7 @@ const props = defineProps({
 <template>
     <AppLayout title="Settings">
 
-        <div class="mb-4 prose font-bold border mx-auto p-10 border-secondary
+        <div class="mb-4 prose font-bold border mx-auto p-10 border-secondary mt-4
         bg-base-100 dark:bg-base-200 shadow-xl rounded-lg w-full">
             You can add as many services as you want from below and then use different
             services for different Collections.
