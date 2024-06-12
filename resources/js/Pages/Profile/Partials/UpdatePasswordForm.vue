@@ -12,13 +12,12 @@ const passwordInput = ref(null);
 const currentPasswordInput = ref(null);
 
 const form = useForm({
-    current_password: '',
     password: '',
     password_confirmation: '',
 });
 
 const updatePassword = () => {
-    form.put(route('user-password.update'), {
+    form.put(route('custom.user-password.update'), {
         errorBag: 'updatePassword',
         preserveScroll: true,
         onSuccess: () => form.reset(),
@@ -48,18 +47,6 @@ const updatePassword = () => {
         </template>
 
         <template #form>
-            <div class="col-span-6 sm:col-span-4">
-                <InputLabel for="current_password" value="Current Password" />
-                <TextInput
-                    id="current_password"
-                    ref="currentPasswordInput"
-                    v-model="form.current_password"
-                    type="password"
-                    class="mt-1 block w-full"
-                    autocomplete="current-password"
-                />
-                <InputError :message="form.errors.current_password" class="mt-2" />
-            </div>
 
             <div class="col-span-6 sm:col-span-4">
                 <InputLabel for="password" value="New Password" />

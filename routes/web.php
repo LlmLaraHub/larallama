@@ -34,6 +34,13 @@ Route::middleware([
     'verified',
 ])->group(function () {
 
+    Route::controller(\App\Http\Controllers\PasswordController::class)->group(
+        function () {
+            Route::put('/users/password/update', 'update')
+                ->name('custom.user-password.update');
+        }
+    );
+
     Route::controller(\App\Http\Controllers\OutputController::class)->group(
         function () {
 
