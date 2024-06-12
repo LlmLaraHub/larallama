@@ -42,14 +42,21 @@ class StandardsChecker extends FunctionContract
             $prompts = [];
 
             foreach ($chunk as $document) {
-                $prompt = StandardsCheckerPrompt::prompt(
-                    $document->summary, $usersInput
-                );
-                $title = sprintf('Using Document %s as context', $document->subject);
-                $this->promptHistory[] = StandardsCheckerPrompt::prompt(
-                    $title, $usersInput
-                );
-                $prompts[] = $prompt;
+                if($document->summary) {
+                    $prompt = StandardsCheckerPrompt::prompt(
+                        $document->summary, $usersInput
+                    );
+                    $title = sprintf('Using Document %s as context', $document->subject);
+                    $this->promptHistory[] = StandardsCheckerPrompt::prompt(
+                        $title, $usersInput
+                    );
+                    $prompts[] = $prompt;
+                } else {
+                    Log::info('[LaraChain] No Summary for Document', [
+                        'document' => $document->id,
+                    ]);
+                }
+
             }
 
             try {

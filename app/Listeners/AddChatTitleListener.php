@@ -24,6 +24,5 @@ class AddChatTitleListener implements ShouldQueue
     {
         TitleRepo::handle($event->message);
         notify_ui($event->message->chat, 'Chat Title Updated');
-        notify_ui($event->message->chat, UiStatusEnum::Complete->name);
     }
 }
