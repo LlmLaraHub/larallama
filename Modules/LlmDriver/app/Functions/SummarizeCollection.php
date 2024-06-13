@@ -4,7 +4,6 @@ namespace LlmLaraHub\LlmDriver\Functions;
 
 use App\Domains\Agents\VerifyPromptInputDto;
 use App\Domains\Agents\VerifyPromptOutputDto;
-use App\Domains\Chat\UiStatusEnum;
 use Facades\App\Domains\Agents\VerifyResponseAgent;
 use Illuminate\Support\Facades\Log;
 use Laravel\Pennant\Feature;
@@ -66,7 +65,7 @@ class SummarizeCollection extends FunctionContract
             $this->verify($model, 'Can you summarize this collection of data for me.', $summary);
         }
 
-        notify_ui($model->getChat(), UiStatusEnum::Complete->name);
+        notify_ui_complete($model->getChat());
 
         return FunctionResponse::from([
             'content' => $this->response,

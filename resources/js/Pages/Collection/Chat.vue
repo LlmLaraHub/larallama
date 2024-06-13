@@ -86,6 +86,7 @@ onUnmounted(() => {
                             :chats="chats"></ChatSideNav>
                     </div>
                     <div class="col-span-12 sm:col-span-10">
+
                         <div class="overflow-hidden shadow-xl sm:rounded-lg">
                             <div class="px-3">
                                 <div class="flex justify-between items-center">

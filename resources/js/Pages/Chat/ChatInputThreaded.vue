@@ -6,6 +6,7 @@ import axios from "axios";
 import { useToast } from "vue-toastification";
 import { Switch, SwitchGroup, SwitchLabel } from '@headlessui/vue'
 import Filters from "@/Pages/Collection/Components/Filters.vue";
+import StyleGuide from "@/Pages/Collection/Components/StyleGuide.vue";
 
 
 const toast = useToast();
@@ -26,14 +27,21 @@ const form = useForm({
     input: "",
     completion: false,
     tool: "",
-    filter: null
+    filter: null,
+    persona: null
 })
 
 const filterChosen = ref({})
+const personaChosen = ref({})
 
 const filter = (filter) => {
     filterChosen.value = filter;
     form.filter = filter?.id
+}
+
+const persona = (persona) => {
+    personaChosen.value = persona;
+    form.persona = persona?.id;
 }
 
 const getting_results = ref(false)
@@ -66,6 +74,7 @@ const save = () => {
     let completion = form.completion
     let filter = form.filter
     let tool = form.tool
+    let persona = form.persona
     form.reset();
     axios.post(route('chats.messages.create', {
         chat: props.chat.id
@@ -73,6 +82,7 @@ const save = () => {
         input: message,
         completion: completion,
         tool: tool,
+        persona: persona,
         filter: filter
     }).catch(error => {
         getting_results.value = false
@@ -148,12 +158,11 @@ const setQuestion = (question) => {
                     </svg>
                 </button>
             </div>
-            <div class="flex justify-between gap-4 items-center ml-2">
-
-
-                <div class="flex justify-start gap-2 items-center">
+            <div class="
+            justify-start gap-4 items-center ml-2">
+                <div class="flex justify-start gap-2 items-center ml-1 mb-2">
                     <div v-if="filterChosen?.name" class="flex justify-start gap-1 items-center">
-                        <span class="text-gray-600">
+                        <span class="text-secondary">
                             Filter being used: </span>
                         <span class="font-bold">{{filterChosen.name}}</span>
                         <button type="button" @click="filter({})">
@@ -162,9 +171,26 @@ const setQuestion = (question) => {
                             </svg>
                         </button>
                     </div>
-                <Filters
-                    @filter="filter"
-                    :collection="chat.collection"></Filters>
+                    <div v-if="personaChosen?.name" class="flex justify-start gap-1 items-center">
+                        <span class="text-secondary">
+                            Persona being used: </span>
+                        <span class="font-bold">{{personaChosen.name}}</span>
+                        <button type="button" @click="persona({})">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="flex justify-start gap-2 items-center">
+
+                    <Filters
+                        @filter="filter"
+                        :collection="chat.collection"></Filters>
+                    <StyleGuide
+                        @persona="persona"
+                        :collection="chat.collection"></StyleGuide>
                 </div>
             </div>
 

@@ -45,10 +45,16 @@ const theme = ref('dark')
                                 LaraLlama.io
                             </a>
                         </li>
-                        <li>
+                        <li class="hidden sm:flex">
                             <Link :href="route('dashboard')"
                                   :class="{ 'underline' : route().current('collections.index') }">
                                 Collections
+                            </Link>
+                        </li>
+                        <li class="hidden sm:flex">
+                            <Link :href="route('style_guide.show')"
+                                  :class="{ 'underline' : route().current('style_guide.show') }">
+                                Style Guides
                             </Link>
                         </li>
                     </ul>

@@ -50,14 +50,11 @@ const logout = () => {
     <li>
         <details>
             <summary>
-                <template v-if="$page.props.jetstream.managesProfilePhotos">
-                    <img class="h-8 w-8 rounded-full object-cover" :src="$page.props.auth.user.profile_photo_url" :alt="$page.props.auth.user.name">
-                </template>
-                <template v-else>
-                    {{ $page.props.auth.user.name }}
-                </template>
+                Main Menu
             </summary>
             <ul class="p-2 z-50">
+                <li class="flex sm:hidden"><Link :href="route('collections.index')">Collections</Link></li>
+                <li class="flex sm:hidden"><Link :href="route('style_guide.show')">Style Guides</Link></li>
                 <li><Link :href="route('profile.show')">Profile</Link></li>
                 <li><Link :href="route('settings.show')">Settings</Link></li>
                 <li><a :href="route('horizon.index')">Queue</a></li>

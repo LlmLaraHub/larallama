@@ -33,6 +33,8 @@ class DocumentResource extends JsonResource
             'tags_count' => $this->tags->count(),
             'children_count' => $this->children->count(),
             'parent_id' => $this->parent_id,
+            'created_at_diff' => $this->created_at->diffForHumans(),
+            'updated_at_diff' => $this->updated_at->diffForHumans(),
             'children' => DocumentResource::collection($this->children),
         ];
     }

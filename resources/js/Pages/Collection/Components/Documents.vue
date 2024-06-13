@@ -163,7 +163,9 @@ onUnmounted(() => {
                                                 {{ document.type }}
                                             </td>
                                             <td>
-                                                    <div v-if="document.type === 'Json'" class="truncate w-80">{{ document.subject }}</div>
+                                                    <div v-if="document.type === 'Json'" class="truncate w-80">
+                                                        {{ document.subject }}
+                                                    </div>
                                                     <div v-else-if="document.subject">
                                                         <div class="truncate max-w-2xl">
                                                             <div v-if="!document.link">
@@ -192,6 +194,7 @@ onUnmounted(() => {
                                                             {{ document.file_path }}
                                                         </a>
                                                     </div>
+                                                <div class="text-xs text-secondary">updated: {{ document.updated_at_diff }}</div>
                                             </td>
 
                                             <td>

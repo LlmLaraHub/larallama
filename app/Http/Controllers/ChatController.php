@@ -8,11 +8,13 @@ use App\Http\Resources\ChatResource;
 use App\Http\Resources\CollectionResource;
 use App\Http\Resources\FilterResource;
 use App\Http\Resources\MessageResource;
+use App\Http\Resources\PersonaResource;
 use App\Jobs\OrchestrateJob;
 use App\Jobs\SimpleSearchAndSummarizeOrchestrateJob;
 use App\Models\Chat;
 use App\Models\Collection;
 use App\Models\Filter;
+use App\Models\Persona;
 use Illuminate\Bus\Batch;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Log;
@@ -44,6 +46,7 @@ class ChatController extends Controller
             'chat' => new ChatResource($chat),
             'chats' => ChatResource::collection($collection->chats()->latest()->paginate(20)),
             'filters' => FilterResource::collection($collection->filters),
+            'personas' => PersonaResource::collection(Persona::all()),
             'system_prompt' => $collection->systemPrompt(),
             'settings' => [
                 'supports_functions' => LlmDriverFacade::driver($chat->getDriver())->hasFunctions(),
@@ -59,20 +62,30 @@ class ChatController extends Controller
             'completion' => 'boolean',
             'tool' => ['nullable', 'string'],
             'filter' => ['nullable', 'integer'],
+            'persona' => ['nullable', 'integer'],
         ]);
 
         try {
             Log::info('Request', request()->toArray());
 
+            $input = $validated['input'];
+
+            $persona = data_get($validated, 'persona', null);
+
+            if ($persona) {
+                $persona = Persona::find($persona);
+                $input = $persona->wrapPromptInPersona($input);
+            }
+
             $chat->addInput(
-                message: $validated['input'],
+                message: $input,
                 role: RoleEnum::User,
                 show_in_thread: true);
 
             $messagesArray = [];
 
             $messagesArray[] = MessageInDto::from([
-                'content' => $validated['input'],
+                'content' => $input,
                 'role' => 'user',
             ]);
 
@@ -110,7 +123,7 @@ class ChatController extends Controller
             } else {
                 Log::info('[LaraChain] Simple Search and Summarize added to queue');
                 $this->batchJob([
-                    new SimpleSearchAndSummarizeOrchestrateJob($validated['input'], $chat, $filter),
+                    new SimpleSearchAndSummarizeOrchestrateJob($input, $chat, $filter),
                 ], $chat, 'simple_search_and_summarize');
             }
 
