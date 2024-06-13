@@ -19,6 +19,9 @@ const hasActions = computed(() => !! useSlots().actions);
         </SectionTitle>
 
         <div class="mt-5 md:mt-0 md:col-span-2">
+            <slot name="intro">
+
+            </slot>
             <form @submit.prevent="$emit('submitted')">
                 <div
                     class="px-4 py-5 sm:p-6 shadow"

@@ -124,6 +124,17 @@ Route::middleware([
         }
     );
 
+    Route::controller(\App\Http\Controllers\StyleGuideController::class)->group(
+        function () {
+            Route::get('/style_guides', 'show')
+                ->name('style_guide.show');
+            Route::post('/style_guides/persona', 'createPersona')
+                ->name('style_guide.create.persona');
+            Route::put('/style_guides/{persona}/persona', 'updatePersona')
+                ->name('style_guide.update.persona');
+        }
+    );
+
     Route::controller(\App\Http\Controllers\SettingController::class)->group(
         function () {
             Route::get('/settings', 'show')

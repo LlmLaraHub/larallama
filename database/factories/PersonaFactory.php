@@ -18,7 +18,7 @@ class PersonaFactory extends Factory
     {
         return [
             'name' => $this->faker->name,
-            'data' => $this->faker->text,
+            'content' => $this->faker->text,
         ];
     }
 }
