@@ -7,6 +7,7 @@ use App\Models\Collection;
 use App\Models\Filter;
 use App\Models\PromptHistory;
 use Facades\LlmLaraHub\LlmDriver\NonFunctionSearchOrSummarize;
+use Illuminate\Bus\Batchable;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -19,6 +20,7 @@ use LlmLaraHub\LlmDriver\Responses\NonFunctionResponseDto;
 
 class SimpleSearchAndSummarizeOrchestrateJob implements ShouldQueue
 {
+    use Batchable;
     use CreateReferencesTrait;
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 

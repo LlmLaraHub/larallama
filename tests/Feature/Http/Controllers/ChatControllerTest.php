@@ -9,11 +9,10 @@ use App\Models\Collection;
 use App\Models\Message;
 use App\Models\User;
 use Facades\App\Domains\Agents\VerifyResponseAgent;
-use Facades\LlmLaraHub\LlmDriver\NonFunctionSearchOrSummarize;
 use Facades\LlmLaraHub\LlmDriver\Orchestrate;
+use Illuminate\Support\Facades\Bus;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
 use LlmLaraHub\LlmDriver\Responses\CompletionResponse;
-use LlmLaraHub\LlmDriver\Responses\NonFunctionResponseDto;
 use Tests\TestCase;
 
 class ChatControllerTest extends TestCase
@@ -127,6 +126,7 @@ class ChatControllerTest extends TestCase
 
     public function test_no_functions()
     {
+        Bus::fake();
         $user = User::factory()->create();
         $collection = Collection::factory()->create();
         $chat = Chat::factory()->create([
@@ -137,13 +137,6 @@ class ChatControllerTest extends TestCase
 
         LlmDriverFacade::shouldReceive('driver->hasFunctions')->once()->andReturn(false);
 
-        NonFunctionSearchOrSummarize::shouldReceive('handle')->once()->andReturn(
-            NonFunctionResponseDto::from([
-                'response' => 'Foobar',
-                'documentChunks' => collect(),
-                'prompt' => 'Foobar',
-            ]));
-
         $this->actingAs($user)->post(route('chats.messages.create', [
             'chat' => $chat->id,
         ]),
@@ -151,6 +144,8 @@ class ChatControllerTest extends TestCase
                 'system_prompt' => 'Foo',
                 'input' => 'user input',
             ])->assertOk();
+
+        Bus::assertBatchCount(1);
 
     }
 

@@ -84,7 +84,6 @@ class ChatController extends Controller
 
             if (data_get($validated, 'tool', null) === 'completion') {
                 Log::info('[LaraChain] Running Simple Completion');
-                $prompt = $validated['input'];
 
                 notify_ui($chat, 'We are running a completion back shortly');
 
