@@ -24,6 +24,9 @@ const showAddForm = () => {
     show_add_form.value = !show_add_form.value;
 }
 const showEditForm = (styleItem) => {
+    console.log('showEditForm', styleItem);
+    show_edit_form.value = false;
+    persona.value = {};
     persona.value = styleItem;
     show_edit_form.value = true;
 }
@@ -69,7 +72,7 @@ const addStyle = () => {
         </template>
         <template #intro>
             <h2>Existing Personas </h2>
-            <div>
+            <div v-auto-animate>
                 <div class="text-sm text-secondary"  v-if="personas.length === 0">
                     No Personas Yet! Start adding below.
                 </div>
@@ -78,9 +81,9 @@ const addStyle = () => {
                         Add Persona
                     </PrimaryButton>
                 </div>
-                <div class="mt-10 w-full border border-secondary rounded-lg p-10">
+                <div class="mt-10 w-full border border-secondary rounded-lg p-10" v-auto-animate>
                     <div
-                        v-if="personas.length > 0"
+                        v-if="personas.length > 0 && show_edit_form === false"
                         class="flex flex-wrap gap-4 mt-2 w-full justify-center items-center">
                         <div v-for="styleItem in personas" :key="styleItem.id">
                             <div class="flex
@@ -104,7 +107,7 @@ const addStyle = () => {
                             <button
                                 class="btn btn-outline rounded-none"
                                 @click="hideEditForm()">
-                                Cancel
+                                Close
                             </button>
                         </PersonaItem>
                     </div>
