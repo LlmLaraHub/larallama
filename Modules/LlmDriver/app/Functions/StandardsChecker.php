@@ -79,7 +79,7 @@ class StandardsChecker extends FunctionContract
 
         notify_ui($model->getChat(), 'Wow that was a lot of document!');
 
-        notify_ui($model->getChat(), UiStatusEnum::Complete->name);
+        notify_ui_complete($model->getChat());
 
         return FunctionResponse::from([
             'content' => implode('\n', $this->results),

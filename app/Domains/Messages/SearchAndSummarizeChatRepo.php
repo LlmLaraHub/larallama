@@ -35,8 +35,6 @@ class SearchAndSummarizeChatRepo
 
         $originalPrompt = $input;
 
-        notify_ui($chat, 'Searching documents');
-
         Log::info('[LaraChain] Embedding the Data', [
             'question' => $input,
         ]);

@@ -36,6 +36,7 @@ class Orchestrate
          * We are looking first for functions / agents / tools
          */
         Log::info('[LaraChain] Orchestration Function Check');
+
         $functions = LlmDriverFacade::driver($chat->chatable->getDriver())
             ->functionPromptChat($messagesArray);
 
@@ -133,8 +134,6 @@ class Orchestrate
                     'role' => 'assistant',
                     'content' => $response->content,
                 ]));
-
-                notify_ui($chat, 'The Agent has completed the task going to the final step now');
 
                 $this->response = $response->content;
                 $this->requiresFollowup = $response->requires_follow_up_prompt;

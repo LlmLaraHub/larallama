@@ -5,23 +5,20 @@ namespace App\Jobs;
 use App\Models\Chat;
 use App\Models\Filter;
 use Facades\LlmLaraHub\LlmDriver\Orchestrate;
+use Illuminate\Bus\Batchable;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\Middleware\WithoutOverlapping;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Log;
 
 class OrchestrateJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    use Batchable;
 
-    /**
-     * The number of times the job may be attempted.
-     *
-     * @var int
-     */
-    public $tries = 1;
 
     /**
      * Create a new job instance.
@@ -39,24 +36,16 @@ class OrchestrateJob implements ShouldQueue
      */
     public function handle(): void
     {
+        if ($this->batch()->cancelled()) {
+            // Determine if the batch has been cancelled...
+            notify_ui_complete($this->chat);
+            return;
+        }
+
+        Log::info('[LaraChain] Orchestrate Job from batch');
         Orchestrate::handle($this->messagesArray, $this->chat, $this->filter, $this->tool);
+        notify_ui_complete($this->chat);
     }
 
-    /**
-     * Get the middleware the job should pass through.
-     *
-     * @return array<int, object>
-     */
-    public function middleware(): array
-    {
-        return [new WithoutOverlapping(sprintf('orchestrate_chat_id_%d', $this->chat->id))];
-    }
 
-    /**
-     * Determine the time at which the job should timeout.
-     */
-    public function retryUntil(): \DateTime
-    {
-        return now()->addMinutes(10);
-    }
 }

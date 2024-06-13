@@ -17,7 +17,7 @@ class OllamaClient extends BaseClient
 
     public function embedData(string $prompt): EmbeddingsResponseDto
     {
-        Log::info('LlmDriver::Ollama::completion');
+        Log::info('LlmDriver::Ollama::embedData');
 
         $response = $this->getClient()->post('/embeddings', [
             'model' => $this->getConfig('ollama')['models']['embedding_model'],
@@ -120,8 +120,13 @@ class OllamaClient extends BaseClient
 
     protected function getClient()
     {
-        $api_token = Setting::getSecret('openai', 'api_key');
-        $baseUrl = Setting::getSecret('openai', 'api_url');
+        $api_token = Setting::getSecret('ollama', 'api_key');
+        $baseUrl = Setting::getSecret('ollama', 'api_url');
+
+        Log::info('LlmDriver::OllamaClient::getClient', [
+            'api_token' => $api_token,
+            'baseUrl' => $baseUrl,
+        ]);
 
         if (! $api_token || ! $baseUrl) {
             throw new \Exception('Ollama API Base URL or Token not found');

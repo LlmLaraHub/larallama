@@ -147,7 +147,7 @@ if (! function_exists('notify_ui_complete')) {
             ChatUiUpdateEvent::dispatch(
                 $model->getChatable(),
                 $model->getChat(),
-                \App\Domains\Documents\StatusEnum::Complete->name
+                \App\Domains\Chat\UiStatusEnum::Complete->name
             );
         } catch (\Exception $e) {
             Log::error('Error notifying UI', ['error' => $e->getMessage()]);

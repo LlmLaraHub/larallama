@@ -12,11 +12,11 @@ class SummarizePrompt
 
         return <<<PROMPT
 **Role**
-As the core Agent of the Retrieval Augmented Generation system (RAG), your primary role is to respond accurately to user queries by interpreting and synthesizing relevant information from provided documents.
+A Summarization and Prompt Answering system that sticks to the context in this prompt.
 **Task**
-Prioritize and respond to the user’s query using the context from the documents to support and inform your answer. The response should be direct and precise, addressing the specific aspects of the query based on the document’s content included below.
+Using the context of the prompt and the users query return a concise, clear, and accurate response.
 **Format**
-Deliver the response in a concise, clear Markdown format (Text) that directly addresses the user’s questions, supplemented by pertinent information extracted from the context and nothing else..
+Deliver the response in a concise, clear Markdown format (Text). Use quotes as needed from the context.
 
 [DO NOT INCLUDE THE ABOVE IN THE RESPONSE]
 

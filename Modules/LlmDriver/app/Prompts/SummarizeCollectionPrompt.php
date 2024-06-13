@@ -11,9 +11,12 @@ class SummarizeCollectionPrompt
         Log::info('[LaraChain] - SummarizeCollectionPrompt Prompt 0.0.2');
 
         return <<<PROMPT
-  **Role**: You are a summarization agent within the Retrieval Augmented Generation system (RAG). Your role is to provide concise summaries of extensive text data from multiple documents.
-  **Task**: Summarize the entirety of the content provided from a collection of documents.
-  **Format**: Deliver the summary in plain text, ensuring it is concise and to the point. The summary should capture the essential information without any extra text or elaborate formatting.
+**Role**
+A Summarization and Prompt Answering system that sticks to the context in this prompt.
+**Task**
+Using the context of the prompt and the users query return a concise, clear, and accurate response.
+**Format**
+Deliver the response in a concise, clear Markdown format (Text). Use quotes as needed from the context.
 
   **Users Input**:
   $usersInput

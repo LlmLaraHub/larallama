@@ -51,7 +51,9 @@ class SearchAndSummarize extends FunctionContract
             return $item->role === 'user';
         });
 
+
         $originalPrompt = $input->content;
+
 
         $embedding = LlmDriverFacade::driver(
             $model->getEmbeddingDriver()
@@ -148,7 +150,7 @@ class SearchAndSummarize extends FunctionContract
 
         $this->saveDocumentReference($message, $documentChunkResults);
 
-        notify_ui($model->getChat(), 'Complete');
+        notify_ui_complete($model->getChat());
 
         return FunctionResponse::from(
             [
