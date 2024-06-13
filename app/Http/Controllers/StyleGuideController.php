@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\PersonaResource;
-use App\Http\Resources\SettingResource;
 use App\Models\Persona;
 use App\Models\Setting;
 use Illuminate\Http\Request;
@@ -26,7 +25,7 @@ class StyleGuideController extends Controller
             'content' => 'string|required',
         ]);
 
-        $persona->update($validated );
+        $persona->update($validated);
 
         request()->session()->flash('flash.banner', 'Persona updated');
 

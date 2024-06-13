@@ -4,8 +4,6 @@ namespace Tests\Feature\Http\Controllers;
 
 use App\Models\Persona;
 use App\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class StyleGuideControllerTest extends TestCase
@@ -44,4 +42,3 @@ class StyleGuideControllerTest extends TestCase
         $this->assertEquals('Test Data', $persona->refresh()->content);
     }
 }
-
