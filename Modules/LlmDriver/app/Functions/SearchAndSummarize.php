@@ -51,9 +51,7 @@ class SearchAndSummarize extends FunctionContract
             return $item->role === 'user';
         });
 
-
         $originalPrompt = $input->content;
-
 
         $embedding = LlmDriverFacade::driver(
             $model->getEmbeddingDriver()

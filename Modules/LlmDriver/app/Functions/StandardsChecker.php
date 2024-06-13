@@ -2,7 +2,6 @@
 
 namespace LlmLaraHub\LlmDriver\Functions;
 
-use App\Domains\Chat\UiStatusEnum;
 use App\Domains\Prompts\StandardsCheckerPrompt;
 use Illuminate\Support\Facades\Log;
 use LlmLaraHub\LlmDriver\HasDrivers;

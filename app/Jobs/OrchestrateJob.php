@@ -10,15 +10,13 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Queue\Middleware\WithoutOverlapping;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
 
 class OrchestrateJob implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
     use Batchable;
-
+    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /**
      * Create a new job instance.
@@ -39,6 +37,7 @@ class OrchestrateJob implements ShouldQueue
         if ($this->batch()->cancelled()) {
             // Determine if the batch has been cancelled...
             notify_ui_complete($this->chat);
+
             return;
         }
 
@@ -46,6 +45,4 @@ class OrchestrateJob implements ShouldQueue
         Orchestrate::handle($this->messagesArray, $this->chat, $this->filter, $this->tool);
         notify_ui_complete($this->chat);
     }
-
-
 }

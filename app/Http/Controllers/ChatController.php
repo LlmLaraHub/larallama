@@ -102,17 +102,17 @@ class ChatController extends Controller
                 notify_ui($chat, 'Running Standards Checker');
                 $this->batchJob([
                     new OrchestrateJob($messagesArray, $chat, $filter, 'standards_checker'),
-                ], $chat, "search_and_summarize");
+                ], $chat, 'search_and_summarize');
             } elseif (LlmDriverFacade::driver($chat->getDriver())->hasFunctions()) {
                 Log::info('[LaraChain] Running Orchestrate added to queue');
                 $this->batchJob([
                     new OrchestrateJob($messagesArray, $chat, $filter),
-                ], $chat, "orchestrate");
+                ], $chat, 'orchestrate');
             } else {
                 Log::info('[LaraChain] Simple Search and Summarize added to queue');
                 $this->batchJob([
                     new SimpleSearchAndSummarizeOrchestrateJob($validated['input'], $chat, $filter),
-                ], $chat, "simple_search_and_summarize");
+                ], $chat, 'simple_search_and_summarize');
             }
 
             notify_ui($chat, 'Working on it!');
@@ -125,17 +125,17 @@ class ChatController extends Controller
         }
     }
 
-    protected function batchJob(array $jobs, Chat $chat, string $function) : void
+    protected function batchJob(array $jobs, Chat $chat, string $function): void
     {
         Bus::batch($jobs)
             ->name("Orchestrate Chat - {$chat->id} {$function}")
             ->then(function (Batch $batch) use ($chat) {
-            ChatUiUpdateEvent::dispatch(
-                $chat->getChatable(),
-                $chat,
-                \App\Domains\Chat\UiStatusEnum::Complete->name
-            );
-        })
+                ChatUiUpdateEvent::dispatch(
+                    $chat->getChatable(),
+                    $chat,
+                    \App\Domains\Chat\UiStatusEnum::Complete->name
+                );
+            })
             ->allowFailures()
             ->dispatch();
     }
