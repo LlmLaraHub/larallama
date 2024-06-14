@@ -52,6 +52,29 @@ class SettingTest extends TestCase
         $this->assertEquals('foobar', $openai);
     }
 
+    public function test_get_llms(): void
+    {
+        $this->be(User::factory()->create());
+        $model = Setting::createNewSetting();
+        $llms = $model->getLlms();
+
+        $this->assertCount(1, $llms);
+
+    }
+
+    public function test_get_llms_all_have_keys(): void
+    {
+        $this->be(User::factory()->create());
+        $model = Setting::factory()->all_have_keys()->create();
+        $llms = $model->getLlms();
+
+        $this->assertCount(4, $llms);
+
+        $this->assertCount(4,
+            Setting::getAllActiveLlms()
+        );
+    }
+
     public function test_get_settings(): void
     {
         $this->be(User::factory()->create());

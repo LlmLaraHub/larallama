@@ -3,26 +3,24 @@ import { onMounted, ref } from 'vue';
 
 defineProps({
     modelValue: String,
-    rows: {
-        type: Number,
-        default: 10,
-    }
+    options: Object
 });
 
 defineEmits(['update:modelValue']);
-
-const input = ref(null);
 
 
 </script>
 
 <template>
-    <textarea
-        ref="input"
-        :rows="rows"
-        class="textarea textarea-bordered textarea-secondary"
+
+    <select
         :value="modelValue"
         @input="$emit('update:modelValue', $event.target.value)"
     >
-    </textarea>
+        <option disabled>Choose one</option>
+        <option v-for="option in options" :key="option.id"
+        :value="option.id">{{option.name}}</option>
+    </select>
+
+
 </template>
