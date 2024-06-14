@@ -161,7 +161,7 @@ class Setting extends Model
                         'api_url' => 'https://api.groq.com/openai/v1/',
                     ],
                     'ollama' => [
-                        'api_key' =>  null,
+                        'api_key' => null,
                         'api_url' => 'http://localhost:11434/api/',
                     ],
                 ],
