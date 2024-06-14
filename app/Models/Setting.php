@@ -92,7 +92,7 @@ class Setting extends Model
         ?string $key = null,
         ?string $default = null
     ) {
-        $setting = Setting::first();
+        $setting = Setting::createNewSetting();
 
         $secrets = data_get($setting->secrets, $driver, null);
 

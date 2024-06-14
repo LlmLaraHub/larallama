@@ -39,7 +39,6 @@ class SettingTest extends TestCase
         $this->be(User::factory()->create());
         $model = Setting::factory()->all_have_keys()->create();
 
-
         $openai = Setting::getSecret('openai');
         $this->assertNotNull($openai);
         $this->assertEquals('https://api.openai.com/v1', $openai['api_url']);

@@ -50,13 +50,16 @@ class SettingFactory extends Factory
                 'api_key' => 'foobar',
                 'api_url' => 'https://api.openai.com/v1',
             ];
-            $attributes['meta_data']['ollama'] = [
+            $attributes['secrets']['ollama'] = [
+                'api_key' => 'foobar',
+                'api_url' => 'https://api.anthropic.com/v1',
+            ];
+            $attributes['secrets']['claude'] = [
                 'api_key' => 'foobar',
                 'api_url' => 'http://localhost:11434/api/',
             ];
+
             return $attributes;
         });
     }
-
-
 }

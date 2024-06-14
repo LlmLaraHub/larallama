@@ -5,7 +5,6 @@ namespace Tests\Feature;
 use App\Models\Setting;
 use Illuminate\Support\Facades\Http;
 use LlmLaraHub\LlmDriver\GroqClient;
-use LlmLaraHub\LlmDriver\OllamaClient;
 use LlmLaraHub\LlmDriver\Requests\MessageInDto;
 use LlmLaraHub\LlmDriver\Responses\CompletionResponse;
 use Tests\TestCase;
@@ -45,7 +44,7 @@ class GroqClientTest extends TestCase
         $results = $client->completionPool([
             'test1',
             'test2',
-            'test3'
+            'test3',
         ]);
 
         $this->assertCount(3, $results);
@@ -54,7 +53,6 @@ class GroqClientTest extends TestCase
 
     public function test_chat(): void
     {
-
 
         $client = new GroqClient();
 

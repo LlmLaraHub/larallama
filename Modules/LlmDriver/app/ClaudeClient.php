@@ -3,6 +3,7 @@
 namespace LlmLaraHub\LlmDriver;
 
 use App\Models\Setting;
+use Illuminate\Http\Client\Pool;
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
@@ -104,6 +105,68 @@ class ClaudeClient extends BaseClient
         ]);
     }
 
+    /**
+     * @return CompletionResponse[]
+     *
+     * @throws \Exception
+     */
+    public function completionPool(array $prompts, int $temperature = 0): array
+    {
+        $api_token = Setting::getSecret('claude', 'api_key');
+        $model = $this->getConfig('claude')['models']['completion_model'];
+        $maxTokens = $this->getConfig('claude')['max_tokens'];
+
+        if (is_null($api_token)) {
+            throw new \Exception('Missing Claude api key');
+        }
+
+        $responses = Http::pool(function (Pool $pool) use (
+            $prompts,
+            $api_token,
+            $model,
+            $maxTokens) {
+            foreach ($prompts as $prompt) {
+                $pool->retry(3, 6000)->withHeaders([
+                    'x-api-key' => $api_token,
+                    'anthropic-beta' => 'tools-2024-04-04',
+                    'anthropic-version' => $this->version,
+                    'content-type' => 'application/json',
+                ])->baseUrl($this->baseUrl)
+                    ->timeout(240)
+                    ->post('/messages', [
+                        'model' => $model,
+                        'max_tokens' => $maxTokens,
+                        'messages' => [
+                            [
+                                'role' => 'user',
+                                'content' => $prompt,
+                            ],
+                        ],
+                    ]);
+            }
+
+        });
+
+        $results = [];
+
+        foreach ($responses as $index => $response) {
+            if ($response->ok()) {
+                foreach ($response->json()['content'] as $content) {
+                    $results[] = CompletionResponse::from([
+                        'content' => $content['text'],
+                    ]);
+                }
+            } else {
+                Log::error('Claude API Error ', [
+                    'index' => $index,
+                    'error' => $response->body(),
+                ]);
+            }
+        }
+
+        return $results;
+    }
+
     protected function getError(Response $response)
     {
         return $response->json()['error']['type'];
@@ -111,7 +174,7 @@ class ClaudeClient extends BaseClient
 
     protected function getClient()
     {
-        $api_token = Setting::getSecret('openai', 'api_key');
+        $api_token = Setting::getSecret('claude', 'api_key');
 
         if (! $api_token) {
             throw new \Exception('Claude API Token not found');
@@ -274,5 +337,10 @@ class ClaudeClient extends BaseClient
         }
 
         return $newMessagesArray;
+    }
+
+    public function onQueue(): string
+    {
+        return 'claude';
     }
 }

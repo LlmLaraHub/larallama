@@ -2,10 +2,7 @@
 
 namespace LlmLaraHub\LlmDriver;
 
-use App\Models\Setting;
-use Illuminate\Http\Client\Pool;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use LlmLaraHub\LlmDriver\Requests\MessageInDto;
 use LlmLaraHub\LlmDriver\Responses\CompletionResponse;
@@ -14,6 +11,8 @@ use LlmLaraHub\LlmDriver\Responses\EmbeddingsResponseDto;
 abstract class BaseClient
 {
     protected string $driver = 'mock';
+
+    protected int $poolSize = 3;
 
     public function embedData(string $data): EmbeddingsResponseDto
     {
@@ -131,6 +130,7 @@ EOD;
     public function completionPool(array $prompts, int $temperature = 0): array
     {
         Log::info('LlmDriver::MockClient::completionPool');
+
         return [
             $this->completion($prompts[0]),
         ];
@@ -261,5 +261,10 @@ EOD;
         $driver = config("llmdriver.drivers.$driver");
 
         return data_get($driver, 'max_tokens', 8192);
+    }
+
+    public function poolSize(): int
+    {
+        return $this->poolSize;
     }
 }

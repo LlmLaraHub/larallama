@@ -113,8 +113,7 @@ class GroqClient extends BaseClient
         $model = $this->getConfig('groq')['models']['completion_model'];
         $maxTokens = $this->getConfig('groq')['max_tokens'];
 
-        $responses = Http::pool(function (Pool $pool) use
-        (
+        $responses = Http::pool(function (Pool $pool) use (
             $prompts,
             $token,
             $model,
@@ -163,7 +162,6 @@ class GroqClient extends BaseClient
 
         return $results;
     }
-
 
     protected function getClient()
     {
@@ -272,5 +270,4 @@ class GroqClient extends BaseClient
     {
         return 'groq';
     }
-
 }

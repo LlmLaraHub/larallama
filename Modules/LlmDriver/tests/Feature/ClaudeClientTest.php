@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\Setting;
 use Feature;
 use Illuminate\Support\Facades\Http;
 use LlmLaraHub\LlmDriver\ClaudeClient;
@@ -41,6 +42,30 @@ class ClaudeClientTest extends TestCase
         $results = $client->completion('test');
 
         $this->assertInstanceOf(CompletionResponse::class, $results);
+
+    }
+
+    public function test_completion_pool(): void
+    {
+        Setting::factory()->all_have_keys()->create();
+
+        $client = new ClaudeClient();
+
+        $data = get_fixture('claude_completion.json');
+
+        Http::fake([
+            'api.anthropic.com/*' => Http::response($data, 200),
+        ]);
+
+        Http::preventStrayRequests();
+
+        $results = $client->completionPool([
+            'test1',
+            'test2',
+            'test3',
+        ]);
+
+        $this->assertCount(3, $results);
 
     }
 

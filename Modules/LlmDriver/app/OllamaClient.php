@@ -117,15 +117,14 @@ class OllamaClient extends BaseClient
         }
 
         $model = $this->getConfig('ollama')['models']['completion_model'];
-        $responses = Http::pool(function (Pool $pool) use
-        (
+        $responses = Http::pool(function (Pool $pool) use (
             $prompts,
             $model,
             $baseUrl
         ) {
             foreach ($prompts as $prompt) {
                 $pool->withHeaders([
-                    'content-type' => 'application/json'
+                    'content-type' => 'application/json',
                 ])->timeout(120)
                     ->baseUrl($baseUrl)
                     ->post('/generate', [
