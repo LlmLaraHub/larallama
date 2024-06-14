@@ -57,6 +57,12 @@ const theme = ref('dark')
                                 Style Guides
                             </Link>
                         </li>
+                        <li class="hidden sm:flex">
+                            <Link :href="route('settings.show')"
+                                  :class="{ 'underline' : route().current('settings.show') }">
+                                Settings
+                            </Link>
+                        </li>
                     </ul>
                 </div>
                 <div class="navbar-center hidden lg:flex">

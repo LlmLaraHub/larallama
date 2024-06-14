@@ -35,8 +35,8 @@ class SettingController extends Controller
     public function updateOllama(Request $request, Setting $setting)
     {
         $validated = $request->validate([
-            'api_key' => 'string|required',
-            'api_url' => 'string|required',
+            'api_key' => 'string|nullable',
+            'api_url' => 'string|nullable',
         ]);
 
         $secrets = $setting->secrets;
