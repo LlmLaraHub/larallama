@@ -37,7 +37,8 @@ class SettingTest extends TestCase
     public function test_get_secret(): void
     {
         $this->be(User::factory()->create());
-        $model = Setting::createNewSetting();
+        $model = Setting::factory()->all_have_keys()->create();
+
 
         $openai = Setting::getSecret('openai');
         $this->assertNotNull($openai);
@@ -46,6 +47,10 @@ class SettingTest extends TestCase
         $openai = Setting::getSecret('openai', 'api_url');
         $this->assertNotNull($openai);
         $this->assertEquals('https://api.openai.com/v1', $openai);
+
+        $openai = Setting::getSecret('groq', 'api_key');
+        $this->assertNotNull($openai);
+        $this->assertEquals('foobar', $openai);
     }
 
     public function test_get_settings(): void

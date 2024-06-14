@@ -32,8 +32,31 @@ class SettingFactory extends Factory
                 'openai' => [
                     'api_key' => 'foobar',
                 ],
+                'groq' => [
+                    'api_key' => 'foobar',
+                ],
             ],
             'user_id' => User::factory(),
         ];
     }
+
+    public function all_have_keys(): Factory
+    {
+        return $this->state(function (array $attributes) {
+            $attributes['secrets']['groq'] = [
+                'api_key' => 'foobar',
+            ];
+            $attributes['secrets']['openai'] = [
+                'api_key' => 'foobar',
+                'api_url' => 'https://api.openai.com/v1',
+            ];
+            $attributes['meta_data']['ollama'] = [
+                'api_key' => 'foobar',
+                'api_url' => 'http://localhost:11434/api/',
+            ];
+            return $attributes;
+        });
+    }
+
+
 }

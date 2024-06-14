@@ -139,8 +139,9 @@ class ChatController extends Controller
 
     protected function batchJob(array $jobs, Chat $chat, string $function): void
     {
+        $driver = $chat->getDriver();
         Bus::batch($jobs)
-            ->name("Orchestrate Chat - {$chat->id} {$function}")
+            ->name("Orchestrate Chat - {$chat->id} {$function} {$driver}")
             ->then(function (Batch $batch) use ($chat) {
                 ChatUiUpdateEvent::dispatch(
                     $chat->getChatable(),

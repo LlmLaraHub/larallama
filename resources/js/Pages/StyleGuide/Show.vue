@@ -3,6 +3,7 @@ import AppLayout from '@/Layouts/AppLayout.vue';
 import SectionBorder from '@/Components/SectionBorder.vue';
 import Persona from "./Partials/Persona.vue";
 import Images from "@/Pages/StyleGuide/Partials/Images.vue";
+import SocialLinks from "@/Pages/StyleGuide/Partials/SocialLinks.vue";
 
 const props = defineProps({
     personas: Object,
@@ -31,6 +32,10 @@ items-center flex justify-start gap-4
                 </div>
                 <div>
                     <Images :images="{}"/>
+                    <SectionBorder/>
+                </div>
+                <div>
+                    <SocialLinks :socials="{}"/>
                     <SectionBorder/>
                 </div>
             </div>

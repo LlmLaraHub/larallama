@@ -2,7 +2,10 @@
 
 namespace LlmLaraHub\LlmDriver;
 
+use App\Models\Setting;
+use Illuminate\Http\Client\Pool;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use LlmLaraHub\LlmDriver\Requests\MessageInDto;
 use LlmLaraHub\LlmDriver\Responses\CompletionResponse;
@@ -118,6 +121,19 @@ EOD;
     public function hasFunctions(): bool
     {
         return count($this->getFunctions()) > 0;
+    }
+
+    /**
+     * @return CompletionResponse[]
+     *
+     * @throws \Exception
+     */
+    public function completionPool(array $prompts, int $temperature = 0): array
+    {
+        Log::info('LlmDriver::MockClient::completionPool');
+        return [
+            $this->completion($prompts[0]),
+        ];
     }
 
     public function getFunctions(): array

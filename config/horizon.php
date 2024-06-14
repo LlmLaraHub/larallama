@@ -219,6 +219,19 @@ return [
             'timeout' => 600,
             'nice' => 0,
         ],
+        'groq' => [
+            'connection' => 'redis',
+            'queue' => ['groq'],
+            'balance' => 'auto',
+            'autoScalingStrategy' => 'time',
+            'maxProcesses' => env('GROQ_NUM_PARALLEL', 1),
+            'maxTime' => 0,
+            'maxJobs' => 0,
+            'memory' => 256,
+            'tries' => 10,
+            'timeout' => 600,
+            'nice' => 0,
+        ],
     ],
 
     'environments' => [

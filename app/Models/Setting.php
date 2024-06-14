@@ -94,14 +94,6 @@ class Setting extends Model
     ) {
         $setting = Setting::first();
 
-        if (! $setting) {
-            /**
-             * @TODO
-             * Throw an exception here
-             */
-            return config('llmdriver.drivers.'.$driver);
-        }
-
         $secrets = data_get($setting->secrets, $driver, null);
 
         if (! $key) {

@@ -110,7 +110,7 @@ class OpenAiClient extends BaseClient
             } else {
                 Log::error('OpenAi API Error ', [
                     'index' => $index,
-                    'error' => $result->body(),
+                    'error' => $response->body(),
                 ]);
             }
         }

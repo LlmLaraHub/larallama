@@ -4,6 +4,7 @@ namespace LlmLaraHub\LlmDriver;
 
 use App\Models\Setting;
 use Illuminate\Contracts\Container\BindingResolutionException;
+use Illuminate\Http\Client\Pool;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Laravel\Pennant\Feature;
@@ -96,11 +97,61 @@ class OllamaClient extends BaseClient
             'stream' => false,
         ]);
 
-        put_fixture('ollama_chat_results.json', $response->json());
-
         $results = $response->json()['message']['content'];
 
         return new CompletionResponse($results);
+    }
+
+    /**
+     * @return CompletionResponse[]
+     *
+     * @throws \Exception
+     */
+    public function completionPool(array $prompts, int $temperature = 0): array
+    {
+        Log::info('LlmDriver::Ollama::completionPool');
+        $baseUrl = Setting::getSecret('ollama', 'api_url');
+
+        if (! $baseUrl) {
+            throw new \Exception('Ollama API Base URL or Token not found');
+        }
+
+        $model = $this->getConfig('ollama')['models']['completion_model'];
+        $responses = Http::pool(function (Pool $pool) use
+        (
+            $prompts,
+            $model,
+            $baseUrl
+        ) {
+            foreach ($prompts as $prompt) {
+                $pool->withHeaders([
+                    'content-type' => 'application/json'
+                ])->timeout(120)
+                    ->baseUrl($baseUrl)
+                    ->post('/generate', [
+                        'model' => $model,
+                        'prompt' => $prompt,
+                        'stream' => false,
+                    ]);
+            }
+        });
+
+        $results = [];
+
+        foreach ($responses as $index => $response) {
+            if ($response->ok()) {
+                $results[] = CompletionResponse::from([
+                    'content' => $response->json()['response'],
+                ]);
+            } else {
+                Log::error('Ollama API Error ', [
+                    'index' => $index,
+                    'error' => $response->body(),
+                ]);
+            }
+        }
+
+        return $results;
     }
 
     public function completion(string $prompt): CompletionResponse
