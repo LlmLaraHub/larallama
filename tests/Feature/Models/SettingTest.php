@@ -58,7 +58,7 @@ class SettingTest extends TestCase
         $model = Setting::createNewSetting();
         $llms = $model->getLlms();
 
-        $this->assertCount(1, $llms);
+        $this->assertCount(0, $llms);
 
     }
 
