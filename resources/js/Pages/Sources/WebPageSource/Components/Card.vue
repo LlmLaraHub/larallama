@@ -35,6 +35,10 @@ const run = (source) => {
     <div class="card rounded-none w-96 dark:bg-neutral shadow-xl" :key="source.id">
         <div class="card-body">
             <Settings :source="source"/>
+
+            <div class="text-xs">
+                URLs: <span class="font-bold">{{ source.meta_data.urls }}</span>
+            </div>
             <div class="card-actions justify-end">
                 <button @click="run(source)" type="button" class="btn btn-primary rounded-none">Run</button>
                 <Link :href="route('collections.sources.web_page_source.edit', {

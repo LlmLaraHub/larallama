@@ -34,7 +34,7 @@ const form = useForm({
     active: props.source.data.active,
     recurring: props.source.data.recurring,
     meta_data: {
-        example: props.source.data.meta_data.example
+        urls: props.source.data.meta_data.urls
     }
 
 });

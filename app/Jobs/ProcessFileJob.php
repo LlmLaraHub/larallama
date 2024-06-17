@@ -32,6 +32,12 @@ class ProcessFileJob implements ShouldQueue
      */
     public function handle(): void
     {
+        /**
+         * @TODO
+         * I need a document->reset() type method
+         * to better deal with this
+         * Then it uses the source type to just do that one document
+         */
         $document = $this->document;
 
         if ($document->type === TypesEnum::Pptx) {
@@ -69,7 +75,20 @@ class ProcessFileJob implements ShouldQueue
                 ->allowFailures()
                 ->onQueue(LlmDriverFacade::driver($document->getDriver())->onQueue())
                 ->dispatch();
+        } elseif ($document->type === TypesEnum::HTML) {
 
+            Log::info('Processing Html Document');
+
+            Bus::batch([
+                new WebPageSourceJob($this->document->source, $this->document->file_path),
+            ])
+                ->name('Processing Html Document - '.$document->id)
+                ->finally(function (Batch $batch) use ($document) {
+                    DocumentProcessingCompleteJob::dispatch($document);
+                })
+                ->allowFailures()
+                ->onQueue(LlmDriverFacade::driver($document->getDriver())->onQueue())
+                ->dispatch();
         } elseif ($document->type === TypesEnum::PDF) {
             Log::info('Processing PDF Document');
             Bus::batch([

@@ -21,6 +21,7 @@ use LlmLaraHub\TagFunction\Models\Tag;
  * @property int $id
  * @property int $collection_id
  * @property string|null $summary
+ * @property string|null $original_content
  * @property string|null $file_path
  * @property StructuredTypeEnum $child_type
  */

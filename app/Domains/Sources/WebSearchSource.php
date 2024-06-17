@@ -38,13 +38,13 @@ class WebSearchSource extends BaseSource
 
             $jobs = [];
 
-            Log::info('[Larachain] Getting Content from websearch');
+            Log::info('[LaraChain] Getting Content from websearch');
 
             foreach ($response->getWeb() as $web) {
                 $jobs[] = new GetWebContentJob($source, $web);
             }
 
-            Log::info('[Larachain] Dispatching jobs to get content', [
+            Log::info('[LaraChain] Dispatching jobs to get content', [
                 'jobs' => count($jobs),
             ]);
 

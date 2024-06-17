@@ -18,9 +18,7 @@ class GetWebContentJobTest extends TestCase
      */
     public function test_job_html(): void
     {
-        Feature::define('html_to_text', function () {
-            return true;
-        });
+
         Bus::fake();
 
         $source = Source::factory()->create();
@@ -35,15 +33,11 @@ class GetWebContentJobTest extends TestCase
             'profile' => ['key' => 'value'],
         ]);
 
-        $content = get_fixture('dummy_content.txt', false);
+        $html = get_fixture('test_medium_2.html', false);
 
-        GetPage::shouldReceive('make->handle')
-            ->once()
-            ->andReturn('foobar');
+        GetPage::shouldReceive('make->handle')->once()->andReturn($html);
 
-        GetPage::shouldReceive('make->parseHtml')
-            ->once()
-            ->andReturn($content);
+        GetPage::makePartial();
 
         $this->assertDatabaseCount('documents', 0);
         $this->assertDatabaseCount('document_chunks', 0);
@@ -51,7 +45,7 @@ class GetWebContentJobTest extends TestCase
 
         $job->handle();
         $this->assertDatabaseCount('documents', 1);
-        $this->assertDatabaseCount('document_chunks', 82);
+        $this->assertDatabaseCount('document_chunks', 33);
         $document = Document::first();
         $this->assertEquals('Example', $document->subject);
 
@@ -59,8 +53,8 @@ class GetWebContentJobTest extends TestCase
 
     public function test_job_pdf(): void
     {
-        Feature::define('html_to_text', function () {
-            return false;
+        Feature::define('html_to_pdf', function () {
+            return true;
         });
         Bus::fake();
 

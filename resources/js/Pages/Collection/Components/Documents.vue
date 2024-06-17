@@ -134,9 +134,9 @@ onUnmounted(() => {
                                             Type</th>
                                         <th>
                                             Name</th>
-                                        <th>
+                                        <th v-if="false">
                                             Children</th>
-                                        <th>
+                                        <th v-if="false">
                                             Parent Id</th>
                                         <th>
                                             Pages</th>
@@ -178,7 +178,13 @@ onUnmounted(() => {
                                                             </div>
                                                         </div>
                                                         <div class="text-gray-400 text-sm">
-                                                            <a class="underline" target="_blank" :href="route('download.document', {
+                                                            <a
+                                                                :href="document.file_path"
+                                                                v-if="document.type === 'Html'"
+                                                                class="underline truncate w-8" target="_blank">
+                                                                {{ document.file_path }}
+                                                            </a>
+                                                            <a v-else class="underline" target="_blank" :href="route('download.document', {
                                                                     collection: collection.id,
                                                                     document_name: document.file_path
                                                                 })">
@@ -197,11 +203,11 @@ onUnmounted(() => {
                                                 <div class="text-xs text-secondary">updated: {{ document.updated_at_diff }}</div>
                                             </td>
 
-                                            <td>
+                                            <td v-if="false">
                                                 {{ document.children_count }}
                                             </td>
 
-                                            <td>
+                                            <td v-if="false">
                                                 {{ document.parent_id }}
                                             </td>
                                             <td>

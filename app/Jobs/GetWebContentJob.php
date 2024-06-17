@@ -77,7 +77,7 @@ class GetWebContentJob implements ShouldQueue
          * there is some code in the getPage for html
          * that might be worth it later
          */
-        if (! Feature::active('html_to_text')) {
+        if (Feature::active('html_to_pdf')) {
             $document->update([
                 'type' => TypesEnum::PDF,
                 'file_path' => md5($this->webResponseDto->url).'.pdf',
@@ -94,19 +94,15 @@ class GetWebContentJob implements ShouldQueue
                 ->onQueue(LlmDriverFacade::driver($this->source->getDriver())->onQueue())
                 ->dispatch();
         } else {
-            $results = GetPage::make($this->source->collection)->parseHtml($html);
+            $results = GetPage::parseHtml($html);
 
-            $page_number = 1;
-            $guid = md5($this->webResponseDto->url);
+            $results = to_utf8($results);
 
-            /**
-             * @TODO
-             * I need to use the token_counter and the break up the string till
-             * all of it fits into that limit
-             * In the meantime just doing below
-             */
-            $maxTokenSize = LlmDriverFacade::driver($this->source->getDriver())
-                ->getMaxTokenSize($this->source->getDriver());
+            $document->update([
+                'type' => TypesEnum::HTML,
+                'file_path' => $this->webResponseDto->url,
+                'original_content' => $results,
+            ]);
 
             $page_number = 1;
 
@@ -132,6 +128,7 @@ class GetWebContentJob implements ShouldQueue
 
                 $this->batch()->add([
                     new VectorlizeDataJob($DocumentChunk),
+                    new SummarizeDocumentJob($document),
                 ]);
 
                 $page_number++;

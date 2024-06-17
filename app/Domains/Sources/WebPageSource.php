@@ -2,8 +2,11 @@
 
 namespace App\Domains\Sources;
 
+use App\Jobs\WebPageSourceJob;
 use App\Models\Source;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Bus\Batch;
+use Illuminate\Support\Facades\Bus;
+use LlmLaraHub\LlmDriver\LlmDriverFacade;
 
 class WebPageSource extends BaseSource
 {
@@ -21,8 +24,26 @@ class WebPageSource extends BaseSource
      */
     public function handle(Source $source): void
     {
+        $jobs = [];
 
-        Log::info('[LaraChain] - WebPageSource Doing something');
+        $urls = $source->meta_data['urls'];
+
+        $urls = explode("\n", $urls);
+
+        foreach ($urls as $url) {
+
+            $jobs[] = new WebPageSourceJob($source, $url);
+
+        }
+
+        Bus::batch($jobs)
+            ->name('Web Pages to Documents - '.$source->subject)
+            ->finally(function (Batch $batch) {
+                //this is triggered in the PdfTransformer class
+            })
+            ->allowFailures()
+            ->onQueue(LlmDriverFacade::driver($source->getDriver())->onQueue())
+            ->dispatch();
 
     }
 }

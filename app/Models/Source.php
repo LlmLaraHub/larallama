@@ -14,6 +14,7 @@ use Illuminate\Support\Str;
 use LlmLaraHub\LlmDriver\HasDrivers;
 
 /**
+ * @property string $subject
  * @property string $slug
  */
 class Source extends Model implements HasDrivers
