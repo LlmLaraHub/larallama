@@ -11,7 +11,7 @@ class VideoResponseDto extends Data
         public string $title,
         public string $description,
         public array $meta_data,
-        public string $thumbnail,
+        public ?string $thumbnail = null,
         public ?string $age = null,
     ) {
     }
