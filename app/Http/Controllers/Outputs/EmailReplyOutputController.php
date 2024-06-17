@@ -42,7 +42,7 @@ class EmailReplyOutputController extends OutputController
         ];
     }
 
-    public function updateOutput(Output $output, array $validated) : void
+    public function updateOutput(Output $output, array $validated): void
     {
         $secrets = [
             'username' => data_get($validated, 'secrets.username', null),

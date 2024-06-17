@@ -81,7 +81,7 @@ class OutputController extends Controller
         return back();
     }
 
-    public function updateOutput(Output $output, array $validated) : void
+    public function updateOutput(Output $output, array $validated): void
     {
         $output->update($validated);
     }
