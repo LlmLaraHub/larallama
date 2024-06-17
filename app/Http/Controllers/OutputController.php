@@ -79,25 +79,9 @@ class OutputController extends Controller
     public function store(Collection $collection)
     {
 
-        $validated = request()->validate([
-            'title' => 'required|string',
-            'summary' => 'required|string',
-            'active' => 'boolean|nullable',
-            'public' => 'boolean|nullable',
-            'recurring' => 'string|nullable',
-            'meta_data' => 'array|nullable',
-        ]);
+        $validated = request()->validate($this->getValidationRules());
 
-        Output::create([
-            'title' => $validated['title'],
-            'summary' => $validated['summary'],
-            'collection_id' => $collection->id,
-            'recurring' => data_get($validated, 'recurring', null),
-            'active' => data_get($validated, 'active', false),
-            'public' => data_get($validated, 'public', false),
-            'type' => $this->outputTypeEnum,
-            'meta_data' => data_get($validated, 'meta_data', []),
-        ]);
+        $this->makeOutput($validated, $collection);
 
         request()->session()->flash('flash.banner', 'Output added successfully');
 
@@ -116,14 +100,7 @@ class OutputController extends Controller
 
     public function update(Collection $collection, Output $output)
     {
-        $validated = request()->validate([
-            'title' => 'required|string',
-            'recurring' => 'string|nullable',
-            'summary' => 'required|string',
-            'active' => 'boolean|nullable',
-            'public' => 'boolean|nullable',
-            'meta_data' => 'array|nullable',
-        ]);
+        $validated = request()->validate($this->getValidationRules());
 
         $output->update($validated);
 
@@ -208,6 +185,32 @@ class OutputController extends Controller
         request()->session()->flash('flash.banner', 'Output deleted');
 
         return to_route('collections.outputs.index', $collection);
+    }
+
+    protected function getValidationRules(): array
+    {
+        return [
+            'title' => 'required|string',
+            'summary' => 'required|string',
+            'active' => 'boolean|nullable',
+            'public' => 'boolean|nullable',
+            'recurring' => 'string|nullable',
+            'meta_data' => 'array|nullable',
+        ];
+    }
+
+    protected function makeOutput(array $validated, Collection $collection): void
+    {
+        Output::create([
+            'title' => $validated['title'],
+            'summary' => $validated['summary'],
+            'collection_id' => $collection->id,
+            'recurring' => data_get($validated, 'recurring', null),
+            'active' => data_get($validated, 'active', false),
+            'public' => data_get($validated, 'public', false),
+            'type' => $this->outputTypeEnum,
+            'meta_data' => data_get($validated, 'meta_data', []),
+        ]);
     }
 
     public function getPrompts(): array
