@@ -7,12 +7,9 @@ use App\Domains\Sources\SourceTypeEnum;
 use App\Http\Controllers\BaseSourceController;
 use App\Models\Collection;
 use App\Models\Source;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Str;
 
 class WebPageSourceController extends BaseSourceController
 {
-
     protected SourceTypeEnum $sourceTypeEnum = SourceTypeEnum::WebPageSource;
 
     protected string $edit_path = 'Sources/WebPageSource/Edit';
@@ -49,11 +46,10 @@ class WebPageSourceController extends BaseSourceController
         ]);
     }
 
-
-    public function getPrompts(): array {
+    public function getPrompts(): array
+    {
         return [
             'web_page' => WebPagePrompt::prompt('[CONTEXT]'),
         ];
     }
-
 }

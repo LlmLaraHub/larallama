@@ -27,7 +27,7 @@ class WebPageSourceControllerTest extends TestCase
                 'details' => 'Test Details',
                 'meta_data' => [
                     'urls' => 'https://larallama.io/posts/numerous-ui-updates-prompt-template-improvements-and-more
-https://docs.larallama.io/developing.html'
+https://docs.larallama.io/developing.html',
                 ],
             ])->assertSessionHasNoErrors();
         $response->assertSessionHas('flash.banner', 'Source added successfully');
@@ -60,7 +60,7 @@ https://docs.larallama.io/developing.html'
                 'details' => 'Test Details',
                 'meta_data' => [
                     'urls' => 'https://larallama.io/posts/numerous-ui-updates-prompt-template-improvements-and-more
-https://docs.larallama.io/developing.html'
+https://docs.larallama.io/developing.html',
                 ],
             ])
             ->assertSessionHasNoErrors()

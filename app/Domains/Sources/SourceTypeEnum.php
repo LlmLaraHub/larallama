@@ -19,7 +19,6 @@ enum SourceTypeEnum: string
     case WebPageSource = 'web_page_source';
     //leave for scripting
 
-
     public static function ignore(): array
     {
         return [

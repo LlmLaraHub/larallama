@@ -18,9 +18,6 @@ class WebPageSource extends BaseSource
      * API hits source with article added to CMS
      * Source triggers Reaction via Output that sends the results of the LLM
      * looking in the collection of data for related content
-     *
-     * @param Source $source
-     * @return void
      */
     public function handle(Source $source): void
     {
