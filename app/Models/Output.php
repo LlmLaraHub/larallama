@@ -31,6 +31,7 @@ class Output extends Model
 
     protected $casts = [
         'last_run' => 'datetime',
+        'secrets' => 'encrypted:array',
         'type' => OutputTypeEnum::class,
         'recurring' => RecurringTypeEnum::class,
         'meta_data' => 'array',

@@ -27,6 +27,9 @@ class OutputFactory extends Factory
             'recurring' => RecurringTypeEnum::Daily,
             'type' => OutputTypeEnum::WebPage,
             'meta_data' => [],
+            'secrets' => [
+                'foo' => 'bar',
+            ],
             'public' => fake()->boolean,
             'summary' => fake()->sentences(4, true),
         ];

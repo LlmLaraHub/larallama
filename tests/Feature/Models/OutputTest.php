@@ -23,6 +23,13 @@ class OutputTest extends TestCase
 
         $this->assertNotNull($output->slug);
         $this->assertNotNull($output->meta_data);
+        $this->assertNotNull($output->secrets);
+        $this->assertEquals(
+            [
+                'foo' => 'bar',
+            ],
+            $output->secrets
+        );
         $this->assertEquals(OutputTypeEnum::WebPage, $output->type);
         $this->assertNotNull($output->collection->id);
         $this->assertNotNull($output->collection->outputs()->first()->id);
