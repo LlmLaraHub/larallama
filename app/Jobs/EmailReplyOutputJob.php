@@ -13,8 +13,8 @@ use Illuminate\Queue\SerializesModels;
 
 class EmailReplyOutputJob implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
     use Batchable;
+    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /**
      * Create a new job instance.

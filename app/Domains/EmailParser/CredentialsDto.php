@@ -6,7 +6,6 @@ use Spatie\LaravelData\Data;
 
 class CredentialsDto extends Data
 {
-
     public function __construct(
         public string $username,
         public string $password,
@@ -14,8 +13,7 @@ class CredentialsDto extends Data
         public string $port,
         public string $protocol,
         public string $encryption,
-        public string $email_box = "Inbox"
+        public string $email_box = 'Inbox'
     ) {
     }
-
 }

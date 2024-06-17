@@ -20,9 +20,9 @@ class EmailClientTest extends TestCase
         $source = Source::factory()
             ->emailSecrets()
             ->create([
-            'slug' => 'test',
-            'type' => SourceTypeEnum::EmailBoxSource,
-        ]);
+                'slug' => 'test',
+                'type' => SourceTypeEnum::EmailBoxSource,
+            ]);
 
         EmailClientFacade::shouldReceive('setConfig')
             ->once()

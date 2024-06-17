@@ -41,7 +41,6 @@ class SourceFactory extends Factory
         ];
     }
 
-
     public function emailSecrets(): Factory
     {
         return $this->state(function (array $attributes) {
@@ -52,11 +51,10 @@ class SourceFactory extends Factory
                     'host' => $this->faker->url,
                     'email_box' => $this->faker->email,
                     'port' => 443,
-                    'protocol' => "imap",
-                    'encryption' => "ssl",
+                    'protocol' => 'imap',
+                    'encryption' => 'ssl',
                 ],
             ];
         });
     }
-
 }

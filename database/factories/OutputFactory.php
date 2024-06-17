@@ -45,8 +45,8 @@ class OutputFactory extends Factory
                     'host' => $this->faker->url,
                     'email_box' => $this->faker->email,
                     'port' => 443,
-                    'protocol' => "imap",
-                    'encryption' => "ssl",
+                    'protocol' => 'imap',
+                    'encryption' => 'ssl',
                 ],
             ];
         });

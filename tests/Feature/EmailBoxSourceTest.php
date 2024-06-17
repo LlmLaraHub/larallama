@@ -50,9 +50,9 @@ BODY;
         $source = Source::factory()
             ->emailSecrets()
             ->create([
-            'slug' => 'test',
-            'type' => SourceTypeEnum::EmailBoxSource,
-        ]);
+                'slug' => 'test',
+                'type' => SourceTypeEnum::EmailBoxSource,
+            ]);
 
         $source->run();
     }

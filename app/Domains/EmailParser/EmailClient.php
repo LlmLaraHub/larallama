@@ -3,7 +3,6 @@
 namespace App\Domains\EmailParser;
 
 use App\Domains\Sources\SourceTypeEnum;
-use App\Models\Source;
 use Illuminate\Support\Facades\Log;
 use Webklex\PHPIMAP\Message;
 
@@ -103,7 +102,7 @@ class EmailClient
 
                         $mail[] = $messageDto;
 
-                        if($delete) {
+                        if ($delete) {
                             $message->delete(expunge: true);
                         }
                     }

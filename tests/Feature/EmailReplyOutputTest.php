@@ -5,13 +5,10 @@ namespace Tests\Feature;
 use App\Domains\EmailParser\MailDto;
 use App\Domains\Outputs\EmailReplyOutput;
 use App\Domains\Outputs\OutputTypeEnum;
-use App\Jobs\EmailReplyOutputJob;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
+use App\Models\Output;
 use Facades\App\Domains\EmailParser\EmailClient;
 use Illuminate\Support\Facades\Bus;
 use Tests\TestCase;
-use App\Models\Output;
 
 class EmailReplyOutputTest extends TestCase
 {
@@ -26,8 +23,8 @@ class EmailReplyOutputTest extends TestCase
         $output = Output::factory()
             ->emailSecrets()
             ->create([
-            'type' => OutputTypeEnum::EmailReplyOutput,
-        ]);
+                'type' => OutputTypeEnum::EmailReplyOutput,
+            ]);
 
         EmailClient::shouldReceive('handle')
             ->once()->andReturn([
