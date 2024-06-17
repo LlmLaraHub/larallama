@@ -17,9 +17,6 @@ class WebPageSourceTest extends TestCase
 
         $html = get_fixture('test_medium_2.html', false);
 
-        GetPage::shouldReceive('make->handle')->twice()->andReturn($html);
-
-        GetPage::makePartial();
 
         $source = Source::factory()->create([
             'slug' => 'test',
