@@ -4,7 +4,6 @@ namespace Tests\Feature;
 
 use App\Domains\Sources\SourceTypeEnum;
 use App\Models\Source;
-use Facades\App\Domains\Sources\WebSearch\GetPage;
 use Illuminate\Support\Facades\Bus;
 use Tests\TestCase;
 
@@ -16,7 +15,6 @@ class WebPageSourceTest extends TestCase
         Bus::fake();
 
         $html = get_fixture('test_medium_2.html', false);
-
 
         $source = Source::factory()->create([
             'slug' => 'test',

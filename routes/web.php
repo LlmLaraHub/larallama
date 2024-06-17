@@ -247,6 +247,45 @@ Route::middleware([
             ->name('chats.messages.create');
     });
 
+    Route::controller(\App\Http\Controllers\Sources\WebhookSourceController::class)->group(
+        function () {
+            Route::get('/collections/{collection}/sources/webhook_source/create', 'create')
+                ->name('collections.sources.webhook_source.create');
+            Route::post('/collections/{collection}/sources/webhook_source', 'store')
+                ->name('collections.sources.webhook_source.store');
+            Route::get('/collections/{collection}/sources/webhook_source/{source}/edit', 'edit')
+                ->name('collections.sources.webhook_source.edit');
+            Route::put('/collections/{collection}/sources/webhook_source/{source}/update', 'update')
+                ->name('collections.sources.webhook_source.update');
+        }
+    );
+
+    Route::controller(\App\Http\Controllers\Sources\JsonSourceController::class)->group(
+        function () {
+            Route::get('/collections/{collection}/sources/json_source/create', 'create')
+                ->name('collections.sources.json_source.create');
+            Route::post('/collections/{collection}/sources/json_source', 'store')
+                ->name('collections.sources.json_source.store');
+            Route::get('/collections/{collection}/sources/json_source/{source}/edit', 'edit')
+                ->name('collections.sources.json_source.edit');
+            Route::put('/collections/{collection}/sources/json_source/{source}/update', 'update')
+                ->name('collections.sources.json_source.update');
+        }
+    );
+
+    Route::controller(\App\Http\Controllers\Sources\WebPageSourceController::class)->group(
+        function () {
+            Route::get('/collections/{collection}/sources/web_page_source/create', 'create')
+                ->name('collections.sources.web_page_source.create');
+            Route::post('/collections/{collection}/sources/web_page_source', 'store')
+                ->name('collections.sources.web_page_source.store');
+            Route::get('/collections/{collection}/sources/web_page_source/{source}/edit', 'edit')
+                ->name('collections.sources.web_page_source.edit');
+            Route::put('/collections/{collection}/sources/web_page_source/{source}/update', 'update')
+                ->name('collections.sources.web_page_source.update');
+        }
+    );
+
 });
 
 Route::get('/pages/{output}', [
@@ -259,54 +298,6 @@ Route::post('/pages/{output:id}/chat', [
 ])
     ->name('collections.outputs.web_page.chat');
 
-Route::controller(\App\Http\Controllers\Sources\WebhookSourceController::class)->group(
-    function () {
-        Route::get('/collections/{collection}/sources/webhook_source/create', 'create')
-            ->name('collections.sources.webhook_source.create');
-        Route::post('/collections/{collection}/sources/webhook_source', 'store')
-            ->name('collections.sources.webhook_source.store');
-        Route::get('/collections/{collection}/sources/webhook_source/{source}/edit', 'edit')
-            ->name('collections.sources.webhook_source.edit');
-        Route::put('/collections/{collection}/sources/webhook_source/{source}/update', 'update')
-            ->name('collections.sources.webhook_source.update');
-    }
-);
 
-Route::controller(\App\Http\Controllers\Sources\JsonSourceController::class)->group(
-    function () {
-        Route::get('/collections/{collection}/sources/json_source/create', 'create')
-            ->name('collections.sources.json_source.create');
-        Route::post('/collections/{collection}/sources/json_source', 'store')
-            ->name('collections.sources.json_source.store');
-        Route::get('/collections/{collection}/sources/json_source/{source}/edit', 'edit')
-            ->name('collections.sources.json_source.edit');
-        Route::put('/collections/{collection}/sources/json_source/{source}/update', 'update')
-            ->name('collections.sources.json_source.update');
-    }
-);
 
-Route::controller(\App\Http\Controllers\Sources\FooBarController::class)->group(
-    function () {
-        Route::get('/collections/{collection}/sources/foo_bar/create', 'create')
-            ->name('collections.sources.foo_bar.create');
-        Route::post('/collections/{collection}/sources/foo_bar', 'store')
-            ->name('collections.sources.foo_bar.store');
-        Route::get('/collections/{collection}/sources/foo_bar/{source}/edit', 'edit')
-            ->name('collections.sources.foo_bar.edit');
-        Route::put('/collections/{collection}/sources/foo_bar/{source}/update', 'update')
-            ->name('collections.sources.foo_bar.update');
-    }
-);
 
-Route::controller(\App\Http\Controllers\Sources\WebPageSourceController::class)->group(
-    function () {
-        Route::get('/collections/{collection}/sources/web_page_source/create', 'create')
-            ->name('collections.sources.web_page_source.create');
-        Route::post('/collections/{collection}/sources/web_page_source', 'store')
-            ->name('collections.sources.web_page_source.store');
-        Route::get('/collections/{collection}/sources/web_page_source/{source}/edit', 'edit')
-            ->name('collections.sources.web_page_source.edit');
-        Route::put('/collections/{collection}/sources/web_page_source/{source}/update', 'update')
-            ->name('collections.sources.web_page_source.update');
-    }
-);
