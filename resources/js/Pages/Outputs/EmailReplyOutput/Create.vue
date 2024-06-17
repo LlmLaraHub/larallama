@@ -27,7 +27,14 @@ const form = useForm({
     meta_data: {
         signature: ""
     },
-    signature: ""
+    secrets: {
+        username: "bob@bobsburgers.com",
+        password: "password",
+        host: "mail.bobsburgers.com",
+        email_box: "Inbox",
+        port: 993,
+        delete: true,
+    },
 });
 
 const choosePrompt = (prompt) => {
@@ -37,14 +44,7 @@ const choosePrompt = (prompt) => {
 const to_emails = ref("")
 
 const submit = () => {
-    form.
-    transform((data) => ({
-        ...data,
-        meta_data: {
-            signature: form.signature
-        },
-    }))
-        .post(
+    form.post(
             route('collections.outputs.email_reply_output.store', {
                 collection: props.collection.data.id
             }), {

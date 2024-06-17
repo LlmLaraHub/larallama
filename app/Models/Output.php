@@ -18,6 +18,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property Collection $collection
  * @property bool $public
  * @property bool $active
+ * @property array $secrets
  * @property Carbon $last_run
  * @property RecurringTypeEnum $recurring
  */

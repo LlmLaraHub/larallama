@@ -64,6 +64,13 @@ class EmailReplyOutputControllerTest extends TestCase
                     'meta_data' => [
                         'signature' => 'Call if needed',
                     ],
+                    'secrets' => [
+                        'username' => 'bob@bobsburgers.com',
+                        'password' => 'password',
+                        'delete' => true,
+                        'host' => 'mail.privateemail.com',
+                        'email_box' => 'bob@bobsburgers.com',
+                    ],
                 ])
             ->assertStatus(302)
             ->assertSessionHasNoErrors();
@@ -77,5 +84,12 @@ class EmailReplyOutputControllerTest extends TestCase
         $this->assertEquals(OutputTypeEnum::EmailReplyOutput, $model->type);
 
         $this->assertNotEmpty($model->meta_data['signature']);
+
+        $secrets = $output->refresh()->secrets;
+        $this->assertEquals($secrets['username'], 'bob@bobsburgers.com');
+        $this->assertEquals($secrets['password'], 'password');
+        $this->assertEquals($secrets['host'], 'mail.privateemail.com');
+        $this->assertEquals($secrets['delete'], true);
+        $this->assertEquals($secrets['email_box'], 'bob@bobsburgers.com');
     }
 }

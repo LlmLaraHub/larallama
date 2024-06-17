@@ -58,8 +58,6 @@
         </div>
 
 
-
-
         <div>
             <InputLabel value="Delete"/>
             <input v-model="modelValue.secrets.delete" type="checkbox"  />

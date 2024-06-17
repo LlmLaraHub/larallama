@@ -36,6 +36,14 @@ const form = useForm({
     recurring: props.output.recurring,
     meta_data: props.output.meta_data,
     signature: props.output.meta_data?.signature,
+    secrets: {
+        username: props.output.secrets?.username,
+        password: props.output.secrets?.password,
+        host: props.output.secrets?.host,
+        email_box: props.output.secrets?.email_box,
+        port: props.output.secrets?.port,
+        delete: props.output.secrets?.delete,
+    }
 });
 
 onMounted(() => {

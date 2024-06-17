@@ -74,11 +74,16 @@ class OutputController extends Controller
     {
         $validated = request()->validate($this->getValidationRules());
 
-        $output->update($validated);
+        $this->updateOutput($output, $validated);
 
         request()->session()->flash('flash.banner', 'Updated');
 
         return back();
+    }
+
+    public function updateOutput(Output $output, array $validated) : void
+    {
+        $output->update($validated);
     }
 
     public function show(Output $output)
@@ -168,6 +173,7 @@ class OutputController extends Controller
             'public' => 'boolean|nullable',
             'recurring' => 'string|nullable',
             'meta_data' => 'array|nullable',
+            'secrets' => ['nullable', 'array'],
         ];
     }
 
@@ -182,6 +188,7 @@ class OutputController extends Controller
             'public' => data_get($validated, 'public', false),
             'type' => $this->outputTypeEnum,
             'meta_data' => data_get($validated, 'meta_data', []),
+            'secrets' => data_get($validated, 'secrets', []),
         ]);
     }
 
