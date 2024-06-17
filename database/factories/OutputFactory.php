@@ -34,4 +34,21 @@ class OutputFactory extends Factory
             'summary' => fake()->sentences(4, true),
         ];
     }
+
+    public function emailSecrets(): Factory
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'secrets' => [
+                    'username' => $this->faker->name,
+                    'password' => $this->faker->password,
+                    'host' => $this->faker->url,
+                    'email_box' => $this->faker->email,
+                    'port' => 443,
+                    'protocol' => "imap",
+                    'encryption' => "ssl",
+                ],
+            ];
+        });
+    }
 }
