@@ -13,7 +13,11 @@ class RoutesSource extends Base
     {
         $this->generatorRepository = $generatorRepository;
         $routes = <<<'EOD'
-
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified',
+])->group(function () {
     Route::controller(\App\Http\Controllers\Sources\[RESOURCE_CLASS_NAME]Controller::class)->group(
         function () {
             Route::get('/collections/{collection}/sources/[RESOURCE_KEY]/create', 'create')
@@ -26,6 +30,7 @@ class RoutesSource extends Base
                 ->name('collections.sources.[RESOURCE_KEY].update');
         }
     );
+    });
 
 EOD;
         $routesTransformed = TokenReplacer::handle($generatorRepository, $routes);
