@@ -54,8 +54,8 @@ class EmailReplyOutputControllerTest extends TestCase
         $response = $this->actingAs($user)
             ->put(route('collections.outputs.email_reply_output.update',
                 [
-                    $collection,
-                    $output,
+                    $collection->id,
+                    $output->id,
                 ]), [
                     'title' => 'Test Title',
                     'active' => 1,

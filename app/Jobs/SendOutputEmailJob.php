@@ -78,8 +78,6 @@ class SendOutputEmailJob implements ShouldQueue
         $prompt = $this->output->getPrompt();
         $prompt = PromptMerge::merge($tokens, $content, $prompt);
 
-        put_fixture('latest_content_prompt.txt', $prompt, false);
-
         notify_collection_ui(
             $this->output->collection,
             CollectionStatusEnum::PROCESSING,
