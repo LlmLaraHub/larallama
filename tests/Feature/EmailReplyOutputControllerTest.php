@@ -4,13 +4,9 @@ namespace Tests\Feature;
 
 use App\Domains\Outputs\OutputTypeEnum;
 use App\Domains\Recurring\RecurringTypeEnum;
-use App\Domains\Sources\SourceTypeEnum;
 use App\Models\Collection;
 use App\Models\Output;
-use App\Models\Source;
 use App\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class EmailReplyOutputControllerTest extends TestCase
@@ -59,16 +55,16 @@ class EmailReplyOutputControllerTest extends TestCase
             ->put(route('collections.outputs.email_reply_output.update',
                 [
                     $collection,
-                    $output
+                    $output,
                 ]), [
-                'title' => 'Test Title',
-                'active' => 1,
-                'recurring' => RecurringTypeEnum::Daily->value,
-                'summary' => 'Test Details',
-                'meta_data' => [
-                    'signature' => 'Call if needed',
-                ],
-            ])
+                    'title' => 'Test Title',
+                    'active' => 1,
+                    'recurring' => RecurringTypeEnum::Daily->value,
+                    'summary' => 'Test Details',
+                    'meta_data' => [
+                        'signature' => 'Call if needed',
+                    ],
+                ])
             ->assertStatus(302)
             ->assertSessionHasNoErrors();
 

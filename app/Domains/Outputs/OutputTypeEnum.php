@@ -15,7 +15,6 @@ enum OutputTypeEnum: string
     case EmailReplyOutput = 'email_reply_output';
     //leave for scripting
 
-
     public static function ignore(): array
     {
         return [
