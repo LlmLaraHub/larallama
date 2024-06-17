@@ -8,7 +8,7 @@ use App\Http\Controllers\OutputController;
 
 class EmailReplyOutputController extends OutputController
 {
-    protected OutputTypeEnum $outputTypeEnum = OutputTypeEnum::ApiOutput;
+    protected OutputTypeEnum $outputTypeEnum = OutputTypeEnum::EmailReplyOutput;
 
     protected string $edit_path = 'Outputs/EmailReplyOutput/Edit';
 
@@ -16,13 +16,18 @@ class EmailReplyOutputController extends OutputController
 
     protected string $create_path = 'Outputs/EmailReplyOutput/Create';
 
+    protected string $info = 'Add an Email box to check for emails and then reply to them.';
+
+    protected string $type = 'Email Reply Output';
+
     protected function getValidationRules(): array
     {
         return [
             'title' => 'required|string',
-            'details' => 'required|string',
-            'active' => ['boolean', 'required'],
-            'recurring' => ['string', 'required'],
+            'summary' => 'required|string',
+            'active' => 'boolean|nullable',
+            'public' => 'boolean|nullable',
+            'recurring' => 'string|nullable',
             'meta_data.signature' => ['required', 'string'],
         ];
     }

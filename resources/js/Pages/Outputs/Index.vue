@@ -12,6 +12,7 @@ import { useToast } from 'vue-toastification';
 import WebCard from "@/Pages/Outputs/WebPage/Components/Card.vue";
 import EmailCard from "@/Pages/Outputs/EmailOutput/Components/Card.vue";
 import ApiCard from "@/Pages/Outputs/ApiOutput/Components/Card.vue";
+import EmailReplyOutput from "@/Pages/Outputs/EmailReplyOutput/Components/Card.vue";
 
 const toast = useToast();
 
@@ -66,6 +67,7 @@ const props = defineProps({
                             v-for="output in outputs.data" :key="output.id">
                             <EmailCard v-if="output.type === 'email_output'" :output="output"/>
                             <WebCard v-if="output.type === 'web_page'" :output="output"/>
+                            <EmailReplyOutput v-if="output.type === 'email_reply_output'" :output="output"/>
                             <ApiCard v-if="output.type === 'api_output'" :output="output"/>
                         </template>
                     </div>

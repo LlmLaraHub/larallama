@@ -43,35 +43,7 @@ class OutputController extends Controller
                 ->where('collection_id', $collection->id)
                 ->latest('id')
                 ->get()),
-            'available_outputs' => [
-                [
-                    'route' => route('collections.outputs.web_page.create',
-                        [
-                            'collection' => $collection->id,
-                        ]
-                    ),
-                    'name' => 'Web Page',
-                    'active' => true,
-                ],
-                [
-                    'route' => route('collections.outputs.email_output.create',
-                        [
-                            'collection' => $collection->id,
-                        ]
-                    ),
-                    'name' => 'Email',
-                    'active' => true,
-                ],
-                [
-                    'route' => route('collections.outputs.api_output.create',
-                        [
-                            'collection' => $collection->id,
-                        ]
-                    ),
-                    'name' => 'API',
-                    'active' => true,
-                ],
-            ],
+            'available_outputs' => OutputTypeEnum::getAvailable($collection),
             'outputs' => OutputResource::collection($collection->outputs()->latest()->paginate(10)),
         ]);
     }

@@ -286,6 +286,18 @@ Route::middleware([
         }
     );
 
+    Route::controller(\App\Http\Controllers\Outputs\EmailReplyOutputController::class)->group(
+        function () {
+            Route::get('/collections/{collection}/outputs/email_reply_output/{output:id}/edit', 'edit')
+                ->name('collections.outputs.email_reply_output.edit');
+            Route::get('/collections/{collection}/outputs/email_reply_output/create', 'create')
+                ->name('collections.outputs.email_reply_output.create');
+            Route::post('/collections/{collection}/outputs/email_reply_output', 'store')
+                ->name('collections.outputs.email_reply_output.store');
+            Route::put('/collections/{collection}/outputs/email_reply_output/{output:id}/update', 'update')
+                ->name('collections.outputs.email_reply_output.update');
+        }
+    );
 });
 
 Route::get('/pages/{output}', [
