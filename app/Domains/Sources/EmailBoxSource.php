@@ -2,6 +2,7 @@
 
 namespace App\Domains\Sources;
 
+use App\Domains\EmailParser\CredentialsDto;
 use App\Models\Source;
 use Facades\App\Domains\EmailParser\EmailClient;
 use Facades\App\Domains\Transformers\EmailTransformer;
@@ -16,7 +17,8 @@ class EmailBoxSource extends EmailSource
 
     public function handle(Source $source): void
     {
-        $mails = EmailClient::handle($source);
+        $credentials = CredentialsDto::from($source->secrets);
+        $mails = EmailClient::handle($credentials);
         $this->source = $source;
 
         foreach ($mails as $mailDto) {

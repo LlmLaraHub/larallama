@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Domains\EmailParser\CredentialsDto;
 use App\Domains\EmailParser\EmailClient;
 use App\Domains\EmailParser\EmailClientFacade;
 use App\Domains\Sources\SourceTypeEnum;
@@ -16,7 +17,9 @@ class EmailClientTest extends TestCase
      */
     public function test_compaitble(): void
     {
-        Source::factory()->create([
+        $source = Source::factory()
+            ->emailSecrets()
+            ->create([
             'slug' => 'test',
             'type' => SourceTypeEnum::EmailBoxSource,
         ]);
@@ -32,7 +35,9 @@ class EmailClientTest extends TestCase
         EmailClientFacade::shouldReceive('getFolders')
             ->once()
             ->andReturn($folders);
-        (new EmailClient())->handle(Source::first());
+
+        $secrets = CredentialsDto::from($source->secrets);
+        (new EmailClient())->handle($secrets);
 
     }
 }

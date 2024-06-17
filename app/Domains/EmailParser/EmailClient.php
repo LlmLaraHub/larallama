@@ -36,35 +36,24 @@ class EmailClient
      * @throws \Webklex\PHPIMAP\Exceptions\MessageNotFoundException
      * @throws \Webklex\PHPIMAP\Exceptions\RuntimeException
      */
-    public function handle(Source $source): array
+    public function handle(CredentialsDto $credentials, bool $delete = true): array
     {
         $mail = [];
 
-        if (! in_array($source->type, $this->compatible_sources)) {
-            return $mail;
-        }
-
-        $foldersToCheck = explode(',', trim($source->secrets['email_box']));
+        $foldersToCheck = explode(',', trim($credentials->email_box));
 
         $foldersToCheck = collect($foldersToCheck)->map(function ($folder) {
             return str($folder)->lower()->toString();
         })->toArray();
 
-        $secrets = $source->secrets;
-
         $config = [
-            'host' => data_get($secrets, 'host'),
-            'port' => data_get($secrets, 'port', 993),
-            'protocol' => data_get($secrets, 'protocol', 'imap'),
-            'encryption' => data_get($secrets, 'encryption', 'ssl'),
-            'username' => data_get($secrets, 'username'),
-            'password' => data_get($secrets, 'password'),
+            'host' => $credentials->host,
+            'port' => $credentials->port,
+            'protocol' => $credentials->protocol,
+            'encryption' => $credentials->encryption,
+            'username' => $credentials->username,
+            'password' => $credentials->password,
         ];
-
-        Log::info('Connecting to email box', [
-            'config' => $config,
-            'secrets' => $secrets,
-        ]);
 
         $config = [
             'accounts' => [
@@ -78,8 +67,7 @@ class EmailClient
             $client->connect();
 
             Log::info('Connected to email box', [
-                'host' => data_get($secrets, 'host'),
-                'box' => data_get($secrets, 'email_box'),
+                'host' => $credentials->host,
                 'folders_to_check' => $foldersToCheck,
             ]);
 
@@ -114,7 +102,10 @@ class EmailClient
                         ]);
 
                         $mail[] = $messageDto;
-                        $message->delete(expunge: true);
+
+                        if($delete) {
+                            $message->delete(expunge: true);
+                        }
                     }
 
                 }

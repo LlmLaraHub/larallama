@@ -47,7 +47,9 @@ BODY;
             ->once()
             ->andReturn($folders);
 
-        $source = Source::factory()->create([
+        $source = Source::factory()
+            ->emailSecrets()
+            ->create([
             'slug' => 'test',
             'type' => SourceTypeEnum::EmailBoxSource,
         ]);
