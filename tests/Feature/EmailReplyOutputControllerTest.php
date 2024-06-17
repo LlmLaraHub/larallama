@@ -28,6 +28,13 @@ class EmailReplyOutputControllerTest extends TestCase
                 'meta_data' => [
                     'signature' => 'Call if needed',
                 ],
+                'secrets' => [
+                    'username' => 'bob@bobsburgers.com',
+                    'password' => 'password',
+                    'delete' => true,
+                    'host' => 'mail.privateemail.com',
+                    'email_box' => 'bob@bobsburgers.com',
+                ],
             ])
             ->assertStatus(302)
             ->assertSessionHasNoErrors();
