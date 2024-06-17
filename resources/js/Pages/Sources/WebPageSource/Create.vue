@@ -40,7 +40,7 @@ const form = useForm({
 
 const submit = () => {
     form.post(
-        route('collections.sources.[RESOURCE_KEY].store', {
+        route('collections.sources.web_page_source.store', {
             collection: props.collection.data.id
         }), {
             preserveScroll: true,

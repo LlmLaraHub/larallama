@@ -12,28 +12,20 @@
             <textarea
                 rows="10"
                 v-model="modelValue.details"
-                class="rounded-none textarea textarea-bordered w-full mb-5  text-xl"
+                class="rounded-none textarea textarea-bordered w-full mb-5 text-xl"
                 placeholder="This can assist the LLM to process your messages later."></textarea>
             <InputError :message="modelValue.errors.details" />
         </div>
-
-        <div class="border-gray-300 border rounded p-10">
-            <h2>This is meta data</h2>
-
-            <div>
-                <InputLabel value="Add One or more URLs, one per line"/>
-                <textarea
-                    rows="10"
-                    v-model="modelValue.meta_data.urls" type="text"
-                    placeholder="
-https://larallama.io/posts/numerous-ui-updates-prompt-template-improvements-and-more
+        <div>
+            <InputLabel value="Add One or more URLs, one per line"/>
+            <textarea
+                rows="5"
+                v-model="modelValue.meta_data.urls" type="text"
+                placeholder="https://larallama.io/posts/numerous-ui-updates-prompt-template-improvements-and-more
 https://docs.larallama.io/developing.html"
-                       class="rounded-none input input-bordered w-full " />
-                <InputError :message="modelValue.errors?.meta_data?.urls" />
-            </div>
-
+                class="rounded-none textarea textarea-bordered w-full mb-5 text-md"/>
+            <InputError :message="modelValue.errors?.meta_data?.urls" />
         </div>
-
 
         <div>
             <InputLabel value="Active"/>
