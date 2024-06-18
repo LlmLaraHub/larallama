@@ -42,7 +42,7 @@ class EmailClient
         $foldersToCheck = explode(',', trim($credentials->email_box));
 
         $foldersToCheck = collect($foldersToCheck)->map(function ($folder) {
-            return str($folder)->lower()->toString();
+            return str($folder)->toString();
         })->toArray();
 
         $config = [
@@ -80,30 +80,46 @@ class EmailClient
                     'folders_to_check' => $foldersToCheck,
                 ]);
 
-                $full_name = str($full_name)->lower()->toString();
+                $full_name = str($full_name)->toString();
 
                 if (in_array($full_name, $foldersToCheck)) {
+                    Log::info('Found Folder', [
+                        'full_name' => $full_name,
+                        'folders_to_check' => $foldersToCheck,
+                    ]);
+
                     $messages = $folder->messages()->all()->get();
-                    logger('[LaraChain] - Email Box Count', [
+
+                    Log::info('[LaraChain] - Email Box Count', [
                         'count' => $messages->count(),
                         'folder' => $full_name,
                     ]);
 
                     /** @var Message $message */
                     foreach ($messages as $message) {
-                        $messageDto = MailDto::from([
-                            'to' => $message->getTo()->toString(),
-                            'from' => $message->getFrom()->toString(),
-                            'body' => $message->getTextBody(),
-                            'subject' => $message->getSubject(),
-                            'date' => $message->getDate()->toString(),
-                            'header' => $message->getHeader()->raw,
-                        ]);
+                        $flags = $message->getFlags();
 
-                        $mail[] = $messageDto;
+                        if (! $flags->contains('Seen')) {
+                            $messageDto = MailDto::from([
+                                'to' => $message->getTo()->toString(),
+                                'from' => $message->getFrom()->toString(),
+                                'body' => $message->getTextBody(),
+                                'subject' => $message->getSubject(),
+                                'date' => $message->getDate()->toString(),
+                                'header' => $message->getHeader()->raw,
+                            ]);
 
-                        if ($delete) {
-                            $message->delete(expunge: true);
+                            $mail[] = $messageDto;
+
+                            if ($delete) {
+                                $message->delete(expunge: true);
+                            } else {
+                                $message->addFlag('Seen');
+                            }
+                        } else {
+                            Log::info('[LaraChain] - Flag Seen', [
+                                'flags' => $flags->toArray(),
+                            ]);
                         }
                     }
 

@@ -32,6 +32,7 @@ class OutputTest extends TestCase
         );
         $this->assertEquals(OutputTypeEnum::WebPage, $output->type);
         $this->assertNotNull($output->collection->id);
+        $this->assertNotNull($output->persona->id);
         $this->assertNotNull($output->collection->outputs()->first()->id);
     }
 

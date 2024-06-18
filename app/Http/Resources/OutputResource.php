@@ -42,6 +42,7 @@ class OutputResource extends JsonResource
             'active' => $this->active,
             'public' => $this->public,
             'recurring' => $recurring,
+            'persona' => $this->persona,
             'meta_data' => $this->meta_data,
             'last_run' => $lastRun,
             'slug' => $this->slug,

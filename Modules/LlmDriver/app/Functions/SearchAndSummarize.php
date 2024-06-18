@@ -77,9 +77,6 @@ class SearchAndSummarize extends FunctionContract
          */
         foreach ($documentChunkResults as $result) {
             $contentString = remove_ascii($result->content);
-            if (Feature::active('reduce_text')) {
-                $result = reduce_text_size($contentString);
-            }
             $content[] = $contentString; //reduce_text_size seem to mess up Claude?
         }
 

@@ -170,6 +170,20 @@ if (! function_exists('notify_ui')) {
     }
 }
 
+if (! function_exists('clean_email')) {
+    function clean_email(string $email): string
+    {
+        // Use a regular expression to match the email address
+        if (preg_match('/<([^>]*)>/', $email, $matches)) {
+            // If the email is within angle brackets, extract it
+            return $matches[1];
+        } else {
+            // If no valid email is found, return an empty string or handle the error as needed
+            return $email;
+        }
+    }
+}
+
 if (! function_exists('notify_collection_ui')) {
     function notify_collection_ui(Collection $collection, CollectionStatusEnum $status, string $message = '')
     {

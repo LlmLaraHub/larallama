@@ -7,6 +7,7 @@ use App\Domains\Prompts\EmailReplyPrompt;
 use App\Http\Controllers\OutputController;
 use App\Models\Collection;
 use App\Models\Output;
+use Facades\App\Domains\Outputs\EmailReplyOutput;
 
 class EmailReplyOutputController extends OutputController
 {
@@ -24,15 +25,10 @@ class EmailReplyOutputController extends OutputController
 
     protected function getValidationRules(): array
     {
-        return [
-            'title' => 'required|string',
-            'summary' => 'required|string',
-            'active' => 'boolean|nullable',
-            'public' => 'boolean|nullable',
-            'recurring' => 'string|nullable',
+
+        return array_merge(parent::getValidationRules(), [
             'meta_data.signature' => ['required', 'string'],
-            'secrets' => ['required', 'array'],
-        ];
+        ]);
     }
 
     public function getPrompts(): array
@@ -52,43 +48,41 @@ class EmailReplyOutputController extends OutputController
             'protocol' => data_get($validated, 'secrets.protocol', 'imap'),
             'encryption' => data_get($validated, 'secrets.encryption', 'ssl'),
             'delete' => data_get($validated, 'secrets.delete', false),
-            'email_box' => data_get($validated, 'secrets.email_box', null),
+            'email_box' => data_get($validated, 'secrets.email_box', 'Inbox'),
         ];
 
-        $output->meta_data = $validated['meta_data'];
-        $output->secrets = $secrets;
-
-        $output->updateQuietly();
-
-        $output->update([
-            'title' => $validated['title'],
-            'summary' => $validated['summary'],
-            'recurring' => $validated['recurring'],
-            'active' => $validated['active'],
-        ]);
+        $validated['secrets'] = $secrets;
+        $output->update($validated);
     }
 
     protected function makeOutput(array $validated, Collection $collection): void
     {
-        Output::create([
-            'title' => $validated['title'],
-            'summary' => $validated['summary'],
-            'collection_id' => $collection->id,
-            'recurring' => data_get($validated, 'recurring', null),
-            'active' => data_get($validated, 'active', false),
-            'public' => data_get($validated, 'public', false),
-            'type' => $this->outputTypeEnum,
-            'meta_data' => data_get($validated, 'meta_data', []),
-            'secrets' => [
-                'username' => data_get($validated, 'secrets.username', null),
-                'password' => data_get($validated, 'secrets.password', null),
-                'host' => data_get($validated, 'secrets.host', null),
-                'port' => data_get($validated, 'secrets.port', '993'),
-                'protocol' => data_get($validated, 'secrets.protocol', 'imap'),
-                'encryption' => data_get($validated, 'secrets.encryption', 'ssl'),
-                'delete' => data_get($validated, 'secrets.delete', false),
-                'email_box' => data_get($validated, 'secrets.email_box', null),
-            ],
-        ]);
+
+        $secrets = [
+            'username' => data_get($validated, 'secrets.username', null),
+            'password' => data_get($validated, 'secrets.password', null),
+            'host' => data_get($validated, 'secrets.host', null),
+            'port' => data_get($validated, 'secrets.port', '993'),
+            'protocol' => data_get($validated, 'secrets.protocol', 'imap'),
+            'encryption' => data_get($validated, 'secrets.encryption', 'ssl'),
+            'delete' => data_get($validated, 'secrets.delete', false),
+            'email_box' => data_get($validated, 'secrets.email_box', null),
+        ];
+
+        $validated['secrets'] = $secrets;
+
+        $validated['collection_id'] = $collection->id;
+        $validated['type'] = $this->outputTypeEnum;
+
+        Output::create($validated);
+    }
+
+    public function check(Output $output)
+    {
+        EmailReplyOutput::handle($output);
+
+        request()->session()->flash('flash.banner', 'Checking box sending replies');
+
+        return back();
     }
 }

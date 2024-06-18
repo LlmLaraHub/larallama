@@ -5,6 +5,7 @@ namespace Database\Factories;
 use App\Domains\Outputs\OutputTypeEnum;
 use App\Domains\Recurring\RecurringTypeEnum;
 use App\Models\Collection;
+use App\Models\Persona;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -22,6 +23,7 @@ class OutputFactory extends Factory
         return [
             'title' => fake()->title,
             'collection_id' => Collection::factory(),
+            'persona_id' => Persona::factory(),
             'last_run' => now(),
             'active' => fake()->boolean,
             'recurring' => RecurringTypeEnum::Daily,

@@ -9,10 +9,12 @@ use App\Domains\Recurring\RecurringTypeEnum;
 use App\Http\Resources\CollectionResource;
 use App\Http\Resources\DocumentResource;
 use App\Http\Resources\OutputResource;
+use App\Http\Resources\PersonaResource;
 use App\Http\Resources\PublicOutputResource;
 use App\Models\Collection;
 use App\Models\Document;
 use App\Models\Output;
+use App\Models\Persona;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Gate;
 use LlmLaraHub\LlmDriver\Requests\MessageInDto;
@@ -64,6 +66,7 @@ class OutputController extends Controller
     {
         return inertia($this->edit_path, [
             'output' => $output,
+            'personas' => PersonaResource::collection(Persona::orderBy('name')->get()),
             'recurring' => RecurringTypeEnum::selectOptions(),
             'collection' => new CollectionResource($collection),
             'prompts' => $this->getPrompts(),
@@ -109,6 +112,7 @@ class OutputController extends Controller
         return inertia($this->create_path, [
             'info' => $this->info,
             'type' => $this->type,
+            'personas' => PersonaResource::collection(Persona::all()),
             'recurring' => RecurringTypeEnum::selectOptions(),
             'collection' => new CollectionResource($collection),
             'prompts' => $this->getPrompts(),
@@ -168,6 +172,7 @@ class OutputController extends Controller
     {
         return [
             'title' => 'required|string',
+            'persona_id' => ['nullable', 'integer'],
             'summary' => 'required|string',
             'active' => 'boolean|nullable',
             'public' => 'boolean|nullable',

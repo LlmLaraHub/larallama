@@ -90,6 +90,11 @@ class Output extends Model
         return $this->belongsTo(Collection::class);
     }
 
+    public function persona(): BelongsTo
+    {
+        return $this->belongsTo(Persona::class);
+    }
+
     public function fromMetaData(string $key): mixed
     {
         $meta_data = $this->meta_data;

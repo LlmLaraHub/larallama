@@ -214,7 +214,6 @@ class GroqClient extends BaseClient
             foreach ($functionArray as $possibleFunction) {
                 $functions[] = $possibleFunction;
             }
-
         }
 
         /**

@@ -296,6 +296,8 @@ Route::middleware([
                 ->name('collections.outputs.email_reply_output.store');
             Route::put('/collections/{collection}/outputs/email_reply_output/{output:id}/update', 'update')
                 ->name('collections.outputs.email_reply_output.update');
+            Route::post('/outputs/{output:id}/check', 'check')
+                ->name('collections.outputs.email_reply_output.check');
         }
     );
 });

@@ -13,7 +13,7 @@ const toast = useToast();
 const form = useForm({})
 
 const send = () => {
-    form.post(route('collections.outputs.email_output.send', {
+    form.post(route('collections.outputs.email_reply_output.check', {
         output: props.output.id
     }), {
         preserveScroll: true,
@@ -37,6 +37,10 @@ const send = () => {
             <div class="text-xs">
                 Signature: <span class="font-bold">{{ output.meta_data.signature }}</span>
             </div>
+            <div class="text-xs">
+                Persona Of: <span class="font-bold">{{ output.persona?.name }}</span>
+            </div>
+
 
             <div class="text-xs">
                 Type: <span class="badge badge-default">{{ output.type_formatted}}</span>

@@ -65,7 +65,9 @@ onMounted(() => {
             let message = e.message;
             if (message) {
                 if(message !== 'Processing Document') {
-                    toast.info(message)
+                    toast.info(message, {
+                        position: 'bottom-right',
+                    })
                 }
             }
         });

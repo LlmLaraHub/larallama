@@ -30,6 +30,20 @@ class HelpersTest extends TestCase
         $this->assertEquals($prompt, append_prompt('[TOKEN]', $prompt));
     }
 
+    public function test_clean_email()
+    {
+
+        $string = 'Alfred Nutile <alfrednutile@gmail.com>';
+        $slug = clean_email($string);
+
+        $this->assertEquals('alfrednutile@gmail.com', $slug);
+
+        $string = 'alfrednutile@gmail.com';
+        $slug = clean_email($string);
+
+        $this->assertEquals('alfrednutile@gmail.com', $slug);
+    }
+
     public function test_email_slug()
     {
 

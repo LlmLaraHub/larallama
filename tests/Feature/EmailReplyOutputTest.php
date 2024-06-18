@@ -35,6 +35,13 @@ class EmailReplyOutputTest extends TestCase
                     'header' => 'This is header',
                     'body' => 'This is the body',
                 ]),
+                MailDto::from([
+                    'to' => 'info+12345@llmassistant.io',
+                    'from' => 'foo@var.com',
+                    'subject' => 'This is it',
+                    'header' => 'This is header',
+                    'body' => 'This is the body',
+                ]),
             ]);
 
         (new EmailReplyOutput())->handle($output);

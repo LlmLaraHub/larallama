@@ -86,7 +86,20 @@
             <InputError :message="modelValue.errors.active" />
         </div>
 
+        <div>
+            <InputLabel value="Persona to answer in?"/>
+            <select
 
+                class="select select-bordered w-full max-w-xs mt-2"
+                v-model="modelValue.persona_id">
+                <option disabled selected>Types</option>
+                <option v-for="persona in usePage().props.personas.data"
+                        :key="persona.id" :value="persona.id">
+                    {{persona.name}}
+                </option>
+            </select>
+            <InputError :message="modelValue.errors.persona_id" />
+        </div>
         <div>
             <InputLabel value="Recurring"/>
             <select
@@ -111,6 +124,7 @@ import InputError from "@/Components/InputError.vue";
 import InputLabel from "@/Components/InputLabel.vue";
 import {ref} from "vue";
 import InfoBox from "@/Components/InfoBox.vue";
+import {usePage} from "@inertiajs/vue3";
 
 const emit = defineEmits(['update:modelValue'])
 

@@ -20,6 +20,7 @@ const props = defineProps({
         required: true,
     },
     prompts: Object,
+    personas: Object,
     output: {
         type: Object
     },
@@ -34,6 +35,7 @@ const form = useForm({
     summary: props.output.summary,
     active: props.output.active,
     recurring: props.output.recurring,
+    persona_id: props.output.persona_id,
     meta_data: props.output.meta_data,
     signature: props.output.meta_data?.signature,
     secrets: {

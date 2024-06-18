@@ -23,6 +23,7 @@ const form = useForm({
     title: 'Email Reply Output Title',
     summary: props.prompts.email,
     active: 1,
+    persona_id: null,
     recurring: "not",
     meta_data: {
         signature: ""

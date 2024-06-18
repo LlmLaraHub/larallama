@@ -11,8 +11,8 @@ class CredentialsDto extends Data
         public string $password,
         public string $host,
         public string $port,
-        public string $protocol,
-        public string $encryption,
+        public string $encryption = 'ssl',
+        public string $protocol = 'imap',
         public string $email_box = 'Inbox'
     ) {
     }

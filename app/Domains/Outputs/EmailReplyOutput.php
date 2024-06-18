@@ -8,6 +8,7 @@ use App\Models\Output;
 use Facades\App\Domains\EmailParser\EmailClient;
 use Illuminate\Bus\Batch;
 use Illuminate\Support\Facades\Bus;
+use Illuminate\Support\Facades\Log;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
 
 class EmailReplyOutput extends BaseOutput
@@ -22,9 +23,14 @@ class EmailReplyOutput extends BaseOutput
          * Webhooks
          */
         $credentials = CredentialsDto::from($output->secrets);
-        $mails = EmailClient::handle($credentials);
+        $mails = EmailClient::handle($credentials, false);
 
         $replies = [];
+
+        Log::info('[LaraChain] - EmailReplyOutput', [
+            'output' => $output->id,
+            'emails_found' => count($mails),
+        ]);
 
         foreach ($mails as $mailDto) {
             $replies[] = new EmailReplyOutputJob($output, $mailDto);
@@ -37,7 +43,12 @@ class EmailReplyOutput extends BaseOutput
             })
             ->then(function (Batch $batch) {
             })->catch(function (Batch $batch, \Throwable $e) {
+                Log::error('[LaraChain] - Error running Email Reply Output', [
+                    'error' => $e->getMessage(),
+                    'batch' => $batch->toArray(),
+                ]);
             })->finally(function (Batch $batch) {
+                //more here
             })
             ->onQueue(
                 LlmDriverFacade::driver($output->collection->getDriver())->onQueue()

@@ -16,7 +16,7 @@ You are replying to the email that was sent to you.
 **Task**
 Using the given context and the email that was sent to you, answer the question.
 **Format**
-Text output that will later be used in an email.
+Text output that will later be used in an email. Just the body no salutation
 
 **Email being replied to**
 $emailBeingRepliedTo
