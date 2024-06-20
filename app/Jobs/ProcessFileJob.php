@@ -51,6 +51,7 @@ class ProcessFileJob implements ShouldQueue
                         [
                             new SummarizeDocumentJob($document),
                             new TagDocumentJob($document),
+                            new DocumentProcessingCompleteJob($document),
                         ],
                     ])
                         ->name("Summarizing and Tagging Document - {$document->id}")
@@ -95,8 +96,8 @@ class ProcessFileJob implements ShouldQueue
                 new ParsePdfFileJob($this->document),
             ])
                 ->name('Process PDF Document - '.$document->id)
-                ->finally(function (Batch $batch) {
-                    //this is triggered in the PdfTransformer class
+                ->finally(function (Batch $batch) use ($document) {
+                    DocumentProcessingCompleteJob::dispatch($document);
                 })
                 ->allowFailures()
                 ->onQueue(LlmDriverFacade::driver($document->getDriver())->onQueue())
