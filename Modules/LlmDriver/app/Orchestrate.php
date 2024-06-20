@@ -147,7 +147,7 @@ class Orchestrate
              */
             $message = get_latest_user_content($messagesArray)?->content;
 
-            if(is_null($message)) {
+            if (is_null($message)) {
                 Log::error('[LaraChain] Orchestration No Message Found', [
                     'messages' => $messagesArray,
                 ]);
