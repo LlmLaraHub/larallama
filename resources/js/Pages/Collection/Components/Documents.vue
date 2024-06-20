@@ -9,6 +9,7 @@ import Filters from "@/Pages/Collection/Components/Filters.vue";
 import ManageFilters from "@/Pages/Collection/Components/ManageFilters.vue";
 import {router} from "@inertiajs/vue3";
 import {useToast} from "vue-toastification";
+import Pagination from "@/Pages/Collection/Components/Pagination.vue";
 
 const toast = useToast();
 
@@ -117,7 +118,7 @@ onUnmounted(() => {
                                </div>
                            </div>
                        </Transition>
-                        <div v-if="documents.length === 0"
+                        <div v-if="documents.data.length === 0"
                             class="text-center text-sm font-medium px-10 py-10">
                             No Documents uploaded yet please upload some documents to get started.
                         </div>
@@ -153,7 +154,7 @@ onUnmounted(() => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <template v-for="document in documents" :key="document.id">
+                                    <template v-for="document in documents.data" :key="document.id">
                                         <tr class="even:bg-base-200">
                                             <td>
                                                 <input type="checkbox"  @change="checked(document.id)"/>
@@ -255,6 +256,10 @@ onUnmounted(() => {
                                     </template>
                                 </tbody>
                             </table>
+                        </div>
+                        <div>
+                            <Pagination
+                                :meta="documents" />
                         </div>
                     </div>
                 </div>

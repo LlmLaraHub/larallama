@@ -108,7 +108,7 @@ class BaseSourceController extends Controller
             'documents' => DocumentResource::collection(Document::query()
                 ->where('collection_id', $collection->id)
                 ->latest('id')
-                ->get()),
+                ->paginate(50)),
             'available_sources' => SourceTypeEnum::getAvailableSources($collection),
             'sources' => SourceResource::collection($collection->sources()->orderBy('id')->paginate(10)),
         ]);

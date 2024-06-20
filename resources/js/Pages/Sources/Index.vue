@@ -100,7 +100,8 @@ const props = defineProps({
                     </div>
 
                  <div class="mt-10">
-                    <Documents :collection="collection.data" :documents="documents.data"></Documents>
+                    <Documents :collection="collection.data"
+                               :documents="documents"></Documents>
                  </div>
                 </div>
 

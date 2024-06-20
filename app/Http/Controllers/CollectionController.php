@@ -78,7 +78,8 @@ class CollectionController extends Controller
             'documents' => DocumentResource::collection(Document::query()
                 ->where('collection_id', $collection->id)
                 ->latest('id')
-                ->get()),
+                ->paginate(25)
+                ->withQueryString()),
         ]);
     }
 

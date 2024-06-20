@@ -127,7 +127,7 @@ const reset = () => {
                     <!-- show related files -->
                     <Documents
                         :filters="filters.data"
-                        :collection="collection.data" :documents="documents.data"></Documents>
+                        :collection="collection.data" :documents="documents"></Documents>
                 </div>
             </div>
         </div>

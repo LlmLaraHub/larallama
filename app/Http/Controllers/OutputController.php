@@ -44,7 +44,7 @@ class OutputController extends Controller
             'documents' => DocumentResource::collection(Document::query()
                 ->where('collection_id', $collection->id)
                 ->latest('id')
-                ->get()),
+                ->paginate(50)),
             'available_outputs' => OutputTypeEnum::getAvailable($collection),
             'outputs' => OutputResource::collection($collection->outputs()->latest()->paginate(10)),
         ]);

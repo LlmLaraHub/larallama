@@ -44,7 +44,7 @@ const props = defineProps({
         <Nav :collection="collection.data" :chat="chat?.data"></Nav>
 
         <div class="py-6">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="max-w-9xl mx-auto sm:px-6 lg:px-8">
                 <div class="overflow-hidden shadow-xl sm:rounded-lg p-2">
                  <Intro>
                     Manage Outputs
@@ -94,7 +94,7 @@ const props = defineProps({
                     </div>
 
                  <div class="mt-10">
-                    <Documents :collection="collection.data" :documents="documents.data"></Documents>
+                    <Documents :collection="collection.data" :documents="documents"></Documents>
                  </div>
                 </div>
 
