@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Illuminate\Support\Facades\DB;
 use LlmLaraHub\LlmDriver\HasDrivers;
 use LlmLaraHub\LlmDriver\Requests\MessageInDto;
 use OpenAI\Laravel\Facades\OpenAI;
@@ -87,22 +88,24 @@ class Chat extends Model implements HasDrivers
         bool $show_in_thread = true): Message
     {
 
-        if ($systemPrompt) {
-            $this->createSystemMessageIfNeeded($systemPrompt);
-        }
+        return DB::transaction(function () use ($message, $role, $systemPrompt, $show_in_thread) {
 
-        $message = $this->messages()->create(
-            [
-                'body' => $message,
-                'role' => $role,
-                'in_out' => ($role === RoleEnum::User) ? true : false,
-                'created_at' => now(),
-                'updated_at' => now(),
-                'chat_id' => $this->id,
-                'is_chat_ignored' => ! $show_in_thread,
-            ]);
+            if ($systemPrompt) {
+                $this->createSystemMessageIfNeeded($systemPrompt);
+            }
 
-        return $message;
+            return $this->messages()->create(
+                [
+                    'body' => $message,
+                    'role' => $role,
+                    'in_out' => ($role === RoleEnum::User) ? true : false,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                    'chat_id' => $this->id,
+                    'is_chat_ignored' => ! $show_in_thread,
+                ]);
+        });
+
     }
 
     /**

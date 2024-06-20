@@ -1,0 +1,69 @@
+<script setup>
+import {useForm} from "@inertiajs/vue3";
+import InputError from "@/Components/InputError.vue";
+import InputLabel from "@/Components/InputLabel.vue";
+
+const props = defineProps({
+    audience: Object
+})
+
+const form = useForm({
+    name: props.audience.name,
+    content: props.audience.content,
+});
+
+const submit = () => {
+    form.put(route('style_guide.update.audience', {
+        audience: props.audience.id
+    }), {
+        preserveScroll: true,
+        preserveState: true,
+        onSuccess: () => {
+
+        }
+    })
+}
+</script>
+
+<template>
+
+    <form @submit.prevent="submit">
+
+        <div class="col-span-6 sm:col-span-4">
+            <InputLabel for="name" value="Title" />
+            <input
+                id="name"
+                v-model="form.name"
+                type="text"
+                class="mt-1 block input input-bordered w-full "
+                placeholder="In the voice of Mark Twain"
+            />
+            <InputError :message="form.errors.name" class="mt-2" />
+        </div>
+
+        <div class="col-span-6 sm:col-span-4">
+            <InputLabel for="data" value="Content" />
+            <textarea
+                rows="15"
+                id="data"
+                v-model="form.content"
+                class="textarea textarea-bordered w-full"
+                placeholder="The audience is non-technical but have an interest for new gadgets"
+            />
+            <InputError :message="form.errors.content" class="mt-2" />
+        </div>
+        <div class="flex justify-end gap-2 items-center mt-2">
+            <button class="btn btn-secondary rounded-none">Update</button>
+            <slot>
+
+            </slot>
+        </div>
+
+    </form>
+
+
+</template>
+
+<style scoped>
+
+</style>

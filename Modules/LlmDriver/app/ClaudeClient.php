@@ -32,7 +32,7 @@ class ClaudeClient extends BaseClient
         $model = $this->getConfig('claude')['models']['completion_model'];
         $maxTokens = $this->getConfig('claude')['max_tokens'];
 
-        Log::info('LlmDriver::Claude::completion');
+        Log::info('LlmDriver::Claude::chat');
 
         /**
          * I need to iterate over each item
@@ -41,6 +41,8 @@ class ClaudeClient extends BaseClient
          * using the Laravel Collection library
          */
         $messages = $this->remapMessages($messages);
+
+        put_fixture('after_mapping.json', $messages);
 
         $results = $this->getClient()->post('/messages', [
             'model' => $model,
@@ -52,6 +54,7 @@ class ClaudeClient extends BaseClient
         if (! $results->ok()) {
             $error = $results->json()['error']['type'];
             $message = $results->json()['error']['message'];
+            put_fixture('claude_error.json', $results->json());
             Log::error('Claude API Error ', [
                 'type' => $error,
                 'message' => $message,
@@ -302,6 +305,8 @@ class ClaudeClient extends BaseClient
             if ($item->role === 'system') {
                 $item->role = 'assistant';
             }
+
+            $item->content = str($item->content)->replaceEnd("\n", '')->trim()->toString();
 
             return $item->toArray();
         })

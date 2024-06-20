@@ -79,9 +79,9 @@ const props = defineProps({
                 </TabGroup>
             </div>
             <div v-else
-                class="bg-base-100 flex rounded-md shadow-lg shadow-inner-custom  p-4 prose "
+                class="bg-base-100 flex rounded-md shadow-lg shadow-inner-custom  p-4 "
                 :class="message.from_ai ? 'rounded-tr-none' : 'flex-row-reverse'">
-                <div class="grow"
+                <div class="grow leading-loose"
                      :class="message.from_ai ? 'rounded-tr-none' : 'rounded-tl-none'"
                      v-html="message.body_markdown">
                 </div>

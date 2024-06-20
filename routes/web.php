@@ -132,6 +132,10 @@ Route::middleware([
                 ->name('style_guide.create.persona');
             Route::put('/style_guides/{persona}/persona', 'updatePersona')
                 ->name('style_guide.update.persona');
+            Route::post('/style_guides/audience', 'createAudience')
+                ->name('style_guide.create.audience');
+            Route::put('/style_guides/{audience}/audience', 'updateAudience')
+                ->name('style_guide.update.audience');
         }
     );
 

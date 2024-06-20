@@ -2,11 +2,13 @@
 import AppLayout from '@/Layouts/AppLayout.vue';
 import SectionBorder from '@/Components/SectionBorder.vue';
 import Persona from "./Partials/Persona.vue";
+import Audience from "./Partials/Audience.vue";
 import Images from "@/Pages/StyleGuide/Partials/Images.vue";
 import SocialLinks from "@/Pages/StyleGuide/Partials/SocialLinks.vue";
 
 const props = defineProps({
     personas: Object,
+    audiences: Object,
 });
 </script>
 
@@ -28,6 +30,10 @@ items-center flex justify-start gap-4
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div>
                     <Persona :personas="personas.data"/>
+                    <SectionBorder/>
+                </div>
+                <div>
+                    <Audience :audiences="audiences.data"/>
                     <SectionBorder/>
                 </div>
                 <div>

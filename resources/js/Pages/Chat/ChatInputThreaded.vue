@@ -44,6 +44,14 @@ const persona = (persona) => {
     form.persona = persona?.id;
 }
 
+const audience = (audience) => {
+    form.input = form.input + "\n" + audience?.content;
+    toast.info('Audience added to your prompt!', {
+        position: 'bottom-right'
+    });
+}
+
+
 const getting_results = ref(false)
 
 onMounted(() => {
@@ -130,7 +138,8 @@ const setQuestion = (question) => {
                 disabled:opacity-40
                 bg-transparent block w-full border-0 py-1.5 ring-inset
                 ring-secondary placeholder:text-gray-400 ring-2
-                focus:ring-pink-500 sm:text-sm sm:leading-6"
+                text-xl
+                focus:ring-pink-500  placeholder:text-xl"
                 v-model="form.input" placeholder="Chat about your Collection"/>
 
                 <span
@@ -190,7 +199,9 @@ const setQuestion = (question) => {
                         :collection="chat.collection"></Filters>
                     <StyleGuide
                         @persona="persona"
-                        :collection="chat.collection"></StyleGuide>
+                        @audience="audience"
+                        :collection="chat.collection">
+                    </StyleGuide>
                 </div>
             </div>
 

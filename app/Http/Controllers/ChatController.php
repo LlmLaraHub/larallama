@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Domains\Messages\RoleEnum;
 use App\Events\ChatUiUpdateEvent;
+use App\Http\Resources\AudienceResource;
 use App\Http\Resources\ChatResource;
 use App\Http\Resources\CollectionResource;
 use App\Http\Resources\FilterResource;
@@ -11,6 +12,7 @@ use App\Http\Resources\MessageResource;
 use App\Http\Resources\PersonaResource;
 use App\Jobs\OrchestrateJob;
 use App\Jobs\SimpleSearchAndSummarizeOrchestrateJob;
+use App\Models\Audience;
 use App\Models\Chat;
 use App\Models\Collection;
 use App\Models\Filter;
@@ -47,6 +49,7 @@ class ChatController extends Controller
             'chats' => ChatResource::collection($collection->chats()->latest()->paginate(20)),
             'filters' => FilterResource::collection($collection->filters),
             'personas' => PersonaResource::collection(Persona::all()),
+            'audiences' => AudienceResource::collection(Audience::all()),
             'system_prompt' => $collection->systemPrompt(),
             'settings' => [
                 'supports_functions' => LlmDriverFacade::driver($chat->getDriver())->hasFunctions(),
