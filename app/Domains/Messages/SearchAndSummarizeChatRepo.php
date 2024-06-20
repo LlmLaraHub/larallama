@@ -73,7 +73,7 @@ class SearchAndSummarizeChatRepo
             context: $context
         );
 
-        $chat->addInput(
+        $message = $chat->addInput(
             message: $contentFlattened,
             role: RoleEnum::Assistant,
             systemPrompt: $chat->chatable->systemPrompt(),

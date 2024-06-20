@@ -145,11 +145,14 @@ class Orchestrate
              * @NOTE
              * this assumes way too much
              */
-            $message = collect($messagesArray)->first(
-                function ($message) {
-                    return $message->role === 'user';
-                }
-            )->content;
+            $message = get_latest_user_content($messagesArray)?->content;
+
+            if(is_null($message)) {
+                Log::error('[LaraChain] Orchestration No Message Found', [
+                    'messages' => $messagesArray,
+                ]);
+                throw new \Exception('No message found in incoming messages');
+            }
 
             return SearchAndSummarizeChatRepo::search($chat, $message, $filter);
         }
