@@ -20,6 +20,9 @@ class StandardsChecker extends FunctionContract
 
     protected array $promptHistory = [];
 
+    /**
+    * @param  MessageInDto[]  $messageArray
+    */
     public function handle(
         array $messageArray,
         HasDrivers $model,
