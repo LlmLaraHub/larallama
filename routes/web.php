@@ -251,6 +251,11 @@ Route::middleware([
             ->name('chats.messages.create');
     });
 
+    Route::controller(\App\Http\Controllers\UpdateSummaryController::class)->group(function () {
+        Route::post('/documents/{document}/update-summary', 'updateSummary')
+            ->name('collections.documents.update-summary');
+    });
+
     Route::controller(\App\Http\Controllers\Sources\WebhookSourceController::class)->group(
         function () {
             Route::get('/collections/{collection}/sources/webhook_source/create', 'create')

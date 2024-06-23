@@ -81,7 +81,6 @@ onUnmounted(() => {
 
 
 const isChecked = (item) => {
-    console.log("is checked", item);
     return [...selectedDocuments.value].some(existingItem => existingItem === item);
 }
 

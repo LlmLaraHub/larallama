@@ -14,7 +14,7 @@
                   border-b border-gray-100 dark:border-gray-700 py-6 shadow-xl">
                     <div class="px-4 sm:px-6">
                       <div class="flex items-start justify-between">
-                        <DialogTitle class="text-base font-semibold leading-6 ">Document {{ document.file_path }}</DialogTitle>
+                        <DialogTitle class="text-base font-semibold leading-6 ">Document {{ documentToShow.file_path }}</DialogTitle>
                         <div class="ml-3 flex h-7 items-center">
                           <button
                           type="button" class="relative rounded-md  focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
@@ -26,13 +26,26 @@
                         </div>
                       </div>
                     </div>
-                    <div class="relative mt-6 flex-1 px-4 sm:px-6">
+                    <div class="relative mt-6 flex-1 px-4 sm:px-6" v-auto-animate>
                         <Tags :document="document"></Tags>
+                        <div class="flex justify-end gap-2 items-center">
+                            <UpdateSummary
+                                @startingUpdate="startingUpdate"
+                                @updateSummary="updateSummary"
+                                :document="document"></UpdateSummary>
+                        </div>
                       <h2 class="font-bold">Summary:</h2>
-                      <div class="prose  mb-10 mt-5" v-html="document.summary_markdown"></div>
-
-
-
+                        <div v-if="updating" class="mt-10">
+                            <div class="flex w-full flex-col gap-4">
+                                <div class="skeleton bg-gray-700 h-4 w-28"></div>
+                                <div class="skeleton bg-gray-700 h-4 w-full"></div>
+                                <div class="skeleton bg-gray-700 h-4 w-full"></div>
+                                <div class="skeleton bg-gray-700  h-32 w-full"></div>
+                            </div>
+                        </div>
+                      <div
+                          v-else
+                          class="prose  mb-10 mt-5" v-html="documentToShow.summary_markdown"></div>
                     </div>
                   </div>
                 </DialogPanel>
@@ -49,18 +62,35 @@
 import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } from '@headlessui/vue'
 import { XMarkIcon } from '@heroicons/vue/24/outline'
 import Tags from '@/Components/Tags.vue';
+import UpdateSummary from "./UpdateSummary.vue";
+import {router} from "@inertiajs/vue3";
+import {ref} from "vue";
 
 const props = defineProps({
     document: Object,
     open: Boolean,
 });
 
+const documentToShow = ref(props.document);
+
 const emit = defineEmits(['closing']);
+
+const updating = ref(false);
+
+const startingUpdate = () => {
+    updating.value = true;
+}
+
 
 function closeSlideOut() {
     open.value = false;
     emit('closing');
 }
 
+function updateSummary(documentUpdated) {
+    console.log('updateSummary called');
+    documentToShow.value = documentUpdated;
+    updating.value = false;
+}
 
 </script>

@@ -4,7 +4,6 @@ namespace App\Jobs;
 
 use App\Domains\Agents\VerifyPromptInputDto;
 use App\Domains\Agents\VerifyPromptOutputDto;
-use App\Domains\Collections\CollectionStatusEnum;
 use App\Domains\Documents\StatusEnum;
 use App\Domains\Prompts\PromptMerge;
 use App\Domains\Prompts\SummarizeDocumentPrompt;
@@ -112,8 +111,6 @@ class SummarizeDocumentJob implements ShouldQueue
             'summary' => $this->results,
             'status_summary' => StatusEnum::Complete,
         ]);
-
-        notify_collection_ui($this->document->collection, CollectionStatusEnum::PROCESSED, 'Document Summarized');
 
         DocumentProcessingCompleteJob::dispatch($this->document);
     }
