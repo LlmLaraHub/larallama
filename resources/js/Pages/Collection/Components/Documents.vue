@@ -58,6 +58,7 @@ const emptyDocumentIds = () => {
     console.log("Resetting documents");
     selectedDocuments.value = new Set()
 }
+
 onMounted(() => {
     Echo.private(`collection.${props.collection.id}`)
         .listen('.status', (e) => {
@@ -77,6 +78,31 @@ onMounted(() => {
 onUnmounted(() => {
     Echo.leave(`collection.${props.collection.id}`);
 });
+
+
+const isChecked = (item) => {
+    console.log("is checked", item);
+    return [...selectedDocuments.value].some(existingItem => existingItem === item);
+}
+
+const toggledAll = ref(false);
+
+const toggleAll = () => {
+    toggledAll.value = !toggledAll.value;
+
+
+    if ([...props.documents.data].every(item => selectedDocuments.value.has(item.id))) {
+        for (const item of props.documents.data) {
+            selectedDocuments.value.delete(item.id);
+        }
+    } else {
+        for (const item of props.documents.data) {
+            if (!selectedDocuments.value.has(item.id)) {
+                selectedDocuments.value.add(item.id);
+            }
+        }
+    }
+}
 
 </script>
 <template>
@@ -118,11 +144,26 @@ onUnmounted(() => {
                                </div>
                            </div>
                        </Transition>
+
                         <div v-if="documents.data.length === 0"
                             class="text-center text-sm font-medium px-10 py-10">
                             No Documents uploaded yet please upload some documents to get started.
                         </div>
                         <div class="overflow-x-auto" v-else>
+                            <div class="form-control w-32">
+                                <label class="label cursor-pointer">
+                                    <span v-if="toggledAll" class="label-text">
+                                        Un-Check All
+                                    </span>
+                                    <span v-else class="label-text">
+                                        Check All
+                                    </span>
+                                    <input
+                                        :checked="toggledAll"
+                                        @change="toggleAll()"
+                                        type="checkbox" checked="checked" class="checkbox" />
+                                </label>
+                            </div>
                             <table class="table">
                                 <thead>
                                     <tr>
@@ -157,7 +198,11 @@ onUnmounted(() => {
                                     <template v-for="document in documents.data" :key="document.id">
                                         <tr class="even:bg-base-200">
                                             <td>
-                                                <input type="checkbox"  @change="checked(document.id)"/>
+                                                <input type="checkbox"
+
+                                                       :checked="isChecked(document.id)"
+                                                       @change="checked(document.id)"
+                                                />
                                             </td>
                                             <td>
                                                 {{ document.id }}

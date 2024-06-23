@@ -1,0 +1,53 @@
+[
+    {
+        "name": "summarize_collection",
+        "description": "NOT FOR SEARCH, This is used when the prompt wants to summarize the entire collection of documents",
+        "parameters": {
+            "type": "object",
+            "properties": [
+                {
+                    "name": "prompt",
+                    "description": "The prompt the user is using the search for.",
+                    "type": "string",
+                    "enum": [],
+                    "default": "",
+                    "required": true
+                }
+            ]
+        }
+    },
+    {
+        "name": "search_and_summarize",
+        "description": "Used to embed users prompt, search database and return summarized results.",
+        "parameters": {
+            "type": "object",
+            "properties": [
+                {
+                    "name": "prompt",
+                    "description": "This is the prompt the user is using to search the database and may or may not assist the results.",
+                    "type": "string",
+                    "enum": [],
+                    "default": "",
+                    "required": false
+                }
+            ]
+        }
+    },
+    {
+        "name": "standards_checker",
+        "description": "Checks the prompt data follows the standards of the documents in the collection",
+        "parameters": {
+            "type": "object",
+            "properties": [
+                {
+                    "name": "prompt",
+                    "description": "The prompt the user is using to check standards.",
+                    "type": "string",
+                    "enum": [],
+                    "default": "",
+                    "required": true
+                }
+            ]
+        }
+    }
+]
