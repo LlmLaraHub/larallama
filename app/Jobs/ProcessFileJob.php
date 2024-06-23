@@ -11,13 +11,16 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Bus;
-use Illuminate\Support\Facades\Log;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
 use LlmLaraHub\TagFunction\Jobs\TagDocumentJob;
 
 class ProcessFileJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+
+    public array $jobs = [];
+
+    public array $finally = [];
 
     /**
      * Create a new job instance.
@@ -40,69 +43,61 @@ class ProcessFileJob implements ShouldQueue
          */
         $document = $this->document;
 
-        if ($document->type === TypesEnum::Pptx) {
-            Log::info('Processing PPTX Document');
-            $batch = Bus::batch([
-                new ParsePowerPointJob($this->document),
-            ])
-                ->name('Process PPTX Document - '.$document->id)
-                ->finally(function (Batch $batch) use ($document) {
-                    Bus::batch([
-                        [
-                            new SummarizeDocumentJob($document),
-                            new TagDocumentJob($document),
-                            new DocumentProcessingCompleteJob($document),
-                        ],
-                    ])
-                        ->name("Summarizing and Tagging Document - {$document->id}")
-                        ->allowFailures()
-                        ->onQueue(LlmDriverFacade::driver($document->getDriver())->onQueue())
-                        ->dispatch();
-                })
-                ->allowFailures()
-                ->onQueue(LlmDriverFacade::driver($document->getDriver())->onQueue())
-                ->dispatch();
+        $options = [
+            TypesEnum::Pptx->value => [
+                'jobs' => [
+                    ParsePowerPointJob::class,
+                ],
+                'finally' => [
+                    SummarizeDocumentJob::class,
+                    TagDocumentJob::class,
+                    DocumentProcessingCompleteJob::class,
+                ],
+            ],
+            TypesEnum::Txt->value => [
+                'jobs' => [
+                    ProcessTextFilesJob::class,
+                ],
+                'finally' => [
+                    DocumentProcessingCompleteJob::class,
+                ],
+            ],
+            TypesEnum::HTML->value => [
+                'jobs' => [
+                    WebPageDocumentJob::class,
+                ],
+                'finally' => [
+                    DocumentProcessingCompleteJob::class,
+                ],
+            ],
+            TypesEnum::PDF->value => [
+                'jobs' => [
+                    ParsePdfFileJob::class,
+                ],
+                'finally' => [
+                    DocumentProcessingCompleteJob::class,
+                ],
+            ],
+        ];
 
-        } elseif ($document->type === TypesEnum::Txt) {
+        $option = $options[$document->type->value];
 
-            Log::info('Processing Text Document');
-            Bus::batch([
-                new ProcessTextFilesJob($this->document),
-            ])
-                ->name('Processing Text Document - '.$document->id)
-                ->finally(function (Batch $batch) use ($document) {
-                    DocumentProcessingCompleteJob::dispatch($document);
-                })
-                ->allowFailures()
-                ->onQueue(LlmDriverFacade::driver($document->getDriver())->onQueue())
-                ->dispatch();
-        } elseif ($document->type === TypesEnum::HTML) {
-
-            Log::info('Processing Html Document');
-
-            Bus::batch([
-                new WebPageSourceJob($this->document->source, $this->document->file_path),
-            ])
-                ->name('Processing Html Document - '.$document->id)
-                ->finally(function (Batch $batch) use ($document) {
-                    DocumentProcessingCompleteJob::dispatch($document);
-                })
-                ->allowFailures()
-                ->onQueue(LlmDriverFacade::driver($document->getDriver())->onQueue())
-                ->dispatch();
-        } elseif ($document->type === TypesEnum::PDF) {
-            Log::info('Processing PDF Document');
-            Bus::batch([
-                new ParsePdfFileJob($this->document),
-            ])
-                ->name('Process PDF Document - '.$document->id)
-                ->finally(function (Batch $batch) use ($document) {
-                    DocumentProcessingCompleteJob::dispatch($document);
-                })
-                ->allowFailures()
-                ->onQueue(LlmDriverFacade::driver($document->getDriver())->onQueue())
-                ->dispatch();
-        }
+        Bus::batch(collect($option['jobs'])->map(function ($job) use ($document) {
+            return new $job($document);
+        })->toArray())
+            ->name(sprintf('Process %s Document - %d', $document->type->value, $document->id))
+            ->finally(function (Batch $batch) use ($document, $option) {
+                Bus::batch(collect($option['finally'])->map(function ($job) use ($document) {
+                    return new $job($document);
+                })->toArray())
+                    ->name(sprintf('Part 2 of Process for %s Document - %d', $document->type->value, $document->id))
+                    ->allowFailures()
+                    ->onQueue(LlmDriverFacade::driver($document->getDriver())->onQueue())
+                    ->dispatch();
+            })
+            ->allowFailures()
+            ->onQueue(LlmDriverFacade::driver($document->getDriver())->onQueue())
+            ->dispatch();
 
     }
 }

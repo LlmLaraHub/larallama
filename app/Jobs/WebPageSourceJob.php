@@ -4,9 +4,7 @@ namespace App\Jobs;
 
 use App\Domains\Documents\StatusEnum;
 use App\Domains\Documents\TypesEnum;
-use App\Helpers\TextChunker;
 use App\Models\Document;
-use App\Models\DocumentChunk;
 use App\Models\Source;
 use Facades\App\Domains\Sources\WebSearch\GetPage;
 use Illuminate\Bus\Batch;
@@ -16,15 +14,12 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\Bus;
-use Illuminate\Support\Facades\Log;
-use LlmLaraHub\LlmDriver\LlmDriverFacade;
-use LlmLaraHub\TagFunction\Jobs\TagDocumentJob;
 
 class WebPageSourceJob implements ShouldQueue
 {
     use Batchable;
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    use WebHelperTrait;
 
     /**
      * Create a new job instance.
@@ -66,13 +61,13 @@ class WebPageSourceJob implements ShouldQueue
         $document = Document::updateOrCreate(
             [
                 'source_id' => $this->source->id,
-                'type' => TypesEnum::HTML,
-                'subject' => to_utf8($title),
                 'link' => $this->url,
                 'collection_id' => $this->source->collection_id,
             ],
             [
                 'status' => StatusEnum::Pending,
+                'type' => TypesEnum::HTML,
+                'subject' => to_utf8($title),
                 'file_path' => $this->url,
                 'summary' => str($html)->limit(254)->toString(),
                 'status_summary' => StatusEnum::Pending,
@@ -81,45 +76,7 @@ class WebPageSourceJob implements ShouldQueue
             ]
         );
 
-        $page_number = 1;
-
-        $chunked_chunks = TextChunker::handle($html);
-
-        foreach ($chunked_chunks as $chunkSection => $chunkContent) {
-
-            $guid = md5($chunkContent);
-
-            $DocumentChunk = DocumentChunk::updateOrCreate(
-                [
-                    'document_id' => $document->id,
-                    'sort_order' => $page_number,
-                    'section_number' => $chunkSection,
-                ],
-                [
-                    'guid' => $guid,
-                    'content' => to_utf8($chunkContent), //still having issues.
-                ]
-            );
-
-            Log::info('[LaraChain] adding to new batch');
-
-            $jobs[] = [
-                new VectorlizeDataJob($DocumentChunk),
-                new TagDocumentJob($document),
-                new SummarizeDocumentJob($document),
-            ];
-
-            $page_number++;
-        }
-
-        Bus::batch($jobs)
-            ->name('Web Pages to Documents - '.$this->source->subject)
-            ->finally(function (Batch $batch) use ($document) {
-                DocumentProcessingCompleteJob::dispatch($document);
-            })
-            ->allowFailures()
-            ->onQueue(LlmDriverFacade::driver($this->source->getDriver())->onQueue())
-            ->dispatch();
+        $this->processDocument($document);
 
     }
 }
