@@ -63,6 +63,12 @@ const theme = ref('dark')
                                 Settings
                             </Link>
                         </li>
+                        <li class="hidden sm:flex">
+                            <Link :href="route('batches.index')"
+                                  :class="{ 'underline' : route().current('batches.index') }">
+                                Running Tasks
+                            </Link>
+                        </li>
                     </ul>
                 </div>
                 <div class="navbar-center hidden lg:flex">

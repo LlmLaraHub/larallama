@@ -234,6 +234,13 @@ Route::middleware([
             ->name('text-documents.store');
     });
 
+    Route::controller(\App\Http\Controllers\ManageBatchesController::class)->group(function () {
+        Route::get('/batches', 'index')
+            ->name('batches.index');
+        Route::post('/batches/{batchId}', 'cancel')
+            ->name('batches.cancel');
+    });
+
     Route::controller(CollectionController::class)->group(function () {
         Route::get('/collections', 'index')->name('collections.index');
         Route::post('/collections/{collection}/documents/{document}/reset', 'resetCollectionDocument')
