@@ -129,7 +129,7 @@ const setQuestion = (question) => {
         <form @submit.prevent="save"  autocomplete="off"
               class="relative p-4 flex-col max-container mx-auto w-full" v-auto-animate>
 
-            <div class="relative p-4 flex max-container mx-auto w-full" >
+            <div class="relative p-4 flex max-container mx-auto w-full items-center gap-4" >
                 <textarea
                 rows="15"
                 type="text"
@@ -154,9 +154,7 @@ const setQuestion = (question) => {
                 <button
                     v-else
                     :disabled="getting_results" type="submit"
-                    class="
-                    flex justify-start gap-3 items-center
-                        bg-gray-850 hover:text-gray-400 text-gray-500 px-2.5 rounded-r-md">
+                    class="btn btn-secondary btn-circle">
                     <span
                         v-if="getting_results"
                         class="loading loading-dots loading-md"></span>
