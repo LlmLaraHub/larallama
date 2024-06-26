@@ -44,12 +44,13 @@
                             </div>
                         </div>
                       <div
-                          v-else
+                          v-if="!updating"
                           class="prose  mb-10 mt-5" v-html="documentToShow.summary_markdown"></div>
                     </div>
                   </div>
                 </DialogPanel>
               </TransitionChild>
+
             </div>
           </div>
         </div>
@@ -64,7 +65,7 @@ import { XMarkIcon } from '@heroicons/vue/24/outline'
 import Tags from '@/Components/Tags.vue';
 import UpdateSummary from "./UpdateSummary.vue";
 import {router} from "@inertiajs/vue3";
-import {ref} from "vue";
+import {onMounted, ref} from "vue";
 
 const props = defineProps({
     document: Object,
@@ -72,6 +73,10 @@ const props = defineProps({
 });
 
 const documentToShow = ref(props.document);
+
+onMounted(() => {
+    documentToShow.value = props.document;
+});
 
 const emit = defineEmits(['closing']);
 

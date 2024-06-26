@@ -24,6 +24,7 @@
         "openai-php/laravel": "^0.8.1",
         "owenvoke/blade-fontawesome": "^2.3",
         "phpoffice/phppresentation": "dev-fix-pptx",
+        "pusher/pusher-php-server": "^7.2",
         "roach-php/core": "^3.2",
         "roach-php/laravel": "^3.1",
         "smalot/pdfparser": "^2.9",

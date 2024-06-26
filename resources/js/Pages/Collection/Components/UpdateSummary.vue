@@ -42,7 +42,7 @@ const updateSummary = () => {
     <button
         :disabled="running"
         type="button"
-        class="btn btn-primary rounded-none"
+        class="btn btn-primary rounded-none mt-2"
         @click="updateSummary">
         Generate Summary
     </button>
