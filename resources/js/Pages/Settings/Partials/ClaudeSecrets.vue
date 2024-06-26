@@ -16,6 +16,7 @@ const props = defineProps({
 const form = useForm({
     _method: 'PUT',
     api_key: props.setting.secrets?.claude?.api_key,
+    api_url: props.setting.secrets?.claude?.api_url ?? 'https://api.anthropic.com/v1',
 });
 
 
@@ -59,6 +60,20 @@ const updateSecrets = () => {
                 />
                 <InputError :message="form.errors.api_key" class="mt-2" />
             </div>
+
+
+            <div class="col-span-6 sm:col-span-4">
+                <InputLabel for="name" value="Api Url" />
+                <TextInput
+                    id="name"
+                    v-model="form.api_url"
+                    type="text"
+                    class="mt-1 block w-full"
+                    required
+                />
+                <InputError :message="form.errors.api_url" class="mt-2" />
+            </div>
+
         </template>
 
         <template #actions>

@@ -97,7 +97,7 @@ const submit = () => {
                         <div>Sign in With Email </div>
                         <div class="text-sm ">(no password needed!)</div>
                     </button>
-                    <div class="bg-gray-200 dark:bg-gray-700 p-4 rounded-lg mt-2 flex items-start ">
+                    <div class="bg-gray-600 dark:bg-gray-700 p-4 rounded-lg mt-2 flex items-start ">
 
                         <div>
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mr-2">

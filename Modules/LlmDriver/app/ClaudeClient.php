@@ -178,6 +178,7 @@ class ClaudeClient extends BaseClient
     protected function getClient()
     {
         $api_token = Setting::getSecret('claude', 'api_key');
+        $api_url = Setting::getSecret('claude', 'api_url');
 
         if (! $api_token) {
             throw new \Exception('Claude API Token not found');
@@ -188,7 +189,7 @@ class ClaudeClient extends BaseClient
             'anthropic-beta' => 'tools-2024-04-04',
             'anthropic-version' => $this->version,
             'content-type' => 'application/json',
-        ])->baseUrl($this->baseUrl);
+        ])->baseUrl($api_url);
     }
 
     /**

@@ -67,7 +67,7 @@ const setActiveTab = (tab) => {
     <div class="bg-gray-900">
         <main>
             <div class="flex justify-end p-2">
-                <Link class="btn btn-secondary link text-sm" href="/login">Login</Link>
+                <Link class="btn btn-secondary link text-sm rounded-none" href="/login">Login</Link>
             </div>
             <!-- Hero section -->
             <div class="relative isolate overflow-hidden">
