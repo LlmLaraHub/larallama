@@ -312,7 +312,9 @@ const toggleAll = () => {
     </div>
     <Teleport to="body">
 
-    <ShowDocument :document="document" :open="showDocumentSlideOut"
+    <ShowDocument
+        v-if="showDocumentSlideOut"
+        :document="document" :open="showDocumentSlideOut"
             @closing="closeDocument" />
     </Teleport>
 

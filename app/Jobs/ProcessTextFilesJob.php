@@ -50,6 +50,7 @@ class ProcessTextFilesJob implements ShouldQueue
 
         $document->update([
             'summary' => $content,
+            'original_content' => $content,
         ]);
 
         $jobs = [];
