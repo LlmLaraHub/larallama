@@ -52,7 +52,7 @@ const deleteTeam = () => {
                 </template>
 
                 <template #content>
-                    Are you sure you want to delete this team? Once a team is deleted, all of its resources and data will be permanently deleted.
+                    Are you sure you want to delete this team? Once a team is deleted, all of its resources and data will be permawenently deleted.
                 </template>
 
                 <template #footer>

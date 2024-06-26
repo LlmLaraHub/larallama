@@ -11,6 +11,11 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
+Route::get('/team-invitations/{invitation}',
+    [\App\Http\Controllers\TeamInviteAcceptController::class, 'accept'])
+    ->middleware('signed')
+    ->name('team-invitations.accept');
+
 Route::get('/login/signed/{token}', [\App\Http\Controllers\SignedUrlAuth::class,
     'signInWithToken'])
     ->name('signed_url.login');
