@@ -59,6 +59,8 @@ class ProcessFileJob implements ShouldQueue
                     ProcessTextFilesJob::class,
                 ],
                 'finally' => [
+                    SummarizeDocumentJob::class,
+                    TagDocumentJob::class,
                     DocumentProcessingCompleteJob::class,
                 ],
             ],
