@@ -54,6 +54,16 @@ class ProcessFileJob implements ShouldQueue
                     DocumentProcessingCompleteJob::class,
                 ],
             ],
+            TypesEnum::Docx->value => [
+                'jobs' => [
+                    ParseDocxJob::class,
+                ],
+                'finally' => [
+                    SummarizeDocumentJob::class,
+                    TagDocumentJob::class,
+                    DocumentProcessingCompleteJob::class,
+                ],
+            ],
             TypesEnum::Txt->value => [
                 'jobs' => [
                     ProcessTextFilesJob::class,

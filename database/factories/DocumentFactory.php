@@ -74,6 +74,15 @@ BODY;
         });
     }
 
+    public function docx(): Factory
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'type' => TypesEnum::Docx,
+            ];
+        });
+    }
+
     public function pptx(): Factory
     {
         return $this->state(function (array $attributes) {

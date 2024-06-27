@@ -9,13 +9,13 @@ trait SharedSetupForPptFile
 {
     public Document $document;
 
-    protected function setupFile(): Document
+    protected function setupFile(string $example_name = 'example.pptx'): Document
     {
         $document = Document::factory()->create([
-            'file_path' => 'example.ppt',
+            'file_path' => $example_name,
         ]);
 
-        $from = base_path('tests/fixtures/sample_data/example.pptx');
+        $from = base_path('tests/fixtures/sample_data/'.$example_name);
 
         if (! File::exists($document->pathToFile())) {
             if (! File::exists($document->mkdirPathToFile())) {

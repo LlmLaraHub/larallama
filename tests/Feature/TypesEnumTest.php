@@ -25,4 +25,12 @@ class TypesEnumTest extends TestCase
 
         $this->assertEquals(TypesEnum::Txt, $results);
     }
+
+    public function test_docx(): void
+    {
+        $results = TypesEnum::mimeTypeToType(
+            'application/vnd.openxmlformats-officedocument.wordprocessingml.document');
+
+        $this->assertEquals(TypesEnum::Docx, $results);
+    }
 }
