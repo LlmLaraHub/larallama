@@ -7,6 +7,7 @@ use App\Helpers\TextChunker;
 use App\Jobs\VectorlizeDataJob;
 use App\Models\Document;
 use App\Models\DocumentChunk;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
 use PhpOffice\PhpWord\IOFactory;
 
@@ -21,6 +22,10 @@ class DocXTransformer
         $filePath = $this->document->pathToFile();
 
         $parser = IOFactory::createReader('Word2007');
+
+        if(!File::exists($filePath)) {
+            throw new \Exception('Can not fine the document '.$filePath);
+        }
 
         if (! $parser->canRead($filePath)) {
             throw new \Exception('Can not read the document '.$filePath);
@@ -44,7 +49,7 @@ class DocXTransformer
                  * what about tables
                  * what about lists
                  */
-                $content[] = $element->getText();
+                $content[] = str($element->getText())->trim()->toString();
 
             }
         }
@@ -73,7 +78,9 @@ class DocXTransformer
             ];
         }
 
-        notify_collection_ui($document->collection, CollectionStatusEnum::PROCESSING, 'Processing Document');
+
+        notify_collection_ui($this->document->collection,
+            CollectionStatusEnum::PROCESSING, 'Processing Document');
 
         Log::info('DocXTransformer:handle', ['chunks' => count($chunks)]);
 
