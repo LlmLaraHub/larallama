@@ -23,7 +23,7 @@ class DocXTransformer
 
         $parser = IOFactory::createReader('Word2007');
 
-        if(!File::exists($filePath)) {
+        if (! File::exists($filePath)) {
             throw new \Exception('Can not fine the document '.$filePath);
         }
 
@@ -77,7 +77,6 @@ class DocXTransformer
                 new VectorlizeDataJob($DocumentChunk),
             ];
         }
-
 
         notify_collection_ui($this->document->collection,
             CollectionStatusEnum::PROCESSING, 'Processing Document');

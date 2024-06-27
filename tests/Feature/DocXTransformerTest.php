@@ -3,9 +3,6 @@
 namespace Tests\Feature;
 
 use App\Domains\Documents\Transformers\DocXTransformer;
-use App\Domains\Documents\Transformers\PowerPointTransformer;
-use App\Domains\Documents\TypesEnum;
-use App\Models\Document;
 use App\Models\DocumentChunk;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Event;
@@ -35,7 +32,7 @@ class DocXTransformerTest extends TestCase
         $transformer->handle($document);
         $this->assertDatabaseCount('document_chunks', 1);
 
-        $this->assertEquals("Lorem ipsum dolor sit amet.", DocumentChunk::first()->content);
+        $this->assertEquals('Lorem ipsum dolor sit amet.', DocumentChunk::first()->content);
 
     }
 
