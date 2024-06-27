@@ -81,4 +81,20 @@ class DocXTransformerTest extends TestCase
 
         $this->assertStringContainsString(DocumentChunk::first()->content, $content);
     }
+
+    public function test_gets_data_from_docx_with_text_break()
+    {
+        Event::fake();
+        Bus::fake();
+        $document = $this->setupFile('handbook-1p.docx');
+
+        $this->assertDatabaseCount('document_chunks', 0);
+        $transformer = new DocXTransformer();
+        $transformer->handle($document);
+        $this->assertDatabaseCount('document_chunks', 7);
+
+        $content = get_fixture('handbook-1p.text', false);
+
+        $this->assertStringContainsString(DocumentChunk::first()->content, $content);
+    }
 }
