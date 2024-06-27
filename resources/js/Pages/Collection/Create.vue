@@ -9,9 +9,9 @@
               <TransitionChild as="template" enter="transform transition ease-in-out duration-500 sm:duration-700" enter-from="translate-x-full" enter-to="translate-x-0" leave="transform transition ease-in-out duration-500 sm:duration-700" leave-from="translate-x-0" leave-to="translate-x-full">
                 <DialogPanel class="pointer-events-auto w-screen max-w-2xl">
                     <div class="flex h-full flex-col overflow-y-scroll
-
                   bg-base-100 dark:bg-base-200
-                  border-b border-gray-100 dark:border-gray-700 py-6 shadow-xl">
+                  border border-neutral
+                  py-6 shadow-xl">
                         <div class="px-4 sm:px-6">
                       <div class="flex items-start justify-between">
                         <DialogTitle

@@ -3,6 +3,7 @@
 import {useToast} from "vue-toastification";
 import {computed} from "vue";
 import {usePage} from "@inertiajs/vue3";
+import DisplayMenu from "@/Components/DisplayMenu.vue";
 
 const toast = useToast();
 
@@ -22,15 +23,11 @@ const getFilter = (filter) => {
 </script>
 
 <template>
-    <details class="dropdown dropdown-top">
-        <summary class="m-1 btn btn-neutral">Filters</summary>
-        <ul class="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-48 ">
-            <li v-for="filter in filters" :key="filter.id">
-                <button type="button" @click="getFilter(filter)">{{ filter.name }}</button>
-            </li>
-            <li><button type="button" @click="getFilter({})">Reset</button></li>
-        </ul>
-    </details>
+    <DisplayMenu :items="filters" @itemSelected="getFilter">
+        <template #title>
+            Filters
+        </template>
+    </DisplayMenu>
 </template>
 
 <style scoped>
