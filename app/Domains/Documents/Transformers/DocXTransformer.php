@@ -106,20 +106,19 @@ class DocXTransformer
         return $chunks;
     }
 
-
     private function processTable(Table $table): string
     {
         $tableContent = [];
         $rows = $table->getRows();
         foreach ($rows as $row) {
             $rowData = $this->processRow($row);
-            if (!empty($rowData)) {
-                $tableContent[] = '[Table Row: ' . implode(', ', $rowData) . ']';
+            if (! empty($rowData)) {
+                $tableContent[] = '[Table Row: '.implode(', ', $rowData).']';
             }
         }
+
         return implode("\n", $tableContent);
     }
-
 
     private function processRow($row): array
     {
@@ -137,6 +136,7 @@ class DocXTransformer
                 }
             }
         }
+
         return $rowData;
     }
 }
