@@ -6,13 +6,13 @@
 
                 <CollectionTags :collection="collection"></CollectionTags>
 
-                <details class="dropdown">
-                    <summary class="m-1 btn btn-ghost">
+                <details ref="openMenu" class="dropdown">
+                    <summary class="m-1 btn btn-ghost border-neutral">
                         <EllipsisVerticalIcon class="h-5 w-5" />
                     </summary>
                     <ul class="p-2 shadow menu dropdown-content
                      -ml-24
-                    z-[1] bg-base-100 rounded-box w-52">
+                    z-[1] bg-base-100  border border-neutral rounded-box w-52">
                         <li>
                             <button type="button" class="btn-link" @click="showEditCollectionSlideOut">Edit</button>
                         </li>
@@ -40,7 +40,13 @@ import Label from '@/Components/Labels.vue';
 import CreateChat from './CreateChat.vue';
 import { ChatBubbleLeftIcon } from '@heroicons/vue/24/outline';
 import { EllipsisVerticalIcon } from '@heroicons/vue/24/solid';
+import {ref} from "vue";
 
+const openMenu = ref(null);
+
+const closeMenu = () => {
+    openMenu.value.removeAttribute('open')
+}
 
 const props = defineProps({
     collection: {
@@ -55,10 +61,12 @@ const props = defineProps({
 const emit = defineEmits(['showEditCollectionSlideOut', 'toggleReindexCollection']);
 
 const showEditCollectionSlideOut = () => {
+    closeMenu();
     emit('showEditCollectionSlideOut');
 };
 
 const toggleReindexCollection = () => {
+    closeMenu();
     emit('toggleReindexCollection');
 };
 

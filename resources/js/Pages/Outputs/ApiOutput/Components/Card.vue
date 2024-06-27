@@ -16,7 +16,7 @@ const showToken = ref(false)
 </script>
 
 <template>
-    <div class="card rounded-none w-96 dark:bg-neutral shadow-xl">
+    <div class="card rounded-none w-96 dark:bg-neutral shadow-xl  border border-neutral">
         <div class="card-body">
             <Settings :output="output"></Settings>
 
@@ -32,7 +32,7 @@ const showToken = ref(false)
             <div class="text-xs">
                 URL: <span class="font-bold">{{ output.url }}</span>
             </div>
-            <div class="card-actions justify-between flex items-center">
+            <div class="card-actions justify-between flex items-center ">
                 <span class="badge badge-default">{{ output.type_formatted}}</span>
                 <div class="flex justify-end gap-2 items-center">
                     <Link :href="route('collections.outputs.api_output.edit', {
