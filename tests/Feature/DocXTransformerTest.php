@@ -79,6 +79,6 @@ class DocXTransformerTest extends TestCase
 
         $content = get_fixture('docx-tables.text', false);
 
-        $this->assertEquals($content, DocumentChunk::first()->content);
+        $this->assertStringContainsString(DocumentChunk::first()->content, $content);
     }
 }

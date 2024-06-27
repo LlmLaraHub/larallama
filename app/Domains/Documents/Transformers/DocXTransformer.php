@@ -56,33 +56,7 @@ class DocXTransformer
                     } elseif ($element instanceof Image) {
                         $content[] = '[Image: '.$element->getSource().']';
                     } elseif ($element instanceof Table) {
-                        $rows = $element->getRows();
-                        foreach ($rows as $row) {
-                            $cells = $row->getCells();
-                            $rowData = [];
-                            foreach ($cells as $cell) {
-                                $cellElements = $cell->getElements();
-                                foreach ($cellElements as $cellElement) {
-                                    if ($cellElement instanceof Text) {
-                                        $rowData[] = str($cellElement->getText())->trim()->toString();
-                                    } elseif ($cellElement instanceof Table) {
-                                        $childRows = $cellElement->getRows();
-                                        foreach ($childRows as $childRow) {
-                                            $childCells = $childRow->getCells();
-                                            foreach ($childCells as $childCell) {
-                                                $childCellElements = $childCell->getElements();
-                                                foreach ($childCellElements as $childCellElement) {
-                                                    if ($childCellElement instanceof Text) {
-                                                        $rowData[] = str($childCellElement->getText())->trim()->toString();
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                                $content[] = '[Table Row: ' . implode(', ', $rowData) . ']';
-                            }
-                        }
+                        $content[] = $this->processTable($element);
                     } elseif ($element instanceof ListItem) {
                         $content[] = '[ListItem: '.$element->getText().']';
                     } elseif ($element instanceof PageBreak) {
@@ -130,5 +104,39 @@ class DocXTransformer
         Log::info('DocXTransformer:handle', ['chunks' => count($chunks)]);
 
         return $chunks;
+    }
+
+
+    private function processTable(Table $table): string
+    {
+        $tableContent = [];
+        $rows = $table->getRows();
+        foreach ($rows as $row) {
+            $rowData = $this->processRow($row);
+            if (!empty($rowData)) {
+                $tableContent[] = '[Table Row: ' . implode(', ', $rowData) . ']';
+            }
+        }
+        return implode("\n", $tableContent);
+    }
+
+
+    private function processRow($row): array
+    {
+        $rowData = [];
+        $cells = $row->getCells();
+        foreach ($cells as $cell) {
+            $cellElements = $cell->getElements();
+            foreach ($cellElements as $cellElement) {
+                if ($cellElement instanceof Text) {
+                    $rowData[] = str($cellElement->getText())->trim()->toString();
+                } elseif ($cellElement instanceof TextRun) {
+                    $rowData[] = str($cellElement->getText())->trim()->toString();
+                } elseif ($cellElement instanceof Table) {
+                    $rowData[] = $this->processTable($cellElement);
+                }
+            }
+        }
+        return $rowData;
     }
 }
