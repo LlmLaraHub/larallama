@@ -50,4 +50,35 @@ class DocXTransformerTest extends TestCase
         $this->assertDatabaseCount('document_chunks', 1);
 
     }
+
+    public function test_gets_data_from_docx_with_page_breaks()
+    {
+        Event::fake();
+        Bus::fake();
+        $document = $this->setupFile('page-breaks.docx');
+
+        $this->assertDatabaseCount('document_chunks', 0);
+        $transformer = new DocXTransformer();
+        $transformer->handle($document);
+        $this->assertDatabaseCount('document_chunks', 1);
+
+        $content = get_fixture('page-breaks.text', false);
+        $this->assertEquals($content, DocumentChunk::first()->content);
+    }
+
+    public function test_gets_data_from_docx_with_tables()
+    {
+        Event::fake();
+        Bus::fake();
+        $document = $this->setupFile('docx-tables.docx');
+
+        $this->assertDatabaseCount('document_chunks', 0);
+        $transformer = new DocXTransformer();
+        $transformer->handle($document);
+        $this->assertDatabaseCount('document_chunks', 1);
+
+        $content = get_fixture('docx-tables.text', false);
+
+        $this->assertEquals($content, DocumentChunk::first()->content);
+    }
 }

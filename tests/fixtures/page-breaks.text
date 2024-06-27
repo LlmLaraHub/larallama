@@ -1,0 +1,2 @@
+First page, tab here:	followed by line-break here:here:and here:no-break hyphen here:and hard page-break here&gt;&gt;
+&lt;&lt;Text on second page. The font is big so it breaks ontoContinuous section break here&gt;&gt;&lt;&lt;followed by text on same pageOdd-page section break here&gt;&gt;&lt;&lt;producing two page-breaks to get from page-3 to page-5.Then text gets big again so a &quot;natural&quot; rendered page break happens again here&gt;&gt; &lt;&lt;and then more text proceeds.

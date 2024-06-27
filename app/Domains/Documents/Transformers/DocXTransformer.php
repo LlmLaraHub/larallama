@@ -9,6 +9,13 @@ use App\Models\Document;
 use App\Models\DocumentChunk;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
+use PhpOffice\PhpWord\Element\Image;
+use PhpOffice\PhpWord\Element\ListItem;
+use PhpOffice\PhpWord\Element\PageBreak;
+use PhpOffice\PhpWord\Element\Table;
+use PhpOffice\PhpWord\Element\Text;
+use PhpOffice\PhpWord\Element\TextBreak;
+use PhpOffice\PhpWord\Element\TextRun;
 use PhpOffice\PhpWord\IOFactory;
 
 class DocXTransformer
@@ -39,22 +46,53 @@ class DocXTransformer
         $chunks = [];
 
         foreach ($sections as $section) {
-            $elements = $section->getElements();
-            foreach ($elements as $element) {
-                /**
-                 * @TODO
-                 * what type of section
-                 * text is easy
-                 * what about images
-                 * what about tables
-                 * what about lists
-                 */
-                $content[] = str($element->getText())->trim()->toString();
-
+            try {
+                $elements = $section->getElements();
+                foreach ($elements as $element) {
+                    if ($element instanceof Text || $element instanceof TextRun) {
+                        $content[] = str($element->getText())->trim()->toString();
+                    } elseif ($element instanceof TextBreak) {
+                        $content[] = "\n";
+                    } elseif ($element instanceof Image) {
+                        // Handle images
+                        $content[] = '[Image: '.$element->getSource().']';
+                    } elseif ($element instanceof Table) {
+                        // Handle tables
+                        $rows = $element->getRows();
+                        foreach ($rows as $row) {
+                            $cells = $row->getCells();
+                            $rowData = [];
+                            foreach ($cells as $cell) {
+                                $cellElements = $cell->getElements();
+                                foreach ($cellElements as $cellElement) {
+                                    if ($cellElement instanceof Text) {
+                                        $rowData[] = str($cellElement->getText())->trim()->toString();
+                                    }
+                                }
+                            }
+                            $content[] = '[Table Row: '.implode(', ', $rowData).']';
+                        }
+                    } elseif ($element instanceof ListItem) {
+                        // Handle list items
+                        $content[] = '[ListItem: '.$element->getText().']';
+                    } elseif ($element instanceof PageBreak) {
+                        $content[] = "\n";
+                    } else {
+                        // Handle other types if needed
+                        Log::info('Unhandled Element', [
+                            'element' => $element->getType(),
+                        ]);
+                        //$content[] = '[Unhandled Element]';
+                    }
+                }
+            } catch (\Exception $e) {
+                Log::error('Error parsing Docx', [
+                    'error' => $e->getMessage(),
+                ]);
             }
         }
 
-        $content_flattened = implode(' ', $content);
+        $content_flattened = implode('', $content);
         $size = config('llmdriver.chunking.default_size');
         $chunked_chunks = TextChunker::handle($content_flattened, $size);
         $page = 1;
