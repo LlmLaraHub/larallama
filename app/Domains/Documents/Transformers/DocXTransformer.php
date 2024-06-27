@@ -54,10 +54,8 @@ class DocXTransformer
                     } elseif ($element instanceof TextBreak) {
                         $content[] = "\n";
                     } elseif ($element instanceof Image) {
-                        // Handle images
                         $content[] = '[Image: '.$element->getSource().']';
                     } elseif ($element instanceof Table) {
-                        // Handle tables
                         $rows = $element->getRows();
                         foreach ($rows as $row) {
                             $cells = $row->getCells();
@@ -67,22 +65,32 @@ class DocXTransformer
                                 foreach ($cellElements as $cellElement) {
                                     if ($cellElement instanceof Text) {
                                         $rowData[] = str($cellElement->getText())->trim()->toString();
+                                    } elseif ($cellElement instanceof Table) {
+                                        $childRows = $cellElement->getRows();
+                                        foreach ($childRows as $childRow) {
+                                            $childCells = $childRow->getCells();
+                                            foreach ($childCells as $childCell) {
+                                                $childCellElements = $childCell->getElements();
+                                                foreach ($childCellElements as $childCellElement) {
+                                                    if ($childCellElement instanceof Text) {
+                                                        $rowData[] = str($childCellElement->getText())->trim()->toString();
+                                                    }
+                                                }
+                                            }
+                                        }
                                     }
                                 }
+                                $content[] = '[Table Row: ' . implode(', ', $rowData) . ']';
                             }
-                            $content[] = '[Table Row: '.implode(', ', $rowData).']';
                         }
                     } elseif ($element instanceof ListItem) {
-                        // Handle list items
                         $content[] = '[ListItem: '.$element->getText().']';
                     } elseif ($element instanceof PageBreak) {
                         $content[] = "\n";
                     } else {
-                        // Handle other types if needed
                         Log::info('Unhandled Element', [
                             'element' => $element->getType(),
                         ]);
-                        //$content[] = '[Unhandled Element]';
                     }
                 }
             } catch (\Exception $e) {
