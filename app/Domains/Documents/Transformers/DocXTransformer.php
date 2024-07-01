@@ -77,7 +77,6 @@ class DocXTransformer
             }
         }
 
-        /** @phpstan-ignore-next-line */
         $content_flattened = collect($content)->map(
             function ($item) {
                 if ($item instanceof TextRun) {
