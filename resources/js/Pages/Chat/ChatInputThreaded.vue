@@ -1,10 +1,8 @@
 <script setup>
 import {router, useForm, usePage} from "@inertiajs/vue3";
-import { ChevronDoubleDownIcon, ChevronRightIcon} from "@heroicons/vue/20/solid";
 import {computed, inject, onMounted, onUnmounted, ref, watch} from "vue";
 import axios from "axios";
 import { useToast } from "vue-toastification";
-import { Switch, SwitchGroup, SwitchLabel } from '@headlessui/vue'
 import Filters from "@/Pages/Collection/Components/Filters.vue";
 import StyleGuide from "@/Pages/Collection/Components/StyleGuide.vue";
 

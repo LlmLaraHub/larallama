@@ -97,4 +97,17 @@ class DocXTransformerTest extends TestCase
 
         $this->assertStringContainsString(DocumentChunk::first()->content, $content);
     }
+
+    public function test_gets_data_from_docx_with_many_pages()
+    {
+        Event::fake();
+        Bus::fake();
+        $document = $this->setupFile('handbook-872p.docx');
+
+        $this->assertDatabaseCount('document_chunks', 0);
+        $transformer = new DocXTransformer();
+        $transformer->handle($document);
+        $this->assertDatabaseCount('document_chunks', 800);
+
+    }
 }

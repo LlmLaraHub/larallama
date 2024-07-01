@@ -19,7 +19,7 @@ const chooseItem = (item) => {
 
 <template>
     <details ref="openMenu" class="dropdown dropdown-top">
-        <summary class="m-1 btn btn-neutral">
+        <summary class="m-1 btn btn-neutral btn-outline">
             <slot name="title"></slot>
         </summary>
         <ul class="

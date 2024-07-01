@@ -16,6 +16,7 @@ use PhpOffice\PhpWord\Element\Table;
 use PhpOffice\PhpWord\Element\Text;
 use PhpOffice\PhpWord\Element\TextBreak;
 use PhpOffice\PhpWord\Element\TextRun;
+use PhpOffice\PhpWord\Element\Title;
 use PhpOffice\PhpWord\IOFactory;
 
 class DocXTransformer
@@ -61,9 +62,11 @@ class DocXTransformer
                         $content[] = '[ListItem: '.$element->getText().']';
                     } elseif ($element instanceof PageBreak) {
                         $content[] = "\n";
+                    } elseif ($element instanceof Title) {
+                        $content[] = $element->getText();
                     } else {
                         Log::info('Unhandled Element', [
-                            'element' => $element->getType(),
+                            'class' => get_class($element),
                         ]);
                     }
                 }

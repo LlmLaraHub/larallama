@@ -21,8 +21,6 @@ const props = defineProps({
                 <ChatMessage
                 :chat="chat.data" :messages="messages.data">
                 </ChatMessage>
-
-
             </div>
 
             <div class="mt-10">

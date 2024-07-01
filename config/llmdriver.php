@@ -67,7 +67,8 @@ return [
         ],
     ],
     'features' => [
-        'pptx' => env('FEATURE_PPTX', false),
+        'pptx' => true,
+        'chatv2' => env('FEATURE_CHATV2', false),
     ],
     'sources' => [
         'search_driver' => env('LARALAMMA_SEARCH_SOURCE', 'mock'),

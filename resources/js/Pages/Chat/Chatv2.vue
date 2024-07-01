@@ -1,0 +1,305 @@
+<script setup>
+import {router, useForm, usePage} from "@inertiajs/vue3";
+import {computed, inject, onMounted, onUnmounted, ref, watch} from "vue";
+import axios from "axios";
+import { useToast } from "vue-toastification";
+import Filters from "@/Pages/Collection/Components/Filters.vue";
+import StyleGuide from "@/Pages/Collection/Components/StyleGuide.vue";
+const toast = useToast();
+
+import ChatMessageV2 from "@/Pages/Chat/ChatMessageV2.vue";
+
+const props = defineProps({
+    loading: {
+        type: Boolean,
+        default: false
+    },
+    chat: Object,
+    messages: Object,
+})
+
+const emits = defineEmits(['chatSubmitted'])
+
+const errors = ref({})
+
+const form = useForm({
+    input: "",
+    completion: false,
+    tool: "",
+    filter: null,
+    persona: null
+})
+
+const filterChosen = ref({})
+const personaChosen = ref({})
+
+const filter = (filter) => {
+    filterChosen.value = filter;
+    form.filter = filter?.id
+}
+
+const persona = (persona) => {
+    personaChosen.value = persona;
+    form.persona = persona?.id;
+}
+
+const audience = (audience) => {
+    form.input = form.input + "\n" + audience?.content;
+    toast.info('Audience added to your prompt!', {
+        position: 'bottom-right'
+    });
+}
+
+
+const getting_results = ref(false)
+
+onMounted(() => {
+    Echo.private(`collection.chat.${props.chat.chatable_id}.${props.chat.id}`)
+        .listen('.status', (e) => {
+            router.reload({
+                preserveScroll: true,
+            })
+        })
+        .listen('.update', (e) => {
+            if(e.updateMessage === 'Complete') {
+                getting_results.value = false
+                router.reload({
+                    preserveScroll: true,
+                })
+            } else {
+                toast.success(e.updateMessage, {
+                    position: "bottom-right",
+                    timeout: 2000,
+                    closeOnClick: true,
+                    pauseOnFocusLoss: false,
+                    pauseOnHover: false,
+                    draggable: false,
+                    draggablePercent: 0.6,
+                    showCloseButtonOnHover: true,
+                    hideProgressBar: true,
+                    closeButton: "button",
+                    icon: true,
+                    rtl: false
+                });
+            }
+        });
+});
+
+onUnmounted(() => {
+    Echo.leave(`collection.chat.${props.chat.chatable_id}.${props.chat.id}`);
+});
+
+
+const save = () => {
+    getting_results.value = true
+    let message = form.input
+    let completion = form.completion
+    let filter = form.filter
+    let tool = form.tool
+    let persona = form.persona
+    form.reset();
+    axios.post(route('chats.messages.create', {
+        chat: props.chat.id
+    }), {
+        input: message,
+        completion: completion,
+        tool: tool,
+        persona: persona,
+        filter: filter
+    }).catch(error => {
+        getting_results.value = false
+        toast.error('An error occurred. Please try again.')
+        console.log(error)
+    });
+}
+
+const setQuestion = (question) => {
+    form.input = question;
+}
+
+const reusePrompt = (prompt) => {
+    form.input = prompt;
+    router.visit('#chat-input', {
+        preserveState: true,
+    });
+    toast.success('Prompt ready to reuse', {
+        position: "bottom-right",
+    });
+}
+
+
+</script>
+
+<template>
+    <div class="flex-1 flex flex-col mx-auto px-5 ">
+
+        <div v-if="chat?.id && messages.length === 0">
+            Ask a question below to get started.
+        </div>
+        <div v-for="message in messages" v-else>
+            <ChatMessageV2
+                @reusePrompt="reusePrompt"
+                :message="message"></ChatMessageV2>
+        </div>
+
+        <div v-if="getting_results">
+            <div class="w-full px-5 py-5">
+                <div class="animate-pulse flex space-x-4 mb-10">
+                    <div class="flex-1 space-y-4 py-1">
+                        <div class="h-6 bg-slate-400 rounded"></div>
+                        <div class="space-y-3">
+                            <div class="grid grid-cols-3 gap-4">
+                                <div class="h-6 bg-slate-400 rounded col-span-2"></div>
+                                <div class="h-6 bg-slate-400 rounded col-span-1"></div>
+                            </div>
+                            <div class="h-6 bg-slate-400 rounded"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="join join-vertical w-full
+                    bg-neutral mt-4 p-2 mb-10 pb-10">
+        <form @submit.prevent="save"  autocomplete="off">
+        <div class="join-item">
+            <!-- file upload will go here -->
+        </div>
+
+        <div class="w-full mx-auto px-4">
+            <label class="form-control join-item">
+                <div class="label" v-if="false">
+                    <span class="label-text">Your bio</span>
+                    <span class="label-text-alt">Alt label</span>
+                </div>
+
+                <div class="flex mt-5 ">
+<!--                    add anchor below so I cal scroll to it-->
+                    <textarea
+                        id="chat-input"
+                        v-model="form.input"
+                        class="
+                        textarea textarea-bordered h-40 text-lg w-full"
+                        placeholder="Chat with your Collection">
+
+                    </textarea>
+
+                    <div class="flex justify-center mb-2 pt-1 mx-auto ml-4">
+                        <span
+                            v-if="getting_results"
+                            class="mt-2">
+                            <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            </svg>
+                        </span>
+                        <button
+                            v-else
+                            :disabled="getting_results || !form.input" type="submit"
+                            class="btn btn-secondary rounded-md btn-sm">
+                            <span
+                                v-if="getting_results"
+                                class="loading loading-dots loading-md">
+
+                            </span>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                                 class="size-4 font-bold ">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 10.5 12 3m0 0 7.5 7.5M12 3v18" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="label" v-if="false">
+                    <span class="label-text-alt">Your bio</span>
+                    <span class="label-text-alt">Alt label</span>
+                </div>
+            </label>
+        </div>
+        <div class="join-item px-4 mt-4">
+            <div class="flex justify-start gap-2 items-center ml-1 mb-2">
+                <div v-if="filterChosen?.name" class="flex justify-start gap-1 items-center">
+                        <span class="text-secondary">
+                            Filter being used: </span>
+                    <span class="font-bold">{{filterChosen.name}}</span>
+                    <button type="button" @click="filter({})">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                        </svg>
+                    </button>
+                </div>
+                <div v-if="personaChosen?.name" class="flex justify-start gap-1 items-center">
+                        <span class="text-secondary">
+                            Persona being used: </span>
+                    <span class="font-bold">{{personaChosen.name}}</span>
+                    <button type="button" @click="persona({})">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <div class="flex justify-start gap-2 items-center">
+
+                <Filters
+                    @filter="filter"
+                    :collection="chat.collection"></Filters>
+                <StyleGuide
+                    @persona="persona"
+                    @audience="audience"
+                    :collection="chat.collection">
+                </StyleGuide>
+            </div>
+
+            <div>
+                <h2
+                    class="text-lg font-medium prose mt-4 px-2 mb-4 items-center justify-start flex gap-4"
+                >
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-10
+text-secondary">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 18v-5.25m0 0a6.01 6.01 0 0 0 1.5-.189m-1.5.189a6.01 6.01 0 0 1-1.5-.189m3.75 7.478a12.06 12.06 0 0 1-4.5 0m3.75 2.383a14.406 14.406 0 0 1-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 1 0-7.517 0c.85.493 1.509 1.333 1.509 2.316V18" />
+                    </svg>
+
+                    Click a button below to choose a focus for your chat. This will help the system to be more specific on how it integrates your Collection and the Prompt.</h2>
+                <div class="flex justify-center items-center gap-3">
+                    <div class="tooltip tooltip-info"
+                         data-tip="This will take your prompt and compare it to each document in your collection. The results will be the summary of all the comments the LLM has.">
+                        <button
+                            class="btn btn-secondary rounded-none"
+                            :class="{ 'opacity-50': form.tool !== 'standards_checker' && form.tool !== '' }"
+                            type="button"
+                            @click="form.tool = 'standards_checker'"
+                        >
+                            Standards Checker
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-4">
+                                <path fill-rule="evenodd" d="M15 8A7 7 0 1 1 1 8a7 7 0 0 1 14 0Zm-6 3.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0ZM7.293 5.293a1 1 0 1 1 .99 1.667c-.459.134-1.033.566-1.033 1.29v.25a.75.75 0 1 0 1.5 0v-.115a2.5 2.5 0 1 0-2.518-4.153.75.75 0 1 0 1.061 1.06Z" clip-rule="evenodd" />
+                            </svg>
+
+                        </button>
+                    </div>
+
+                    <div class="tooltip tooltip-info" data-tip="This is more like Chat GPT it will not search your collection. It will just take your prompt and the history of the chat and return the response.">
+                        <button
+                            class="btn btn-secondary rounded-none"
+                            type="button"
+                            :class="{ 'opacity-50': form.tool !== 'completion' && form.tool !== '' }"
+                            @click="form.tool = 'completion'"
+                        >
+                            Raw Prompt
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-4">
+                                <path fill-rule="evenodd" d="M15 8A7 7 0 1 1 1 8a7 7 0 0 1 14 0Zm-6 3.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0ZM7.293 5.293a1 1 0 1 1 .99 1.667c-.459.134-1.033.566-1.033 1.29v.25a.75.75 0 1 0 1.5 0v-.115a2.5 2.5 0 1 0-2.518-4.153.75.75 0 1 0 1.061 1.06Z" clip-rule="evenodd" />
+                            </svg>
+
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </form>
+    </div>
+
+</template>
+
+<style scoped>
+
+</style>
