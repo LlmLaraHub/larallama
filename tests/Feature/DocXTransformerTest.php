@@ -107,7 +107,7 @@ class DocXTransformerTest extends TestCase
         $this->assertDatabaseCount('document_chunks', 0);
         $transformer = new DocXTransformer();
         $transformer->handle($document);
-        $this->assertDatabaseCount('document_chunks', 800);
+        $this->assertDatabaseCount('document_chunks', 1594);
 
     }
 }

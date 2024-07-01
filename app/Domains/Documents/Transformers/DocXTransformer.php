@@ -78,28 +78,45 @@ class DocXTransformer
         }
 
         /** @phpstan-ignore-next-line */
-        $content_flattened = implode('', $content);
+        $content_flattened = collect($content)->map(
+            function ($item) {
+                if($item instanceof TextRun) {
+                    return str($item->getText())->trim()->toString();
+                }
+                return $item;
+            }
+        )->filter(
+            function ($item) {
+                return $item !== '';
+            }
+        )->implode('');
         $size = config('llmdriver.chunking.default_size');
         $chunked_chunks = TextChunker::handle($content_flattened, $size);
         $page = 1;
 
         foreach ($chunked_chunks as $chunkSection => $chunkContent) {
-            $DocumentChunk = DocumentChunk::updateOrCreate(
-                [
-                    'document_id' => $this->document->id,
-                    'sort_order' => $page,
-                    'section_number' => $chunkSection,
-                ],
-                [
-                    'guid' => md5($chunkContent),
-                    'content' => $chunkContent,
-                    'meta_data' => [$chunkContent],
-                ]
-            );
+            try {
+                $DocumentChunk = DocumentChunk::updateOrCreate(
+                    [
+                        'document_id' => $this->document->id,
+                        'sort_order' => $page,
+                        'section_number' => $chunkSection,
+                    ],
+                    [
+                        'guid' => md5($chunkContent),
+                        'content' => $chunkContent,
+                        'meta_data' => [$chunkContent],
+                    ]
+                );
 
-            $chunks[] = [
-                new VectorlizeDataJob($DocumentChunk),
-            ];
+                $chunks[] = [
+                    new VectorlizeDataJob($DocumentChunk),
+                ];
+            } catch (\Exception $e) {
+                Log::error('Error processing Docx', [
+                    'error' => $e->getMessage(),
+                ]);
+            }
         }
 
         notify_collection_ui($this->document->collection,
