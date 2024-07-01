@@ -36,7 +36,6 @@ class AppServiceProvider extends ServiceProvider
             return config('llmdriver.features.chatv2'); //just not ready yet
         });
 
-
         Feature::define('ollama-functions', function (User $user) {
             return config('llmdriver.drivers.ollama.feature_flags.functions'); //just not ready yet
         });
