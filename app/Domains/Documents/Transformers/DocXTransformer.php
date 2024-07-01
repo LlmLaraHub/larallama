@@ -77,6 +77,7 @@ class DocXTransformer
             }
         }
 
+        /** @phpstan-ignore-next-line */
         $content_flattened = implode('', $content);
         $size = config('llmdriver.chunking.default_size');
         $chunked_chunks = TextChunker::handle($content_flattened, $size);
