@@ -89,34 +89,45 @@ class CollectionController extends Controller
             'files' => 'required',
         ]);
 
-        foreach ($validated['files'] as $file) {
-            $mimetype = $file->getMimeType();
+       try {
+           foreach ($validated['files'] as $file) {
+               $mimetype = $file->getMimeType();
 
-            //if pptx
-            Log::info('[LaraChain] - Mimetype', [
-                'mimetype' => $mimetype,
-            ]);
+               //if pptx
+               Log::info('[LaraChain] - Mimetype', [
+                   'mimetype' => $mimetype,
+               ]);
 
-            $mimeType = TypesEnum::mimeTypeToType($mimetype);
+               $mimeType = TypesEnum::mimeTypeToType($mimetype);
 
-            $document = Document::create([
-                'collection_id' => $collection->id,
-                'file_path' => $file->getClientOriginalName(),
-                'type' => $mimeType,
-            ]);
+               $document = Document::create([
+                   'collection_id' => $collection->id,
+                   'file_path' => $file->getClientOriginalName(),
+                   'type' => $mimeType,
+               ]);
 
-            $file->storeAs(
-                path: $collection->id,
-                name: $file->getClientOriginalName(),
-                options: ['disk' => 'collections']
-            );
+               $file->storeAs(
+                   path: $collection->id,
+                   name: $file->getClientOriginalName(),
+                   options: ['disk' => 'collections']
+               );
 
-            ProcessFileJob::dispatch($document);
-        }
+               ProcessFileJob::dispatch($document);
+           }
 
-        request()->session()->flash('flash.banner', 'Files uploaded successfully!');
+           request()->session()->flash('flash.banner', 'Files uploaded successfully!');
 
-        return back();
+           return back();
+       } catch (\Exception $e) {
+           Log::error('Error processing file', [
+               'error' => $e->getMessage(),
+           ]);
+
+           request()->session()->flash('flash.banner', 'Error processing file');
+           request()->session()->flash('flash.bannerStyle', 'danger');
+
+           return back();
+       }
     }
 
     public function resetCollectionDocument(Collection $collection, Document $document)
