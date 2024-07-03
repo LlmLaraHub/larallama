@@ -102,11 +102,10 @@ class ChatControllerTest extends TestCase
                 'date_range' => DateRangesEnum::ThisWeek->value,
             ])->assertOk();
 
-
         $this->assertDatabaseCount('messages', 1);
 
         $message = Message::first();
-        $this->assertEquals("this_week", $message->meta_data->date_range);
+        $this->assertEquals('this_week', $message->meta_data->date_range);
     }
 
     public function test_a_function_based_chat()
