@@ -32,18 +32,7 @@ class Orchestrate
         ?Filter $filter = null,
         string $tool = ''): ?string
     {
-        /**
-         * We are looking first for functions / agents / tools
-         */
-        Log::info('[LaraChain] Orchestration Function Check');
 
-        $functions = LlmDriverFacade::driver($chat->chatable->getDriver())
-            ->functionPromptChat($messagesArray);
-
-        Log::info("['LaraChain'] Functions Found?", [
-            'count' => count($functions),
-            'functions' => $functions,
-        ]);
 
         if ($tool) {
             Log::info('[LaraChain] Orchestration Has Tool', [
@@ -70,91 +59,106 @@ class Orchestrate
                 $this->requiresFollowUp($messagesArray, $chat);
             }
 
-        } elseif ($this->hasFunctions($functions)) {
-            Log::info('[LaraChain] Orchestration Has Functions', $functions);
-
-            foreach ($functions as $function) {
-                $functionName = data_get($function, 'name', null);
-
-                if (is_null($functionName)) {
-                    throw new \Exception('Function name is required');
-                }
-
-                notify_ui($chat, 'We are running the agent back shortly');
-
-                Log::info('[LaraChain] - Running function '.$functionName);
-
-                $functionClass = app()->make($functionName);
-
-                $arguments = data_get($function, 'arguments');
-
-                $arguments = is_array($arguments) ? json_encode($arguments) : '';
-
-                $functionDto = FunctionCallDto::from([
-                    'arguments' => $arguments,
-                    'function_name' => $functionName,
-                    'filter' => $filter,
-                ]);
-
-                /** @var FunctionResponse $response */
-                $response = $functionClass->handle($messagesArray, $chat, $functionDto);
-
-                Log::info('[LaraChain] - Function Response', [
-                    'function' => $functionName,
-                    'response' => $response,
-                ]);
-
-                $message = null;
-                if ($response->save_to_message) {
-
-                    $message = $chat->addInput(
-                        message: $response->content,
-                        role: RoleEnum::Assistant,
-                        show_in_thread: true);
-                }
-
-                if ($response->prompt) {
-                    PromptHistory::create([
-                        'prompt' => $response->prompt,
-                        'chat_id' => $chat->getChat()->id,
-                        'message_id' => $message?->id,
-                        /** @phpstan-ignore-next-line */
-                        'collection_id' => $chat->getChatable()?->id,
-                    ]);
-                }
-
-                if (! empty($response->documentChunks)) {
-                    $this->saveDocumentReference(
-                        $message,
-                        $response->documentChunks
-                    );
-                }
-
-                $messagesArray = Arr::wrap(MessageInDto::from([
-                    'role' => 'assistant',
-                    'content' => $response->content,
-                ]));
-
-                $this->response = $response->content;
-                $this->requiresFollowup = $response->requires_follow_up_prompt;
-            }
-
         } else {
-            Log::info('[LaraChain] Orchestration No Functions Default Search And Summarize');
             /**
-             * @NOTE
-             * this assumes way too much
+             * We are looking first for functions / agents / tools
              */
-            $message = get_latest_user_content($messagesArray);
+            Log::info('[LaraChain] Orchestration Function Check');
 
-            if (is_null($message)) {
-                Log::error('[LaraChain] Orchestration No Message Found', [
-                    'messages' => $messagesArray,
-                ]);
-                throw new \Exception('No message found in incoming messages');
+            $functions = LlmDriverFacade::driver($chat->chatable->getDriver())
+                ->functionPromptChat($messagesArray);
+
+            Log::info("['LaraChain'] Functions Found?", [
+                'count' => count($functions),
+                'functions' => $functions,
+            ]);
+
+            if ($this->hasFunctions($functions)) {
+                Log::info('[LaraChain] Orchestration Has Functions', $functions);
+
+                foreach ($functions as $function) {
+                    $functionName = data_get($function, 'name', null);
+
+                    if (is_null($functionName)) {
+                        throw new \Exception('Function name is required');
+                    }
+
+                    notify_ui($chat, 'We are running the agent back shortly');
+
+                    Log::info('[LaraChain] - Running function '.$functionName);
+
+                    $functionClass = app()->make($functionName);
+
+                    $arguments = data_get($function, 'arguments');
+
+                    $arguments = is_array($arguments) ? json_encode($arguments) : '';
+
+                    $functionDto = FunctionCallDto::from([
+                        'arguments' => $arguments,
+                        'function_name' => $functionName,
+                        'filter' => $filter,
+                    ]);
+
+                    /** @var FunctionResponse $response */
+                    $response = $functionClass->handle($messagesArray, $chat, $functionDto);
+
+                    Log::info('[LaraChain] - Function Response', [
+                        'function' => $functionName,
+                        'response' => $response,
+                    ]);
+
+                    $message = null;
+                    if ($response->save_to_message) {
+
+                        $message = $chat->addInput(
+                            message: $response->content,
+                            role: RoleEnum::Assistant,
+                            show_in_thread: true);
+                    }
+
+                    if ($response->prompt) {
+                        PromptHistory::create([
+                            'prompt' => $response->prompt,
+                            'chat_id' => $chat->getChat()->id,
+                            'message_id' => $message?->id,
+                            /** @phpstan-ignore-next-line */
+                            'collection_id' => $chat->getChatable()?->id,
+                        ]);
+                    }
+
+                    if (! empty($response->documentChunks)) {
+                        $this->saveDocumentReference(
+                            $message,
+                            $response->documentChunks
+                        );
+                    }
+
+                    $messagesArray = Arr::wrap(MessageInDto::from([
+                        'role' => 'assistant',
+                        'content' => $response->content,
+                    ]));
+
+                    $this->response = $response->content;
+                    $this->requiresFollowup = $response->requires_follow_up_prompt;
+                }
+
+            } else {
+                Log::info('[LaraChain] Orchestration No Functions Default Search And Summarize');
+                /**
+                 * @NOTE
+                 * this assumes way too much
+                 */
+                $message = get_latest_user_content($messagesArray);
+
+                if (is_null($message)) {
+                    Log::error('[LaraChain] Orchestration No Message Found', [
+                        'messages' => $messagesArray,
+                    ]);
+                    throw new \Exception('No message found in incoming messages');
+                }
+
+                return SearchAndSummarizeChatRepo::search($chat, $message, $filter);
             }
-
-            return SearchAndSummarizeChatRepo::search($chat, $message, $filter);
         }
 
         $this->requiresFollowUp($messagesArray, $chat);
