@@ -56,9 +56,10 @@ const getting_results = ref(false)
 onMounted(() => {
     Echo.private(`collection.chat.${props.chat.chatable_id}.${props.chat.id}`)
         .listen('.status', (e) => {
-            router.reload({
-                preserveScroll: true,
-            })
+            // @NOTE hmm why did I do this?
+            // router.reload({
+            //     preserveScroll: true,
+            // })
         })
         .listen('.update', (e) => {
             if(e.updateMessage === 'Complete') {
@@ -66,21 +67,6 @@ onMounted(() => {
                 router.reload({
                     preserveScroll: true,
                 })
-            } else {
-                toast.success(e.updateMessage, {
-                    position: "bottom-right",
-                    timeout: 2000,
-                    closeOnClick: true,
-                    pauseOnFocusLoss: false,
-                    pauseOnHover: false,
-                    draggable: false,
-                    draggablePercent: 0.6,
-                    showCloseButtonOnHover: true,
-                    hideProgressBar: true,
-                    closeButton: "button",
-                    icon: true,
-                    rtl: false
-                });
             }
         });
 });

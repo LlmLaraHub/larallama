@@ -33,7 +33,6 @@ class Orchestrate
         string $tool = ''): ?string
     {
 
-
         if ($tool) {
             Log::info('[LaraChain] Orchestration Has Tool', [
                 'tool' => $tool,
