@@ -6,7 +6,6 @@ use Spatie\LaravelData\Data;
 
 class MetaDataDto extends Data
 {
-
     public function __construct(
         public mixed $persona = '',
         public mixed $filter = '',

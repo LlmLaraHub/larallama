@@ -87,9 +87,9 @@ class Chat extends Model implements HasDrivers
         RoleEnum $role = RoleEnum::User,
         ?string $systemPrompt = null,
         bool $show_in_thread = true,
-        MetaDataDto $meta_data = null): Message
+        ?MetaDataDto $meta_data = null): Message
     {
-        if(! $meta_data) {
+        if (! $meta_data) {
             $meta_data = MetaDataDto::from([]);
         }
 
