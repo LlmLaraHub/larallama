@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Domains\Chat\DateRangesEnum;
 use App\Domains\Chat\MetaDataDto;
 use App\Domains\Messages\RoleEnum;
 use App\Events\ChatUiUpdateEvent;
@@ -46,6 +47,7 @@ class ChatController extends Controller
     {
         return inertia('Collection/Chat', [
             'collection' => new CollectionResource($collection),
+            'date_ranges' => DateRangesEnum::selectOptions(),
             'chat' => new ChatResource($chat),
             'chats' => ChatResource::collection($collection->chats()->latest()->paginate(20)),
             'filters' => FilterResource::collection($collection->filters),

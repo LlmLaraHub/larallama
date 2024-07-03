@@ -247,7 +247,14 @@ const toggleAll = () => {
                                                             {{ document.file_path }}
                                                         </a>
                                                     </div>
-                                                <div class="text-xs text-secondary">updated: {{ document.updated_at_diff }}</div>
+                                                <div class="text-xs text-secondary flex w-full items-center justify-start">
+                                                    <div>updated: {{ document.updated_at_diff }}</div>
+                                                    <div class="text-secondary mx-2"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-2">
+                                                        <path fill-rule="evenodd" d="M9.58 1.077a.75.75 0 0 1 .405.82L9.165 6h4.085a.75.75 0 0 1 .567 1.241l-6.5 7.5a.75.75 0 0 1-1.302-.638L6.835 10H2.75a.75.75 0 0 1-.567-1.241l6.5-7.5a.75.75 0 0 1 .897-.182Z" clip-rule="evenodd" />
+                                                    </svg>
+                                                    </div>
+                                                    <div>created at: {{ document.created_at_diff }}</div>
+                                                </div>
                                             </td>
 
                                             <td v-if="false">

@@ -8,6 +8,7 @@ import StyleGuide from "@/Pages/Collection/Components/StyleGuide.vue";
 const toast = useToast();
 
 import ChatMessageV2 from "@/Pages/Chat/ChatMessageV2.vue";
+import DisplayMenu from "@/Components/DisplayMenu.vue";
 
 const props = defineProps({
     loading: {
@@ -27,11 +28,21 @@ const form = useForm({
     completion: false,
     tool: "",
     filter: null,
-    persona: null
+    persona: null,
+    date_range: null
 })
 
 const filterChosen = ref({})
+
 const personaChosen = ref({})
+
+const dateRangeChosen = ref({})
+
+const dateRangeSelected = (dateRange) => {
+    console.log('dateRangeSelected', dateRange)
+    dateRangeChosen.value = dateRange;
+    form.date_range = dateRange?.id
+}
 
 const filter = (filter) => {
     filterChosen.value = filter;
@@ -237,6 +248,12 @@ const reusePrompt = (prompt) => {
                     @audience="audience"
                     :collection="chat.collection">
                 </StyleGuide>
+
+                <DisplayMenu :items="usePage().props.date_ranges" @itemSelected="dateRangeSelected">
+                    <template #title>
+                        Date Range
+                    </template>
+                </DisplayMenu>
             </div>
 
             <div>
