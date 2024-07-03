@@ -59,7 +59,7 @@ const reuse = (prompt) => {
 
                                         <Clipboard
                                             class="btn-ghost"
-                                            :content="message.body_markdown">
+                                            :content="message.body">
                                             Copy
                                         </Clipboard>
                                     </div>

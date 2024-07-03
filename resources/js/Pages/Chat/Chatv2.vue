@@ -39,7 +39,6 @@ const personaChosen = ref({})
 const dateRangeChosen = ref({})
 
 const dateRangeSelected = (dateRange) => {
-    console.log('dateRangeSelected', dateRange)
     dateRangeChosen.value = dateRange;
     form.date_range = dateRange?.id
 }
@@ -231,6 +230,16 @@ const reusePrompt = (prompt) => {
                             Persona being used: </span>
                     <span class="font-bold">{{personaChosen.name}}</span>
                     <button type="button" @click="persona({})">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                        </svg>
+                    </button>
+                </div>
+                <div v-if="dateRangeChosen?.name" class="flex justify-start gap-1 items-center">
+                        <span class="text-secondary">
+                            Date Range: </span>
+                    <span class="font-bold">{{dateRangeChosen.name}}</span>
+                    <button type="button" @click="dateRangeSelected({})">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
                             <path stroke-linecap="round" stroke-linejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                         </svg>
