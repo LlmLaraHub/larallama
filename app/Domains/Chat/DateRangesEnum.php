@@ -4,9 +4,8 @@ namespace App\Domains\Chat;
 
 use App\Helpers\EnumHelperTrait;
 
-enum DateRangesEnum : string
+enum DateRangesEnum: string
 {
-
     use EnumHelperTrait;
 
     case Today = 'today';
@@ -15,6 +14,5 @@ enum DateRangesEnum : string
     case LastWeek = 'last_week';
     case ThisMonth = 'this_month';
     case LastMonth = 'last_month';
-
 
 }
