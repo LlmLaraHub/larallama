@@ -10,9 +10,9 @@ class MetaDataDto extends Data
         public mixed $persona = '',
         public mixed $filter = '',
         public bool $completion = false,
-        public string $tool = '',
-        public string $date_range = '',
-        public string $input = '',
+        public mixed $tool = '',
+        public mixed $date_range = '',
+        public mixed $input = '',
     ) {
 
     }
