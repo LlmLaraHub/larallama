@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Domains\Chat\MetaDataDto;
 use App\Domains\Messages\RoleEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -85,10 +86,14 @@ class Chat extends Model implements HasDrivers
     public function addInput(string $message,
         RoleEnum $role = RoleEnum::User,
         ?string $systemPrompt = null,
-        bool $show_in_thread = true): Message
+        bool $show_in_thread = true,
+        MetaDataDto $meta_data = null): Message
     {
+        if(! $meta_data) {
+            $meta_data = MetaDataDto::from([]);
+        }
 
-        return DB::transaction(function () use ($message, $role, $systemPrompt, $show_in_thread) {
+        return DB::transaction(function () use ($message, $role, $systemPrompt, $show_in_thread, $meta_data) {
 
             if ($systemPrompt) {
                 $this->createSystemMessageIfNeeded($systemPrompt);
@@ -103,6 +108,7 @@ class Chat extends Model implements HasDrivers
                     'updated_at' => now(),
                     'chat_id' => $this->id,
                     'is_chat_ignored' => ! $show_in_thread,
+                    'meta_data' => $meta_data,
                 ]);
         });
 

@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Domains\Chat\MetaDataDto;
 use App\Domains\Messages\RoleEnum;
 use App\Models\Chat;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -23,6 +24,14 @@ class MessageFactory extends Factory
             'in_out' => $this->faker->boolean,
             'role' => RoleEnum::User,
             'chat_id' => Chat::factory(),
+            'meta_data' => MetaDataDto::from([
+                'persona' => 1,
+                'filter' => 1,
+                'completion' => false,
+                'tool' => 'foobar',
+                'date_range' => 'this_week',
+                'input' => 'my input here',
+            ]),
         ];
     }
 }

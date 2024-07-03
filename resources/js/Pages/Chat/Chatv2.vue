@@ -57,6 +57,8 @@ onMounted(() => {
     Echo.private(`collection.chat.${props.chat.chatable_id}.${props.chat.id}`)
         .listen('.status', (e) => {
             // @NOTE hmm why did I do this?
+            // resources/js/Pages/Collection/Chat.vue:36
+            //
             // router.reload({
             //     preserveScroll: true,
             // })

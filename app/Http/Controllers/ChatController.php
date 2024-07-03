@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Domains\Chat\MetaDataDto;
 use App\Domains\Messages\RoleEnum;
 use App\Events\ChatUiUpdateEvent;
 use App\Http\Resources\AudienceResource;
@@ -63,6 +64,7 @@ class ChatController extends Controller
         $validated = request()->validate([
             'input' => 'required|string',
             'completion' => 'boolean',
+            'date_range' => ['nullable', 'string'],
             'tool' => ['nullable', 'string'],
             'filter' => ['nullable', 'integer'],
             'persona' => ['nullable', 'integer'],
@@ -80,7 +82,9 @@ class ChatController extends Controller
                 $input = $persona->wrapPromptInPersona($input);
             }
 
-            $chat->addInput(
+            $meta_data = MetaDataDto::from($validated);
+
+            $message = $chat->addInput(
                 message: $input,
                 role: RoleEnum::User,
                 show_in_thread: true);

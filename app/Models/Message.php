@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Domains\Chat\MetaDataDto;
 use App\Domains\Messages\RoleEnum;
 use App\Events\MessageCreatedEvent;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -26,6 +27,7 @@ class Message extends Model
 
     protected $casts = [
         'role' => RoleEnum::class,
+        'meta_data' => MetaDataDto::class,
         'in_out' => 'boolean',
     ];
 

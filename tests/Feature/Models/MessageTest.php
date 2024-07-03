@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Models;
 
+use App\Domains\Chat\MetaDataDto;
 use App\Models\Message;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -18,5 +19,7 @@ class MessageTest extends TestCase
         $model = Message::factory()->create();
         $this->assertNotNull($model->body);
         $this->assertNotNull($model->chat->id);
+        $this->assertInstanceOf(MetaDataDto::class, $model->meta_data);
+        $this->assertNotNull($model->meta_data->date_range);
     }
 }
