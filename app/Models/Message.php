@@ -19,6 +19,7 @@ class Message extends Model
         'role',
         'in_out',
         'is_chat_ignored',
+        'meta_data',
     ];
 
     protected $dispatchesEvents = [

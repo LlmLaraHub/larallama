@@ -89,7 +89,8 @@ class ChatController extends Controller
             $message = $chat->addInput(
                 message: $input,
                 role: RoleEnum::User,
-                show_in_thread: true);
+                show_in_thread: true,
+                meta_data: $meta_data);
 
             $messagesArray = [];
 
