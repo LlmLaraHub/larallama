@@ -92,19 +92,7 @@ class ChatController extends Controller
                 show_in_thread: true,
                 meta_data: $meta_data);
 
-            $messagesArray = [];
-
-            $messagesArray[] = MessageInDto::from([
-                'content' => $input,
-                'role' => 'user',
-                'meta_data' => $meta_data,
-            ]);
-
-            $filter = data_get($validated, 'filter', null);
-
-            if ($filter) {
-                $filter = Filter::find($filter);
-            }
+            $filter = $message->getFilter();
 
             if ($message->meta_data->tool === 'completion') {
                 Log::info('[LaraChain] Running Simple Completion');
@@ -120,6 +108,10 @@ class ChatController extends Controller
                     role: RoleEnum::Assistant,
                     show_in_thread: true);
 
+                /**
+                 * @TODO
+                 * MOVE ALL OF THIS BELOW INTO ORCHESTRATE JOB
+                 */
             } elseif ($message->meta_data->tool === 'standards_checker') {
                 Log::info('[LaraChain] Running Standards Checker');
                 notify_ui($chat, 'Running Standards Checker');

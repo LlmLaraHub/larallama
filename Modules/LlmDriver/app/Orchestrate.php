@@ -111,20 +111,20 @@ class Orchestrate
 
                     $arguments = is_array($arguments) ? json_encode($arguments) : '';
 
-                    $functionDto = FunctionCallDto::from([
-                        'arguments' => $arguments,
-                        'function_name' => $functionName,
-                        'filter' => $filter,
-                    ]);
 
                     /**
                      * @TODO
                      * All functions need to then just get Message
                      * by the time this refactor is done!
                      */
+                    $functionDto = FunctionCallDto::from([
+                        'arguments' => $arguments,
+                        'function_name' => $functionName,
+                        'filter' => $filter,
+                    ]);
 
                     /** @var FunctionResponse $response */
-                    $response = $functionClass->handle($messagesArray, $chat, $functionDto);
+                    $response = $functionClass->handle($message);
 
                     Log::info('[LaraChain] - Function Response', [
                         'function' => $functionName,
