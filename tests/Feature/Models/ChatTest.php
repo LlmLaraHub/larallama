@@ -26,6 +26,7 @@ class ChatTest extends TestCase
         $this->assertNotNull($model->user->id);
         $this->assertNotNull($model->chatable_id);
         $this->assertNotNull($model->chatable->id);
+        $this->assertEquals($collection->id, $model->chatable->id);
         $this->assertNotNull($model->chatable->systemPrompt());
         $this->assertNotNull($collection->chats()->first()->id);
     }
