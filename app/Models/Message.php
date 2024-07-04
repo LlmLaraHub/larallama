@@ -95,4 +95,15 @@ class Message extends Model
     {
         return $this->chat->getChatResponse();
     }
+
+    public function getFilter() : ?Filter
+    {
+        $filter = data_get($this->meta_data, 'filter');
+
+        if ($filter) {
+            $filter = Filter::findOrFail($filter);
+        }
+
+        return $filter;
+    }
 }

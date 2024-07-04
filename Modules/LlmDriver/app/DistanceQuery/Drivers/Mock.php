@@ -15,7 +15,6 @@ class Mock extends Base
         string $embeddingSize,
         int $collectionId,
         Vector $embedding,
-        ?Filter $filter = null,
         ?MetaDataDto $meta_data = null
     ): Collection {
         $documents = CollectionModel::find($collectionId)->documents->pluck('id');

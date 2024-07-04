@@ -18,9 +18,11 @@ class PostGres extends Base
         string $embeddingSize,
         int $collectionId,
         Vector $embedding,
-        ?Filter $filter = null,
         ?MetaDataDto $meta_data = null
     ): Collection {
+
+        $filter = $meta_data?->getFilter();
+        $date_range = $meta_data?->date_range;
 
         Log::info('[LaraChain] - PostgresSQL Cosine Query', [
             'filter' => $filter?->toArray(),
@@ -32,16 +34,14 @@ class PostGres extends Base
             ->when($filter, function ($query, $filter) {
                 $query->whereIn('id', $filter->documents()->pluck('id'));
             })
-            ->when($meta_data, function ($query, $meta_data) {
-                if ($meta_data->date_range) {
-                    $results = DateRangesEnum::getStartAndEndDates($meta_data->date_range);
+            ->when($date_range, function ($query, $date_range) {
+                $results = DateRangesEnum::getStartAndEndDates($date_range);
 
-                    $query->whereBetween(
-                        'created_at', [
-                            $results['start'],
-                            $results['end'],
-                        ]);
-                }
+                $query->whereBetween(
+                    'created_at', [
+                        $results['start'],
+                        $results['end'],
+                    ]);
             })
             ->where('documents.collection_id', $collectionId)
             ->orderBy('id')

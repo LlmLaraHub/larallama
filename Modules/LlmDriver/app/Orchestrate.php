@@ -164,7 +164,7 @@ class Orchestrate
             } else {
                 Log::info('[LaraChain] Orchestration No Functions Default Search And Summarize');
 
-                return SearchAndSummarizeChatRepo::search($chat, $message, $filter);
+                return SearchAndSummarizeChatRepo::search($chat, $message);
             }
         }
 

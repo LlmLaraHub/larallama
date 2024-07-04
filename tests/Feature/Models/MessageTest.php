@@ -3,6 +3,7 @@
 namespace Tests\Feature\Models;
 
 use App\Domains\Chat\MetaDataDto;
+use App\Models\Filter;
 use App\Models\Message;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -21,5 +22,16 @@ class MessageTest extends TestCase
         $this->assertNotNull($model->chat->id);
         $this->assertInstanceOf(MetaDataDto::class, $model->meta_data);
         $this->assertNotNull($model->meta_data->date_range);
+    }
+
+    public function test_get_filter(): void
+    {
+        $filter = Filter::factory()->create();
+        $model = Message::factory()->create([
+            'meta_data' => MetaDataDto::from([
+                'filter' => $filter->id,
+            ]),
+        ]);
+        $this->assertNotNull($model->getFilter());
     }
 }
