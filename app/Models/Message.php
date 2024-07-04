@@ -90,4 +90,9 @@ class Message extends Model
     {
         return $this->hasMany(PromptHistory::class);
     }
+
+    public function getLatestMessages(): array
+    {
+        return $this->chat->getChatResponse();
+    }
 }
