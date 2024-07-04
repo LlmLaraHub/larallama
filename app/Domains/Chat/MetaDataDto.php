@@ -18,7 +18,7 @@ class MetaDataDto extends Data
 
     }
 
-    public function getFilter() : ?Filter
+    public function getFilter(): ?Filter
     {
         $filter = data_get($this, 'filter');
 

@@ -5,7 +5,6 @@ namespace LlmLaraHub\LlmDriver\Functions;
 use App\Domains\Prompts\StandardsCheckerPrompt;
 use App\Models\Message;
 use Illuminate\Support\Facades\Log;
-use LlmLaraHub\LlmDriver\HasDrivers;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
 use LlmLaraHub\LlmDriver\Requests\MessageInDto;
 use LlmLaraHub\LlmDriver\Responses\FunctionResponse;

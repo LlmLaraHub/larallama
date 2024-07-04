@@ -5,7 +5,6 @@ namespace LlmLaraHub\LlmDriver\DistanceQuery\Drivers;
 use App\Domains\Chat\MetaDataDto;
 use App\Models\Collection as CollectionModel;
 use App\Models\DocumentChunk;
-use App\Models\Filter;
 use Illuminate\Support\Collection;
 use Pgvector\Laravel\Vector;
 

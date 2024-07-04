@@ -2,13 +2,8 @@
 
 namespace LlmLaraHub\LlmDriver\Functions;
 
-use App\Domains\Agents\VerifyPromptInputDto;
-use App\Domains\Agents\VerifyPromptOutputDto;
 use App\Models\Message;
-use Facades\App\Domains\Agents\VerifyResponseAgent;
 use Illuminate\Support\Facades\Log;
-use Laravel\Pennant\Feature;
-use LlmLaraHub\LlmDriver\HasDrivers;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
 use LlmLaraHub\LlmDriver\Prompts\SummarizeCollectionPrompt;
 use LlmLaraHub\LlmDriver\Requests\MessageInDto;
@@ -64,7 +59,6 @@ class SummarizeCollection extends FunctionContract
             'documentChunks' => collect([]),
         ]);
     }
-
 
     /**
      * @return PropertyDto[]

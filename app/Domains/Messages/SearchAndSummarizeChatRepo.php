@@ -7,7 +7,6 @@ use App\Domains\Agents\VerifyPromptOutputDto;
 use App\Domains\Prompts\SummarizePrompt;
 use App\Models\Chat;
 use App\Models\DocumentChunk;
-use App\Models\Filter;
 use App\Models\Message;
 use App\Models\PromptHistory;
 use Facades\App\Domains\Agents\VerifyResponseAgent;
@@ -111,7 +110,7 @@ class SearchAndSummarizeChatRepo
 
         $message = $chat->addInput(
             message: $this->response,
-            role:RoleEnum::Assistant,
+            role: RoleEnum::Assistant,
             meta_data: $message->meta_data);
 
         PromptHistory::create([

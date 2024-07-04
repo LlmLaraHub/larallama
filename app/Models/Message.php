@@ -97,7 +97,7 @@ class Message extends Model implements HasDrivers
         return $this->chat->getChatResponse();
     }
 
-    public function getFilter() : ?Filter
+    public function getFilter(): ?Filter
     {
         $filter = data_get($this->meta_data, 'filter');
 
@@ -108,7 +108,8 @@ class Message extends Model implements HasDrivers
         return $filter;
     }
 
-    public function getContent() : string {
+    public function getContent(): string
+    {
         return $this->body;
     }
 

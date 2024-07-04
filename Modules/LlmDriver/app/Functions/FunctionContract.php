@@ -3,8 +3,6 @@
 namespace LlmLaraHub\LlmDriver\Functions;
 
 use App\Models\Message;
-use LlmLaraHub\LlmDriver\HasDrivers;
-use LlmLaraHub\LlmDriver\Requests\MessageInDto;
 use LlmLaraHub\LlmDriver\Responses\FunctionResponse;
 
 abstract class FunctionContract
