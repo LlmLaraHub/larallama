@@ -17,13 +17,11 @@ use App\Jobs\SimpleSearchAndSummarizeOrchestrateJob;
 use App\Models\Audience;
 use App\Models\Chat;
 use App\Models\Collection;
-use App\Models\Filter;
 use App\Models\Persona;
 use Illuminate\Bus\Batch;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Log;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
-use LlmLaraHub\LlmDriver\Requests\MessageInDto;
 
 class ChatController extends Controller
 {

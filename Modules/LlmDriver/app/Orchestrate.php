@@ -111,7 +111,6 @@ class Orchestrate
 
                     $arguments = is_array($arguments) ? json_encode($arguments) : '';
 
-
                     /**
                      * @TODO
                      * All functions need to then just get Message
