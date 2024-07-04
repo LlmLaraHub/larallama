@@ -5,6 +5,7 @@ namespace LlmLaraHub\LlmDriver;
 use App\Domains\Messages\RoleEnum;
 use App\Models\Chat;
 use App\Models\Filter;
+use App\Models\Message;
 use App\Models\PromptHistory;
 use Facades\App\Domains\Messages\SearchAndSummarizeChatRepo;
 use Facades\LlmLaraHub\LlmDriver\Functions\StandardsChecker;
@@ -15,6 +16,11 @@ use LlmLaraHub\LlmDriver\Helpers\CreateReferencesTrait;
 use LlmLaraHub\LlmDriver\Requests\MessageInDto;
 use LlmLaraHub\LlmDriver\Responses\FunctionResponse;
 
+/**
+ * @NOTE
+ * I hate notes but doing a lot of ref
+ * and will clean these up as I go
+ */
 class Orchestrate
 {
     use CreateReferencesTrait;
@@ -27,11 +33,18 @@ class Orchestrate
      * @param  MessageInDto[]  $messagesArray
      */
     public function handle(
-        array $messagesArray,
         Chat $chat,
-        ?Filter $filter = null,
-        string $tool = ''): ?string
+        Message $message): ?string
     {
+        /**
+         * @TODO
+         * Surfacing some items here
+         * that will be just part of Message
+         * after this refactor
+         */
+        $messagesArray = $message->getLatestMessages();
+        $filter = $message->meta_data->filter;
+        $tool = $message->meta_data->tool;
 
         if ($tool) {
             Log::info('[LaraChain] Orchestration Has Tool', [
@@ -45,6 +58,11 @@ class Orchestrate
              * but the user is now forcing it which is fine too
              */
             if ($tool === 'standards_checker') {
+                /**
+                 * @TODO
+                 * Refactor this since Message really can build this
+                 * and I am now passing this into all things.
+                 */
                 $functionDto = FunctionCallDto::from([
                     'arguments' => '{}',
                     'function_name' => 'standards_checker',
@@ -98,6 +116,12 @@ class Orchestrate
                         'filter' => $filter,
                     ]);
 
+                    /**
+                     * @TODO
+                     * All functions need to then just get Message
+                     * by the time this refactor is done!
+                     */
+
                     /** @var FunctionResponse $response */
                     $response = $functionClass->handle($messagesArray, $chat, $functionDto);
 
@@ -106,36 +130,31 @@ class Orchestrate
                         'response' => $response,
                     ]);
 
-                    $message = null;
                     if ($response->save_to_message) {
 
-                        $message = $chat->addInput(
+                        $assistantMessage = $chat->addInput(
                             message: $response->content,
                             role: RoleEnum::Assistant,
-                            show_in_thread: true);
+                            show_in_thread: true,
+                            meta_data: $message->meta_data);
                     }
 
                     if ($response->prompt) {
                         PromptHistory::create([
                             'prompt' => $response->prompt,
                             'chat_id' => $chat->getChat()->id,
-                            'message_id' => $message?->id,
+                            'message_id' => $assistantMessage?->id,
                             /** @phpstan-ignore-next-line */
                             'collection_id' => $chat->getChatable()?->id,
                         ]);
                     }
 
-                    if (! empty($response->documentChunks)) {
+                    if (! empty($response->documentChunks) && $assistantMessage?->id) {
                         $this->saveDocumentReference(
-                            $message,
+                            $assistantMessage,
                             $response->documentChunks
                         );
                     }
-
-                    $messagesArray = Arr::wrap(MessageInDto::from([
-                        'role' => 'assistant',
-                        'content' => $response->content,
-                    ]));
 
                     $this->response = $response->content;
                     $this->requiresFollowup = $response->requires_follow_up_prompt;
@@ -143,22 +162,15 @@ class Orchestrate
 
             } else {
                 Log::info('[LaraChain] Orchestration No Functions Default Search And Summarize');
-                /**
-                 * @NOTE
-                 * this assumes way too much
-                 */
-                $message = get_latest_user_content($messagesArray);
-
-                if (is_null($message)) {
-                    Log::error('[LaraChain] Orchestration No Message Found', [
-                        'messages' => $messagesArray,
-                    ]);
-                    throw new \Exception('No message found in incoming messages');
-                }
 
                 return SearchAndSummarizeChatRepo::search($chat, $message, $filter);
             }
         }
+
+        /**
+         * ONE MORE REFRESH
+         */
+        $messagesArray = $message->getLatestMessages();
 
         $this->requiresFollowUp($messagesArray, $chat);
 

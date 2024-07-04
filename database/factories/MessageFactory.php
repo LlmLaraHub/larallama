@@ -34,4 +34,14 @@ class MessageFactory extends Factory
             ]),
         ];
     }
+
+    public function user(): Factory
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'role' => RoleEnum::User,
+            ];
+        });
+    }
+
 }

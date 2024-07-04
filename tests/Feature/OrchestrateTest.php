@@ -2,9 +2,11 @@
 
 namespace Tests\Feature;
 
+use App\Domains\Chat\MetaDataDto;
 use App\Events\ChatUiUpdateEvent;
 use App\Models\Chat;
 use App\Models\Collection;
+use App\Models\Message;
 use App\Models\User;
 use Facades\App\Domains\Messages\SearchAndSummarizeChatRepo;
 use Facades\LlmLaraHub\LlmDriver\Functions\StandardsChecker;
@@ -62,12 +64,16 @@ class OrchestrateTest extends TestCase
             'user_id' => $user->id,
         ]);
 
-        $messageDto = MessageInDto::from([
-            'content' => 'TLDR it for me',
-            'role' => 'user',
+        $message = Message::factory()->user()->create([
+            'meta_data' => MetaDataDto::from(
+                [
+                    'tool' => '',
+                ]
+            ),
         ]);
 
-        $results = (new Orchestrate())->handle([$messageDto], $chat);
+
+        $results = (new Orchestrate())->handle($chat, $message);
 
         Event::assertDispatched(ChatUiUpdateEvent::class);
 

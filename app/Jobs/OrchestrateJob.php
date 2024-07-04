@@ -4,6 +4,7 @@ namespace App\Jobs;
 
 use App\Models\Chat;
 use App\Models\Filter;
+use App\Models\Message;
 use Facades\LlmLaraHub\LlmDriver\Orchestrate;
 use Illuminate\Bus\Batchable;
 use Illuminate\Bus\Queueable;
@@ -23,8 +24,7 @@ class OrchestrateJob implements ShouldQueue
      */
     public function __construct(public array $messagesArray,
         public Chat $chat,
-        public ?Filter $filter = null,
-        public string $tool = ''
+        public Message $message,
     ) {
         //
     }
@@ -42,7 +42,7 @@ class OrchestrateJob implements ShouldQueue
         }
 
         Log::info('[LaraChain] Orchestrate Job from batch');
-        Orchestrate::handle($this->messagesArray, $this->chat, $this->filter, $this->tool);
+        Orchestrate::handle($this->chat, $this->message);
         notify_ui_complete($this->chat);
     }
 }
