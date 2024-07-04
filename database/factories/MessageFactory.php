@@ -3,9 +3,11 @@
 namespace Database\Factories;
 
 use App\Domains\Chat\MetaDataDto;
+use App\Domains\Chat\ToolsDto;
 use App\Domains\Messages\RoleEnum;
 use App\Models\Chat;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use LlmLaraHub\LlmDriver\Functions\FunctionCallDto;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Message>
@@ -31,6 +33,14 @@ class MessageFactory extends Factory
                 'tool' => 'foobar',
                 'date_range' => 'this_week',
                 'input' => 'my input here',
+            ]),
+            'tools' => ToolsDto::from([
+                'tools' => [
+                    FunctionCallDto::from([
+                        'arguments' => '{}',
+                        'function_name' => 'standards_checker',
+                    ]),
+                ],
             ]),
         ];
     }

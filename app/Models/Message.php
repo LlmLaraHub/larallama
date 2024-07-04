@@ -3,12 +3,14 @@
 namespace App\Models;
 
 use App\Domains\Chat\MetaDataDto;
+use App\Domains\Chat\ToolsDto;
 use App\Domains\Messages\RoleEnum;
 use App\Events\MessageCreatedEvent;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use LlmLaraHub\LlmDriver\Functions\FunctionCallDto;
 use LlmLaraHub\LlmDriver\HasDrivers;
 
 class Message extends Model implements HasDrivers
@@ -29,6 +31,7 @@ class Message extends Model implements HasDrivers
 
     protected $casts = [
         'role' => RoleEnum::class,
+        'tools' => ToolsDto::class,
         'meta_data' => MetaDataDto::class,
         'in_out' => 'boolean',
     ];
