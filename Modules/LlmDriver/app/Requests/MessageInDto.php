@@ -3,6 +3,7 @@
 namespace LlmLaraHub\LlmDriver\Requests;
 
 use App\Domains\Chat\MetaDataDto;
+use App\Models\Message;
 use Spatie\LaravelData\Data;
 
 class MessageInDto extends Data
@@ -20,7 +21,33 @@ class MessageInDto extends Data
     {
         return [
             'content' => $this->content,
-            'role' => $this->role,
+            'role' => $this->role->value,
         ];
+    }
+
+    public static function fromMessageAsUser(Message $message): self
+    {
+        return MessageInDto::from(
+            [
+                'content' => $message->body,
+                'role' => $message->role->value,
+                'meta_data' => $message->meta_data,
+                'is_ai' => false,
+                'show' => true,
+            ]
+        );
+    }
+
+    public static function fromMessageAsAssistant(Message $message): self
+    {
+        return MessageInDto::from(
+            [
+                'content' => $message->body,
+                'role' => $message->role->value,
+                'meta_data' => $message->meta_data,
+                'is_ai' => true,
+                'show' => true,
+            ]
+        );
     }
 }
