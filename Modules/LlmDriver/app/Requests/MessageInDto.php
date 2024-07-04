@@ -20,7 +20,7 @@ class MessageInDto extends Data
     {
         return [
             'content' => $this->content,
-            'role' => $this->role
+            'role' => $this->role,
         ];
     }
 }

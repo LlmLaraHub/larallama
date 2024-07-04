@@ -16,12 +16,10 @@ enum DateRangesEnum: string
     case ThisMonth = 'this_month';
     case LastMonth = 'last_month';
 
-
-
     public static function getStartAndEndDates(string $dateRange): array|\Exception
     {
         $result = match ($dateRange) {
-            self::Today ->value=> [
+            self::Today->value => [
                 'start' => now(),
                 'end' => now(),
             ],
@@ -53,5 +51,4 @@ enum DateRangesEnum: string
             'end' => $result['end']->format('Y-m-d'),
         ];
     }
-
 }

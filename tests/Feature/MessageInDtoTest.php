@@ -3,8 +3,6 @@
 namespace Tests\Feature;
 
 use App\Domains\Chat\MetaDataDto;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use LlmLaraHub\LlmDriver\Requests\MessageInDto;
 use Tests\TestCase;
 

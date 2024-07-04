@@ -7,7 +7,6 @@ use App\Domains\Chat\MetaDataDto;
 use App\Models\Document;
 use App\Models\DocumentChunk;
 use App\Models\Filter;
-use ArchTech\Enums\Meta\Meta;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
 use Pgvector\Laravel\Distance;
@@ -34,14 +33,14 @@ class PostGres extends Base
                 $query->whereIn('id', $filter->documents()->pluck('id'));
             })
             ->when($meta_data, function ($query, $meta_data) {
-                if($meta_data->date_range) {
+                if ($meta_data->date_range) {
                     $results = DateRangesEnum::getStartAndEndDates($meta_data->date_range);
 
                     $query->whereBetween(
                         'created_at', [
-                        $results['start'],
-                        $results['end'],
-                    ]);
+                            $results['start'],
+                            $results['end'],
+                        ]);
                 }
             })
             ->where('documents.collection_id', $collectionId)
