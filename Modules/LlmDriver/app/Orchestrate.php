@@ -44,6 +44,9 @@ class Orchestrate
          */
         $messagesArray = $message->getLatestMessages();
         $filter = $message->meta_data->filter;
+        if($filter) {
+            $filter = Filter::find($filter);
+        }
         $tool = $message->meta_data->tool;
 
         if ($tool) {
@@ -99,8 +102,6 @@ class Orchestrate
                     if (is_null($functionName)) {
                         throw new \Exception('Function name is required');
                     }
-
-                    notify_ui($chat, 'We are running the agent back shortly');
 
                     Log::info('[LaraChain] - Running function '.$functionName);
 

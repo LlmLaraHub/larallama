@@ -43,5 +43,4 @@ class MessageFactory extends Factory
             ];
         });
     }
-
 }

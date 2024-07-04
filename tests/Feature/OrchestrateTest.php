@@ -72,7 +72,6 @@ class OrchestrateTest extends TestCase
             ),
         ]);
 
-
         $results = (new Orchestrate())->handle($chat, $message);
 
         Event::assertDispatched(ChatUiUpdateEvent::class);
@@ -102,12 +101,16 @@ class OrchestrateTest extends TestCase
             'user_id' => $user->id,
         ]);
 
-        $messageDto = MessageInDto::from([
-            'content' => 'TLDR it for me',
-            'role' => 'user',
+        $message = Message::factory()->user()->create([
+            'meta_data' => MetaDataDto::from(
+                [
+                    'tool' => 'standards_checker',
+                ]
+            ),
         ]);
 
-        $results = (new Orchestrate())->handle([$messageDto], $chat, null, 'standards_checker');
+        $results = (new Orchestrate())->handle($chat, $message);
+
     }
 
     public function test_makes_history_no_message(): void
@@ -149,12 +152,15 @@ class OrchestrateTest extends TestCase
             'user_id' => $user->id,
         ]);
 
-        $messageDto = MessageInDto::from([
-            'content' => 'TLDR it for me',
-            'role' => 'user',
+        $message = Message::factory()->user()->create([
+            'meta_data' => MetaDataDto::from(
+                [
+                    'tool' => null,
+                ]
+            ),
         ]);
 
-        $results = (new Orchestrate())->handle([$messageDto], $chat);
+        $results = (new Orchestrate())->handle($chat, $message);
 
         Event::assertDispatched(ChatUiUpdateEvent::class);
 

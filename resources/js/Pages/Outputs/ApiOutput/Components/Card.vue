@@ -16,7 +16,7 @@ const showToken = ref(false)
 </script>
 
 <template>
-    <div class="card rounded-none w-96 dark:bg-neutral shadow-xl  border border-neutral">
+    <div class="card rounded-none w-96  shadow-xl  border border-neutral">
         <div class="card-body">
             <Settings :output="output"></Settings>
 
