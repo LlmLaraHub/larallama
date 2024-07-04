@@ -158,7 +158,7 @@ const reusePrompt = (prompt) => {
         </div>
     </div>
     <div class="join join-vertical w-full
-                    bg-neutral mt-4 p-2 mb-10 pb-10">
+                    mt-4 p-2 mb-10 pb-10">
         <form @submit.prevent="save"  autocomplete="off">
         <div class="join-item">
             <!-- file upload will go here -->

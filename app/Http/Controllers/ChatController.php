@@ -106,7 +106,7 @@ class ChatController extends Controller
                 $filter = Filter::find($filter);
             }
 
-            if (data_get($validated, 'tool', null) === 'completion') {
+            if ($message->meta_data->tool === 'completion') {
                 Log::info('[LaraChain] Running Simple Completion');
 
                 notify_ui($chat, 'We are running a completion back shortly');
@@ -120,16 +120,16 @@ class ChatController extends Controller
                     role: RoleEnum::Assistant,
                     show_in_thread: true);
 
-            } elseif (data_get($validated, 'tool', null) === 'standards_checker') {
+            } elseif ($message->meta_data->tool === 'standards_checker') {
                 Log::info('[LaraChain] Running Standards Checker');
                 notify_ui($chat, 'Running Standards Checker');
                 $this->batchJob([
-                    new OrchestrateJob($messagesArray, $chat, $filter, 'standards_checker'),
+                    new OrchestrateJob($chat, $message),
                 ], $chat, 'search_and_summarize');
             } elseif (LlmDriverFacade::driver($chat->getDriver())->hasFunctions()) {
                 Log::info('[LaraChain] Running Orchestrate added to queue');
                 $this->batchJob([
-                    new OrchestrateJob($messagesArray, $chat, $filter),
+                    new OrchestrateJob($chat, $message),
                 ], $chat, 'orchestrate');
             } else {
                 Log::info('[LaraChain] Simple Search and Summarize added to queue');
