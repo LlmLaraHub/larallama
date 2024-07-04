@@ -9,8 +9,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use LlmLaraHub\LlmDriver\HasDrivers;
 
-class Message extends Model
+class Message extends Model implements HasDrivers
 {
     use HasFactory;
 
@@ -105,5 +106,44 @@ class Message extends Model
         }
 
         return $filter;
+    }
+
+    public function getContent() : string {
+        return $this->body;
+    }
+
+    public function getDriver(): string
+    {
+        return $this->chat->getDriver();
+    }
+
+    public function getEmbeddingDriver(): string
+    {
+        return $this->chat->getEmbeddingDriver();
+    }
+
+    public function getSummary(): string
+    {
+        return $this->chat->getSummary();
+    }
+
+    public function getId(): int
+    {
+        return $this->chat->getId();
+    }
+
+    public function getType(): string
+    {
+        return $this->chat->getType();
+    }
+
+    public function getChatable(): HasDrivers
+    {
+        return $this->chat->getChatable();
+    }
+
+    public function getChat(): ?Chat
+    {
+        return $this->chat;
     }
 }

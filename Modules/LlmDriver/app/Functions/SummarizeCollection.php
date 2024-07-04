@@ -4,6 +4,7 @@ namespace LlmLaraHub\LlmDriver\Functions;
 
 use App\Domains\Agents\VerifyPromptInputDto;
 use App\Domains\Agents\VerifyPromptOutputDto;
+use App\Models\Message;
 use Facades\App\Domains\Agents\VerifyResponseAgent;
 use Illuminate\Support\Facades\Log;
 use Laravel\Pennant\Feature;
@@ -22,21 +23,17 @@ class SummarizeCollection extends FunctionContract
     protected string $response = '';
 
     public function handle(
-        array $messageArray,
-        HasDrivers $model,
-        FunctionCallDto $functionCallDto): FunctionResponse
+        Message $message): FunctionResponse
     {
         Log::info('[LaraChain] SummarizeCollection Function called');
 
-        $usersInput = get_latest_user_content($messageArray);
-
         $summary = collect([]);
 
-        foreach ($model->getChatable()->documents as $document) {
+        foreach ($message->getChatable()->documents as $document) {
             $summary->add($document->summary);
         }
 
-        notify_ui($model->getChat(), 'Getting Summary');
+        notify_ui($message->getChat(), 'Getting Summary');
 
         $summary = $summary->implode('\n');
 
@@ -45,7 +42,7 @@ class SummarizeCollection extends FunctionContract
             'token_count_v1' => token_counter($summary),
         ]);
 
-        $prompt = SummarizeCollectionPrompt::prompt($summary, $usersInput);
+        $prompt = SummarizeCollectionPrompt::prompt($summary, $message->getContent());
 
         $messagesArray = [];
 
@@ -54,18 +51,11 @@ class SummarizeCollection extends FunctionContract
             'role' => 'user',
         ]);
 
-        $results = LlmDriverFacade::driver($model->getDriver())->chat($messagesArray);
+        $results = LlmDriverFacade::driver($message->getDriver())->chat($messagesArray);
 
         $this->response = $results->content;
 
-        notify_ui($model->getChat(), 'Summary complete');
-
-        if (Feature::active('verification_prompt')) {
-            Log::info('[LaraChain] Verifying Summary Collection');
-            $this->verify($model, 'Can you summarize this collection of data for me.', $summary);
-        }
-
-        notify_ui_complete($model->getChat());
+        notify_ui($message->getChat(), 'Summary complete');
 
         return FunctionResponse::from([
             'content' => $this->response,
@@ -75,36 +65,6 @@ class SummarizeCollection extends FunctionContract
         ]);
     }
 
-    protected function verify(
-        HasDrivers $model,
-        string $originalPrompt,
-        string $context
-    ): void {
-        /**
-         * Lets Verify
-         */
-        $verifyPrompt = <<<'PROMPT'
-This the content from all the documents in this collection.
-Then that was passed into the LLM to summarize the results.
-PROMPT;
-
-        $dto = VerifyPromptInputDto::from(
-            [
-                'chattable' => $model->getChat(),
-                'originalPrompt' => $originalPrompt,
-                'context' => $context,
-                'llmResponse' => $this->response,
-                'verifyPrompt' => $verifyPrompt,
-            ]
-        );
-
-        notify_ui($model, 'Verifiying Results');
-
-        /** @var VerifyPromptOutputDto $response */
-        $response = VerifyResponseAgent::verify($dto);
-
-        $this->response = $response->response;
-    }
 
     /**
      * @return PropertyDto[]
