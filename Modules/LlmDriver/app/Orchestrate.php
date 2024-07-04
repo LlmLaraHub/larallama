@@ -44,7 +44,7 @@ class Orchestrate
          */
         $messagesArray = $message->getLatestMessages();
         $filter = $message->meta_data->filter;
-        if($filter) {
+        if ($filter) {
             $filter = Filter::find($filter);
         }
         $tool = $message->meta_data->tool;
