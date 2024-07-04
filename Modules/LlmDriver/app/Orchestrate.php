@@ -65,6 +65,7 @@ class Orchestrate
                  * @TODO
                  * Refactor this since Message really can build this
                  * and I am now passing this into all things.
+                 * Will come back shortly
                  */
                 $functionDto = FunctionCallDto::from([
                     'arguments' => '{}',
@@ -72,7 +73,7 @@ class Orchestrate
                     'filter' => $filter,
                 ]);
 
-                $response = StandardsChecker::handle($messagesArray, $chat, $functionDto);
+                $response = StandardsChecker::handle($message);
                 $messagesArray = $this->handleResponse($response, $chat);
                 $this->response = $response->content;
                 $this->requiresFollowup = $response->requires_follow_up_prompt;
