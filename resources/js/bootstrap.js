@@ -7,7 +7,6 @@ window.Pusher = Pusher;
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
-console.log(import.meta.env);
 if (import.meta.env.VITE_BROADCAST_CONNECTION === 'pusher') {
     // Configuration for Pusher
     window.Echo = new Echo({
