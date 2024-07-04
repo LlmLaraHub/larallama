@@ -2,6 +2,8 @@
 
 namespace LlmLaraHub\LlmDriver\Tests\Feature;
 
+use App\Domains\Chat\DateRangesEnum;
+use App\Domains\Chat\MetaDataDto;
 use App\Models\Document;
 use App\Models\DocumentChunk;
 use App\Models\Filter;
@@ -89,6 +91,58 @@ class DistanceQueryClientTest extends TestCase
 
         $this->assertCount(1, $results);
 
+    }
+
+    public function test_date_range_finds_none()
+    {
+        $files = File::files(base_path('tests/fixtures/document_chunks'));
+
+        $document = Document::factory()->create([
+            'id' => 31,
+            'created_at' => now()->subDays(1),
+        ]);
+
+        foreach ($files as $file) {
+            $data = json_decode(File::get($file), true);
+            $documentChunk = DocumentChunk::factory()->create($data);
+        }
+
+        $question = get_fixture('embedding_question_distance.json');
+
+        $vector = new Vector($question);
+
+        $results = DistanceQueryFacade::cosineDistance(
+            'embedding_1024',
+            $document->collection_id,
+            $vector,
+            null,
+            MetaDataDto::from([
+                'date_range' => DateRangesEnum::LastWeek->value,
+            ]));
+
+        $this->assertCount(0, $results);
+
+        $results = DistanceQueryFacade::cosineDistance(
+            'embedding_1024',
+            $document->collection_id,
+            $vector,
+            null,
+            MetaDataDto::from([
+                'date_range' => DateRangesEnum::ThisWeek->value,
+            ]));
+
+        $this->assertCount(1, $results);
+
+        $results = DistanceQueryFacade::cosineDistance(
+            'embedding_1024',
+            $document->collection_id,
+            $vector,
+            null,
+            MetaDataDto::from([
+                'date_range' => DateRangesEnum::Today->value,
+            ]));
+
+        $this->assertCount(0, $results);
     }
 
     public function test_results_empty_due_to_filter()

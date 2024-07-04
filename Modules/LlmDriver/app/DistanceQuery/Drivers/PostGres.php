@@ -2,9 +2,12 @@
 
 namespace LlmLaraHub\LlmDriver\DistanceQuery\Drivers;
 
+use App\Domains\Chat\DateRangesEnum;
+use App\Domains\Chat\MetaDataDto;
 use App\Models\Document;
 use App\Models\DocumentChunk;
 use App\Models\Filter;
+use ArchTech\Enums\Meta\Meta;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
 use Pgvector\Laravel\Distance;
@@ -16,10 +19,11 @@ class PostGres extends Base
         string $embeddingSize,
         int $collectionId,
         Vector $embedding,
-        ?Filter $filter = null
+        ?Filter $filter = null,
+        ?MetaDataDto $meta_data = null
     ): Collection {
 
-        Log::info('[LaraChain] - PostGres Cosine Query', [
+        Log::info('[LaraChain] - PostgresSQL Cosine Query', [
             'filter' => $filter?->toArray(),
             'embedding_size' => $embeddingSize,
         ]);
@@ -28,6 +32,17 @@ class PostGres extends Base
             ->select('id')
             ->when($filter, function ($query, $filter) {
                 $query->whereIn('id', $filter->documents()->pluck('id'));
+            })
+            ->when($meta_data, function ($query, $meta_data) {
+                if($meta_data->date_range) {
+                    $results = DateRangesEnum::getStartAndEndDates($meta_data->date_range);
+
+                    $query->whereBetween(
+                        'created_at', [
+                        $results['start'],
+                        $results['end'],
+                    ]);
+                }
             })
             ->where('documents.collection_id', $collectionId)
             ->orderBy('id')

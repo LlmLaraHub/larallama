@@ -2,6 +2,7 @@
 
 namespace LlmLaraHub\LlmDriver\Requests;
 
+use App\Domains\Chat\MetaDataDto;
 use Spatie\LaravelData\Data;
 
 class MessageInDto extends Data
@@ -10,7 +11,8 @@ class MessageInDto extends Data
         public string $content,
         public string $role,
         public bool $is_ai = false,
-        public bool $show = true
+        public bool $show = true,
+        public ?MetaDataDto $meta_data = null
     ) {
     }
 
@@ -18,7 +20,7 @@ class MessageInDto extends Data
     {
         return [
             'content' => $this->content,
-            'role' => $this->role,
+            'role' => $this->role
         ];
     }
 }

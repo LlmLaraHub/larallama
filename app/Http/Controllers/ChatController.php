@@ -97,6 +97,7 @@ class ChatController extends Controller
             $messagesArray[] = MessageInDto::from([
                 'content' => $input,
                 'role' => 'user',
+                'meta_data' => $meta_data,
             ]);
 
             $filter = data_get($validated, 'filter', null);

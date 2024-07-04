@@ -2,6 +2,7 @@
 
 namespace LlmLaraHub\LlmDriver\DistanceQuery\Drivers;
 
+use App\Domains\Chat\MetaDataDto;
 use App\Models\DocumentChunk;
 use App\Models\Filter;
 use Illuminate\Support\Collection;
@@ -13,7 +14,8 @@ abstract class Base
         string $embeddingSize,
         int $collectionId,
         Vector $embedding,
-        ?Filter $filter = null
+        ?Filter $filter = null,
+        ?MetaDataDto $meta_data = null
     ): Collection;
 
     protected function getSiblings(Collection $results): Collection

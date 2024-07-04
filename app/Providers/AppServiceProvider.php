@@ -32,8 +32,8 @@ class AppServiceProvider extends ServiceProvider
             return $user->isAdmin();
         });
 
-        Feature::define('chatv2', function (User $user) {
-            return config('llmdriver.features.chatv2'); //just not ready yet
+        Feature::define('date_range', function (User $user) {
+            return config('llmdriver.features.date_range'); //just not ready yet
         });
 
         Feature::define('ollama-functions', function (User $user) {
