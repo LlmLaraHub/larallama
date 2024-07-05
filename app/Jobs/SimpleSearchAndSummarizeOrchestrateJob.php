@@ -5,6 +5,7 @@ namespace App\Jobs;
 use App\Domains\Messages\RoleEnum;
 use App\Models\Collection;
 use App\Models\Filter;
+use App\Models\Message;
 use App\Models\PromptHistory;
 use Facades\LlmLaraHub\LlmDriver\NonFunctionSearchOrSummarize;
 use Illuminate\Bus\Batchable;
@@ -18,6 +19,11 @@ use LlmLaraHub\LlmDriver\HasDrivers;
 use LlmLaraHub\LlmDriver\Helpers\CreateReferencesTrait;
 use LlmLaraHub\LlmDriver\Responses\NonFunctionResponseDto;
 
+/**
+ * @NOTE
+ * This is used by LLMs that might not have functions
+ * but still want to do a search and summarize
+ */
 class SimpleSearchAndSummarizeOrchestrateJob implements ShouldQueue
 {
     use Batchable;
@@ -28,9 +34,7 @@ class SimpleSearchAndSummarizeOrchestrateJob implements ShouldQueue
      * Create a new job instance.
      */
     public function __construct(
-        public string $input,
-        public HasDrivers $chat,
-        public ?Filter $filter = null)
+        public Message $message)
     {
         //
     }
@@ -43,29 +47,30 @@ class SimpleSearchAndSummarizeOrchestrateJob implements ShouldQueue
         Log::info('[LaraChain] Skipping over functions doing SimpleSearchAndSummarizeOrchestrateJob');
 
         notify_ui(
-            $this->chat->getChatable(),
+            $this->message->getChatable(),
             'Searching data now to summarize content'
         );
 
-        $collection = $this->chat->getChatable();
+        $collection = $this->message->getChatable();
 
         if (get_class($collection) === Collection::class) {
             /** @var NonFunctionResponseDto $results */
-            $results = NonFunctionSearchOrSummarize::handle($this->input, $collection, $this->filter);
+            $results = NonFunctionSearchOrSummarize::handle($this->message);
 
-            $message = $this->chat->getChat()->addInput(
+            $message = $this->message->getChat()->addInput(
                 message: $results->response,
                 role: RoleEnum::Assistant,
-                show_in_thread: true
+                show_in_thread: true,
+                meta_data: $this->message->meta_data
             );
 
             if ($results->prompt) {
                 PromptHistory::create([
                     'prompt' => $results->prompt,
-                    'chat_id' => $this->chat->getChat()->id,
+                    'chat_id' => $this->message->getChat()->id,
                     'message_id' => $message->id,
                     /** @phpstan-ignore-next-line */
-                    'collection_id' => $this->chat->getChatable()?->id,
+                    'collection_id' => $this->message->getChatable()?->id,
                 ]);
             }
 
@@ -76,7 +81,7 @@ class SimpleSearchAndSummarizeOrchestrateJob implements ShouldQueue
                 );
             }
 
-            notify_ui($this->chat->getChat(), 'Complete');
+            notify_ui($this->message->getChat(), 'Complete');
         } else {
             Log::info('Can only handle Collection model right now');
         }

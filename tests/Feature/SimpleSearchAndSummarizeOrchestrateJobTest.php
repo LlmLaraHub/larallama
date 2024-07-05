@@ -2,9 +2,11 @@
 
 namespace Tests\Feature;
 
+use App\Domains\Chat\MetaDataDto;
 use App\Jobs\SimpleSearchAndSummarizeOrchestrateJob;
 use App\Models\Chat;
 use App\Models\DocumentChunk;
+use App\Models\Message;
 use Facades\LlmLaraHub\LlmDriver\NonFunctionSearchOrSummarize;
 use LlmLaraHub\LlmDriver\Responses\NonFunctionResponseDto;
 use Tests\TestCase;
@@ -30,10 +32,14 @@ class SimpleSearchAndSummarizeOrchestrateJobTest extends TestCase
                 ])
             );
 
-        (new SimpleSearchAndSummarizeOrchestrateJob(
-            $input,
-            $chat
-        ))->handle();
+        $message = Message::factory()->user()->create([
+            'chat_id' => $chat->id,
+            'meta_data' => MetaDataDto::from([
+                'tool' => 'completion',
+            ]),
+        ]);
+
+        (new SimpleSearchAndSummarizeOrchestrateJob($message))->handle();
 
         $this->assertDatabaseCount('messages', 1);
         $this->assertDatabaseCount('prompt_histories', 1);

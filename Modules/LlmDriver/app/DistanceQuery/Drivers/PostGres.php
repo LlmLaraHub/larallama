@@ -34,6 +34,9 @@ class PostGres extends Base
                 $query->whereIn('id', $filter->documents()->pluck('id'));
             })
             ->when($date_range, function ($query, $date_range) {
+                Log::info('Date Range', [
+                    'date_range' => $date_range,
+                ]);
                 $results = DateRangesEnum::getStartAndEndDates($date_range);
 
                 $query->whereBetween(

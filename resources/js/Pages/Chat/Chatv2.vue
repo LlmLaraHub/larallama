@@ -105,12 +105,15 @@ const chatMessages = ref([]);
 const save = () => {
     emits('chatSubmitted')
 
+    // NOTE: Why did I not just use form?
+    // I think there was a reload limitations but now I am doing get message
     getting_results.value = true
     let message = form.input
     let completion = form.completion
     let filter = form.filter
     let tool = form.tool
     let persona = form.persona
+    let date_range = form.date_range
     form.reset();
     alreadyCompleted.value = false;
     axios.post(route('chats.messages.create', {
@@ -119,6 +122,7 @@ const save = () => {
         input: message,
         completion: completion,
         tool: tool,
+        date_range: date_range,
         persona: persona,
         filter: filter
     }).then(response => {

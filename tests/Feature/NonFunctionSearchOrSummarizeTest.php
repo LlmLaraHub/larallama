@@ -2,7 +2,10 @@
 
 namespace Tests\Feature;
 
+use App\Domains\Chat\MetaDataDto;
+use App\Models\Chat;
 use App\Models\DocumentChunk;
+use App\Models\Message;
 use App\Models\Output;
 use LlmLaraHub\LlmDriver\DistanceQuery\DistanceQueryFacade;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
@@ -45,7 +48,17 @@ class NonFunctionSearchOrSummarizeTest extends TestCase
                 'content' => 'search',
             ]));
 
-        $results = (new NonFunctionSearchOrSummarize())->handle('Search for foo', $output->collection);
+        $chat = Chat::factory()->create([
+            'chatable_id' => $output->collection->id,
+        ]);
+
+        $message = Message::factory()->user()->create([
+            'chat_id' => $chat->id,
+            'meta_data' => MetaDataDto::from([
+                'tool' => 'completion',
+            ]),
+        ]);
+        $results = (new NonFunctionSearchOrSummarize())->handle($message);
 
         $this->assertNotNull($results->response);
         $this->assertNotNull($results->documentChunks);
@@ -84,7 +97,19 @@ class NonFunctionSearchOrSummarizeTest extends TestCase
                 'content' => 'search',
             ]));
 
-        $results = (new NonFunctionSearchOrSummarize())->handle('Search for foo', $output->collection);
+        $chat = Chat::factory()->create([
+            'chatable_id' => $output->collection->id,
+        ]);
+
+        $message = Message::factory()->user()->create([
+            'chat_id' => $chat->id,
+            'body' => 'Search for foo',
+            'meta_data' => MetaDataDto::from([
+                'tool' => 'completion',
+            ]),
+        ]);
+
+        $results = (new NonFunctionSearchOrSummarize())->handle($message);
 
         $this->assertNotNull($results->response);
         $this->assertNotNull($results->documentChunks);
@@ -121,7 +146,19 @@ class NonFunctionSearchOrSummarizeTest extends TestCase
                 'content' => 'not sure :(',
             ]));
 
-        $results = (new NonFunctionSearchOrSummarize())->handle('Search for foo', $output->collection);
+        $chat = Chat::factory()->create([
+            'chatable_id' => $output->collection->id,
+        ]);
+
+        $message = Message::factory()->user()->create([
+            'chat_id' => $chat->id,
+            'body' => 'Search for foo',
+            'meta_data' => MetaDataDto::from([
+                'tool' => 'completion',
+            ]),
+        ]);
+
+        $results = (new NonFunctionSearchOrSummarize())->handle($message);
 
         $this->assertNotNull($results->response);
 
@@ -158,7 +195,19 @@ class NonFunctionSearchOrSummarizeTest extends TestCase
                 'content' => 'not sure :(',
             ]));
 
-        $results = (new NonFunctionSearchOrSummarize())->setPrompt('Foobar')->handle('Search for foo', $output->collection);
+        $chat = Chat::factory()->create([
+            'chatable_id' => $output->collection->id,
+        ]);
+
+        $message = Message::factory()->user()->create([
+            'chat_id' => $chat->id,
+            'body' => 'Search for foo',
+            'meta_data' => MetaDataDto::from([
+                'tool' => 'completion',
+            ]),
+        ]);
+
+        $results = (new NonFunctionSearchOrSummarize())->setPrompt('Foobar')->handle($message);
 
         $this->assertNotNull($results->response);
 

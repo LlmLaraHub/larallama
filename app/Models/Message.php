@@ -218,7 +218,7 @@ class Message extends Model implements HasDrivers
         } else {
             Log::info('[LaraChain] Simple Search and Summarize added to queue');
             $this->batchJob([
-                new SimpleSearchAndSummarizeOrchestrateJob($message->getContent(), $chat, $filter),
+                new SimpleSearchAndSummarizeOrchestrateJob($message),
             ], $chat, 'simple_search_and_summarize');
         }
 
