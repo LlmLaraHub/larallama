@@ -5,21 +5,16 @@ namespace App\Http\Controllers;
 use App\Domains\Chat\DateRangesEnum;
 use App\Domains\Chat\MetaDataDto;
 use App\Domains\Messages\RoleEnum;
-use App\Events\ChatUiUpdateEvent;
 use App\Http\Resources\AudienceResource;
 use App\Http\Resources\ChatResource;
 use App\Http\Resources\CollectionResource;
 use App\Http\Resources\FilterResource;
 use App\Http\Resources\MessageResource;
 use App\Http\Resources\PersonaResource;
-use App\Jobs\OrchestrateJob;
-use App\Jobs\SimpleSearchAndSummarizeOrchestrateJob;
 use App\Models\Audience;
 use App\Models\Chat;
 use App\Models\Collection;
 use App\Models\Persona;
-use Illuminate\Bus\Batch;
-use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Log;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
 
@@ -106,5 +101,4 @@ class ChatController extends Controller
             return response()->json(['message' => $e->getMessage()], 400);
         }
     }
-
 }

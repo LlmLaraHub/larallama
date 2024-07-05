@@ -9,9 +9,9 @@ use App\Models\Collection;
 use App\Models\Filter;
 use App\Models\Message;
 use App\Models\User;
+use Facades\LlmLaraHub\LlmDriver\Orchestrate;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
-use Facades\LlmLaraHub\LlmDriver\Orchestrate;
 use LlmLaraHub\LlmDriver\Responses\CompletionResponse;
 use Tests\TestCase;
 
@@ -45,7 +45,7 @@ class MessageTest extends TestCase
         $this->assertNotNull($model->getFilter());
     }
 
-    public function test_run() : void
+    public function test_run(): void
     {
         $user = User::factory()->create();
         $collection = Collection::factory()->create();
@@ -70,9 +70,11 @@ class MessageTest extends TestCase
         ]);
 
         $message->run();
+
+        $this->assertNotNull($message->refresh()->meta_data->driver);
     }
 
-    public function test_rerun() : void
+    public function test_rerun(): void
     {
         $user = User::factory()->create();
         $collection = Collection::factory()->create();

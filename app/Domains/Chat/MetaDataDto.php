@@ -14,6 +14,7 @@ class MetaDataDto extends Data
         public mixed $tool = '',
         public mixed $date_range = '',
         public mixed $input = '',
+        public mixed $driver = '',
     ) {
 
     }

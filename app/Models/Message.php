@@ -158,13 +158,13 @@ class Message extends Model implements HasDrivers
         return $this->chat;
     }
 
-    public function reRun() : void
+    public function reRun(): void
     {
         $assistantResponse = $this;
 
-        $userRequest = Message::where("role", "user")
-            ->where("chat_id", "=", $this->chat_id)
-            ->where("id", "<", $assistantResponse->id)
+        $userRequest = Message::where('role', 'user')
+            ->where('chat_id', '=', $this->chat_id)
+            ->where('id', '<', $assistantResponse->id)
             ->orderBy('id', 'asc')
             ->firstOrFail();
 
@@ -173,8 +173,7 @@ class Message extends Model implements HasDrivers
         $userRequest->run();
     }
 
-
-    public function run() : void
+    public function run(): void
     {
         $message = $this;
 
@@ -183,6 +182,10 @@ class Message extends Model implements HasDrivers
         $filter = $message->getFilter();
 
         notify_ui($chat, 'Working on it!');
+
+        $meta_data = $message->meta_data;
+        $meta_data->driver = $chat->getDriver();
+        $message->updateQuietly(['meta_data' => $meta_data]);
 
         if ($message->meta_data?->tool === 'completion') {
             Log::info('[LaraChain] Running Simple Completion');
@@ -219,9 +222,7 @@ class Message extends Model implements HasDrivers
             ], $chat, 'simple_search_and_summarize');
         }
 
-
     }
-
 
     protected function batchJob(array $jobs, Chat $chat, string $function): void
     {
