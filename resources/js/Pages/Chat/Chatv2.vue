@@ -60,35 +60,49 @@ const audience = (audience) => {
     });
 }
 
+const alreadyCompleted = ref(false);
 
 const getting_results = ref(false)
 
 onMounted(() => {
+    console.log("Chat Mounted");
+    chatMessages.value = props.messages;
     Echo.private(`collection.chat.${props.chat.chatable_id}.${props.chat.id}`)
         .listen('.status', (e) => {
-            // @NOTE hmm why did I do this?
-            // resources/js/Pages/Collection/Chat.vue:36
-            //
-            // router.reload({
-            //     preserveScroll: true,
-            // })
+
         })
         .listen('.update', (e) => {
             if(e.updateMessage === 'Complete') {
-                getting_results.value = false
-                router.reload({
-                    preserveScroll: true,
-                })
+                if(!alreadyCompleted.value) {
+                    getLatestMessage();
+                }
             }
         });
 });
 
 onUnmounted(() => {
+    chatMessages.value = [];
     Echo.leave(`collection.chat.${props.chat.chatable_id}.${props.chat.id}`);
 });
 
+const getLatestMessage = (marketCompleted = true) => {
+    axios.get(route('chats.collection.latest', {
+        collection: props.chat.chatable_id,
+        chat: props.chat.id
+    })).then(response => {
+        chatMessages.value = response.data.messages
+        if(marketCompleted) {
+            getting_results.value = false
+            alreadyCompleted.value = true;
+        }
+    })
+}
+
+const chatMessages = ref([]);
 
 const save = () => {
+    emits('chatSubmitted')
+
     getting_results.value = true
     let message = form.input
     let completion = form.completion
@@ -96,6 +110,7 @@ const save = () => {
     let tool = form.tool
     let persona = form.persona
     form.reset();
+    alreadyCompleted.value = false;
     axios.post(route('chats.messages.create', {
         chat: props.chat.id
     }), {
@@ -104,7 +119,10 @@ const save = () => {
         tool: tool,
         persona: persona,
         filter: filter
-    }).catch(error => {
+    }).then(response => {
+            getLatestMessage(false);
+        })
+        .catch(error => {
         getting_results.value = false
         toast.error('An error occurred. Please try again.')
         console.log(error)
@@ -131,17 +149,17 @@ const reusePrompt = (prompt) => {
 <template>
     <div class="flex-1 flex flex-col mx-auto px-5 ">
 
-        <div v-if="chat?.id && messages.length === 0">
+        <div v-if="chat?.id && chatMessages.length === 0">
             Ask a question below to get started.
         </div>
-        <div v-for="message in messages" v-else>
+        <div v-for="message in chatMessages" v-else v-auto-animate>
             <ChatMessageV2
                 @reusePrompt="reusePrompt"
                 :message="message"></ChatMessageV2>
         </div>
 
         <div v-if="getting_results">
-            <div class="w-full px-5 py-5">
+            <div class="w-full py-5">
                 <div class="animate-pulse flex space-x-4 mb-10">
                     <div class="flex-1 space-y-4 py-1">
                         <div class="h-6 bg-slate-400 rounded"></div>

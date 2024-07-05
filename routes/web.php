@@ -259,6 +259,9 @@ Route::middleware([
     Route::controller(ChatController::class)->group(function () {
         Route::post('/collections/{collection}/chats', 'storeCollectionChat')->name('chats.collection.store');
         Route::get('/collections/{collection}/chats/{chat}', 'showCollectionChat')->name('chats.collection.show');
+
+        Route::get('/collections/{collection}/chats/{chat}/messages/latest', 'latestChatMessage')->name('chats.collection.latest');
+
         Route::post('/chats/{chat}/messages/create', 'chat')
             ->name('chats.messages.create');
     });

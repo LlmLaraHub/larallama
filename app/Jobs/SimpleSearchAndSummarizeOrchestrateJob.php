@@ -75,6 +75,8 @@ class SimpleSearchAndSummarizeOrchestrateJob implements ShouldQueue
                     $results->documentChunks
                 );
             }
+
+            notify_ui($this->chat->getChat(), 'Complete');
         } else {
             Log::info('Can only handle Collection model right now');
         }

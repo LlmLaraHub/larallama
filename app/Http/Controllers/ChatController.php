@@ -59,6 +59,12 @@ class ChatController extends Controller
         ]);
     }
 
+    public function latestChatMessage(Collection $collection, Chat $chat) {
+        return response()->json([
+            'messages' => MessageResource::collection($chat->latest_messages)
+        ]);
+    }
+
     public function chat(Chat $chat)
     {
         $validated = request()->validate([

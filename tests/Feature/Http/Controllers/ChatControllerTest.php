@@ -200,4 +200,30 @@ class ChatControllerTest extends TestCase
             ])->assertOk();
 
     }
+
+    public function test_latest_chat_message(): void
+    {
+        $user = User::factory()->create();
+        $collection = Collection::factory()->create();
+        $chat = Chat::factory()->create([
+            'chatable_id' => $collection->id,
+            'chatable_type' => Collection::class,
+            'user_id' => $user->id,
+        ]);
+
+        $message = Message::factory()->create([
+            'chat_id' => $chat->id,
+            'role' => RoleEnum::Assistant,
+        ]);
+
+        $response = $this->actingAs($user)
+            ->get(route('chats.collection.latest', [
+            'collection' => $collection->id,
+            'chat' => $chat->id,
+        ]));
+
+        dd($response->json());
+
+        $response->assertOk();
+    }
 }

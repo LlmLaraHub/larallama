@@ -122,7 +122,6 @@ class SearchAndSummarizeChatRepo
         ]);
 
         $this->saveDocumentReference($message, $documentChunkResults);
-        notify_ui($chat, 'Complete');
 
         return $this->response;
     }
