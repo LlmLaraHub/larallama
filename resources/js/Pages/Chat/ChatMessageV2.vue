@@ -110,6 +110,9 @@ const reuse = (prompt) => {
                         </svg>
                     </button>
                 </div>
+                <div class="flex justify-start">
+<!--                    {{ message.meta_data}}-->
+                </div>
             </div>
 
 

@@ -6,6 +6,7 @@ use App\Domains\Chat\MetaDataDto;
 use App\Domains\Messages\RoleEnum;
 use App\Models\Chat;
 use App\Models\Collection;
+use App\Models\Output;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -64,5 +65,13 @@ class ChatTest extends TestCase
             role: RoleEnum::User);
 
         $this->assertDatabaseCount('messages', 3);
+    }
+
+    public function test_first_or_create_using_output() : void
+    {
+            $output = Output::factory()->create();
+            $chat = Chat::firstOrCreateUsingOutput($output);
+            $this->assertNotNull($chat->session_id);
+            $this->assertNotNull($chat->id);
     }
 }

@@ -22,6 +22,8 @@ class MessageResource extends JsonResource
             'body' => $this->body,
             'collection_id' => $this->chat->chatable_id,
             'body_markdown' => str($this->body)->markdown(),
+            'meta_data' => $this->meta_data,
+            'tools' => $this->tools,
             'diff_for_humans' => $this->created_at->diffForHumans(),
             'prompt_histories' => PromptHistoryResource::collection($this->prompt_histories),
             'prompt_histories_plain' => PromptHistoryResource::collection($this->prompt_histories),

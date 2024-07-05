@@ -17,6 +17,7 @@ use OpenAI\Laravel\Facades\OpenAI;
 
 /**
  * @property mixed $chatable;
+ * @property string $session_id;
  */
 class Chat extends Model implements HasDrivers
 {
@@ -193,5 +194,19 @@ class Chat extends Model implements HasDrivers
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public static function firstOrCreateUsingOutput(Output $output): Chat
+    {
+        $sessionId = session()->getId();
+
+        return Chat::firstOrCreate([
+            'session_id' => $sessionId,
+        ], [
+            'title' => 'Chat with Output '. $output->title,
+            'chatable_id' => $output->collection->id,
+            'chatable_type' => Collection::class,
+            'user_id' => $output->getUserId(),
+        ]);
     }
 }

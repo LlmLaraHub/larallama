@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Domains\Collections\CollectionStatusEnum;
+use App\Domains\Messages\RoleEnum;
 use App\Domains\Prompts\SummarizeForPage;
+use App\Models\Chat;
 use App\Models\Collection;
 use App\Models\Output;
 use Facades\LlmLaraHub\LlmDriver\NonFunctionSearchOrSummarize;
@@ -39,9 +41,15 @@ class WebPageOutputController extends OutputController
         Log::info('[LaraChain] - Check if Search or Summarize', [
             'message' => $validated['input']]
         );
+        $chat = Chat::firstOrCreateUsingOutput($output);
 
+        $message = $chat->addInput(
+            message: $input,
+            role: RoleEnum::User,
+            show_in_thread: true,
+        );
         /** @var NonFunctionResponseDto $results */
-        $results = NonFunctionSearchOrSummarize::handle($input, $output->collection);
+        $results = NonFunctionSearchOrSummarize::handle($message);
 
         $this->setChatMessages($results->response, 'assistant');
 
