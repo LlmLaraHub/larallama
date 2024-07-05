@@ -167,7 +167,6 @@ class Orchestrate
                         }
                     }
 
-
                     $this->response = $response->content;
                     $this->requiresFollowup = $response->requires_follow_up_prompt;
                 }

@@ -196,9 +196,9 @@ class ClaudeClientTest extends TestCase
         $this->assertIsArray($response);
         $this->assertCount(1, $response);
 
-
         Http::assertSent(function (Request $request) {
             $last = Arr::last($request['messages']);
+
             return $last['role'] === 'user' && count($request['messages']) === 4;
         });
     }

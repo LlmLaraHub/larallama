@@ -213,7 +213,6 @@ class ClaudeClient extends BaseClient
          * The api will not let me end this array in an assistant message
          * it has to end in a user message
          */
-
         Log::info('LlmDriver::ClaudeClient::functionPromptChat', $messages);
 
         $model = $this->getConfig('claude')['models']['completion_model'];
@@ -358,7 +357,7 @@ class ClaudeClient extends BaseClient
         if ($userLast) {
             $last = Arr::last($newMessagesArray);
 
-            if($last['role'] === 'assistant') {
+            if ($last['role'] === 'assistant') {
                 $newMessagesArray[] = [
                     'role' => 'user',
                     'content' => 'Using the surrounding context to continue this response thread',

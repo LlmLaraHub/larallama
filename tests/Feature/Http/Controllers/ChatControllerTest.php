@@ -218,9 +218,9 @@ class ChatControllerTest extends TestCase
 
         $response = $this->actingAs($user)
             ->get(route('chats.collection.latest', [
-            'collection' => $collection->id,
-            'chat' => $chat->id,
-        ]));
+                'collection' => $collection->id,
+                'chat' => $chat->id,
+            ]));
 
         dd($response->json());
 
