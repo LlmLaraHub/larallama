@@ -148,24 +148,25 @@ class Orchestrate
                             show_in_thread: true,
                             meta_data: $message->meta_data,
                             tools: $message->tools);
+
+                        if ($response->prompt) {
+                            PromptHistory::create([
+                                'prompt' => $response->prompt,
+                                'chat_id' => $chat->getChat()->id,
+                                'message_id' => $assistantMessage?->id,
+                                /** @phpstan-ignore-next-line */
+                                'collection_id' => $chat->getChatable()?->id,
+                            ]);
+                        }
+
+                        if (! empty($response->documentChunks) && $assistantMessage?->id) {
+                            $this->saveDocumentReference(
+                                $assistantMessage,
+                                $response->documentChunks
+                            );
+                        }
                     }
 
-                    if ($response->prompt) {
-                        PromptHistory::create([
-                            'prompt' => $response->prompt,
-                            'chat_id' => $chat->getChat()->id,
-                            'message_id' => $assistantMessage?->id,
-                            /** @phpstan-ignore-next-line */
-                            'collection_id' => $chat->getChatable()?->id,
-                        ]);
-                    }
-
-                    if (! empty($response->documentChunks) && $assistantMessage?->id) {
-                        $this->saveDocumentReference(
-                            $assistantMessage,
-                            $response->documentChunks
-                        );
-                    }
 
                     $this->response = $response->content;
                     $this->requiresFollowup = $response->requires_follow_up_prompt;

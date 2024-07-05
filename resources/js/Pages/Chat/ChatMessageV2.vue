@@ -52,6 +52,9 @@ const reuse = (prompt) => {
                             mx-auto
                             w-full
                             flex-col rounded-md relative shadow-lg shadow-inner-custom  p-4 ">
+                                    <div class="justify-end flex text-xs text-gray-500">
+                                        #{{ message.id}}
+                                    </div>
                                     <div class="prose"
                                          v-html="message.body_markdown">
                                     </div>
@@ -88,6 +91,9 @@ const reuse = (prompt) => {
             </div>
             <div v-else
                 class="flex-col rounded-md shadow-lg p-4 border-neutral border mb-4">
+                <div class="justify-end flex text-xs text-gray-500">
+                    #{{ message.id}}
+                </div>
                 <div class="grow leading-loose prose" v-html="message.body_markdown">
                 </div>
 

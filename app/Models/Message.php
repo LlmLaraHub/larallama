@@ -22,6 +22,7 @@ class Message extends Model implements HasDrivers
         'in_out',
         'is_chat_ignored',
         'meta_data',
+        'tools',
     ];
 
     protected $dispatchesEvents = [
