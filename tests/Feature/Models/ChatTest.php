@@ -67,11 +67,11 @@ class ChatTest extends TestCase
         $this->assertDatabaseCount('messages', 3);
     }
 
-    public function test_first_or_create_using_output() : void
+    public function test_first_or_create_using_output(): void
     {
-            $output = Output::factory()->create();
-            $chat = Chat::firstOrCreateUsingOutput($output);
-            $this->assertNotNull($chat->session_id);
-            $this->assertNotNull($chat->id);
+        $output = Output::factory()->create();
+        $chat = Chat::firstOrCreateUsingOutput($output);
+        $this->assertNotNull($chat->session_id);
+        $this->assertNotNull($chat->id);
     }
 }

@@ -8,7 +8,6 @@ use App\Domains\Prompts\ChatBotPrompt;
 use App\Domains\Prompts\PromptMerge;
 use App\Domains\Prompts\SupportChatBotPrompt;
 use App\Models\Chat;
-use App\Models\Collection;
 use App\Models\Output;
 use Facades\LlmLaraHub\LlmDriver\NonFunctionSearchOrSummarize;
 use Illuminate\Support\Facades\Log;
@@ -43,8 +42,6 @@ class ApiOutputController extends OutputController
         ], [
             $input,
         ], $prompt);
-
-
 
         $chat = Chat::firstOrCreateUsingOutput($output);
 

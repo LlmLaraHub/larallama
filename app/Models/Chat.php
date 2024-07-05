@@ -203,7 +203,7 @@ class Chat extends Model implements HasDrivers
         return Chat::firstOrCreate([
             'session_id' => $sessionId,
         ], [
-            'title' => 'Chat with Output '. $output->title,
+            'title' => 'Chat with Output '.$output->title,
             'chatable_id' => $output->collection->id,
             'chatable_type' => Collection::class,
             'user_id' => $output->getUserId(),
