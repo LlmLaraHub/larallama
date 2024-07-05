@@ -10,6 +10,10 @@ class ArgumentCaster implements Cast
 {
     public function cast(DataProperty $property, mixed $value, array $properties, CreationContext $context): array
     {
+
+        if(is_array($value)) {
+            return $value;
+        }
         return json_decode($value, true);
     }
 }

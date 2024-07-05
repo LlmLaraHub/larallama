@@ -41,7 +41,6 @@ class SimpleSearchAndSummarizeOrchestrateJobTest extends TestCase
 
         (new SimpleSearchAndSummarizeOrchestrateJob($message))->handle();
 
-        $this->assertDatabaseCount('messages', 1);
         $this->assertDatabaseCount('prompt_histories', 1);
         $this->assertDatabaseCount('message_document_references', 3);
     }

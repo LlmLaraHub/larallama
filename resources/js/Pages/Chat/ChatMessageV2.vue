@@ -110,8 +110,23 @@ const reuse = (prompt) => {
                         </svg>
                     </button>
                 </div>
-                <div class="flex justify-start">
-<!--                    {{ message.meta_data}}-->
+                <div class="flex justify-start text-sm gap-2 items-center">
+                    <div v-if="message.meta_data?.persona" class="flex justify-start gap-2 items-center">
+                        <span class="text-secondary">
+                            Persona being used: </span>
+                        <span class="font-bold">{{message.meta_data.persona}}</span>
+                    </div>
+                    <div v-if="message.meta_data?.filter" class="flex justify-start gap-2 items-center">
+                        <span class="text-secondary">
+                            Filter being used: </span>
+                        <span class="font-bold">{{message.meta_data.filter.name}}</span>
+                    </div>
+
+                    <div v-if="message.meta_data?.date_range" class="flex justify-start gap-2 items-center">
+                        <span class="text-secondary">
+                            Date Range used: </span>
+                        <span class="font-bold">{{message.meta_data.date_range}}</span>
+                    </div>
                 </div>
             </div>
 
