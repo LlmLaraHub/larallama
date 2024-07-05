@@ -1,6 +1,6 @@
 [
     {
-        "content": "How about email ideas",
+        "content": "Overview: This document is going to show you how to configure the router and what steps you need to take. It\\\u2019s really simple, so just follow along. First, open the admin panel by entering the IP address into your browser. Then you need to go to the settings tab and configure your Wi-Fi settings. Click Save.\n\nAfter you\\\u2019ve done that, you need to check if the configuration is correct. If you get an error, then something went wrong. Check the settings again or maybe restart the router. You should be good to go! Remember, a well-configured router is essential for a strong and reliable internet connection.",
         "role": "user",
         "is_ai": false,
         "show": true,
