@@ -221,9 +221,6 @@ class ChatControllerTest extends TestCase
                 'collection' => $collection->id,
                 'chat' => $chat->id,
             ]));
-
-        dd($response->json());
-
         $response->assertOk();
     }
 }

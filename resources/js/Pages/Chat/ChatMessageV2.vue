@@ -4,6 +4,8 @@ import { TabGroup, TabList, Tab, TabPanels, TabPanel, TransitionRoot } from '@he
 import ReferenceTable from './Components/ReferenceTable.vue'
 import History from './Components/History.vue'
 import Clipboard from "@/Components/ClipboardButton.vue";
+import {useForm} from "@inertiajs/vue3";
+import {onMounted, ref} from "vue";
 
 const props = defineProps({
     message: Object
@@ -14,6 +16,8 @@ const emits = defineEmits(['reusePrompt'])
 const reuse = (prompt) => {
     emits('reusePrompt', prompt)
 }
+
+
 </script>
 
 <template>
@@ -60,6 +64,7 @@ const reuse = (prompt) => {
                                     </div>
                                     <div class="w-full flex justify-end gap-2 items-center">
 
+                                        <slot name="rerun"></slot>
                                         <Clipboard
                                             class="btn-ghost"
                                             :content="message.body">

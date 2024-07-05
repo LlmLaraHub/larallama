@@ -266,6 +266,10 @@ Route::middleware([
             ->name('chats.messages.create');
     });
 
+    Route::controller(\App\Http\Controllers\ReRunController::class)->group(function () {
+        Route::post('/messages/{message}/rerun', 'rerun')->name('messages.rerun');
+    });
+
     Route::controller(\App\Http\Controllers\UpdateSummaryController::class)->group(function () {
         Route::post('/documents/{document}/update-summary', 'updateSummary')
             ->name('collections.documents.update-summary');

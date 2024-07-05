@@ -46,13 +46,13 @@ class Orchestrate
 
         put_fixture('latest_messages.json', $messagesArray);
 
-        $filter = $message->meta_data->filter;
+        $filter = $message->meta_data?->filter;
 
         if ($filter) {
             $filter = Filter::find($filter);
         }
 
-        $tool = $message->meta_data->tool;
+        $tool = $message->meta_data?->tool;
 
         if ($tool) {
             Log::info('[LaraChain] Orchestration Has Tool', [

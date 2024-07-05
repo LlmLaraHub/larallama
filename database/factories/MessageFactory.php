@@ -45,6 +45,15 @@ class MessageFactory extends Factory
         ];
     }
 
+    public function assistant(): Factory
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'role' => RoleEnum::Assistant,
+            ];
+        });
+    }
+
     public function user(): Factory
     {
         return $this->state(function (array $attributes) {
