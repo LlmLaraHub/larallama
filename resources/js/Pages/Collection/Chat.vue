@@ -32,14 +32,23 @@ const props = defineProps({
 provide('system_prompt', props.system_prompt);
 
 onMounted(() => {
+    mountItems();
+});
+
+const chatCreated = () => {
+    mountItems();
+}
+
+
+const mountItems = () => {
     Echo.private(`collection.chat.${props.collection.data.id}.${props.chat.data.id}`)
-    .listen('.status', (e) => {
-        router.reload({
-            preserveScroll: true,
+        .listen('.status', (e) => {
+            router.reload({
+                preserveScroll: true,
+            })
         })
-    })
-    .listen('.update', (e) => {
-        toast.success(e.updateMessage, {
+        .listen('.update', (e) => {
+            toast.success(e.updateMessage, {
                 position: "bottom-right",
                 timeout: 2000,
                 closeOnClick: true,
@@ -53,8 +62,8 @@ onMounted(() => {
                 icon: true,
                 rtl: false
             });
-    });
-});
+        });
+}
 
 onUnmounted(() => {
     Echo.leave(`collection.chat.${props.collection.data.id}.${props.chat.data.id}`);
@@ -72,6 +81,7 @@ onUnmounted(() => {
                 <div class="grid grid-cols-12 gap-2">
                     <div class="hidden sm:col-span-3 sm:flex overflow-hidden">
                         <ChatSideNav
+                            @chatCreated="chatCreated"
                             :collection="collection.data"
                             :chats="chats"></ChatSideNav>
                     </div>
