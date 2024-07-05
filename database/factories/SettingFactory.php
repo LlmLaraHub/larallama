@@ -52,11 +52,11 @@ class SettingFactory extends Factory
             ];
             $attributes['secrets']['ollama'] = [
                 'api_key' => 'foobar',
-                'api_url' => 'https://api.anthropic.com/v1',
+                'api_url' => 'http://localhost:11434/api/',
             ];
             $attributes['secrets']['claude'] = [
                 'api_key' => 'foobar',
-                'api_url' => 'http://localhost:11434/api/',
+                'api_url' => 'https://api.anthropic.com/v1',
             ];
 
             return $attributes;

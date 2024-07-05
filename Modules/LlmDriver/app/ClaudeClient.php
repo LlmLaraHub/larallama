@@ -5,6 +5,7 @@ namespace LlmLaraHub\LlmDriver;
 use App\Models\Setting;
 use Illuminate\Http\Client\Pool;
 use Illuminate\Http\Client\Response;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use LlmLaraHub\LlmDriver\Requests\MessageInDto;
@@ -205,7 +206,13 @@ class ClaudeClient extends BaseClient
     public function functionPromptChat(array $messages, array $only = []): array
     {
 
-        $messages = $this->remapMessages($messages);
+        $messages = $this->remapMessages($messages, true);
+
+        /**
+         * @NOTE
+         * The api will not let me end this array in an assistant message
+         * it has to end in a user message
+         */
 
         Log::info('LlmDriver::ClaudeClient::functionPromptChat', $messages);
 
@@ -305,7 +312,7 @@ class ClaudeClient extends BaseClient
      *
      * @param  MessageInDto[]  $messages
      */
-    protected function remapMessages(array $messages): array
+    protected function remapMessages(array $messages, bool $userLast = false): array
     {
         put_fixture('before_mapping.json', $messages);
         $messages = collect($messages)->map(function ($item) {
@@ -346,6 +353,17 @@ class ClaudeClient extends BaseClient
 
             $lastRole = $currentRole;
 
+        }
+
+        if ($userLast) {
+            $last = Arr::last($newMessagesArray);
+
+            if($last['role'] === 'assistant') {
+                $newMessagesArray[] = [
+                    'role' => 'user',
+                    'content' => 'Using the surrounding context to continue this response thread',
+                ];
+            }
         }
 
         put_fixture('after_mapping.json', $newMessagesArray);
