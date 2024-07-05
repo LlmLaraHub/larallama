@@ -2,6 +2,7 @@
 
 namespace LlmLaraHub\LlmDriver;
 
+use App\Domains\Chat\ToolsDto;
 use App\Domains\Messages\RoleEnum;
 use App\Models\Chat;
 use App\Models\Filter;
@@ -9,7 +10,6 @@ use App\Models\Message;
 use App\Models\PromptHistory;
 use Facades\App\Domains\Messages\SearchAndSummarizeChatRepo;
 use Facades\LlmLaraHub\LlmDriver\Functions\StandardsChecker;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Log;
 use LlmLaraHub\LlmDriver\Functions\FunctionCallDto;
 use LlmLaraHub\LlmDriver\Helpers\CreateReferencesTrait;
@@ -43,10 +43,15 @@ class Orchestrate
          * after this refactor
          */
         $messagesArray = $message->getLatestMessages();
+
+        put_fixture('latest_messages.json', $messagesArray);
+
         $filter = $message->meta_data->filter;
+
         if ($filter) {
             $filter = Filter::find($filter);
         }
+
         $tool = $message->meta_data->tool;
 
         if ($tool) {
@@ -73,11 +78,13 @@ class Orchestrate
                     'filter' => $filter,
                 ]);
 
+                $this->addToolsToMessage($message, $functionDto);
+
                 $response = StandardsChecker::handle($message);
-                $messagesArray = $this->handleResponse($response, $chat);
+                $this->handleResponse($response, $chat, $message);
                 $this->response = $response->content;
                 $this->requiresFollowup = $response->requires_follow_up_prompt;
-                $this->requiresFollowUp($messagesArray, $chat);
+                $this->requiresFollowUp($message->getLatestMessages(), $chat);
             }
 
         } else {
@@ -123,6 +130,8 @@ class Orchestrate
                         'filter' => $filter,
                     ]);
 
+                    $this->addToolsToMessage($message, $functionDto);
+
                     /** @var FunctionResponse $response */
                     $response = $functionClass->handle($message);
 
@@ -137,7 +146,8 @@ class Orchestrate
                             message: $response->content,
                             role: RoleEnum::Assistant,
                             show_in_thread: true,
-                            meta_data: $message->meta_data);
+                            meta_data: $message->meta_data,
+                            tools: $message->tools);
                     }
 
                     if ($response->prompt) {
@@ -188,40 +198,47 @@ class Orchestrate
     /**
      * @return MessageInDto[]
      */
-    protected function handleResponse(FunctionResponse $response, Chat $chat): array
+    protected function handleResponse(
+        FunctionResponse $response,
+        Chat $chat,
+        Message $message): void
     {
-        $message = null;
 
         if ($response->save_to_message) {
             $message = $chat->addInput(
                 message: $response->content,
                 role: RoleEnum::Assistant,
-                show_in_thread: true);
+                show_in_thread: true,
+                meta_data: $message->meta_data,
+                tools: $message->tools);
+
+            if ($response->prompt) {
+                PromptHistory::create([
+                    'prompt' => $response->prompt,
+                    'chat_id' => $chat->getChat()->id,
+                    'message_id' => $message?->id,
+                    /** @phpstan-ignore-next-line */
+                    'collection_id' => $chat->getChatable()?->id,
+                ]);
+            }
+
+            if (! empty($response->documentChunks)) {
+                $this->saveDocumentReference(
+                    $message,
+                    $response->documentChunks
+                );
+            }
         }
+    }
 
-        if ($response->prompt) {
-            PromptHistory::create([
-                'prompt' => $response->prompt,
-                'chat_id' => $chat->getChat()->id,
-                'message_id' => $message?->id,
-                /** @phpstan-ignore-next-line */
-                'collection_id' => $chat->getChatable()?->id,
-            ]);
+    protected function addToolsToMessage(Message $message, FunctionCallDto $functionDto): void
+    {
+        $tools = $message->tools;
+        if (! $tools) {
+            $tools = ToolsDto::from(['tools' => []]);
         }
-
-        if (! empty($response->documentChunks)) {
-            $this->saveDocumentReference(
-                $message,
-                $response->documentChunks
-            );
-        }
-
-        $messagesArray = Arr::wrap(MessageInDto::from([
-            'role' => 'assistant',
-            'content' => $response->content,
-        ]));
-
-        return $messagesArray;
+        $tools->tools[] = $functionDto;
+        $message->updateQuietly(['tools' => $tools]);
     }
 
     protected function requiresFollowUp(array $messagesArray, Chat $chat): void

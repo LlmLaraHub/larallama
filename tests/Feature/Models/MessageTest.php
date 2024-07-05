@@ -26,7 +26,6 @@ class MessageTest extends TestCase
         $this->assertNotNull($model->tools);
         $this->assertInstanceOf(ToolsDto::class, $model->tools);
 
-
     }
 
     public function test_get_filter(): void

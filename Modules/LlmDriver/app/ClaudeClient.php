@@ -37,12 +37,10 @@ class ClaudeClient extends BaseClient
         /**
          * I need to iterate over each item
          * then if there are two rows with role assistant I need to insert
-         * in betwee a user row with some copy to make it work like "And the user search results had"
+         * in between a user row with some copy to make it work like "And the user search results had"
          * using the Laravel Collection library
          */
         $messages = $this->remapMessages($messages);
-
-        put_fixture('after_mapping.json', $messages);
 
         $results = $this->getClient()->post('/messages', [
             'model' => $model,
@@ -54,12 +52,12 @@ class ClaudeClient extends BaseClient
         if (! $results->ok()) {
             $error = $results->json()['error']['type'];
             $message = $results->json()['error']['message'];
-            put_fixture('claude_error.json', $results->json());
-            Log::error('Claude API Error ', [
+            Log::error('Claude API Error Chat', [
                 'type' => $error,
                 'message' => $message,
             ]);
-            throw new \Exception('Claude API Error '.$message);
+
+            throw new \Exception('Claude API Error Chat');
         }
 
         $data = null;
@@ -93,8 +91,13 @@ class ClaudeClient extends BaseClient
 
         if (! $results->ok()) {
             $error = $results->json()['error']['type'];
-            Log::error('Claude API Error '.$error);
-            throw new \Exception('Claude API Error '.$error);
+            $message = $results->json()['error']['message'];
+            Log::error('Claude API Error Chat', [
+                'type' => $error,
+                'message' => $message,
+            ]);
+
+            throw new \Exception('Claude API Error Chat');
         }
 
         $data = null;
@@ -201,10 +204,10 @@ class ClaudeClient extends BaseClient
      */
     public function functionPromptChat(array $messages, array $only = []): array
     {
-        $messages = $this->remapMessages($messages);
-        Log::info('LlmDriver::ClaudeClient::functionPromptChat', $messages);
 
-        $functions = $this->getFunctions();
+        $messages = $this->remapMessages($messages);
+
+        Log::info('LlmDriver::ClaudeClient::functionPromptChat', $messages);
 
         $model = $this->getConfig('claude')['models']['completion_model'];
         $maxTokens = $this->getConfig('claude')['max_tokens'];
@@ -222,11 +225,13 @@ class ClaudeClient extends BaseClient
         if (! $results->ok()) {
             $error = $results->json()['error']['type'];
             $message = $results->json()['error']['message'];
-            Log::error('Claude API Error ', [
+
+            Log::error('Claude API Error  getting functions ', [
                 'type' => $error,
                 'message' => $message,
             ]);
-            throw new \Exception('Claude API Error '.$message);
+
+            throw new \Exception('Claude API Error getting functions');
         }
 
         $stop_reason = $results->json()['stop_reason'];
@@ -302,6 +307,7 @@ class ClaudeClient extends BaseClient
      */
     protected function remapMessages(array $messages): array
     {
+        put_fixture('before_mapping.json', $messages);
         $messages = collect($messages)->map(function ($item) {
             if ($item->role === 'system') {
                 $item->role = 'assistant';
@@ -341,6 +347,8 @@ class ClaudeClient extends BaseClient
             $lastRole = $currentRole;
 
         }
+
+        put_fixture('after_mapping.json', $newMessagesArray);
 
         return $newMessagesArray;
     }
