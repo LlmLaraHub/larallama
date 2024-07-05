@@ -4,7 +4,6 @@ namespace App\Jobs;
 
 use App\Domains\Messages\RoleEnum;
 use App\Models\Collection;
-use App\Models\Filter;
 use App\Models\Message;
 use App\Models\PromptHistory;
 use Facades\LlmLaraHub\LlmDriver\NonFunctionSearchOrSummarize;
@@ -15,7 +14,6 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
-use LlmLaraHub\LlmDriver\HasDrivers;
 use LlmLaraHub\LlmDriver\Helpers\CreateReferencesTrait;
 use LlmLaraHub\LlmDriver\Responses\NonFunctionResponseDto;
 
