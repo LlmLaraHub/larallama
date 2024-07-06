@@ -65,7 +65,7 @@ const alreadyCompleted = ref(false);
 const getting_results = ref(false)
 
 onMounted(() => {
-    console.log("Chat Mounted");
+    
     chatMessages.value = props.messages;
     Echo.private(`collection.chat.${props.chat.chatable_id}.${props.chat.id}`)
         .listen('.status', (e) => {
@@ -310,7 +310,6 @@ const rerun = (message) => {
                 </StyleGuide>
 
                 <DisplayMenu
-                    v-if="usePage().props.features.date_range"
                     :items="usePage().props.date_ranges" @itemSelected="dateRangeSelected">
                     <template #title>
                         Date Range
