@@ -1,6 +1,6 @@
 <script setup>
 import AppLayout from '@/Layouts/AppLayout.vue';
-import {computed, onMounted, onUnmounted, provide, ref} from 'vue';
+import {computed, onMounted, onUnmounted, provide, nextTick, ref, watch} from 'vue';
 import Nav from '@/Pages/Collection/Components/Nav.vue';
 import CollectionTags from './Components/CollectionTags.vue';
 import {router, useForm, usePage} from '@inertiajs/vue3';
@@ -29,37 +29,75 @@ const props = defineProps({
     },
 });
 
+const emittedMessages = ref([]);
+
+const chatSubmitted = () => {
+    emittedMessages.value = [];
+}
+
 provide('system_prompt', props.system_prompt);
 
 onMounted(() => {
-    Echo.private(`collection.chat.${props.collection.data.id}.${props.chat.data.id}`)
-    .listen('.status', (e) => {
-        router.reload({
-            preserveScroll: true,
-        })
-    })
-    .listen('.update', (e) => {
-        toast.success(e.updateMessage, {
-                position: "bottom-right",
-                timeout: 2000,
-                closeOnClick: true,
-                pauseOnFocusLoss: false,
-                pauseOnHover: false,
-                draggable: false,
-                draggablePercent: 0.6,
-                showCloseButtonOnHover: true,
-                hideProgressBar: true,
-                closeButton: "button",
-                icon: true,
-                rtl: false
-            });
-    });
+    if (currentChatId.value) {
+        mountItems();
+    }
 });
 
-onUnmounted(() => {
+const chatCreated = async () => {
+    showChat.value = false;
+    await nextTick();
+    mountItems();
+}
+
+const showChat = ref(false);
+
+const currentChatId = ref(props.chat?.data?.id);
+
+watch(() => props.chat?.data?.id, (newId) => {
+    if (newId !== currentChatId.value) {
+        currentChatId.value = newId;
+        mountItems();
+    }
+});
+
+const mountItems = () => {
     Echo.leave(`collection.chat.${props.collection.data.id}.${props.chat.data.id}`);
-});
 
+    Echo.private(`collection.chat.${props.collection.data.id}.${props.chat.data.id}`)
+        .listen('.status', (e) => {
+            router.reload({
+                preserveScroll: true,
+            })
+        })
+        .listen('.update', (e) => {
+            if (!emittedMessages.value.includes(e.updateMessage)) {
+                emittedMessages.value.push(e.updateMessage);
+                toast.success(e.updateMessage, {
+                    position: "bottom-right",
+                    timeout: 2000,
+                    closeOnClick: true,
+                    pauseOnFocusLoss: false,
+                    pauseOnHover: false,
+                    draggable: false,
+                    draggablePercent: 0.6,
+                    showCloseButtonOnHover: true,
+                    hideProgressBar: true,
+                    closeButton: "button",
+                    icon: true,
+                    rtl: false
+                });
+            }
+        });
+    nextTick(() => {
+        showChat.value = true;
+    });
+}
+onUnmounted(() => {
+    showChat.value = false;
+    if (currentChatId.value) {
+        Echo.leave(`collection.chat.${props.collection.data.id}.${currentChatId.value}`);
+    }
+});
 </script>
 
 <template>
@@ -72,6 +110,7 @@ onUnmounted(() => {
                 <div class="grid grid-cols-12 gap-2">
                     <div class="hidden sm:col-span-3 sm:flex overflow-hidden">
                         <ChatSideNav
+                            @chatCreated="chatCreated"
                             :collection="collection.data"
                             :chats="chats"></ChatSideNav>
                     </div>
@@ -89,9 +128,19 @@ onUnmounted(() => {
                                     <CollectionTags :collection="collection.data"></CollectionTags>
                                 </div>
                             </div>
+
                             <Chatv2
+                                v-if="showChat"
                                     :chat="chat.data"
                                     :messages="messages.data"></Chatv2>
+                            <div v-else>
+                                <div class="flex w-full px-10 py-10 flex-col gap-4">
+                                    <div class="skeleton h-32 w-full"></div>
+                                    <div class="skeleton h-4 w-28"></div>
+                                    <div class="skeleton h-4 w-full"></div>
+                                    <div class="skeleton h-4 w-full"></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 

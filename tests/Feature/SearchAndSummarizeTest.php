@@ -115,11 +115,8 @@ class SearchAndSummarizeTest extends TestCase
                 ]
             ));
 
-        $results = (new SearchAndSummarize())->handle(
-            messageArray: $messageArray,
-            model: $chat,
-            functionCallDto: $functionCallDto
-        );
+        $message = Message::factory()->user()->create(['chat_id' => $chat->id]);
+        $results = (new SearchAndSummarize())->handle($message);
 
         $this->assertNotNull($results);
         $this->assertDatabaseCount('message_document_references', 3);

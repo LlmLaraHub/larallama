@@ -2,20 +2,15 @@
 
 namespace LlmLaraHub\LlmDriver\Functions;
 
-use App\Domains\Agents\VerifyPromptInputDto;
-use App\Domains\Agents\VerifyPromptOutputDto;
 use App\Domains\Messages\RoleEnum;
 use App\Domains\Prompts\SummarizePrompt;
 use App\Models\Chat;
+use App\Models\Message;
 use App\Models\PromptHistory;
-use Facades\App\Domains\Agents\VerifyResponseAgent;
 use Illuminate\Support\Facades\Log;
-use Laravel\Pennant\Feature;
 use LlmLaraHub\LlmDriver\DistanceQuery\DistanceQueryFacade;
-use LlmLaraHub\LlmDriver\HasDrivers;
 use LlmLaraHub\LlmDriver\Helpers\CreateReferencesTrait;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
-use LlmLaraHub\LlmDriver\Requests\MessageInDto;
 use LlmLaraHub\LlmDriver\Responses\CompletionResponse;
 use LlmLaraHub\LlmDriver\Responses\FunctionResponse;
 
@@ -29,14 +24,9 @@ class SearchAndSummarize extends FunctionContract
 
     protected string $response = '';
 
-    /**
-     * @param  MessageInDto[]  $messageArray
-     */
     public function handle(
-        array $messageArray,
-        HasDrivers $model,
-        FunctionCallDto $functionCallDto
-    ): FunctionResponse {
+        Message $message): FunctionResponse
+    {
         Log::info('[LaraChain] Using Function: SearchAndSummarize');
 
         /**
@@ -47,25 +37,23 @@ class SearchAndSummarize extends FunctionContract
          * @TODO
          * Should I break up the string using the LLM to make the search better?
          */
-        $input = collect($messageArray)->first(function ($item) {
-            return $item->role === 'user';
-        });
+        $input = $message->getContent();
 
-        $originalPrompt = $input->content;
+        $originalPrompt = $input;
 
         $embedding = LlmDriverFacade::driver(
-            $model->getEmbeddingDriver()
+            $message->getEmbeddingDriver()
         )->embedData($originalPrompt);
 
-        $embeddingSize = get_embedding_size($model->getEmbeddingDriver());
+        $embeddingSize = get_embedding_size($message->getEmbeddingDriver());
 
-        notify_ui($model, 'Searching documents');
+        notify_ui($message->getChat(), 'Searching documents');
 
         $documentChunkResults = DistanceQueryFacade::cosineDistance(
-            $embeddingSize,
-            $model->getChatable()->id,
-            $embedding->embedding,
-            $functionCallDto->filter,
+            embeddingSize: $embeddingSize,
+            collectionId: $message->getChatable()->id,
+            embedding: $embedding->embedding,
+            meta_data: $message->meta_data,
         );
 
         $content = [];
@@ -87,65 +75,58 @@ class SearchAndSummarize extends FunctionContract
             context: $context
         );
 
-        $model->getChat()->addInput(
+        /**
+         * @TODO @WHY
+         * Why do I do this system prompt thing?
+         */
+        $message->getChat()->addInput(
             message: $contentFlattened,
             role: RoleEnum::Assistant,
-            systemPrompt: $model->getChat()->getChatable()->systemPrompt(),
-            show_in_thread: false
+            systemPrompt: $message->getChat()->getChatable()->systemPrompt(),
+            show_in_thread: false,
+            meta_data: $message->meta_data
         );
 
         Log::info('[LaraChain] Getting the Search and Summary results', [
             'input' => $contentFlattened,
-            'driver' => $model->getChat()->getChatable()->getDriver(),
+            'driver' => $message->getChat()->getChatable()->getDriver(),
         ]);
 
-        $messageArray = MessageInDto::from([
-            'content' => $contentFlattened,
-            'role' => 'user',
+        notify_ui($message->getChat(), 'Building Summary');
+
+        /**
+         * @TODO
+         * This breaks down here. This was made for a non message / chat
+         * based chat since non logged in users could use the chat api.
+         */
+        Log::info('[LaraChain] Using the Chat Completion', [
+            'input' => $contentFlattened,
+            'driver' => $message->getChatable()->getDriver(),
         ]);
 
-        notify_ui($model, 'Building Summary');
+        $messages = $message->getChat()->getChatResponse();
 
-        if (! get_class($model) === Chat::class) {
-            Log::info('[LaraChain] Using the Simple Completion', [
-                'input' => $contentFlattened,
-                'driver' => $model->getChatable()->getDriver(),
-            ]);
-            /** @var CompletionResponse $response */
-            $response = LlmDriverFacade::driver(
-                $model->getChatable()->getDriver()
-            )->completion($contentFlattened);
-        } else {
-            Log::info('[LaraChain] Using the Chat Completion', [
-                'input' => $contentFlattened,
-                'driver' => $model->getChatable()->getDriver(),
-            ]);
-            $messages = $model->getChat()->getChatResponse();
-
-            /** @var CompletionResponse $response */
-            $response = LlmDriverFacade::driver(
-                $model->getChatable()->getDriver()
-            )->chat($messages);
-        }
+        /** @var CompletionResponse $response */
+        $response = LlmDriverFacade::driver(
+            $message->getChatable()->getDriver()
+        )->chat($messages);
 
         $this->response = $response->content;
 
-        if (Feature::active('verification_prompt')) {
-            $this->verify($model, $originalPrompt, $context);
-        }
-
-        $message = $model->getChat()->addInput($this->response, RoleEnum::Assistant);
+        $AssistantMessage = $message->getChat()->addInput($this->response,
+            RoleEnum::Assistant,
+            meta_data: $message->meta_data);
 
         PromptHistory::create([
             'prompt' => $contentFlattened,
-            'chat_id' => $model->getChat()->id,
-            'message_id' => $message?->id,
-            'collection_id' => $model->getChat()->getChatable()?->id,
+            'chat_id' => $message->getChat()->id,
+            'message_id' => $AssistantMessage?->id,
+            'collection_id' => $message->getChat()->getChatable()?->id,
         ]);
 
         $this->saveDocumentReference($message, $documentChunkResults);
 
-        notify_ui_complete($model->getChat());
+        notify_ui_complete($message->getChat());
 
         return FunctionResponse::from(
             [
@@ -154,37 +135,6 @@ class SearchAndSummarize extends FunctionContract
                 'prompt' => $contentFlattened,
             ]
         );
-    }
-
-    protected function verify(
-        HasDrivers $model,
-        string $originalPrompt,
-        string $context
-    ): void {
-        /**
-         * Lets Verify
-         */
-        $verifyPrompt = <<<'PROMPT'
-This is the results from a Vector search based on the Users Prompt.
-Then that was passed into the LLM to summarize the results.
-PROMPT;
-
-        $dto = VerifyPromptInputDto::from(
-            [
-                'chattable' => $model->getChat(),
-                'originalPrompt' => $originalPrompt,
-                'context' => $context,
-                'llmResponse' => $this->response,
-                'verifyPrompt' => $verifyPrompt,
-            ]
-        );
-
-        notify_ui($model, 'Verifiying Results');
-
-        /** @var VerifyPromptOutputDto $response */
-        $response = VerifyResponseAgent::verify($dto);
-
-        $this->response = $response->response;
     }
 
     /**

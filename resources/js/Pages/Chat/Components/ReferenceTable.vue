@@ -25,7 +25,14 @@
             <tr v-for="reference in message.message_document_references" :key="reference.id">
                 <th>{{ reference.id }}</th>
                 <td>
-                    <a class="underline" :href="route('download.document', {
+                    <a
+                        v-if="reference.type === 'html'"
+                        target="_blank"
+                        class="underline"
+                        :href="reference.document_name">{{ reference.document_name }}</a>
+                    <a
+                        v-else
+                        class="underline" :href="route('download.document', {
                         collection: message.collection_id,
                         document_name: reference.document_name
                     })">{{ reference.document_name }}</a>

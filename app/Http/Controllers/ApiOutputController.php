@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Domains\Messages\RoleEnum;
 use App\Domains\Outputs\OutputTypeEnum;
 use App\Domains\Prompts\ChatBotPrompt;
 use App\Domains\Prompts\PromptMerge;
 use App\Domains\Prompts\SupportChatBotPrompt;
+use App\Models\Chat;
 use App\Models\Output;
 use Facades\LlmLaraHub\LlmDriver\NonFunctionSearchOrSummarize;
 use Illuminate\Support\Facades\Log;
@@ -41,11 +43,17 @@ class ApiOutputController extends OutputController
             $input,
         ], $prompt);
 
+        $chat = Chat::firstOrCreateUsingOutput($output);
+
+        $message = $chat->addInput(
+            message: $input,
+            role: RoleEnum::User,
+            show_in_thread: true,
+        );
+
         /** @var NonFunctionResponseDto $results */
         $results = NonFunctionSearchOrSummarize::setPrompt($prompt)
-            ->handle(
-                $input,
-                $output->collection);
+            ->handle($message);
 
         return response()->json([
             'choices' => [

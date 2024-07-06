@@ -5,25 +5,18 @@ namespace App\Http\Controllers;
 use App\Domains\Chat\DateRangesEnum;
 use App\Domains\Chat\MetaDataDto;
 use App\Domains\Messages\RoleEnum;
-use App\Events\ChatUiUpdateEvent;
 use App\Http\Resources\AudienceResource;
 use App\Http\Resources\ChatResource;
 use App\Http\Resources\CollectionResource;
 use App\Http\Resources\FilterResource;
 use App\Http\Resources\MessageResource;
 use App\Http\Resources\PersonaResource;
-use App\Jobs\OrchestrateJob;
-use App\Jobs\SimpleSearchAndSummarizeOrchestrateJob;
 use App\Models\Audience;
 use App\Models\Chat;
 use App\Models\Collection;
-use App\Models\Filter;
 use App\Models\Persona;
-use Illuminate\Bus\Batch;
-use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Log;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
-use LlmLaraHub\LlmDriver\Requests\MessageInDto;
 
 class ChatController extends Controller
 {
@@ -61,6 +54,13 @@ class ChatController extends Controller
         ]);
     }
 
+    public function latestChatMessage(Collection $collection, Chat $chat)
+    {
+        return response()->json([
+            'messages' => MessageResource::collection($chat->latest_messages),
+        ]);
+    }
+
     public function chat(Chat $chat)
     {
         $validated = request()->validate([
@@ -92,53 +92,7 @@ class ChatController extends Controller
                 show_in_thread: true,
                 meta_data: $meta_data);
 
-            $messagesArray = [];
-
-            $messagesArray[] = MessageInDto::from([
-                'content' => $input,
-                'role' => 'user',
-                'meta_data' => $meta_data,
-            ]);
-
-            $filter = data_get($validated, 'filter', null);
-
-            if ($filter) {
-                $filter = Filter::find($filter);
-            }
-
-            if ($message->meta_data->tool === 'completion') {
-                Log::info('[LaraChain] Running Simple Completion');
-
-                notify_ui($chat, 'We are running a completion back shortly');
-
-                $messages = $chat->getChatResponse();
-                $response = LlmDriverFacade::driver($chat->getDriver())->chat($messages);
-                $response = $response->content;
-
-                $chat->addInput(
-                    message: $response,
-                    role: RoleEnum::Assistant,
-                    show_in_thread: true);
-
-            } elseif ($message->meta_data->tool === 'standards_checker') {
-                Log::info('[LaraChain] Running Standards Checker');
-                notify_ui($chat, 'Running Standards Checker');
-                $this->batchJob([
-                    new OrchestrateJob($chat, $message),
-                ], $chat, 'search_and_summarize');
-            } elseif (LlmDriverFacade::driver($chat->getDriver())->hasFunctions()) {
-                Log::info('[LaraChain] Running Orchestrate added to queue');
-                $this->batchJob([
-                    new OrchestrateJob($chat, $message),
-                ], $chat, 'orchestrate');
-            } else {
-                Log::info('[LaraChain] Simple Search and Summarize added to queue');
-                $this->batchJob([
-                    new SimpleSearchAndSummarizeOrchestrateJob($input, $chat, $filter),
-                ], $chat, 'simple_search_and_summarize');
-            }
-
-            notify_ui($chat, 'Working on it!');
+            $message->run();
 
             return response()->json(['message' => 'ok']);
         } catch (\Exception $e) {
@@ -146,21 +100,5 @@ class ChatController extends Controller
 
             return response()->json(['message' => $e->getMessage()], 400);
         }
-    }
-
-    protected function batchJob(array $jobs, Chat $chat, string $function): void
-    {
-        $driver = $chat->getDriver();
-        Bus::batch($jobs)
-            ->name("Orchestrate Chat - {$chat->id} {$function} {$driver}")
-            ->then(function (Batch $batch) use ($chat) {
-                ChatUiUpdateEvent::dispatch(
-                    $chat->getChatable(),
-                    $chat,
-                    \App\Domains\Chat\UiStatusEnum::Complete->name
-                );
-            })
-            ->allowFailures()
-            ->dispatch();
     }
 }

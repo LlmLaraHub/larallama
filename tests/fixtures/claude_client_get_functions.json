@@ -32,5 +32,23 @@
             },
             "required": []
         }
+    },
+    {
+        "name": "standards_checker",
+        "description": "Checks the prompt data follows the standards of the documents in the collection",
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "prompt": {
+                    "description": "The prompt the user is using to check standards.",
+                    "type": "string",
+                    "enum": [],
+                    "default": ""
+                }
+            },
+            "required": [
+                "prompt"
+            ]
+        }
     }
 ]

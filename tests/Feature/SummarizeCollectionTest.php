@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Domains\Agents\VerifyPromptOutputDto;
 use App\Models\Collection;
 use App\Models\DocumentChunk;
+use App\Models\Message;
 use Facades\App\Domains\Agents\VerifyResponseAgent;
 use LlmLaraHub\LlmDriver\Functions\ParametersDto;
 use LlmLaraHub\LlmDriver\Functions\PropertyDto;
@@ -85,7 +86,9 @@ class SummarizeCollectionTest extends TestCase
             ]),
         ]);
 
-        $results = (new SummarizeCollection())->handle($messageArray, $chat, $functionCallDto);
+        $message = Message::factory()->create();
+
+        $results = (new SummarizeCollection())->handle($message);
 
         $this->assertInstanceOf(\LlmLaraHub\LlmDriver\Responses\FunctionResponse::class, $results);
 

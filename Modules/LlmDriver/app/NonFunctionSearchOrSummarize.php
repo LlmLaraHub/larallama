@@ -9,7 +9,7 @@ use App\Domains\Prompts\SummarizeDocumentPrompt;
 use App\Domains\Prompts\SummarizePrompt;
 use App\Models\Collection;
 use App\Models\DocumentChunk;
-use App\Models\Filter;
+use App\Models\Message;
 use Illuminate\Support\Facades\Log;
 use LlmLaraHub\LlmDriver\DistanceQuery\DistanceQueryFacade;
 use LlmLaraHub\LlmDriver\Responses\NonFunctionResponseDto;
@@ -25,27 +25,28 @@ class NonFunctionSearchOrSummarize
         return $this;
     }
 
-    public function handle(string $input,
-        HasDrivers $collection,
-        ?Filter $filter = null): NonFunctionResponseDto
-    {
-        $collection = $collection->getChatable();
+    public function handle(
+        Message $message
+    ): NonFunctionResponseDto {
+        $collection = $message->getChatable();
 
         if (! get_class($collection) === Collection::class) {
             throw new \Exception('Can only do Collection class right now');
         }
 
+        $filter = $message->getFilter();
+
         Log::info('[LaraChain] - Using the NonFunctionSearchOrSummarize Search and Summarize Prompt', [
             'collection' => $collection->id,
-            'input' => $input,
+            'input' => $message->getContent(),
             'filters' => $filter?->toArray(),
             'prompt' => $this->prompt,
         ]);
 
-        $prompt = SearchOrSummarize::prompt($input);
+        $prompt = SearchOrSummarize::prompt($message->getContent());
 
         $response = LlmDriverFacade::driver(
-            $collection->getDriver()
+            $message->getDriver()
         )->completion($prompt);
 
         Log::info('[LaraChain] - Results from NonFunctionSearchOrSummarize from search or summarize ', [
@@ -59,7 +60,7 @@ class NonFunctionSearchOrSummarize
 
             $embedding = LlmDriverFacade::driver(
                 $collection->getEmbeddingDriver()
-            )->embedData($input);
+            )->embedData($message->getContent());
 
             $embeddingSize = get_embedding_size($collection->getEmbeddingDriver());
 
@@ -67,7 +68,7 @@ class NonFunctionSearchOrSummarize
                 $embeddingSize,
                 $collection->id,
                 $embedding->embedding,
-                $filter
+                $message->meta_data
             );
 
             $content = [];
@@ -88,7 +89,7 @@ class NonFunctionSearchOrSummarize
                 ], $this->prompt);
             } else {
                 $contentFlattened = SummarizePrompt::prompt(
-                    originalPrompt: $input,
+                    originalPrompt: $message->getContent(),
                     context: $context
                 );
             }
@@ -101,11 +102,11 @@ class NonFunctionSearchOrSummarize
              * @TODO Make this chat
              */
             $response = LlmDriverFacade::driver(
-                $collection->getDriver()
+                $message->getDriver()
             )->completion($contentFlattened);
 
-            if ($collection->getChat()) {
-                notify_ui($collection->getChat(), 'Complete');
+            if ($message->getChat()) {
+                notify_ui($message->getChat(), 'Complete');
             }
 
             return NonFunctionResponseDto::from(
@@ -166,14 +167,15 @@ class NonFunctionSearchOrSummarize
 
             $embedding = LlmDriverFacade::driver(
                 $collection->getEmbeddingDriver()
-            )->embedData($input);
+            )->embedData($message->getContent());
 
             $embeddingSize = get_embedding_size($collection->getEmbeddingDriver());
 
             $documentChunkResults = DistanceQueryFacade::cosineDistance(
                 $embeddingSize,
                 $collection->id,
-                $embedding->embedding
+                $embedding->embedding,
+                $message->meta_data
             );
 
             $content = [];
@@ -191,7 +193,7 @@ class NonFunctionSearchOrSummarize
             ]);
 
             $contentFlattened = DefaultPrompt::prompt(
-                originalPrompt: $input,
+                originalPrompt: $message->getContent(),
                 context: $context
             );
 

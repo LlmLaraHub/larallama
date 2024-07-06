@@ -42,6 +42,5 @@ class OrchestrateJob implements ShouldQueue
 
         Log::info('[LaraChain] Orchestrate Job from batch');
         Orchestrate::handle($this->chat, $this->message);
-        notify_ui_complete($this->chat);
     }
 }

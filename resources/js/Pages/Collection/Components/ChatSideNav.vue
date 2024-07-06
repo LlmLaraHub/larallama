@@ -5,6 +5,12 @@ const props = defineProps({
     chats: Object,
     collection: Object
 })
+
+const emits = defineEmits(['chatCreated']);
+
+const chatCreated = () => {
+    emits('chatCreated');
+}
 </script>
 
 <template>
@@ -13,7 +19,7 @@ const props = defineProps({
         <div>
             <CreateChat
                 class-value="btn btn-neutral w-full rounded-none"
-                 :collection="collection" >
+                 :collection="collection"  @chatCreated="chatCreated">
                 <template #default>
                     <div class="flex items-center gap-2">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">

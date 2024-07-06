@@ -2,8 +2,7 @@
 
 namespace LlmLaraHub\LlmDriver\Functions;
 
-use LlmLaraHub\LlmDriver\HasDrivers;
-use LlmLaraHub\LlmDriver\Requests\MessageInDto;
+use App\Models\Message;
 use LlmLaraHub\LlmDriver\Responses\FunctionResponse;
 
 abstract class FunctionContract
@@ -14,13 +13,9 @@ abstract class FunctionContract
 
     protected string $type = 'object';
 
-    /**
-     * @param  MessageInDto[]  $messageArray
-     */
     abstract public function handle(
-        array $messageArray,
-        HasDrivers $model,
-        FunctionCallDto $functionCallDto): FunctionResponse;
+        Message $message,
+    ): FunctionResponse;
 
     public function getFunction(): FunctionDto
     {

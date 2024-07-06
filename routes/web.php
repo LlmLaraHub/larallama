@@ -259,8 +259,15 @@ Route::middleware([
     Route::controller(ChatController::class)->group(function () {
         Route::post('/collections/{collection}/chats', 'storeCollectionChat')->name('chats.collection.store');
         Route::get('/collections/{collection}/chats/{chat}', 'showCollectionChat')->name('chats.collection.show');
+
+        Route::get('/collections/{collection}/chats/{chat}/messages/latest', 'latestChatMessage')->name('chats.collection.latest');
+
         Route::post('/chats/{chat}/messages/create', 'chat')
             ->name('chats.messages.create');
+    });
+
+    Route::controller(\App\Http\Controllers\ReRunController::class)->group(function () {
+        Route::post('/messages/{message}/rerun', 'rerun')->name('messages.rerun');
     });
 
     Route::controller(\App\Http\Controllers\UpdateSummaryController::class)->group(function () {

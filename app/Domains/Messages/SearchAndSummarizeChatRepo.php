@@ -7,7 +7,7 @@ use App\Domains\Agents\VerifyPromptOutputDto;
 use App\Domains\Prompts\SummarizePrompt;
 use App\Models\Chat;
 use App\Models\DocumentChunk;
-use App\Models\Filter;
+use App\Models\Message;
 use App\Models\PromptHistory;
 use Facades\App\Domains\Agents\VerifyResponseAgent;
 use Illuminate\Support\Facades\Log;
@@ -24,20 +24,21 @@ class SearchAndSummarizeChatRepo
 
     protected string $response = '';
 
-    public function search(Chat $chat,
-        string $input,
-        ?Filter $filter = null): string
+    public function search(
+        Chat $chat,
+        Message $message): string
     {
+
+        $input = $message->body;
+
+        $filter = $message->getFilter();
+
         Log::info('[LaraChain] Search and Summarize Default Function', [
             'note' => 'Showing input since some system grab the last on the array',
             'input' => $input,
         ]);
 
         $originalPrompt = $input;
-
-        Log::info('[LaraChain] Embedding the Data', [
-            'question' => $input,
-        ]);
 
         /** @var EmbeddingsResponseDto $embedding */
         $embedding = LlmDriverFacade::driver(
@@ -52,7 +53,7 @@ class SearchAndSummarizeChatRepo
             /** @phpstan-ignore-next-line */
             $chat->getChatable()->id,
             $embedding->embedding,
-            $filter
+            $message->meta_data
         );
 
         $content = [];
@@ -77,11 +78,12 @@ class SearchAndSummarizeChatRepo
             message: $contentFlattened,
             role: RoleEnum::Assistant,
             systemPrompt: $chat->chatable->systemPrompt(),
-            show_in_thread: false
+            show_in_thread: false,
+            meta_data: $message->meta_data,
         );
 
         /** @TODO coming back to chat shorly just moved to completion to focus on prompt */
-        $latestMessagesArray = $chat->getChatResponse();
+        $latestMessagesArray = $message->getLatestMessages();
 
         Log::info('[LaraChain] Getting the Summary', [
             'input' => $contentFlattened,
@@ -106,7 +108,10 @@ class SearchAndSummarizeChatRepo
             $this->verify($chat, $originalPrompt, $context);
         }
 
-        $message = $chat->addInput($this->response, RoleEnum::Assistant);
+        $message = $chat->addInput(
+            message: $this->response,
+            role: RoleEnum::Assistant,
+            meta_data: $message->meta_data);
 
         PromptHistory::create([
             'prompt' => $contentFlattened,
@@ -117,7 +122,6 @@ class SearchAndSummarizeChatRepo
         ]);
 
         $this->saveDocumentReference($message, $documentChunkResults);
-        notify_ui($chat, 'Complete');
 
         return $this->response;
     }

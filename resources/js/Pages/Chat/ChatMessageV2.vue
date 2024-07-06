@@ -4,6 +4,8 @@ import { TabGroup, TabList, Tab, TabPanels, TabPanel, TransitionRoot } from '@he
 import ReferenceTable from './Components/ReferenceTable.vue'
 import History from './Components/History.vue'
 import Clipboard from "@/Components/ClipboardButton.vue";
+import {useForm} from "@inertiajs/vue3";
+import {onMounted, ref} from "vue";
 
 const props = defineProps({
     message: Object
@@ -14,6 +16,8 @@ const emits = defineEmits(['reusePrompt'])
 const reuse = (prompt) => {
     emits('reusePrompt', prompt)
 }
+
+
 </script>
 
 <template>
@@ -52,11 +56,15 @@ const reuse = (prompt) => {
                             mx-auto
                             w-full
                             flex-col rounded-md relative shadow-lg shadow-inner-custom  p-4 ">
+                                    <div class="justify-end flex text-xs text-gray-500">
+                                        #{{ message.id}}
+                                    </div>
                                     <div class="prose"
                                          v-html="message.body_markdown">
                                     </div>
                                     <div class="w-full flex justify-end gap-2 items-center">
 
+                                        <slot name="rerun"></slot>
                                         <Clipboard
                                             class="btn-ghost"
                                             :content="message.body">
@@ -88,6 +96,9 @@ const reuse = (prompt) => {
             </div>
             <div v-else
                 class="flex-col rounded-md shadow-lg p-4 border-neutral border mb-4">
+                <div class="justify-end flex text-xs text-gray-500">
+                    #{{ message.id}}
+                </div>
                 <div class="grow leading-loose prose" v-html="message.body_markdown">
                 </div>
 
@@ -98,6 +109,24 @@ const reuse = (prompt) => {
                             <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
                         </svg>
                     </button>
+                </div>
+                <div class="flex justify-start text-sm gap-2 items-center">
+                    <div v-if="message.meta_data?.persona" class="flex justify-start gap-2 items-center">
+                        <span class="text-secondary">
+                            Persona being used: </span>
+                        <span class="font-bold">{{message.meta_data.persona}}</span>
+                    </div>
+                    <div v-if="message.meta_data?.filter" class="flex justify-start gap-2 items-center">
+                        <span class="text-secondary">
+                            Filter being used: </span>
+                        <span class="font-bold">{{message.meta_data.filter.name}}</span>
+                    </div>
+
+                    <div v-if="message.meta_data?.date_range" class="flex justify-start gap-2 items-center">
+                        <span class="text-secondary">
+                            Date Range used: </span>
+                        <span class="font-bold">{{message.meta_data.date_range}}</span>
+                    </div>
                 </div>
             </div>
 
