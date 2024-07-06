@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Domains\Chat\MetaDataDto;
+use App\Domains\Chat\ToolsDto;
 use App\Domains\Messages\RoleEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -16,6 +17,7 @@ use OpenAI\Laravel\Facades\OpenAI;
 
 /**
  * @property mixed $chatable;
+ * @property string $session_id;
  */
 class Chat extends Model implements HasDrivers
 {
@@ -87,13 +89,14 @@ class Chat extends Model implements HasDrivers
         RoleEnum $role = RoleEnum::User,
         ?string $systemPrompt = null,
         bool $show_in_thread = true,
-        ?MetaDataDto $meta_data = null): Message
+        ?MetaDataDto $meta_data = null,
+        ?ToolsDto $tools = null): Message
     {
         if (! $meta_data) {
             $meta_data = MetaDataDto::from([]);
         }
 
-        return DB::transaction(function () use ($message, $role, $systemPrompt, $show_in_thread, $meta_data) {
+        return DB::transaction(function () use ($message, $role, $tools, $systemPrompt, $show_in_thread, $meta_data) {
 
             if ($systemPrompt) {
                 $this->createSystemMessageIfNeeded($systemPrompt);
@@ -109,6 +112,7 @@ class Chat extends Model implements HasDrivers
                     'chat_id' => $this->id,
                     'is_chat_ignored' => ! $show_in_thread,
                     'meta_data' => $meta_data,
+                    'tools' => $tools,
                 ]);
         });
 
@@ -144,7 +148,6 @@ class Chat extends Model implements HasDrivers
     {
         $latestMessages = $this->messages()
             ->orderBy('id', 'desc')
-            ->limit(5)
             ->get();
 
         $latestMessagesArray = [];
@@ -191,5 +194,19 @@ class Chat extends Model implements HasDrivers
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public static function firstOrCreateUsingOutput(Output $output): Chat
+    {
+        $sessionId = session()->getId();
+
+        return Chat::firstOrCreate([
+            'session_id' => $sessionId,
+        ], [
+            'title' => 'Chat with Output '.$output->title,
+            'chatable_id' => $output->collection->id,
+            'chatable_type' => Collection::class,
+            'user_id' => $output->getUserId(),
+        ]);
     }
 }

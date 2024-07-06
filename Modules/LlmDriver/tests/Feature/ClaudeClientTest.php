@@ -4,6 +4,8 @@ namespace Tests\Feature;
 
 use App\Models\Setting;
 use Feature;
+use Illuminate\Http\Client\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Http;
 use LlmLaraHub\LlmDriver\ClaudeClient;
 use LlmLaraHub\LlmDriver\Requests\MessageInDto;
@@ -162,6 +164,8 @@ class ClaudeClientTest extends TestCase
 
     public function test_functions_prompt(): void
     {
+        Setting::factory()->all_have_keys()->create();
+
         Feature::define('llm-driver.claude.functions', function () {
             return true;
         });
@@ -170,6 +174,8 @@ class ClaudeClientTest extends TestCase
         Http::fake([
             'api.anthropic.com/*' => Http::response($data, 200),
         ]);
+
+        Http::preventStrayRequests();
 
         $openaiClient = new \LlmLaraHub\LlmDriver\ClaudeClient();
         $response = $openaiClient->functionPromptChat([
@@ -181,9 +187,19 @@ class ClaudeClientTest extends TestCase
                 'content' => 'test',
                 'role' => 'user',
             ]),
+            MessageInDto::from([
+                'content' => 'test should not be last',
+                'role' => 'assistant',
+            ]),
         ]);
 
         $this->assertIsArray($response);
         $this->assertCount(1, $response);
+
+        Http::assertSent(function (Request $request) {
+            $last = Arr::last($request['messages']);
+
+            return $last['role'] === 'user' && count($request['messages']) === 4;
+        });
     }
 }

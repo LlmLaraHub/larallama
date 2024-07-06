@@ -15,6 +15,7 @@ class MessageDocumentReferenceResource extends JsonResource
     public function toArray(Request $request): array
     {
         $tags = $this->document_chunk?->tags;
+
         if ($tags) {
             $tags = TagResource::collection($tags);
         }
@@ -28,6 +29,7 @@ class MessageDocumentReferenceResource extends JsonResource
             'section_number' => $this->document_chunk?->section_number + 1, //since 0 does not look good in the ui
             'summary' => str($this->document_chunk?->content)->markdown(),
             'taggings' => $tags,
+            'type' => $this->document_chunk?->document->type,
         ];
     }
 }

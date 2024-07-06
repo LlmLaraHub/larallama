@@ -117,4 +117,9 @@ class Output extends Model
             return DefaultOutput::getContext($this);
         }
     }
+
+    public function getUserId(): ?int
+    {
+        return $this->collection->team->user_id;
+    }
 }

@@ -14,7 +14,7 @@
 </template>
 
 <script setup>
-import { useForm } from '@inertiajs/vue3';
+import {router, useForm} from '@inertiajs/vue3';
 import { useToast } from 'vue-toastification';
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 import { ChatBubbleLeftIcon } from '@heroicons/vue/24/outline';
@@ -30,7 +30,7 @@ const props = defineProps({
 })
 
 const form = useForm({});
-
+const emits = defineEmits(['chatCreated']);
 
 const start = () => {
     form.post(route('chats.collection.store', {
@@ -39,6 +39,9 @@ const start = () => {
         onError: () => {
             toast.error('Failed to start chat :(');
         },
+        onSuccess: () => {
+            emits('chatCreated');
+        }
     });
 }
 </script>

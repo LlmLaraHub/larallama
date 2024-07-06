@@ -60,51 +60,75 @@ const audience = (audience) => {
     });
 }
 
+const alreadyCompleted = ref(false);
 
 const getting_results = ref(false)
 
 onMounted(() => {
+    console.log("Chat Mounted");
+    chatMessages.value = props.messages;
     Echo.private(`collection.chat.${props.chat.chatable_id}.${props.chat.id}`)
         .listen('.status', (e) => {
-            // @NOTE hmm why did I do this?
-            // resources/js/Pages/Collection/Chat.vue:36
-            //
-            // router.reload({
-            //     preserveScroll: true,
-            // })
+
         })
         .listen('.update', (e) => {
             if(e.updateMessage === 'Complete') {
-                getting_results.value = false
-                router.reload({
-                    preserveScroll: true,
-                })
+                if(!alreadyCompleted.value) {
+                    getLatestMessage();
+                }
             }
         });
 });
 
 onUnmounted(() => {
+    chatMessages.value = [];
     Echo.leave(`collection.chat.${props.chat.chatable_id}.${props.chat.id}`);
 });
 
+const getLatestMessage = (marketCompleted = true) => {
+    axios.get(route('chats.collection.latest', {
+        collection: props.chat.chatable_id,
+        chat: props.chat.id
+    })).then(response => {
+        chatMessages.value = response.data.messages
+        if(marketCompleted) {
+            getting_results.value = false
+            alreadyCompleted.value = true;
+            rerunning.value = false;
+        }
+    })
+}
+
+
+const chatMessages = ref([]);
 
 const save = () => {
+    emits('chatSubmitted')
+
+    // NOTE: Why did I not just use form?
+    // I think there was a reload limitations but now I am doing get message
     getting_results.value = true
     let message = form.input
     let completion = form.completion
     let filter = form.filter
     let tool = form.tool
     let persona = form.persona
+    let date_range = form.date_range
     form.reset();
+    alreadyCompleted.value = false;
     axios.post(route('chats.messages.create', {
         chat: props.chat.id
     }), {
         input: message,
         completion: completion,
         tool: tool,
+        date_range: date_range,
         persona: persona,
         filter: filter
-    }).catch(error => {
+    }).then(response => {
+            getLatestMessage(false);
+        })
+        .catch(error => {
         getting_results.value = false
         toast.error('An error occurred. Please try again.')
         console.log(error)
@@ -125,23 +149,50 @@ const reusePrompt = (prompt) => {
     });
 }
 
+const rerunForm = useForm({});
+
+const rerunning = ref(false);
+
+const rerun = (message) => {
+    rerunning.value = true;
+    rerunForm.post(route('messages.rerun', {
+        message: message.id
+    }), {
+        preserveScroll: true,
+        onSuccess: () => {
+            //emits('rerun');
+        }
+    });
+}
 
 </script>
 
 <template>
     <div class="flex-1 flex flex-col mx-auto px-5 ">
 
-        <div v-if="chat?.id && messages.length === 0">
+        <div v-if="chat?.id && chatMessages.length === 0">
             Ask a question below to get started.
         </div>
-        <div v-for="message in messages" v-else>
+        <div v-for="message in chatMessages" v-else v-auto-animate>
             <ChatMessageV2
                 @reusePrompt="reusePrompt"
-                :message="message"></ChatMessageV2>
+                @rerun="rerun"
+                :message="message">
+                <template #rerun>
+                    <button type="button" class="btn btn-ghost" @click="rerun(message)">
+                        <svg
+                            :class="{ 'animate-spin': rerunning }"
+                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99" />
+                        </svg>
+                        Retry
+                    </button>
+                </template>
+            </ChatMessageV2>
         </div>
 
         <div v-if="getting_results">
-            <div class="w-full px-5 py-5">
+            <div class="w-full py-5">
                 <div class="animate-pulse flex space-x-4 mb-10">
                     <div class="flex-1 space-y-4 py-1">
                         <div class="h-6 bg-slate-400 rounded"></div>

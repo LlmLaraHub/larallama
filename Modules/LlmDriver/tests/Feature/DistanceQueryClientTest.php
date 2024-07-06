@@ -46,6 +46,10 @@ class DistanceQueryClientTest extends TestCase
 
         $filter->documents()->attach($document->id);
 
+        $meta_data = MetaDataDto::from([
+            'filter' => $filter->id,
+        ]);
+
         $question = get_fixture('embedding_question_distance.json');
 
         $vector = new Vector($question);
@@ -54,7 +58,7 @@ class DistanceQueryClientTest extends TestCase
             'embedding_1024',
             $document->collection_id,
             $vector,
-            $filter);
+            $meta_data);
 
         $this->assertCount(1, $results);
 
@@ -126,7 +130,6 @@ class DistanceQueryClientTest extends TestCase
             'embedding_1024',
             $document->collection_id,
             $vector,
-            null,
             MetaDataDto::from([
                 'date_range' => DateRangesEnum::ThisWeek->value,
             ]));
@@ -166,6 +169,10 @@ class DistanceQueryClientTest extends TestCase
 
         $filter->documents()->attach($documentNot->id);
 
+        $meta_data = MetaDataDto::from([
+            'filter' => $filter->id,
+        ]);
+
         $question = get_fixture('embedding_question_distance.json');
 
         $vector = new Vector($question);
@@ -174,7 +181,7 @@ class DistanceQueryClientTest extends TestCase
             'embedding_1024',
             $document->collection_id,
             $vector,
-            $filter);
+            $meta_data);
 
         $this->assertCount(0, $results);
 

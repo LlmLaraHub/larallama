@@ -8,7 +8,6 @@ window.Pusher = Pusher;
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 if (import.meta.env.VITE_BROADCAST_CONNECTION === 'pusher') {
-    // Configuration for Pusher
     window.Echo = new Echo({
         broadcaster: 'pusher',
         key: import.meta.env.VITE_PUSHER_APP_KEY,
@@ -16,7 +15,6 @@ if (import.meta.env.VITE_BROADCAST_CONNECTION === 'pusher') {
         forceTLS: true
     });
 } else {
-    // Configuration for Reverb
     window.Echo = new Echo({
         broadcaster: 'reverb',
         key: import.meta.env.VITE_REVERB_APP_KEY,

@@ -3,11 +3,14 @@
 namespace Tests\Feature;
 
 use App\Domains\Agents\VerifyPromptOutputDto;
+use App\Domains\Chat\MetaDataDto;
+use App\Domains\Messages\RoleEnum;
 use App\Domains\Messages\SearchAndSummarizeChatRepo;
 use App\Models\Chat;
 use App\Models\Collection;
 use App\Models\Document;
 use App\Models\DocumentChunk;
+use App\Models\Message;
 use Facades\App\Domains\Agents\VerifyResponseAgent;
 use LlmLaraHub\LlmDriver\DistanceQuery\DistanceQueryFacade;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
@@ -69,7 +72,17 @@ class SearchAndSummarizeChatRepoTest extends TestCase
             ->once()
             ->andReturn(DocumentChunk::all());
 
-        $results = (new SearchAndSummarizeChatRepo())->search($chat, 'Puppy');
+        $message = Message::factory()->create([
+            'body' => 'Puppy',
+            'role' => RoleEnum::User,
+            'is_chat_ignored' => false,
+            'chat_id' => $chat->id,
+            'meta_data' => MetaDataDto::from([
+                'filter' => null,
+            ]),
+        ]);
+
+        $results = (new SearchAndSummarizeChatRepo())->search($chat, $message);
 
         $this->assertNotNull($results);
         $this->assertDatabaseCount('message_document_references', 3);

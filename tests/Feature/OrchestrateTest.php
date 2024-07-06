@@ -64,6 +64,7 @@ class OrchestrateTest extends TestCase
         ]);
 
         $message = Message::factory()->user()->create([
+            'tools' => [],
             'meta_data' => MetaDataDto::from(
                 [
                     'tool' => '',
@@ -76,7 +77,10 @@ class OrchestrateTest extends TestCase
         Event::assertDispatched(ChatUiUpdateEvent::class);
 
         $this->assertEquals($results, 'This is the summary of the collection');
+
         $this->assertDatabaseCount('prompt_histories', 1);
+
+        $this->assertCount(1, $message->tools->tools);
     }
 
     public function test_tool_standards_checker(): void

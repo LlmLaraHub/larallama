@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\Collection;
+use App\Models\Message;
 use LlmLaraHub\LlmDriver\Functions\ParametersDto;
 use LlmLaraHub\LlmDriver\Functions\PropertyDto;
 use LlmLaraHub\LlmDriver\Functions\StandardsChecker;
@@ -81,7 +82,12 @@ CONTENT;
             ]),
         ]);
 
-        $results = (new StandardsChecker())->handle($messageArray, $chat, $functionCallDto);
+        $message = Message::factory()->create([
+            'chat_id' => $chat->id,
+        ]);
+
+        $results = (new StandardsChecker())
+            ->handle($message);
 
         $this->assertInstanceOf(\LlmLaraHub\LlmDriver\Responses\FunctionResponse::class, $results);
 
