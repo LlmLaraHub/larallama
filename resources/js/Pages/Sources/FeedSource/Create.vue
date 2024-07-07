@@ -32,7 +32,7 @@ const form = useForm({
     details: '',
     recurring: 'not',
     meta_data: {
-        example: "bob@bobsburgers.com",
+        feed_url: "https://larallama.io/feed",
     },
     active: true
 });
