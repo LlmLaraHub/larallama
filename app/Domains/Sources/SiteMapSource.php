@@ -39,10 +39,10 @@ class SiteMapSource extends BaseSource
 
         foreach ($feedItems as $feedItem) {
             $webResponseDto = WebResponseDto::from([
-                'url' => $feedItem['link'],
-                'title' => $feedItem['title'],
-                'description' => $feedItem['description'],
-                'meta_data' => $feedItem,
+                'url' => $feedItem->link,
+                'title' => $feedItem->title,
+                'description' => $feedItem->description,
+                'meta_data' => $feedItem->toArray(),
                 'profile' => [],
             ]);
             $jobs[] = new GetWebContentJob($source, $webResponseDto);
