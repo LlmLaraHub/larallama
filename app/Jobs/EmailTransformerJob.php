@@ -2,12 +2,10 @@
 
 namespace App\Jobs;
 
-use App\Domains\Documents\StatusEnum;
-use App\Domains\Documents\TypesEnum;
 use App\Domains\EmailParser\MailDto;
 use App\Domains\UnStructured\StructuredTypeEnum;
-use Facades\App\Domains\Transformers\EmailTransformer;
 use App\Models\Document;
+use Facades\App\Domains\Transformers\EmailTransformer;
 use Illuminate\Bus\Batchable;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -17,8 +15,8 @@ use Illuminate\Queue\SerializesModels;
 
 class EmailTransformerJob implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
     use Batchable;
+    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /**
      * Create a new job instance.
@@ -85,7 +83,6 @@ class EmailTransformerJob implements ShouldQueue
                     StructuredTypeEnum::EmailBody
                 )));
         }
-
 
     }
 }

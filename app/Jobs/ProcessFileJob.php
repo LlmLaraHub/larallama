@@ -56,7 +56,7 @@ class ProcessFileJob implements ShouldQueue
             ],
             TypesEnum::Email->value => [
                 'jobs' => [
-                    EmailTransformerJob::class
+                    EmailTransformerJob::class,
                 ],
                 'finally' => [
                     SummarizeDocumentJob::class,
@@ -101,7 +101,6 @@ class ProcessFileJob implements ShouldQueue
         ];
 
         $option = $options[$document->type->value];
-
 
         Bus::batch(collect($option['jobs'])->map(function ($job) use ($document) {
             return new $job($document);

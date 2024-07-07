@@ -62,6 +62,4 @@ BODY;
         $this->assertCount(8, $transformer->document_chunks);
 
     }
-
-
 }
