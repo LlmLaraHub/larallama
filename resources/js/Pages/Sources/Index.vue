@@ -16,6 +16,7 @@ import WebhookSource from "@/Pages/Sources/WebhookSource/Components/Card.vue";
 import JsonSource from "@/Pages/Sources/JsonSource/Components/Card.vue";
 import FeedSource from "@/Pages/Sources/FeedSource/Components/Card.vue";
 import WebPageSource from "@/Pages/Sources/WebPageSource/Components/Card.vue";
+import SiteMapSource from "@/Pages/Sources/SiteMapSource/Components/Card.vue";
 
 const toast = useToast();
 
@@ -80,6 +81,7 @@ const props = defineProps({
                               <JsonSource v-else-if="source.type_key === 'json_source'" :source="source"></JsonSource>
                               <FeedSource v-else-if="source.type_key === 'feed_source'" :source="source"></FeedSource>
                               <WebPageSource v-else-if="source.type_key === 'web_page_source'" :source="source"></WebPageSource>
+                              <SiteMapSource v-else-if="source.type_key === 'site_map_source'" :source="source"></SiteMapSource>
                               <Card v-else :source="source"></Card>
                           </template>
                       </div>
@@ -88,7 +90,7 @@ const props = defineProps({
 
                   <div class="mt-5 mx-10">
                         <h3 class="font-bold">Available Sources</h3>
-                        <div class="flex justify-start items-center gap-2"
+                        <div class="flex justify-center items-center gap-2 flex-wrap"
                         >
                             <template v-for="available_source in available_sources" :key="name">
                                 <Link

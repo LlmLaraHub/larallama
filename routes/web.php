@@ -339,3 +339,22 @@ Route::post('/pages/{output:id}/chat', [
     \App\Http\Controllers\WebPageOutputController::class, 'chat',
 ])
     ->name('collections.outputs.web_page.chat');
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified',
+])->group(function () {
+    Route::controller(\App\Http\Controllers\Sources\SiteMapSourceController::class)->group(
+        function () {
+            Route::get('/collections/{collection}/sources/site_map_source/create', 'create')
+                ->name('collections.sources.site_map_source.create');
+            Route::post('/collections/{collection}/sources/site_map_source', 'store')
+                ->name('collections.sources.site_map_source.store');
+            Route::get('/collections/{collection}/sources/site_map_source/{source}/edit', 'edit')
+                ->name('collections.sources.site_map_source.edit');
+            Route::put('/collections/{collection}/sources/site_map_source/{source}/update', 'update')
+                ->name('collections.sources.site_map_source.update');
+            Route::post('/sources/site_map_source/test_feed', 'testFeed')->name('sources.site_map_source.test_feed');
+        }
+    );
+});

@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Jetstream\Events\InvitingTeamMember;
 use Laravel\Pennant\Feature;
+use vipnytt\SitemapParser;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -52,6 +53,10 @@ class AppServiceProvider extends ServiceProvider
             InvitingTeamMember::class,
             InvitingTeamMemberAddToSystemListener::class,
         );
+
+        $this->app->bind('sitemap_parser', function ($app) {
+            return new SitemapParser();
+        });
 
     }
 }

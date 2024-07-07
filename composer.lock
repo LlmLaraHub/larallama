@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b51eaba759aab5df44c230f458b4d9cf",
+    "content-hash": "c8bebea0fdd38181ff7b9d63d1b3c8b0",
     "packages": [
         {
             "name": "amphp/amp",
@@ -12605,6 +12605,73 @@
                 "source": "https://github.com/vedmant/laravel-feed-reader/tree/1.6.1"
             },
             "time": "2024-03-13T03:27:20+00:00"
+        },
+        {
+            "name": "vipnytt/sitemapparser",
+            "version": "v1.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/VIPnytt/SitemapParser.git",
+                "reference": "c414ec31b7d76f5dee32779e5f5efaa5e2786625"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/VIPnytt/SitemapParser/zipball/c414ec31b7d76f5dee32779e5f5efaa5e2786625",
+                "reference": "c414ec31b7d76f5dee32779e5f5efaa5e2786625",
+                "shasum": ""
+            },
+            "require": {
+                "ext-mbstring": "*",
+                "ext-simplexml": "*",
+                "guzzlehttp/guzzle": "^6.0 || ^7.0",
+                "lib-libxml": "*",
+                "php": "^5.6 || ^7.0 || ^8.0"
+            },
+            "require-dev": {
+                "codeclimate/php-test-reporter": "^0",
+                "phpunit/phpunit": "^5.0 || ^6.0 || ^7.0 || ^8.0"
+            },
+            "suggest": {
+                "caseyamcl/guzzle_retry_middleware": "Allow automatic retry when request for sitemap fails",
+                "gmponos/guzzle_logger": "Advanced logging",
+                "hamburgscleanest/guzzle-advanced-throttle": "Throttle requests"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "vipnytt\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "VIP nytt",
+                    "email": "vipnytt@gmail.com",
+                    "role": "creator"
+                },
+                {
+                    "name": "Jan-Petter Gundersen",
+                    "email": "europe.jpg@gmail.com",
+                    "role": "developer"
+                }
+            ],
+            "description": "XML Sitemap parser class compliant with the Sitemaps.org protocol.",
+            "homepage": "https://github.com/VIPnytt/SitemapParser",
+            "keywords": [
+                "Sitemap",
+                "parser",
+                "robots.txt",
+                "sitemaps.org",
+                "xml"
+            ],
+            "support": {
+                "issues": "https://github.com/VIPnytt/SitemapParser/issues",
+                "source": "https://github.com/VIPnytt/SitemapParser/tree/v1.3.0"
+            },
+            "time": "2023-11-27T15:24:01+00:00"
         },
         {
             "name": "vlucas/phpdotenv",

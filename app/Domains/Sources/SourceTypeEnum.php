@@ -17,6 +17,7 @@ enum SourceTypeEnum: string
     case JsonSource = 'json_source';
     case FeedSource = 'feed_source';
     case WebPageSource = 'web_page_source';
+    case SiteMapSource = 'site_map_source';
     //leave for scripting
 
     public static function ignore(): array

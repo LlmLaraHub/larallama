@@ -3,7 +3,7 @@
         <div>
             <InputLabel value="Title"/>
             <input v-model="modelValue.title" type="text" placeholder="Type here"
-                class="rounded-none input input-bordered w-full " />
+                   class="rounded-none input input-bordered w-full " />
             <InputError :message="modelValue.errors.title" />
         </div>
 
@@ -20,7 +20,7 @@
             <h2>This is meta data</h2>
 
             <div>
-                <InputLabel value="Url to use for RSS Feed"/>
+                <InputLabel value="Url to use for SiteMap.xml"/>
                 <input v-model="modelValue.meta_data.feed_url" type="text" placeholder="https://www.larallama.io/feed"
                        class="rounded-none input input-bordered w-full " />
                 <InputError :message="modelValue.errors?.meta_data?.feed_url" />
@@ -106,7 +106,7 @@ const testFeed = () => {
     gettingFeed.value = true;
     toast('Getting', {position: "bottom-right"});
     form.url = props.modelValue.meta_data.feed_url;
-    axios.post(route('sources.feed_source.test_feed'), {
+    axios.post(route('sources.site_map_source.test_feed'), {
         url: form.url
     }).then(response => {
         gettingFeed.value = false;
