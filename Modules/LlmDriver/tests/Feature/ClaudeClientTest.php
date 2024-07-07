@@ -15,6 +15,15 @@ use Tests\TestCase;
 
 class ClaudeClientTest extends TestCase
 {
+
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        Http::preventStrayRequests();
+        Setting::factory()->all_have_keys()->create();
+    }
+
     /**
      * A basic feature test example.
      */

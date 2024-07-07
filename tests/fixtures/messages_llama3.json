@@ -1,14 +1,10 @@
 [
     {
         "content": "test",
-        "role": "system",
-        "is_ai": false,
-        "show": true
+        "role": "system"
     },
     {
         "content": "test",
-        "role": "user",
-        "is_ai": false,
-        "show": true
+        "role": "user"
     }
 ]

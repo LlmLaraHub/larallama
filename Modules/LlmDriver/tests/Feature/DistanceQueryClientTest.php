@@ -91,7 +91,7 @@ class DistanceQueryClientTest extends TestCase
             'embedding_1024',
             $document->collection_id,
             $vector,
-            $filter);
+            MetaDataDto::from([]));
 
         $this->assertCount(1, $results);
 
@@ -119,7 +119,6 @@ class DistanceQueryClientTest extends TestCase
             'embedding_1024',
             $document->collection_id,
             $vector,
-            null,
             MetaDataDto::from([
                 'date_range' => DateRangesEnum::LastWeek->value,
             ]));
@@ -140,7 +139,6 @@ class DistanceQueryClientTest extends TestCase
             'embedding_1024',
             $document->collection_id,
             $vector,
-            null,
             MetaDataDto::from([
                 'date_range' => DateRangesEnum::Today->value,
             ]));

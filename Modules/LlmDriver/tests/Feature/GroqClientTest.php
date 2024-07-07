@@ -11,6 +11,16 @@ use Tests\TestCase;
 
 class GroqClientTest extends TestCase
 {
+
+
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        Http::preventStrayRequests();
+        Setting::factory()->all_have_keys()->create();
+    }
+
     public function test_completion(): void
     {
         $client = new GroqClient();
