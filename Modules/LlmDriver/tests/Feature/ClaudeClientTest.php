@@ -15,7 +15,6 @@ use Tests\TestCase;
 
 class ClaudeClientTest extends TestCase
 {
-
     public function setUp(): void
     {
         parent::setUp();

@@ -14,14 +14,13 @@ use Tests\TestCase;
 
 class OpenAiClientTest extends TestCase
 {
-
-
     public function setUp(): void
     {
         parent::setUp();
 
         Setting::factory()->all_have_keys()->create();
     }
+
     public function test_get_functions(): void
     {
         $openaiClient = new \LlmLaraHub\LlmDriver\OpenAiClient();

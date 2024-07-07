@@ -3,7 +3,6 @@
 namespace Tests;
 
 use App\Domains\Agents\VerifyPromptOutputDto;
-use App\Models\Setting;
 use App\Models\Team;
 use App\Models\User;
 use Facades\App\Domains\Agents\VerifyResponseAgent;
@@ -14,8 +13,6 @@ use LlmLaraHub\LlmDriver\HasDrivers;
 abstract class TestCase extends BaseTestCase
 {
     use LazilyRefreshDatabase;
-
-
 
     public function createUserWithCurrentTeam()
     {

@@ -11,8 +11,6 @@ use Tests\TestCase;
 
 class GroqClientTest extends TestCase
 {
-
-
     public function setUp(): void
     {
         parent::setUp();

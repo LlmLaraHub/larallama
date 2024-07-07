@@ -13,12 +13,9 @@ use Tests\TestCase;
 
 class OllamaClientTest extends TestCase
 {
-
-
     public function setUp(): void
     {
         parent::setUp();
-
 
         Http::preventStrayRequests();
 
