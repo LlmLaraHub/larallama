@@ -30,7 +30,10 @@ class SiteMapSource extends BaseSource
 
         Log::info('[LaraChain] - SiteMapSource Doing something');
 
-        $feedItems = $this->getFeedFromUrl($source->meta_data['feed_url']);
+        /**
+         * There is a lot here so we limit them
+         */
+        $feedItems = SiteMapParserWrapper::handle($source->meta_data['feed_url'])->take(10);
 
         $jobs = [];
 
@@ -59,12 +62,5 @@ class SiteMapSource extends BaseSource
             status: CollectionStatusEnum::PENDING,
             message: 'Feed data sent to get all pages and make documents'
         );
-    }
-
-    public function getFeedFromUrl(string $url): array
-    {
-        Log::info('[LaraChain] - SiteMapSource Doing something');
-
-        return SiteMapParserWrapper::handle($url);
     }
 }

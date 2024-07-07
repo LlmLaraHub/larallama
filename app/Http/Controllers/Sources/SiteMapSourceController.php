@@ -66,7 +66,7 @@ class SiteMapSourceController extends BaseSourceController
 
         return response()->json([
             'count' => count($items),
-            'items' => $items,
+            'items' => $items->take(10)->toArray(),
         ]);
     }
 }

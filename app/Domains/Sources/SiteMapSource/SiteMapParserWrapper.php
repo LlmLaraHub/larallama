@@ -3,11 +3,12 @@
 namespace App\Domains\Sources\SiteMapSource;
 
 use App\Domains\Sources\FeedSource\FeedItemDto;
+use Illuminate\Support\Collection;
 use vipnytt\SitemapParser;
 
 class SiteMapParserWrapper
 {
-    public function handle(string $url): array
+    public function handle(string $url): Collection
     {
         $parser = new SitemapParser();
         $parser->parse($url);
@@ -25,7 +26,7 @@ class SiteMapParserWrapper
                         ]
                     );
                 }
-            )->toArray();
+            );
 
         return $items;
     }

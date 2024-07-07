@@ -14,9 +14,13 @@ class SiteMapSourceTest extends TestCase
     {
 
         Bus::fake();
+
         $data = get_fixture('sitemap_parsed_results.json');
+
         SiteMapParserWrapper::shouldReceive('handle')
-            ->once()->andReturn($data);
+            ->once()->andReturn(
+                collect($data)
+            );
 
         $source = Source::factory()->create([
             'slug' => 'test',
