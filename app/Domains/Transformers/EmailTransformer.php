@@ -81,7 +81,7 @@ class EmailTransformer extends BaseTransformer
             $mailDto->subject,
             2,
             0,
-            StructuredTypeEnum::EmailFrom
+            StructuredTypeEnum::EmailSubject
         );
         $this->baseSource->addDocumentChunk($chunks);
 

@@ -4,6 +4,7 @@ namespace App\Domains\Sources;
 
 use App\Domains\Prompts\PromptMerge;
 use App\Domains\UnStructured\StructuredTypeEnum;
+use App\Jobs\DocumentProcessingCompleteJob;
 use App\Jobs\SummarizeDocumentJob;
 use App\Jobs\VectorlizeDataJob;
 use App\Models\Document;
@@ -78,6 +79,7 @@ abstract class BaseSource
             [
                 new SummarizeDocumentJob($document, $this->getSummarizeDocumentPrompt()),
                 new TagDocumentJob($document),
+                new DocumentProcessingCompleteJob($document),
             ],
         ];
     }

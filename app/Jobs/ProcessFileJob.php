@@ -54,6 +54,16 @@ class ProcessFileJob implements ShouldQueue
                     DocumentProcessingCompleteJob::class,
                 ],
             ],
+            TypesEnum::Email->value => [
+                'jobs' => [
+                    EmailTransformerJob::class
+                ],
+                'finally' => [
+                    SummarizeDocumentJob::class,
+                    TagDocumentJob::class,
+                    DocumentProcessingCompleteJob::class,
+                ],
+            ],
             TypesEnum::Docx->value => [
                 'jobs' => [
                     ParseDocxJob::class,
@@ -91,6 +101,7 @@ class ProcessFileJob implements ShouldQueue
         ];
 
         $option = $options[$document->type->value];
+
 
         Bus::batch(collect($option['jobs'])->map(function ($job) use ($document) {
             return new $job($document);

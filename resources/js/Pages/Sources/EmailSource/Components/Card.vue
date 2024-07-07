@@ -1,6 +1,6 @@
 <script setup>
 
-import {Link, useForm} from "@inertiajs/vue3";
+import {Link, useForm, usePage} from "@inertiajs/vue3";
 import {useToast} from "vue-toastification";
 import Settings from "@/Pages/Sources/Cards/Settings.vue";
 import Clipboard from "@/Components/Clipboard.vue";
@@ -14,7 +14,7 @@ const props = defineProps({
 const form = useForm({})
 
 const email = computed(() => {
-    return `assistant+${ props.source.slug }@laralamma.ai`
+    return `assistant+${ props.source.slug }@${ usePage().props.domain }`
 })
 
 const run = (source) => {

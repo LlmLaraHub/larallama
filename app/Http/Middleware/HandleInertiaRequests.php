@@ -44,6 +44,7 @@ class HandleInertiaRequests extends Middleware
             'active_llms_with_embeddings' => Setting::getAllActiveLlmsWithEmbeddings(),
             'drivers' => Setting::getDrivers(),
             'app_name' => config('app.name'),
+            'domain' => config('llmlarahub.domain'),
             'features' => Feature::all(),
         ]);
     }

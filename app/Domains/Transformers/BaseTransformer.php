@@ -23,7 +23,7 @@ abstract class BaseTransformer
 
     abstract public function transform(BaseSource $baseSource): BaseSource;
 
-    protected function chunkContent(string $content): array
+    public function chunkContent(string $content): array
     {
         $size = config('llmdriver.chunking.default_size');
 
@@ -45,7 +45,7 @@ abstract class BaseTransformer
         return true;
     }
 
-    protected function documentChunk(
+    public function documentChunk(
         Document $document,
         string $content,
         int $sort_order,
