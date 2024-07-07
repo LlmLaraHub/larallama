@@ -20,6 +20,7 @@ const form = useForm({
 });
 
 
+
 const updateSecrets = () => {
 
     form.put(route('settings.update.ollama', {
@@ -59,6 +60,7 @@ const updateSecrets = () => {
                     class="mt-1 block w-full"
                 />
                 <InputError :message="form.errors.api_key" class="mt-2" />
+
             </div>
 
             <div class="col-span-6 sm:col-span-4">

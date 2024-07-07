@@ -8,6 +8,7 @@ import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
+import SecretInput from "@/Components/SecretInput.vue";
 
 const props = defineProps({
     setting: Object,
@@ -52,15 +53,9 @@ const updateSecrets = () => {
             <!-- Name -->
             <div class="col-span-6 sm:col-span-4">
                 <InputLabel for="name" value="Api Token" />
-                <TextInput
-                    id="name"
-                    v-model="form.api_key"
-                    type="text"
-                    class="mt-1 block w-full"
-                />
+                <SecretInput v-model="form.api_key" class="mt-1 block w-full" />
                 <InputError :message="form.errors.api_key" class="mt-2" />
             </div>
-
 
             <div class="col-span-6 sm:col-span-4">
                 <InputLabel for="name" value="Api Url" />
