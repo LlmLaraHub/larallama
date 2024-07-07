@@ -15,7 +15,6 @@ class SiteMapParserWrapper
 
         $items = collect($parser->getURLs())
             ->transform(
-                /** @phpstan-ignore-next-line */
                 function ($item) {
                     return FeedItemDto::from(
                         [
