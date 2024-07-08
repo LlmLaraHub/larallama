@@ -2,14 +2,10 @@
 
 namespace LlmLaraHub\TagFunction;
 
-use App\Domains\Agents\VerifyPromptInputDto;
-use App\Domains\Agents\VerifyPromptOutputDto;
 use App\Domains\Collections\CollectionStatusEnum;
 use App\Models\Document;
-use Facades\App\Domains\Agents\VerifyResponseAgent;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
-use Laravel\Pennant\Feature;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
 use LlmLaraHub\LlmDriver\Responses\CompletionResponse;
 
@@ -37,35 +33,14 @@ class TagManager
 
         $this->tagsAsString = $response->content;
 
-        if (Feature::active('verification_prompt_tags')) {
-            $verifyPrompt = <<<'PROMPT'
-            This was the response from the LLM to get Tags from the content.
-            Please verify the json is good if not fix it so what you return is just JSON
-            and remove from tags any text that is not needed and any
-            tags that are not correct.
-            PROMPT;
-
-            $dto = VerifyPromptInputDto::from(
-                [
-                    'chattable' => $document,
-                    'originalPrompt' => $prompt,
-                    'context' => $summary,
-                    'llmResponse' => $this->tagsAsString,
-                    'verifyPrompt' => $verifyPrompt,
-                ]
-            );
-
-            /** @var VerifyPromptOutputDto $response */
-            $response = VerifyResponseAgent::verify($dto);
-
-            $this->tagsAsString = $response->response;
-
-        }
-
         $this->tags = collect(explode(',', $this->tagsAsString));
 
         $this->tags->take(3)
             ->map(function ($tag) use ($document) {
+                $tag = str($tag)
+                    ->remove('Here Are 3 Tags:')
+                    ->trim()
+                    ->toString();
                 $document->addTag($tag);
             });
 

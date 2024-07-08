@@ -42,6 +42,7 @@ enum TypesEnum: string
             'application/vnd.ms-excel' => TypesEnum::Xls,
             'application/vnd.ms-powerpoint' => TypesEnum::Ppt,
             'text/plain' => TypesEnum::Txt,
+            'text/csv' => TypesEnum::CSV,
             'text/html' => TypesEnum::HTML,
             default => TypesEnum::PDF,
         };

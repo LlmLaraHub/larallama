@@ -41,6 +41,11 @@ class StandardsChecker extends FunctionContract
 
                 foreach ($chunk as $document) {
                     if ($document->summary) {
+                        /**
+                         * @NOTE
+                         * This assumes a small amount of incoming content to check
+                         * The user my upload a blog post that is 20 paragraphs or more.
+                         */
                         $prompt = StandardsCheckerPrompt::prompt(
                             $document->summary, $usersInput->content
                         );

@@ -93,7 +93,6 @@ class CollectionController extends Controller
             foreach ($validated['files'] as $file) {
                 $mimetype = $file->getMimeType();
 
-                //if pptx
                 Log::info('[LaraChain] - Mimetype', [
                     'mimetype' => $mimetype,
                 ]);

@@ -44,6 +44,12 @@ class ProcessFileJob implements ShouldQueue
         $document = $this->document;
 
         $options = [
+            TypesEnum::CSV->value => [
+                'jobs' => [
+                    ProcessCSVJob::class,
+                ],
+                'finally' => [], //going to make new docs from each row
+            ],
             TypesEnum::Pptx->value => [
                 'jobs' => [
                     ParsePowerPointJob::class,

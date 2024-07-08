@@ -18,6 +18,14 @@ class TypesEnumTest extends TestCase
         $this->assertEquals(TypesEnum::Pptx, $results);
     }
 
+    public function test_csv(): void
+    {
+        $results = TypesEnum::mimeTypeToType(
+            'text/csv');
+
+        $this->assertEquals(TypesEnum::CSV, $results);
+    }
+
     public function test_text_plain(): void
     {
         $results = TypesEnum::mimeTypeToType(
