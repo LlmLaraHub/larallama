@@ -8,6 +8,7 @@ use App\Models\Chat;
 use App\Models\Collection;
 use App\Models\Filter;
 use App\Models\Message;
+use App\Models\Report;
 use App\Models\User;
 use Facades\LlmLaraHub\LlmDriver\Orchestrate;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -25,7 +26,13 @@ class MessageTest extends TestCase
     public function test_factory(): void
     {
         $model = Message::factory()->create();
+
+        $report = Report::factory()->create([
+            'message_id' => $model->id,
+        ]);
+
         $this->assertNotNull($model->body);
+        $this->assertNotNull($model->report->id);
         $this->assertNotNull($model->chat->id);
         $this->assertInstanceOf(MetaDataDto::class, $model->meta_data);
         $this->assertNotNull($model->meta_data->date_range);

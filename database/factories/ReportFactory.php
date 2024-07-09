@@ -23,6 +23,7 @@ class ReportFactory extends Factory
             'user_id' => User::factory(),
             'chat_id' => Chat::factory(),
             'reference_collection_id' => Collection::factory(),
+            'message_id' => null,
             'type' => \App\Domains\Reporting\ReportTypeEnum::RFP,
 
         ];

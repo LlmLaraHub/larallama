@@ -43,6 +43,7 @@ class ReportingTool extends FunctionContract
 
         $report = Report::firstOrCreate([
             'chat_id' => $message->getChat()->id,
+            'message_id' => $message->id,
             'reference_collection_id' => $message->getReferenceCollection()?->id,
             'user_id' => $message->getChat()->user_id,
         ], [

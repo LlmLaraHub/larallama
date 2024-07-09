@@ -6,6 +6,7 @@ import History from './Components/History.vue'
 import Clipboard from "@/Components/ClipboardButton.vue";
 import {useForm} from "@inertiajs/vue3";
 import {onMounted, ref} from "vue";
+import Report from "@/Pages/Chat/Components/Report.vue";
 
 const props = defineProps({
     message: Object
@@ -47,6 +48,9 @@ const reuse = (prompt) => {
                             </Tab>
                             <Tab as="div" v-slot="{ selected }">
                                 <div :class="{ 'underline': selected }" class="hover:cursor-pointer m4-2">Prompt History</div>
+                            </Tab>
+                            <Tab as="div" v-slot="{ selected }">
+                                <div :class="{ 'underline': selected }" class="hover:cursor-pointer m4-2">Report</div>
                             </Tab>
                         </TabList>
                         <TabPanels  v-auto-animate>
@@ -91,41 +95,60 @@ const reuse = (prompt) => {
                                     </div>
                                 </div>
                             </TabPanel>
+                            <TabPanel>
+                                <div class="w-fullp-4 mt-2 shadow-lg rounded-md">
+                                    <div>
+                                        <div class="overflow-x-auto">
+                                            <Report :message="message" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </TabPanel>
                         </TabPanels>
                     </TabGroup>
             </div>
             <div v-else
                 class="flex-col rounded-md shadow-lg p-4 border-neutral border mb-4">
-                <div class="justify-end flex text-xs text-gray-500">
+                <div class="justify-end flex text-xs text-gray-500 -mb-5">
                     #{{ message.id}}
                 </div>
+
                 <div class="grow leading-loose prose" v-html="message.body_markdown">
                 </div>
 
-                <div class="w-full flex justify-end gap-2 items-center">
-                    <button type="button" class="btn btn-ghost" @click="reuse(message.body)">
-                        <span>Reuse Prompt</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
-                        </svg>
-                    </button>
-                </div>
-                <div class="flex justify-start text-sm gap-2 items-center">
-                    <div v-if="message.meta_data?.persona" class="flex justify-start gap-2 items-center">
+                <div class="flex justify-between items-center -mb-2">
+                    <div class="flex justify-start text-sm gap-2 items-center w-3/4">
+                        <div v-if="message.meta_data?.persona" class="flex justify-start gap-2 items-center">
                         <span class="text-secondary">
                             Persona being used: </span>
-                        <span class="font-bold">{{message.meta_data.persona}}</span>
-                    </div>
-                    <div v-if="message.meta_data?.filter" class="flex justify-start gap-2 items-center">
+                            <span class="font-bold">{{message.meta_data.persona}}</span>
+                        </div>
+                        <div v-if="message.meta_data?.filter" class="flex justify-start gap-2 items-center">
                         <span class="text-secondary">
                             Filter being used: </span>
-                        <span class="font-bold">{{message.meta_data.filter.name}}</span>
-                    </div>
+                            <span class="font-bold">{{message.meta_data.filter.name}}</span>
+                        </div>
 
-                    <div v-if="message.meta_data?.date_range" class="flex justify-start gap-2 items-center">
+                        <div v-if="message.meta_data?.date_range" class="flex justify-start gap-2 items-center">
                         <span class="text-secondary">
                             Date Range used: </span>
-                        <span class="font-bold">{{message.meta_data.date_range}}</span>
+                            <span class="font-bold">{{message.meta_data.date_range}}</span>
+                        </div>
+
+                        <div v-if="message.meta_data?.tool" class="flex justify-start gap-2 items-center">
+                        <span class="text-secondary">
+                            Tool used: </span>
+                            <span class="font-bold">{{message.meta_data.tool}}</span>
+                        </div>
+                    </div>
+
+                    <div class="w-full flex justify-end gap-2 items-center">
+                        <button type="button" class="btn btn-ghost" @click="reuse(message.body)">
+                            <span>Reuse Prompt</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                            </svg>
+                        </button>
                     </div>
                 </div>
             </div>

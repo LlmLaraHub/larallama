@@ -13,7 +13,9 @@ use Illuminate\Bus\Batch;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Log;
 use LlmLaraHub\LlmDriver\HasDrivers;
@@ -82,6 +84,11 @@ class Message extends Model implements HasDrivers
         // Remove punctuation
         return preg_replace('/\p{P}/', '', $body);
 
+    }
+
+    public function report(): HasOne
+    {
+        return $this->hasOne(Report::class);
     }
 
     /**
