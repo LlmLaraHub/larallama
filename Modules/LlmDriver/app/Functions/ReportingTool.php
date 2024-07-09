@@ -3,14 +3,12 @@
 namespace LlmLaraHub\LlmDriver\Functions;
 
 use App\Domains\Prompts\ReportBuildingFindRequirementsPrompt;
-use App\Domains\Prompts\StandardsCheckerPrompt;
 use App\Domains\Reporting\ReportTypeEnum;
 use App\Models\Message;
 use App\Models\Report;
 use App\Models\Section;
 use Illuminate\Support\Facades\Log;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
-use LlmLaraHub\LlmDriver\Requests\MessageInDto;
 use LlmLaraHub\LlmDriver\Responses\FunctionResponse;
 
 class ReportingTool extends FunctionContract
@@ -51,14 +49,13 @@ class ReportingTool extends FunctionContract
             'type' => ReportTypeEnum::RFP,
         ]);
 
-
         $documents = $message->getChatable()->documents;
 
         notify_ui($message->getChat(), 'Going through all the documents to check requirements');
 
         $this->results = [];
 
-        foreach($documents->chunk(3) as $index => $databaseChunk) {
+        foreach ($documents->chunk(3) as $index => $databaseChunk) {
             try {
                 $prompts = [];
                 $documents = [];
@@ -89,17 +86,17 @@ class ReportingTool extends FunctionContract
                     //make the sections per the results coming back.
                     $content = $result->content;
                     $content = json_decode($content, true);
-                    foreach($content as $sectionIndex =>$sectionText) {
-                        $title = data_get($sectionText, 'title', "NOT TITLE GIVEN");
-                        $content = data_get($sectionText, 'content', "NOT CONTENT GIVEN");
+                    foreach ($content as $sectionIndex => $sectionText) {
+                        $title = data_get($sectionText, 'title', 'NOT TITLE GIVEN');
+                        $content = data_get($sectionText, 'content', 'NOT CONTENT GIVEN');
 
                         $section = Section::updateOrCreate([
                             'document_id' => $document->id,
                             'report_id' => $report->id,
                             'sort_order' => $sectionIndex,
-                            ],[
-                                'subject' => $title,
-                                'content' => $content,
+                        ], [
+                            'subject' => $title,
+                            'content' => $content,
                         ]);
                     }
 

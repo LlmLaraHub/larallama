@@ -73,7 +73,6 @@ class LlmServiceProvider extends ServiceProvider
             return new ReportingTool();
         });
 
-
     }
 
     /**

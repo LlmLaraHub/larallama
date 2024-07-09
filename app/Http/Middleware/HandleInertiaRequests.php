@@ -6,7 +6,6 @@ use App\Models\Setting;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 use Laravel\Pennant\Feature;
-use LlmLaraHub\LlmDriver\LlmDriverClient;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
 
 class HandleInertiaRequests extends Middleware

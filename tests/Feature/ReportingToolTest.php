@@ -9,7 +9,6 @@ use App\Models\Message;
 use LlmLaraHub\LlmDriver\Functions\ParametersDto;
 use LlmLaraHub\LlmDriver\Functions\PropertyDto;
 use LlmLaraHub\LlmDriver\Functions\ReportingTool;
-use LlmLaraHub\LlmDriver\Functions\StandardsChecker;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
 use LlmLaraHub\LlmDriver\Requests\MessageInDto;
 use LlmLaraHub\LlmDriver\Responses\CompletionResponse;
@@ -93,14 +92,13 @@ CONTENT;
         Document::factory(5)
             ->has(DocumentChunk::factory(), 'document_chunks')
             ->create([
-            'collection_id' => $collection->id,
-        ]);
+                'collection_id' => $collection->id,
+            ]);
 
         $chat = \App\Models\Chat::factory()->create([
             'chatable_type' => Collection::class,
             'chatable_id' => $collection->id,
         ]);
-
 
         $functionCallDto = \LlmLaraHub\LlmDriver\Functions\FunctionCallDto::from([
             'function_name' => 'reporting_tool',
@@ -169,7 +167,6 @@ CONTENT;
             'chatable_type' => Collection::class,
             'chatable_id' => $collection->id,
         ]);
-
 
         $functionCallDto = \LlmLaraHub\LlmDriver\Functions\FunctionCallDto::from([
             'function_name' => 'reporting_tool',

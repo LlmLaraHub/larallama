@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('sections', function (Blueprint $table) {
             $table->id();
-            $table->string("subject")->nullable();
-            $table->longText("content")->nullable();
-            $table->longText("response")->nullable();
-            $table->integer("sort_order")->default(0);
+            $table->string('subject')->nullable();
+            $table->longText('content')->nullable();
+            $table->longText('response')->nullable();
+            $table->integer('sort_order')->default(0);
             $table->foreignIdFor(\App\Models\Report::class)->constrained()->onDelete('cascade');
             $table->foreignIdFor(\App\Models\Document::class)->constrained()->onDelete('cascade');
             $table->timestamps();

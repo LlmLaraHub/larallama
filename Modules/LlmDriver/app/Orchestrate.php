@@ -9,7 +9,6 @@ use App\Models\Filter;
 use App\Models\Message;
 use App\Models\PromptHistory;
 use Facades\App\Domains\Messages\SearchAndSummarizeChatRepo;
-use Facades\LlmLaraHub\LlmDriver\Functions\StandardsChecker;
 use Illuminate\Support\Facades\Log;
 use LlmLaraHub\LlmDriver\Functions\FunctionCallDto;
 use LlmLaraHub\LlmDriver\Helpers\CreateReferencesTrait;
@@ -43,7 +42,6 @@ class Orchestrate
          * after this refactor
          */
         $messagesArray = $message->getLatestMessages();
-
 
         $filter = $message->meta_data?->filter;
 
