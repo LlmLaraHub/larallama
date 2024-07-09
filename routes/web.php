@@ -242,6 +242,8 @@ Route::middleware([
     Route::controller(\App\Http\Controllers\ManageBatchesController::class)->group(function () {
         Route::get('/batches', 'index')
             ->name('batches.index');
+        Route::post('/batches/cancel-all', 'cancelAll')
+            ->name('batches.cancel-all');
         Route::post('/batches/{batchId}', 'cancel')
             ->name('batches.cancel');
     });

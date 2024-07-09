@@ -18,6 +18,8 @@ class CSVTransformer
 
     protected TypesEnum $mimeType = TypesEnum::CSV;
 
+    protected string $readerType = \Maatwebsite\Excel\Excel::CSV;
+
     public function handle(Document $document): array
     {
         $this->document = $document;
@@ -26,7 +28,7 @@ class CSVTransformer
 
         //$filePath = null, string $disk = null, string $readerType = null
         $collection = (new DocumentsImport())
-            ->toCollection($filePath, null, \Maatwebsite\Excel\Excel::CSV);
+            ->toCollection($filePath, null, $this->readerType);
 
         $rows = $collection->first();
 
@@ -36,53 +38,66 @@ class CSVTransformer
          * Going to turn into a document then chunks
          */
         foreach ($rows as $rowNumber => $row) {
-            $file_name = 'row_'.$rowNumber.'_'.$document->file_path;
+            try {
+                $content = collect($row)
+                    ->filter(function ($item) {
+                        return $item !== '';
+                    })
+                    ->transform(function ($item, $key) {
+                        return remove_ascii($key.': '.$item);
+                    })->implode("\n");
 
-            $encoded = json_encode($row);
+                $file_name = 'row_'.$rowNumber.'_'.str($document->file_path)->beforeLast('.')->toString().'.txt';
 
-            Storage::disk('collections')
-                ->put((string) $document->collection->id.'/'.$file_name, $encoded);
+                Storage::disk('collections')
+                    ->put((string) $document->collection->id.'/'.$file_name, $content);
 
-            $documentRow = Document::updateOrCreate([
-                'collection_id' => $document->collection_id,
-                'file_path' => $file_name,
-                'type' => $this->mimeType,
-            ], [
-                'status' => StatusEnum::Pending,
-                'summary' => $encoded,
-                'meta_data' => $row,
-                'original_content' => $encoded,
-                'subject' => "Row $rowNumber import from ".$document->file_path,
-            ]);
+                $documentRow = Document::updateOrCreate([
+                    'collection_id' => $document->collection_id,
+                    'file_path' => $file_name,
+                    'type' => $this->mimeType,
+                ], [
+                    'status' => StatusEnum::Pending,
+                    'summary' => $content,
+                    'meta_data' => $row,
+                    'original_content' => $content,
+                    'subject' => "Row $rowNumber import from ".$document->file_path,
+                ]);
 
-            $size = config('llmdriver.chunking.default_size');
+                $size = config('llmdriver.chunking.default_size');
 
-            $chunked_chunks = TextChunker::handle($encoded, $size);
+                $chunked_chunks = TextChunker::handle($content, $size);
 
-            if ($documentRow->wasRecentlyCreated) {
-                foreach ($chunked_chunks as $chunkSection => $chunkContent) {
+                if ($documentRow->wasRecentlyCreated) {
+                    foreach ($chunked_chunks as $chunkSection => $chunkContent) {
 
-                    $guid = md5($chunkContent);
+                        $guid = md5($chunkContent);
 
-                    $DocumentChunk = DocumentChunk::updateOrCreate(
-                        [
-                            'document_id' => $documentRow->id,
-                            'sort_order' => $rowNumber,
-                            'section_number' => $chunkSection,
-                        ],
-                        [
-                            'guid' => $guid,
-                            'content' => $chunkContent,
-                            'meta_data' => $row,
-                            'original_content' => $encoded,
-                        ]
-                    );
+                        $DocumentChunk = DocumentChunk::updateOrCreate(
+                            [
+                                'document_id' => $documentRow->id,
+                                'sort_order' => $rowNumber,
+                                'section_number' => $chunkSection,
+                            ],
+                            [
+                                'guid' => $guid,
+                                'content' => $chunkContent,
+                                'meta_data' => $row,
+                                'original_content' => $content,
+                            ]
+                        );
 
-                    $chunks[] = $DocumentChunk;
+                        $chunks[$documentRow->id][] = $DocumentChunk;
+                    }
+                } else {
+                    $documentRow->updateQuietly([
+                        'status' => StatusEnum::Complete,
+                    ]);
                 }
-            } else {
-                $documentRow->updateQuietly([
-                    'status' => StatusEnum::Complete,
+            } catch (\Exception $e) {
+                Log::error('Error processing Row', [
+                    'error' => $e->getMessage(),
+                    'row_number' => $rowNumber,
                 ]);
             }
 
@@ -90,7 +105,7 @@ class CSVTransformer
 
         notify_collection_ui($document->collection, CollectionStatusEnum::PROCESSING, 'Processing Documents');
 
-        Log::info('CSVTransformer:handle', ['chunks' => count($chunks)]);
+        Log::info($this->mimeType->name.':Transformer:handle', ['chunks' => count($chunks)]);
 
         $document->delete();
 

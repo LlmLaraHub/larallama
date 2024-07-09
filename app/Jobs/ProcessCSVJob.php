@@ -2,8 +2,10 @@
 
 namespace App\Jobs;
 
+use App\Domains\Documents\TypesEnum;
 use App\Models\Document;
 use Facades\App\Domains\Documents\Transformers\CSVTransformer;
+use Facades\App\Domains\Documents\Transformers\XlsxTransformer;
 use Illuminate\Bus\Batch;
 use Illuminate\Bus\Batchable;
 use Illuminate\Bus\Queueable;
@@ -39,28 +41,44 @@ class ProcessCSVJob implements ShouldQueue
             return;
         }
 
-        $chunks = CSVTransformer::handle($this->document);
+        if ($this->document->type === TypesEnum::Xlsx) {
+            $chunks = XlsxTransformer::handle($this->document);
+        } else {
+            $chunks = CSVTransformer::handle($this->document);
+        }
 
-        foreach ($chunks as $chunk) {
-            $document = $chunk->document;
-            Bus::batch([
-                new VectorlizeDataJob($chunk),
-            ])
-                ->name(sprintf('Process %s Document Chunks - %d', $document->type->value, $document->id))
+        $total = count($chunks) - 1;
+        $count = 1;
+
+        foreach ($chunks as $item => $chunk) {
+
+            $document = Document::find($item);
+
+            $chunkVectorized = collect($chunk)
+                ->map(function ($chunk) {
+                    return new VectorlizeDataJob($chunk);
+                })->toArray();
+
+            Bus::batch($chunkVectorized)
                 ->finally(function (Batch $batch) use ($document) {
                     Bus::batch([
-                        new SummarizeDocumentJob($document),
-                        new TagDocumentJob($document),
-                        new DocumentProcessingCompleteJob($document),
-                    ])->name(sprintf('Part 2 of Process for %s Document - %d',
-                        $document->type->value, $document->id))
+                        [
+                            new SummarizeDocumentJob($document),
+                            new TagDocumentJob($document),
+                            new DocumentProcessingCompleteJob($document),
+                        ],
+                    ])->name(sprintf('Part 2 of Process for Document - %d',
+                        $document->id))
                         ->allowFailures()
                         ->onQueue(LlmDriverFacade::driver($document->getDriver())->onQueue())
                         ->dispatch();
                 })
+                ->name(sprintf('Part 1 of Process Document # %d %d of %d',
+                    $document->id, $count, $total))
                 ->allowFailures()
                 ->onQueue(LlmDriverFacade::driver($document->getDriver())->onQueue())
                 ->dispatch();
+            $count++;
         }
     }
 }

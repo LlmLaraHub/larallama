@@ -38,7 +38,6 @@ enum TypesEnum: string
             'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' => TypesEnum::Xlsx,
             'application/vnd.openxmlformats-officedocument.presentationml.presentation' => TypesEnum::Pptx,
             'application/vnd.openxmlformats-officedocument.wordprocessingml.document' => TypesEnum::Docx,
-            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' => TypesEnum::Xlsx,
             'application/vnd.ms-excel' => TypesEnum::Xls,
             'application/vnd.ms-powerpoint' => TypesEnum::Ppt,
             'text/plain' => TypesEnum::Txt,

@@ -39,6 +39,7 @@ class TagManager
             ->map(function ($tag) use ($document) {
                 $tag = str($tag)
                     ->remove('Here Are 3 Tags:')
+                    ->remove('Here Are The Tags:')
                     ->trim()
                     ->toString();
                 $document->addTag($tag);

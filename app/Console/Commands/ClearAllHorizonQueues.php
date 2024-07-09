@@ -3,6 +3,8 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Log;
 
 class ClearAllHorizonQueues extends Command
 {
@@ -29,8 +31,14 @@ class ClearAllHorizonQueues extends Command
         foreach ($queues as $keyName => $queue) {
             $names = data_get($queue, 'queue', []);
             foreach ($names as $name) {
-                $this->info("Clearing queue: $name");
-                $this->call('horizon:clear', [$name]);
+                try {
+                    $this->info("Clearing queue: $name");
+                    Log::info("Clearing queue: $name");
+                    Artisan::call('queue:clear  --force --queue '.$name);
+                } catch (\Exception $e) {
+                    $this->error($e->getMessage());
+                    Log::error($e->getMessage().' '.$name);
+                }
             }
         }
     }

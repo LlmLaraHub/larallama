@@ -2,8 +2,8 @@
 
 namespace Tests\Feature;
 
+use App\Domains\Documents\TypesEnum;
 use App\Jobs\ProcessCSVJob;
-use App\Models\Document;
 use App\Models\DocumentChunk;
 use Facades\App\Domains\Documents\Transformers\CSVTransformer;
 use Illuminate\Support\Facades\Bus;
@@ -11,6 +11,8 @@ use Tests\TestCase;
 
 class ProcessCSVJobTest extends TestCase
 {
+    use SharedSetupForPptFile;
+
     /**
      * A basic feature test example.
      */
@@ -18,17 +20,37 @@ class ProcessCSVJobTest extends TestCase
     {
         Bus::fake();
 
-        $document = Document::factory()->create();
+        $file = 'strategies.csv';
+
+        $document = $this->setupFile($file);
+
+        $document->update([
+            'type' => TypesEnum::CSV,
+        ]);
+
+        $file = 'strategies.csv';
+
+        $document2 = $this->setupFile($file);
 
         CSVTransformer::shouldReceive('handle')
             ->once()->andReturn(
                 [
-                    DocumentChunk::factory()->create([
-                        'document_id' => $document->id,
-                    ]),
-                    DocumentChunk::factory()->create([
-                        'document_id' => $document->id,
-                    ]),
+                    $document->id => [
+                        DocumentChunk::factory()->create([
+                            'document_id' => $document->id,
+                        ]),
+                        DocumentChunk::factory()->create([
+                            'document_id' => $document->id,
+                        ]),
+                    ],
+                    $document2->id => [
+                        DocumentChunk::factory()->create([
+                            'document_id' => $document->id,
+                        ]),
+                        DocumentChunk::factory()->create([
+                            'document_id' => $document->id,
+                        ]),
+                    ],
                 ]
             );
 

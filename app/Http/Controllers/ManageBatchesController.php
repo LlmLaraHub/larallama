@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\BatchResource;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\DB;
 
@@ -22,7 +23,27 @@ class ManageBatchesController extends Controller
         $batch = Bus::findBatch($batchId);
         $batch->cancel();
 
+        Artisan::call('queue:prune-batches');
+
         request()->session()->flash('flash.banner', 'Batch Cancelled');
+
+        return back();
+    }
+
+    public function cancelAll()
+    {
+        foreach (DB::table('job_batches')
+            ->whereNull('finished_at')
+            ->latest('created_at')
+            ->limit(500)
+            ->get() as $batch) {
+            $batch = Bus::findBatch($batch->id);
+            $batch->cancel();
+        }
+        Artisan::call('horizon:clear-all-horizon-queues');
+        Artisan::call('queue:prune-batches');
+
+        request()->session()->flash('flash.banner', 'Batch Cleared');
 
         return back();
     }

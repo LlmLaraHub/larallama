@@ -50,6 +50,12 @@ class ProcessFileJob implements ShouldQueue
                 ],
                 'finally' => [], //going to make new docs from each row
             ],
+            TypesEnum::Xlsx->value => [
+                'jobs' => [
+                    ProcessCSVJob::class,
+                ],
+                'finally' => [], //going to make new docs from each row
+            ],
             TypesEnum::Pptx->value => [
                 'jobs' => [
                     ParsePowerPointJob::class,
