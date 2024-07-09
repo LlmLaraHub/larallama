@@ -2,6 +2,7 @@
 
 namespace LlmLaraHub\LlmDriver;
 
+use LlmLaraHub\LlmDriver\Functions\ReportingTool;
 use LlmLaraHub\LlmDriver\Functions\SearchAndSummarize;
 use LlmLaraHub\LlmDriver\Functions\StandardsChecker;
 use LlmLaraHub\LlmDriver\Functions\SummarizeCollection;
@@ -59,7 +60,18 @@ class LlmDriverClient
             (new SummarizeCollection())->getFunction(),
             (new SearchAndSummarize())->getFunction(),
             (new StandardsChecker())->getFunction(),
+            (new ReportingTool())->getFunction(),
         ];
+    }
+
+    public function getFunctionsForUi(): array
+    {
+        return collect($this->getFunctions())
+            ->map(function($item) {
+                $item = $item->toArray();
+                $item['name_formatted'] = str($item['name'])->headline()->toString();
+                return $item;
+            })->toArray();
     }
 
     /**

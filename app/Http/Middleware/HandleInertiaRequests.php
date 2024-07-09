@@ -6,6 +6,8 @@ use App\Models\Setting;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 use Laravel\Pennant\Feature;
+use LlmLaraHub\LlmDriver\LlmDriverClient;
+use LlmLaraHub\LlmDriver\LlmDriverFacade;
 
 class HandleInertiaRequests extends Middleware
 {
@@ -46,6 +48,7 @@ class HandleInertiaRequests extends Middleware
             'app_name' => config('app.name'),
             'domain' => config('llmlarahub.domain'),
             'features' => Feature::all(),
+            'tools' => LlmDriverFacade::getFunctionsForUi(),
         ]);
     }
 }

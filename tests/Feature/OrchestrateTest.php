@@ -9,7 +9,7 @@ use App\Models\Collection;
 use App\Models\Message;
 use App\Models\User;
 use Facades\App\Domains\Messages\SearchAndSummarizeChatRepo;
-use Facades\LlmLaraHub\LlmDriver\Functions\StandardsChecker;
+use LlmLaraHub\LlmDriver\Functions\StandardsChecker;
 use Illuminate\Support\Facades\Event;
 use LlmLaraHub\LlmDriver\Functions\SearchAndSummarize;
 use LlmLaraHub\LlmDriver\Functions\SummarizeCollection;
@@ -86,15 +86,21 @@ class OrchestrateTest extends TestCase
     public function test_tool_standards_checker(): void
     {
         Event::fake();
-        StandardsChecker::shouldReceive('handle')
-            ->once()
-            ->andReturn(
-                FunctionResponse::from(
-                    [
-                        'content' => 'This is the summary of the collection',
-                        'prompt' => 'TLDR it for me',
-                    ])
-            );
+
+        $this->instance(
+            'standards_checker',
+            Mockery::mock(StandardsChecker::class, function (Mockery\MockInterface $mock) {
+                $mock->shouldReceive('handle')
+                    ->once()
+                    ->andReturn(
+                        FunctionResponse::from(
+                            [
+                                'content' => 'This is the summary of the collection',
+                                'prompt' => 'TLDR it for me',
+                            ])
+                    );
+            })
+        );
 
         $user = User::factory()->create();
         $collection = Collection::factory()->create();

@@ -357,35 +357,23 @@ text-secondary">
 
                     Click a button below to choose a focus for your chat. This will help the system to be more specific on how it integrates your Collection and the Prompt.</h2>
                 <div class="flex justify-center items-center gap-3">
-                    <div class="tooltip tooltip-info"
-                         data-tip="This will take your prompt and compare it to each document in your collection. The results will be the summary of all the comments the LLM has.">
-                        <button
-                            class="btn btn-secondary rounded-none"
-                            :class="{ 'opacity-50': form.tool !== 'standards_checker' && form.tool !== '' }"
-                            type="button"
-                            @click="form.tool = 'standards_checker'"
-                        >
-                            Standards Checker
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-4">
-                                <path fill-rule="evenodd" d="M15 8A7 7 0 1 1 1 8a7 7 0 0 1 14 0Zm-6 3.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0ZM7.293 5.293a1 1 0 1 1 .99 1.667c-.459.134-1.033.566-1.033 1.29v.25a.75.75 0 1 0 1.5 0v-.115a2.5 2.5 0 1 0-2.518-4.153.75.75 0 1 0 1.061 1.06Z" clip-rule="evenodd" />
-                            </svg>
+                    <template v-for="tool in usePage().props.tools" :key="tool.name">
+                        <div class="tooltip tooltip-info"
+                             :data-tip="tool.description">
+                            <button
+                                class="btn btn-secondary rounded-none"
+                                :class="{ 'opacity-50': form.tool !== tool.name && form.tool !== '' }"
+                                type="button"
+                                @click="form.tool = tool.name"
+                            >
+                                {{ tool.name_formatted}}
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-4">
+                                    <path fill-rule="evenodd" d="M15 8A7 7 0 1 1 1 8a7 7 0 0 1 14 0Zm-6 3.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0ZM7.293 5.293a1 1 0 1 1 .99 1.667c-.459.134-1.033.566-1.033 1.29v.25a.75.75 0 1 0 1.5 0v-.115a2.5 2.5 0 1 0-2.518-4.153.75.75 0 1 0 1.061 1.06Z" clip-rule="evenodd" />
+                                </svg>
 
-                        </button>
-                    </div>
-
-                    <div class="tooltip tooltip-info" data-tip="This is more like Chat GPT it will not search your collection. It will just take your prompt and the history of the chat and return the response.">
-                        <button
-                            class="btn btn-secondary rounded-none"
-                            type="button"
-                            :class="{ 'opacity-50': form.tool !== 'completion' && form.tool !== '' }"
-                            @click="form.tool = 'completion'"
-                        >
-                            Raw Prompt
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-4">
-                                <path fill-rule="evenodd" d="M15 8A7 7 0 1 1 1 8a7 7 0 0 1 14 0Zm-6 3.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0ZM7.293 5.293a1 1 0 1 1 .99 1.667c-.459.134-1.033.566-1.033 1.29v.25a.75.75 0 1 0 1.5 0v-.115a2.5 2.5 0 1 0-2.518-4.153.75.75 0 1 0 1.061 1.06Z" clip-rule="evenodd" />
-                            </svg>
-                        </button>
-                    </div>
+                            </button>
+                        </div>
+                    </template>
                 </div>
             </div>
         </div>

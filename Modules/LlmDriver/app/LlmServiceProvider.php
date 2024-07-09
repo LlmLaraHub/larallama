@@ -6,6 +6,7 @@ use App\Models\Setting;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\ServiceProvider;
 use LlmLaraHub\LlmDriver\DistanceQuery\DistanceQueryClient;
+use LlmLaraHub\LlmDriver\Functions\ReportingTool;
 use LlmLaraHub\LlmDriver\Functions\SearchAndSummarize;
 use LlmLaraHub\LlmDriver\Functions\StandardsChecker;
 use LlmLaraHub\LlmDriver\Functions\SummarizeCollection;
@@ -67,6 +68,11 @@ class LlmServiceProvider extends ServiceProvider
         $this->app->bind('standards_checker', function () {
             return new StandardsChecker();
         });
+
+        $this->app->bind('reporting_tool', function () {
+            return new ReportingTool();
+        });
+
 
     }
 

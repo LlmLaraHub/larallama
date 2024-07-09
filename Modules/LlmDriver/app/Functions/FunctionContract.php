@@ -36,6 +36,11 @@ abstract class FunctionContract
         return $this->name;
     }
 
+    protected function getKey(): string
+    {
+        return $this->name;
+    }
+
     protected function getDescription(): string
     {
         return $this->description;

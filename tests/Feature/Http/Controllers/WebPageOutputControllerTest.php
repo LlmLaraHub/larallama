@@ -47,7 +47,7 @@ class WebPageOutputControllerTest extends TestCase
 
         LlmDriverFacade::shouldReceive('driver->embedData')
             ->never();
-
+        LlmDriverFacade::shouldReceive('getFunctionsForUi')->andReturn([]);
         LlmDriverFacade::shouldReceive('driver->completion')
             ->twice()
             ->andReturn(CompletionResponse::from([
@@ -168,7 +168,7 @@ class WebPageOutputControllerTest extends TestCase
             ->once()->andReturn(CompletionResponse::from([
                 'content' => 'Test',
             ]));
-
+        LlmDriverFacade::shouldReceive('getFunctionsForUi')->andReturn([]);
         $collection = Collection::factory()->create();
 
         Document::factory(5)->create([

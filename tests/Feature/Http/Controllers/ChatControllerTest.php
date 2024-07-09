@@ -190,6 +190,7 @@ class ChatControllerTest extends TestCase
         ]);
 
         LlmDriverFacade::shouldReceive('driver->hasFunctions')->once()->andReturn(false);
+        LlmDriverFacade::shouldReceive('getFunctionsForUi')->andReturn([]);
 
         $this->actingAs($user)->post(route('chats.messages.create', [
             'chat' => $chat->id,

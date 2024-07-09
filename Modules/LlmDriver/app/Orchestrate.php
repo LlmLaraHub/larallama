@@ -44,7 +44,6 @@ class Orchestrate
          */
         $messagesArray = $message->getLatestMessages();
 
-        put_fixture('latest_messages.json', $messagesArray);
 
         $filter = $message->meta_data?->filter;
 
@@ -59,33 +58,21 @@ class Orchestrate
                 'tool' => $tool,
             ]);
 
-            /**
-             * @TODO
-             * sooo much to do
-             * this has to be just a natural function
-             * but the user is now forcing it which is fine too
-             */
-            if ($tool === 'standards_checker') {
-                /**
-                 * @TODO
-                 * Refactor this since Message really can build this
-                 * and I am now passing this into all things.
-                 * Will come back shortly
-                 */
-                $functionDto = FunctionCallDto::from([
-                    'arguments' => '{}',
-                    'function_name' => 'standards_checker',
-                    'filter' => $filter,
-                ]);
+            $functionDto = FunctionCallDto::from([
+                'arguments' => '{}',
+                'function_name' => $tool,
+                'filter' => $filter,
+            ]);
 
-                $this->addToolsToMessage($message, $functionDto);
+            $this->addToolsToMessage($message, $functionDto);
 
-                $response = StandardsChecker::handle($message);
-                $this->handleResponse($response, $chat, $message);
-                $this->response = $response->content;
-                $this->requiresFollowup = $response->requires_follow_up_prompt;
-                $this->requiresFollowUp($message->getLatestMessages(), $chat);
-            }
+            $toolClass = app()->make($tool);
+
+            $response = $toolClass->handle($message);
+            $this->handleResponse($response, $chat, $message);
+            $this->response = $response->content;
+            $this->requiresFollowup = $response->requires_follow_up_prompt;
+            $this->requiresFollowUp($message->getLatestMessages(), $chat);
 
         } else {
             /**

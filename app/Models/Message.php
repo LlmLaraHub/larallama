@@ -158,6 +158,17 @@ class Message extends Model implements HasDrivers
         return $this->chat;
     }
 
+    public function getReferenceCollection() : ?Collection
+    {
+        $id = data_get($this->meta_data, 'reference_collection_id', null);
+
+        if($id) {
+            return Collection::find($id);
+        }
+
+        return null;
+    }
+
     public function reRun(): void
     {
         $assistantResponse = $this;
