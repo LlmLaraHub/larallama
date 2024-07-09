@@ -42,12 +42,14 @@ class ChatController extends Controller
             'collection' => new CollectionResource($collection),
             'reference_collections' => Collection::orderBy('name')
                 ->get()
-                ->transform(function ($item) {
-                    return [
-                        'id' => $item->id,
-                        'name' => $item->name,
-                    ];
-                }),
+                ->transform(
+                    /** @phpstan-ignore-next-line */
+                    function ($item) {
+                        return [
+                            'id' => $item->id,
+                            'name' => $item->name,
+                        ];
+                    }),
             'date_ranges' => DateRangesEnum::selectOptions(),
             'chat' => new ChatResource($chat),
             'chats' => ChatResource::collection($collection->chats()->latest()->paginate(20)),
@@ -56,7 +58,7 @@ class ChatController extends Controller
             'audiences' => AudienceResource::collection(Audience::all()),
             'system_prompt' => $collection->systemPrompt(),
             'settings' => [
-                'supports_functions' => LlmDriverFacade::driver($chat->getDriver())->hasFunctions(),
+                    'supports_functions' => LlmDriverFacade::driver($chat->getDriver())->hasFunctions(),
             ],
             'messages' => MessageResource::collection($chat->latest_messages),
         ]);
@@ -92,8 +94,6 @@ class ChatController extends Controller
                 $persona = Persona::find($persona);
                 $input = $persona->wrapPromptInPersona($input);
             }
-
-            put_fixture('validated_chat_input.json', $validated);
 
             $meta_data = MetaDataDto::from($validated);
 

@@ -18,6 +18,7 @@ enum SourceTypeEnum: string
     case FeedSource = 'feed_source';
     case WebPageSource = 'web_page_source';
     case SiteMapSource = 'site_map_source';
+    case GoogleSheetSource = 'google_sheet_source';
     //leave for scripting
 
     public static function ignore(): array

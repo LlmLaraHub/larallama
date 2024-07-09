@@ -1,8 +1,9 @@
 {
     "completion": false,
     "tool": null,
-    "input": "can you summarize this collection",
+    "input": "Can you summarize this collection for me",
     "filter": null,
     "persona": null,
-    "date_range": null
+    "date_range": null,
+    "reference_collection_id": null
 }

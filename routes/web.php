@@ -360,3 +360,22 @@ Route::middleware([
         }
     );
 });
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified',
+])->group(function () {
+    Route::controller(\App\Http\Controllers\Sources\GoogleSheetSourceController::class)->group(
+        function () {
+            Route::get('/collections/{collection}/sources/google_sheet_source/create', 'create')
+                ->name('collections.sources.google_sheet_source.create');
+            Route::post('/collections/{collection}/sources/google_sheet_source', 'store')
+                ->name('collections.sources.google_sheet_source.store');
+            Route::get('/collections/{collection}/sources/google_sheet_source/{source}/edit', 'edit')
+                ->name('collections.sources.google_sheet_source.edit');
+            Route::put('/collections/{collection}/sources/google_sheet_source/{source}/update', 'update')
+                ->name('collections.sources.google_sheet_source.update');
+            Route::post('/sources/google_sheet_source/test_feed', 'testFeed')->name('sources.google_sheet_source.test_feed');
+        }
+    );
+});
