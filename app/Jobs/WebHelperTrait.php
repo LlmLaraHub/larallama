@@ -43,8 +43,6 @@ trait WebHelperTrait
 
             $jobs[] = [
                 new VectorlizeDataJob($DocumentChunk),
-                new TagDocumentJob($document),
-                new SummarizeDocumentJob($document),
             ];
 
             $page_number++;
@@ -54,7 +52,17 @@ trait WebHelperTrait
             Bus::batch($jobs)
                 ->name('Web Pages to Documents - '.$document->subject)
                 ->finally(function (Batch $batch) use ($document) {
-                    DocumentProcessingCompleteJob::dispatch($document);
+                    Bus::batch([
+                        [
+                            new SummarizeDocumentJob($document),
+                            new TagDocumentJob($document),
+                            new DocumentProcessingCompleteJob($document),
+                        ],
+                    ])->name(sprintf('Part 2 of Process for Web Page Document %d',
+                        $document->id))
+                        ->allowFailures()
+                        ->onQueue(LlmDriverFacade::driver($document->getDriver())->onQueue())
+                        ->dispatch();
                 })
                 ->allowFailures()
                 ->onQueue(LlmDriverFacade::driver($document->collection->getDriver())->onQueue())

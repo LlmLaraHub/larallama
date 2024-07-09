@@ -5,7 +5,7 @@ namespace App\Domains\Documents\Transformers;
 use App\Domains\Documents\TypesEnum;
 use App\Models\Document;
 
-class XlsxTransformer extends CsvTransformer
+class XlsxTransformer extends CSVTransformer
 {
     protected Document $document;
 
