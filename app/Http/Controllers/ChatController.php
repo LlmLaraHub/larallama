@@ -42,7 +42,7 @@ class ChatController extends Controller
             'collection' => new CollectionResource($collection),
             'reference_collections' => Collection::orderBy('name')
                 ->get()
-                ->transform(function($item) {
+                ->transform(function ($item) {
                     return [
                         'id' => $item->id,
                         'name' => $item->name,
