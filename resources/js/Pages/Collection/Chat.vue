@@ -21,6 +21,9 @@ const props = defineProps({
     chat: {
         type: Object,
     },
+    reference_collections: {
+        type: Object,
+    },
     chats: {
         type: Object,
     },

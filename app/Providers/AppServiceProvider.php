@@ -41,6 +41,11 @@ class AppServiceProvider extends ServiceProvider
             return config('llmdriver.drivers.ollama.feature_flags.functions'); //just not ready yet
         });
 
+        Feature::define('reference_collection', function (User $user) {
+            return config('llmdriver.features.reference_collection'); //just not ready yet
+        });
+
+
         Feature::define('verification_prompt_tags', function (User $user) {
             return false;
         });

@@ -40,6 +40,14 @@ class ChatController extends Controller
     {
         return inertia('Collection/Chat', [
             'collection' => new CollectionResource($collection),
+            'reference_collections' => Collection::orderBy('name')
+                ->get()
+                ->transform(function($item) {
+                    return [
+                        'id' => $item->id,
+                        'name' => $item->name,
+                    ];
+                }),
             'date_ranges' => DateRangesEnum::selectOptions(),
             'chat' => new ChatResource($chat),
             'chats' => ChatResource::collection($collection->chats()->latest()->paginate(20)),
@@ -64,12 +72,13 @@ class ChatController extends Controller
     public function chat(Chat $chat)
     {
         $validated = request()->validate([
-            'input' => 'required|string',
-            'completion' => 'boolean',
-            'date_range' => ['nullable', 'string'],
+            'completion' => ['boolean'],
             'tool' => ['nullable', 'string'],
+            'input' => ['required', 'string'],
             'filter' => ['nullable', 'integer'],
             'persona' => ['nullable', 'integer'],
+            'date_range' => ['nullable', 'string'],
+            'reference_collection_id' => ['nullable', 'integer'],
         ]);
 
         try {
@@ -83,6 +92,8 @@ class ChatController extends Controller
                 $persona = Persona::find($persona);
                 $input = $persona->wrapPromptInPersona($input);
             }
+
+            put_fixture('validated_chat_input.json', $validated);
 
             $meta_data = MetaDataDto::from($validated);
 

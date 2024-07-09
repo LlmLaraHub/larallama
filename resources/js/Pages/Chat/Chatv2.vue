@@ -29,6 +29,7 @@ const form = useForm({
     tool: "",
     filter: null,
     persona: null,
+    reference_collection_id: null,
     date_range: null
 })
 
@@ -36,11 +37,18 @@ const filterChosen = ref({})
 
 const personaChosen = ref({})
 
-const dateRangeChosen = ref({})
+const dateRangeChosen = ref({});
+
+const referenceCollectionChosen = ref({});
 
 const dateRangeSelected = (dateRange) => {
     dateRangeChosen.value = dateRange;
     form.date_range = dateRange?.id
+}
+
+const referenceCollectionSelected = (referenceCollection) => {
+    referenceCollectionChosen.value = referenceCollection;
+    form.reference_collection_id = referenceCollection?.id;
 }
 
 const filter = (filter) => {
@@ -65,7 +73,7 @@ const alreadyCompleted = ref(false);
 const getting_results = ref(false)
 
 onMounted(() => {
-    
+
     chatMessages.value = props.messages;
     Echo.private(`collection.chat.${props.chat.chatable_id}.${props.chat.id}`)
         .listen('.status', (e) => {
@@ -107,6 +115,7 @@ const save = () => {
 
     // NOTE: Why did I not just use form?
     // I think there was a reload limitations but now I am doing get message
+    // @TODO just go back to using form
     getting_results.value = true
     let message = form.input
     let completion = form.completion
@@ -114,6 +123,7 @@ const save = () => {
     let tool = form.tool
     let persona = form.persona
     let date_range = form.date_range
+    let reference_collection_id = form.reference_collection_id
     form.reset();
     alreadyCompleted.value = false;
     axios.post(route('chats.messages.create', {
@@ -123,6 +133,7 @@ const save = () => {
         completion: completion,
         tool: tool,
         date_range: date_range,
+        reference_collection_id: reference_collection_id,
         persona: persona,
         filter: filter
     }).then(response => {
@@ -296,6 +307,16 @@ const rerun = (message) => {
                         </svg>
                     </button>
                 </div>
+                <div v-if="referenceCollectionChosen?.name" class="flex justify-start gap-1 items-center">
+                        <span class="text-secondary">
+                            Reference: </span>
+                    <span class="font-bold">{{referenceCollectionChosen.name}}</span>
+                    <button type="button" @click="referenceCollectionSelected({})">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                        </svg>
+                    </button>
+                </div>
             </div>
 
             <div class="flex justify-start gap-2 items-center">
@@ -313,6 +334,14 @@ const rerun = (message) => {
                     :items="usePage().props.date_ranges" @itemSelected="dateRangeSelected">
                     <template #title>
                         Date Range
+                    </template>
+                </DisplayMenu>
+                <DisplayMenu
+                    v-if="usePage().props.features.reference_collection"
+                    search="true"
+                    :items="usePage().props.reference_collections" @itemSelected="referenceCollectionSelected">
+                    <template #title>
+                        Reference Collection
                     </template>
                 </DisplayMenu>
             </div>

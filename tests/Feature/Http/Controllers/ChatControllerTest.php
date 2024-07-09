@@ -108,6 +108,31 @@ class ChatControllerTest extends TestCase
         $this->assertEquals('this_week', $message->meta_data->date_range);
     }
 
+    public function test_adds_references_collection_id()
+    {
+        $user = User::factory()->create();
+        $collection = Collection::factory()->create();
+        $chat = Chat::factory()->create([
+            'chatable_id' => $collection->id,
+            'chatable_type' => Collection::class,
+            'user_id' => $user->id,
+        ]);
+
+        Orchestrate::shouldReceive('handle')->once()->andReturn('Yo');
+        $this->actingAs($user)->post(route('chats.messages.create', [
+            'chat' => $chat->id,
+        ]),
+            [
+                'system_prompt' => 'Foo',
+                'input' => 'user input',
+                'reference_collection_id' => 12345,
+                'date_range' => DateRangesEnum::ThisWeek->value,
+            ])->assertOk();
+
+        $message = Message::first();
+        $this->assertEquals(12345, $message->meta_data->reference_collection_id);
+    }
+
     public function test_a_function_based_chat()
     {
         $user = User::factory()->create();

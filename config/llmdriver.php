@@ -69,6 +69,7 @@ return [
     'features' => [
         'pptx' => true,
         'chatv2' => true,
+        'reference_collection' => env('REFERENCE_COLLECTION', false),
         'date_range' => env('FEATURE_DATE_RANGE', false),
     ],
     'sources' => [
