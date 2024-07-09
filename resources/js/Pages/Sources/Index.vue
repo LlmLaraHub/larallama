@@ -17,6 +17,7 @@ import JsonSource from "@/Pages/Sources/JsonSource/Components/Card.vue";
 import FeedSource from "@/Pages/Sources/FeedSource/Components/Card.vue";
 import WebPageSource from "@/Pages/Sources/WebPageSource/Components/Card.vue";
 import SiteMapSource from "@/Pages/Sources/SiteMapSource/Components/Card.vue";
+import GoogleSheetSource from "@/Pages/Sources/GoogleSheetSource/Components/Card.vue";
 
 const toast = useToast();
 
@@ -82,6 +83,7 @@ const props = defineProps({
                               <FeedSource v-else-if="source.type_key === 'feed_source'" :source="source"></FeedSource>
                               <WebPageSource v-else-if="source.type_key === 'web_page_source'" :source="source"></WebPageSource>
                               <SiteMapSource v-else-if="source.type_key === 'site_map_source'" :source="source"></SiteMapSource>
+                              <GoogleSheetSource v-else-if="source.type_key === 'google_sheet_source'" :source="source"></GoogleSheetSource>
                               <Card v-else :source="source"></Card>
                           </template>
                       </div>
