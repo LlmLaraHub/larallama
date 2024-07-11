@@ -131,6 +131,7 @@ class GetWebContentJob implements ShouldQueue
                     new VectorlizeDataJob($DocumentChunk),
                     new SummarizeDocumentJob($document),
                     new TagDocumentJob($document),
+                    new DocumentProcessingCompleteJob($document),
                 ]);
 
                 $page_number++;

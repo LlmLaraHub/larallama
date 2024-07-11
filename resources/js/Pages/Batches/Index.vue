@@ -92,7 +92,7 @@ const cancelAll = () => {
                             <th>Pending Jobs</th>
                             <th>Failed Jobs</th>
                             <th>
-                                Created At\Cancelled At\Finished At
+                                Created At\Finished At\Cancelled At
                             </th>
                             <th></th>
                         </tr>
@@ -113,7 +113,7 @@ const cancelAll = () => {
                                {{ batch.failed_jobs }}
                             </td>
                             <td>
-                                {{ batch.created_at }} \ {{ batch.cancelled_at }} \ {{ batch.finished_at }}
+                                {{ batch.created_at }} \ {{ batch.finished_at }} \ {{ batch.cancelled_at }}
                             </td>
                             <td>
                                 <button type="button"

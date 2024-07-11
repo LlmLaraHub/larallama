@@ -7,9 +7,10 @@ import ActionDeleteDocuments from "@/Pages/Collection/Components/ActionDeleteDoc
 import ActionCreateFilter from "@/Pages/Collection/Components/ActionCreateFilter.vue";
 import Filters from "@/Pages/Collection/Components/Filters.vue";
 import ManageFilters from "@/Pages/Collection/Components/ManageFilters.vue";
-import {router} from "@inertiajs/vue3";
+import {router, useForm} from "@inertiajs/vue3";
 import {useToast} from "vue-toastification";
 import Pagination from "@/Pages/Collection/Components/Pagination.vue";
+import DocumentStatus from "@/Pages/Collection/Components/DocumentStatus.vue";
 
 const toast = useToast();
 
@@ -29,6 +30,7 @@ const props = defineProps({
 const document = ref({})
 const showDocumentSlideOut = ref(false)
 
+const documentsList = ref([])
 
 const showDocumentButton = (documentToShow) => {
     document.value = documentToShow;
@@ -57,21 +59,14 @@ const checked = (item) => {
 const emptyDocumentIds = () => {
     console.log("Resetting documents");
     selectedDocuments.value = new Set()
+    router.reload({ only: ['documents', 'collection'] })
 }
 
 onMounted(() => {
+    getDocuments();
     Echo.private(`collection.${props.collection.id}`)
         .listen('.status', (e) => {
-            console.log(e.status);
             router.reload({ only: ['documents'] })
-            let message = e.message;
-            if (message) {
-                if(message !== 'Processing Document') {
-                    toast.info(message, {
-                        position: 'bottom-right',
-                    })
-                }
-            }
         });
 });
 
@@ -79,6 +74,31 @@ onUnmounted(() => {
     Echo.leave(`collection.${props.collection.id}`);
 });
 
+
+const form = useForm({
+    filter: ""
+})
+
+const getDocuments = (filterBy) => {
+    //for now
+    // instead of fixing this I will make to Inertia Tables
+
+    documentsList.value = props.documents;
+    return;
+    form.filter = filterBy;
+    form.processing = true;
+    axios.get(route('collections.documents.index', {
+        collection: props.collection.id,
+        filter: form.filter
+    })).then(response => {
+        console.log(response.data);
+        documentsList.value = response.data.documents;
+        form.processing = false;
+    }).catch(error => {
+        console.log(error)
+        form.processing = false;
+    })
+}
 
 const isChecked = (item) => {
     return [...selectedDocuments.value].some(existingItem => existingItem === item);
@@ -103,6 +123,8 @@ const toggleAll = () => {
     }
 }
 
+const featureShowFilters = ref(false)
+
 </script>
 <template>
     <div class="px-5">
@@ -117,6 +139,27 @@ const toggleAll = () => {
     </div>
 
     <div v-auto-animate>
+        <div class="justify-center flex w-full mx-auto mt-4 gap-3 items-center">
+            <div class="flex gap-2 items-center justify-start">
+                <button type="button" @click="getDocuments('pending')"   v-if="featureShowFilters"
+                        class="btn btn-default rounded-none">
+                    Show Not Completed
+                    <span
+                        v-show="form.processing && form.filter === 'pending'"
+                        class="loading loading-spinner loading-xs"></span>
+                </button>
+                <button type="button" @click="getDocuments('complete')"   v-if="featureShowFilters"
+                        class="btn btn-default rounded-none">
+                    Show Completed
+                    <span
+                        v-show="form.processing && form.filter === 'complete'"
+                        class="loading loading-spinner loading-xs"></span>
+                </button>
+            </div>
+            <div class="justify-center flex">
+                <DocumentStatus :collection="collection" ></DocumentStatus>
+            </div>
+        </div>
         <div class="px-4 sm:px-6 lg:px-8">
             <div class="mt-8 flow-root">
                 <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -134,7 +177,9 @@ const toggleAll = () => {
                                <div  class="flex justify-start gap-2 items-center">
                                    <div class="font-bold text-secondary">Actions:</div>
                                    <ActionDeleteDocuments
+                                       :collection="collection"
                                        @deleted="emptyDocumentIds"
+                                       @deletedAll="emptyDocumentIds"
                                        :document-ids="selectedDocumentsToArray"></ActionDeleteDocuments>
 
                                    <ActionCreateFilter

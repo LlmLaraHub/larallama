@@ -124,7 +124,7 @@ class SearchAndSummarize extends FunctionContract
             'collection_id' => $message->getChat()->getChatable()?->id,
         ]);
 
-        $this->saveDocumentReference($message, $documentChunkResults);
+        $this->saveDocumentReference($AssistantMessage, $documentChunkResults);
 
         notify_ui_complete($message->getChat());
 

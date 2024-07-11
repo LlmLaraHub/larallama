@@ -90,6 +90,7 @@ class Orchestrate
                 Log::info('[LaraChain] Orchestration Has Functions', $functions);
 
                 foreach ($functions as $function) {
+
                     $functionName = data_get($function, 'name', null);
 
                     if (is_null($functionName)) {

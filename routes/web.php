@@ -39,6 +39,15 @@ Route::middleware([
     'verified',
 ])->group(function () {
 
+    Route::controller(\App\Http\Controllers\DocumentController::class)->group(
+        function () {
+            Route::get('/collections/{collection}/documents', 'index')
+                ->name('collections.documents.index');
+            Route::get('/collections/{collection}/documents/status', 'status')
+                ->name('collections.documents.status');
+        }
+    );
+
     Route::controller(\App\Http\Controllers\PasswordController::class)->group(
         function () {
             Route::put('/users/password/update', 'update')
@@ -224,6 +233,8 @@ Route::middleware([
         function () {
             Route::delete('/documents/delete', 'delete')
                 ->name('documents.delete');
+            Route::delete('/collections/{collection}/documents/delete', 'deleteAll')
+                ->name('documents.delete_all');
         }
     );
 

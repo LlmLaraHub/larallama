@@ -21,7 +21,7 @@ class DocumentProcessingCompleteJob implements ShouldQueue
      */
     public function __construct(public Document $document)
     {
-        //
+        $this->onQueue("default");
     }
 
     /**

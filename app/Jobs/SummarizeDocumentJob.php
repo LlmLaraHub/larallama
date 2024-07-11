@@ -109,9 +109,8 @@ class SummarizeDocumentJob implements ShouldQueue
 
         $this->document->update([
             'summary' => $this->results,
-            'status_summary' => StatusEnum::Complete,
+            'status_summary' => StatusEnum::SummaryComplete,
         ]);
 
-        DocumentProcessingCompleteJob::dispatch($this->document);
     }
 }

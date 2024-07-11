@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Collection;
 use App\Models\Document;
 use Illuminate\Support\Facades\Log;
 
@@ -27,6 +28,18 @@ class DeleteDocumentsController extends Controller
 
         \request()->session()->flash('flash.banner', 'Deleted Documents');
 
+        return back();
+    }
+
+    public function deleteAll(Collection $collection) {
+
+        foreach($collection->documents as $document) {
+            $document->document_chunks()->delete();
+            $document->tags()->delete();
+            $document->delete();
+        }
+
+        request()->session()->flash('flash.banner', 'Deleted all Documents');
         return back();
     }
 }

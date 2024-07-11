@@ -5,12 +5,14 @@ namespace App\Http\Controllers;
 use App\Domains\Collections\CollectionStatusEnum;
 use App\Domains\Documents\StatusEnum;
 use App\Events\CollectionStatusEvent;
+use App\Jobs\DocumentProcessingCompleteJob;
 use App\Jobs\SummarizeDataJob;
 use App\Jobs\SummarizeDocumentJob;
 use App\Jobs\VectorlizeDataJob;
 use App\Models\Collection;
 use Illuminate\Bus\Batch;
 use Illuminate\Support\Facades\Bus;
+use LlmLaraHub\TagFunction\Jobs\TagDocumentJob;
 
 class ReindexCollectionController extends Controller
 {
@@ -34,6 +36,8 @@ class ReindexCollectionController extends Controller
                 ->name("Reindexing - {$document->id}")
                 ->finally(function (Batch $batch) use ($document) {
                     SummarizeDocumentJob::dispatch($document);
+                    TagDocumentJob::dispatch($document);
+                    DocumentProcessingCompleteJob::dispatch($document);
                 })
                 ->allowFailures()
                 ->dispatch();

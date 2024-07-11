@@ -45,6 +45,5 @@ class TagManager
                 $document->addTag($tag);
             });
 
-        notify_collection_ui($document->collection, CollectionStatusEnum::PROCESSING, 'Tags added');
     }
 }
