@@ -8,8 +8,6 @@ use LlmLaraHub\LlmDriver\Functions\FunctionCallDto;
 
 trait ToolsHelper
 {
-
-
     protected function addToolsToMessage(Message $message, FunctionCallDto $functionDto): Message
     {
         $tools = $message->tools;

@@ -2,7 +2,6 @@
 
 namespace LlmLaraHub\LlmDriver;
 
-use App\Domains\Chat\ToolsDto;
 use App\Domains\Messages\RoleEnum;
 use App\Models\Chat;
 use App\Models\Filter;
@@ -23,7 +22,6 @@ use LlmLaraHub\LlmDriver\Responses\FunctionResponse;
 class Orchestrate
 {
     use CreateReferencesTrait;
-
     use ToolsHelper;
 
     protected string $response = '';
@@ -64,7 +62,7 @@ class Orchestrate
                 'filter' => $filter,
             ]);
 
-            $message =$this->addToolsToMessage($message, $functionDto);
+            $message = $this->addToolsToMessage($message, $functionDto);
 
             $toolClass = app()->make($tool);
 
@@ -118,13 +116,13 @@ class Orchestrate
                         'filter' => $filter,
                     ]);
 
-                    $message =$this->addToolsToMessage($message, $functionDto);
+                    $message = $this->addToolsToMessage($message, $functionDto);
 
                     /** @var FunctionResponse $response */
                     $response = $functionClass->handle($message);
 
                     Log::info('[LaraChain] - Function Response', [
-                        'function' => $functionName
+                        'function' => $functionName,
                     ]);
 
                     if ($response->save_to_message) {
@@ -217,8 +215,6 @@ class Orchestrate
             }
         }
     }
-
-
 
     protected function requiresFollowUp(array $messagesArray, Chat $chat): void
     {

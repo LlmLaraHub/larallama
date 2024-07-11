@@ -40,7 +40,7 @@ class SearchAndSummarizeChatRepo
             'arguments' => json_encode([
                 'prompt' => $input,
             ]),
-            'function_name' => "search_and_summarize",
+            'function_name' => 'search_and_summarize',
             'filter' => $filter,
         ]);
 

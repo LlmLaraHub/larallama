@@ -84,7 +84,7 @@ class OrchestrateTest extends TestCase
 
         $this->assertCount(1, $message->tools->tools);
 
-        $message = Message::where('chat_id', $chat->id)->where("role", RoleEnum::Assistant)->first();
+        $message = Message::where('chat_id', $chat->id)->where('role', RoleEnum::Assistant)->first();
 
         $this->assertNotNull($message?->id);
 
