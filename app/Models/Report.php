@@ -30,7 +30,6 @@ class Report extends Model
         return $this->belongsTo(Message::class);
     }
 
-
     public function chat(): BelongsTo
     {
         return $this->belongsTo(Chat::class);

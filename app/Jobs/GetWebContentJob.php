@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Log;
 use Laravel\Pennant\Feature;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
+use LlmLaraHub\TagFunction\Jobs\TagDocumentJob;
 
 class GetWebContentJob implements ShouldQueue
 {
@@ -129,6 +130,7 @@ class GetWebContentJob implements ShouldQueue
                 $this->batch()->add([
                     new VectorlizeDataJob($DocumentChunk),
                     new SummarizeDocumentJob($document),
+                    new TagDocumentJob($document),
                 ]);
 
                 $page_number++;
