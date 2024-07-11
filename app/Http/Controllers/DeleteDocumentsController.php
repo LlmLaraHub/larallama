@@ -31,15 +31,17 @@ class DeleteDocumentsController extends Controller
         return back();
     }
 
-    public function deleteAll(Collection $collection) {
+    public function deleteAll(Collection $collection)
+    {
 
-        foreach($collection->documents as $document) {
+        foreach ($collection->documents as $document) {
             $document->document_chunks()->delete();
             $document->tags()->delete();
             $document->delete();
         }
 
         request()->session()->flash('flash.banner', 'Deleted all Documents');
+
         return back();
     }
 }

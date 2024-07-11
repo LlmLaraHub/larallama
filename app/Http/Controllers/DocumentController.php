@@ -5,18 +5,18 @@ namespace App\Http\Controllers;
 use App\Http\Resources\DocumentResource;
 use App\Http\Resources\DocumentResourceWithPaginate;
 use App\Models\Collection;
-use Illuminate\Http\Request;
 
 class DocumentController extends Controller
 {
-    public function index(Collection $collection) {
+    public function index(Collection $collection)
+    {
 
         $filter = request()->get('filter');
 
         if ($filter) {
             $documents = $collection->documents()
                 ->where('status', '=', $filter)->paginate(100);
-        }   else {
+        } else {
             $documents = $collection->documents()->paginate(100);
         }
 
@@ -25,7 +25,8 @@ class DocumentController extends Controller
         ]);
     }
 
-    public function status(Collection $collection) {
+    public function status(Collection $collection)
+    {
 
         return response()->json([
             'documents' => DocumentResource::collection($collection->documents),

@@ -2,7 +2,6 @@
 
 namespace LlmLaraHub\TagFunction;
 
-use App\Domains\Collections\CollectionStatusEnum;
 use App\Models\Document;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
