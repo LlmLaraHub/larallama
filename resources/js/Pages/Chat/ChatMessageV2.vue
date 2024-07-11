@@ -7,6 +7,7 @@ import Clipboard from "@/Components/ClipboardButton.vue";
 import {useForm} from "@inertiajs/vue3";
 import {onMounted, ref} from "vue";
 import Report from "@/Pages/Chat/Components/Report.vue";
+import MessageMetaData from "@/Pages/Chat/Components/MessageMetaData.vue";
 
 const props = defineProps({
     message: Object
@@ -66,14 +67,19 @@ const reuse = (prompt) => {
                                     <div class="prose"
                                          v-html="message.body_markdown">
                                     </div>
-                                    <div class="w-full flex justify-end gap-2 items-center">
+                                    <div class="w-full flex justify-between gap-2 items-center">
+                                        <div class="w-full">
+                                            <MessageMetaData :message="message"></MessageMetaData>
+                                        </div>
+                                        <div class="flex justify-end gap-2 items-center">
+                                            <slot name="rerun"></slot>
+                                            <Clipboard
+                                                class="btn-ghost"
+                                                :content="message.body">
+                                                Copy
+                                            </Clipboard>
+                                        </div>
 
-                                        <slot name="rerun"></slot>
-                                        <Clipboard
-                                            class="btn-ghost"
-                                            :content="message.body">
-                                            Copy
-                                        </Clipboard>
                                     </div>
                                 </div>
                             </TabPanel>
@@ -116,41 +122,7 @@ const reuse = (prompt) => {
                 <div class="grow leading-loose prose" v-html="message.body_markdown">
                 </div>
 
-                <div class="flex justify-between items-center -mb-2">
-                    <div class="flex justify-start text-sm gap-2 items-center w-3/4">
-                        <div v-if="message.meta_data?.persona" class="flex justify-start gap-2 items-center">
-                        <span class="text-secondary">
-                            Persona being used: </span>
-                            <span class="font-bold">{{message.meta_data.persona}}</span>
-                        </div>
-                        <div v-if="message.meta_data?.filter" class="flex justify-start gap-2 items-center">
-                        <span class="text-secondary">
-                            Filter being used: </span>
-                            <span class="font-bold">{{message.meta_data.filter.name}}</span>
-                        </div>
-
-                        <div v-if="message.meta_data?.date_range" class="flex justify-start gap-2 items-center">
-                        <span class="text-secondary">
-                            Date Range used: </span>
-                            <span class="font-bold">{{message.meta_data.date_range}}</span>
-                        </div>
-
-                        <div v-if="message.meta_data?.tool" class="flex justify-start gap-2 items-center">
-                        <span class="text-secondary">
-                            Tool used: </span>
-                            <span class="font-bold">{{message.meta_data.tool}}</span>
-                        </div>
-                    </div>
-
-                    <div class="w-full flex justify-end gap-2 items-center">
-                        <button type="button" class="btn btn-ghost" @click="reuse(message.body)">
-                            <span>Reuse Prompt</span>
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
-                            </svg>
-                        </button>
-                    </div>
-                </div>
+                <MessageMetaData :message="message"></MessageMetaData>
             </div>
 
 

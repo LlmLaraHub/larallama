@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Domains\Chat\MetaDataDto;
+use App\Domains\Messages\RoleEnum;
 use App\Events\ChatUiUpdateEvent;
 use App\Models\Chat;
 use App\Models\Collection;
@@ -65,6 +66,7 @@ class OrchestrateTest extends TestCase
 
         $message = Message::factory()->user()->create([
             'tools' => [],
+            'chat_id' => $chat->id,
             'meta_data' => MetaDataDto::from(
                 [
                     'tool' => '',
@@ -81,6 +83,14 @@ class OrchestrateTest extends TestCase
         $this->assertDatabaseCount('prompt_histories', 1);
 
         $this->assertCount(1, $message->tools->tools);
+
+        $message = Message::where('chat_id', $chat->id)->where("role", RoleEnum::Assistant)->first();
+
+        $this->assertNotNull($message?->id);
+
+        $this->assertCount(1, $message->tools->tools);
+
+        $this->assertEquals('summarize_collection', $message->tools->tools[0]->function_name);
     }
 
     public function test_tool_standards_checker(): void

@@ -79,12 +79,13 @@ class SearchAndSummarize extends FunctionContract
          * @TODO @WHY
          * Why do I do this system prompt thing?
          */
-        $message->getChat()->addInput(
+        $assistantMessage = $message->getChat()->addInput(
             message: $contentFlattened,
             role: RoleEnum::Assistant,
             systemPrompt: $message->getChat()->getChatable()->systemPrompt(),
             show_in_thread: false,
-            meta_data: $message->meta_data
+            meta_data: $message->meta_data,
+            tools: $message->tools
         );
 
         Log::info('[LaraChain] Getting the Search and Summary results', [
@@ -113,18 +114,19 @@ class SearchAndSummarize extends FunctionContract
 
         $this->response = $response->content;
 
-        $AssistantMessage = $message->getChat()->addInput($this->response,
+        $assistantMessage = $message->getChat()->addInput($this->response,
             RoleEnum::Assistant,
-            meta_data: $message->meta_data);
+            meta_data: $message->meta_data,
+            tools: $message->tools);
 
         PromptHistory::create([
             'prompt' => $contentFlattened,
             'chat_id' => $message->getChat()->id,
-            'message_id' => $AssistantMessage?->id,
+            'message_id' => $assistantMessage?->id,
             'collection_id' => $message->getChat()->getChatable()?->id,
         ]);
 
-        $this->saveDocumentReference($AssistantMessage, $documentChunkResults);
+        $this->saveDocumentReference($assistantMessage, $documentChunkResults);
 
         notify_ui_complete($message->getChat());
 

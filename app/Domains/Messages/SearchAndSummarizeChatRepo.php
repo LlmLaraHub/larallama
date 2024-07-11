@@ -13,14 +13,17 @@ use Facades\App\Domains\Agents\VerifyResponseAgent;
 use Illuminate\Support\Facades\Log;
 use Laravel\Pennant\Feature;
 use LlmLaraHub\LlmDriver\DistanceQuery\DistanceQueryFacade;
+use LlmLaraHub\LlmDriver\Functions\FunctionCallDto;
 use LlmLaraHub\LlmDriver\Helpers\CreateReferencesTrait;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
 use LlmLaraHub\LlmDriver\Responses\CompletionResponse;
 use LlmLaraHub\LlmDriver\Responses\EmbeddingsResponseDto;
+use LlmLaraHub\LlmDriver\ToolsHelper;
 
 class SearchAndSummarizeChatRepo
 {
     use CreateReferencesTrait;
+    use ToolsHelper;
 
     protected string $response = '';
 
@@ -32,6 +35,16 @@ class SearchAndSummarizeChatRepo
         $input = $message->body;
 
         $filter = $message->getFilter();
+
+        $functionDto = FunctionCallDto::from([
+            'arguments' => json_encode([
+                'prompt' => $input,
+            ]),
+            'function_name' => "search_and_summarize",
+            'filter' => $filter,
+        ]);
+
+        $message = $this->addToolsToMessage($message, $functionDto);
 
         Log::info('[LaraChain] Search and Summarize Default Function', [
             'note' => 'Showing input since some system grab the last on the array',
@@ -74,7 +87,7 @@ class SearchAndSummarizeChatRepo
             context: $context
         );
 
-        $message = $chat->addInput(
+        $assistantMessage = $chat->addInput(
             message: $contentFlattened,
             role: RoleEnum::Assistant,
             systemPrompt: $chat->chatable->systemPrompt(),
@@ -82,8 +95,10 @@ class SearchAndSummarizeChatRepo
             meta_data: $message->meta_data,
         );
 
+        $assistantMessage = $this->addToolsToMessage($assistantMessage, $functionDto);
+
         /** @TODO coming back to chat shorly just moved to completion to focus on prompt */
-        $latestMessagesArray = $message->getLatestMessages();
+        $latestMessagesArray = $assistantMessage->getLatestMessages();
 
         Log::info('[LaraChain] Getting the Summary', [
             'input' => $contentFlattened,
@@ -108,7 +123,7 @@ class SearchAndSummarizeChatRepo
             $this->verify($chat, $originalPrompt, $context);
         }
 
-        $message = $chat->addInput(
+        $assistantMessage = $chat->addInput(
             message: $this->response,
             role: RoleEnum::Assistant,
             meta_data: $message->meta_data);
@@ -116,12 +131,12 @@ class SearchAndSummarizeChatRepo
         PromptHistory::create([
             'prompt' => $contentFlattened,
             'chat_id' => $chat->id,
-            'message_id' => $message->id,
+            'message_id' => $assistantMessage->id,
             /** @phpstan-ignore-next-line */
             'collection_id' => $chat->getChatable()?->id,
         ]);
 
-        $this->saveDocumentReference($message, $documentChunkResults);
+        $this->saveDocumentReference($assistantMessage, $documentChunkResults);
 
         return $this->response;
     }

@@ -24,6 +24,8 @@ class Orchestrate
 {
     use CreateReferencesTrait;
 
+    use ToolsHelper;
+
     protected string $response = '';
 
     protected bool $requiresFollowup = false;
@@ -62,7 +64,7 @@ class Orchestrate
                 'filter' => $filter,
             ]);
 
-            $this->addToolsToMessage($message, $functionDto);
+            $message =$this->addToolsToMessage($message, $functionDto);
 
             $toolClass = app()->make($tool);
 
@@ -116,14 +118,13 @@ class Orchestrate
                         'filter' => $filter,
                     ]);
 
-                    $this->addToolsToMessage($message, $functionDto);
+                    $message =$this->addToolsToMessage($message, $functionDto);
 
                     /** @var FunctionResponse $response */
                     $response = $functionClass->handle($message);
 
                     Log::info('[LaraChain] - Function Response', [
-                        'function' => $functionName,
-                        'response' => $response,
+                        'function' => $functionName
                     ]);
 
                     if ($response->save_to_message) {
@@ -217,15 +218,7 @@ class Orchestrate
         }
     }
 
-    protected function addToolsToMessage(Message $message, FunctionCallDto $functionDto): void
-    {
-        $tools = $message->tools;
-        if (! $tools) {
-            $tools = ToolsDto::from(['tools' => []]);
-        }
-        $tools->tools[] = $functionDto;
-        $message->updateQuietly(['tools' => $tools]);
-    }
+
 
     protected function requiresFollowUp(array $messagesArray, Chat $chat): void
     {
