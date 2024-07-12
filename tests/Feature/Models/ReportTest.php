@@ -30,5 +30,7 @@ class ReportTest extends TestCase
         $this->assertNotNull($model->reference_collection->id);
         $this->assertNotNull($model->sections->first()->id);
         $this->assertNotNull($section->report->id);
+        $this->assertNotNUll($model->status_sections_generation);
+        $this->assertNotNUll($model->status_entries_generation);
     }
 }

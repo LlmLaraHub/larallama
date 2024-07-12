@@ -2,17 +2,26 @@
 
 namespace LlmLaraHub\LlmDriver\Functions;
 
+use App\Domains\Chat\MetaDataDto;
 use App\Domains\Messages\RoleEnum;
+use App\Domains\Prompts\FindSolutionsPrompt;
 use App\Domains\Prompts\ReportBuildingFindRequirementsPrompt;
 use App\Domains\Prompts\ReportingSummaryPrompt;
+use App\Domains\Reporting\EntryTypeEnum;
 use App\Domains\Reporting\ReportTypeEnum;
+use App\Domains\Reporting\StatusEnum;
 use App\Models\Document;
+use App\Models\DocumentChunk;
+use App\Models\Entry;
 use App\Models\Message;
 use App\Models\Report;
 use App\Models\Section;
 use Illuminate\Support\Facades\Log;
+use Laravel\Pennant\Feature;
+use LlmLaraHub\LlmDriver\DistanceQuery\DistanceQueryFacade;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
 use LlmLaraHub\LlmDriver\Responses\CompletionResponse;
+use LlmLaraHub\LlmDriver\Responses\EmbeddingsResponseDto;
 use LlmLaraHub\LlmDriver\Responses\FunctionResponse;
 use LlmLaraHub\LlmDriver\ToolsHelper;
 
@@ -35,21 +44,6 @@ class ReportingTool extends FunctionContract
     {
         Log::info('[LaraChain] ReportingTool Function called');
 
-        //make or update a reports table for this message - chat
-        //gather all the documents
-        //and for each document
-        //GOT TO TRIGGER THE PROMPT TO BE RELATIVE
-        //  like a summary of the goal or something
-        //build up a list of sections that are requests (since this is a flexible tool that will be part of a prompt
-        //then save each one with a reference to the document, chunk to the sections table
-        //then for each section review each related collections solutions to make numerous
-        // or use vector search
-        //entries to address the sections requirements
-        //saving to the entries the related collection, document, document_chunk, full text (siblings)
-        //then build a response for each section to the response field of the section.
-        //finally build up a summary of all the responses for the report
-        //this will lead to a ui to comment on "sections" and "responses"
-
         $report = Report::firstOrCreate([
             'chat_id' => $message->getChat()->id,
             'message_id' => $message->id,
@@ -57,6 +51,8 @@ class ReportingTool extends FunctionContract
             'user_id' => $message->getChat()->user_id,
         ], [
             'type' => ReportTypeEnum::RFP,
+            'status_sections_generation' => StatusEnum::Pending,
+            'status_entries_generation' => StatusEnum::Pending,
         ]);
 
         $documents = $message->getChatable()->documents;
@@ -64,8 +60,6 @@ class ReportingTool extends FunctionContract
         notify_ui($message->getChat(), 'Going through all the documents to check requirements');
 
         $this->results = [];
-
-        $sectionContent = [];
 
         Log::info('[LaraChain] - Reporting Tool', [
             'documents_count' => count($documents),
@@ -107,9 +101,13 @@ class ReportingTool extends FunctionContract
             }
         }
 
-        notify_ui($message->getChat(), 'Wow that was a lot of document! Now to finalize the output');
+        notify_ui($message->getChat(), 'Building Summary');
 
         $response = $this->summarizeReport($report);
+
+        $report->update([
+            'status_sections_generation' => StatusEnum::Complete,
+        ]);
 
         $assistantMessage = $message->getChat()->addInput(
             message: $response->content,
@@ -126,6 +124,19 @@ class ReportingTool extends FunctionContract
         $report->message_id = $assistantMessage->id;
         $report->save();
 
+        notify_ui_complete($message->getChat());
+
+        notify_ui($message->getChat(), 'Building Solutions list');
+        notify_ui_report($report, 'Building Solutions list');
+
+        $this->makeEntriesFromSections($report);
+
+        $report->update([
+            'status_entries_generation' => StatusEnum::Complete,
+        ]);
+
+        notify_ui_complete($message->getChat());
+        notify_ui_report_complete($report);
         //as a final output
         //get deadlines
         //get contacts
@@ -137,6 +148,87 @@ class ReportingTool extends FunctionContract
             'documentChunks' => collect([]),
             'save_to_message' => false,
         ]);
+    }
+
+    protected function makeEntriesFromSections(Report $report): void
+    {
+        $referenceCollection = $report->reference_collection;
+
+        if (! $referenceCollection) {
+            return;
+        }
+
+        foreach ($report->refresh()->sections->chunk(3) as $sectionChunk) {
+            $prompts = []; //reset every 3 sections
+            $sections = []; //reset every 3 sections
+
+            /** @var Section $section */
+            foreach ($sectionChunk as $section) {
+
+                $input = $section->content;
+
+                /** @var EmbeddingsResponseDto $embedding */
+                $embedding = LlmDriverFacade::driver(
+                    $report->getEmbeddingDriver()
+                )->embedData($input);
+
+                $embeddingSize = get_embedding_size($report->getEmbeddingDriver());
+
+                /** @phpstan-ignore-next-line */
+                $documentChunkResults = DistanceQueryFacade::cosineDistance(
+                    $embeddingSize,
+                    /** @phpstan-ignore-next-line */
+                    $referenceCollection->id, //holy luck batman this is nice!
+                    $embedding->embedding,
+                    MetaDataDto::from([])//@NOTE could use this later if needed
+                );
+
+                $content = [];
+                /** @var DocumentChunk $result */
+                foreach ($documentChunkResults as $result) {
+                    $contentString = remove_ascii($result->content);
+                    $content[] = $contentString; //reduce_text_size seem to mess up Claude?
+                }
+
+                $context = implode(' ', $content);
+
+                $prompt = FindSolutionsPrompt::prompt(
+                    $section->content,
+                    $context,
+                    $report->getChatable()->description
+                );
+
+                $prompts[] = $prompt;
+                $sections[] = $section;
+            }
+
+            $results = LlmDriverFacade::driver($report->getDriver())
+                ->completionPool($prompts);
+
+            foreach ($results as $resultIndex => $result) {
+                $section = data_get($sections, $resultIndex, null);
+
+                if (! $section) {
+                    continue;
+                }
+
+                $content = $result->content;
+                $title = str($content)->limit(125)->toString();
+
+                Entry::updateOrCreate([
+                    'section_id' => $section->id,
+                    'document_id' => $section->document_id,
+                ],
+                    [
+                        'title' => $title,
+                        'content' => $content,
+                        'type' => EntryTypeEnum::Solution,
+                    ]);
+
+                notify_ui_report($report, 'Added Solution');
+            }
+        }
+
     }
 
     protected function poolPrompt(array $prompts, Report $report, Document $document): void
@@ -173,6 +265,16 @@ class ReportingTool extends FunctionContract
         Report $report): void
     {
         try {
+
+            notify_ui($report->getChat(), 'Building Requirements list');
+            notify_ui_report($report, 'Building Requirements list');
+
+            /**
+             * @TODO
+             * use the force tool feature to then
+             * make a tool that it has to return the values
+             * as
+             */
             $content = str($content)
                 ->remove('```json')
                 ->remove('```')
@@ -189,6 +291,7 @@ class ReportingTool extends FunctionContract
                     'subject' => $title,
                     'content' => $contentBody,
                 ]);
+                notify_ui_report($report, 'Added Requirement');
             }
         } catch (\Exception $e) {
             Section::updateOrCreate([
@@ -199,12 +302,16 @@ class ReportingTool extends FunctionContract
                 'subject' => '[ERROR FORMATTING PLEASE FIX]',
                 'content' => $content,
             ]);
+            notify_ui_report($report, 'Added Requirement');
             Log::error('Error parsing JSON', [
                 'error' => $e->getMessage(),
                 'content' => $content,
                 'line' => $e->getLine(),
             ]);
         }
+
+        notify_ui($report->getChat(), 'Done Building Requirements list');
+        notify_ui_report($report, 'Done Building Requirements list');
     }
 
     /**

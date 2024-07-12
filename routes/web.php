@@ -250,6 +250,16 @@ Route::middleware([
             ->name('text-documents.store');
     });
 
+    Route::controller(\App\Http\Controllers\ReportController::class)->group(function () {
+        Route::get('api/reports/{report}', 'show')
+            ->name('api.reports.show');
+    });
+
+    Route::controller(\App\Http\Controllers\SectionsController::class)->group(function () {
+        Route::get('api/reports/{report}/sections', 'index')
+            ->name('api.sections.index');
+    });
+
     Route::controller(\App\Http\Controllers\ManageBatchesController::class)->group(function () {
         Route::get('/batches', 'index')
             ->name('batches.index');

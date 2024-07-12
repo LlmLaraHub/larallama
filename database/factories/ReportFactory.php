@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Domains\Reporting\StatusEnum;
 use App\Models\Chat;
 use App\Models\Collection;
 use App\Models\User;
@@ -25,7 +26,8 @@ class ReportFactory extends Factory
             'reference_collection_id' => Collection::factory(),
             'message_id' => null,
             'type' => \App\Domains\Reporting\ReportTypeEnum::RFP,
-
+            'status_sections_generation' => StatusEnum::Pending,
+            'status_entries_generation' => StatusEnum::Pending,
         ];
     }
 }

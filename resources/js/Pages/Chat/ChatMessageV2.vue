@@ -50,7 +50,11 @@ const reuse = (prompt) => {
                                 <div :class="{ 'underline': selected }" class="hover:cursor-pointer m4-2">Prompt History</div>
                             </Tab>
                             <Tab as="div" v-slot="{ selected }">
-                                <div :class="{ 'underline': selected }" class="hover:cursor-pointer m4-2">Report</div>
+                                <div
+                                    class="hover:cursor-pointer flex justify-start gap-2 items-center">
+                                    <span :class="{ 'underline': selected }">Report</span>
+                                    <div class="badge badge-primary">{{ message?.report?.sections.length}}</div>
+                                </div>
                             </Tab>
                         </TabList>
                         <TabPanels  v-auto-animate>

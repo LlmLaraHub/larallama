@@ -170,6 +170,34 @@ if (! function_exists('notify_ui')) {
     }
 }
 
+if (! function_exists('notify_ui_report')) {
+    function notify_ui_report(\App\Models\Report $report, string $message)
+    {
+        try {
+            \App\Events\ReportingEvent::dispatch(
+                $report,
+                $message
+            );
+        } catch (\Exception $e) {
+            Log::error('Error notifying UI', ['error' => $e->getMessage()]);
+        }
+    }
+}
+
+if (! function_exists('notify_ui_report_complete')) {
+    function notify_ui_report_complete(\App\Models\Report $report)
+    {
+        try {
+            \App\Events\ReportingEvent::dispatch(
+                $report,
+                \App\Domains\Chat\UiStatusEnum::Complete->name
+            );
+        } catch (\Exception $e) {
+            Log::error('Error notifying UI', ['error' => $e->getMessage()]);
+        }
+    }
+}
+
 if (! function_exists('clean_email')) {
     function clean_email(string $email): string
     {

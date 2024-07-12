@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class SectionResource extends JsonResource
+class EntryResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,12 +16,13 @@ class SectionResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'subject' => $this->subject,
+            'title' => $this->title,
             'content' => $this->content,
             'content_formatted' => str($this->content)->markdown(),
-            'sort_order' => $this->sort_order,
+            'type' => $this->type->name,
+            'votes' => $this->votes,
             'document' => $this->document,
-            'entries' => EntryResource::collection($this->entries),
+            'section' => $this->section,
         ];
     }
 }

@@ -164,6 +164,7 @@ class ClaudeClient extends BaseClient
                 ])->baseUrl($this->baseUrl)
                     ->timeout(240)
                     ->post('/messages', $payload);
+
             }
 
         });

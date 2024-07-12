@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Domains\Reporting\ReportTypeEnum;
+use App\Domains\Reporting\StatusEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -10,6 +11,10 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use LlmLaraHub\LlmDriver\HasDrivers;
 
+/**
+ * @property StatusEnum $status_sections_generation
+ * @property StatusEnum $status_entries_generation
+ */
 class Report extends Model implements HasDrivers
 {
     use HasFactory;
@@ -19,6 +24,8 @@ class Report extends Model implements HasDrivers
 
     protected $casts = [
         'type' => ReportTypeEnum::class,
+        'status_sections_generation' => StatusEnum::class,
+        'status_entries_generation' => StatusEnum::class,
     ];
 
     public function user(): BelongsTo

@@ -2,10 +2,14 @@
 
 namespace Feature;
 
+use App\Domains\Chat\MetaDataDto;
+use App\Domains\Reporting\StatusEnum;
 use App\Models\Collection;
 use App\Models\Document;
 use App\Models\DocumentChunk;
 use App\Models\Message;
+use App\Models\Report;
+use LlmLaraHub\LlmDriver\DistanceQuery\DistanceQueryFacade;
 use LlmLaraHub\LlmDriver\Functions\ParametersDto;
 use LlmLaraHub\LlmDriver\Functions\PropertyDto;
 use LlmLaraHub\LlmDriver\Functions\ReportingTool;
@@ -234,5 +238,147 @@ CONTENT;
 
         //1 * 20
         $this->assertDatabaseCount('sections', 26);
+    }
+
+    public function test_makes_entries()
+    {
+
+        $messageArray = [];
+
+        $dtos = [];
+        foreach (range(0, 13) as $i) {
+            $data = fake()->sentences(3, true);
+            $title = fake()->sentences(1, true);
+            $data2 = fake()->sentences(3, true);
+            $title2 = fake()->sentences(1, true);
+            $content = <<<CONTENT
+[
+    {
+        "title": "$title",
+        "content": "$data"
+    },
+    {
+        "title": "$title2",
+        "content": "$data2"
+    }
+]
+CONTENT;
+
+            $dtos[] = CompletionResponse::from([
+                'content' => $content,
+            ]);
+        }
+
+        $referenceCollection = Collection::factory()->create();
+
+        Document::factory(2)
+            ->has(DocumentChunk::factory(33), 'document_chunks')
+            ->create([
+                'collection_id' => $referenceCollection->id,
+            ]);
+
+        DistanceQueryFacade::shouldReceive('cosineDistance')
+            ->times(26)
+            ->andReturn(DocumentChunk::limit(3)->get());
+
+        $embedding = get_fixture('embedding_response.json');
+
+        $dto = \LlmLaraHub\LlmDriver\Responses\EmbeddingsResponseDto::from([
+            'embedding' => data_get($embedding, 'data.0.embedding'),
+            'token_count' => 1000,
+        ]);
+
+        LlmDriverFacade::shouldReceive('driver->embedData')
+            ->times(26)
+            ->andReturn($dto);
+
+        LlmDriverFacade::shouldReceive('getFunctionsForUi')->andReturn([]);
+
+        LlmDriverFacade::shouldReceive('driver->completionPool')
+            ->andReturn([
+                $dtos[0],
+                $dtos[1],
+                $dtos[2],
+            ], [
+                $dtos[3],
+                $dtos[4],
+                $dtos[5],
+            ],
+                [
+                    $dtos[6],
+                    $dtos[7],
+                    $dtos[8],
+                ], [
+                    $dtos[9],
+                    $dtos[10],
+                    $dtos[11],
+                ],
+                [
+                    $dtos[12],
+                ],
+                [
+                    $dtos[9],
+                    $dtos[10],
+                    $dtos[11],
+                ], [
+                    $dtos[9],
+                    $dtos[10],
+                    $dtos[11],
+                ]);
+
+        LlmDriverFacade::shouldReceive('driver->completion')->once()->andReturn(
+            CompletionResponse::from([
+                'content' => 'foo bar',
+            ])
+        );
+
+        $collection = Collection::factory()->create();
+
+        $document = Document::factory()->create([
+            'collection_id' => $collection->id,
+        ]);
+
+        foreach (range(0, 13) as $page) {
+            foreach (range(0, 3) as $chunk) {
+                DocumentChunk::factory()->create([
+                    'document_id' => $document->id,
+                    'sort_order' => $page,
+                    'section_number' => $chunk,
+                ]);
+            }
+        }
+
+        $chat = \App\Models\Chat::factory()->create([
+            'chatable_type' => Collection::class,
+            'chatable_id' => $collection->id,
+        ]);
+
+        $functionCallDto = \LlmLaraHub\LlmDriver\Functions\FunctionCallDto::from([
+            'function_name' => 'reporting_tool',
+            'arguments' => json_encode([
+                'prompt' => 'foo bar',
+            ]),
+        ]);
+
+        $message = Message::factory()->create([
+            'chat_id' => $chat->id,
+            'meta_data' => MetaDataDto::from([
+                'reference_collection_id' => $referenceCollection->id,
+            ]),
+        ]);
+
+        $this->assertDatabaseCount('reports', 0);
+        $results = (new ReportingTool())
+            ->handle($message);
+
+        $this->assertInstanceOf(\LlmLaraHub\LlmDriver\Responses\FunctionResponse::class, $results);
+
+        //1 * 20
+        $this->assertDatabaseCount('sections', 26);
+        $this->assertDatabaseCount('entries', 26);
+        $this->assertDatabaseCount('reports', 1);
+        $report = Report::first();
+        $this->assertEquals(StatusEnum::Complete, $report->status_sections_generation);
+        $this->assertEquals(StatusEnum::Complete, $report->status_entries_generation);
     }
 }

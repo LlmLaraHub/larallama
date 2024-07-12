@@ -2,16 +2,14 @@
 
 namespace App\Events;
 
-use App\Models\Chat;
-use App\Models\Collection;
+use App\Models\Report;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
-use LlmLaraHub\LlmDriver\HasDrivers;
 
-class ChatUiUpdateEvent implements ShouldBroadcast
+class ReportingEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -19,10 +17,9 @@ class ChatUiUpdateEvent implements ShouldBroadcast
      * Create a new event instance.
      */
     public function __construct(
-        public Collection|HasDrivers $collection,
-        public Chat $chat,
-        public string $updateMessage)
-    {
+        public Report $report,
+        public string $updateMessage
+    ) {
         //
     }
 
@@ -34,27 +31,24 @@ class ChatUiUpdateEvent implements ShouldBroadcast
     public function broadcastOn(): array
     {
         return [
-            new PrivateChannel('collection.chat.'.$this->collection->getId().'.'.$this->chat->id),
+            new PrivateChannel(
+                'collection.chat.reports.'.$this->report->id),
         ];
     }
 
-    /**
-     * The event's broadcast name.
-     */
     public function broadcastAs(): string
     {
         return 'update';
     }
 
-    /**
-     * Get the data to broadcast.
-     *
-     * @return array<string, mixed>
-     */
     public function broadcastWith(): array
     {
         return [
-            'id' => $this->collection->getId(),
+            'id' => $this->report->id,
+            /** @phpstan-ignore-next-line */
+            'status_sections_generation' => $this->report->status_sections_generation?->value,
+            /** @phpstan-ignore-next-line */
+            'status_entries_generation' => $this->report->status_entries_generation?->value,
             'updateMessage' => $this->updateMessage,
         ];
     }
