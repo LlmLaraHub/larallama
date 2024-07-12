@@ -336,4 +336,8 @@ class ReportingTool extends FunctionContract
             ),
         ];
     }
+
+    public function runAsBatch() : bool {
+        return true;
+    }
 }

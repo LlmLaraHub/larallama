@@ -3,11 +3,13 @@
 namespace LlmLaraHub\LlmDriver;
 
 use App\Domains\Messages\RoleEnum;
+use App\Jobs\OrchestrateBatchJob;
 use App\Models\Chat;
 use App\Models\Filter;
 use App\Models\Message;
 use App\Models\PromptHistory;
 use Facades\App\Domains\Messages\SearchAndSummarizeChatRepo;
+use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Log;
 use LlmLaraHub\LlmDriver\Functions\FunctionCallDto;
 use LlmLaraHub\LlmDriver\Helpers\CreateReferencesTrait;
@@ -66,12 +68,23 @@ class Orchestrate
 
             $toolClass = app()->make($tool);
 
-            $response = $toolClass->handle($message);
-            $this->handleResponse($response, $chat, $message);
-            $this->response = $response->content;
-            $this->requiresFollowup = $response->requires_follow_up_prompt;
-            $this->requiresFollowUp($message->getLatestMessages(), $chat);
+            if($toolClass->runAsBatch()) {
+                notify_ui($chat, "Running as long running job");
 
+                Bus::batch([
+                    new OrchestrateBatchJob($toolClass, $message),
+                ])->name("Orchestrate Batch Job - {$chat->id} {$tool}")
+                    ->allowFailures()
+                    ->dispatch();
+
+                return "Running as batch";
+            } else {
+                $response = $toolClass->handle($message);
+                $this->handleResponse($response, $chat, $message);
+                $this->response = $response->content;
+                $this->requiresFollowup = $response->requires_follow_up_prompt;
+                $this->requiresFollowUp($message->getLatestMessages(), $chat);
+            }
         } else {
             /**
              * We are looking first for functions / agents / tools
