@@ -191,6 +191,14 @@ class ReportingTool extends FunctionContract
                 ]);
             }
         } catch (\Exception $e) {
+            Section::updateOrCreate([
+                'document_id' => $document->id,
+                'report_id' => $report->id,
+                'sort_order' => $report->refresh()->sections->count() + 1,
+            ], [
+                'subject' => "[ERROR FORMATTING PLEASE FIX]",
+                'content' => $content,
+            ]);
             Log::error('Error parsing JSON', [
                 'error' => $e->getMessage(),
                 'content' => $content,
