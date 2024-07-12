@@ -1,12 +1,12 @@
 <template>
-    <div class="p-10">
+    <div class="p-2">
         <div v-if="message.report?.sections.length === 0">
             No sections read more <a href="https://docs.larallama.io/docs/reporting" target="_blank">here</a>
             on building reports
         </div>
         <div v-else>
-            <div>
-                <h2>Reference Collection Being Used:
+            <div class="flex justify-between items-center">
+                <h2 class="text-gray-500">Report #{{report?.id}} - Reference Collection Being Used:
 
                     <Link
                         class="link"
@@ -14,6 +14,10 @@
                         collection: message.report.reference_collection.id
                     })">{{ message.report?.reference_collection?.name }}</Link>
                 </h2>
+                <div  v-show=" report?.id">
+                    <a
+                    :href="`/reports/${report?.id}/export`" class="btn btn-secondary rounded-none btn-sm">Export</a>
+                </div>
 
             </div>
             <div class="flex justify-start gap-4 items-center mt-4 w-full">

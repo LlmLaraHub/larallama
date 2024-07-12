@@ -52,7 +52,7 @@ const reuse = (prompt) => {
                             <Tab as="div" v-slot="{ selected }">
                                 <div
                                     class="hover:cursor-pointer flex justify-start gap-2 items-center">
-                                    <span :class="{ 'underline': selected }">Report</span>
+                                    <span :class="{ 'underline': selected }">Report (BETA)</span>
                                     <div class="badge badge-primary">{{ message?.report?.sections.length}}</div>
                                 </div>
                             </Tab>
