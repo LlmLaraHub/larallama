@@ -165,41 +165,49 @@ class ReportingTool extends FunctionContract
             /** @var Section $section */
             foreach ($sectionChunk as $section) {
 
-                $input = $section->content;
+                try {
+                    $input = $section->content;
 
-                /** @var EmbeddingsResponseDto $embedding */
-                $embedding = LlmDriverFacade::driver(
-                    $report->getEmbeddingDriver()
-                )->embedData($input);
+                    /** @var EmbeddingsResponseDto $embedding */
+                    $embedding = LlmDriverFacade::driver(
+                        $report->getEmbeddingDriver()
+                    )->embedData($input);
 
-                $embeddingSize = get_embedding_size($report->getEmbeddingDriver());
+                    $embeddingSize = get_embedding_size($report->getEmbeddingDriver());
 
-                /** @phpstan-ignore-next-line */
-                $documentChunkResults = DistanceQueryFacade::cosineDistance(
-                    $embeddingSize,
                     /** @phpstan-ignore-next-line */
-                    $referenceCollection->id, //holy luck batman this is nice!
-                    $embedding->embedding,
-                    MetaDataDto::from([])//@NOTE could use this later if needed
-                );
+                    $documentChunkResults = DistanceQueryFacade::cosineDistance(
+                        $embeddingSize,
+                        /** @phpstan-ignore-next-line */
+                        $referenceCollection->id, //holy luck batman this is nice!
+                        $embedding->embedding,
+                        MetaDataDto::from([])//@NOTE could use this later if needed
+                    );
 
-                $content = [];
-                /** @var DocumentChunk $result */
-                foreach ($documentChunkResults as $result) {
-                    $contentString = remove_ascii($result->content);
-                    $content[] = $contentString; //reduce_text_size seem to mess up Claude?
+                    $content = [];
+                    /** @var DocumentChunk $result */
+                    foreach ($documentChunkResults as $result) {
+                        $contentString = remove_ascii($result->content);
+                        $content[] = $contentString; //reduce_text_size seem to mess up Claude?
+                    }
+
+                    $context = implode(' ', $content);
+
+                    $prompt = FindSolutionsPrompt::prompt(
+                        $section->content,
+                        $context,
+                        $report->getChatable()->description
+                    );
+
+                    $prompts[] = $prompt;
+                    $sections[] = $section;
+                } catch (\Exception $e) {
+                    Log::error('Error running Reporting Tool Checker for Section', [
+                        'error' => $e->getMessage(),
+                        'section' => $section->id,
+                        'line' => $e->getLine(),
+                    ]);
                 }
-
-                $context = implode(' ', $content);
-
-                $prompt = FindSolutionsPrompt::prompt(
-                    $section->content,
-                    $context,
-                    $report->getChatable()->description
-                );
-
-                $prompts[] = $prompt;
-                $sections[] = $section;
             }
 
             $results = LlmDriverFacade::driver($report->getDriver())

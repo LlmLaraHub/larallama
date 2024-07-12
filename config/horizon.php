@@ -190,7 +190,7 @@ return [
             'maxJobs' => 0,
             'memory' => 256,
             'tries' => 3,
-            'timeout' => 600,
+            'timeout' => 1200,
             'nice' => 0,
         ],
         'api_request' => [
@@ -203,7 +203,7 @@ return [
             'maxJobs' => 0,
             'memory' => 256,
             'tries' => 3,
-            'timeout' => 600,
+            'timeout' => 1200,
             'nice' => 0,
         ],
         'ollama' => [
@@ -216,7 +216,7 @@ return [
             'maxJobs' => 0,
             'memory' => 256,
             'tries' => 3,
-            'timeout' => 600,
+            'timeout' => 1200,
             'nice' => 0,
         ],
         'groq' => [
@@ -229,7 +229,7 @@ return [
             'maxJobs' => 0,
             'memory' => 256,
             'tries' => 3,
-            'timeout' => 600,
+            'timeout' => 1200,
             'nice' => 0,
         ],
         'claude' => [
@@ -242,7 +242,7 @@ return [
             'maxJobs' => 0,
             'memory' => 256,
             'tries' => 3,
-            'timeout' => 600,
+            'timeout' => 1200,
             'nice' => 0,
         ],
     ],

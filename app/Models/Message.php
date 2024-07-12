@@ -217,16 +217,17 @@ class Message extends Model implements HasDrivers
                 show_in_thread: true);
 
             notify_ui_complete($chat);
+        } elseif ($message->meta_data?->tool) {
             /**
-             * @TODO
-             * MOVE ALL OF THIS BELOW INTO ORCHESTRATE JOB
+             * @NOTE
+             * Quick win area for Ollama
              */
-        } elseif ($message->meta_data?->tool === 'standards_checker') {
-            Log::info('[LaraChain] Running Standards Checker');
-            notify_ui($chat, 'Running Standards Checker');
+            Log::info('[LaraChain] Running Tool that was chosen');
+
             $this->batchJob([
                 new OrchestrateJob($chat, $message),
-            ], $chat, 'search_and_summarize');
+            ], $chat, $message->meta_data?->tool);
+
         } elseif (LlmDriverFacade::driver($chat->getDriver())->hasFunctions()) {
             Log::info('[LaraChain] Running Orchestrate added to queue');
             $this->batchJob([
