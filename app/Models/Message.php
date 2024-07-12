@@ -224,9 +224,12 @@ class Message extends Model implements HasDrivers
              */
             Log::info('[LaraChain] Running Tool that was chosen');
 
+            /** @phpstan-ignore-next-line */
+            $tool = $message->meta_data?->tool;
+
             $this->batchJob([
                 new OrchestrateJob($chat, $message),
-            ], $chat, $message->meta_data?->tool);
+            ], $chat, $tool);
 
         } elseif (LlmDriverFacade::driver($chat->getDriver())->hasFunctions()) {
             Log::info('[LaraChain] Running Orchestrate added to queue');
