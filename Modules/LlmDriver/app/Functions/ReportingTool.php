@@ -90,12 +90,10 @@ class ReportingTool extends FunctionContract
                     foreach ($pagesChunk as $index => $page) {
                         $pageContent = collect($page)->pluck('content')->toArray();
                         $pageContent = implode("\n", $pageContent);
-                        put_fixture('solutions_prompts_'.$pageIndex.'.txt', $pageContent, false);
                         $prompt = ReportBuildingFindRequirementsPrompt::prompt(
                             $pageContent, $message->getContent(), $message->getChatable()->description
                         );
                         $prompts[] = $prompt;
-                        put_fixture('solutions_prompts_'.$index.'.txt', $prompts, false);
                     }
                     $this->poolPrompt($prompts, $report, $document);
                 }
@@ -148,7 +146,6 @@ class ReportingTool extends FunctionContract
         foreach ($results as $resultIndex => $result) {
             //make the sections per the results coming back.
             $content = $result->content;
-            put_fixture('solutions_content_'.$resultIndex.'.txt', $content, false);
             $this->makeSectionFromContent($content, $document, $report);
         }
     }
@@ -194,7 +191,6 @@ class ReportingTool extends FunctionContract
                 ]);
             }
         } catch (\Exception $e) {
-            put_fixture('solutions_content_error.txt', $content, false);
             Log::error('Error parsing JSON', [
                 'error' => $e->getMessage(),
                 'content' => $content,
