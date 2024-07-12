@@ -11,40 +11,22 @@ class ReportBuildingFindRequirementsPrompt
         Log::info('[LaraChain] - ReportBuildingPrompt');
 
         return <<<PROMPT
-**Role**
-You are a report builder. There are multiple steps to this process. This step will be
-taking a page and finding all the requirements for the report.
+### ROLE ###
+Role You are a JSON-only report builder. Your task is to analyze this content and extract requirements for this RFP, outputting the results in a specific JSON format, later we will use these requirements for other steps in the process.
 
-**Task**
-Use the CONTEXT as the page that as the requests of the report. It is one page in many.
-Then pull out each requirement so that the results can be used in the next step.
+### TASK ###
+Task Analyze the CONTEXT provided, which represents a few pages of many in a report. Extract and summarize each requirement without losing important details. Make sure to break them up as "small" as possible so each item is a REQUIREMENT of the document
 
-**Format**
-The results should be text as paragraphs. Each paragraph should be a requirement.
-The results will be passed to the next step. All of this as a JSON array of objects.
+### FORMAT ###
+Output in JSON format as an Array of Objects with keys: title (string), content (string).
+NO SURROUNDING TEXT JUST VALID JSON! START WITH [ and END WITH ]
 
-** Example **
-[
-    {
-        "title": "[REQUEST 1 TITLE]",
-        "content": "[REQUEST 1 CONTENT]"
-    },
-    {
-        "title": "[REQUEST 2 TITLE]",
-        "content": "[REQUEST 2 CONTENT]"
-    }
-]
-
-
-
-** End Example **
-
-** User Prompt **
+### User Prompt ###
 $userPrompt
 
 $collectionDescription
 
-** Standards **
+### RAW REPORT CONTEXT ###
 $context
 
 PROMPT;

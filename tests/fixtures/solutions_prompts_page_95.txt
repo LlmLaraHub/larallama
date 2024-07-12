@@ -1,0 +1,42 @@
+### ROLE ###
+Role You are a JSON-only report builder. Your task is to analyze this content and extract requirements for this RFP, outputting the results in a specific JSON format, later we will use these requirements for other steps in the process.
+
+### TASK ###
+Task Analyze the CONTEXT provided, which represents a few pages of many in a report. Extract and summarize each requirement without losing important details. Make sure to break them up as "small" as possible so each item is a REQUIREMENT of the document
+
+### FORMAT ###
+Output in JSON format as an Array of Objects with keys: title (string), content (string).
+NO SURROUNDING TEXT JUST VALID JSON! START WITH [ and END WITH ]
+
+### User Prompt ###
+Adipisci qui eveniet et enim ut et tempore. Dolor neque inventore voluptatem aut recusandae dolore explicabo. Deleniti accusamus quam ipsum quae nisi rerum impedit.
+
+Quisquam nihil maiores modi nihil necessitatibus. Repellat amet optio nulla rerum. Consequatur aut ipsam rerum nostrum sapiente repudiandae. Atque aut aut sint voluptatum quod consequatur aut enim.
+
+Id sunt nemo doloremque similique dignissimos. Incidunt ea pariatur atque dolor ea sit non. Facere et quisquam blanditiis enim quod quia.
+
+Sed omnis aliquam mollitia et autem nam sunt. Et voluptatem quidem voluptate qui sint velit.
+
+### RAW REPORT CONTEXT ###
+Esse aliquid dolore cumque illum ipsam voluptates enim molestias.
+### ROLE ###
+Role You are a JSON-only report builder. Your task is to analyze this content and extract requirements for this RFP, outputting the results in a specific JSON format, later we will use these requirements for other steps in the process.
+
+### TASK ###
+Task Analyze the CONTEXT provided, which represents a few pages of many in a report. Extract and summarize each requirement without losing important details. Make sure to break them up as "small" as possible so each item is a REQUIREMENT of the document
+
+### FORMAT ###
+Output in JSON format as an Array of Objects with keys: title (string), content (string).
+NO SURROUNDING TEXT JUST VALID JSON! START WITH [ and END WITH ]
+
+### User Prompt ###
+Adipisci qui eveniet et enim ut et tempore. Dolor neque inventore voluptatem aut recusandae dolore explicabo. Deleniti accusamus quam ipsum quae nisi rerum impedit.
+
+Quisquam nihil maiores modi nihil necessitatibus. Repellat amet optio nulla rerum. Consequatur aut ipsam rerum nostrum sapiente repudiandae. Atque aut aut sint voluptatum quod consequatur aut enim.
+
+Id sunt nemo doloremque similique dignissimos. Incidunt ea pariatur atque dolor ea sit non. Facere et quisquam blanditiis enim quod quia.
+
+Sed omnis aliquam mollitia et autem nam sunt. Et voluptatem quidem voluptate qui sint velit.
+
+### RAW REPORT CONTEXT ###
+Tempore corrupti similique similique et id neque temporibus repudiandae dolor rerum ut.

@@ -8,8 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use LlmLaraHub\LlmDriver\HasDrivers;
 
-class Report extends Model
+class Report extends Model implements HasDrivers
 {
     use HasFactory;
     use SoftDeletes;
@@ -43,5 +44,40 @@ class Report extends Model
     public function reference_collection(): BelongsTo
     {
         return $this->belongsTo(Collection::class, 'reference_collection_id');
+    }
+
+    public function getDriver(): string
+    {
+        return $this->chat->getDriver();
+    }
+
+    public function getEmbeddingDriver(): string
+    {
+        return $this->chat->getEmbeddingDriver();
+    }
+
+    public function getSummary(): string
+    {
+        return $this->chat->getSummary();
+    }
+
+    public function getId(): int
+    {
+        return $this->chat->getChat()->id;
+    }
+
+    public function getType(): string
+    {
+        return $this->chat->getType();
+    }
+
+    public function getChatable(): HasDrivers
+    {
+        return $this->chat->getChatable();
+    }
+
+    public function getChat(): ?Chat
+    {
+        return $this->chat;
     }
 }

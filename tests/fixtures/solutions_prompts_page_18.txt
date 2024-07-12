@@ -1,0 +1,197 @@
+### ROLE ###
+Role You are a JSON-only report builder. Your task is to analyze this content and extract requirements for this RFP, outputting the results in a specific JSON format, later we will use these requirements for other steps in the process.
+
+### TASK ###
+Task Analyze the CONTEXT provided, which represents a few pages of many in a report. Extract and summarize each requirement without losing important details. Make sure to break them up as "small" as possible so each item is a REQUIREMENT of the document
+
+### FORMAT ###
+Output in JSON format as an Array of Objects with keys: title (string), content (string).
+NO SURROUNDING TEXT JUST VALID JSON! START WITH [ and END WITH ]
+
+### User Prompt ###
+what are the goals of this proposal
+
+Some details about your collection that will help give the ai system some context.
+
+### RAW REPORT CONTEXT ###
+Page 16 of 34 
+ 
+ EXHIBIT I  
+ OFFER AND SUBMITTAL, REFERENCES, PROPOSED SUBCONTRACTORS 
+ 
+ 
+ 
+ 
+                                    PAGE INTENTIONALLY LEFT BLANK 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+### ROLE ###
+Role You are a JSON-only report builder. Your task is to analyze this content and extract requirements for this RFP, outputting the results in a specific JSON format, later we will use these requirements for other steps in the process.
+
+### TASK ###
+Task Analyze the CONTEXT provided, which represents a few pages of many in a report. Extract and summarize each requirement without losing important details. Make sure to break them up as "small" as possible so each item is a REQUIREMENT of the document
+
+### FORMAT ###
+Output in JSON format as an Array of Objects with keys: title (string), content (string).
+NO SURROUNDING TEXT JUST VALID JSON! START WITH [ and END WITH ]
+
+### User Prompt ###
+what are the goals of this proposal
+
+Some details about your collection that will help give the ai system some context.
+
+### RAW REPORT CONTEXT ###
+EACH OR VIOLATI ON OF THIS WARRANTY, THE CITY SHALL HAVE THE RIGHT 
+TO ANNUL THIS AGREEMENT WITHOUT LIABILITY OR, AT ITS DISCRETION, TO DEDUCT FROM THE 
+CONTRACT PRICES OR CONSIDERATION, OR OTHERWISE RECOVER THE FULL AMOUNT OF SUCH 
+COMMISSION, PERCENTAGE, BRO KERAGE OR CONTINGENT FEE." 
+ 
+Respectfully Submitted: 
+ 
+_______________________________________________________________________________________ 
+(Print or Type Name of Contractor – Full Company Name) 
+ 
+City of Houston Vendor No. (If already doing business with City): 
+__________________________________________ 
+ 
+Federal Identificati
+_ 
+Date:  ___________________________________________________________________________ 
+Address of Contractor: _____________________________________________________________________ 
+ Street Address or P.O. Box 
+ _____________________________________________________________________ 
+ City – State – Zip Code 
+ 
+Telephone No. of Contractor: (_____) __________________________________________________________ 
+ 
+Signature, Name and title of Affiant: ____________________________________________________________ 
+ 
+_____________________________________________________________________________________
+ 
+Page 17 of 34 
+ 
+EXHIBIT I  
+OFFER AND SUBMITTAL 
+ 
+NOTE: SUBMISSION MUST BE SIGNED AND NOTARIZED BY AN AUTHORIZED REPRESENTATIVE(S) OF 
+THE RESPONDENT, WHICH MUST BE THE ACTUAL LEGAL ENTITY THAT WILL PERFORM THE 
+CONTRACT IF AWARDED.  
+ 
+"THE RESPONDENT WARRANTS THAT NO PERSON OR SELLING AGENCY HAS BEEN EMPLOYED OR 
+RETAINED TO SOLICIT OR SECURE THIS CONTRACT UPON AN AGREEMENT OR UNDERSTANDING 
+FOR A COMMISSION, PERCENTAGE, BROKERAGE, OR CONTINGENT FEE, EXCEPTING BONA FIDE 
+EMPLOYEES.  FOR BREACH OR VIOLATI ON OF THIS WARRANTY, THE CITY SHALL HAVE THE RIGHT 
+TO ANNUL THIS AGREEMENT WITHOUT 
+ready doing business with City): 
+__________________________________________ 
+ 
+Federal Identification Number: 
+_____________________________________________________________________ 
+ 
+By: ____________________________________________________________________________________ 
+      (Signature of Authorized Officer or Agent) 
+ 
+Printed Name: ___________________________________________________________________________ 
+Title:  ___________________________________________________________________________ 
+Date:  ___________________________________________________________________________ 
+Address of Co
+___________ 
+ 
+_______________________________________________________________________________________ 
+(Notary Public in and for)  
+ 
+____________________________________________________________________________ County, Texas 
+ 
+My Commission Expires: ______________ day of _____________________________________ 20	_________ 
+ 
+  
+### ROLE ###
+Role You are a JSON-only report builder. Your task is to analyze this content and extract requirements for this RFP, outputting the results in a specific JSON format, later we will use these requirements for other steps in the process.
+
+### TASK ###
+Task Analyze the CONTEXT provided, which represents a few pages of many in a report. Extract and summarize each requirement without losing important details. Make sure to break them up as "small" as possible so each item is a REQUIREMENT of the document
+
+### FORMAT ###
+Output in JSON format as an Array of Objects with keys: title (string), content (string).
+NO SURROUNDING TEXT JUST VALID JSON! START WITH [ and END WITH ]
+
+### User Prompt ###
+what are the goals of this proposal
+
+Some details about your collection that will help give the ai system some context.
+
+### RAW REPORT CONTEXT ###
+________________________________________________ 
+  __________________________________________________________________________ 
+ 
+2. Name: ___________________________________  Phone No.: _________________ 
+  Address:  __________________________________________________________________ 
+  Contract Award Date:  ________________  Contract Completion Date:  _______________ 
+  Contract Name/Title:  ________________________________________________________ 
+  
+Email:  ________________________________________________________ 
+  Project Description:  _____________________________________________________
+__________ 
+  
+Email:  ________________________________________________________ 
+  Project Description:  _________________________________________________________ 
+  __________________________________________________________________________ 
+ 
+4. Name: ___________________________________  Phone No.: _________________ 
+  Address:  __________________________________________________________________ 
+  Contract Award Date:  ________________  Contract Completion Date:  _______________ 
+  Contract Name/Title:  ________________________________________________________ 
+  
+Email:  _____________________
+ 
+Page 18 of 34 
+ 
+EXHIBIT I  
+ REFERENCES 
+LIST OF PREVIOUS CUSTOMERS 
+ 
+1. Name: ___________________________________  Phone No.: _________________ 
+  Address:  __________________________________________________________________ 
+  Contract Award Date:  ________________  Contract Completion Date:  _______________ 
+  Contract Name/Title:  ________________________________________________________ 
+  
+Email:  ________________________________________________________ 
+  Project Description:  _________________________________________________________ 
+  ________________________________________________
+_____________________ 
+  Project Description:  _________________________________________________________ 
+  __________________________________________________________________________ 
+ 
+ 
+3. Name: ___________________________________  Phone No.: _________________ 
+  Address:  __________________________________________________________________ 
+  Contract Award Date:  ________________  Contract Completion Date:  _______________ 
+  Contract Name/Title:  ________________________________________________________ 
+  
+Email:  ________________________________________________________ 
+  Project Descripti
+e/Title:  ________________________________________________________ 
+  
+Email:  ________________________________________________________ 
+Project Description:  _________________________________________________________ 
+  

@@ -79,7 +79,7 @@ class ClaudeClient extends BaseClient
 
         Log::info('LlmDriver::Claude::completion');
 
-        $results = $this->getClient()->post('/messages', [
+        $payload = [
             'model' => $model,
             'max_tokens' => $maxTokens,
             'messages' => [
@@ -88,9 +88,13 @@ class ClaudeClient extends BaseClient
                     'content' => $prompt,
                 ],
             ],
-        ]);
+        ];
 
-        if (! $results->ok()) {
+        $payload = $this->addJsonFormat($payload);
+
+        $results = $this->getClient()->post('/messages', $payload);
+
+        if ($results->failed()) {
             $error = $results->json()['error']['type'];
             $message = $results->json()['error']['message'];
             Log::error('Claude API Error Chat', [
@@ -110,6 +114,12 @@ class ClaudeClient extends BaseClient
         return CompletionResponse::from([
             'content' => $data,
         ]);
+    }
+
+    public function addJsonFormat(array $payload): array
+    {
+        //not available for Claude
+        return $payload;
     }
 
     /**
@@ -133,6 +143,19 @@ class ClaudeClient extends BaseClient
             $model,
             $maxTokens) {
             foreach ($prompts as $prompt) {
+                $payload = [
+                    'model' => $model,
+                    'max_tokens' => $maxTokens,
+                    'messages' => [
+                        [
+                            'role' => 'user',
+                            'content' => $prompt,
+                        ],
+                    ],
+                ];
+
+                $payload = $this->addJsonFormat($payload);
+
                 $pool->retry(3, 6000)->withHeaders([
                     'x-api-key' => $api_token,
                     'anthropic-beta' => 'tools-2024-04-04',
@@ -140,16 +163,7 @@ class ClaudeClient extends BaseClient
                     'content-type' => 'application/json',
                 ])->baseUrl($this->baseUrl)
                     ->timeout(240)
-                    ->post('/messages', [
-                        'model' => $model,
-                        'max_tokens' => $maxTokens,
-                        'messages' => [
-                            [
-                                'role' => 'user',
-                                'content' => $prompt,
-                            ],
-                        ],
-                    ]);
+                    ->post('/messages', $payload);
             }
 
         });
@@ -157,7 +171,7 @@ class ClaudeClient extends BaseClient
         $results = [];
 
         foreach ($responses as $index => $response) {
-            if ($response->ok()) {
+            if ($response->successful()) {
                 foreach ($response->json()['content'] as $content) {
                     $results[] = CompletionResponse::from([
                         'content' => $content['text'],

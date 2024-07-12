@@ -1,0 +1,22 @@
+[
+    {
+        "title": "CONTRACT AMOUNT TO BE PAID TO PRIME (excluding MWBE Participation)",
+        "content": "The contractor is required to disclose the contract amount to be paid to the prime contractor, excluding MWBE participation."
+    },
+    {
+        "title": "MWBE PARTICIPATION AMOUNT",
+        "content": "The contractor must disclose the MWBE participation amount."
+    },
+    {
+        "title": "TOTAL BID/PROPOSAL AMOUNT",
+        "content": "The total bid/proposal amount should be calculated by adding the contract amount to be paid to the prime contractor and the MWBE participation amount."
+    },
+    {
+        "title": "TOTAL % MWBE PARTICIPATION AMOUNT",
+        "content": "The percentage of MWBE participation amount should be calculated and disclosed."
+    },
+    {
+        "title": "Conflict of Interest Questionnaire",
+        "content": "The contractor must complete a conflict of interest questionnaire to ensure compliance with ethical standards and transparency in the proposal process."
+    }
+]

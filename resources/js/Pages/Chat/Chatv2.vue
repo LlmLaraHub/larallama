@@ -124,7 +124,9 @@ const save = () => {
     let persona = form.persona
     let date_range = form.date_range
     let reference_collection_id = form.reference_collection_id
-    form.reset();
+    form.reset({
+        input: message,
+    });
     alreadyCompleted.value = false;
     axios.post(route('chats.messages.create', {
         chat: props.chat.id

@@ -1,0 +1,235 @@
+### ROLE ###
+Role You are a JSON-only report builder. Your task is to analyze this content and extract requirements for this RFP, outputting the results in a specific JSON format, later we will use these requirements for other steps in the process.
+
+### TASK ###
+Task Analyze the CONTEXT provided, which represents a few pages of many in a report. Extract and summarize each requirement without losing important details. Make sure to break them up as "small" as possible so each item is a REQUIREMENT of the document
+
+### FORMAT ###
+Output in JSON format as an Array of Objects with keys: title (string), content (string).
+NO SURROUNDING TEXT JUST VALID JSON! START WITH [ and END WITH ]
+
+### User Prompt ###
+what are the goals of this proposal
+
+Some details about your collection that will help give the ai system some context.
+
+### RAW REPORT CONTEXT ###
+n trafficking and, per Executive Order 1-56, City funds shall 
+not be used to promote human trafficking. City vendors are expected to comply with this Executive 
+Order and notify the City’s Chief Procurement Officer of any information regarding possible violation 
+by the vendor or its subcontractors providing services or goods to the City. The Executive Order is 
+available on the City’s website: http://www.houstontx.gov/execorders/1	-56.pdf
+. 
+ 6.0 PRESERVATION OF CONTRACTING INFORMATION 
+ 
+The requirements of Subchapter J, Chapter 552, Texas Government Code, may apply to this 
+solicitatio
+Page 13 of 34 
+ 
+  
+ 
+3.0 PROTESTS  
+ 
+Protests shall be filed in accordance with the City of Houston Administrative Policy No. 5-	12 
+http://www.houstontx.gov/adminpolicies/5-	12.pdf
+.  
+ 4.0 CANCELLATION  
+ The City has sole discretion and reserves the right to cancel this RFQ or to reject any or all 
+submissions received prior to contract award. 
+ 
+5.0 EXECUTIVE ORDER 1 -56 ZERO TOLERANCE FOR HUMAN TRAFFICKING IN CITY 
+SERVICE CONTRACTS AND PURCHASING 
+ 
+The City has a zero tolerance for human trafficking and, per Executive Order 1-56, City funds shall 
+not be used to promote human traffick
+The requirements of Subchapter J, Chapter 552, Texas Government Code, may apply to this 
+solicitation and the contractor or vendor agrees that the contract can be terminated if the contractor 
+or vendor knowingly or intentionally fails to comply with a requirement of that subchapter. 
+ 
+7.0 COMPLIANCE WITH CERTAIN STATE LAW REQUIREMENTS 
+ 
+Anti-Boycott of Israel.  Vendor certifies that vendor is not currently engaged in, and agrees for the 
+duration of this Agreement not to engage in, the boycott of Israel as defined by Section 808.001 of 
+the Texas Government Code.  
+ 
+Anti-Boycott of Energy 
+s against a firearm entity or 
+firearm trade association, or will not discriminate against a firearm entity or firearm trade association 
+for the duration of this Agreement, as defined by Section 2274.001 of the Texas Government Code.  
+ 
+Certification of No Business with Foreign Terrorist Organizations.  For purposes of Section 2252.152 
+of the Code, Vendor certifies that, at the time of this Agreement neither vendor nor any wholly owned 
+subsidiary, majority-owned subsidiary, parent company or affiliate of vendor, is a company listed by 
+the Texas Comptroller of Public Accounts under Section
+t of Israel as defined by Section 808.001 of 
+the Texas Government Code.  
+ 
+Anti-Boycott of Energy Companies.  Vendor certifies that Vendor is not currently engaged in and 
+agrees for the duration of this Agreement not to engage in, the boycott of energy companies as 
+defined by Section 809.001 of the Texas Government Code.  
+ 
+Anti-Boycott of Firearm Entities or Firearm Trade Associations.  Vendor certifies that vendor does 
+not have a practice, policy, guidance, or directive that discriminates against a firearm entity or 
+firearm trade association, or will not discriminate against a firearm
+ affiliate of vendor, is a company listed by 
+the Texas Comptroller of Public Accounts under Sections 2252.153 or 2270.0201 of the Code as a 
+company known to have contracts with or provide supplies or to a foreign terrorist organization. 
+ 
+   
+### ROLE ###
+Role You are a JSON-only report builder. Your task is to analyze this content and extract requirements for this RFP, outputting the results in a specific JSON format, later we will use these requirements for other steps in the process.
+
+### TASK ###
+Task Analyze the CONTEXT provided, which represents a few pages of many in a report. Extract and summarize each requirement without losing important details. Make sure to break them up as "small" as possible so each item is a REQUIREMENT of the document
+
+### FORMAT ###
+Output in JSON format as an Array of Objects with keys: title (string), content (string).
+NO SURROUNDING TEXT JUST VALID JSON! START WITH [ and END WITH ]
+
+### User Prompt ###
+what are the goals of this proposal
+
+Some details about your collection that will help give the ai system some context.
+
+### RAW REPORT CONTEXT ###
+shall be answered by the City and made available to Respondent(s) who are listed 
+as having obtained the RFQ.  Respondent	(s) shall be notified in writing of any changes in the 
+specifications contained within this RFQ.  
+ 
+3.0 LETTER(S) OF CLARIFICATION 
+ 
+3.1 All Letters of Clarification and interpretations to this Solicitation shall be in writing.  Any Letter of 
+Clarification(s) or interpretation that is not in writing shall not legally bind the City.  Only information 
+supplied by the City in writing or in this RFQ shall be used in preparing submission responses.  
+ 
+3.2 The City does not
+pondent shall be responsible for making all 
+investigations and examinations that are necessary to ascertain conditions and affecting the 
+requirements of this RFQ.  Failure to make such investigations and examinations shall not relieve 
+the Respondent from obligation to comply, in every detail, with all provisions and requirements of 
+the RFQ. 
+ 
+5.0 POST- SUBMISSION DISCUSSIONS WITH RESPONDENT(S)  
+ 
+It is the City’s intent to commence final negotiation with the Respondent	(s) deemed most qualified 
+in accordance with the criteria provided herein in, at the City’s sole discretion. The Ci
+Page 14 of 34 
+ 
+PART 8 – INSTRUCTIONS TO RESPONDENT	S 
+ 
+1.0 PRE-SUBMISSION CONFERENCE 
+ 
+A Pre-Submission Conference will be held at the date, time, and location indicated on the first page 
+of the RFQ document.  Interested Respondent	(s) are encouraged to attend.  It will be assumed that 
+potential Respondent(s) attending this meeting have reviewed the RFQ in detail and are prepared 
+to bring up any substantive questions not already addressed by the City. 
+ 
+2.0 ADDITIONAL INFORMATION AND SPECIFICATION CHANGES 
+ 
+Requests for additional information and questions shall be addressed to the 
+PECIFICATION CHANGES 
+ 
+Requests for additional information and questions shall be addressed to the Finance Department, 
+Strategic Procurement Division, Jennifer Williams	, preferably by e -mail to 
+jennifer.williams@houstontx.gov or by telephone at (832) 393-	8715 no later than the date and time 
+shown on page one of this document.  The City shall provide written responses to all questions 
+received by Respondents prior to the RFQ submittal deadline.  Questions received from all 
+Respondent(s) shall be answered by the City and made available to Respondent(s) who are listed 
+as having obtained
+in writing or in this RFQ shall be used in preparing submission responses.  
+ 
+3.2 The City does not assume responsibility for the receipt of any Letters of Clarification sent to 
+Respondent(s). 
+ 
+4.0 EXAMINATION OF DOCUMENTS AND REQUIREMENTS 
+ 
+4.1 Each Respondent shall carefully examine all RFQ documents and familiarize themselves with 
+all requirements prior to submitting a submission to ensure that the submission meets the intent of 
+this RFQ. 
+ 
+4.2 Before submitting a submission, each Respondent shall be responsible for making all 
+investigations and examinations that are necessary to a
+alified 
+in accordance with the criteria provided herein in, at the City’s sole discretion. The City reserves the 
+right to conduct post-submission discussions and/or interviews with any Respondent	s. 
+ 
+   
+### ROLE ###
+Role You are a JSON-only report builder. Your task is to analyze this content and extract requirements for this RFP, outputting the results in a specific JSON format, later we will use these requirements for other steps in the process.
+
+### TASK ###
+Task Analyze the CONTEXT provided, which represents a few pages of many in a report. Extract and summarize each requirement without losing important details. Make sure to break them up as "small" as possible so each item is a REQUIREMENT of the document
+
+### FORMAT ###
+Output in JSON format as an Array of Objects with keys: title (string), content (string).
+NO SURROUNDING TEXT JUST VALID JSON! START WITH [ and END WITH ]
+
+### User Prompt ###
+what are the goals of this proposal
+
+Some details about your collection that will help give the ai system some context.
+
+### RAW REPORT CONTEXT ###
+Page 15 of 34 
+ 
+PART 9 – REQUIRED FORMS TO BE SUBMITTED WITH SUBMISSION 
+ 
+1.0 Offer and Submittal, List of References, and List of Proposed Subcontractors (Exhibit I)  
+ 
+2.0 Signed M/WBE Forms (Exhibit II): Attachment “A” MWBE Participation Plan/Good Faith Efforts; 
+Attachment “B” Letter of Intent; Attachment “C” Certified M/WBE Subcontracting Agreement Terms   
+ 
+3.0 Declaration of Hire Houston First Designation (Exhibit II – 	Attachment “D”) 
+ 
+3.1 To be eligible for the preference, a company must be designated as a City Business (CB) or 
+Local Business (LB) under the 
+ertification of Compliance with Pay or Play Program (POP-2) pop2.pdf (houstontx.gov), and List 
+of Participating Subcontractors (POP-	3) pop3.pdf (houstontx.gov).  
+ 
+4.0 Requested information outlined in the scope of work and other additional relevant/supporting 
+information, or alternate submission.  
+ 
+5.0 Texas Ethics Commission, Certificate of Interested Parties (Form 1295). Create a certificate at 
+https://www.ethics.state.tx.us/filinginfo/1295/. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+ preference, a company must be designated as a City Business (CB) or 
+Local Business (LB) under the Hire Houston First Program prior to submitting a response to the 
+RFQ.  Respondents must provide Declaration of Hire Houston First Designation form (SPD can 
+insert form number) with submission. 
+ 
+4.0 City of Houston Ownership Information Form (Exhibit III) 
+ 
+5.0 Anti-Collusion Statement (Exhibit IV) 
+ 
+6.0 Conflict of Interest Questionnaire (Exhibit V) 
+ 
+PART 10 – REQUIRED FORMS TO BE SUBMITTED BY RECOMMENDED VENDOR ONLY  
+ 
+Required forms shall be supplied to the Contractor after the awar
+TED BY RECOMMENDED VENDOR ONLY  
+ 
+Required forms shall be supplied to the Contractor after the award recommendation:  
+ 
+1.0 Insurance Requirements and Insurance Certificate  
+ 
+2.0 Drug Policy Compliance Agreement (Exhibit “B”); Contractor’s Certification of No Safety Impact 
+Positions in Performance of a City Contract (Exhibit “C”); Drug Policy Compliance Declaration 
+(Exhibit “D”)  
+ 
+3.0 City Contractors’ Pay or Play Acknowledgement Form (POP-1) pop1.pdf (houstontx.gov)
+, 
+Certification of Compliance with Pay or Play Program (POP-2) pop2.pdf (houstontx.gov), and List 
+of P

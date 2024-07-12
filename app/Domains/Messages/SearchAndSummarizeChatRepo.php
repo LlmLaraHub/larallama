@@ -101,7 +101,6 @@ class SearchAndSummarizeChatRepo
         $latestMessagesArray = $assistantMessage->getLatestMessages();
 
         Log::info('[LaraChain] Getting the Summary', [
-            'input' => $contentFlattened,
             'driver' => $chat->chatable->getDriver(),
             'messages' => count($latestMessagesArray),
         ]);

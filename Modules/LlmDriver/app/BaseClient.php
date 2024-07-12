@@ -14,6 +14,15 @@ abstract class BaseClient
 
     protected int $poolSize = 3;
 
+    protected bool $formatJson = false;
+
+    public function setFormatJson(): self
+    {
+        $this->formatJson = true;
+
+        return $this;
+    }
+
     public function embedData(string $data): EmbeddingsResponseDto
     {
         if (! app()->environment('testing')) {
@@ -34,6 +43,17 @@ abstract class BaseClient
         return collect($messages)->map(function ($message) {
             return $message->toArray();
         })->toArray();
+    }
+
+    public function addJsonFormat(array $payload): array
+    {
+        if ($this->formatJson) {
+            $payload['response_format'] = [
+                'type' => 'json_object',
+            ];
+        }
+
+        return $payload;
     }
 
     /**

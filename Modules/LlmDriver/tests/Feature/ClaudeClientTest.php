@@ -69,7 +69,7 @@ class ClaudeClientTest extends TestCase
 
         Http::preventStrayRequests();
 
-        $results = $client->completionPool([
+        $results = $client->setFormatJson()->completionPool([
             'test1',
             'test2',
             'test3',

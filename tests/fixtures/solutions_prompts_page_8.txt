@@ -1,0 +1,72 @@
+### ROLE ###
+Role You are a JSON-only report builder. Your task is to analyze this content and extract requirements for this RFP, outputting the results in a specific JSON format, later we will use these requirements for other steps in the process.
+
+### TASK ###
+Task Analyze the CONTEXT provided, which represents a few pages of many in a report. Extract and summarize each requirement without losing important details. Make sure to break them up as "small" as possible so each item is a REQUIREMENT of the document
+
+### FORMAT ###
+Output in JSON format as an Array of Objects with keys: title (string), content (string).
+NO SURROUNDING TEXT JUST VALID JSON! START WITH [ and END WITH ]
+
+### User Prompt ###
+Officia autem quia saepe et eius dolore nam. Harum doloribus dolor aspernatur tempora. Optio est fugit atque inventore atque est repellendus. Error rerum suscipit eum commodi.
+
+Ea doloremque nemo odio cupiditate nulla est deleniti. Adipisci est vel aut libero qui. Delectus et at laudantium aliquam mollitia. Est atque accusamus aut ab ab molestiae.
+
+Et et aspernatur sed. Consequuntur dolores nisi ut totam architecto porro in dicta. Autem ratione ut rem est eius dignissimos. Tempore veniam aspernatur nostrum sed natus.
+
+Facere voluptatem provident quis. Ut et esse aut. Non libero eveniet incidunt consequatur. Sit qui cum quidem.
+
+### RAW REPORT CONTEXT ###
+Cum laboriosam autem deserunt quaerat praesentium ducimus reprehenderit qui sint excepturi.
+Repudiandae et minus rem aperiam eum nam ipsum ipsum et quae.
+Consequatur nemo nobis animi rerum corporis praesentium et sed.
+Ab sapiente ex consectetur possimus quia numquam libero ut et facere soluta.
+### ROLE ###
+Role You are a JSON-only report builder. Your task is to analyze this content and extract requirements for this RFP, outputting the results in a specific JSON format, later we will use these requirements for other steps in the process.
+
+### TASK ###
+Task Analyze the CONTEXT provided, which represents a few pages of many in a report. Extract and summarize each requirement without losing important details. Make sure to break them up as "small" as possible so each item is a REQUIREMENT of the document
+
+### FORMAT ###
+Output in JSON format as an Array of Objects with keys: title (string), content (string).
+NO SURROUNDING TEXT JUST VALID JSON! START WITH [ and END WITH ]
+
+### User Prompt ###
+Officia autem quia saepe et eius dolore nam. Harum doloribus dolor aspernatur tempora. Optio est fugit atque inventore atque est repellendus. Error rerum suscipit eum commodi.
+
+Ea doloremque nemo odio cupiditate nulla est deleniti. Adipisci est vel aut libero qui. Delectus et at laudantium aliquam mollitia. Est atque accusamus aut ab ab molestiae.
+
+Et et aspernatur sed. Consequuntur dolores nisi ut totam architecto porro in dicta. Autem ratione ut rem est eius dignissimos. Tempore veniam aspernatur nostrum sed natus.
+
+Facere voluptatem provident quis. Ut et esse aut. Non libero eveniet incidunt consequatur. Sit qui cum quidem.
+
+### RAW REPORT CONTEXT ###
+Id qui et fugit voluptatem blanditiis voluptatum fugiat.
+Debitis dolore repellat et aut sint sequi amet ea et dolore odit perferendis et.
+Ut laudantium officiis temporibus iusto error neque dignissimos.
+Id ut quaerat expedita sapiente tempore necessitatibus.
+### ROLE ###
+Role You are a JSON-only report builder. Your task is to analyze this content and extract requirements for this RFP, outputting the results in a specific JSON format, later we will use these requirements for other steps in the process.
+
+### TASK ###
+Task Analyze the CONTEXT provided, which represents a few pages of many in a report. Extract and summarize each requirement without losing important details. Make sure to break them up as "small" as possible so each item is a REQUIREMENT of the document
+
+### FORMAT ###
+Output in JSON format as an Array of Objects with keys: title (string), content (string).
+NO SURROUNDING TEXT JUST VALID JSON! START WITH [ and END WITH ]
+
+### User Prompt ###
+Officia autem quia saepe et eius dolore nam. Harum doloribus dolor aspernatur tempora. Optio est fugit atque inventore atque est repellendus. Error rerum suscipit eum commodi.
+
+Ea doloremque nemo odio cupiditate nulla est deleniti. Adipisci est vel aut libero qui. Delectus et at laudantium aliquam mollitia. Est atque accusamus aut ab ab molestiae.
+
+Et et aspernatur sed. Consequuntur dolores nisi ut totam architecto porro in dicta. Autem ratione ut rem est eius dignissimos. Tempore veniam aspernatur nostrum sed natus.
+
+Facere voluptatem provident quis. Ut et esse aut. Non libero eveniet incidunt consequatur. Sit qui cum quidem.
+
+### RAW REPORT CONTEXT ###
+Repellendus quaerat nemo facilis fugiat est placeat cumque atque corporis qui odit distinctio autem.
+Est praesentium porro quisquam non repellat dolorem odit dicta mollitia atque voluptatem et doloribus.
+Ut eos molestias aspernatur nulla eum pariatur ad est repellendus sit molestiae provident sed debitis.
+Dolor laudantium voluptate amet dolore iure repellendus et repellat consequuntur sit odit blanditiis adipisci.

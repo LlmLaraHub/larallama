@@ -1,0 +1,90 @@
+### ROLE ###
+Role You are a JSON-only report builder. Your task is to analyze this content and extract requirements for this RFP, outputting the results in a specific JSON format, later we will use these requirements for other steps in the process.
+
+### TASK ###
+Task Analyze the CONTEXT provided, which represents a few pages of many in a report. Extract and summarize each requirement without losing important details. Make sure to break them up as "small" as possible so each item is a REQUIREMENT of the document
+
+### FORMAT ###
+Output in JSON format as an Array of Objects with keys: title (string), content (string).
+NO SURROUNDING TEXT JUST VALID JSON! START WITH [ and END WITH ]
+
+### User Prompt ###
+what are the goals of this proposal
+
+Some details about your collection that will help give the ai system some context.
+
+### RAW REPORT CONTEXT ###
+e Nos.:      
+Attorney/Agent Name:      
+Attorney/Agent Phone No.:      
+Tax Years:    
+  . 
+      
+      
+   
+   
+      
+   
+   
+a copy of the 
+official form receipted by the appropriate agency. 
+ 
+REQUIRED: UNSWORN DECLARATION 
+ 
+I certify that I am duly authorized to submit this form on behalf of the firm, that I am associated with the firm in 
+the capacity noted below, and that I have personal knowledge of the accuracy of the information provided 
+herein. I affirm that all the information contained herein is true and correct to the best of my knowledge. I 
+understand that failure to submit accurate information with my submission may result in my submission being 
+considered non-responsive and non-responsible.  
+ 
+  P
+Orig. Dept.: FIN/SPD 	File/I.D. No.: 64 –  
+ 
+Page 31 of 34 
+ 
+CITY OF HOUSTON OWNERSHIP INFORMATION FORM 
+REV. 12/23/2019 
+ 
+OPTIONAL: TAX APPEAL INFORMATION 
+ 
+If the firm/company or an owner/officer is actively protesting, challenging, or appealing the accuracy 
+and/or amount of taxes levied with a tax appraisal district, please provide the following information: 
+ 
+ 
+Status of Appeal 
+[DESCRIBE]: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+If an appeal of taxes has been filed on behalf of your company, please include a copy of the 
+official form receipted by the appropriate agency. 
+ 
+REQUIRED: UNSWORN DECLARATION 
+
+submission may result in my submission being 
+considered non-responsive and non-responsible.  
+ 
+  Preparer’s Signature 	Date 
+ 
+ 
+  Printed name 
+ 
+ 
+Title 
+ 
+NOTE: This form constitutes a governmental record, as defined by Section 37.01 of the Texas Penal Code. 
+Submission of a false government record and falsification of a governmental record are crimes, punishable as 
+provided in Section 37.10 of the Texas Penal Code. 
+Debtor (Firm or Owner Name):       
+Tax Account Nos.:      
+Case or File Nos.:      
+Attorney/Agent Name:      
+Attorney/Agent Phone No.:      
+Tax Years:    
+  . 
+      
+

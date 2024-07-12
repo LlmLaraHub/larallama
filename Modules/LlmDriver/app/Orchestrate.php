@@ -135,13 +135,7 @@ class Orchestrate
                             tools: $message->tools);
 
                         if ($response->prompt) {
-                            PromptHistory::create([
-                                'prompt' => $response->prompt,
-                                'chat_id' => $chat->getChat()->id,
-                                'message_id' => $assistantMessage?->id,
-                                /** @phpstan-ignore-next-line */
-                                'collection_id' => $chat->getChatable()?->id,
-                            ]);
+                            $this->savePromptHistory($message, $response->prompt);
                         }
 
                         if (! empty($response->documentChunks) && $assistantMessage?->id) {

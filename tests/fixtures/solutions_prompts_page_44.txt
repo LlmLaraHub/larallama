@@ -1,0 +1,63 @@
+### ROLE ###
+Role You are a JSON-only report builder. Your task is to analyze this content and extract requirements for this RFP, outputting the results in a specific JSON format, later we will use these requirements for other steps in the process.
+
+### TASK ###
+Task Analyze the CONTEXT provided, which represents a few pages of many in a report. Extract and summarize each requirement without losing important details. Make sure to break them up as "small" as possible so each item is a REQUIREMENT of the document
+
+### FORMAT ###
+Output in JSON format as an Array of Objects with keys: title (string), content (string).
+NO SURROUNDING TEXT JUST VALID JSON! START WITH [ and END WITH ]
+
+### User Prompt ###
+Aliquam quia quia dolorum sit. Exercitationem vel aut rerum sint nesciunt numquam. Voluptas recusandae aut sunt doloribus. Nihil illo molestiae eveniet enim voluptas error exercitationem.
+
+Et quasi laboriosam sit at esse quo nihil. Natus excepturi et culpa ducimus. Adipisci porro consequatur error nobis enim.
+
+Assumenda consequatur odit sunt nihil ea. Magni hic ut cum et et quos necessitatibus ducimus. Et ipsa est saepe atque qui suscipit earum.
+
+Quod veritatis nulla minus ullam. Voluptas error odio natus soluta. Eum eum in voluptates.
+
+### RAW REPORT CONTEXT ###
+Delectus enim inventore sit natus ab quod enim excepturi expedita.
+### ROLE ###
+Role You are a JSON-only report builder. Your task is to analyze this content and extract requirements for this RFP, outputting the results in a specific JSON format, later we will use these requirements for other steps in the process.
+
+### TASK ###
+Task Analyze the CONTEXT provided, which represents a few pages of many in a report. Extract and summarize each requirement without losing important details. Make sure to break them up as "small" as possible so each item is a REQUIREMENT of the document
+
+### FORMAT ###
+Output in JSON format as an Array of Objects with keys: title (string), content (string).
+NO SURROUNDING TEXT JUST VALID JSON! START WITH [ and END WITH ]
+
+### User Prompt ###
+Aliquam quia quia dolorum sit. Exercitationem vel aut rerum sint nesciunt numquam. Voluptas recusandae aut sunt doloribus. Nihil illo molestiae eveniet enim voluptas error exercitationem.
+
+Et quasi laboriosam sit at esse quo nihil. Natus excepturi et culpa ducimus. Adipisci porro consequatur error nobis enim.
+
+Assumenda consequatur odit sunt nihil ea. Magni hic ut cum et et quos necessitatibus ducimus. Et ipsa est saepe atque qui suscipit earum.
+
+Quod veritatis nulla minus ullam. Voluptas error odio natus soluta. Eum eum in voluptates.
+
+### RAW REPORT CONTEXT ###
+Molestiae itaque asperiores maiores eos fugiat dolor aut repellat voluptas qui.
+### ROLE ###
+Role You are a JSON-only report builder. Your task is to analyze this content and extract requirements for this RFP, outputting the results in a specific JSON format, later we will use these requirements for other steps in the process.
+
+### TASK ###
+Task Analyze the CONTEXT provided, which represents a few pages of many in a report. Extract and summarize each requirement without losing important details. Make sure to break them up as "small" as possible so each item is a REQUIREMENT of the document
+
+### FORMAT ###
+Output in JSON format as an Array of Objects with keys: title (string), content (string).
+NO SURROUNDING TEXT JUST VALID JSON! START WITH [ and END WITH ]
+
+### User Prompt ###
+Aliquam quia quia dolorum sit. Exercitationem vel aut rerum sint nesciunt numquam. Voluptas recusandae aut sunt doloribus. Nihil illo molestiae eveniet enim voluptas error exercitationem.
+
+Et quasi laboriosam sit at esse quo nihil. Natus excepturi et culpa ducimus. Adipisci porro consequatur error nobis enim.
+
+Assumenda consequatur odit sunt nihil ea. Magni hic ut cum et et quos necessitatibus ducimus. Et ipsa est saepe atque qui suscipit earum.
+
+Quod veritatis nulla minus ullam. Voluptas error odio natus soluta. Eum eum in voluptates.
+
+### RAW REPORT CONTEXT ###
+Impedit iure esse debitis quia quas ad non adipisci similique eos dolor debitis rem.

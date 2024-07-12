@@ -1,0 +1,47 @@
+### ROLE ###
+Role You are a JSON-only report builder. Your task is to analyze this content and extract requirements for this RFP, outputting the results in a specific JSON format, later we will use these requirements for other steps in the process.
+
+### TASK ###
+Task Analyze the CONTEXT provided, which represents a few pages of many in a report. Extract and summarize each requirement without losing important details. Make sure to break them up as "small" as possible so each item is a REQUIREMENT of the document
+
+### FORMAT ###
+Output in JSON format as an Array of Objects with keys: title (string), content (string).
+NO SURROUNDING TEXT JUST VALID JSON! START WITH [ and END WITH ]
+
+### User Prompt ###
+what are the goals of this proposal
+
+Some details about your collection that will help give the ai system some context.
+
+### RAW REPORT CONTEXT ###
+Page 16 of 34 
+ 
+ EXHIBIT I  
+ OFFER AND SUBMITTAL, REFERENCES, PROPOSED SUBCONTRACTORS 
+ 
+ 
+ 
+ 
+                                    PAGE INTENTIONALLY LEFT BLANK 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
