@@ -16,8 +16,10 @@ abstract class FunctionContract
 
     public Batch $batch;
 
-    public function setBatch(Batch $batch) : self {
+    public function setBatch(Batch $batch): self
+    {
         $this->batch = $batch;
+
         return $this;
     }
 
@@ -54,7 +56,8 @@ abstract class FunctionContract
         return $this->description;
     }
 
-    public function runAsBatch() : bool {
+    public function runAsBatch(): bool
+    {
         return false;
     }
 

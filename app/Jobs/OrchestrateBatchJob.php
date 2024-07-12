@@ -13,13 +13,15 @@ use LlmLaraHub\LlmDriver\Functions\FunctionContract;
 
 class OrchestrateBatchJob implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
     use Batchable;
+    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+
+    public int $tries = 1;
 
     /**
      * Create a new job instance.
      */
-    public function __construct(public FunctionContract $function, public Message$message)
+    public function __construct(public FunctionContract $function, public Message $message)
     {
         //
     }

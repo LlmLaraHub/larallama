@@ -68,8 +68,8 @@ class Orchestrate
 
             $toolClass = app()->make($tool);
 
-            if($toolClass->runAsBatch()) {
-                notify_ui($chat, "Running as long running job");
+            if ($toolClass->runAsBatch()) {
+                notify_ui($chat, 'Running as long running job');
 
                 Bus::batch([
                     new OrchestrateBatchJob($toolClass, $message),
@@ -77,7 +77,7 @@ class Orchestrate
                     ->allowFailures()
                     ->dispatch();
 
-                return "Running as batch";
+                return 'Running as batch';
             } else {
                 $response = $toolClass->handle($message);
                 $this->handleResponse($response, $chat, $message);
