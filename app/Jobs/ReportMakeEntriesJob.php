@@ -3,18 +3,18 @@
 namespace App\Jobs;
 
 use App\Models\Report;
+use Facades\LlmLaraHub\LlmDriver\Functions\ReportingToolMakeEntries;
 use Illuminate\Bus\Batchable;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use Facades\LlmLaraHub\LlmDriver\Functions\ReportingToolMakeEntries;
 
 class ReportMakeEntriesJob implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
     use Batchable;
+    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /**
      * Create a new job instance.

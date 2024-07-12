@@ -14,11 +14,9 @@ use App\Models\Section;
 use Illuminate\Support\Facades\Log;
 use LlmLaraHub\LlmDriver\DistanceQuery\DistanceQueryFacade;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
-use LlmLaraHub\LlmDriver\Responses\EmbeddingsResponseDto;
 
 class ReportingToolMakeEntries
 {
-
     public function handle(Report $report)
     {
         $referenceCollection = $report->reference_collection;
@@ -50,7 +48,7 @@ class ReportingToolMakeEntries
         foreach ($results as $resultIndex => $result) {
             $section = data_get($sections, $resultIndex, null);
 
-            if (!$section) {
+            if (! $section) {
                 continue;
             }
 
@@ -71,7 +69,8 @@ class ReportingToolMakeEntries
         }
     }
 
-    protected function buildPrompts(\Illuminate\Support\Collection $sectionChunk, Report $report, Collection $referenceCollection): array {
+    protected function buildPrompts(\Illuminate\Support\Collection $sectionChunk, Report $report, Collection $referenceCollection): array
+    {
         /** @var Section $section */
         foreach ($sectionChunk as $section) {
             try {

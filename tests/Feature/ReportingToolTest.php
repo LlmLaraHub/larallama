@@ -3,15 +3,12 @@
 namespace Feature;
 
 use App\Domains\Chat\MetaDataDto;
-use App\Domains\Reporting\StatusEnum;
 use App\Models\Collection;
 use App\Models\Document;
 use App\Models\DocumentChunk;
 use App\Models\Message;
-use App\Models\Report;
 use Illuminate\Bus\PendingBatch;
 use Illuminate\Support\Facades\Bus;
-use LlmLaraHub\LlmDriver\DistanceQuery\DistanceQueryFacade;
 use LlmLaraHub\LlmDriver\Functions\ParametersDto;
 use LlmLaraHub\LlmDriver\Functions\PropertyDto;
 use LlmLaraHub\LlmDriver\Functions\ReportingTool;
@@ -276,7 +273,6 @@ CONTENT;
         }
 
         $referenceCollection = Collection::factory()->create();
-
 
         LlmDriverFacade::shouldReceive('getFunctionsForUi')->andReturn([]);
 

@@ -2,33 +2,23 @@
 
 namespace LlmLaraHub\LlmDriver\Functions;
 
-use App\Domains\Chat\MetaDataDto;
 use App\Domains\Chat\UiStatusEnum;
 use App\Domains\Messages\RoleEnum;
-use App\Domains\Prompts\FindSolutionsPrompt;
 use App\Domains\Prompts\ReportBuildingFindRequirementsPrompt;
 use App\Domains\Prompts\ReportingSummaryPrompt;
-use App\Domains\Reporting\EntryTypeEnum;
 use App\Domains\Reporting\ReportTypeEnum;
 use App\Domains\Reporting\StatusEnum;
 use App\Events\ReportingEvent;
 use App\Jobs\MakeReportSectionsJob;
 use App\Jobs\ReportMakeEntriesJob;
-use App\Models\Document;
-use App\Models\DocumentChunk;
-use App\Models\Entry;
 use App\Models\Message;
 use App\Models\Report;
-use App\Models\Section;
 use Illuminate\Bus\Batch;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Log;
-use Laravel\Pennant\Feature;
-use LlmLaraHub\LlmDriver\DistanceQuery\DistanceQueryFacade;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
 use LlmLaraHub\LlmDriver\Responses\CompletionResponse;
-use LlmLaraHub\LlmDriver\Responses\EmbeddingsResponseDto;
 use LlmLaraHub\LlmDriver\Responses\FunctionResponse;
 use LlmLaraHub\LlmDriver\ToolsHelper;
 
@@ -84,7 +74,7 @@ class ReportingTool extends FunctionContract
 
                 Bus::batch([
                     new ReportMakeEntriesJob($report),
-                ])->name(sprintf("Reporting Entities Report Id %s", $report->id))
+                ])->name(sprintf('Reporting Entities Report Id %s', $report->id))
                     ->allowFailures()
                     ->finally(function (Batch $batch) use ($report) {
                         $report->update([
@@ -123,10 +113,8 @@ class ReportingTool extends FunctionContract
         $report->message_id = $assistantMessage->id;
         $report->save();
 
-
         notify_ui($message->getChat(), 'Building Solutions list');
         notify_ui_report($report, 'Building Solutions list');
-
 
         return FunctionResponse::from([
             'content' => $response->content,
@@ -153,7 +141,7 @@ class ReportingTool extends FunctionContract
                 })->collapse();
 
                 foreach (collect($pagesGrouped)
-                             ->chunk(3) as $pageIndex => $pagesChunk) {
+                    ->chunk(3) as $pageIndex => $pagesChunk) {
                     $prompts = [];
                     foreach ($pagesChunk as $index => $page) {
                         $pageContent = collect($page)->pluck('content')->toArray();
@@ -177,7 +165,6 @@ class ReportingTool extends FunctionContract
         }
     }
 
-
     protected function summarizeReport(Report $report): CompletionResponse
     {
         $sectionContent = $report->refresh()->sections->pluck('content')->toArray();
@@ -195,8 +182,6 @@ class ReportingTool extends FunctionContract
         return $response;
     }
 
-
-
     /**
      * @return PropertyDto[]
      */
@@ -212,7 +197,8 @@ class ReportingTool extends FunctionContract
         ];
     }
 
-    public function runAsBatch() : bool {
+    public function runAsBatch(): bool
+    {
         return true;
     }
 }

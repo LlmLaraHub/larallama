@@ -5,13 +5,11 @@ namespace LlmLaraHub\LlmDriver\Functions;
 use App\Models\Document;
 use App\Models\Report;
 use App\Models\Section;
-use Illuminate\Bus\Batch;
 use Illuminate\Support\Facades\Log;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
 
 class ReportingToolMakeSections
 {
-
     public function handle(
         array $prompts,
         Report $report,
@@ -86,5 +84,4 @@ class ReportingToolMakeSections
         notify_ui($report->getChat(), 'Done Building Requirements list');
         notify_ui_report($report, 'Done Building Requirements list');
     }
-
 }

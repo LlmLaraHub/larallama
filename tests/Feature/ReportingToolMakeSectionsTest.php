@@ -7,9 +7,6 @@ use App\Models\Document;
 use App\Models\DocumentChunk;
 use App\Models\Message;
 use App\Models\Report;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use LlmLaraHub\LlmDriver\Functions\ReportingTool;
 use Facades\LlmLaraHub\LlmDriver\Functions\ReportingToolMakeSections;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
 use LlmLaraHub\LlmDriver\Responses\CompletionResponse;
@@ -124,7 +121,6 @@ CONTENT;
             'foo bar',
             'foo bar',
         ];
-
 
         $report = Report::factory()->create([
             'message_id' => $message->id,

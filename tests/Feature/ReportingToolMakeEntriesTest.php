@@ -10,11 +10,8 @@ use App\Models\DocumentChunk;
 use App\Models\Message;
 use App\Models\Report;
 use App\Models\Section;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use LlmLaraHub\LlmDriver\DistanceQuery\DistanceQueryFacade;
-use LlmLaraHub\LlmDriver\Functions\ReportingTool;
 use Facades\LlmLaraHub\LlmDriver\Functions\ReportingToolMakeEntries;
+use LlmLaraHub\LlmDriver\DistanceQuery\DistanceQueryFacade;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
 use LlmLaraHub\LlmDriver\Responses\CompletionResponse;
 use Tests\TestCase;
@@ -109,8 +106,6 @@ CONTENT;
                     $dtos[11],
                 ]);
 
-
-
         $collection = Collection::factory()->create();
 
         $document = Document::factory()->create([
@@ -148,7 +143,6 @@ CONTENT;
 
         $this->assertDatabaseCount('reports', 0);
 
-
         $report = Report::factory()->create([
             'message_id' => $message->id,
             'chat_id' => $chat->id,
@@ -157,7 +151,6 @@ CONTENT;
         Section::factory(26)->create([
             'report_id' => $report->id,
         ]);
-
 
         ReportingToolMakeEntries::handle($report);
 
