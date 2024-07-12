@@ -78,12 +78,6 @@ CONTENT;
                     $dtos[11],
                 ]);
 
-        LlmDriverFacade::shouldReceive('driver->completion')->once()->andReturn(
-            CompletionResponse::from([
-                'content' => 'foo bar',
-            ])
-        );
-
         $collection = Collection::factory()->create();
 
         $document = Document::factory()->create([
