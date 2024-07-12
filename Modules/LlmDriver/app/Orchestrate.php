@@ -37,12 +37,6 @@ class Orchestrate
         Chat $chat,
         Message $message): ?string
     {
-        /**
-         * @TODO
-         * Surfacing some items here
-         * that will be just part of Message
-         * after this refactor
-         */
         $messagesArray = $message->getLatestMessages();
 
         $filter = $message->meta_data?->filter;
@@ -84,7 +78,9 @@ class Orchestrate
                 $this->response = $response->content;
                 $this->requiresFollowup = $response->requires_follow_up_prompt;
                 $this->requiresFollowUp($message->getLatestMessages(), $chat);
+                notify_ui_complete($chat);
             }
+
         } else {
             /**
              * We are looking first for functions / agents / tools
@@ -163,6 +159,13 @@ class Orchestrate
                     $this->requiresFollowup = $response->requires_follow_up_prompt;
                 }
 
+                /**
+                 * ONE MORE REFRESH
+                 */
+                $messagesArray = $message->getLatestMessages();
+
+                $this->requiresFollowUp($messagesArray, $chat);
+
             } else {
                 Log::info('[LaraChain] Orchestration No Functions Default Search And Summarize');
 
@@ -170,14 +173,8 @@ class Orchestrate
             }
         }
 
-        /**
-         * ONE MORE REFRESH
-         */
-        $messagesArray = $message->getLatestMessages();
 
-        $this->requiresFollowUp($messagesArray, $chat);
 
-        notify_ui_complete($chat);
 
         return $this->response;
     }
@@ -240,5 +237,8 @@ class Orchestrate
 
             $this->response = $results->content;
         }
+
+        notify_ui_complete($chat);
+
     }
 }

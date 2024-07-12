@@ -16,7 +16,7 @@ class EntryResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'title' => $this->title,
+            'title' => str($this->title)->remove(["#"])->trim()->limit(50)->toString(),
             'content' => $this->content,
             'content_formatted' => str($this->content)->markdown(),
             'type' => $this->type->name,

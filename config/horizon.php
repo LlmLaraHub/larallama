@@ -245,6 +245,19 @@ return [
             'timeout' => 1200,
             'nice' => 0,
         ],
+        'pool' => [
+            'connection' => 'redis',
+            'queue' => ['pool'],
+            'balance' => 'auto',
+            'autoScalingStrategy' => 'time',
+            'maxProcesses' => 1,
+            'maxTime' => 0,
+            'maxJobs' => 1,
+            'memory' => 256,
+            'tries' => 1,
+            'timeout' => 1200,
+            'nice' => 0,
+        ],
     ],
 
     'environments' => [
