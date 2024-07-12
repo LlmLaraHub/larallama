@@ -95,7 +95,9 @@ onMounted(() => {
 
     Echo.private(`collection.chat.reports.${props.message.report?.id}`)
         .listen('.update', (e) => {
-            getSections();
+            if(loadingSections.value === false) {
+                getSections();
+            }
         });
 });
 

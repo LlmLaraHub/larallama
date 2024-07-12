@@ -16,6 +16,8 @@ class ReportMakeEntriesJob implements ShouldQueue
     use Batchable;
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
+    public int $tries = 1;
+
     /**
      * Create a new job instance.
      */

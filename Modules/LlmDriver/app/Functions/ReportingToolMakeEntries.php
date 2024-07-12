@@ -40,6 +40,7 @@ class ReportingToolMakeEntries
         ]);
 
         notify_ui_report_complete($report);
+        notify_ui_complete($report);
 
     }
 

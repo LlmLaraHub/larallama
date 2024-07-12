@@ -2,13 +2,11 @@
 
 namespace LlmLaraHub\LlmDriver\Functions;
 
-use App\Domains\Chat\UiStatusEnum;
 use App\Domains\Messages\RoleEnum;
 use App\Domains\Prompts\ReportBuildingFindRequirementsPrompt;
 use App\Domains\Prompts\ReportingSummaryPrompt;
 use App\Domains\Reporting\ReportTypeEnum;
 use App\Domains\Reporting\StatusEnum;
-use App\Events\ReportingEvent;
 use App\Jobs\MakeReportSectionsJob;
 use App\Jobs\ReportMakeEntriesJob;
 use App\Models\Message;
@@ -71,7 +69,6 @@ class ReportingTool extends FunctionContract
             ->allowFailures()
             ->finally(function (Batch $batch) use ($report) {
                 $report->update(['status_sections_generation' => StatusEnum::Complete]);
-
                 Bus::batch([
                     new ReportMakeEntriesJob($report),
                 ])->name(sprintf('Reporting Entities Report Id %s', $report->id))
@@ -80,10 +77,6 @@ class ReportingTool extends FunctionContract
                         $report->update([
                             'status_entries_generation' => StatusEnum::Complete,
                         ]);
-                        ReportingEvent::dispatch(
-                            $report,
-                            UiStatusEnum::Complete->name
-                        );
                     })
                     ->dispatch();
 
@@ -95,7 +88,7 @@ class ReportingTool extends FunctionContract
         $response = $this->summarizeReport($report);
 
         $report->update([
-            'status_sections_generation' => StatusEnum::Complete,
+            'status_sections_generation' => StatusEnum::Running,
         ]);
 
         $assistantMessage = $message->getChat()->addInput(
