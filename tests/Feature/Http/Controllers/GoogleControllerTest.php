@@ -14,7 +14,7 @@ class GoogleControllerTest extends TestCase
     public function test_saves_meta_data(): void
     {
         $user = User::factory()->create([
-            'meta_data' => []
+            'meta_data' => [],
         ]);
 
         Socialite::shouldReceive('driver->user')
@@ -26,7 +26,6 @@ class GoogleControllerTest extends TestCase
                 'getAvatar' => 'https://foo.bar',
                 'getEmail' => 'foo@bar.com',
             ]);
-
 
         $this->actingAs($user)->get(route('auth.google.callback'));
 

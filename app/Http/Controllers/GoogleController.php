@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Laravel\Socialite\Facades\Socialite;
 
@@ -41,6 +40,7 @@ class GoogleController extends Controller
             // Here you would typically save the user info and tokens to your database
 
             request()->session()->flash('flash.bannerStyle', 'Google Authentication Successful!');
+
             return to_route('collections.index');
         } catch (\Exception $e) {
             Log::error('Error authenticating with Google', [
@@ -48,6 +48,7 @@ class GoogleController extends Controller
             ]);
             request()->session()->flash('flash.bannerStyle', 'danger');
             request()->session()->flash('flash.banner', 'Google Authentication Failed');
+
             return to_route('collections.index');
         }
     }

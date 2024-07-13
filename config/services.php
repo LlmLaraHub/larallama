@@ -34,7 +34,7 @@ return [
     'google' => [
         'client_id' => env('GOOGLE_CLIENT_ID'),
         'client_secret' => env('GOOGLE_CLIENT_SECRET'),
-        'redirect' => 'https://dailyai.sharedwithexpose.com' . '/auth/google/callback',
+        'redirect' => 'https://dailyai.sharedwithexpose.com'.'/auth/google/callback',
     ],
 
 ];

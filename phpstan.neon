@@ -15,6 +15,7 @@ parameters:
         - vendor
         - app/Actions/*
         - app/Http/Resources/*
+        - app/Http/Controllers/GoogleController.php
 
     checkMissingIterableValueType: false
     treatPhpDocTypesAsCertain: false

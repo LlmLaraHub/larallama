@@ -39,11 +39,10 @@ Route::middleware([
     'verified',
 ])->group(function () {
 
-
     Route::get('/auth/google', [\App\Http\Controllers\GoogleController::class, 'redirectToGoogle'])
-    ->name('auth.google');
+        ->name('auth.google');
     Route::get('/auth/google/callback', [\App\Http\Controllers\GoogleController::class, 'handleGoogleCallback'])
-    ->name('auth.google.callback');
+        ->name('auth.google.callback');
 
     Route::controller(\App\Http\Controllers\DocumentController::class)->group(
         function () {
