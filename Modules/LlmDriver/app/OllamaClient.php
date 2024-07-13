@@ -125,7 +125,7 @@ class OllamaClient extends BaseClient
             foreach ($prompts as $prompt) {
                 $pool->withHeaders([
                     'content-type' => 'application/json',
-                ])->timeout(120)
+                ])->timeout(300)
                     ->baseUrl($baseUrl)
                     ->post('/generate', [
                         'model' => $model,

@@ -3,11 +3,13 @@
 namespace LlmLaraHub\LlmDriver;
 
 use App\Domains\Messages\RoleEnum;
+use App\Jobs\OrchestrateBatchJob;
 use App\Models\Chat;
 use App\Models\Filter;
 use App\Models\Message;
 use App\Models\PromptHistory;
 use Facades\App\Domains\Messages\SearchAndSummarizeChatRepo;
+use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Log;
 use LlmLaraHub\LlmDriver\Functions\FunctionCallDto;
 use LlmLaraHub\LlmDriver\Helpers\CreateReferencesTrait;
@@ -35,12 +37,6 @@ class Orchestrate
         Chat $chat,
         Message $message): ?string
     {
-        /**
-         * @TODO
-         * Surfacing some items here
-         * that will be just part of Message
-         * after this refactor
-         */
         $messagesArray = $message->getLatestMessages();
 
         $filter = $message->meta_data?->filter;
@@ -66,11 +62,28 @@ class Orchestrate
 
             $toolClass = app()->make($tool);
 
-            $response = $toolClass->handle($message);
-            $this->handleResponse($response, $chat, $message);
-            $this->response = $response->content;
-            $this->requiresFollowup = $response->requires_follow_up_prompt;
-            $this->requiresFollowUp($message->getLatestMessages(), $chat);
+            if ($toolClass->runAsBatch()) {
+                Log::info('[LaraChain] - Running as long running job', [
+                    'tool' => $tool,
+                    'chat' => $chat->id,
+                ]);
+                notify_ui($chat, 'Running as long running job');
+
+                Bus::batch([
+                    new OrchestrateBatchJob($toolClass, $message),
+                ])->name("Orchestrate Batch Job - {$chat->id} {$tool}")
+                    ->allowFailures()
+                    ->dispatch();
+
+                return 'Running as batch';
+            } else {
+                $response = $toolClass->handle($message);
+                $this->handleResponse($response, $chat, $message);
+                $this->response = $response->content;
+                $this->requiresFollowup = $response->requires_follow_up_prompt;
+                $this->requiresFollowUp($message->getLatestMessages(), $chat);
+                notify_ui_complete($chat);
+            }
 
         } else {
             /**
@@ -150,21 +163,19 @@ class Orchestrate
                     $this->requiresFollowup = $response->requires_follow_up_prompt;
                 }
 
+                /**
+                 * ONE MORE REFRESH
+                 */
+                $messagesArray = $message->getLatestMessages();
+
+                $this->requiresFollowUp($messagesArray, $chat);
+
             } else {
                 Log::info('[LaraChain] Orchestration No Functions Default Search And Summarize');
 
                 return SearchAndSummarizeChatRepo::search($chat, $message);
             }
         }
-
-        /**
-         * ONE MORE REFRESH
-         */
-        $messagesArray = $message->getLatestMessages();
-
-        $this->requiresFollowUp($messagesArray, $chat);
-
-        notify_ui_complete($chat);
 
         return $this->response;
     }
@@ -227,5 +238,6 @@ class Orchestrate
 
             $this->response = $results->content;
         }
+
     }
 }

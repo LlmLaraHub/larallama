@@ -3,13 +3,12 @@
 namespace Feature;
 
 use App\Domains\Chat\MetaDataDto;
-use App\Domains\Reporting\StatusEnum;
 use App\Models\Collection;
 use App\Models\Document;
 use App\Models\DocumentChunk;
 use App\Models\Message;
-use App\Models\Report;
-use LlmLaraHub\LlmDriver\DistanceQuery\DistanceQueryFacade;
+use Illuminate\Bus\PendingBatch;
+use Illuminate\Support\Facades\Bus;
 use LlmLaraHub\LlmDriver\Functions\ParametersDto;
 use LlmLaraHub\LlmDriver\Functions\PropertyDto;
 use LlmLaraHub\LlmDriver\Functions\ReportingTool;
@@ -133,6 +132,7 @@ CONTENT;
 
     public function test_builds_up_sections()
     {
+        Bus::fake();
 
         $messageArray = [];
 
@@ -236,12 +236,15 @@ CONTENT;
 
         $this->assertInstanceOf(\LlmLaraHub\LlmDriver\Responses\FunctionResponse::class, $results);
 
-        //1 * 20
-        $this->assertDatabaseCount('sections', 26);
+        Bus::assertBatched(function (PendingBatch $batch) {
+            return $batch->jobs->count() === 5;
+        });
     }
 
     public function test_makes_entries()
     {
+
+        Bus::fake();
 
         $messageArray = [];
 
@@ -270,27 +273,6 @@ CONTENT;
         }
 
         $referenceCollection = Collection::factory()->create();
-
-        Document::factory(2)
-            ->has(DocumentChunk::factory(33), 'document_chunks')
-            ->create([
-                'collection_id' => $referenceCollection->id,
-            ]);
-
-        DistanceQueryFacade::shouldReceive('cosineDistance')
-            ->times(26)
-            ->andReturn(DocumentChunk::limit(3)->get());
-
-        $embedding = get_fixture('embedding_response.json');
-
-        $dto = \LlmLaraHub\LlmDriver\Responses\EmbeddingsResponseDto::from([
-            'embedding' => data_get($embedding, 'data.0.embedding'),
-            'token_count' => 1000,
-        ]);
-
-        LlmDriverFacade::shouldReceive('driver->embedData')
-            ->times(26)
-            ->andReturn($dto);
 
         LlmDriverFacade::shouldReceive('getFunctionsForUi')->andReturn([]);
 
@@ -372,13 +354,8 @@ CONTENT;
             ->handle($message);
 
         $this->assertInstanceOf(\LlmLaraHub\LlmDriver\Responses\FunctionResponse::class, $results);
-
+        Bus::assertBatchCount(1);
         //1 * 20
-        $this->assertDatabaseCount('sections', 26);
-        $this->assertDatabaseCount('entries', 26);
         $this->assertDatabaseCount('reports', 1);
-        $report = Report::first();
-        $this->assertEquals(StatusEnum::Complete, $report->status_sections_generation);
-        $this->assertEquals(StatusEnum::Complete, $report->status_entries_generation);
     }
 }

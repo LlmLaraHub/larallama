@@ -1,12 +1,12 @@
 <template>
-    <div class="p-10">
+    <div class="p-2">
         <div v-if="message.report?.sections.length === 0">
             No sections read more <a href="https://docs.larallama.io/docs/reporting" target="_blank">here</a>
             on building reports
         </div>
         <div v-else>
-            <div>
-                <h2>Reference Collection Being Used:
+            <div class="flex justify-between items-center">
+                <h2 class="text-gray-500">Report #{{report?.id}} - Reference Collection Being Used:
 
                     <Link
                         class="link"
@@ -14,6 +14,10 @@
                         collection: message.report.reference_collection.id
                     })">{{ message.report?.reference_collection?.name }}</Link>
                 </h2>
+                <div  v-show=" report?.id">
+                    <a
+                    :href="`/reports/${report?.id}/export`" class="btn btn-secondary rounded-none btn-sm">Export</a>
+                </div>
 
             </div>
             <div class="flex justify-start gap-4 items-center mt-4 w-full">
@@ -34,7 +38,7 @@
                 </div>
             </div>
         </div>
-        <div v-if="loadingSections" class="flex justify-start w-full gap-4 items-center mt-4">
+        <div v-if="loadingSections " class="flex justify-start w-full gap-4 items-center mt-4">
             <div class="flex w-full flex-col gap-4 border border-neutral rounded-md p-4">
                 <div class="skeleton h-4 w-28"></div>
                 <div class="skeleton h-4 w-full"></div>
@@ -70,7 +74,6 @@ const sections = ref([]);
 const report = ref({});
 
 const getSections = () => {
-    loadingSections.value = true;
     axios.get(route('api.reports.show', {
         report: props.message.report.id
     })).then(response => {
@@ -82,7 +85,7 @@ const getSections = () => {
     })
 }
 
-const loadingSections = ref(false);
+const loadingSections = ref(true);
 
 onMounted(() => {
     if(props.message.report?.id) {
@@ -91,7 +94,9 @@ onMounted(() => {
 
     Echo.private(`collection.chat.reports.${props.message.report?.id}`)
         .listen('.update', (e) => {
-            getSections();
+            if(loadingSections.value === false) {
+                getSections();
+            }
         });
 });
 

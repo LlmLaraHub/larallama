@@ -2,31 +2,25 @@
 
 namespace App\Jobs;
 
-use App\Models\Chat;
 use App\Models\Message;
-use Facades\LlmLaraHub\LlmDriver\Orchestrate;
 use Illuminate\Bus\Batchable;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\Log;
+use LlmLaraHub\LlmDriver\Functions\FunctionContract;
 
-class OrchestrateJob implements ShouldQueue
+class OrchestrateBatchJob implements ShouldQueue
 {
     use Batchable;
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public int $tries = 1;
-
     /**
      * Create a new job instance.
      */
-    public function __construct(
-        public Chat $chat,
-        public Message $message,
-    ) {
+    public function __construct(public FunctionContract $function, public Message $message)
+    {
         //
     }
 
@@ -36,12 +30,12 @@ class OrchestrateJob implements ShouldQueue
     public function handle(): void
     {
         if ($this->batch()->cancelled()) {
-            notify_ui_complete($this->chat);
+            // Determine if the batch has been cancelled...
 
             return;
         }
 
-        Log::info('[LaraChain] Orchestrate Job from batch');
-        Orchestrate::handle($this->chat, $this->message);
+        $this->function->setBatch($this->batch())->handle($this->message);
+
     }
 }

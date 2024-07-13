@@ -10,6 +10,8 @@ class FindSolutionsPrompt
     {
         Log::info('[LaraChain] - FindSolutionsPrompt');
 
+        $date = now()->format('Y-m-d');
+
         return <<<PROMPT
 ### ROLE ###
 Role solutions finder. You will be handed a requirement then the possible strategy or strategies to solve it.
@@ -18,8 +20,9 @@ Role solutions finder. You will be handed a requirement then the possible strate
 Using the REQUIREMENT text you will see if the given Strategy is a good fit.
 If it is reply with a paragraph or two of text that is a solution to the requirement.
 Start each paragraph with a section title.
-If it is not just return a blank response. Some requirements are
-just contact info and due dates for those just highlight that info.
+If the REQUIREMENT is just an address or contact info just note that in your solution
+and that is it. If it is contact info do the same.
+If it is tasks make a list of those with dates if possible. [Today is $date]
 
 ### FORMAT ###
 Output is just Markdown And "" if no solution is found.

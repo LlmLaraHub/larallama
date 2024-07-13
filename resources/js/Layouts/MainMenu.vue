@@ -57,7 +57,8 @@ const logout = () => {
                 <li class="flex sm:hidden"><Link :href="route('style_guide.show')">Style Guides</Link></li>
                 <li><Link :href="route('profile.show')">Profile</Link></li>
                 <li><Link :href="route('settings.show')">Settings</Link></li>
-                <li><a :href="route('horizon.index')">Queue</a></li>
+                <li><a :href="route('horizon.index')" target="_blank">Queue</a></li>
+                <li><a href="/log-viewer" target="_blank">System Logs</a></li>
                 <li>
                     <Link v-if=false :href="route('api-tokens.index')">API Tokens</Link>
                 </li>

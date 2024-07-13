@@ -93,3 +93,4 @@ jobs:
           curl https://envoyer.io/deploy/${{ secrets.ENVOYER_FRESHJONES }}
           curl https://envoyer.io/deploy/${{ secrets.ENVOYER_Q }}
           curl https://envoyer.io/deploy/${{ secrets.ENVOYER_T }}
+          curl https://envoyer.io/deploy/${{ secrets.ENVOYER_FH }}

@@ -3,6 +3,7 @@
 namespace LlmLaraHub\LlmDriver\Functions;
 
 use App\Models\Message;
+use Illuminate\Bus\Batch;
 use LlmLaraHub\LlmDriver\Responses\FunctionResponse;
 
 abstract class FunctionContract
@@ -12,6 +13,15 @@ abstract class FunctionContract
     protected string $description;
 
     protected string $type = 'object';
+
+    public Batch $batch;
+
+    public function setBatch(Batch $batch): self
+    {
+        $this->batch = $batch;
+
+        return $this;
+    }
 
     abstract public function handle(
         Message $message,
@@ -44,6 +54,11 @@ abstract class FunctionContract
     protected function getDescription(): string
     {
         return $this->description;
+    }
+
+    public function runAsBatch(): bool
+    {
+        return false;
     }
 
     /**
