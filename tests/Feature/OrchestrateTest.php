@@ -109,6 +109,9 @@ class OrchestrateTest extends TestCase
                                 'prompt' => 'TLDR it for me',
                             ])
                     );
+                $mock->shouldReceive('runAsBatch')
+                    ->once()
+                    ->andReturn(false);
             })
         );
 
