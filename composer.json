@@ -16,6 +16,7 @@
         "laravel/pulse": "^1.0@beta",
         "laravel/reverb": "@beta",
         "laravel/sanctum": "^4.0",
+        "laravel/socialite": "^5.15",
         "laravel/tinker": "^2.9",
         "league/html-to-markdown": "^5.1",
         "maatwebsite/excel": "^3.1",

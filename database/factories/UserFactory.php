@@ -37,6 +37,13 @@ class UserFactory extends Factory
             'profile_photo_path' => null,
             'current_team_id' => null,
             'is_admin' => false,
+            'meta_data' => [
+                'google' => [
+                    'token' => 'foo',
+                    'refresh_token' => 'bar',
+                    'expires_in' => 3600,
+                ],
+            ],
         ];
     }
 

@@ -90,12 +90,15 @@ const submit = () => {
                         type="button"
                         @click="magic"
                         class="
-                            disabled:opacity-70
+                            disabled:opacity-70 disabled:bg-secondary disabled:text-white
                             disabled:cursor-not-allowed
-                            block w-full justify-center
-                    bg-black py-4 rounded-lg font-bold text-2xl">
-                        <div>Sign in With Email </div>
-                        <div class="text-sm ">(no password needed!)</div>
+                            ring-1 ring-inset ring-gray-300 hover:ring-2 hover:ring-gray-400
+                            btn w-full justify-center btn-secondary btn-lg px-6 mb-4
+                            rounded-lg font-bold text-xl">
+                        <span class="flex flex-col justify-center w-full">
+                            <span>Sign in With Email </span>
+                            <span class="text-sm text-white">(no password needed!)</span>
+                        </span>
                     </button>
                     <div class="bg-gray-600 dark:bg-gray-700 p-4 rounded-lg mt-2 flex items-start ">
 
@@ -122,21 +125,21 @@ const submit = () => {
                     </label>
                 </div>
 
-                <div class="flex items-center justify-center mt-4">
-                    <Link v-if="canResetPassword" :href="route('password.request')" class="underline text-sm text-gray-600 hover:text-gray-900">
+                <div class="flex items-center justify-center mt-4 gap-2">
+                    <Link v-if="canResetPassword" :href="route('password.request')" class="link">
                         Forgot password?
                     </Link>
-                    <span class="ml-1">|</span>
+                    <span class="">|</span>
                     <button v-if="usePassword"
                             type="button"
                             @click="useMagic"
-                            class="ml-1 underline text-sm hover:text-gray-900">
+                            class="link">
                         SignIn with Magic Email?
                     </button>
                     <button v-else
                             type="button"
                             @click="passwordInstead"
-                            class="ml-1 underline text-sm hover:text-gray-900">
+                            class="link">
                         Use password to login
                     </button>
                 </div>

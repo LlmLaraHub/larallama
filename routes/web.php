@@ -39,6 +39,12 @@ Route::middleware([
     'verified',
 ])->group(function () {
 
+
+    Route::get('/auth/google', [\App\Http\Controllers\GoogleController::class, 'redirectToGoogle'])
+    ->name('auth.google');
+    Route::get('/auth/google/callback', [\App\Http\Controllers\GoogleController::class, 'handleGoogleCallback'])
+    ->name('auth.google.callback');
+
     Route::controller(\App\Http\Controllers\DocumentController::class)->group(
         function () {
             Route::get('/collections/{collection}/documents', 'index')
