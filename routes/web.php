@@ -253,6 +253,8 @@ Route::middleware([
     Route::controller(\App\Http\Controllers\ReportController::class)->group(function () {
         Route::get('api/reports/{report}', 'show')
             ->name('api.reports.show');
+        Route::get('/reports/{report}/export', 'export')
+            ->name('reports.export');
     });
 
     Route::controller(\App\Http\Controllers\SectionsController::class)->group(function () {
