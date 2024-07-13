@@ -184,7 +184,7 @@ class OrchestrateTest extends TestCase
 
         $results = (new Orchestrate())->handle($chat, $message);
 
-        Event::assertDispatched(ChatUiUpdateEvent::class);
+        Event::assertNotDispatched(ChatUiUpdateEvent::class);
 
         $this->assertEquals($results, 'This is the summary of the collection');
     }
