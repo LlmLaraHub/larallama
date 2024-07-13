@@ -1,13 +1,12 @@
 <template>
     <div class="p-10">
-        <div v-if="message.report?.sections.length === 0">
+        <div v-if="report?.sections.length === 0">
             No sections read more <a href="https://docs.larallama.io/docs/reporting" target="_blank">here</a>
             on building reports
         </div>
         <div v-else>
             <div>
                 <h2>Reference Collection Being Used:
-
                     <Link
                         class="link"
                         :href="route('collections.show', {
