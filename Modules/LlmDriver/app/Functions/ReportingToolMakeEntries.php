@@ -41,7 +41,6 @@ class ReportingToolMakeEntries
 
         notify_ui_report_complete($report);
         notify_ui_complete($report);
-
     }
 
     protected function processResults(array $sections, array $results, Report $report): void

@@ -36,9 +36,7 @@ class OrchestrateJob implements ShouldQueue
     public function handle(): void
     {
         if ($this->batch()->cancelled()) {
-            // Determine if the batch has been cancelled...
             notify_ui_complete($this->chat);
-
             return;
         }
 

@@ -38,7 +38,7 @@
                 </div>
             </div>
         </div>
-        <div v-if="loadingSections" class="flex justify-start w-full gap-4 items-center mt-4">
+        <div v-if="loadingSections " class="flex justify-start w-full gap-4 items-center mt-4">
             <div class="flex w-full flex-col gap-4 border border-neutral rounded-md p-4">
                 <div class="skeleton h-4 w-28"></div>
                 <div class="skeleton h-4 w-full"></div>
@@ -74,7 +74,6 @@ const sections = ref([]);
 const report = ref({});
 
 const getSections = () => {
-    loadingSections.value = true;
     axios.get(route('api.reports.show', {
         report: props.message.report.id
     })).then(response => {
@@ -86,7 +85,7 @@ const getSections = () => {
     })
 }
 
-const loadingSections = ref(false);
+const loadingSections = ref(true);
 
 onMounted(() => {
     if(props.message.report?.id) {

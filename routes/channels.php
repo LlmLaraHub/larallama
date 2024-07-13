@@ -19,7 +19,7 @@ Broadcast::channel('collection.{id}', function ($user, $id) {
 
 //private-collection.chat.reports.36
 Broadcast::channel('collection.chat.reports.{id}', function ($user, $id) {
-    Log::info('Connecting to channel Report Id'.$id);
+    Log::info('Connecting to channel Report Id '.$id);
 
     /**
      * @TODO

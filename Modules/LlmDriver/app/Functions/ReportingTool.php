@@ -108,6 +108,7 @@ class ReportingTool extends FunctionContract
 
         notify_ui($message->getChat(), 'Building Solutions list');
         notify_ui_report($report, 'Building Solutions list');
+        notify_ui_complete($report->getChat());
 
         return FunctionResponse::from([
             'content' => $response->content,

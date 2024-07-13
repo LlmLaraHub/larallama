@@ -53,7 +53,6 @@ const reuse = (prompt) => {
                                 <div
                                     class="hover:cursor-pointer flex justify-start gap-2 items-center">
                                     <span :class="{ 'underline': selected }">Report (BETA)</span>
-                                    <div class="badge badge-primary">{{ message?.report?.sections.length}}</div>
                                 </div>
                             </Tab>
                         </TabList>

@@ -63,6 +63,10 @@ class Orchestrate
             $toolClass = app()->make($tool);
 
             if ($toolClass->runAsBatch()) {
+                Log::info('[LaraChain] - Running as long running job', [
+                    'tool' => $tool,
+                    'chat' => $chat->id,
+                ]);
                 notify_ui($chat, 'Running as long running job');
 
                 Bus::batch([
@@ -235,7 +239,6 @@ class Orchestrate
             $this->response = $results->content;
         }
 
-        notify_ui_complete($chat);
 
     }
 }
