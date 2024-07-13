@@ -239,6 +239,5 @@ class Orchestrate
             $this->response = $results->content;
         }
 
-
     }
 }
