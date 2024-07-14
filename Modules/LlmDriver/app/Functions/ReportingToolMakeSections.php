@@ -22,8 +22,36 @@ class ReportingToolMakeSections
 
     protected function poolPrompt(array $prompts, Report $report, Document $document): void
     {
+        $dto = FunctionDto::from([
+            'name' => 'reporting_json',
+            'description' => 'JSON Summary of the report',
+            'parameters' => ParametersDto::from([
+                'type' => 'array',
+                'properties' => [
+                    PropertyDto::from([
+                        'name' => 'title',
+                        'description' => 'The title of the section',
+                        'type' => 'string',
+                        'required' => true,
+                    ]),
+                    PropertyDto::from([
+                        'name' => 'content',
+                        'description' => 'The content of the section',
+                        'type' => 'string',
+                        'required' => true,
+                    ]),
+                ]
+            ])
+        ]);
+
+        Log::info('LlmDriver::ClaudeClient::poolPrompt', [
+            'driver' => $report->getDriver(),
+            'dto' => $dto,
+        ]);
         $results = LlmDriverFacade::driver($report->getDriver())
+            ->setForceTool($dto)
             ->completionPool($prompts);
+
         foreach ($results as $resultIndex => $result) {
             $content = $result->content;
             $this->makeSectionFromContent($content, $document, $report);
@@ -40,16 +68,6 @@ class ReportingToolMakeSections
             notify_ui($report->getChat(), 'Building Requirements list');
             notify_ui_report($report, 'Building Requirements list');
 
-            /**
-             * @TODO
-             * use the force tool feature to then
-             * make a tool that it has to return the values
-             * as
-             */
-            $content = str($content)
-                ->remove('```json')
-                ->remove('```')
-                ->toString();
             $contentDecoded = json_decode($content, true);
             foreach ($contentDecoded as $sectionIndex => $sectionText) {
                 $title = data_get($sectionText, 'title', 'NOT TITLE GIVEN');

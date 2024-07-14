@@ -50,7 +50,23 @@ class EmailSource extends BaseSource
 
         Log::info('[LaraChain] - Running Email Source');
 
+        /**
+         * @TODO
+         * I missed the point here. I just need to keep making tools work
+         * and the prompt the user gives in the Source
+         * let it do the work.
+         */
         try {
+            /**
+             * @TODO
+             * This turns the email into a document but what if the user wants to do something with the
+             * data in the email. Like Parse URLs or Recipe ideas etc
+             * The Prompt of the Source should drive all of this
+             *
+             */
+
+
+
             $baseSource = EmailTransformer::transform(baseSource: $this);
             /**
              * @NOTE

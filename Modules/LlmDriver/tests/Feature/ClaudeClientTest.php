@@ -8,6 +8,9 @@ use Illuminate\Http\Client\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Http;
 use LlmLaraHub\LlmDriver\ClaudeClient;
+use LlmLaraHub\LlmDriver\Functions\FunctionDto;
+use LlmLaraHub\LlmDriver\Functions\ParametersDto;
+use LlmLaraHub\LlmDriver\Functions\PropertyDto;
 use LlmLaraHub\LlmDriver\Requests\MessageInDto;
 use LlmLaraHub\LlmDriver\Responses\CompletionResponse;
 use LlmLaraHub\LlmDriver\Responses\EmbeddingsResponseDto;
@@ -208,5 +211,96 @@ class ClaudeClientTest extends TestCase
 
             return $last['role'] === 'user' && count($request['messages']) === 4;
         });
+    }
+
+    public function test_remap_array() : void {
+
+        $payload = get_fixture('payload_modified.json');
+
+        $shouldBe = data_get($payload, 'tools');
+
+        $dto = FunctionDto::from([
+            'name' => 'reporting_json',
+            'description' => 'JSON Summary of the report',
+            'parameters' => ParametersDto::from([
+                'type' => 'array',
+                'properties' => [
+                    PropertyDto::from([
+                        'name' => 'title',
+                        'description' => 'The title of the section',
+                        'type' => 'string',
+                        'required' => true,
+                    ]),
+                    PropertyDto::from([
+                        'name' => 'content',
+                        'description' => 'The content of the section',
+                        'type' => 'string',
+                        'required' => true,
+                    ]),
+                ]
+            ])
+        ]);
+
+        $results = (new ClaudeClient)->remapFunctions([$dto]);
+
+        //put_fixture('claude_remap_results.json', $results);
+
+        //dd($results);
+
+        $this->assertEquals(
+            $shouldBe,
+            $results
+        );
+    }
+
+    public function test_tool_response() : void {
+
+        $data = get_fixture('response_tools_with_modified.json');
+
+        $data = [
+            'stop_reason' => 'tool_use',
+            'stop_sequence' => null,
+            'usage' => [
+                'input_tokens' => 808,
+                'output_tokens' => 254
+            ],
+            'content' => $data['content'],
+        ];
+
+        $client = new ClaudeClient();
+
+        Http::fake([
+            'api.anthropic.com/*' => Http::response($data, 200),
+        ]);
+
+        $dto = FunctionDto::from([
+            'name' => 'reporting_json',
+            'description' => 'JSON Summary of the report',
+            'parameters' => ParametersDto::from([
+                'type' => 'array',
+                'properties' => [
+                    PropertyDto::from([
+                        'name' => 'title',
+                        'description' => 'The title of the section',
+                        'type' => 'string',
+                        'required' => true,
+                    ]),
+                    PropertyDto::from([
+                        'name' => 'content',
+                        'description' => 'The content of the section',
+                        'type' => 'string',
+                        'required' => true,
+                    ]),
+                ]
+            ])
+        ]);
+
+        $results = (new ClaudeClient)->setForceTool($dto)->completion('test');
+
+        $content = $results->content;
+
+        $decoded = json_decode($content, true, 512, JSON_THROW_ON_ERROR);
+
+        $this->assertCount(3, $decoded);
     }
 }

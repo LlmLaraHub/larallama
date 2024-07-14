@@ -126,6 +126,12 @@ class OpenAiClient extends BaseClient
             throw new \Exception('Missing open ai api key');
         }
 
+        $payload =  [
+            'model' => $this->getConfig('openai')['models']['completion_model'],
+            'messages' => [
+                ['role' => 'user', 'content' => $prompt],
+            ];
+
         $response = Http::withHeaders([
             'Content-type' => 'application/json',
         ])
@@ -140,11 +146,7 @@ class OpenAiClient extends BaseClient
 
                 return 60000;
             })
-            ->post('/chat/completions', [
-                'model' => $this->getConfig('openai')['models']['completion_model'],
-                'messages' => [
-                    ['role' => 'user', 'content' => $prompt],
-                ],
+            ->post('/chat/completions',$payload,
             ]);
 
         $results = null;

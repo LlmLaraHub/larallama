@@ -9,15 +9,14 @@ class GoogleController extends Controller
 {
     public function redirectToGoogle()
     {
-        return Socialite::driver('google')
-            ->scopes(['https://www.googleapis.com/auth/spreadsheets', 'https://www.googleapis.com/auth/calendar'])
-            ->redirect();
+        return Socialite::driver('google')->redirect();
     }
 
     public function handleGoogleCallback()
     {
         try {
-            $user = Socialite::driver('google')->user();
+            $user = Socialite::driver('google')
+                ->user();
 
             $userModel = auth()->user();
 
@@ -33,11 +32,6 @@ class GoogleController extends Controller
             $userModel->update([
                 'meta_data' => $meta_data,
             ]);
-            // $user->token is the access token
-            // $user->refreshToken is the refresh token
-            // $user->expiresIn is the lifetime in seconds of the access token
-
-            // Here you would typically save the user info and tokens to your database
 
             request()->session()->flash('flash.bannerStyle', 'Google Authentication Successful!');
 
@@ -45,6 +39,8 @@ class GoogleController extends Controller
         } catch (\Exception $e) {
             Log::error('Error authenticating with Google', [
                 'error' => $e->getMessage(),
+                'line' => $e->getLine(),
+                'raw' => $e->getTraceAsString(),
             ]);
             request()->session()->flash('flash.bannerStyle', 'danger');
             request()->session()->flash('flash.banner', 'Google Authentication Failed');

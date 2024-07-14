@@ -4,6 +4,7 @@ namespace LlmLaraHub\LlmDriver;
 
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Log;
+use LlmLaraHub\LlmDriver\Functions\FunctionDto;
 use LlmLaraHub\LlmDriver\Requests\MessageInDto;
 use LlmLaraHub\LlmDriver\Responses\CompletionResponse;
 use LlmLaraHub\LlmDriver\Responses\EmbeddingsResponseDto;
@@ -16,11 +17,24 @@ abstract class BaseClient
 
     protected bool $formatJson = false;
 
+    protected ?FunctionDto $forceTool = null;
+
+    public function setForceTool(FunctionDto $tool): self {
+        $this->forceTool = $tool;
+
+        return $this;
+    }
+
     public function setFormatJson(): self
     {
         $this->formatJson = true;
 
         return $this;
+    }
+
+    public function modifyPayload(array $payload): array
+    {
+        return $payload;
     }
 
     public function embedData(string $data): EmbeddingsResponseDto

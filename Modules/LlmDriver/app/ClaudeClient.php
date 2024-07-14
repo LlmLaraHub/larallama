@@ -8,6 +8,7 @@ use Illuminate\Http\Client\Response;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use LlmLaraHub\LlmDriver\Functions\FunctionDto;
 use LlmLaraHub\LlmDriver\Requests\MessageInDto;
 use LlmLaraHub\LlmDriver\Responses\CompletionResponse;
 use LlmLaraHub\LlmDriver\Responses\EmbeddingsResponseDto;
@@ -43,12 +44,16 @@ class ClaudeClient extends BaseClient
          */
         $messages = $this->remapMessages($messages);
 
-        $results = $this->getClient()->post('/messages', [
+        $payload = [
             'model' => $model,
             'system' => 'Return a markdown response.',
             'max_tokens' => $maxTokens,
             'messages' => $messages,
-        ]);
+        ];
+
+        $payload = $this->modifyPayload($payload);
+
+        $results = $this->getClient()->post('/messages', $payload);
 
         if (! $results->ok()) {
             $error = $results->json()['error']['type'];
@@ -61,14 +66,14 @@ class ClaudeClient extends BaseClient
             throw new \Exception('Claude API Error Chat');
         }
 
-        $data = null;
-
-        foreach ($results->json()['content'] as $content) {
-            $data = $content['text'];
-        }
+        [$data, $tool_used, $stop_reason] = $this->getContentAndToolTypeFromResults($results);
 
         return CompletionResponse::from([
             'content' => $data,
+            'tool_used' => $tool_used,
+            'stop_reason' => $stop_reason,
+            'input_tokens' => data_get($results, 'usage.input_tokens', null),
+            'output_tokens' => data_get($results, 'usage.output_tokens', null),
         ]);
     }
 
@@ -90,7 +95,7 @@ class ClaudeClient extends BaseClient
             ],
         ];
 
-        $payload = $this->addJsonFormat($payload);
+        $payload = $this->modifyPayload($payload);
 
         $results = $this->getClient()->post('/messages', $payload);
 
@@ -105,15 +110,41 @@ class ClaudeClient extends BaseClient
             throw new \Exception('Claude API Error Chat');
         }
 
-        $data = null;
-
-        foreach ($results->json()['content'] as $content) {
-            $data = $content['text'];
-        }
+        [$data, $tool_used, $stop_reason] = $this->getContentAndToolTypeFromResults($results);
 
         return CompletionResponse::from([
             'content' => $data,
+            'tool_used' => $tool_used,
+            'stop_reason' => $stop_reason,
+            'input_tokens' => data_get($results, 'usage.input_tokens', null),
+            'output_tokens' => data_get($results, 'usage.output_tokens', null),
         ]);
+    }
+
+    public function getContentAndToolTypeFromResults(Response $results): array
+    {
+        $results = $results->json();
+        $tool_used = null;
+        $stop_reason = data_get($results, 'stop_reason', 'end_turn');
+
+        if($stop_reason === 'tool_use') {
+            /**
+             * @TOOD
+             * The tool should be used here to get the
+             * output since it might be different
+             * for each tool
+             */
+            foreach ($results['content'] as $content) {
+                $tool_used = data_get($content, 'name');
+                $data = json_encode(data_get($content, 'input.results', []), JSON_THROW_ON_ERROR);
+            }
+        } else {
+            foreach ($results['content'] as $content) {
+                $data = $content['text'];
+            }
+        }
+
+        return [$data, $tool_used, $stop_reason];
     }
 
     public function addJsonFormat(array $payload): array
@@ -121,6 +152,30 @@ class ClaudeClient extends BaseClient
         //not available for Claude
         return $payload;
     }
+
+    public function modifyPayload(array $payload): array
+    {
+        Log::info('LlmDriver::ClaudeClient::modifyPayload', [
+            'payload' => $payload,
+            'forceTool' => $this->forceTool,
+        ]);
+
+        if (! empty($this->forceTool)) {
+            $function = [$this->forceTool];
+            $function = $this->remapFunctions($function);
+
+            $payload['tools'] = $function;
+            $payload['tool_choice'] = [
+                'type' => "tool",
+                'name' => $this->forceTool->name,
+            ];
+        }
+
+        $payload = $this->addJsonFormat($payload);
+
+        return $payload;
+    }
+
 
     /**
      * @return CompletionResponse[]
@@ -154,7 +209,11 @@ class ClaudeClient extends BaseClient
                     ],
                 ];
 
-                $payload = $this->addJsonFormat($payload);
+                put_fixture('claude_pre_remap_results_completion_pool.json', $payload);
+
+                $payload = $this->modifyPayload($payload);
+
+                put_fixture('claude_post_remap_results_completion_pool.json', $payload);
 
                 $pool->retry(3, 6000)->withHeaders([
                     'x-api-key' => $api_token,
@@ -173,11 +232,15 @@ class ClaudeClient extends BaseClient
 
         foreach ($responses as $index => $response) {
             if ($response->successful()) {
-                foreach ($response->json()['content'] as $content) {
-                    $results[] = CompletionResponse::from([
-                        'content' => $content['text'],
+                    [$data, $tool_used, $stop_reason] = $this->getContentAndToolTypeFromResults($response);
+
+                    $results[] =CompletionResponse::from([
+                        'content' => $data,
+                        'tool_used' => $tool_used,
+                        'stop_reason' => $stop_reason,
+                        'input_tokens' => data_get($results, 'usage.input_tokens', null),
+                        'output_tokens' => data_get($results, 'usage.output_tokens', null),
                     ]);
-                }
             } else {
                 Log::error('Claude API Error ', [
                     'index' => $index,
@@ -286,10 +349,21 @@ class ClaudeClient extends BaseClient
     {
         $functions = LlmDriverFacade::getFunctions();
 
+        return $this->remapFunctions($functions);
+    }
+
+    /**
+     * @param FunctionDto[] $functions
+     * @return array
+     */
+    public function remapFunctions(array $functions): array
+    {
         return collect($functions)->map(function ($function) {
             $function = $function->toArray();
             $properties = [];
             $required = [];
+
+            $type = data_get($function, 'parameters.type', 'object');
 
             foreach (data_get($function, 'parameters.properties', []) as $property) {
                 $name = data_get($property, 'name');
@@ -301,17 +375,33 @@ class ClaudeClient extends BaseClient
                 $properties[$name] = [
                     'description' => data_get($property, 'description', null),
                     'type' => data_get($property, 'type', 'string'),
-                    'enum' => data_get($property, 'enum', []),
-                    'default' => data_get($property, 'default', null),
                 ];
             }
+
+            $itemsOrProperties = [
+                'type' => "object",
+                'properties' => $properties,
+            ];
+
+            if ($type === 'array') {
+                $itemsOrProperties = [
+                    "results" => [
+                        "type" => "array",
+                        'items' => [
+                            'type' => 'object',
+                            'properties' => $properties,
+                        ],
+                    ]
+                ];
+            }
+
 
             return [
                 'name' => data_get($function, 'name'),
                 'description' => data_get($function, 'description'),
                 'input_schema' => [
                     'type' => 'object',
-                    'properties' => $properties,
+                    'properties' => $itemsOrProperties,
                     'required' => $required,
                 ],
             ];

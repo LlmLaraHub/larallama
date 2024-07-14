@@ -1,6 +1,18 @@
 [
     {
-        "content": "**Role**\nA Summarization and Prompt Answering system that sticks to the context in this prompt.\n**Task**\nUsing the context of the prompt and the users query return a concise, clear, and accurate response.\n**Format**\nDeliver the response in a concise, clear Markdown format (Text). Use quotes as needed from the context.\n\n  **Users Input**:\n  Can you summarize the rfp for me\n\n\n  **Content to Summarize**:\n  ### START ALL SUMMARY DATA\n  Here is a summary of the key points from the provided information:\n\n# Summary\n\n## Project Overview\nThe company TechInnovate Solutions is seeking proposals to enhance their existing website and resolve issues with their API integration and frontend components. The main goals are to:\n\n1. **API Integration Problem**: Diagnose and fix the current issues with the API integration in the Laravel-based backend, ensuring smooth data flow between the frontend and backend.\n2. **Frontend Banner Quality**: Investigate and optimize the low-quality image display in the VueJS-powered banner on the homepage, improving the overall user experience and brand perception.\n\n## Technical Requirements\n- **Backend**: Laravel framework (version 8.0 or higher), PHP 7.4 or higher, MySQL database, RESTful API architecture.\n- **Frontend**: VueJS framework (version 3.0 or higher), HTML5, CSS3, JavaScript, responsive design, modern browser compatibility.\n\n## Scope of Work\n1. **API Issue Resolution**:\n   - Diagnose and fix the API integration problems\n   - Optimize API calls for improved performance\n   - Ensure proper error handling and logging\n   - Update API documentation\n\n2. **VueJS Banner Enhancement**:\n   - Investigate and resolve the low-quality image issues\n   - Implement image optimization techniques\n   - Ensure responsive design and improve loading times\n\n3. **General Improvements**:\n   - Conduct a codebase audit and implement critical optimizations\n   - Ensure cross-browser compatibility\n   - Improve overall website performance\n\n## Deliverables\n1. Fully functional API with resolved integration issues\n2. Optimized VueJS banner with high-quality images\n3. Updated codebase with implemented improvements\n4. Comprehensive documentation of changes and optimizations\n5. Knowledge transfer session with the in-house development team\n\n## Timeline\nThe project is expected to be completed within 2-3 weeks, with the following tentative timeline:\n- Week 1: API diagnosis and initial fixes\n- Week 2: VueJS banner optimization and general improvements\n- Week 3: Final testing, documentation, and knowledge transfer\n\n## Budget and Proposal Requirements\nThe company is looking for a cost-effective solution that meets their requirements. Proposals should include:\n1. Company\/individual overview and relevant experience\n2. Detailed approach to solving the issues\n3. Proposed timeline\n4. Cost breakdown\n5. Team structure (if applicable)\n6. At least two references from similar projects\n\nThe proposals will be evaluated based on technical expertise (40%), proposed approach and methodology (25%), cost effectiveness (20%), timeline and ability to meet deadlines (10%), and references and past performance (5%).\n  ### END ALL SUMMARY DATA",
+        "content": "test",
+        "role": "assistant"
+    },
+    {
+        "content": "test",
         "role": "user"
+    },
+    {
+        "content": "test should not be last",
+        "role": "assistant"
+    },
+    {
+        "role": "user",
+        "content": "Using the surrounding context to continue this response thread"
     }
 ]

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Domains\Prompts\EmailToDocumentSummary;
+use App\Domains\Prompts\EmailToWebContent;
 use App\Domains\Sources\SourceTypeEnum;
 use App\Models\Collection;
 use App\Models\Source;
@@ -40,6 +41,8 @@ class AssistantEmailBoxSourceController extends BaseSourceController
     {
         return [
             'summarize_email' => EmailToDocumentSummary::prompt('[CONTEXT]'),
+
+            'get_web_page' => EmailToWebContent::prompt('[CONTEXT]'),
         ];
     }
 }

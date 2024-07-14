@@ -1,0 +1,45 @@
+{
+    "model": "claude-3-haiku-20240307",
+    "max_tokens": 4096,
+    "messages": [
+        {
+            "role": "user",
+            "content": "test"
+        }
+    ],
+    "tools": [
+        {
+            "name": "reporting_json",
+            "description": "JSON Summary of the report",
+            "input_schema": {
+                "type": "object",
+                "properties": {
+                    "results": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "title": {
+                                    "description": "The title of the section",
+                                    "type": "string"
+                                },
+                                "content": {
+                                    "description": "The content of the section",
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                },
+                "required": [
+                    "title",
+                    "content"
+                ]
+            }
+        }
+    ],
+    "tool_choice": {
+        "type": "tool",
+        "name": "reporting_json"
+    }
+}

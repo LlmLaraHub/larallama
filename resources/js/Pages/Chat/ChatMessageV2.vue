@@ -43,7 +43,6 @@ const reuse = (prompt) => {
                                 <div
                                     class="hover:cursor-pointer flex justify-start gap-2 items-center">
                                     <span :class="{ 'underline': selected }">Sources</span>
-                                    <div class="badge badge-primary">{{ message?.message_document_references.length}}</div>
                                 </div>
                             </Tab>
                             <Tab as="div" v-slot="{ selected }">
