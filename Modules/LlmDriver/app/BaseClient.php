@@ -175,6 +175,11 @@ EOD;
     {
         $functions = LlmDriverFacade::getFunctions();
 
+        return $this->remapFunctions($functions);
+    }
+
+    public function remapFunctions(array $functions): array
+    {
         return collect($functions)->map(function ($function) {
             $function = $function->toArray();
             $properties = [];

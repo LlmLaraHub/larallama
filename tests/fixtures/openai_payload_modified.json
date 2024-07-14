@@ -1,0 +1,46 @@
+{
+    "model": "gpt-3.5-turbo-0125",
+    "messages": [
+        {
+            "role": "user",
+            "content": "### ROLE ###\nRole You are a JSON-only report builder. Your task is to analyze this content and extract requirements for this RFP, outputting the results in a specific JSON format, later we will use these requirements for other steps in the process.\n\n### TASK ###\nTask Analyze the CONTEXT provided, which represents a few pages of many in a report. Extract and summarize each requirement without losing important details. Make sure to break them up as \"small\" as possible so each item is a REQUIREMENT of the document\n\n### FORMAT ###\nOutput in JSON format as an Array of Objects with keys: title (string), content (string).\nNO SURROUNDING TEXT JUST VALID JSON! START WITH [ and END WITH ]\n\n### REPORT BELOW ###\n\n### 4.1 API Issue Resolution\n- Diagnose the current API integration problems\n- Implement necessary fixes to ensure smooth data flow between frontend and backend\n- Optimize API calls for improved performance\n- Ensure proper error handling and logging\n- Update API documentation as needed\n### 4.2 VueJS Banner Enhancement\n- Investigate the cause of low-quality images in the banner\n- Implement image optimization techniques\n- Ensure responsive design across various devices and screen sizes\n- Improve loading times for banner images\n- Implement lazy loading if appropriate\n### 4.3 General Improvements\n- Conduct a brief audit of the existing codebase\n- Suggest and implement any critical optimizations\n- Ensure cross-browser compatibility\n- Improve overall website performance"
+        }
+    ],
+    "tools": [
+        {
+            "type": "function",
+            "function": {
+                "name": "reporting_json",
+                "description": "JSON Summary of the report",
+                "parameters": {
+                    "type": "object",
+                    "properties": {
+                        "results": {
+                            "type": "array",
+                            "description": "The results of prompt",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "title": {
+                                        "description": "The title of the section",
+                                        "type": "string"
+                                    },
+                                    "content": {
+                                        "description": "The content of the section",
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    ],
+    "tool_choice": {
+        "type": "function",
+        "function": {
+            "name": "reporting_json"
+        }
+    }
+}

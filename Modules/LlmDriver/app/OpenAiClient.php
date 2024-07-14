@@ -4,8 +4,11 @@ namespace LlmLaraHub\LlmDriver;
 
 use App\Models\Setting;
 use Illuminate\Http\Client\Pool;
+use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use Laravel\Pennant\Feature;
+use LlmLaraHub\LlmDriver\Functions\FunctionDto;
 use LlmLaraHub\LlmDriver\Requests\MessageInDto;
 use LlmLaraHub\LlmDriver\Responses\CompletionResponse;
 use LlmLaraHub\LlmDriver\Responses\EmbeddingsResponseDto;
@@ -22,19 +25,52 @@ class OpenAiClient extends BaseClient
      */
     public function chat(array $messages): CompletionResponse
     {
+        $token = Setting::getSecret('openai', 'api_key');
 
-        $response = OpenAI::chat()->create([
-            'model' => $this->getConfig('openai')['models']['chat_model'],
-            'messages' => $this->messagesToArray($messages),
-        ]);
-
-        $results = null;
-
-        foreach ($response->choices as $result) {
-            $results = $result->message->content;
+        if (is_null($token)) {
+            throw new \Exception('Missing open ai api key');
         }
 
-        return new CompletionResponse($results);
+        $payload = [
+            'model' => $this->getConfig('openai')['models']['chat_model'],
+            'messages' => $this->messagesToArray($messages),
+        ];
+
+        $payload = $this->modifyPayload($payload);
+
+        $response = Http::withHeaders([
+            'Content-type' => 'application/json',
+        ])
+            ->withToken($token)
+            ->baseUrl($this->baseUrl)
+            ->timeout(240)
+            ->retry(3, function (int $attempt, \Exception $exception) {
+                Log::info('OpenAi API Error going to retry', [
+                    'attempt' => $attempt,
+                    'error' => $exception->getMessage(),
+                ]);
+
+                return 60000;
+            })
+            ->post('/chat/completions', $payload);
+
+        if ($response->failed()) {
+            Log::error('OpenAi API Error ', [
+                'error' => $response->body(),
+            ]);
+
+            throw new \Exception('OpenAi API Error Chat');
+        }
+
+        [$data, $tool_used, $stop_reason] = $this->getContentAndToolTypeFromResults($response);
+
+        return CompletionResponse::from([
+            'content' => $data,
+            'tool_used' => $tool_used,
+            'stop_reason' => $stop_reason,
+            'input_tokens' => data_get($response, 'usage.prompt_tokens', null),
+            'output_tokens' => data_get($response, 'usage.completion_tokens', null),
+        ]);
     }
 
     public function embedData(string $data): EmbeddingsResponseDto
@@ -72,6 +108,15 @@ class OpenAiClient extends BaseClient
 
         $responses = Http::pool(function (Pool $pool) use ($prompts, $token) {
             foreach ($prompts as $prompt) {
+                $payload = [
+                    'model' => $this->getConfig('openai')['models']['completion_model'],
+                    'messages' => [
+                        ['role' => 'user', 'content' => $prompt],
+                    ],
+                ];
+
+                $payload = $this->modifyPayload($payload);
+
                 $pool->withHeaders([
                     'content-type' => 'application/json',
                     'Authorization' => 'Bearer '.$token,
@@ -86,12 +131,7 @@ class OpenAiClient extends BaseClient
 
                         return 60000;
                     })
-                    ->post('/chat/completions', [
-                        'model' => $this->getConfig('openai')['models']['completion_model'],
-                        'messages' => [
-                            ['role' => 'user', 'content' => $prompt],
-                        ],
-                    ]);
+                    ->post('/chat/completions', $payload);
             }
 
         });
@@ -100,13 +140,14 @@ class OpenAiClient extends BaseClient
 
         foreach ($responses as $index => $response) {
             if ($response->ok()) {
-                $response = $response->json();
-                foreach (data_get($response, 'choices', []) as $result) {
-                    $result = data_get($result, 'message.content', '');
-                    $results[] = CompletionResponse::from([
-                        'content' => $result,
-                    ]);
-                }
+                [$data, $tool_used, $stop_reason] = $this->getContentAndToolTypeFromResults($response);
+                $results[] = CompletionResponse::from([
+                    'content' => $data,
+                    'tool_used' => $tool_used,
+                    'stop_reason' => $stop_reason,
+                    'input_tokens' => data_get($response, 'usage.prompt_tokens', null),
+                    'output_tokens' => data_get($response, 'usage.completion_tokens', null),
+                ]);
             } else {
                 Log::error('OpenAi API Error ', [
                     'index' => $index,
@@ -133,6 +174,8 @@ class OpenAiClient extends BaseClient
             ],
         ];
 
+        $payload = $this->modifyPayload($payload);
+
         $response = Http::withHeaders([
             'Content-type' => 'application/json',
         ])
@@ -149,15 +192,84 @@ class OpenAiClient extends BaseClient
             })
             ->post('/chat/completions', $payload);
 
-        $results = null;
+        if ($response->failed()) {
+            Log::error('OpenAi API Error ', [
+                'error' => $response->body(),
+            ]);
 
-        $response = $response->json();
-
-        foreach (data_get($response, 'choices', []) as $result) {
-            $results = data_get($result, 'message.content', '');
+            throw new \Exception('OpenAi API Error Chat');
         }
 
-        return new CompletionResponse($results);
+        [$data, $tool_used, $stop_reason] = $this->getContentAndToolTypeFromResults($response);
+
+        return CompletionResponse::from([
+            'content' => $data,
+            'tool_used' => $tool_used,
+            'stop_reason' => $stop_reason,
+            'input_tokens' => data_get($response, 'usage.prompt_tokens', null),
+            'output_tokens' => data_get($response, 'usage.completion_tokens', null),
+        ]);
+    }
+
+    public function getContentAndToolTypeFromResults(Response $results): array
+    {
+        $results = $results->json();
+        $tool_used = null;
+        $stop_reason = data_get($results, 'choices.0.finish_reason', 'stop');
+        $tool_calls = data_get($results, 'choices.0.message.tool_calls', []);
+
+        if ($stop_reason === 'tool_calls' || ! empty($tool_calls)) {
+            /**
+             * @TOOD
+             * The tool should be used here to get the
+             * output since it might be different
+             * for each tool
+             * Right now it assumes the JSON one is being used
+             */
+            foreach ($results['choices'] as $content) {
+                $tool_used = data_get($content, 'message.tool_calls.0.function.name');
+                $data = json_encode(data_get($content, 'message.tool_calls.0.function.arguments', []), JSON_THROW_ON_ERROR);
+            }
+        } else {
+            foreach (data_get($results, 'choices', []) as $result) {
+                $data = data_get($result, 'message.content', '');
+            }
+        }
+
+        return [$data, $tool_used, $stop_reason];
+    }
+
+    public function modifyPayload(array $payload): array
+    {
+        Log::info('LlmDriver::OpenAi::modifyPayload', [
+            'payload' => $payload,
+            'forceTool' => $this->forceTool,
+        ]);
+
+        if (! empty($this->forceTool)) {
+            $function = [$this->forceTool];
+            $function = $this->remapFunctions($function);
+
+            $payload['tools'] = $function;
+            $payload['tool_choice'] = [
+                'type' => 'function',
+                'function' => [
+                    'name' => $this->forceTool->name,
+                ],
+            ];
+        } else {
+            //I should add all the tools here?
+            if (Feature::active('all_tools')) {
+                $payload['tools'] = $this->getFunctions();
+                $payload['tool_choice'] = 'auto';
+            } else {
+                //$payload['tool_choice'] = 'none';
+            }
+        }
+
+        $payload = $this->addJsonFormat($payload);
+
+        return $payload;
     }
 
     /**
@@ -215,10 +327,21 @@ class OpenAiClient extends BaseClient
     {
         $functions = LlmDriverFacade::getFunctions();
 
+        return $this->remapFunctions($functions);
+
+    }
+
+    /**
+     * @param  FunctionDto[]  $functions
+     */
+    public function remapFunctions(array $functions): array
+    {
         return collect($functions)->map(function ($function) {
             $function = $function->toArray();
             $properties = [];
             $required = [];
+
+            $type = data_get($function, 'parameters.type', 'object');
 
             foreach (data_get($function, 'parameters.properties', []) as $property) {
                 $name = data_get($property, 'name');
@@ -230,8 +353,21 @@ class OpenAiClient extends BaseClient
                 $properties[$name] = [
                     'description' => data_get($property, 'description', null),
                     'type' => data_get($property, 'type', 'string'),
-                    'enum' => data_get($property, 'enum', []),
-                    'default' => data_get($property, 'default', null),
+                ];
+            }
+
+            $itemsOrProperties = $properties;
+
+            if ($type === 'array') {
+                $itemsOrProperties = [
+                    'results' => [
+                        'type' => 'array',
+                        'description' => 'The results of prompt',
+                        'items' => [
+                            'type' => 'object',
+                            'properties' => $properties,
+                        ],
+                    ],
                 ];
             }
 
@@ -242,9 +378,8 @@ class OpenAiClient extends BaseClient
                     'description' => data_get($function, 'description'),
                     'parameters' => [
                         'type' => 'object',
-                        'properties' => $properties,
+                        'properties' => $itemsOrProperties,
                     ],
-                    'required' => $required,
                 ],
             ];
         })->toArray();

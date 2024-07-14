@@ -71,6 +71,7 @@ return [
         'chatv2' => true,
         'reference_collection' => env('FEATURE_REFERENCE_COLLECTION', false),
         'date_range' => env('FEATURE_DATE_RANGE', true),
+        'all_tools' => env('FEATURE_ALL_TOOLS', false),
     ],
     'sources' => [
         'search_driver' => env('LARALAMMA_SEARCH_SOURCE', 'mock'),

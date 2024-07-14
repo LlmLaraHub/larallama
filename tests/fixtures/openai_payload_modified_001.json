@@ -1,0 +1,31 @@
+[
+    {
+        "type": "function",
+        "function": {
+            "name": "reporting_json",
+            "description": "JSON Summary of the report",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "results": {
+                        "type": "array",
+                        "description": "The results of prompt",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "title": {
+                                    "description": "The title of the section",
+                                    "type": "string"
+                                },
+                                "content": {
+                                    "description": "The content of the section",
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+]

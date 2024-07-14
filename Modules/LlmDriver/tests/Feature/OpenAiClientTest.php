@@ -4,6 +4,9 @@ namespace Tests\Feature;
 
 use App\Models\Setting;
 use Illuminate\Support\Facades\Http;
+use LlmLaraHub\LlmDriver\Functions\FunctionDto;
+use LlmLaraHub\LlmDriver\Functions\ParametersDto;
+use LlmLaraHub\LlmDriver\Functions\PropertyDto;
 use LlmLaraHub\LlmDriver\Requests\MessageInDto;
 use LlmLaraHub\LlmDriver\Responses\CompletionResponse;
 use LlmLaraHub\LlmDriver\Responses\EmbeddingsResponseDto;
@@ -70,19 +73,51 @@ class OpenAiClientTest extends TestCase
         $this->assertInstanceOf(CompletionResponse::class, $response);
     }
 
+    public function test_remap_array(): void
+    {
+        $dto = FunctionDto::from([
+            'name' => 'reporting_json',
+            'description' => 'JSON Summary of the report',
+            'parameters' => ParametersDto::from([
+                'type' => 'array',
+                'properties' => [
+                    PropertyDto::from([
+                        'name' => 'title',
+                        'description' => 'The title of the section',
+                        'type' => 'string',
+                        'required' => true,
+                    ]),
+                    PropertyDto::from([
+                        'name' => 'content',
+                        'description' => 'The content of the section',
+                        'type' => 'string',
+                        'required' => true,
+                    ]),
+                ],
+            ]),
+        ]);
+
+        $openaiClient = new \LlmLaraHub\LlmDriver\OpenAiClient();
+        $response = $openaiClient->remapFunctions([$dto]);
+        $shouldBe = get_fixture('openai_payload_modified.json');
+        $shouldBe = data_get($shouldBe, 'tools', []);
+        $this->assertEquals($shouldBe, $response);
+
+    }
+
     public function test_chat(): void
     {
-        OpenAI::fake([
-            ChatCreateResponse::fake([
+        Http::fake([
+            'api.openai.com/*' => Http::response([
                 'choices' => [
-                    [
-                        'message' => [
-                            'content' => 'awesome!',
-                        ],
+                    'messages' => [
+                        'content' => 'Foo bar',
                     ],
                 ],
             ]),
         ]);
+
+        Http::preventStrayRequests();
 
         $openaiClient = new \LlmLaraHub\LlmDriver\OpenAiClient();
         $response = $openaiClient->chat([
@@ -107,9 +142,6 @@ class OpenAiClientTest extends TestCase
             'choices' => data_get($data, 'choices', []),
         ];
 
-        // OpenAI::fake([
-        //     ChatCreateResponse::fake($response)
-        // ]);
         OpenAI::fake([
             ChatCreateResponse::fake([
                 'choices' => [

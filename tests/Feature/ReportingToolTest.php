@@ -83,7 +83,7 @@ CONTENT;
 ]',
         ]);
 
-        LlmDriverFacade::shouldReceive('driver->completionPool')
+        LlmDriverFacade::shouldReceive('driver->setForceTool->completionPool')
             ->times(5)
             ->andReturn([
                 $dto1,

@@ -247,7 +247,6 @@ class ClaudeClientTest extends TestCase
 
         $results = (new ClaudeClient)->remapFunctions([$dto]);
 
-
         $this->assertEquals(
             $shouldBe,
             $results
