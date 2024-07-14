@@ -163,11 +163,14 @@ class ClaudeClientTest extends TestCase
         });
         $openaiClient = new \LlmLaraHub\LlmDriver\ClaudeClient();
         $response = $openaiClient->getFunctions();
+
         $this->assertNotEmpty($response);
         $this->assertIsArray($response);
         $first = $response[0];
         $this->assertArrayHasKey('name', $first);
         $this->assertArrayHasKey('input_schema', $first);
+
+        $this->assertNotEmpty(data_get($first, 'input_schema.properties.prompt'));
 
         $this->assertNotEmpty($response);
     }
@@ -244,9 +247,6 @@ class ClaudeClientTest extends TestCase
 
         $results = (new ClaudeClient)->remapFunctions([$dto]);
 
-        //put_fixture('claude_remap_results.json', $results);
-
-        //dd($results);
 
         $this->assertEquals(
             $shouldBe,

@@ -8,6 +8,7 @@ use Illuminate\Http\Client\Response;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use Laravel\Pennant\Feature;
 use LlmLaraHub\LlmDriver\Functions\FunctionDto;
 use LlmLaraHub\LlmDriver\Requests\MessageInDto;
 use LlmLaraHub\LlmDriver\Responses\CompletionResponse;
@@ -162,13 +163,21 @@ class ClaudeClient extends BaseClient
 
         if (! empty($this->forceTool)) {
             $function = [$this->forceTool];
+
             $function = $this->remapFunctions($function);
 
             $payload['tools'] = $function;
+
             $payload['tool_choice'] = [
                 'type' => 'tool',
                 'name' => $this->forceTool->name,
             ];
+        } else {
+            if (Feature::active('all_tools')) {
+                $payload['tools'] = $this->getFunctions();
+            } else {
+                $payload['tools'] = [];
+            }
         }
 
         $payload = $this->addJsonFormat($payload);
@@ -208,11 +217,7 @@ class ClaudeClient extends BaseClient
                     ],
                 ];
 
-                put_fixture('claude_pre_remap_results_completion_pool.json', $payload);
-
                 $payload = $this->modifyPayload($payload);
-
-                put_fixture('claude_post_remap_results_completion_pool.json', $payload);
 
                 $pool->retry(3, 6000)->withHeaders([
                     'x-api-key' => $api_token,
@@ -376,10 +381,7 @@ class ClaudeClient extends BaseClient
                 ];
             }
 
-            $itemsOrProperties = [
-                'type' => 'object',
-                'properties' => $properties,
-            ];
+            $itemsOrProperties = $properties;
 
             if ($type === 'array') {
                 $itemsOrProperties = [
@@ -415,7 +417,6 @@ class ClaudeClient extends BaseClient
      */
     protected function remapMessages(array $messages, bool $userLast = false): array
     {
-        put_fixture('before_mapping.json', $messages);
         $messages = collect($messages)->map(function ($item) {
             if ($item->role === 'system') {
                 $item->role = 'assistant';
@@ -466,8 +467,6 @@ class ClaudeClient extends BaseClient
                 ];
             }
         }
-
-        put_fixture('after_mapping.json', $newMessagesArray);
 
         return $newMessagesArray;
     }
