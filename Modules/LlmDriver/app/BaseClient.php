@@ -35,6 +35,8 @@ abstract class BaseClient
 
     public function modifyPayload(array $payload): array
     {
+        $payload = $this->addJsonFormat($payload);
+
         return $payload;
     }
 
@@ -62,12 +64,6 @@ abstract class BaseClient
 
     public function addJsonFormat(array $payload): array
     {
-        if ($this->formatJson) {
-            $payload['response_format'] = [
-                'type' => 'json_object',
-            ];
-        }
-
         return $payload;
     }
 

@@ -33,6 +33,13 @@ class OllamaClient extends BaseClient
         ]);
     }
 
+    public function addJsonFormat(array $payload): array
+    {
+        //@NOTE Just too hard if it is an array of objects
+        //$payload['format'] = 'json';
+        return $payload;
+    }
+
     /**
      * This is to get functions out of the llm
      * if none are returned your system
@@ -89,13 +96,15 @@ class OllamaClient extends BaseClient
 
         $messages = $this->remapMessages($messages);
 
-        put_fixture('messages_llama3.json', $messages);
-
-        $response = $this->getClient()->post('/chat', [
+        $payload = [
             'model' => $this->getConfig('ollama')['models']['completion_model'],
             'messages' => $messages,
             'stream' => false,
-        ]);
+        ];
+
+        $payload = $this->modifyPayload($payload);
+
+        $response = $this->getClient()->post('/chat', $payload);
 
         $results = $response->json()['message']['content'];
 
@@ -123,15 +132,24 @@ class OllamaClient extends BaseClient
             $baseUrl
         ) {
             foreach ($prompts as $prompt) {
+                $payload = [
+                    'model' => $model,
+                    'prompt' => $prompt,
+                    'stream' => false,
+                ];
+
+                $payload = $this->modifyPayload($payload);
+
+                Log::info('Ollama Request', [
+                    'prompt' => $prompt,
+                    'payload' => $payload,
+                ]);
+
                 $pool->withHeaders([
                     'content-type' => 'application/json',
                 ])->timeout(300)
                     ->baseUrl($baseUrl)
-                    ->post('/generate', [
-                        'model' => $model,
-                        'prompt' => $prompt,
-                        'stream' => false,
-                    ]);
+                    ->post('/generate', $payload);
             }
         });
 

@@ -24,7 +24,6 @@ class TextChunkerTest extends TestCase
 
         $this->assertCount(9, $results);
 
-        //put_fixture("chunkable_text_results.json", $results);
         $this->assertEquals(get_fixture('chunkable_text_results.json'), $results);
     }
 

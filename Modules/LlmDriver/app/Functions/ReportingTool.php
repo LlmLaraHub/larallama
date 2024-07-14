@@ -2,12 +2,11 @@
 
 namespace LlmLaraHub\LlmDriver\Functions;
 
-use App\Domains\Messages\RoleEnum;
 use App\Domains\Prompts\ReportBuildingFindRequirementsPrompt;
-use App\Domains\Prompts\ReportingSummaryPrompt;
 use App\Domains\Reporting\ReportTypeEnum;
 use App\Domains\Reporting\StatusEnum;
 use App\Jobs\MakeReportSectionsJob;
+use App\Jobs\ReportingToolSummarizeReportJob;
 use App\Jobs\ReportMakeEntriesJob;
 use App\Models\Message;
 use App\Models\Report;
@@ -15,8 +14,6 @@ use Illuminate\Bus\Batch;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Log;
-use LlmLaraHub\LlmDriver\LlmDriverFacade;
-use LlmLaraHub\LlmDriver\Responses\CompletionResponse;
 use LlmLaraHub\LlmDriver\Responses\FunctionResponse;
 use LlmLaraHub\LlmDriver\ToolsHelper;
 
@@ -31,8 +28,6 @@ class ReportingTool extends FunctionContract
     protected string $response = '';
 
     protected array $results = [];
-
-    protected array $promptHistory = [];
 
     protected array $sectionJobs = [];
 
@@ -74,45 +69,26 @@ class ReportingTool extends FunctionContract
                 ])->name(sprintf('Reporting Entities Report Id %s', $report->id))
                     ->allowFailures()
                     ->finally(function (Batch $batch) use ($report) {
-                        $report->update([
-                            'status_entries_generation' => StatusEnum::Complete,
-                        ]);
+                        Bus::batch([
+                            new ReportingToolSummarizeReportJob($report),
+                        ])->name(sprintf('Reporting Tool Summarize Report Id %s', $report->id))
+                            ->allowFailures()
+                            ->dispatch();
                     })
                     ->dispatch();
 
             })
             ->dispatch();
 
-        notify_ui($message->getChat(), 'Building Summary');
-
-        $response = $this->summarizeReport($report);
-
         $report->update([
             'status_sections_generation' => StatusEnum::Running,
         ]);
 
-        $assistantMessage = $message->getChat()->addInput(
-            message: $response->content,
-            role: RoleEnum::Assistant,
-            systemPrompt: $message->getChat()->getChatable()->systemPrompt(),
-            show_in_thread: true,
-            meta_data: $message->meta_data,
-            tools: $message->tools
-        );
-
-        $this->savePromptHistory($assistantMessage,
-            implode("\n", $this->promptHistory));
-
-        $report->message_id = $assistantMessage->id;
-        $report->save();
-
-        notify_ui($message->getChat(), 'Building Solutions list');
-        notify_ui_report($report, 'Building Solutions list');
-        notify_ui_complete($report->getChat());
+        notify_ui($report->getChat(), 'Running');
 
         return FunctionResponse::from([
-            'content' => $response->content,
-            'prompt' => implode('\n', $this->promptHistory),
+            'content' => 'Building report and Sections and then summarizing',
+            'prompt' => '',
             'requires_followup' => false,
             'documentChunks' => collect([]),
             'save_to_message' => false,
@@ -157,23 +133,6 @@ class ReportingTool extends FunctionContract
                 ]);
             }
         }
-    }
-
-    protected function summarizeReport(Report $report): CompletionResponse
-    {
-        $sectionContent = $report->refresh()->sections->pluck('content')->toArray();
-        $sectionContent = implode("\n", $sectionContent);
-
-        $prompt = ReportingSummaryPrompt::prompt($sectionContent);
-
-        $this->promptHistory = [$prompt];
-
-        /** @var CompletionResponse $response */
-        $response = LlmDriverFacade::driver(
-            $report->getChatable()->getDriver()
-        )->completion($prompt);
-
-        return $response;
     }
 
     /**

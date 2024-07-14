@@ -5,6 +5,7 @@ namespace LlmLaraHub\LlmDriver\Functions;
 use App\Models\Document;
 use App\Models\Report;
 use App\Models\Section;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Log;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
 
@@ -22,6 +23,9 @@ class ReportingToolMakeSections
 
     protected function poolPrompt(array $prompts, Report $report, Document $document): void
     {
+        /**
+         * @NOTE if Format JSON not good enough will try this again
+         */
         $dto = FunctionDto::from([
             'name' => 'reporting_json',
             'description' => 'JSON Summary of the report',
@@ -44,12 +48,12 @@ class ReportingToolMakeSections
             ]),
         ]);
 
-        Log::info('LlmDriver::ClaudeClient::poolPrompt', [
+        Log::info('LlmDriver::Reporting::poolPrompt', [
             'driver' => $report->getDriver(),
-            'dto' => $dto,
+            'prompts' => $prompts,
         ]);
+
         $results = LlmDriverFacade::driver($report->getDriver())
-            ->setForceTool($dto)
             ->completionPool($prompts);
 
         foreach ($results as $resultIndex => $result) {
@@ -69,9 +73,10 @@ class ReportingToolMakeSections
             notify_ui_report($report, 'Building Requirements list');
 
             $contentDecoded = json_decode($content, true);
+            $contentDecoded = Arr::wrap($contentDecoded);
             foreach ($contentDecoded as $sectionIndex => $sectionText) {
-                $title = data_get($sectionText, 'title', 'NOT TITLE GIVEN');
-                $contentBody = data_get($sectionText, 'content', 'NOT CONTENT GIVEN');
+                $title = data_get($sectionText, 'title', 'NO TITLE GIVEN');
+                $contentBody = data_get($sectionText, 'content', 'NO CONTENT GIVEN');
                 Section::updateOrCreate([
                     'document_id' => $document->id,
                     'report_id' => $report->id,

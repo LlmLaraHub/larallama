@@ -107,6 +107,7 @@ class OpenAiClient extends BaseClient
         }
 
         $responses = Http::pool(function (Pool $pool) use ($prompts, $token) {
+
             foreach ($prompts as $prompt) {
                 $payload = [
                     'model' => $this->getConfig('openai')['models']['completion_model'],
@@ -268,6 +269,19 @@ class OpenAiClient extends BaseClient
         }
 
         $payload = $this->addJsonFormat($payload);
+
+        return $payload;
+    }
+
+    public function addJsonFormat(array $payload): array
+    {
+        // @NOTE the results are not great if you want an array of objects
+
+        // if ($this->formatJson) {
+        //     $payload['response_format'] = [
+        //         'type' => 'json_object',
+        //     ];
+        // }
 
         return $payload;
     }

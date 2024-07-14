@@ -85,6 +85,8 @@ onMounted(() => {
                 getting_results.value = false
                 alreadyCompleted.value = true;
                 rerunning.value = false;
+            } else if(e.updateMessage === 'Running') {
+                getting_results.value = true
             }
         });
 });

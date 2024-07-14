@@ -19,7 +19,7 @@ Task Analyze the CONTEXT provided, which represents a few pages of many in a rep
 
 ### FORMAT ###
 Output in JSON format as an Array of Objects with keys: title (string), content (string).
-NO SURROUNDING TEXT JUST VALID JSON! START WITH [ and END WITH ]
+NO SURROUNDING TEXT JUST VALID JSON! START WITH [ and END WITH ] even if only one item found.
 
 ### User Prompt ###
 $userPrompt

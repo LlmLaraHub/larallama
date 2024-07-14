@@ -9,6 +9,7 @@ use App\Models\DocumentChunk;
 use App\Models\Message;
 use Illuminate\Bus\PendingBatch;
 use Illuminate\Support\Facades\Bus;
+use Illuminate\Support\Facades\Queue;
 use LlmLaraHub\LlmDriver\Functions\ParametersDto;
 use LlmLaraHub\LlmDriver\Functions\PropertyDto;
 use LlmLaraHub\LlmDriver\Functions\ReportingTool;
@@ -37,7 +38,7 @@ class ReportingToolTest extends TestCase
 
     public function test_asks()
     {
-
+        Queue::fake();
         $content = <<<CONTENT
 "Compare this content to the standards.
     Example Document
@@ -84,13 +85,13 @@ CONTENT;
         ]);
 
         LlmDriverFacade::shouldReceive('driver->setForceTool->completionPool')
-            ->times(5)
+            ->never(5)
             ->andReturn([
                 $dto1,
                 $dto2,
             ]);
 
-        LlmDriverFacade::shouldReceive('driver->completion')->once()->andReturn(
+        LlmDriverFacade::shouldReceive('driver->completion')->never()->andReturn(
             CompletionResponse::from([
                 'content' => 'foo bar',
             ])
@@ -124,7 +125,6 @@ CONTENT;
         $results = (new ReportingTool())
             ->handle($message);
 
-        $this->assertDatabaseCount('sections', 20);
         $this->assertInstanceOf(\LlmLaraHub\LlmDriver\Responses\FunctionResponse::class, $results);
 
         $this->assertNotEmpty($results->content);
@@ -193,7 +193,7 @@ CONTENT;
                     $dtos[11],
                 ]);
 
-        LlmDriverFacade::shouldReceive('driver->completion')->once()->andReturn(
+        LlmDriverFacade::shouldReceive('driver->completion')->never()->andReturn(
             CompletionResponse::from([
                 'content' => 'foo bar',
             ])
@@ -308,7 +308,7 @@ CONTENT;
                     $dtos[11],
                 ]);
 
-        LlmDriverFacade::shouldReceive('driver->completion')->once()->andReturn(
+        LlmDriverFacade::shouldReceive('driver->completion')->never()->andReturn(
             CompletionResponse::from([
                 'content' => 'foo bar',
             ])

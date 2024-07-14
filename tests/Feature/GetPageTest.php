@@ -23,7 +23,6 @@ class GetPageTest extends TestCase
         $html = get_fixture('test_blog.html', false);
 
         $results = GetPage::handle($url);
-        //put_fixture('test_blog.html', $results, false);
     }
 
     public function test_iterator()
