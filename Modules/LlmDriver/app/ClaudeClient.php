@@ -127,7 +127,7 @@ class ClaudeClient extends BaseClient
         $tool_used = null;
         $stop_reason = data_get($results, 'stop_reason', 'end_turn');
 
-        if($stop_reason === 'tool_use') {
+        if ($stop_reason === 'tool_use') {
             /**
              * @TOOD
              * The tool should be used here to get the
@@ -166,7 +166,7 @@ class ClaudeClient extends BaseClient
 
             $payload['tools'] = $function;
             $payload['tool_choice'] = [
-                'type' => "tool",
+                'type' => 'tool',
                 'name' => $this->forceTool->name,
             ];
         }
@@ -175,7 +175,6 @@ class ClaudeClient extends BaseClient
 
         return $payload;
     }
-
 
     /**
      * @return CompletionResponse[]
@@ -232,15 +231,15 @@ class ClaudeClient extends BaseClient
 
         foreach ($responses as $index => $response) {
             if ($response->successful()) {
-                    [$data, $tool_used, $stop_reason] = $this->getContentAndToolTypeFromResults($response);
+                [$data, $tool_used, $stop_reason] = $this->getContentAndToolTypeFromResults($response);
 
-                    $results[] =CompletionResponse::from([
-                        'content' => $data,
-                        'tool_used' => $tool_used,
-                        'stop_reason' => $stop_reason,
-                        'input_tokens' => data_get($results, 'usage.input_tokens', null),
-                        'output_tokens' => data_get($results, 'usage.output_tokens', null),
-                    ]);
+                $results[] = CompletionResponse::from([
+                    'content' => $data,
+                    'tool_used' => $tool_used,
+                    'stop_reason' => $stop_reason,
+                    'input_tokens' => data_get($results, 'usage.input_tokens', null),
+                    'output_tokens' => data_get($results, 'usage.output_tokens', null),
+                ]);
             } else {
                 Log::error('Claude API Error ', [
                     'index' => $index,
@@ -353,8 +352,7 @@ class ClaudeClient extends BaseClient
     }
 
     /**
-     * @param FunctionDto[] $functions
-     * @return array
+     * @param  FunctionDto[]  $functions
      */
     public function remapFunctions(array $functions): array
     {
@@ -379,22 +377,21 @@ class ClaudeClient extends BaseClient
             }
 
             $itemsOrProperties = [
-                'type' => "object",
+                'type' => 'object',
                 'properties' => $properties,
             ];
 
             if ($type === 'array') {
                 $itemsOrProperties = [
-                    "results" => [
-                        "type" => "array",
+                    'results' => [
+                        'type' => 'array',
                         'items' => [
                             'type' => 'object',
                             'properties' => $properties,
                         ],
-                    ]
+                    ],
                 ];
             }
-
 
             return [
                 'name' => data_get($function, 'name'),

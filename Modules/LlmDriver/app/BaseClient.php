@@ -19,7 +19,8 @@ abstract class BaseClient
 
     protected ?FunctionDto $forceTool = null;
 
-    public function setForceTool(FunctionDto $tool): self {
+    public function setForceTool(FunctionDto $tool): self
+    {
         $this->forceTool = $tool;
 
         return $this;

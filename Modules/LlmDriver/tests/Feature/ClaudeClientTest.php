@@ -213,7 +213,8 @@ class ClaudeClientTest extends TestCase
         });
     }
 
-    public function test_remap_array() : void {
+    public function test_remap_array(): void
+    {
 
         $payload = get_fixture('payload_modified.json');
 
@@ -237,8 +238,8 @@ class ClaudeClientTest extends TestCase
                         'type' => 'string',
                         'required' => true,
                     ]),
-                ]
-            ])
+                ],
+            ]),
         ]);
 
         $results = (new ClaudeClient)->remapFunctions([$dto]);
@@ -253,7 +254,8 @@ class ClaudeClientTest extends TestCase
         );
     }
 
-    public function test_tool_response() : void {
+    public function test_tool_response(): void
+    {
 
         $data = get_fixture('response_tools_with_modified.json');
 
@@ -262,7 +264,7 @@ class ClaudeClientTest extends TestCase
             'stop_sequence' => null,
             'usage' => [
                 'input_tokens' => 808,
-                'output_tokens' => 254
+                'output_tokens' => 254,
             ],
             'content' => $data['content'],
         ];
@@ -291,8 +293,8 @@ class ClaudeClientTest extends TestCase
                         'type' => 'string',
                         'required' => true,
                     ]),
-                ]
-            ])
+                ],
+            ]),
         ]);
 
         $results = (new ClaudeClient)->setForceTool($dto)->completion('test');

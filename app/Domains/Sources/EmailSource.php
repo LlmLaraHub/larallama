@@ -62,11 +62,7 @@ class EmailSource extends BaseSource
              * This turns the email into a document but what if the user wants to do something with the
              * data in the email. Like Parse URLs or Recipe ideas etc
              * The Prompt of the Source should drive all of this
-             *
              */
-
-
-
             $baseSource = EmailTransformer::transform(baseSource: $this);
             /**
              * @NOTE

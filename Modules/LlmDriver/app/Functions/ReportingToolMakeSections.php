@@ -40,8 +40,8 @@ class ReportingToolMakeSections
                         'type' => 'string',
                         'required' => true,
                     ]),
-                ]
-            ])
+                ],
+            ]),
         ]);
 
         Log::info('LlmDriver::ClaudeClient::poolPrompt', [
