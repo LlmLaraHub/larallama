@@ -53,9 +53,18 @@ class AppServiceProvider extends ServiceProvider
             return false;
         });
 
+        Feature::define('editor', function (User $user) {
+            if (config('llmdriver.features.editor')) {
+                return true;
+            }
+
+            return false;
+        });
+
         Feature::define('verification_prompt_tags', function (User $user) {
             return false;
         });
+
 
         Feature::define('verification_prompt', function (User $user) {
             return false;

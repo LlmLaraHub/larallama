@@ -7,23 +7,34 @@
             <InputError :message="modelValue.errors.name" class="mt-2" />
         </div>
         <div class="col-span-6 sm:col-span-6">
-            <InputLabel value="Content (Markdown is ideal)" />
-            <TextArea v-model="modelValue.content" type="text" class="mt-1 block w-full" rows="30"/>
+            <InputLabel value="Content" />
+
+            <Editor
+                v-if="usePage().props.features.editor"
+                v-model="modelValue.content" />
+
+            <TextArea v-else
+                      v-model="modelValue.content" type="text"
+                      class="w-full textarea textarea-secondary" rows="30"/>
             <InputError :message="modelValue.errors.content" class="mt-2" />
         </div>
     </div>
 </template>
 
 <script setup>
+
+
 import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import TextInput from '@/Components/TextInput.vue';
-import TextArea from '@/Components/TextArea.vue';
-import LlmType from './LlmType.vue';
-import EmbeddingType from './EmbeddingType.vue';
+import Editor from '@/Components/Editor.vue';
+import {usePage} from "@inertiajs/vue3";
+
 const props = defineProps({
     modelValue: Object,
 });
+
+
 
 
 

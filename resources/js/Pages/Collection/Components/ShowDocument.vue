@@ -28,11 +28,15 @@
                     </div>
                     <div class="relative mt-6 flex-1 px-4 sm:px-6" v-auto-animate>
                         <Tags :document="document"></Tags>
-                        <div class="flex justify-end gap-2 items-center">
+                        <div class="flex justify-end gap-2 items-center mt-2">
                             <UpdateSummary
                                 @startingUpdate="startingUpdate"
                                 @updateSummary="updateSummary"
                                 :document="document"></UpdateSummary>
+                            <button
+                                v-if="false"
+                                type="button" class="btn btn-ghost rounded-none" @click="toggleEdit">
+                                edit</button>
                         </div>
                       <h2 class="font-bold">Summary:</h2>
                         <div v-if="updating" class="mt-10">
@@ -44,8 +48,15 @@
                             </div>
                         </div>
                       <div
-                          v-if="!updating"
+                          v-if="!updating && !showEdit"
                           class="prose  mb-10 mt-5" v-html="documentToShow.summary_markdown"></div>
+                        <div v-if="showEdit && !updating && false">
+                            <MdEditor
+                                theme="dark"
+                                language="en"
+                                :preview=false
+                                v-model="documentToShow.summary" />
+                        </div>
                     </div>
                   </div>
                 </DialogPanel>
@@ -60,6 +71,9 @@
 
 
 <script setup>
+
+import { MdEditor } from 'md-editor-v3';
+import 'md-editor-v3/lib/style.css';
 import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } from '@headlessui/vue'
 import { XMarkIcon } from '@heroicons/vue/24/outline'
 import Tags from '@/Components/Tags.vue';
@@ -78,9 +92,15 @@ onMounted(() => {
     documentToShow.value = props.document;
 });
 
+const showEdit = ref(false);
+
 const emit = defineEmits(['closing']);
 
 const updating = ref(false);
+
+const toggleEdit = () => {
+    showEdit.value = !showEdit.value;
+}
 
 const startingUpdate = () => {
     updating.value = true;

@@ -19,14 +19,26 @@
         "vue": "^3.3.13"
     },
     "dependencies": {
+        "@codemirror/autocomplete": "^6.17.0",
+        "@editorjs/editorjs": "^2.30.2",
         "@formkit/auto-animate": "^0.8.1",
         "@headlessui/vue": "^1.7.19",
         "@heroicons/vue": "^2.1.1",
+        "@kangc/v-md-editor": "^2.3.18",
+        "@tiptap/extension-bubble-menu": "^2.5.4",
+        "@tiptap/extension-color": "^2.5.1",
+        "@tiptap/extension-list-item": "^2.5.1",
+        "@tiptap/extension-text-style": "^2.5.1",
+        "@tiptap/pm": "^2.5.4",
+        "@tiptap/starter-kit": "^2.5.4",
+        "@tiptap/vue-3": "^2.5.4",
         "@vitejs/plugin-basic-ssl": "^1.1.0",
         "apexcharts": "^3.47.0",
         "axios": "^1.6.4",
+        "easymde": "^2.18.0",
         "laravel-echo": "^1.16.1",
         "laravel-vite-plugin": "^1.0",
+        "md-editor-v3": "^4.17.3",
         "puppeteer": "^22.7.1",
         "pusher-js": "^8.4.0-rc2",
         "theme-change": "^2.5.0",
@@ -34,6 +46,8 @@
         "vue-toastification": "^2.0.0-rc.5",
         "vue-upload-component": "^3.1.15",
         "vue3-apexcharts": "^1.5.2",
-        "vue3-dropzone": "^2.2.1"
+        "vue3-dropzone": "^2.2.1",
+        "vue3-easymde": "^1.0.1",
+        "vue3-markdown": "^1.1.9"
     }
 }

@@ -9,7 +9,6 @@ import VueApexCharts from "vue3-apexcharts";
 import Toast, { TYPE }  from "vue-toastification";
 import { autoAnimatePlugin } from '@formkit/auto-animate/vue'
 
-
 import "vue-toastification/dist/index.css";
 const appName = import.meta.env.VITE_APP_NAME || 'Template App';
 
