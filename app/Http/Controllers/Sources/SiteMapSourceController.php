@@ -48,6 +48,7 @@ class SiteMapSourceController extends BaseSourceController
         Source::create([
             'title' => $validated['title'],
             'details' => $validated['details'],
+            'user_id' => $this->getUserId($collection),
             'recurring' => $validated['recurring'],
             'active' => $validated['active'],
             'collection_id' => $collection->id,

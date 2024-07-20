@@ -39,6 +39,8 @@ class WebhookSourceControllerTest extends TestCase
         $this->assertEquals(SourceTypeEnum::WebhookSource, $source->type);
 
         $this->assertEquals('foobar', $source->secrets['token']);
+
+        $this->assertNotNull($source->user_id);
     }
 
     public function test_update()

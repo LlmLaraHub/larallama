@@ -43,6 +43,11 @@ class Source extends Model implements HasDrivers
         });
     }
 
+    public function getPrompt(): string
+    {
+        return $this->details;
+    }
+
     public function getChatable(): HasDrivers
     {
         return $this->collection->getChatable();
@@ -75,6 +80,11 @@ class Source extends Model implements HasDrivers
     public function getDriver(): string
     {
         return $this->collection->getDriver();
+    }
+
+    public function chat(): BelongsTo
+    {
+        return $this->belongsTo(Chat::class);
     }
 
     public function getEmbeddingDriver(): string

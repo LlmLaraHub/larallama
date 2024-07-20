@@ -35,6 +35,7 @@ class EmailBoxSourceController extends BaseSourceController
             'details' => $validated['details'],
             'recurring' => $validated['recurring'],
             'active' => $validated['active'],
+            'user_id' => $this->getUserId($collection),
             'collection_id' => $collection->id,
             'type' => $this->sourceTypeEnum,
             'slug' => str(Str::random(12))->remove('+')->toString(),

@@ -49,6 +49,7 @@ class FeedSourceController extends BaseSourceController
             'title' => $validated['title'],
             'details' => $validated['details'],
             'recurring' => $validated['recurring'],
+            'user_id' => $this->getUserId($collection),
             'active' => $validated['active'],
             'collection_id' => $collection->id,
             'type' => $this->sourceTypeEnum,

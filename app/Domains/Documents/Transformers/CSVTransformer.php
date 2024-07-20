@@ -26,7 +26,6 @@ class CSVTransformer
 
         $filePath = $this->document->pathToFile();
 
-        //$filePath = null, string $disk = null, string $readerType = null
         $collection = (new DocumentsImport())
             ->toCollection($filePath, null, $this->readerType);
 
@@ -47,6 +46,20 @@ class CSVTransformer
                         return remove_ascii($key.': '.$item);
                     })->implode("\n");
 
+                /**
+                 * @TODO
+                 * We have the text but what does the user want to do with the text
+                 * 1) Here we should have a source with a chat_id or make the chat id
+                 * 2) this becomes a message (that is a lot of them?)
+                 * 3) then the LLM gets the sources prompt and sees what the user wants to do with the data.
+                 * 4) Example "Take these dates and save them to the document start and end data then save the content to the document as an event"
+                 *    Then tag the document by the Region seen in the data (or hard coded in the prompt)
+                 * 5) The Prompt using OrchestrateV2 should take the Chat and Message and start building out the results
+                 *    this will update or create a document
+                 *    this will find start_date and end_date new fields in a document
+                 *    this will tag the document Region: Foobar
+                 *    NOTE: We already have date_range so bummer it is created_at
+                 */
                 $file_name = 'row_'.$rowNumber.'_'.str($document->file_path)->beforeLast('.')->toString().'.txt';
 
                 Storage::disk('collections')

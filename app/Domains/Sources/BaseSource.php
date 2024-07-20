@@ -4,6 +4,7 @@ namespace App\Domains\Sources;
 
 use App\Domains\Prompts\PromptMerge;
 use App\Domains\UnStructured\StructuredTypeEnum;
+use App\Helpers\ChatHelperTrait;
 use App\Jobs\DocumentProcessingCompleteJob;
 use App\Jobs\SummarizeDocumentJob;
 use App\Jobs\VectorlizeDataJob;
@@ -21,6 +22,8 @@ use LlmLaraHub\TagFunction\Jobs\TagDocumentJob;
 
 abstract class BaseSource
 {
+    use ChatHelperTrait;
+
     public string $batchTitle = 'Chunking Source';
 
     public static string $description = 'Sources are ways we get data into the system. They are the core of the system.';
@@ -214,5 +217,18 @@ MESSAGE;
             ->implode("\n");
 
         return $content;
+    }
+
+    public function getSourceFromSlug(string $slug): ?Source
+    {
+        $source = Source::where('type', $this->sourceTypeEnum)
+            ->slug($slug)
+            ->first();
+
+        if ($source) {
+            return $source;
+        }
+
+        return null;
     }
 }

@@ -42,6 +42,7 @@ class WebPageSourceController extends BaseSourceController
             'active' => $validated['active'],
             'collection_id' => $collection->id,
             'type' => $this->sourceTypeEnum,
+            'user_id' => $this->getUserId($collection),
             'meta_data' => $validated['meta_data'],
         ]);
     }

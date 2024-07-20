@@ -35,7 +35,7 @@ class EmailClient
      * @throws \Webklex\PHPIMAP\Exceptions\MessageNotFoundException
      * @throws \Webklex\PHPIMAP\Exceptions\RuntimeException
      */
-    public function handle(CredentialsDto $credentials, bool $delete = true): array
+    public function handle(CredentialsDto $credentials, bool $delete = false): array
     {
         $mail = [];
 
@@ -107,6 +107,7 @@ class EmailClient
                                 'subject' => $message->getSubject(),
                                 'date' => $message->getDate()->toString(),
                                 'header' => $message->getHeader()->raw,
+                                'email_message' => $message,
                             ]);
 
                             $mail[] = $messageDto;

@@ -34,6 +34,7 @@ class WebhookSourceController extends BaseSourceController
             'details' => $validated['details'],
             'recurring' => $validated['recurring'],
             'active' => $validated['active'],
+            'user_id' => $this->getUserId($collection),
             'collection_id' => $collection->id,
             'slug' => str(Str::random(16))->toString(),
             'type' => $this->sourceTypeEnum,

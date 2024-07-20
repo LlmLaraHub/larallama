@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Domains\Recurring\RecurringTypeEnum;
 use App\Domains\Sources\SourceTypeEnum;
+use App\Models\Chat;
 use App\Models\Collection;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -23,6 +24,8 @@ class SourceFactory extends Factory
             'title' => $this->faker->name,
             'slug' => fake()->word,
             'collection_id' => Collection::factory(),
+            'user_id' => null,
+            'chat_id' => Chat::factory(),
             'details' => $this->faker->sentence, // 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.
             'recurring' => RecurringTypeEnum::Daily,
             'active' => true,
