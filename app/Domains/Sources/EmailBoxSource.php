@@ -5,8 +5,6 @@ namespace App\Domains\Sources;
 use App\Domains\EmailParser\CredentialsDto;
 use App\Models\Source;
 use Facades\App\Domains\EmailParser\EmailClient;
-use Facades\App\Domains\Transformers\EmailTransformer;
-use Illuminate\Support\Facades\Log;
 use Facades\App\Domains\Sources\EmailSource as EmailSourceFacade;
 
 class EmailBoxSource extends EmailSource

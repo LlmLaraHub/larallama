@@ -37,6 +37,7 @@ class FeedSource extends BaseSource
         $jobs = [];
 
         foreach ($feedItems as $feedItem) {
+
             $webResponseDto = WebResponseDto::from([
                 'url' => $feedItem['link'],
                 'title' => $feedItem['title'],
@@ -44,7 +45,9 @@ class FeedSource extends BaseSource
                 'meta_data' => $feedItem,
                 'profile' => [],
             ]);
+
             $jobs[] = new GetWebContentJob($source, $webResponseDto);
+
         }
 
         Bus::batch($jobs)

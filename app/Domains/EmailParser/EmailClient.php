@@ -66,7 +66,6 @@ class EmailClient
 
         try {
 
-
             $client->connect();
 
             Log::info('Connected to email box', [

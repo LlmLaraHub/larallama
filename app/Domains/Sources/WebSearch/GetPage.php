@@ -24,7 +24,7 @@ class GetPage
         return new static($collection);
     }
 
-    public function handle(string $url): string
+    public function handle(string $url, bool $parseHtml = true): string
     {
         $results = Browsershot::url($url)
             ->dismissDialogs()
