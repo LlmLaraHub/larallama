@@ -5,6 +5,7 @@ namespace App\Domains\EmailParser;
 use App\Jobs\MailBoxParserJob;
 use Facades\App\Domains\Sources\EmailSource;
 use Illuminate\Support\Facades\Bus;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Webklex\IMAP\Facades\Client as ClientFacade;
 use Webklex\PHPIMAP\Message;
@@ -24,6 +25,7 @@ class Client
 
         $client = ClientFacade::account('default');
         $client->connect();
+
 
         $folders = $client->getFolders(false);
 

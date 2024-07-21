@@ -65,6 +65,8 @@ class EmailClient
         $client = EmailClientFacade::setConfig($config);
 
         try {
+
+
             $client->connect();
 
             Log::info('Connected to email box', [
