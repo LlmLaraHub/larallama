@@ -33,4 +33,19 @@ trait ChatHelperTrait
 
         return $collection->team?->user_id;
     }
+
+    public function ifNotActionRequired(string $results): bool {
+        // @NOTE llms sometimes do not return the right
+        // string for example.
+        // false becomes false, "false" or "False" etc.
+
+        $results = str($results)
+            ->trim()
+            ->lower()
+            ->remove('"')
+            ->remove("'")
+            ->toString();
+
+        return $results == "false";
+    }
 }

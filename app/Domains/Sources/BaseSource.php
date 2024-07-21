@@ -18,11 +18,12 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Log;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
+use LlmLaraHub\LlmDriver\ToolsHelper;
 use LlmLaraHub\TagFunction\Jobs\TagDocumentJob;
 
 abstract class BaseSource
 {
-    use ChatHelperTrait;
+    use ChatHelperTrait, ToolsHelper;
 
     public string $batchTitle = 'Chunking Source';
 

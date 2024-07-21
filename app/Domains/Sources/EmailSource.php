@@ -53,72 +53,73 @@ class EmailSource extends BaseSource
 
         $this->meta_data = $this->mailDto->toArray();
 
-        Log::info('[LaraChain] - Running Email Source');
-
-        //use the users source prompt to create this next step
-        //track the results in a chat_id thread
-        //and as a message?
-        //then using the source the results will do something with the content
-        // and then delete the email
-        // but we can leave it if it returns false?
-        // still too much coding there how do I let the tool do it.
-
         $prompt = PromptMerge::merge(
             ['[CONTEXT]'],
             [$this->content],
             $source->getPrompt()
         );
 
+        Log::info('[LaraChain] - Running Email Source', [
+            'prompt' => $prompt,
+        ]);
+
+
         $chat = $source->chat;
 
-        $chat->addInput(
-            message: $prompt,
-            role: RoleEnum::User,
-            show_in_thread: true,
-            meta_data: MetaDataDto::from([
-                'driver' => $source->getDriver(),
-                'source' => $source->title,
-            ]),
-        );
+
 
         $results = LlmDriverFacade::driver(
             $source->getDriver()
         )->completion($prompt);
 
-        $chat->addInput(
-            message: $results->content,
-            role: RoleEnum::Assistant,
-            show_in_thread: true,
-            meta_data: MetaDataDto::from([
-                'driver' => $source->getDriver(),
-                'source' => $source->title,
-            ]),
-        );
+        if($this->ifNotActionRequired($results->content)) {
+            Log::info('[LaraChain] - Email Source Skipping', [
+                'prompt' => $prompt,
+            ]);
+        } else {
 
-        //@TODO how to look for false
-        // surface this "power" into the UI.
-        // tag or store the fact we checked this emails
+            $userMessage = $chat->addInput(
+                message: $prompt,
+                role: RoleEnum::User,
+                show_in_thread: true,
+                meta_data: MetaDataDto::from([
+                    'driver' => $source->getDriver(),
+                    'source' => $source->title,
+                ]),
+            );
 
-        $document = Document::updateOrCreate([
-            'source_id' => $source->id,
-            'type' => TypesEnum::Email,
-            'subject' => $this->mailDto->subject,
-            'collection_id' => $source->collection_id,
-        ], [
-            'summary' => $results->content,
-            'meta_data' => $this->mailDto->toArray(),
-            'original_content' => $this->mailDto->body,
-            'status_summary' => StatusEnum::Pending,
-            'status' => StatusEnum::Pending,
-        ]);
+            $document = Document::updateOrCreate([
+                'source_id' => $source->id,
+                'type' => TypesEnum::Email,
+                'subject' => $this->mailDto->subject,
+                'collection_id' => $source->collection_id,
+            ], [
+                'summary' => $results->content,
+                'meta_data' => $this->mailDto->toArray(),
+                'original_content' => $this->mailDto->body,
+                'status_summary' => StatusEnum::Pending,
+                'status' => StatusEnum::Pending,
+            ]);
 
-        Bus::batch([new ChunkDocumentJob($document)])
-            ->name("Processing Email {$this->mailDto->subject}")
-            ->allowFailures()
-            ->dispatch();
+            Bus::batch([new ChunkDocumentJob($document)])
+                ->name("Processing Email {$this->mailDto->subject}")
+                ->allowFailures()
+                ->dispatch();
 
-        //should we delete the email?
-        // right now it gets set to seen
-        // on the MailDto we have options
+            $assistantMessage = $chat->addInput(
+                message: $results->content,
+                role: RoleEnum::Assistant,
+                show_in_thread: true,
+                meta_data: MetaDataDto::from([
+                    'driver' => $source->getDriver(),
+                    'source' => $source->title,
+                ]),
+            );
+
+            $this->savePromptHistory(
+                message: $assistantMessage,
+                prompt: $prompt);
+        }
+
     }
 }

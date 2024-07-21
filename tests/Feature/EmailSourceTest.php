@@ -131,4 +131,49 @@ BODY;
 
         Bus::assertBatchCount(1);
     }
+
+
+    public function test_no_action_required()
+    {
+        Bus::fake();
+        $source = Source::factory()->create([
+            'slug' => 'test',
+            'type' => SourceTypeEnum::EmailSource,
+        ]);
+
+        LlmDriverFacade::shouldReceive('driver->completion')->once()->andReturn(
+            CompletionResponse::from([
+                'content' => 'False',
+            ])
+        );
+
+        $body = <<<'BODY'
+Quis ea esse velit id id eu consectetur deserunt exercitation exercitation. Nisi aliqua ipsum fugiat laborum aliquip nostrud eu tempor non cillum Lorem non dolor proident sunt. Irure commodo aliqua reprehenderit deserunt sint irure in excepteur quis eiusmod ullamco aliquip. Dolore tempor ea non ut.Quis ea esse velit id id eu consectetur deserunt exercitation exercitation. Nisi aliqua ipsum fugiat laborum aliquip nostrud eu tempor non cillum Lorem non dolor proident sunt. Irure commodo aliqua reprehenderit deserunt sint irure in excepteur quis eiusmod ullamco aliquip. Dolore tempor ea non ut.
+Quis ea esse velit id id eu consectetur deserunt exercitation exercitation. Nisi aliqua ipsum fugiat laborum aliquip nostrud eu tempor non cillum Lorem non dolor proident sunt. Irure commodo aliqua reprehenderit deserunt sint irure in excepteur quis eiusmod ullamco aliquip. Dolore tempor ea non ut.
+Quis ea esse velit id id eu consectetur deserunt exercitation exercitation. Nisi aliqua ipsum fugiat laborum aliquip nostrud eu tempor non cillum Lorem non dolor proident sunt. Irure commodo aliqua reprehenderit deserunt sint irure in excepteur quis eiusmod ullamco aliquip. Dolore tempor ea non ut.
+Quis ea esse velit id id eu consectetur deserunt exercitation exercitation. Nisi aliqua ipsum fugiat laborum aliquip nostrud eu tempor non cillum Lorem non dolor proident sunt. Irure commodo aliqua reprehenderit deserunt sint irure in excepteur quis eiusmod ullamco aliquip. Dolore tempor ea non ut.
+Quis ea esse velit id id eu consectetur deserunt exercitation exercitation. Nisi aliqua ipsum fugiat laborum aliquip nostrud eu tempor non cillum Lorem non dolor proident sunt. Irure commodo aliqua reprehenderit deserunt sint irure in excepteur quis eiusmod ullamco aliquip. Dolore tempor ea non ut.
+Quis ea esse velit id id eu consectetur deserunt exercitation exercitation. Nisi aliqua ipsum fugiat laborum aliquip nostrud eu tempor non cillum Lorem non dolor proident sunt. Irure commodo aliqua reprehenderit deserunt sint irure in excepteur quis eiusmod ullamco aliquip. Dolore tempor ea non ut.
+
+BODY;
+
+        $dto = MailDto::from([
+            'to' => 'info+12345@llmassistant.io',
+            'from' => 'foo@var.com',
+            'subject' => 'This is it',
+            'header' => 'This is header',
+            'body' => $body,
+        ]);
+
+        $emailSource = new \App\Domains\Sources\EmailSource();
+        $emailSource->setMailDto($dto)->handle($source);
+
+        $this->assertDatabaseCount('documents', 0);
+        $this->assertDatabaseCount('chats', 1);
+        $this->assertDatabaseCount('messages', 1);
+
+        $this->assertNotNull($source->chat_id);
+
+        Bus::assertBatchCount(0);
+    }
 }
