@@ -14,11 +14,11 @@ return new class extends Migration
         Schema::create('source_tasks', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(\App\Models\Source::class);
-            $table->text("task_key");
+            $table->text('task_key');
             $table->timestamps();
         });
 
-        Schema::table('source_tasks', function(Blueprint $table) {
+        Schema::table('source_tasks', function (Blueprint $table) {
             $table->index(['source_id', 'task_key']);
         });
     }

@@ -49,7 +49,7 @@ class EmailSource extends BaseSource
 
         $key = md5($this->mailDto->date.$this->mailDto->from.$source->id);
 
-        if(SourceTask::where('source_id', $source->id)->where('task_key', $key)->exists()) {
+        if (SourceTask::where('source_id', $source->id)->where('task_key', $key)->exists()) {
             return;
         }
 

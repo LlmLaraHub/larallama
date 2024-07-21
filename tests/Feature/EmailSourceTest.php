@@ -142,7 +142,6 @@ BODY;
             'type' => SourceTypeEnum::EmailSource,
         ]);
 
-
         LlmDriverFacade::shouldReceive('driver->completion')->never();
 
         $body = <<<'BODY'

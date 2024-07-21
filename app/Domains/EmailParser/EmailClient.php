@@ -36,8 +36,8 @@ class EmailClient
      * @throws \Webklex\PHPIMAP\Exceptions\RuntimeException
      */
     public function handle(CredentialsDto $credentials,
-                           bool $delete = false,
-                            int $limit = 10): array
+        bool $delete = false,
+        int $limit = 10): array
     {
         $mail = [];
 

@@ -81,7 +81,7 @@ class ChunkDocumentJob implements ShouldQueue
             ];
         }
 
-        $name = sprintf("Chunking Document Type %s id %d ", $document->type->name, $document->id);
+        $name = sprintf('Chunking Document Type %s id %d ', $document->type->name, $document->id);
 
         Bus::batch($chunks)
             ->name($name)
