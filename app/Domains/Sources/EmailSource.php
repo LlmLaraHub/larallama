@@ -14,7 +14,6 @@ use App\Models\Source;
 use Facades\App\Domains\EmailParser\Client;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Log;
-use Laravel\Prompts\Prompt;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
 
 class EmailSource extends BaseSource
@@ -63,16 +62,13 @@ class EmailSource extends BaseSource
             'prompt' => $prompt,
         ]);
 
-
         $chat = $source->chat;
-
-
 
         $results = LlmDriverFacade::driver(
             $source->getDriver()
         )->completion($prompt);
 
-        if($this->ifNotActionRequired($results->content)) {
+        if ($this->ifNotActionRequired($results->content)) {
             Log::info('[LaraChain] - Email Source Skipping', [
                 'prompt' => $prompt,
             ]);

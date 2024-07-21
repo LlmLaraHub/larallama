@@ -34,7 +34,8 @@ trait ChatHelperTrait
         return $collection->team?->user_id;
     }
 
-    public function ifNotActionRequired(string $results): bool {
+    public function ifNotActionRequired(string $results): bool
+    {
         // @NOTE llms sometimes do not return the right
         // string for example.
         // false becomes false, "false" or "False" etc.
@@ -46,6 +47,6 @@ trait ChatHelperTrait
             ->remove("'")
             ->toString();
 
-        return $results == "false";
+        return $results == 'false';
     }
 }

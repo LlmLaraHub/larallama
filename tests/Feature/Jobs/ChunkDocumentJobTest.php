@@ -20,9 +20,7 @@ class ChunkDocumentJobTest extends TestCase
 
         $this->assertDatabaseCount('document_chunks', 0);
 
-
         [$job, $batch] = (new ChunkDocumentJob($document))->withFakeBatch();
-
 
         $job->handle();
 

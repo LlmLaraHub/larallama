@@ -45,12 +45,13 @@ class ChunkDocumentJob implements ShouldQueue
             return;
         }
 
-
         Log::info('[LaraChain] - Chunking Document', [
             'document' => $this->document->id,
         ]);
 
         $document = $this->document;
+
+        $chunks = [];
 
         $page_number = 0;
 
@@ -80,9 +81,7 @@ class ChunkDocumentJob implements ShouldQueue
             ];
         }
 
-        $name = sprintf($document->type->name, $document->id);
-
-
+        $name = sprintf("Chunking Document Type %s id %d ", $document->type->name, $document->id);
 
         Bus::batch($chunks)
             ->name($name)
@@ -94,9 +93,9 @@ class ChunkDocumentJob implements ShouldQueue
                         new SummarizeDocumentJob($document),
                         new TagDocumentJob($document),
                         new DocumentProcessingCompleteJob($document),
-                    ]
+                    ],
                 ])
-                    ->name(sprintf("Final Document Steps Document %s id %d", $document->type->name, $document->id))
+                    ->name(sprintf('Final Document Steps Document %s id %d', $document->type->name, $document->id))
                     ->allowFailures()
                     ->dispatch();
             })

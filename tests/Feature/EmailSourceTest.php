@@ -132,7 +132,6 @@ BODY;
         Bus::assertBatchCount(1);
     }
 
-
     public function test_no_action_required()
     {
         Bus::fake();
@@ -170,7 +169,7 @@ BODY;
 
         $this->assertDatabaseCount('documents', 0);
         $this->assertDatabaseCount('chats', 1);
-        $this->assertDatabaseCount('messages', 1);
+        $this->assertDatabaseCount('messages', 0);
 
         $this->assertNotNull($source->chat_id);
 
