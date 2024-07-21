@@ -112,11 +112,7 @@ class EmailClient
 
                             $mail[] = $messageDto;
 
-                            if ($delete) {
-                                $message->delete(expunge: true);
-                            } else {
-                                $message->addFlag('Seen');
-                            }
+                            $message->addFlag('Seen');
                         } else {
                             Log::info('[LaraChain] - Flag Seen', [
                                 'flags' => $flags->toArray(),

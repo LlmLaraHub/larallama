@@ -40,35 +40,40 @@ class Client
 
                 /** @var Message $message */
                 foreach ($messages as $message) {
-                    $messageDto = MailDto::from([
-                        'to' => $message->getTo()->toString(),
-                        'from' => $message->getFrom()->toString(),
-                        'body' => $message->getTextBody(),
-                        'subject' => $message->getSubject(),
-                        'date' => $message->getDate()->toString(),
-                        'header' => $message->getHeader()->raw,
-                    ]);
+                    $flags = $message->getFlags();
 
-                    \Illuminate\Support\Facades\Log::info('Checking To', [
-                        'to' => $message->getTo()->toString(),
-                    ]);
+                    if (! $flags->contains('Seen')) {
 
-                    /**
-                     * Just check if it is for this system
-                     */
-                    $slug = slug_from_email($message->getTo()->toString());
-                    if (EmailSource::getSourceFromSlug($slug)) {
-                        \Illuminate\Support\Facades\Log::info('Found Source with Slug To', [
+                        $messageDto = MailDto::from([
                             'to' => $message->getTo()->toString(),
-                            'slug' => $slug,
+                            'from' => $message->getFrom()->toString(),
+                            'body' => $message->getTextBody(),
+                            'subject' => $message->getSubject(),
+                            'date' => $message->getDate()->toString(),
+                            'header' => $message->getHeader()->raw,
                         ]);
-                        $mail[] = new MailBoxParserJob($messageDto);
-                        $message->delete(expunge: true);
-                    } else {
-                        \Illuminate\Support\Facades\Log::info('Did not find Source with Slug To', [
+
+                        \Illuminate\Support\Facades\Log::info('Checking To', [
                             'to' => $message->getTo()->toString(),
-                            'slug' => $slug,
                         ]);
+
+                        /**
+                         * Just check if it is for this system
+                         */
+                        $slug = slug_from_email($message->getTo()->toString());
+                        if (EmailSource::getSourceFromSlug($slug)) {
+                            \Illuminate\Support\Facades\Log::info('Found Source with Slug To', [
+                                'to' => $message->getTo()->toString(),
+                                'slug' => $slug,
+                            ]);
+                            $mail[] = new MailBoxParserJob($messageDto);
+                            $message->addFlag('Seen');
+                        } else {
+                            \Illuminate\Support\Facades\Log::info('Did not find Source with Slug To', [
+                                'to' => $message->getTo()->toString(),
+                                'slug' => $slug,
+                            ]);
+                        }
                     }
 
                 }
