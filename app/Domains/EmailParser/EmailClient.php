@@ -35,7 +35,9 @@ class EmailClient
      * @throws \Webklex\PHPIMAP\Exceptions\MessageNotFoundException
      * @throws \Webklex\PHPIMAP\Exceptions\RuntimeException
      */
-    public function handle(CredentialsDto $credentials, bool $delete = false): array
+    public function handle(CredentialsDto $credentials,
+                           bool $delete = false,
+                            int $limit = 10): array
     {
         $mail = [];
 
@@ -88,7 +90,7 @@ class EmailClient
                         'folders_to_check' => $foldersToCheck,
                     ]);
 
-                    $messages = $folder->messages()->all()->get();
+                    $messages = $folder->messages()->all()->limit($limit, 0)->get();
 
                     Log::info('[LaraChain] - Email Box Count', [
                         'count' => $messages->count(),
@@ -97,27 +99,25 @@ class EmailClient
 
                     /** @var Message $message */
                     foreach ($messages as $message) {
-                        $flags = $message->getFlags();
+                        //@NOTE the Seen flag made it too hard to
+                        // then have different sources
+                        // check the same email box.
+                        // the Source will track repeats
+                        //$flags = $message->getFlags();
 
-                        if (! $flags->contains('Seen')) {
-                            $messageDto = MailDto::from([
-                                'to' => $message->getTo()->toString(),
-                                'from' => $message->getFrom()->toString(),
-                                'body' => $message->getTextBody(),
-                                'subject' => $message->getSubject(),
-                                'date' => $message->getDate()->toString(),
-                                'header' => $message->getHeader()->raw,
-                                'email_message' => $message,
-                            ]);
+                        $messageDto = MailDto::from([
+                            'to' => $message->getTo()->toString(),
+                            'from' => $message->getFrom()->toString(),
+                            'body' => $message->getTextBody(),
+                            'subject' => $message->getSubject(),
+                            'date' => $message->getDate()->toString(),
+                            'header' => $message->getHeader()->raw,
+                            'email_message' => $message,
+                        ]);
 
-                            $mail[] = $messageDto;
+                        $mail[] = $messageDto;
 
-                            $message->addFlag('Seen');
-                        } else {
-                            Log::info('[LaraChain] - Flag Seen', [
-                                'flags' => $flags->toArray(),
-                            ]);
-                        }
+                        $message->addFlag('Seen');
                     }
 
                 }

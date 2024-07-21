@@ -11,6 +11,7 @@ use App\Domains\Prompts\PromptMerge;
 use App\Jobs\ChunkDocumentJob;
 use App\Models\Document;
 use App\Models\Source;
+use App\Models\SourceTask;
 use Facades\App\Domains\EmailParser\Client;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Log;
@@ -45,6 +46,17 @@ class EmailSource extends BaseSource
         }
 
         $this->source = $this->checkForChat($source);
+
+        $key = md5($this->mailDto->date.$this->mailDto->from.$source->id);
+
+        if(SourceTask::where('source_id', $source->id)->where('task_key', $key)->exists()) {
+            return;
+        }
+
+        SourceTask::create([
+            'source_id' => $source->id,
+            'task_key' => $key,
+        ]);
 
         $this->content = $this->mailDto->getContent();
 

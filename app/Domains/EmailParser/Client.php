@@ -18,7 +18,7 @@ class Client
         'Drafts',
     ];
 
-    public function handle(): void
+    public function handle(int $limit = 10): void
     {
         $mail = [];
 
@@ -31,7 +31,7 @@ class Client
 
             $full_name = data_get($folder, 'full_name');
             if (! in_array($full_name, $this->ignore)) {
-                $messages = $folder->messages()->all()->limit(10, 0)->get();
+                $messages = $folder->messages()->all()->limit($limit, 0)->get();
 
                 logger('[LaraChain] - Email Count', [
                     'count' => $messages->count(),
@@ -40,40 +40,41 @@ class Client
 
                 /** @var Message $message */
                 foreach ($messages as $message) {
-                    $flags = $message->getFlags();
+                    //@NOTE the Seen flag made it too hard to
+                    // then have different sources
+                    // check the same email box.
+                    // the Source will track repeats
+                    //$flags = $message->getFlags();
 
-                    if (! $flags->contains('Seen')) {
+                    $messageDto = MailDto::from([
+                        'to' => $message->getTo()->toString(),
+                        'from' => $message->getFrom()->toString(),
+                        'body' => $message->getTextBody(),
+                        'subject' => $message->getSubject(),
+                        'date' => $message->getDate()->toString(),
+                        'header' => $message->getHeader()->raw,
+                    ]);
 
-                        $messageDto = MailDto::from([
+                    \Illuminate\Support\Facades\Log::info('Checking To', [
+                        'to' => $message->getTo()->toString(),
+                    ]);
+
+                    /**
+                     * Just check if it is for this system
+                     */
+                    $slug = slug_from_email($message->getTo()->toString());
+                    if (EmailSource::getSourceFromSlug($slug)) {
+                        \Illuminate\Support\Facades\Log::info('Found Source with Slug To', [
                             'to' => $message->getTo()->toString(),
-                            'from' => $message->getFrom()->toString(),
-                            'body' => $message->getTextBody(),
-                            'subject' => $message->getSubject(),
-                            'date' => $message->getDate()->toString(),
-                            'header' => $message->getHeader()->raw,
+                            'slug' => $slug,
                         ]);
-
-                        \Illuminate\Support\Facades\Log::info('Checking To', [
+                        $mail[] = new MailBoxParserJob($messageDto);
+                        $message->addFlag('Seen');
+                    } else {
+                        \Illuminate\Support\Facades\Log::info('Did not find Source with Slug To', [
                             'to' => $message->getTo()->toString(),
+                            'slug' => $slug,
                         ]);
-
-                        /**
-                         * Just check if it is for this system
-                         */
-                        $slug = slug_from_email($message->getTo()->toString());
-                        if (EmailSource::getSourceFromSlug($slug)) {
-                            \Illuminate\Support\Facades\Log::info('Found Source with Slug To', [
-                                'to' => $message->getTo()->toString(),
-                                'slug' => $slug,
-                            ]);
-                            $mail[] = new MailBoxParserJob($messageDto);
-                            $message->addFlag('Seen');
-                        } else {
-                            \Illuminate\Support\Facades\Log::info('Did not find Source with Slug To', [
-                                'to' => $message->getTo()->toString(),
-                                'slug' => $slug,
-                            ]);
-                        }
                     }
 
                 }
