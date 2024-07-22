@@ -95,7 +95,7 @@ class GetWebContentJob implements ShouldQueue
         } else {
             $promptResults = $results->content;
             $chat = $this->source->chat;
-            $userMessage = $chat->addInput(
+            $chat->addInput(
             message: $prompt,
             role: RoleEnum::User,
             show_in_thread: true,
@@ -112,7 +112,7 @@ class GetWebContentJob implements ShouldQueue
                 [
                     'source_id' => $this->source->id,
                     'type' => TypesEnum::HTML,
-                    'subject' => $this->webResponseDto->title,
+                    'subject' => to_utf8($this->webResponseDto->title),
                     'link' => $this->webResponseDto->url,
                     'collection_id' => $this->source->collection_id,
                 ],
@@ -169,6 +169,21 @@ class GetWebContentJob implements ShouldQueue
                 })
                 ->onQueue(LlmDriverFacade::driver($this->source->getDriver())->onQueue())
                 ->dispatch();
+
+
+            $assistantMessage = $chat->addInput(
+                message: $promptResults,
+                role: RoleEnum::Assistant,
+                show_in_thread: true,
+                meta_data: MetaDataDto::from([
+                    'driver' => $this->source->getDriver(),
+                    'source' => $this->source->title,
+                ]),
+            );
+
+            $this->savePromptHistory(
+                message: $assistantMessage,
+                prompt: $prompt);
         }
     }
 }
