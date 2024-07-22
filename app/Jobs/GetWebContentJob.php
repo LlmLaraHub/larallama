@@ -24,7 +24,6 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Log;
-use Laravel\Pennant\Feature;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
 use LlmLaraHub\LlmDriver\ToolsHelper;
 use LlmLaraHub\TagFunction\Jobs\TagDocumentJob;
@@ -32,7 +31,6 @@ use LlmLaraHub\TagFunction\Jobs\TagDocumentJob;
 class GetWebContentJob implements ShouldQueue
 {
     use Batchable, Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-
     use ChatHelperTrait, ToolsHelper;
 
     /**
@@ -96,10 +94,10 @@ class GetWebContentJob implements ShouldQueue
             $promptResults = $results->content;
             $chat = $this->source->chat;
             $chat->addInput(
-            message: $prompt,
-            role: RoleEnum::User,
-            show_in_thread: true,
-            meta_data: MetaDataDto::from([
+                message: $prompt,
+                role: RoleEnum::User,
+                show_in_thread: true,
+                meta_data: MetaDataDto::from([
                     'driver' => $this->source->getDriver(),
                     'source' => $this->source->title,
                 ]),
@@ -169,7 +167,6 @@ class GetWebContentJob implements ShouldQueue
                 })
                 ->onQueue(LlmDriverFacade::driver($this->source->getDriver())->onQueue())
                 ->dispatch();
-
 
             $assistantMessage = $chat->addInput(
                 message: $promptResults,

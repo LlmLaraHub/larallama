@@ -2,12 +2,8 @@
 
 namespace App\Jobs;
 
-use App\Domains\Documents\StatusEnum;
-use App\Domains\Documents\TypesEnum;
 use App\Domains\Sources\WebSearch\Response\WebResponseDto;
-use App\Models\Document;
 use App\Models\Source;
-use Facades\App\Domains\Sources\WebSearch\GetPage;
 use Illuminate\Bus\Batch;
 use Illuminate\Bus\Batchable;
 use Illuminate\Bus\Queueable;
@@ -51,7 +47,7 @@ class WebPageSourceJob implements ShouldQueue
             'url' => $this->url,
             'title' => $title,
             'age' => now()->toString(),
-            'description' => sprintf("From Source %s" ,$this->source->title),
+            'description' => sprintf('From Source %s', $this->source->title),
             'meta_data' => [],
             'thumbnail' => null,
             'profile' => [],

@@ -58,5 +58,4 @@ class GetWebContentJobTest extends TestCase
         $this->assertEquals('Example', $document->subject);
 
     }
-
 }
