@@ -39,7 +39,7 @@ class GetPage
 
         $body = $results->bodyHtml();
 
-        if($parseHtml) {
+        if ($parseHtml) {
             $body = $this->parseHtml($body);
         }
 

@@ -42,7 +42,7 @@ class WebPageSourceController extends BaseSourceController
             'details' => $validated['details'],
             'recurring' => $validated['recurring'],
             'active' => $validated['active'],
-            'force' => $validated['force'],
+            'force' => data_get($validated, 'force', false),
             'collection_id' => $collection->id,
             'type' => $this->sourceTypeEnum,
             'user_id' => $this->getUserId($collection),
