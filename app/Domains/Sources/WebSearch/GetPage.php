@@ -37,7 +37,13 @@ class GetPage
 
         Storage::disk('collections')->put($this->collection->id.'/'.$name, $results->pdf());
 
-        return $results->bodyHtml();
+        $body = $results->bodyHtml();
+
+        if($parseHtml) {
+            $body = $this->parseHtml($body);
+        }
+
+        return $body;
     }
 
     public function parseHtml(string $html): string
