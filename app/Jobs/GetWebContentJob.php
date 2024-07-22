@@ -63,6 +63,7 @@ class GetWebContentJob implements ShouldQueue
             ! $this->source->force &&
             SourceTask::where('source_id', $this->source->id)->where('task_key', $key)->exists()) {
             Log::info('[LaraChain] GetWebContentJob - Skipping - already ran');
+
             return;
         }
 
@@ -111,15 +112,15 @@ class GetWebContentJob implements ShouldQueue
 
             $promptResults = json_decode($promptResultsOriginal, true);
 
-            if(is_null($promptResults)) {
-               $promptResults = Arr::wrap($promptResultsOriginal);
+            if (is_null($promptResults)) {
+                $promptResults = Arr::wrap($promptResultsOriginal);
             }
 
             /**
              * @NOTE all the user to build array results
              * Like Events from a webpage
              */
-            foreach($promptResults as $promptResultIndex => $promptResult) {
+            foreach ($promptResults as $promptResultIndex => $promptResult) {
 
                 $promptResult = json_encode($promptResult);
 
@@ -184,7 +185,7 @@ class GetWebContentJob implements ShouldQueue
                                 new SummarizeDocumentJob($document),
                                 new TagDocumentJob($document),
                                 new DocumentProcessingCompleteJob($document),
-                            ]
+                            ],
                         ])
                             ->name(sprintf('Final Document Steps Document %s id %d', $document->type->name, $document->id))
                             ->allowFailures()
@@ -194,7 +195,6 @@ class GetWebContentJob implements ShouldQueue
                     ->onQueue(LlmDriverFacade::driver($this->source->getDriver())->onQueue())
                     ->dispatch();
             }
-
 
             /**
              * @NOTE
@@ -214,7 +214,6 @@ class GetWebContentJob implements ShouldQueue
             $this->savePromptHistory(
                 message: $assistantMessage,
                 prompt: $prompt);
-
 
         }
     }

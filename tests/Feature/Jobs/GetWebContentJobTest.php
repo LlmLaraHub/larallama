@@ -85,7 +85,7 @@ class GetWebContentJobTest extends TestCase
         LlmDriverFacade::shouldReceive('driver->completion')
             ->once()
             ->andReturn(CompletionResponse::from([
-                'content' => "[{\"content\":\"Test 1\"},{\"content\":\"Test 2\"}]",
+                'content' => '[{"content":"Test 1"},{"content":"Test 2"}]',
             ]));
 
         $this->assertDatabaseCount('documents', 0);
