@@ -23,6 +23,7 @@ class SourceFactory extends Factory
         return [
             'title' => $this->faker->name,
             'slug' => fake()->word,
+            'force' => false,
             'collection_id' => Collection::factory(),
             'user_id' => null,
             'chat_id' => Chat::factory(),

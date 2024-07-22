@@ -24,6 +24,7 @@ class SourceEditResource extends JsonResource
             'collection_id' => $this->collection_id,
             'details' => $this->details,
             'active' => $this->active,
+            'force' => $this->force,
             'recurring' => $this->recurring->value,
             'description' => $this->description,
             'slug' => $this->slug,

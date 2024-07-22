@@ -22,6 +22,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Log;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
@@ -58,7 +59,10 @@ class GetWebContentJob implements ShouldQueue
 
         $key = md5($this->webResponseDto->url.$this->source->id);
 
-        if (SourceTask::where('source_id', $this->source->id)->where('task_key', $key)->exists()) {
+        if (
+            ! $this->source->force &&
+            SourceTask::where('source_id', $this->source->id)->where('task_key', $key)->exists()) {
+            Log::info('[LaraChain] GetWebContentJob - Skipping - already ran');
             return;
         }
 
@@ -91,8 +95,10 @@ class GetWebContentJob implements ShouldQueue
                 'prompt' => $prompt,
             ]);
         } else {
-            $promptResults = $results->content;
+            $promptResultsOriginal = $results->content;
+
             $chat = $this->source->chat;
+
             $chat->addInput(
                 message: $prompt,
                 role: RoleEnum::User,
@@ -103,73 +109,100 @@ class GetWebContentJob implements ShouldQueue
                 ]),
             );
 
+            $promptResults = json_decode($promptResultsOriginal, true);
+
+            if(is_null($promptResults)) {
+               $promptResults = Arr::wrap($promptResultsOriginal);
+            }
+
             /**
-             * Document can reference a source
+             * @NOTE all the user to build array results
+             * Like Events from a webpage
              */
-            $document = Document::updateOrCreate(
-                [
-                    'source_id' => $this->source->id,
-                    'type' => TypesEnum::HTML,
-                    'subject' => to_utf8($this->webResponseDto->title),
-                    'link' => $this->webResponseDto->url,
-                    'collection_id' => $this->source->collection_id,
-                ],
-                [
-                    'status' => StatusEnum::Pending,
-                    'file_path' => $this->webResponseDto->url,
-                    'status_summary' => StatusEnum::Pending,
-                    'meta_data' => $this->webResponseDto->toArray(),
-                    'original_content' => $htmlResults,
-                ]
-            );
+            foreach($promptResults as $promptResultIndex => $promptResult) {
 
-            $page_number = 1;
+                $promptResult = json_encode($promptResult);
 
-            $chunked_chunks = TextChunker::handle($promptResults);
+                $title = sprintf('WebPageSource - item #%d source: %s',
+                    $promptResultIndex + 1,
+                    $this->webResponseDto->url);
 
-            $chunks = [];
-
-            foreach ($chunked_chunks as $chunkSection => $chunkContent) {
-                $guid = md5($chunkContent);
-
-                $DocumentChunk = DocumentChunk::updateOrCreate(
+                /**
+                 * Document can reference a source
+                 */
+                $document = Document::updateOrCreate(
                     [
-                        'document_id' => $document->id,
-                        'guid' => $guid,
+                        'source_id' => $this->source->id,
+                        'type' => TypesEnum::HTML,
+                        'subject' => to_utf8($title),
+                        'link' => $this->webResponseDto->url,
+                        'collection_id' => $this->source->collection_id,
                     ],
                     [
-                        'sort_order' => $page_number,
-                        'section_number' => $chunkSection,
-                        'content' => to_utf8($chunkContent),
+                        'status' => StatusEnum::Pending,
+                        'file_path' => $this->webResponseDto->url,
+                        'status_summary' => StatusEnum::Pending,
+                        'meta_data' => $this->webResponseDto->toArray(),
+                        'original_content' => $promptResult,
                     ]
                 );
 
-                Log::info('[LaraChain] adding to new batch');
+                $page_number = 1;
 
-                $chunks[] = new VectorlizeDataJob($DocumentChunk);
+                $chunked_chunks = TextChunker::handle($promptResult);
 
-                $page_number++;
+                $chunks = [];
+
+                foreach ($chunked_chunks as $chunkSection => $chunkContent) {
+                    $guid = md5($chunkContent);
+
+                    $DocumentChunk = DocumentChunk::updateOrCreate(
+                        [
+                            'document_id' => $document->id,
+                            'guid' => $guid,
+                        ],
+                        [
+                            'sort_order' => $page_number,
+                            'section_number' => $chunkSection,
+                            'content' => to_utf8($chunkContent),
+                        ]
+                    );
+
+                    Log::info('[LaraChain] adding to new batch');
+
+                    $chunks[] = new VectorlizeDataJob($DocumentChunk);
+
+                    $page_number++;
+                }
+
+                Bus::batch($chunks)
+                    ->name("Chunking Document from Web - {$this->webResponseDto->url}")
+                    ->allowFailures()
+                    ->finally(function (Batch $batch) use ($document) {
+                        Bus::batch([
+                            [
+                                new SummarizeDocumentJob($document),
+                                new TagDocumentJob($document),
+                                new DocumentProcessingCompleteJob($document),
+                            ]
+                        ])
+                            ->name(sprintf('Final Document Steps Document %s id %d', $document->type->name, $document->id))
+                            ->allowFailures()
+                            ->onQueue(LlmDriverFacade::driver($document->getDriver())->onQueue())
+                            ->dispatch();
+                    })
+                    ->onQueue(LlmDriverFacade::driver($this->source->getDriver())->onQueue())
+                    ->dispatch();
             }
 
-            Bus::batch($chunks)
-                ->name("Chunking Document from Web - {$this->webResponseDto->url}")
-                ->allowFailures()
-                ->finally(function (Batch $batch) use ($document) {
-                    Bus::batch([
-                        new SummarizeDocumentJob($document),
-                        new TagDocumentJob($document),
-                        new DocumentProcessingCompleteJob($document),
-                    ])
-                        ->name(sprintf('Final Document Steps Document %s id %d', $document->type->name, $document->id))
-                        ->allowFailures()
-                        ->onQueue(LlmDriverFacade::driver($document->getDriver())->onQueue())
-                        ->dispatch();
-                })
-                ->onQueue(LlmDriverFacade::driver($this->source->getDriver())->onQueue())
-                ->dispatch();
 
+            /**
+             * @NOTE
+             * I could move this into the loop if it is not
+             * enough here
+             */
             $assistantMessage = $chat->addInput(
-                message: $promptResults,
+                message: json_encode($promptResults),
                 role: RoleEnum::Assistant,
                 show_in_thread: true,
                 meta_data: MetaDataDto::from([
@@ -181,6 +214,8 @@ class GetWebContentJob implements ShouldQueue
             $this->savePromptHistory(
                 message: $assistantMessage,
                 prompt: $prompt);
+
+
         }
     }
 }

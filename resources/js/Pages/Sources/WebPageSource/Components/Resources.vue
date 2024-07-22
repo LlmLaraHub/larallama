@@ -10,7 +10,7 @@
         <div>
             <InputLabel value="Details"/>
             <textarea
-                rows="10"
+                rows="25"
                 v-model="modelValue.details"
                 class="rounded-none textarea textarea-bordered w-full mb-5 text-xl"
                 placeholder="This can assist the LLM to process your messages later."></textarea>
@@ -32,7 +32,18 @@ https://docs.larallama.io/developing.html"
             <input v-model="modelValue.active" type="checkbox"  />
             <InputError :message="modelValue.errors.active" />
         </div>
-
+        <div>
+            <InputLabel value="Force Repeat"/>
+            <input v-model="modelValue.force" type="checkbox"  />
+            <InputError :message="modelValue.errors.force" />
+            <div class="text-xs prose m-2">
+                by default the system will only run the first time for a url or an email.
+                But if you want to to try again just check this box.
+                This can be good if you are checking a home page for updates.
+                Or a feed for updates. But NOT if you are checking an email box for emails and
+                do not want to repeat check the same email.
+            </div>
+        </div>
 
         <div>
             <InputLabel value="Recurring"/>

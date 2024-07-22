@@ -55,7 +55,48 @@ class GetWebContentJobTest extends TestCase
         $this->assertDatabaseCount('documents', 1);
         $this->assertDatabaseCount('document_chunks', 17);
         $document = Document::first();
-        $this->assertEquals('Example', $document->subject);
+        $this->assertStringContainsString('WebPageSource - item #1 source', $document->subject);
+
+    }
+
+    public function test_array(): void
+    {
+
+        Bus::fake();
+
+        $source = Source::factory()->create();
+
+        $webResponseDto = WebResponseDto::from([
+            'url' => 'https://example.com',
+            'title' => 'Example',
+            'age' => '1 day',
+            'description' => 'Example description',
+            'meta_data' => ['key' => 'value'],
+            'thumbnail' => 'https://example.com/thumbnail.jpg',
+            'profile' => ['key' => 'value'],
+        ]);
+
+        $html = get_fixture('test_medium_2.html', false);
+
+        GetPage::shouldReceive('make->handle')->once()->andReturn($html);
+
+        LlmDriverFacade::shouldReceive('driver->onQueue')->andReturn('default');
+
+        LlmDriverFacade::shouldReceive('driver->completion')
+            ->once()
+            ->andReturn(CompletionResponse::from([
+                'content' => "[{\"content\":\"Test 1\"},{\"content\":\"Test 2\"}]",
+            ]));
+
+        $this->assertDatabaseCount('documents', 0);
+        $this->assertDatabaseCount('document_chunks', 0);
+        [$job, $batch] = (new GetWebContentJob($source, $webResponseDto))->withFakeBatch();
+
+        $job->handle();
+        $this->assertDatabaseCount('documents', 2);
+        $this->assertDatabaseCount('document_chunks', 2);
+        $document = Document::first();
+        $this->assertStringContainsString('WebPageSource - item #1 source', $document->subject);
 
     }
 }

@@ -31,6 +31,7 @@ const form = useForm({
     title: '',
     details: '',
     recurring: 'not',
+    force: true,
     meta_data: {
         example: "bob@bobsburgers.com",
     },
