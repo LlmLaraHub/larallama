@@ -110,7 +110,7 @@ class BaseSourceController extends Controller
                 ->latest('id')
                 ->paginate(50)),
             'available_sources' => SourceTypeEnum::getAvailableSources($collection),
-            'sources' => SourceResource::collection($collection->sources()->orderBy('id')->paginate(10)),
+            'sources' => SourceResource::collection($collection->sources()->orderBy('id')->paginate(50)),
         ]);
     }
 
