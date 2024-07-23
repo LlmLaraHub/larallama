@@ -35,7 +35,6 @@ class CSVTransformer
 
         $chunks = [];
 
-
         /**
          * Going to turn into a document then chunks
          */

@@ -2,23 +2,30 @@
 
 namespace App\Domains\Sources;
 
+use App\Domains\Chat\MetaDataDto;
 use App\Domains\Documents\StatusEnum;
 use App\Domains\Documents\TypesEnum;
+use App\Domains\Messages\RoleEnum;
 use App\Domains\Prompts\PromptMerge;
+use App\Helpers\ChatHelperTrait;
 use App\Helpers\TextChunker;
 use App\Jobs\DocumentProcessingCompleteJob;
+use App\Jobs\SummarizeDocumentJob;
 use App\Jobs\VectorlizeDataJob;
 use App\Models\Document;
 use App\Models\DocumentChunk;
 use App\Models\Source;
+use App\Models\SourceTask;
 use Illuminate\Bus\Batch;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Log;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
+use LlmLaraHub\TagFunction\Jobs\TagDocumentJob;
 
 class WebhookSource extends BaseSource
 {
+
     public SourceTypeEnum $sourceTypeEnum = SourceTypeEnum::WebhookSource;
 
     protected array $payload = [];
@@ -46,68 +53,72 @@ class WebhookSource extends BaseSource
             'payload' => $this->payload,
         ]);
 
-        $chunks = [];
+        $this->source = $this->checkForChat($source);
+        $payloadMd5 = md5(json_encode($this->payload, 128));
+        $key = md5($payloadMd5.$this->source->id);
 
+        if($this->skip($this->source, $key)) {
+            return;
+        }
+
+        $this->createSourceTask($this->source, $key);
         $encoded = json_encode($this->payload, 128);
 
-        $prompt = PromptMerge::merge([
-            '[CONTEXT]',
-        ], [
-            $encoded,
-        ], $source->details);
+        $prompt = PromptMerge::merge(
+            ['[CONTEXT]'],
+            [$encoded],
+            $this->source->getPrompt()
+        );
 
         $results = LlmDriverFacade::driver(
             $source->getDriver()
         )->completion($prompt);
 
-        Log::info('[LaraChain] - WebhookSource Transformation Results', [
-            'results' => $results,
-        ]);
+        if ($this->ifNotActionRequired($results->content)) {
+            Log::info('[LaraChain] - Webhook Skipping', [
+                'prompt' => $prompt,
+            ]);
+        } else {
+            Log::info('[LaraChain] - WebhookSource Transformation Results', [
+                'results' => $results,
+            ]);
 
-        $content = $results->content;
+            $promptResultsOriginal = $results->content;
 
-        /**
-         * @TODO
-         * There is too big of an assumption here
-         * The user might just make this TEXT it is their
-         * prompt to do what they want
-         */
-        $content = str($content)
-            ->replace('```json', '')
-            ->replaceLast('```', '')
-            ->toString();
+            $chat = $source->chat;
 
-        try {
+            $this->addUserMessage($chat, $promptResultsOriginal);
 
-            $results = $this->checkIfJsonOrJustText($results, $content);
+            $promptResults = $this->arrifyPromptResults($promptResultsOriginal);
 
-            $page_number = 0;
+            foreach ($promptResults as $promptResultIndex => $promptResult) {
+                $promptResult = json_encode($promptResult);
 
-            foreach ($results as $index => $result) {
-                if (is_array($result)) {
-                    $result = json_encode($result);
-                }
-
-                $id = $this->getIdFromPayload($result);
+                /**
+                 * Could even do ONE more look at the data
+                 * with the Source Prompt and LLM
+                 */
+                $title = sprintf('WebhookSource - item #%d source: %s',
+                    $promptResultIndex + 1, md5($promptResult));
 
                 $document = Document::updateOrCreate([
                     'type' => TypesEnum::WebHook,
                     'source_id' => $source->id,
-                    'subject' => 'Webhook: '.$id,
+                    'subject' => $title,
+                    'collection_id' => $source->collection_id,
                 ], [
                     'status' => StatusEnum::Pending,
                     'meta_data' => $this->payload,
-                    'collection_id' => $source->collection_id,
                     'status_summary' => StatusEnum::Pending,
-                    'summary' => $result,
+                    'summary' => $promptResult,
+                    'original_content' => $promptResult,
                 ]);
 
-                $this->document = $document;
+                $page_number = 1;
 
-                $page_number = $page_number + 1;
-                $pageContent = $result;
-                $size = config('llmdriver.chunking.default_size');
-                $chunked_chunks = TextChunker::handle($pageContent, $size);
+                $chunked_chunks = TextChunker::handle($promptResult);
+
+                $chunks = [];
 
                 foreach ($chunked_chunks as $chunkSection => $chunkContent) {
                     $guid = md5($chunkContent);
@@ -115,35 +126,43 @@ class WebhookSource extends BaseSource
                     $DocumentChunk = DocumentChunk::updateOrCreate(
                         [
                             'document_id' => $document->id,
-                            'sort_order' => $page_number,
-                            'section_number' => $chunkSection,
+                            'guid' => $guid,
                         ],
                         [
-                            'guid' => $guid,
+                            'sort_order' => $page_number,
+                            'section_number' => $chunkSection,
                             'content' => to_utf8($chunkContent),
+                            'original_content' => to_utf8($chunkContent),
                         ]
                     );
 
-                    $chunks[] = [
-                        new VectorlizeDataJob($DocumentChunk),
-                    ];
+                    Log::info('[LaraLlama] WebhookSource adding to new batch');
+
+                    $chunks[] = new VectorlizeDataJob($DocumentChunk);
+
+                    $page_number++;
                 }
 
                 Bus::batch($chunks)
-                    ->name("Chunking Document from Webhook - {$this->document->id} {$this->document->file_path}")
+                    ->name("Chunking Document from WebhookSource - {$this->source->id}")
                     ->allowFailures()
                     ->finally(function (Batch $batch) use ($document) {
-                        DocumentProcessingCompleteJob::dispatch($document);
+                        Bus::batch([
+                            [
+                                new SummarizeDocumentJob($document),
+                                new TagDocumentJob($document),
+                                new DocumentProcessingCompleteJob($document),
+                            ],
+                        ])
+                            ->name(sprintf('Final Document Steps Document %s id %d', $document->type->name, $document->id))
+                            ->allowFailures()
+                            ->onQueue(LlmDriverFacade::driver($document->getDriver())->onQueue())
+                            ->dispatch();
                     })
-                    ->onQueue(LlmDriverFacade::driver($document->getDriver())->onQueue())
+                    ->onQueue(LlmDriverFacade::driver($this->source->getDriver())->onQueue())
                     ->dispatch();
-
             }
-        } catch (\Exception $e) {
-            Log::error('[LaraChain] - Error running WebhookSource Job Level', [
-                'error' => $e->getMessage(),
-                'results' => $results,
-            ]);
+
         }
 
     }

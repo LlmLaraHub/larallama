@@ -2,9 +2,14 @@
 
 namespace App\Helpers;
 
+use App\Domains\Chat\MetaDataDto;
+use App\Domains\Messages\RoleEnum;
 use App\Models\Chat;
 use App\Models\Collection;
 use App\Models\Source;
+use App\Models\SourceTask;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Log;
 
 trait ChatHelperTrait
 {
@@ -48,5 +53,47 @@ trait ChatHelperTrait
             ->toString();
 
         return $results == 'false';
+    }
+
+    public function skip(Source $source, string $key): bool
+    {
+        if(! $source->force &&
+        SourceTask::where('source_id', $source->id)->where('task_key', $key)->exists()) {
+            Log::info('[LaraChain] GetWebContentJob - Skipping - already ran');
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function createSourceTask(Source $source, string $key): SourceTask
+    {
+        return SourceTask::create([
+            'source_id' => $this->source->id,
+            'task_key' => $key,
+        ]);
+    }
+
+    public function addUserMessage(Chat $chat, string $message): void
+    {
+        $chat->addInput(
+            message: $message,
+            role: RoleEnum::User,
+            show_in_thread: true,
+            meta_data: MetaDataDto::from([
+                'driver' => $this->source->getDriver(),
+                'source' => $this->source->title,
+            ]),
+        );
+    }
+
+    public function arrifyPromptResults(string $original) : array {
+        $promptResults = json_decode($original, true);
+
+        if (is_null($promptResults)) {
+            $promptResults = Arr::wrap($original);
+        }
+
+        return $promptResults;
     }
 }

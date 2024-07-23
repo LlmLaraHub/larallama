@@ -59,18 +59,11 @@ class GetWebContentJob implements ShouldQueue
 
         $key = md5($this->webResponseDto->url.$this->source->id);
 
-        if (
-            ! $this->source->force &&
-            SourceTask::where('source_id', $this->source->id)->where('task_key', $key)->exists()) {
-            Log::info('[LaraChain] GetWebContentJob - Skipping - already ran');
-
+        if($this->skip($this->source, $key)) {
             return;
         }
 
-        SourceTask::create([
-            'source_id' => $this->source->id,
-            'task_key' => $key,
-        ]);
+        $this->createSourceTask($this->source, $key);
 
         Log::info("[LaraChain] GetWebContentJob - {$this->source->title} - URL: {$this->webResponseDto->url}");
 
@@ -100,21 +93,9 @@ class GetWebContentJob implements ShouldQueue
 
             $chat = $this->source->chat;
 
-            $chat->addInput(
-                message: $prompt,
-                role: RoleEnum::User,
-                show_in_thread: true,
-                meta_data: MetaDataDto::from([
-                    'driver' => $this->source->getDriver(),
-                    'source' => $this->source->title,
-                ]),
-            );
+            $this->addUserMessage($chat, $promptResultsOriginal);
 
-            $promptResults = json_decode($promptResultsOriginal, true);
-
-            if (is_null($promptResults)) {
-                $promptResults = Arr::wrap($promptResultsOriginal);
-            }
+            $promptResults = $this->arrifyPromptResults($promptResultsOriginal);
 
             /**
              * @NOTE all the user to build array results
