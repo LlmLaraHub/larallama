@@ -55,11 +55,7 @@ class Source extends Model implements HasDrivers
 
     public function getChat(): ?Chat
     {
-        /**
-         * @TODO
-         * I need to come back to this
-         */
-        return $this->collection->chats()->first();
+        return $this->chat ?: $this->collection->chats()->first();
     }
 
     public function getSummary(): string

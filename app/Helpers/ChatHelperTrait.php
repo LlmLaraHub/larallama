@@ -57,9 +57,10 @@ trait ChatHelperTrait
 
     public function skip(Source $source, string $key): bool
     {
-        if(! $source->force &&
+        if (! $source->force &&
         SourceTask::where('source_id', $source->id)->where('task_key', $key)->exists()) {
             Log::info('[LaraChain] GetWebContentJob - Skipping - already ran');
+
             return true;
         } else {
             return false;
@@ -69,25 +70,26 @@ trait ChatHelperTrait
     public function createSourceTask(Source $source, string $key): SourceTask
     {
         return SourceTask::create([
-            'source_id' => $this->source->id,
+            'source_id' => $source->id,
             'task_key' => $key,
         ]);
     }
 
-    public function addUserMessage(Chat $chat, string $message): void
+    public function addUserMessage(Source $source, string $message): void
     {
-        $chat->addInput(
+        $source->refresh()->getChat()->addInput(
             message: $message,
             role: RoleEnum::User,
             show_in_thread: true,
             meta_data: MetaDataDto::from([
-                'driver' => $this->source->getDriver(),
-                'source' => $this->source->title,
+                'driver' => $source->getDriver(),
+                'source' => $source->title,
             ]),
         );
     }
 
-    public function arrifyPromptResults(string $original) : array {
+    public function arrifyPromptResults(string $original): array
+    {
         $promptResults = json_decode($original, true);
 
         if (is_null($promptResults)) {

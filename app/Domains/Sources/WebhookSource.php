@@ -2,12 +2,9 @@
 
 namespace App\Domains\Sources;
 
-use App\Domains\Chat\MetaDataDto;
 use App\Domains\Documents\StatusEnum;
 use App\Domains\Documents\TypesEnum;
-use App\Domains\Messages\RoleEnum;
 use App\Domains\Prompts\PromptMerge;
-use App\Helpers\ChatHelperTrait;
 use App\Helpers\TextChunker;
 use App\Jobs\DocumentProcessingCompleteJob;
 use App\Jobs\SummarizeDocumentJob;
@@ -15,7 +12,6 @@ use App\Jobs\VectorlizeDataJob;
 use App\Models\Document;
 use App\Models\DocumentChunk;
 use App\Models\Source;
-use App\Models\SourceTask;
 use Illuminate\Bus\Batch;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Bus;
@@ -25,7 +21,6 @@ use LlmLaraHub\TagFunction\Jobs\TagDocumentJob;
 
 class WebhookSource extends BaseSource
 {
-
     public SourceTypeEnum $sourceTypeEnum = SourceTypeEnum::WebhookSource;
 
     protected array $payload = [];
@@ -57,7 +52,7 @@ class WebhookSource extends BaseSource
         $payloadMd5 = md5(json_encode($this->payload, 128));
         $key = md5($payloadMd5.$this->source->id);
 
-        if($this->skip($this->source, $key)) {
+        if ($this->skip($this->source, $key)) {
             return;
         }
 
@@ -85,9 +80,7 @@ class WebhookSource extends BaseSource
 
             $promptResultsOriginal = $results->content;
 
-            $chat = $source->chat;
-
-            $this->addUserMessage($chat, $promptResultsOriginal);
+            $this->addUserMessage($source, $promptResultsOriginal);
 
             $promptResults = $this->arrifyPromptResults($promptResultsOriginal);
 

@@ -13,7 +13,6 @@ use App\Helpers\TextChunker;
 use App\Models\Document;
 use App\Models\DocumentChunk;
 use App\Models\Source;
-use App\Models\SourceTask;
 use Facades\App\Domains\Sources\WebSearch\GetPage;
 use Illuminate\Bus\Batch;
 use Illuminate\Bus\Batchable;
@@ -22,7 +21,6 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Log;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
@@ -59,7 +57,7 @@ class GetWebContentJob implements ShouldQueue
 
         $key = md5($this->webResponseDto->url.$this->source->id);
 
-        if($this->skip($this->source, $key)) {
+        if ($this->skip($this->source, $key)) {
             return;
         }
 
@@ -91,9 +89,7 @@ class GetWebContentJob implements ShouldQueue
         } else {
             $promptResultsOriginal = $results->content;
 
-            $chat = $this->source->chat;
-
-            $this->addUserMessage($chat, $promptResultsOriginal);
+            $this->addUserMessage($this->source, $promptResultsOriginal);
 
             $promptResults = $this->arrifyPromptResults($promptResultsOriginal);
 
@@ -182,7 +178,7 @@ class GetWebContentJob implements ShouldQueue
              * I could move this into the loop if it is not
              * enough here
              */
-            $assistantMessage = $chat->addInput(
+            $assistantMessage = $this->source->getChat()->addInput(
                 message: json_encode($promptResults),
                 role: RoleEnum::Assistant,
                 show_in_thread: true,
