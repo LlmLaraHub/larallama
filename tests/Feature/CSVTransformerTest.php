@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Domains\Documents\Transformers\CSVTransformer;
 use App\Domains\Documents\Transformers\XlsxTransformer;
 use App\Domains\Documents\TypesEnum;
+use App\Models\Document;
 use Illuminate\Support\Facades\File;
 use Tests\TestCase;
 
@@ -52,6 +53,57 @@ class CSVTransformerTest extends TestCase
         $this->assertDatabaseCount('documents', 5);
         $this->assertDatabaseCount('document_chunks', 5);
     }
+
+    public function test_cleans_up(): void
+    {
+
+        $file = 'strategies_with_keys.csv';
+
+        $document = $this->setupFile($file);
+
+        $document->update([
+            'type' => TypesEnum::CSV,
+        ]);
+
+        Document::factory()->count(5)->create([
+            'collection_id' => $document->collection_id,
+            'file_path' => '6666'.$file,
+        ]);
+
+        $results = (new CSVTransformer())->handle($document);
+
+        $this->assertCount(5, $results);
+
+        $this->assertDatabaseCount('documents', 5);
+        $this->assertDatabaseCount('document_chunks', 5);
+    }
+
+    public function test_updates_keys(): void
+    {
+
+        $file = 'strategies_with_keys.csv';
+
+        $document = $this->setupFile($file);
+
+        $document->update([
+            'type' => TypesEnum::CSV,
+        ]);
+
+        $testingDocument = Document::factory()->create([
+            'collection_id' => $document->collection_id,
+            'file_path' => 'row_555_strategies_with_keys.txt'
+        ]);
+
+        $results = (new CSVTransformer())->handle($document);
+
+        $this->assertCount(5, $results);
+
+        $this->assertDatabaseCount('documents', 5);
+        $this->assertDatabaseCount('document_chunks', 5);
+
+        $this->assertStringContainsString('For the front end we focus on simplicity', $testingDocument->refresh()->original_content);
+    }
+
 
     protected function tearDown(): void
     {

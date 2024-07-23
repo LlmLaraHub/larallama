@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\Storage;
 
 class CSVTransformer
 {
+    public $keysFound = [];
+
     protected Document $document;
 
     protected TypesEnum $mimeType = TypesEnum::CSV;
@@ -47,7 +49,22 @@ class CSVTransformer
                         return remove_ascii($key.': '.$item);
                     })->implode("\n");
 
-                $file_name = 'row_'.$rowNumber.'_'.str($document->file_path)->beforeLast('.')->toString().'.txt';
+                /**
+                 * @NOTE
+                 * Row number is tricky
+                 * going to introduce a Key to the meta_data
+                 * in this case i will hard code key to see it work
+                 * then it will establish a key to update
+                 * BUT by saving the keys we can find any documents not updated
+                 * and delete those
+                 */
+                if(collect($row)->has('key')) {
+                    $rowNumber = collect($row)->get('key');
+                }
+
+                $this->keysFound[] = $rowNumber;
+
+                $file_name = $this->getFileName($rowNumber, $document->file_path);
 
                 Storage::disk('collections')
                     ->put((string) $document->collection->id.'/'.$file_name, $content);
@@ -55,20 +72,22 @@ class CSVTransformer
                 $documentRow = Document::updateOrCreate([
                     'collection_id' => $document->collection_id,
                     'file_path' => $file_name,
-                    'type' => $this->mimeType,
                 ], [
                     'status' => StatusEnum::Pending,
                     'summary' => $content,
                     'meta_data' => $row,
+                    'type' => $this->mimeType,
                     'original_content' => $content,
-                    'subject' => "Row $rowNumber import from ".$document->file_path,
+                    'subject' => "Key or Row $rowNumber import from ".$document->file_path,
                 ]);
 
                 $size = config('llmdriver.chunking.default_size');
 
                 $chunked_chunks = TextChunker::handle($content, $size);
 
-                if ($documentRow->wasRecentlyCreated) {
+                if ($documentRow->wasRecentlyCreated || $documentRow->wasChanged([
+                    'original_content',
+                    ])) {
                     foreach ($chunked_chunks as $chunkSection => $chunkContent) {
 
                         $guid = md5($chunkContent);
@@ -77,10 +96,10 @@ class CSVTransformer
                             [
                                 'document_id' => $documentRow->id,
                                 'sort_order' => $rowNumber,
-                                'section_number' => $chunkSection,
                             ],
                             [
                                 'guid' => $guid,
+                                'section_number' => $chunkSection,
                                 'content' => $chunkContent,
                                 'meta_data' => $row,
                                 'original_content' => $content,
@@ -107,8 +126,28 @@ class CSVTransformer
 
         Log::info($this->mimeType->name.':Transformer:handle', ['chunks' => count($chunks)]);
 
+
+        $this->cleanUpDeletedRows();
+
         $document->delete();
 
         return $chunks;
+    }
+
+    protected function cleanUpDeletedRows() :void {
+        Document::where('collection_id', $this->document->collection_id)
+            ->whereNotIn('file_path', $this->getKeysWithFileName())
+            ->delete();
+    }
+
+    protected function getKeysWithFileName(): array {
+        return collect($this->keysFound)->map(function ($rowNumber) {
+            return $this->getFileName($rowNumber, $this->document->file_path);
+        })->toArray();
+    }
+
+    protected function getFileName(int $rowNumber, string $filePath): string
+    {
+        return 'row_'.$rowNumber.'_'.str($filePath)->beforeLast('.')->toString().'.txt';
     }
 }
