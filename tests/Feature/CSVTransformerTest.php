@@ -91,7 +91,7 @@ class CSVTransformerTest extends TestCase
 
         $testingDocument = Document::factory()->create([
             'collection_id' => $document->collection_id,
-            'file_path' => 'row_555_strategies_with_keys.txt'
+            'file_path' => 'row_555_strategies_with_keys.txt',
         ]);
 
         $results = (new CSVTransformer())->handle($document);
@@ -103,7 +103,6 @@ class CSVTransformerTest extends TestCase
 
         $this->assertStringContainsString('For the front end we focus on simplicity', $testingDocument->refresh()->original_content);
     }
-
 
     protected function tearDown(): void
     {

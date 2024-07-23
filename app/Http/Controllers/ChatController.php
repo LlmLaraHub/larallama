@@ -58,7 +58,7 @@ class ChatController extends Controller
             'audiences' => AudienceResource::collection(Audience::all()),
             'system_prompt' => $collection->systemPrompt(),
             'settings' => [
-                    'supports_functions' => LlmDriverFacade::driver($chat->getDriver())->hasFunctions(),
+                'supports_functions' => LlmDriverFacade::driver($chat->getDriver())->hasFunctions(),
             ],
             'messages' => MessageResource::collection($chat->latest_messages),
         ]);

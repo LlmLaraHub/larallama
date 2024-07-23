@@ -58,7 +58,7 @@ class CSVTransformer
                  * BUT by saving the keys we can find any documents not updated
                  * and delete those
                  */
-                if(collect($row)->has('key')) {
+                if (collect($row)->has('key')) {
                     $rowNumber = collect($row)->get('key');
                 }
 
@@ -87,7 +87,7 @@ class CSVTransformer
 
                 if ($documentRow->wasRecentlyCreated || $documentRow->wasChanged([
                     'original_content',
-                    ])) {
+                ])) {
                     foreach ($chunked_chunks as $chunkSection => $chunkContent) {
 
                         $guid = md5($chunkContent);
@@ -126,7 +126,6 @@ class CSVTransformer
 
         Log::info($this->mimeType->name.':Transformer:handle', ['chunks' => count($chunks)]);
 
-
         $this->cleanUpDeletedRows();
 
         $document->delete();
@@ -134,13 +133,15 @@ class CSVTransformer
         return $chunks;
     }
 
-    protected function cleanUpDeletedRows() :void {
+    protected function cleanUpDeletedRows(): void
+    {
         Document::where('collection_id', $this->document->collection_id)
             ->whereNotIn('file_path', $this->getKeysWithFileName())
             ->delete();
     }
 
-    protected function getKeysWithFileName(): array {
+    protected function getKeysWithFileName(): array
+    {
         return collect($this->keysFound)->map(function ($rowNumber) {
             return $this->getFileName($rowNumber, $this->document->file_path);
         })->toArray();
