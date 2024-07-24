@@ -63,6 +63,7 @@ class BaseSourceController extends Controller
             'active' => $validated['active'],
             'collection_id' => $collection->id,
             'type' => $this->sourceTypeEnum,
+            'force' => data_get($validated, 'force', false),
             'user_id' => $this->getUserId($collection),
             'meta_data' => [
                 'driver' => 'brave',
@@ -150,6 +151,7 @@ class BaseSourceController extends Controller
             'title' => 'required|string',
             'details' => 'required|string',
             'active' => ['boolean', 'required'],
+            'force' => ['nullable', 'boolean'],
             'recurring' => ['string', 'required'],
             'meta_data' => ['nullable', 'array'],
             'secrets' => ['nullable', 'array'],

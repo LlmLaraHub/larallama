@@ -11,7 +11,6 @@ use App\Domains\Prompts\PromptMerge;
 use App\Jobs\ChunkDocumentJob;
 use App\Models\Document;
 use App\Models\Source;
-use App\Models\SourceTask;
 use Facades\App\Domains\EmailParser\Client;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Log;
@@ -45,18 +44,17 @@ class EmailSource extends BaseSource
             return;
         }
 
+        $assistantMessage = null;
+
         $this->source = $this->checkForChat($source);
 
         $key = md5($this->mailDto->date.$this->mailDto->from.$source->id);
 
-        if (SourceTask::where('source_id', $source->id)->where('task_key', $key)->exists()) {
+        if ($this->skip($this->source, $key)) {
             return;
         }
 
-        SourceTask::create([
-            'source_id' => $source->id,
-            'task_key' => $key,
-        ]);
+        $this->createSourceTask($this->source, $key);
 
         $this->content = $this->mailDto->getContent();
 
@@ -74,8 +72,6 @@ class EmailSource extends BaseSource
             'prompt' => $prompt,
         ]);
 
-        $chat = $source->chat;
-
         $results = LlmDriverFacade::driver(
             $source->getDriver()
         )->completion($prompt);
@@ -85,48 +81,52 @@ class EmailSource extends BaseSource
                 'prompt' => $prompt,
             ]);
         } else {
+            $this->addUserMessage($source, $prompt);
 
-            $userMessage = $chat->addInput(
-                message: $prompt,
-                role: RoleEnum::User,
-                show_in_thread: true,
-                meta_data: MetaDataDto::from([
-                    'driver' => $source->getDriver(),
-                    'source' => $source->title,
-                ]),
-            );
+            $promptResultsOriginal = $results->content;
+            $promptResults = $this->arrifyPromptResults($promptResultsOriginal);
+            foreach ($promptResults as $promptResultIndex => $promptResult) {
+                $promptResult = json_encode($promptResult);
 
-            $document = Document::updateOrCreate([
-                'source_id' => $source->id,
-                'type' => TypesEnum::Email,
-                'subject' => $this->mailDto->subject,
-                'collection_id' => $source->collection_id,
-            ], [
-                'summary' => $results->content,
-                'meta_data' => $this->mailDto->toArray(),
-                'original_content' => $this->mailDto->body,
-                'status_summary' => StatusEnum::Pending,
-                'status' => StatusEnum::Pending,
-            ]);
+                $title = sprintf('Email Subject - item #%d -%s',
+                    $promptResultIndex + 1,
+                    $this->mailDto->subject);
 
-            Bus::batch([new ChunkDocumentJob($document)])
-                ->name("Processing Email {$this->mailDto->subject}")
-                ->allowFailures()
-                ->dispatch();
+                $document = Document::updateOrCreate([
+                    'source_id' => $source->id,
+                    'type' => TypesEnum::Email,
+                    'subject' => $title,
+                    'collection_id' => $source->collection_id,
+                ], [
+                    'summary' => $promptResult,
+                    'meta_data' => $this->mailDto->toArray(),
+                    'original_content' => $this->mailDto->body,
+                    'status_summary' => StatusEnum::Pending,
+                    'status' => StatusEnum::Pending,
+                ]);
 
-            $assistantMessage = $chat->addInput(
-                message: $results->content,
-                role: RoleEnum::Assistant,
-                show_in_thread: true,
-                meta_data: MetaDataDto::from([
-                    'driver' => $source->getDriver(),
-                    'source' => $source->title,
-                ]),
-            );
+                Bus::batch([new ChunkDocumentJob($document)])
+                    ->name("Processing Email {$this->mailDto->subject}")
+                    ->allowFailures()
+                    ->dispatch();
 
-            $this->savePromptHistory(
-                message: $assistantMessage,
-                prompt: $prompt);
+                $assistantMessage = $source->getChat()->addInput(
+                    message: $results->content,
+                    role: RoleEnum::Assistant,
+                    show_in_thread: true,
+                    meta_data: MetaDataDto::from([
+                        'driver' => $source->getDriver(),
+                        'source' => $source->title,
+                    ]),
+                );
+            }
+
+            if ($assistantMessage?->id) {
+                $this->savePromptHistory(
+                    message: $assistantMessage,
+                    prompt: $prompt);
+            }
+
         }
 
     }

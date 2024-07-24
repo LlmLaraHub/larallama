@@ -35,8 +35,6 @@ class SiteMapSource extends BaseSource
          */
         $feedItems = SiteMapParserWrapper::handle($source->meta_data['feed_url'])->take(10);
 
-        $jobs = [];
-
         foreach ($feedItems as $feedItem) {
             $webResponseDto = WebResponseDto::from([
                 'url' => $feedItem->link,
@@ -45,14 +43,15 @@ class SiteMapSource extends BaseSource
                 'meta_data' => $feedItem->toArray(),
                 'profile' => [],
             ]);
-            $jobs[] = new GetWebContentJob($source, $webResponseDto);
-        }
 
-        Bus::batch($jobs)
-            ->name("Getting Feed Data - {$source->title}")
-            ->onQueue(LlmDriverFacade::driver($source->getDriver())->onQueue())
-            ->allowFailures()
-            ->dispatch();
+            Bus::batch([
+                new GetWebContentJob($source, $webResponseDto),
+            ])
+                ->name("Getting Sitemap site for Source - {$webResponseDto->url}")
+                ->onQueue(LlmDriverFacade::driver($source->getDriver())->onQueue())
+                ->allowFailures()
+                ->dispatch();
+        }
 
         $source->last_run = now();
         $source->save();

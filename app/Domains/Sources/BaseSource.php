@@ -27,6 +27,8 @@ abstract class BaseSource
 
     public string $batchTitle = 'Chunking Source';
 
+    public bool $promptPower = true;
+
     public static string $description = 'Sources are ways we get data into the system. They are the core of the system.';
 
     public ?Document $document = null;

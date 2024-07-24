@@ -34,8 +34,6 @@ class FeedSource extends BaseSource
 
         $feedItems = $this->getFeedFromUrl($source->meta_data['feed_url']);
 
-        $jobs = [];
-
         foreach ($feedItems as $feedItem) {
 
             $webResponseDto = WebResponseDto::from([
@@ -46,15 +44,14 @@ class FeedSource extends BaseSource
                 'profile' => [],
             ]);
 
-            $jobs[] = new GetWebContentJob($source, $webResponseDto);
-
+            Bus::batch([
+                new GetWebContentJob($source, $webResponseDto),
+            ])
+                ->name("Getting Feed Data - {$source->title}")
+                ->onQueue(LlmDriverFacade::driver($source->getDriver())->onQueue())
+                ->allowFailures()
+                ->dispatch();
         }
-
-        Bus::batch($jobs)
-            ->name("Getting Feed Data - {$source->title}")
-            ->onQueue(LlmDriverFacade::driver($source->getDriver())->onQueue())
-            ->allowFailures()
-            ->dispatch();
 
         $source->last_run = now();
         $source->save();

@@ -38,6 +38,7 @@ class FeedSourceController extends BaseSourceController
             'active' => ['boolean', 'required'],
             'recurring' => ['string', 'required'],
             'meta_data' => ['required', 'array'],
+            'force' => ['nullable', 'boolean'],
             'meta_data.feed_url' => ['required', 'string'],
             'secrets' => ['nullable', 'array'],
         ];
@@ -52,6 +53,7 @@ class FeedSourceController extends BaseSourceController
             'user_id' => $this->getUserId($collection),
             'active' => $validated['active'],
             'collection_id' => $collection->id,
+            'force' => data_get($validated, 'force', false),
             'type' => $this->sourceTypeEnum,
             'meta_data' => $validated['meta_data'],
         ]);

@@ -13,7 +13,6 @@ import Card from "@/Pages/Sources/Cards/Card.vue";
 import EmailCard from "@/Pages/Sources/EmailSource/Components/Card.vue";
 import EmailBoxCard from "@/Pages/Sources/EmailBoxSource/Components/Card.vue";
 import WebhookSource from "@/Pages/Sources/WebhookSource/Components/Card.vue";
-import JsonSource from "@/Pages/Sources/JsonSource/Components/Card.vue";
 import FeedSource from "@/Pages/Sources/FeedSource/Components/Card.vue";
 import WebPageSource from "@/Pages/Sources/WebPageSource/Components/Card.vue";
 import SiteMapSource from "@/Pages/Sources/SiteMapSource/Components/Card.vue";
@@ -63,10 +62,7 @@ const props = defineProps({
                         Sources are ways you can add data to your collection beyond uploading documents.
                         You can add via a websearch, and soon email and calendar.
                     </template>
-
                  </Intro>
-
-
                   <div class="border border-secondary p-5 mt-5 flex">
                     <div v-if="sources.data.length === 0" class="text-center w-full">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mx-auto text-gray-400">
@@ -79,7 +75,6 @@ const props = defineProps({
                               <EmailCard v-if="source.type_key === 'email_source'" :source="source"></EmailCard>
                               <EmailBoxCard v-else-if="source.type_key === 'email_box_source'" :source="source"></EmailBoxCard>
                               <WebhookSource v-else-if="source.type_key === 'webhook_source'" :source="source"></WebhookSource>
-                              <JsonSource v-else-if="source.type_key === 'json_source'" :source="source"></JsonSource>
                               <FeedSource v-else-if="source.type_key === 'feed_source'" :source="source"></FeedSource>
                               <WebPageSource v-else-if="source.type_key === 'web_page_source'" :source="source"></WebPageSource>
                               <SiteMapSource v-else-if="source.type_key === 'site_map_source'" :source="source"></SiteMapSource>
