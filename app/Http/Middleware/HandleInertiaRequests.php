@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use App\Models\Setting;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Inertia\Middleware;
 use Laravel\Pennant\Feature;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
@@ -40,14 +41,26 @@ class HandleInertiaRequests extends Middleware
     {
         return array_merge(parent::share($request), [
             'email_name' => config('llmlarahub.email_name'),
-            'steps' => Setting::createNewSetting()->steps,
-            'llms' => Setting::getLlms(),
-            'active_llms' => Setting::getAllActiveLlms(),
-            'active_llms_with_embeddings' => Setting::getAllActiveLlmsWithEmbeddings(),
-            'drivers' => Setting::getDrivers(),
+            'steps' => Cache::remember('steps', now()->addDay(), function () {
+                return Setting::createNewSetting()->steps;
+            }),
+            'llms' => Cache::remember('llms', now()->addDay(), function () {
+                return Setting::getLlms();
+            }),
+            'active_llms' => Cache::remember('active_llms', now()->addDay(), function () {
+                return Setting::getAllActiveLlms();
+            }),
+            'active_llms_with_embeddings' => Cache::remember('active_llms_with_embeddings', now()->addDay(), function () {
+                return Setting::getAllActiveLlmsWithEmbeddings();
+            }),
+            'drivers' => Cache::remember('drivers', now()->addDay(), function () {
+                return Setting::getDrivers();
+            }),
             'app_name' => config('app.name'),
             'domain' => config('llmlarahub.domain'),
-            'features' => Feature::all(),
+            'features' => Cache::remember('features', now()->addDay(), function () {
+                return Feature::all();
+            }),
             'tools' => LlmDriverFacade::getFunctionsForUi(),
         ]);
     }

@@ -41,6 +41,7 @@ class ChatController extends Controller
         return inertia('Collection/Chat', [
             'collection' => new CollectionResource($collection),
             'reference_collections' => Collection::orderBy('name')
+                ->select('id', 'name')
                 ->get()
                 ->transform(
                     /** @phpstan-ignore-next-line */
@@ -60,7 +61,7 @@ class ChatController extends Controller
             'settings' => [
                 'supports_functions' => LlmDriverFacade::driver($chat->getDriver())->hasFunctions(),
             ],
-            'messages' => MessageResource::collection($chat->latest_messages),
+            'messages' => MessageResource::collection($chat->latest_messages()->limit(20)->get()),
         ]);
     }
 

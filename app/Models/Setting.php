@@ -175,8 +175,6 @@ class Setting extends Model
 
     public static function getDrivers(): array
     {
-        $settings = Setting::createNewSetting();
-
         return [];
     }
 
