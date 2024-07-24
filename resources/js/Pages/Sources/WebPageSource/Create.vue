@@ -30,6 +30,7 @@ const props = defineProps({
 const form = useForm({
     title: '',
     details: '',
+    force: false,
     recurring: 'not',
     meta_data: {
         example: "bob@bobsburgers.com",

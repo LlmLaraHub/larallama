@@ -28,6 +28,7 @@ class WebPageSourceController extends BaseSourceController
             'title' => 'required|string',
             'details' => 'required|string',
             'active' => ['boolean', 'required'],
+            'force' => ['boolean', 'required'],
             'recurring' => ['string', 'required'],
             'meta_data.urls' => ['required', 'string'],
         ];
@@ -39,6 +40,7 @@ class WebPageSourceController extends BaseSourceController
             'title' => $validated['title'],
             'details' => $validated['details'],
             'recurring' => $validated['recurring'],
+            'force' => data_get($validated, 'force', false),
             'active' => $validated['active'],
             'collection_id' => $collection->id,
             'type' => $this->sourceTypeEnum,
