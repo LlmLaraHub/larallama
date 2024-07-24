@@ -31,6 +31,7 @@ class AssistantEmailBoxSourceController extends BaseSourceController
             'details' => $validated['details'],
             'recurring' => $validated['recurring'],
             'active' => $validated['active'],
+            'force' => data_get($validated, 'force', false),
             'collection_id' => $collection->id,
             'user_id' => $this->getUserId($collection),
             'type' => $this->sourceTypeEnum,

@@ -36,6 +36,7 @@ class EmailBoxSourceController extends BaseSourceController
             'details' => $validated['details'],
             'recurring' => $validated['recurring'],
             'active' => $validated['active'],
+            'force' => data_get($validated, 'force', false),
             'user_id' => $this->getUserId($collection),
             'collection_id' => $collection->id,
             'type' => $this->sourceTypeEnum,
@@ -77,6 +78,7 @@ class EmailBoxSourceController extends BaseSourceController
         $source->update([
             'title' => $validated['title'],
             'details' => $validated['details'],
+            'force' => data_get($validated, 'force', false),
             'recurring' => $validated['recurring'],
             'active' => $validated['active'],
         ]);

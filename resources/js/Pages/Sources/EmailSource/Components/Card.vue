@@ -14,7 +14,7 @@ const props = defineProps({
 const form = useForm({})
 
 const email = computed(() => {
-    return `assistant+${ props.source.slug }@${ usePage().props.domain }`
+    return `${ usePage().props.email_name }+${ props.source.slug }@${ usePage().props.domain }`
 })
 
 const run = (source) => {

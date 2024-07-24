@@ -32,6 +32,7 @@ const form = useForm({
     title: props.source.data.title,
     details: props.source.data.details,
     active: props.source.data.active,
+    force: props.source.data.force,
     recurring: props.source.data.recurring,
     secrets: {
         username: props.source.data.secrets.username,

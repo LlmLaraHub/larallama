@@ -16,6 +16,20 @@
             <InputError :message="modelValue.errors.details" />
         </div>
 
+
+        <div>
+            <InputLabel value="Force Repeat"/>
+            <input v-model="modelValue.force" type="checkbox"  />
+            <InputError :message="modelValue.errors.force" />
+            <div class="text-xs prose m-2">
+                by default the system will only run the first time for a url or an email.
+                But if you want to to try again just check this box.
+                This can be good if you are checking a home page for updates.
+                Or a feed for updates. But NOT if you are checking an email box for emails and
+                do not want to repeat check the same email.
+            </div>
+        </div>
+
         <div class="border-secondary border rounded p-5">
             <h2>These will be encrypted</h2>
 

@@ -31,6 +31,7 @@ const form = useForm({
     title: '',
     details: '',
     recurring: 'not',
+    force: false,
     secrets: {
         username: "bob@bobsburgers.com",
         password: "password",

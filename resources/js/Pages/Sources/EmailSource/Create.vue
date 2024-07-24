@@ -28,6 +28,7 @@ const props = defineProps({
 const form = useForm({
     title: '',
     details: '',
+    force: false,
     recurring: 'not',
     active: true
 });

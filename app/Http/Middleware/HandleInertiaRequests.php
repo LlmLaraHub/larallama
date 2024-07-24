@@ -39,6 +39,7 @@ class HandleInertiaRequests extends Middleware
     public function share(Request $request): array
     {
         return array_merge(parent::share($request), [
+            'email_name' => config('llmlarahub.email_name'),
             'steps' => Setting::createNewSetting()->steps,
             'llms' => Setting::getLlms(),
             'active_llms' => Setting::getAllActiveLlms(),
