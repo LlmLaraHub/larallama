@@ -2,17 +2,15 @@
 
 namespace Tests\Feature;
 
-use App\Domains\Documents\TypesEnum;
 use App\Domains\EmailParser\MailDto;
 use App\Domains\Sources\SourceTypeEnum;
-use App\Domains\Transformers\TypeEnum;
-use App\Domains\UnStructured\StructuredTypeEnum;
-use App\Models\Document;
 use App\Models\Source;
-use App\Models\Transformer;
+use App\Models\SourceTask;
 use Facades\App\Domains\EmailParser\Client;
 use Facades\App\Domains\Sources\EmailSource;
 use Illuminate\Support\Facades\Bus;
+use LlmLaraHub\LlmDriver\LlmDriverFacade;
+use LlmLaraHub\LlmDriver\Responses\CompletionResponse;
 use Tests\TestCase;
 
 class EmailSourceTest extends TestCase
@@ -46,6 +44,12 @@ class EmailSourceTest extends TestCase
             'type' => SourceTypeEnum::EmailSource,
         ]);
 
+        LlmDriverFacade::shouldReceive('driver->completion')->once()->andReturn(
+            CompletionResponse::from([
+                'content' => 'foo bar',
+            ])
+        );
+
         $body = <<<'BODY'
 Quis ea esse velit id id eu consectetur deserunt exercitation exercitation. Nisi aliqua ipsum fugiat laborum aliquip nostrud eu tempor non cillum Lorem non dolor proident sunt. Irure commodo aliqua reprehenderit deserunt sint irure in excepteur quis eiusmod ullamco aliquip. Dolore tempor ea non ut.Quis ea esse velit id id eu consectetur deserunt exercitation exercitation. Nisi aliqua ipsum fugiat laborum aliquip nostrud eu tempor non cillum Lorem non dolor proident sunt. Irure commodo aliqua reprehenderit deserunt sint irure in excepteur quis eiusmod ullamco aliquip. Dolore tempor ea non ut.
 Quis ea esse velit id id eu consectetur deserunt exercitation exercitation. Nisi aliqua ipsum fugiat laborum aliquip nostrud eu tempor non cillum Lorem non dolor proident sunt. Irure commodo aliqua reprehenderit deserunt sint irure in excepteur quis eiusmod ullamco aliquip. Dolore tempor ea non ut.
@@ -69,8 +73,6 @@ BODY;
 
         $this->assertDatabaseCount('documents', 1);
 
-        $this->assertDatabaseCount('document_chunks', 8);
-
         Bus::assertBatchCount(1);
 
     }
@@ -87,13 +89,19 @@ BODY;
         $source->run();
     }
 
-    public function test_related_tranformers()
+    public function tests_creates_chat_and_message()
     {
         Bus::fake();
         $source = Source::factory()->create([
             'slug' => 'test',
             'type' => SourceTypeEnum::EmailSource,
         ]);
+
+        LlmDriverFacade::shouldReceive('driver->completion')->once()->andReturn(
+            CompletionResponse::from([
+                'content' => 'foo bar',
+            ])
+        );
 
         $body = <<<'BODY'
 Quis ea esse velit id id eu consectetur deserunt exercitation exercitation. Nisi aliqua ipsum fugiat laborum aliquip nostrud eu tempor non cillum Lorem non dolor proident sunt. Irure commodo aliqua reprehenderit deserunt sint irure in excepteur quis eiusmod ullamco aliquip. Dolore tempor ea non ut.Quis ea esse velit id id eu consectetur deserunt exercitation exercitation. Nisi aliqua ipsum fugiat laborum aliquip nostrud eu tempor non cillum Lorem non dolor proident sunt. Irure commodo aliqua reprehenderit deserunt sint irure in excepteur quis eiusmod ullamco aliquip. Dolore tempor ea non ut.
@@ -104,17 +112,6 @@ Quis ea esse velit id id eu consectetur deserunt exercitation exercitation. Nisi
 Quis ea esse velit id id eu consectetur deserunt exercitation exercitation. Nisi aliqua ipsum fugiat laborum aliquip nostrud eu tempor non cillum Lorem non dolor proident sunt. Irure commodo aliqua reprehenderit deserunt sint irure in excepteur quis eiusmod ullamco aliquip. Dolore tempor ea non ut.
 
 BODY;
-
-        $transformer = Transformer::factory()->create(
-            [
-                'transformable_id' => $source->id,
-                'transformable_type' => Source::class,
-                'parent_id' => null,
-                'last_run' => null,
-                'active' => true,
-                'type' => TypeEnum::CrmTransformer,
-            ]
-        );
 
         $dto = MailDto::from([
             'to' => 'info+12345@llmassistant.io',
@@ -127,17 +124,102 @@ BODY;
         $emailSource = new \App\Domains\Sources\EmailSource();
         $emailSource->setMailDto($dto)->handle($source);
 
-        $this->assertDatabaseCount('documents', 3);
+        $this->assertDatabaseCount('documents', 1);
+        $this->assertDatabaseCount('chats', 1);
+        $this->assertDatabaseCount('messages', 2);
+        $this->assertDatabaseCount('source_tasks', 1);
 
-        $this->assertDatabaseCount('document_chunks', 10);
+        $this->assertNotNull($source->chat_id);
 
         Bus::assertBatchCount(1);
+    }
 
-        $documentTo = Document::whereType(TypesEnum::Contact)->exists();
-        $this->assertTrue($documentTo);
-        $documentTo = Document::where('child_type', StructuredTypeEnum::EmailFrom)->exists();
-        $this->assertTrue($documentTo);
-        $documentTo = Document::where('child_type', StructuredTypeEnum::EmailTo)->exists();
-        $this->assertTrue($documentTo);
+    public function test_repeat_tasks()
+    {
+        Bus::fake();
+        $source = Source::factory()->create([
+            'slug' => 'test',
+            'type' => SourceTypeEnum::EmailSource,
+        ]);
+
+        LlmDriverFacade::shouldReceive('driver->completion')->never();
+
+        $body = <<<'BODY'
+Quis ea esse velit id id eu consectetur deserunt exercitation exercitation. Nisi aliqua ipsum fugiat laborum aliquip nostrud eu tempor non cillum Lorem non dolor proident sunt. Irure commodo aliqua reprehenderit deserunt sint irure in excepteur quis eiusmod ullamco aliquip. Dolore tempor ea non ut.Quis ea esse velit id id eu consectetur deserunt exercitation exercitation. Nisi aliqua ipsum fugiat laborum aliquip nostrud eu tempor non cillum Lorem non dolor proident sunt. Irure commodo aliqua reprehenderit deserunt sint irure in excepteur quis eiusmod ullamco aliquip. Dolore tempor ea non ut.
+Quis ea esse velit id id eu consectetur deserunt exercitation exercitation. Nisi aliqua ipsum fugiat laborum aliquip nostrud eu tempor non cillum Lorem non dolor proident sunt. Irure commodo aliqua reprehenderit deserunt sint irure in excepteur quis eiusmod ullamco aliquip. Dolore tempor ea non ut.
+Quis ea esse velit id id eu consectetur deserunt exercitation exercitation. Nisi aliqua ipsum fugiat laborum aliquip nostrud eu tempor non cillum Lorem non dolor proident sunt. Irure commodo aliqua reprehenderit deserunt sint irure in excepteur quis eiusmod ullamco aliquip. Dolore tempor ea non ut.
+Quis ea esse velit id id eu consectetur deserunt exercitation exercitation. Nisi aliqua ipsum fugiat laborum aliquip nostrud eu tempor non cillum Lorem non dolor proident sunt. Irure commodo aliqua reprehenderit deserunt sint irure in excepteur quis eiusmod ullamco aliquip. Dolore tempor ea non ut.
+Quis ea esse velit id id eu consectetur deserunt exercitation exercitation. Nisi aliqua ipsum fugiat laborum aliquip nostrud eu tempor non cillum Lorem non dolor proident sunt. Irure commodo aliqua reprehenderit deserunt sint irure in excepteur quis eiusmod ullamco aliquip. Dolore tempor ea non ut.
+Quis ea esse velit id id eu consectetur deserunt exercitation exercitation. Nisi aliqua ipsum fugiat laborum aliquip nostrud eu tempor non cillum Lorem non dolor proident sunt. Irure commodo aliqua reprehenderit deserunt sint irure in excepteur quis eiusmod ullamco aliquip. Dolore tempor ea non ut.
+
+BODY;
+
+        $dto = MailDto::from([
+            'to' => 'info+12345@llmassistant.io',
+            'from' => 'foo@var.com',
+            'subject' => 'This is it',
+            'header' => 'This is header',
+            'body' => $body,
+        ]);
+
+        SourceTask::factory()->create([
+            'source_id' => $source->id,
+            'task_key' => md5($dto->date.$dto->from.$source->id),
+        ]);
+
+        $emailSource = new \App\Domains\Sources\EmailSource();
+        $emailSource->setMailDto($dto)->handle($source);
+
+        $this->assertDatabaseCount('documents', 0);
+        $this->assertDatabaseCount('chats', 1);
+        $this->assertDatabaseCount('messages', 0);
+
+        $this->assertNotNull($source->chat_id);
+
+        Bus::assertBatchCount(0);
+    }
+
+    public function test_no_action_required()
+    {
+        Bus::fake();
+        $source = Source::factory()->create([
+            'slug' => 'test',
+            'type' => SourceTypeEnum::EmailSource,
+        ]);
+
+        LlmDriverFacade::shouldReceive('driver->completion')->once()->andReturn(
+            CompletionResponse::from([
+                'content' => 'False',
+            ])
+        );
+
+        $body = <<<'BODY'
+Quis ea esse velit id id eu consectetur deserunt exercitation exercitation. Nisi aliqua ipsum fugiat laborum aliquip nostrud eu tempor non cillum Lorem non dolor proident sunt. Irure commodo aliqua reprehenderit deserunt sint irure in excepteur quis eiusmod ullamco aliquip. Dolore tempor ea non ut.Quis ea esse velit id id eu consectetur deserunt exercitation exercitation. Nisi aliqua ipsum fugiat laborum aliquip nostrud eu tempor non cillum Lorem non dolor proident sunt. Irure commodo aliqua reprehenderit deserunt sint irure in excepteur quis eiusmod ullamco aliquip. Dolore tempor ea non ut.
+Quis ea esse velit id id eu consectetur deserunt exercitation exercitation. Nisi aliqua ipsum fugiat laborum aliquip nostrud eu tempor non cillum Lorem non dolor proident sunt. Irure commodo aliqua reprehenderit deserunt sint irure in excepteur quis eiusmod ullamco aliquip. Dolore tempor ea non ut.
+Quis ea esse velit id id eu consectetur deserunt exercitation exercitation. Nisi aliqua ipsum fugiat laborum aliquip nostrud eu tempor non cillum Lorem non dolor proident sunt. Irure commodo aliqua reprehenderit deserunt sint irure in excepteur quis eiusmod ullamco aliquip. Dolore tempor ea non ut.
+Quis ea esse velit id id eu consectetur deserunt exercitation exercitation. Nisi aliqua ipsum fugiat laborum aliquip nostrud eu tempor non cillum Lorem non dolor proident sunt. Irure commodo aliqua reprehenderit deserunt sint irure in excepteur quis eiusmod ullamco aliquip. Dolore tempor ea non ut.
+Quis ea esse velit id id eu consectetur deserunt exercitation exercitation. Nisi aliqua ipsum fugiat laborum aliquip nostrud eu tempor non cillum Lorem non dolor proident sunt. Irure commodo aliqua reprehenderit deserunt sint irure in excepteur quis eiusmod ullamco aliquip. Dolore tempor ea non ut.
+Quis ea esse velit id id eu consectetur deserunt exercitation exercitation. Nisi aliqua ipsum fugiat laborum aliquip nostrud eu tempor non cillum Lorem non dolor proident sunt. Irure commodo aliqua reprehenderit deserunt sint irure in excepteur quis eiusmod ullamco aliquip. Dolore tempor ea non ut.
+
+BODY;
+
+        $dto = MailDto::from([
+            'to' => 'info+12345@llmassistant.io',
+            'from' => 'foo@var.com',
+            'subject' => 'This is it',
+            'header' => 'This is header',
+            'body' => $body,
+        ]);
+
+        $emailSource = new \App\Domains\Sources\EmailSource();
+        $emailSource->setMailDto($dto)->handle($source);
+
+        $this->assertDatabaseCount('documents', 0);
+        $this->assertDatabaseCount('chats', 1);
+        $this->assertDatabaseCount('messages', 0);
+
+        $this->assertNotNull($source->chat_id);
+
+        Bus::assertBatchCount(0);
     }
 }

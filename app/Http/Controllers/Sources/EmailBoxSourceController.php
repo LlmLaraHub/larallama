@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Sources;
 
 use App\Domains\Prompts\EmailToDocumentSummary;
 use App\Domains\Prompts\EmailToWebContent;
+use App\Domains\Prompts\SpecificTopic;
 use App\Domains\Sources\SourceTypeEnum;
 use App\Http\Controllers\BaseSourceController;
 use App\Models\Collection;
@@ -35,6 +36,7 @@ class EmailBoxSourceController extends BaseSourceController
             'details' => $validated['details'],
             'recurring' => $validated['recurring'],
             'active' => $validated['active'],
+            'user_id' => $this->getUserId($collection),
             'collection_id' => $collection->id,
             'type' => $this->sourceTypeEnum,
             'slug' => str(Str::random(12))->remove('+')->toString(),
@@ -83,6 +85,7 @@ class EmailBoxSourceController extends BaseSourceController
     public function getPrompts(): array
     {
         return [
+            'skip_emails_based_on_content' => SpecificTopic::prompt('[CONTEXT]'),
             'summarize_email' => EmailToDocumentSummary::prompt('[CONTEXT]'),
             'get_web_page' => EmailToWebContent::prompt('[CONTEXT]'),
         ];

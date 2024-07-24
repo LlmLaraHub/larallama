@@ -23,6 +23,7 @@ class SourceResource extends JsonResource
         return [
             'id' => $this->id,
             'title' => $this->title,
+            'force' => $this->force ? 'Yes' : 'No',
             'collection_id' => $this->collection_id,
             'details' => $this->details,
             'active' => $this->active ? 'Yes' : 'No',

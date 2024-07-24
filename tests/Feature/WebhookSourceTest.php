@@ -75,10 +75,10 @@ class WebhookSourceTest extends TestCase
         $payload = get_fixture('example_github.json');
 
         LlmDriverFacade::shouldReceive('driver->onQueue')
-            ->times(4)->andReturn('default');
+            ->times(2)->andReturn('default');
 
         LlmDriverFacade::shouldReceive('driver->completion')
-            ->twice()->andReturn(
+            ->once()->andReturn(
                 CompletionResponse::from([
                     'content' => get_fixture('github_transformed.json', false),
                 ])
@@ -97,7 +97,7 @@ class WebhookSourceTest extends TestCase
         $this->assertDatabaseCount('documents', 2);
         $this->assertDatabaseCount('document_chunks', 2);
 
-        Bus::assertBatchCount(4);
+        Bus::assertBatchCount(2);
 
     }
 
@@ -111,10 +111,10 @@ class WebhookSourceTest extends TestCase
         $payload['content'] = $payload;
 
         LlmDriverFacade::shouldReceive('driver->onQueue')
-            ->times(2)->andReturn('default');
+            ->once()->andReturn('default');
 
         LlmDriverFacade::shouldReceive('driver->completion')
-            ->times(2)->andReturn(
+            ->times(1)->andReturn(
                 CompletionResponse::from([
                     'content' => 'Foo Bar',
                 ])
@@ -133,7 +133,7 @@ class WebhookSourceTest extends TestCase
         $this->assertDatabaseCount('documents', 1);
         $this->assertDatabaseCount('document_chunks', 1);
 
-        Bus::assertBatchCount(2);
+        Bus::assertBatchCount(1);
 
     }
 }

@@ -53,6 +53,7 @@ class GoogleSheetSourceController extends BaseSourceController
             'recurring' => $validated['recurring'],
             'active' => $validated['active'],
             'collection_id' => $collection->id,
+            'user_id' => $this->getUserId($collection),
             'type' => $this->sourceTypeEnum,
             'meta_data' => $validated['meta_data'],
         ]);

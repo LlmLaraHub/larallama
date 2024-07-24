@@ -28,7 +28,6 @@ class CSVTransformer
 
         $filePath = $this->document->pathToFile();
 
-        //$filePath = null, string $disk = null, string $readerType = null
         $collection = (new DocumentsImport())
             ->toCollection($filePath, null, $this->readerType);
 

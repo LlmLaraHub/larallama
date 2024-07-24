@@ -33,7 +33,6 @@ class WebPageSource extends BaseSource
         foreach ($urls as $url) {
 
             $jobs[] = new WebPageSourceJob($source, $url);
-
         }
 
         Bus::batch($jobs)

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Domains\Recurring\RecurringTypeEnum;
 use App\Domains\Sources\SourceTypeEnum;
+use App\Helpers\ChatHelperTrait;
 use App\Http\Resources\CollectionResource;
 use App\Http\Resources\DocumentResource;
 use App\Http\Resources\FilterResource;
@@ -16,6 +17,8 @@ use Illuminate\Support\Facades\Gate;
 
 class BaseSourceController extends Controller
 {
+    use ChatHelperTrait;
+
     protected SourceTypeEnum $sourceTypeEnum = SourceTypeEnum::WebSearchSource;
 
     protected string $edit_path = 'Sources/WebSource/Edit';
@@ -60,6 +63,8 @@ class BaseSourceController extends Controller
             'active' => $validated['active'],
             'collection_id' => $collection->id,
             'type' => $this->sourceTypeEnum,
+            'force' => data_get($validated, 'force', false),
+            'user_id' => $this->getUserId($collection),
             'meta_data' => [
                 'driver' => 'brave',
                 'limit' => 5,
@@ -146,6 +151,7 @@ class BaseSourceController extends Controller
             'title' => 'required|string',
             'details' => 'required|string',
             'active' => ['boolean', 'required'],
+            'force' => ['nullable', 'boolean'],
             'recurring' => ['string', 'required'],
             'meta_data' => ['nullable', 'array'],
             'secrets' => ['nullable', 'array'],

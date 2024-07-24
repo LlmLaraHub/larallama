@@ -17,6 +17,8 @@ class GoogleSheetSource extends BaseSource
 
     public static string $description = 'Add an URL that is Public Viewable and the system will keep an eye on it';
 
+    public bool $promptPower = false;
+
     /**
      * Here you can add content coming in from an API,
      * Email etc to documents. or you can React to the data coming in and for example

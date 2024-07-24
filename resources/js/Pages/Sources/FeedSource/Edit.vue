@@ -31,6 +31,7 @@ const props = defineProps({
 const form = useForm({
     title: props.source.data.title,
     details: props.source.data.details,
+    force: props.source.data.force,
     active: props.source.data.active,
     recurring: props.source.data.recurring,
     meta_data: {

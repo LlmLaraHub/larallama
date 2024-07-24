@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Sources;
 
+use App\Domains\Prompts\EventPagePrompt;
 use App\Domains\Prompts\WebPagePrompt;
 use App\Domains\Sources\SourceTypeEnum;
 use App\Http\Controllers\BaseSourceController;
@@ -40,10 +41,11 @@ class WebPageSourceController extends BaseSourceController
             'title' => $validated['title'],
             'details' => $validated['details'],
             'recurring' => $validated['recurring'],
-            'force' => data_get($validated, 'force', false),
             'active' => $validated['active'],
+            'force' => data_get($validated, 'force', false),
             'collection_id' => $collection->id,
             'type' => $this->sourceTypeEnum,
+            'user_id' => $this->getUserId($collection),
             'meta_data' => $validated['meta_data'],
         ]);
     }
@@ -52,6 +54,7 @@ class WebPageSourceController extends BaseSourceController
     {
         return [
             'web_page' => WebPagePrompt::prompt('[CONTEXT]'),
+            'event_data' => EventPagePrompt::prompt('[CONTEXT]'),
         ];
     }
 }

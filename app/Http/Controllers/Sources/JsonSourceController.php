@@ -44,6 +44,7 @@ class JsonSourceController extends BaseSourceController
             'recurring' => $validated['recurring'],
             'active' => $validated['active'],
             'collection_id' => $collection->id,
+            'user_id' => $this->getUserId($collection),
             'slug' => str(Str::random(16))->toString(),
             'type' => $this->sourceTypeEnum,
             'meta_data' => json_decode($validated['meta_data'], true, 512),
