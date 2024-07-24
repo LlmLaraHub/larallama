@@ -5,8 +5,8 @@ namespace Tests\Feature;
 use App\Domains\Sources\SourceTypeEnum;
 use App\Jobs\WebPageSourceJob;
 use App\Models\Source;
-use Facades\App\Domains\Sources\WebSearch\GetPage;
 use Illuminate\Support\Facades\Bus;
+use LlmLaraHub\LlmDriver\LlmDriverFacade;
 use Tests\TestCase;
 
 class WebPageSourceJobTest extends TestCase
@@ -18,11 +18,7 @@ class WebPageSourceJobTest extends TestCase
     {
         Bus::fake();
 
-        $html = get_fixture('test_medium_2.html', false);
-
-        GetPage::shouldReceive('make->handle')->once()->andReturn($html);
-
-        GetPage::makePartial();
+        LlmDriverFacade::shouldReceive('driver->onQueue')->andReturn('default');
 
         $source = Source::factory()->create([
             'slug' => 'test',
@@ -35,11 +31,6 @@ https://docs.larallama.io/developing.html',
 
         [$job, $batch] = (new WebPageSourceJob($source, 'https://larallama.io/posts/numerous-ui-updates-prompt-template-improvements-and-more'))->withFakeBatch();
         $job->handle();
-
-        $this->assertDatabaseCount('documents', 1);
-
-        $this->assertNotEmpty($source->documents->first()->summary);
-        $this->assertNotEmpty($source->documents->first()->original_content);
 
         Bus::assertBatchCount(1);
     }

@@ -31,6 +31,7 @@ const form = useForm({
     title: '',
     details: '',
     recurring: 'not',
+    force: false,
     meta_data: {
         feed_url: "https://larallama.io/feed",
     },

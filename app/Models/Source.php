@@ -43,6 +43,11 @@ class Source extends Model implements HasDrivers
         });
     }
 
+    public function getPrompt(): string
+    {
+        return $this->details;
+    }
+
     public function getChatable(): HasDrivers
     {
         return $this->collection->getChatable();
@@ -50,11 +55,7 @@ class Source extends Model implements HasDrivers
 
     public function getChat(): ?Chat
     {
-        /**
-         * @TODO
-         * I need to come back to this
-         */
-        return $this->collection->chats()->first();
+        return $this->chat ?: $this->collection->chats()->first();
     }
 
     public function getSummary(): string
@@ -75,6 +76,11 @@ class Source extends Model implements HasDrivers
     public function getDriver(): string
     {
         return $this->collection->getDriver();
+    }
+
+    public function chat(): BelongsTo
+    {
+        return $this->belongsTo(Chat::class);
     }
 
     public function getEmbeddingDriver(): string

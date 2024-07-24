@@ -9,7 +9,9 @@
 
         <div>
             <InputLabel value="Details"/>
-            <textarea v-model="modelValue.details" class="rounded-none textarea textarea-bordered w-full mb-5"
+            <textarea v-model="modelValue.details"
+                      rows="20"
+                      class="rounded-none textarea textarea-bordered w-full mb-5"
                 placeholder="This can assist the LLM to process your messages later."></textarea>
             <InputError :message="modelValue.errors.details" />
         </div>

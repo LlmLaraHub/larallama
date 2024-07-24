@@ -40,6 +40,7 @@ class SiteMapSourceController extends BaseSourceController
             'meta_data' => ['required', 'array'],
             'meta_data.feed_url' => ['required', 'string'],
             'secrets' => ['nullable', 'array'],
+            'force' => ['nullable', 'boolean'],
         ];
     }
 
@@ -48,8 +49,10 @@ class SiteMapSourceController extends BaseSourceController
         Source::create([
             'title' => $validated['title'],
             'details' => $validated['details'],
+            'user_id' => $this->getUserId($collection),
             'recurring' => $validated['recurring'],
             'active' => $validated['active'],
+            'force' => data_get($validated, 'force', false),
             'collection_id' => $collection->id,
             'type' => $this->sourceTypeEnum,
             'meta_data' => $validated['meta_data'],

@@ -3,6 +3,7 @@
 namespace App\Domains\EmailParser;
 
 use Spatie\LaravelData\Data;
+use Webklex\PHPIMAP\Message;
 
 class MailDto extends Data
 {
@@ -12,7 +13,8 @@ class MailDto extends Data
         public ?string $to,
         public ?string $body,
         public ?string $header,
-        public ?string $date
+        public ?string $date,
+        public ?Message $email_message = null
     ) {
     }
 

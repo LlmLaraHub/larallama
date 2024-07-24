@@ -2,13 +2,19 @@
 
 namespace App\Domains\Sources;
 
+use App\Domains\Chat\MetaDataDto;
+use App\Domains\Documents\StatusEnum;
+use App\Domains\Documents\TypesEnum;
 use App\Domains\EmailParser\MailDto;
+use App\Domains\Messages\RoleEnum;
+use App\Domains\Prompts\PromptMerge;
+use App\Jobs\ChunkDocumentJob;
 use App\Models\Document;
 use App\Models\Source;
-use App\Models\Transformer;
 use Facades\App\Domains\EmailParser\Client;
-use Facades\App\Domains\Transformers\EmailTransformer;
+use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Log;
+use LlmLaraHub\LlmDriver\LlmDriverFacade;
 
 class EmailSource extends BaseSource
 {
@@ -38,7 +44,17 @@ class EmailSource extends BaseSource
             return;
         }
 
-        $this->source = $source;
+        $assistantMessage = null;
+
+        $this->source = $this->checkForChat($source);
+
+        $key = md5($this->mailDto->date.$this->mailDto->from.$source->id);
+
+        if ($this->skip($this->source, $key)) {
+            return;
+        }
+
+        $this->createSourceTask($this->source, $key);
 
         $this->content = $this->mailDto->getContent();
 
@@ -46,102 +62,72 @@ class EmailSource extends BaseSource
 
         $this->meta_data = $this->mailDto->toArray();
 
-        $this->transformers = $source->transformers;
+        $prompt = PromptMerge::merge(
+            ['[CONTEXT]'],
+            [$this->content],
+            $source->getPrompt()
+        );
 
-        Log::info('[LaraChain] - Running Email Source');
+        Log::info('[LaraChain] - Running Email Source', [
+            'prompt' => $prompt,
+        ]);
 
-        /**
-         * @TODO
-         * I missed the point here. I just need to keep making tools work
-         * and the prompt the user gives in the Source
-         * let it do the work.
-         */
-        try {
-            /**
-             * @TODO
-             * This turns the email into a document but what if the user wants to do something with the
-             * data in the email. Like Parse URLs or Recipe ideas etc
-             * The Prompt of the Source should drive all of this
-             */
-            $baseSource = EmailTransformer::transform(baseSource: $this);
-            /**
-             * @NOTE
-             * Examples
-             * Example One: Maybe there is 1 transformer to make a reply to the email
-             * Transformer 1 of 1 ReplyTo Email
-             *   Take the email
-             *   Use Collection as voice
-             *   Make reply to email
-             *   The Transformer as an Output attached to it and the reply is sent.
-             *
-             *  Example Two: CRM Transformer
-             *    Take the email and make document (Type Email) and chunks from the email
-             *    After that take the content and make who is it to, who is it from
-             *    and make Documents for each for those of type Contact
-             *    Relate those to the document (Type Email)
-             *    and now there are relations for later use
-             *
-             * @TODO
-             * some transformers assume they are never 0 in the chain
-             * like CRM assumes the one before was EmailTransformer
-             * and the document is set
-             */
-            Log::info("[LaraChain] - Source has Transformers let's figure out which one to run");
+        $results = LlmDriverFacade::driver(
+            $source->getDriver()
+        )->completion($prompt);
 
-            foreach ($source->transformers as $transformerChainLink) {
-                $class = '\\App\\Domains\\Transformers\\'.$transformerChainLink->type->name;
-                if (class_exists($class)) {
-                    $facade = '\\Facades\\App\\Domains\\Transformers\\'.$transformerChainLink->type->name;
-                    $baseSource = $facade::transform($this);
-                } else {
-                    Log::info('[LaraChain] - No Class found ', [
-                        'class' => $class,
-                    ]);
-                }
-            }
-            $this->batchTransformedSource($baseSource, $source);
-
-        } catch (\Exception $e) {
-            Log::error('[LaraChain] - Error running Email Source', [
-                'error' => $e->getMessage(),
+        if ($this->ifNotActionRequired($results->content)) {
+            Log::info('[LaraChain] - Email Source Skipping', [
+                'prompt' => $prompt,
             ]);
+        } else {
+            $this->addUserMessage($source, $prompt);
+
+            $promptResultsOriginal = $results->content;
+            $promptResults = $this->arrifyPromptResults($promptResultsOriginal);
+            foreach ($promptResults as $promptResultIndex => $promptResult) {
+                $promptResult = json_encode($promptResult);
+
+                $title = sprintf('Email Subject - item #%d -%s',
+                    $promptResultIndex + 1,
+                    $this->mailDto->subject);
+
+                $document = Document::updateOrCreate([
+                    'source_id' => $source->id,
+                    'type' => TypesEnum::Email,
+                    'subject' => $title,
+                    'collection_id' => $source->collection_id,
+                ], [
+                    'summary' => $promptResult,
+                    'meta_data' => $this->mailDto->toArray(),
+                    'original_content' => $this->mailDto->body,
+                    'status_summary' => StatusEnum::Pending,
+                    'status' => StatusEnum::Pending,
+                ]);
+
+                Bus::batch([new ChunkDocumentJob($document)])
+                    ->name("Processing Email {$this->mailDto->subject}")
+                    ->allowFailures()
+                    ->dispatch();
+
+                $assistantMessage = $source->getChat()->addInput(
+                    message: $results->content,
+                    role: RoleEnum::Assistant,
+                    show_in_thread: true,
+                    meta_data: MetaDataDto::from([
+                        'driver' => $source->getDriver(),
+                        'source' => $source->title,
+                    ]),
+                );
+            }
+
+            if ($assistantMessage?->id) {
+                $this->savePromptHistory(
+                    message: $assistantMessage,
+                    prompt: $prompt);
+            }
+
         }
-
-    }
-
-    public function getSourceFromSlug(string $slug): ?Source
-    {
-        $source = Source::where('type', $this->sourceTypeEnum)
-            ->slug($slug)
-            ->first();
-
-        if ($source) {
-            return $source;
-        }
-
-        return null;
-    }
-
-    protected function getSummarizeDocumentPrompt(): string
-    {
-        if (str($this->source->details)->contains('[CONTEXT]')) {
-            return $this->source->details;
-        }
-
-        return <<<'PROMPT'
-
-The following content is from an email. I would like you to summarize it with the following format.
-
-To: **TO HERE**
-From: **From Here**
-Subject: **Subject Here**
-Body:
-**Summary Here**
-
-
-** CONTEXT IS BELOW THIS LINE**
-[CONTEXT]
-PROMPT;
 
     }
 }

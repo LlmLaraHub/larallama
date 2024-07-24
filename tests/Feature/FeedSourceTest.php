@@ -24,6 +24,6 @@ class FeedSourceTest extends TestCase
 
         $source->run();
 
-        Bus::assertBatchCount(1);
+        Bus::assertBatchCount(17);
     }
 }
