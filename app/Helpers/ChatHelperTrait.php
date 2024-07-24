@@ -59,7 +59,10 @@ trait ChatHelperTrait
     {
         if (! $source->force &&
         SourceTask::where('source_id', $source->id)->where('task_key', $key)->exists()) {
-            Log::info('[LaraChain] GetWebContentJob - Skipping - already ran');
+            Log::info('[LaraChain] GetWebContentJob - Skipping - already ran', [
+                'source' => $source->id,
+                'key' => $key,
+            ]);
 
             return true;
         } else {
