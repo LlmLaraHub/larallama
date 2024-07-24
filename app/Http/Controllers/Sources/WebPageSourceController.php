@@ -29,7 +29,7 @@ class WebPageSourceController extends BaseSourceController
             'title' => 'required|string',
             'details' => 'required|string',
             'active' => ['boolean', 'required'],
-            'force' => ['boolean', 'required'],
+            'force' => ['boolean', 'nullable'],
             'recurring' => ['string', 'required'],
             'meta_data.urls' => ['required', 'string'],
         ];
