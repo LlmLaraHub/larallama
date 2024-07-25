@@ -19,6 +19,7 @@ class ReportResource extends JsonResource
             'user_id' => $this->user_id,
             'chat_id' => $this->chat_id,
             'type' => $this->type,
+            'type_formatted' => str($this->type->name)->headline()->toString(),
             'reference_collection' => new CollectionResource($this->reference_collection),
             'sections' => SectionResource::collection($this->sections),
             'status_sections_generation' => $this->status_sections_generation?->value,

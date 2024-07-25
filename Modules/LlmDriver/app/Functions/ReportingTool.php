@@ -43,6 +43,7 @@ class ReportingTool extends FunctionContract
             'user_id' => $message->getChat()->user_id,
         ], [
             'type' => ReportTypeEnum::RFP,
+            'user_message_id' => $message->id,
             'status_sections_generation' => StatusEnum::Pending,
             'status_entries_generation' => StatusEnum::Pending,
         ]);

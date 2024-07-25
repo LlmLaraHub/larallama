@@ -38,6 +38,11 @@ class Report extends Model implements HasDrivers
         return $this->belongsTo(Message::class);
     }
 
+    public function user_message(): BelongsTo
+    {
+        return $this->belongsTo(Message::class, 'user_message_id');
+    }
+
     public function chat(): BelongsTo
     {
         return $this->belongsTo(Chat::class);

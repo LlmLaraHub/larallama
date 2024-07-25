@@ -35,6 +35,7 @@ class SummarizeReport
         $this->savePromptHistory($assistantMessage,
             implode("\n", $this->promptHistory));
 
+        $report->user_message_id = $report->message_id;
         $report->message_id = $assistantMessage->id;
         $report->save();
 

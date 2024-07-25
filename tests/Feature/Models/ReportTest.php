@@ -27,6 +27,7 @@ class ReportTest extends TestCase
         $this->assertNotNull($model->type);
         $this->assertNotNull($model->message->id);
         $this->assertNotNull($model->user->id);
+        $this->assertNotNull($model->user_message->id);
         $this->assertNotNull($model->reference_collection->id);
         $this->assertNotNull($model->sections->first()->id);
         $this->assertNotNull($section->report->id);

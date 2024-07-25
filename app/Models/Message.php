@@ -124,6 +124,11 @@ class Message extends Model implements HasDrivers
         return $filter;
     }
 
+    public function getPrompt(): string
+    {
+        return $this->body;
+    }
+
     public function getContent(): string
     {
         return $this->body;

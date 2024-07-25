@@ -6,20 +6,23 @@
         </div>
         <div v-else>
             <div class="flex justify-between items-center">
-                <h2 class="text-gray-500">Report #{{report?.id}} - Reference Collection Being Used:
+                <h2
+                    v-if="message.report?.reference_collection?.id"
+                    class="text-gray-500">Report #{{report?.id}} - Reference Collection Being Used:
                     <Link
                         class="link"
                         :href="route('collections.show', {
-                        collection: message.report.reference_collection.id
+                        collection: message.report.reference_collection?.id
                     })">{{ message.report?.reference_collection?.name }}</Link>
                 </h2>
-                <div  v-show=" report?.id">
+                <div  v-show=" report?.id && report?.type === 'rfp'">
                     <a
                     :href="`/reports/${report?.id}/export`" class="btn btn-secondary rounded-none btn-sm">Export</a>
                 </div>
-
             </div>
-            <div class="flex justify-start gap-4 items-center mt-4 w-full">
+            <div class="text-lg font-semibold mt-4">Type: {{ report?.type_formatted }}</div>
+            <div class="flex justify-start gap-4 items-center mt-1 w-full">
+
                 <div class="text-lg font-semibold">Status</div>
                 <div class="badge badge-secondary badge-outline">
                     Section Generation:&nbsp;

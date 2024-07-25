@@ -5,6 +5,7 @@ namespace Database\Factories;
 use App\Domains\Reporting\StatusEnum;
 use App\Models\Chat;
 use App\Models\Collection;
+use App\Models\Message;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -23,6 +24,7 @@ class ReportFactory extends Factory
         return [
             'user_id' => User::factory(),
             'chat_id' => Chat::factory(),
+            'user_message_id' => Message::factory(),
             'reference_collection_id' => Collection::factory(),
             'message_id' => null,
             'type' => \App\Domains\Reporting\ReportTypeEnum::RFP,
