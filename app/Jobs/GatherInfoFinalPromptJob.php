@@ -41,12 +41,6 @@ class GatherInfoFinalPromptJob implements ShouldQueue
         $messages = [];
 
         $history = [];
-
-        $messages[] = MessageInDto::from([
-            'content' => 'You are an assistant helping with this gathered info.',
-            'role' => 'system',
-        ]);
-
         foreach ($this->report->sections as $section) {
             $messages[] = MessageInDto::from([
                 'content' => $section->content,
