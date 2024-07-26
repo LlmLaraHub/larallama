@@ -38,24 +38,40 @@
                                 type="button" class="btn btn-ghost rounded-none" @click="toggleEdit">
                                 edit</button>
                         </div>
-                      <h2 class="font-bold">Summary:</h2>
-                        <div v-if="updating" class="mt-10">
-                            <div class="flex w-full flex-col gap-4">
-                                <div class="skeleton bg-gray-700 h-4 w-28"></div>
-                                <div class="skeleton bg-gray-700 h-4 w-full"></div>
-                                <div class="skeleton bg-gray-700 h-4 w-full"></div>
-                                <div class="skeleton bg-gray-700  h-32 w-full"></div>
+                    <div role="tablist" class="tabs tabs-bordered mt-4 mb-4">
+                        <a role="tab" class="tab"
+                        :class="{ 'tab-active': activeTab === 'summary' }"
+                        @click="toggleTab('summary')"
+                        >Summary</a>
+                        <a role="tab" class="tab"
+                           :class="{ 'tab-active': activeTab === 'original_content' }"
+                           @click="toggleTab('original_content')"
+                        >Original Data</a>
+                    </div>
+                        <div v-if="activeTab === 'summary'">
+                            <h2 class="font-bold">Summary:</h2>
+                            <div v-if="updating" class="mt-10">
+                                <div class="flex w-full flex-col gap-4">
+                                    <div class="skeleton bg-gray-700 h-4 w-28"></div>
+                                    <div class="skeleton bg-gray-700 h-4 w-full"></div>
+                                    <div class="skeleton bg-gray-700 h-4 w-full"></div>
+                                    <div class="skeleton bg-gray-700  h-32 w-full"></div>
+                                </div>
+                            </div>
+                            <div
+                                v-if="!updating && !showEdit"
+                                class="prose  mb-10 mt-5" v-html="documentToShow.summary_markdown"></div>
+                            <div v-if="showEdit && !updating && false">
+                                <MdEditor
+                                    theme="dark"
+                                    language="en"
+                                    :preview=false
+                                    v-model="documentToShow.summary" />
                             </div>
                         </div>
-                      <div
-                          v-if="!updating && !showEdit"
-                          class="prose  mb-10 mt-5" v-html="documentToShow.summary_markdown"></div>
-                        <div v-if="showEdit && !updating && false">
-                            <MdEditor
-                                theme="dark"
-                                language="en"
-                                :preview=false
-                                v-model="documentToShow.summary" />
+                        <div v-if="activeTab === 'original_content'">
+                            <div class="prose  mb-10 mt-5" v-html="documentToShow.original_content"></div>
+
                         </div>
                     </div>
                   </div>
@@ -85,6 +101,12 @@ const props = defineProps({
     document: Object,
     open: Boolean,
 });
+
+const activeTab = ref('summary');
+
+const toggleTab = (tab) => {
+    activeTab.value = tab;
+}
 
 const documentToShow = ref(props.document);
 
