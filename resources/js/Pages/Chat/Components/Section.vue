@@ -16,7 +16,7 @@ const toggleTab = (tab) => {
 
 <template>
 <div>
-    <h3 class="font-bold">Section ID: {{ section.id }} - {{ section.subject }}</h3>
+    <h3 class="font-bold">#: {{ section.id }} - {{ section.subject }}</h3>
 
     <div role="tablist" class="tabs tabs-bordered mt-4 mb-2">
         <a role="tab" class="tab"

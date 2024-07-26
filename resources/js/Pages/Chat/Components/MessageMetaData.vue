@@ -32,7 +32,6 @@ const props = defineProps({
             </div>
 
             <div v-if="
-            message.from_ai === true &&
             message.meta_data?.tool && message.tools?.tools?.length === 0" class="flex justify-start gap-2 items-center">
                         <span class="text-secondary">
                             Tool used: </span>
@@ -40,7 +39,6 @@ const props = defineProps({
             </div>
 
             <div v-if="
-            message.from_ai === true &&
             message.tools?.tools?.length > 0" class="flex justify-start gap-2 items-center"
 
             >

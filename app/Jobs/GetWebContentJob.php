@@ -115,7 +115,7 @@ class GetWebContentJob implements ShouldQueue
                         'source_id' => $this->source->id,
                         'type' => TypesEnum::HTML,
                         'subject' => to_utf8($title),
-                        'document_md5' => md5($promptResult),
+                        'document_md5' => md5($htmlResults),
                         'link' => $this->webResponseDto->url,
                         'collection_id' => $this->source->collection_id,
                     ],
@@ -124,7 +124,7 @@ class GetWebContentJob implements ShouldQueue
                         'file_path' => $this->webResponseDto->url,
                         'status_summary' => StatusEnum::Pending,
                         'meta_data' => $this->webResponseDto->toArray(),
-                        'original_content' => $promptResult,
+                        'original_content' => $htmlResults,
                     ]
                 );
 

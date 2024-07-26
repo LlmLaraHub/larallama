@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Jetstream\Events\InvitingTeamMember;
 use Laravel\Pennant\Feature;
+use Opcodes\LogViewer\Facades\LogViewer;
 use vipnytt\SitemapParser;
 
 class AppServiceProvider extends ServiceProvider
@@ -29,6 +30,14 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        LogViewer::auth(function ($request) {
+            if(!auth()->check()) {
+                return false;
+            }
+
+            return $request->user()?->is_admin || $request->user()?->id === User::first()->id;
+        });
+
         Gate::define('viewPulse', function (User $user) {
             return $user->isAdmin();
         });

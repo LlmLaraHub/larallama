@@ -44,7 +44,7 @@ If no events are found, return the word false
 $context
 </CONTENT>
 
-Respond only with the JSON array or 'false' if no events are found. Do not include any explanations or additional text in your response.
+Respond only with Markdown or 'false' if no events are found. Do not include any explanations or additional text in your response.
 
 PROMPT;
     }
