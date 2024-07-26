@@ -126,6 +126,10 @@ class Message extends Model implements HasDrivers
 
     public function getPrompt(): string
     {
+        if (! str($this->body)->contains('[CONTEXT]')) {
+            $this->body = str($this->body)->append('[CONTEXT]')->toString();
+        }
+
         return $this->body;
     }
 

@@ -86,6 +86,8 @@ class GetWebContentJob implements ShouldQueue
             Log::info('[LaraChain] - Web Source Skipping', [
                 'prompt' => $prompt,
             ]);
+
+            return;
         } else {
             $promptResultsOriginal = $results->content;
 
@@ -113,6 +115,7 @@ class GetWebContentJob implements ShouldQueue
                         'source_id' => $this->source->id,
                         'type' => TypesEnum::HTML,
                         'subject' => to_utf8($title),
+                        'document_md5' => md5($promptResult),
                         'link' => $this->webResponseDto->url,
                         'collection_id' => $this->source->collection_id,
                     ],

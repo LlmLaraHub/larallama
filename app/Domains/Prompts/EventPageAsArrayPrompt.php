@@ -4,11 +4,11 @@ namespace App\Domains\Prompts;
 
 use Illuminate\Support\Facades\Log;
 
-class EventPagePrompt
+class EventPageAsArrayPrompt
 {
     public static function prompt(string $context): string
     {
-        Log::info('[LaraChain] - EventPagePrompt');
+        Log::info('[LaraChain] - EventPageAsArrayPrompt');
 
         return <<<PROMPT
 <ROLE>
@@ -25,20 +25,31 @@ You are an AI assistant tasked with extracting event data from website content.
    - Location
    - Description
    - Any other relevant data
-5. Format the extracted data as a Markdown according to the specifications below.
+5. Format the extracted data as a JSON array according to the specifications below.
 
 <OUTPUT_FORMAT>
-If events are found, return a Markdown with the following structure for each event on the page:
-"title": "Event Title",
-"startDate": "Start Date",
-"endDate": "End Date",
-"location": "Location",
-"description": "Description",
-"additionalInfo": "Any other relevant data"
+If events are found, return a JSON array with the following structure:
 
+[
+  {
+    "title": "Event Title",
+    "startDate": "Start Date",
+    "endDate": "End Date",
+    "location": "Location",
+    "description": "Description",
+    "additionalInfo": "Any other relevant data"
+  },
+  {
+    "title": "Event Title",
+    "startDate": "Start Date",
+    "endDate": "End Date",
+    "location": "Location",
+    "description": "Description",
+    "additionalInfo": "Any other relevant data"
+  }
+]
 
-If no events are found, return the word false
-
+If no events are found, return an empty JSON array: []
 
 <CONTENT>
 $context

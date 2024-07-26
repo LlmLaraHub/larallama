@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Sources;
 
+use App\Domains\Prompts\EventPageAsArrayPrompt;
 use App\Domains\Prompts\EventPagePrompt;
 use App\Domains\Prompts\WebPagePrompt;
 use App\Domains\Sources\SourceTypeEnum;
@@ -55,6 +56,7 @@ class WebPageSourceController extends BaseSourceController
         return [
             'web_page' => WebPagePrompt::prompt('[CONTEXT]'),
             'event_data' => EventPagePrompt::prompt('[CONTEXT]'),
+            'event_data_as_array' => EventPageAsArrayPrompt::prompt('[CONTEXT]'),
         ];
     }
 }

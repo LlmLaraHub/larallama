@@ -31,6 +31,7 @@ class DocumentFactory extends Factory
             'link' => $this->faker->url(),
             'summary' => $this->faker->text(),
             'subject' => $this->faker->text(),
+            'document_md5' => $this->faker->uuid(),
             'original_content' => $this->faker->text(),
             'child_type' => StructuredTypeEnum::Narrative,
             'file_path' => $this->faker->url(),
