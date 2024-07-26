@@ -8,6 +8,7 @@ use App\Domains\Documents\TypesEnum;
 use App\Domains\Messages\RoleEnum;
 use App\Domains\Prompts\PromptMerge;
 use App\Domains\Sources\WebSearch\Response\WebResponseDto;
+use Facades\App\Domains\Tokenizer\Templatizer;
 use App\Helpers\ChatHelperTrait;
 use App\Helpers\TextChunker;
 use App\Models\Document;
@@ -72,11 +73,8 @@ class GetWebContentJob implements ShouldQueue
         $htmlResults = GetPage::make($this->source->collection)
             ->handle($this->webResponseDto->url, true);
 
-        $prompt = PromptMerge::merge(
-            ['[CONTEXT]'],
-            [$htmlResults],
-            $this->source->getPrompt()
-        );
+        $prompt = Templatizer::appendContext(true)
+            ->handle($this->source->getPrompt(), [], $htmlResults);
 
         $results = LlmDriverFacade::driver(
             $this->source->getDriver()
