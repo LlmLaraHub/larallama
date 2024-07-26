@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Domains\Outputs\OutputTypeEnum;
 use App\Domains\Prompts\EmailPrompt;
+use App\Domains\Prompts\EventPageAsArrayPrompt;
+use App\Domains\Prompts\EventPagePrompt;
 use App\Jobs\SendOutputEmailJob;
 use App\Models\Output;
 use Illuminate\Support\Facades\Log;
@@ -51,6 +53,8 @@ class EmailOutputController extends OutputController
     {
         return [
             'transform_github_json' => EmailPrompt::prompt('[CONTEXT]'),
+            'event_data' => EventPagePrompt::prompt('[CONTEXT]'),
+            'event_data_as_array' => EventPageAsArrayPrompt::prompt('[CONTEXT]'),
         ];
     }
 }
