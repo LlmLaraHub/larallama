@@ -31,7 +31,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         LogViewer::auth(function ($request) {
-            if(!auth()->check()) {
+            if (! auth()->check()) {
                 return false;
             }
 
