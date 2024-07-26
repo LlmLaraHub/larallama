@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Domains\Chat\MetaDataDto;
 use App\Domains\Chat\ToolsDto;
 use App\Domains\Messages\RoleEnum;
+use Facades\App\Domains\Tokenizer\Templatizer;
 use App\Events\ChatUiUpdateEvent;
 use App\Events\MessageCreatedEvent;
 use App\Jobs\OrchestrateJob;
@@ -124,12 +125,24 @@ class Message extends Model implements HasDrivers
         return $filter;
     }
 
-    public function getPrompt(): string
+    public function getPrompt(
+        bool $appendContext = false
+    ): string
     {
-        if (! str($this->body)->contains('[CONTEXT]')) {
-            $this->body = str($this->body)->append('[CONTEXT]')->toString();
-        }
+        /**
+         * Fix up dates and stuff
+         * that are automatic tokens
+         */
+        $body = $this->body;
 
+        $body = Templatizer::appendContext($appendContext)
+            ->handle($body);
+
+        return $body;
+    }
+
+    public function getRawBody(): string
+    {
         return $this->body;
     }
 
@@ -204,8 +217,6 @@ class Message extends Model implements HasDrivers
         $message = $this;
 
         $chat = $message->getChat();
-
-        $filter = $message->getFilter();
 
         notify_ui($chat, 'Working on it!');
 
