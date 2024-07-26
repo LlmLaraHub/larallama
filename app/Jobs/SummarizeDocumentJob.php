@@ -6,6 +6,7 @@ use App\Domains\Agents\VerifyPromptInputDto;
 use App\Domains\Agents\VerifyPromptOutputDto;
 use App\Domains\Documents\StatusEnum;
 use App\Domains\Prompts\PromptMerge;
+use Facades\App\Domains\Tokenizer\Templatizer;
 use App\Domains\Prompts\SummarizeDocumentPrompt;
 use App\Models\Document;
 use Facades\App\Domains\Agents\VerifyResponseAgent;
@@ -69,11 +70,9 @@ class SummarizeDocumentJob implements ShouldQueue
         if (empty($this->prompt)) {
             $prompt = SummarizeDocumentPrompt::prompt($content);
         } else {
-            $prompt = PromptMerge::merge([
-                '[CONTEXT]',
-            ], [
-                $content,
-            ], $this->prompt);
+            $prompt = Templatizer::appendContext(true)
+                ->handle($this->prompt, $content);
+
         }
 
         /** @var CompletionResponse $results */

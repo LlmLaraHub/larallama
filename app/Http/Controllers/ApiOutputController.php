@@ -6,6 +6,7 @@ use App\Domains\Messages\RoleEnum;
 use App\Domains\Outputs\OutputTypeEnum;
 use App\Domains\Prompts\ChatBotPrompt;
 use App\Domains\Prompts\PromptMerge;
+use Facades\App\Domains\Tokenizer\Templatizer;
 use App\Domains\Prompts\SupportChatBotPrompt;
 use App\Models\Chat;
 use App\Models\Output;
@@ -37,11 +38,8 @@ class ApiOutputController extends OutputController
 
         $prompt = $output->summary;
 
-        $prompt = PromptMerge::merge([
-            '[USER_INPUT]',
-        ], [
-            $input,
-        ], $prompt);
+        $prompt =Templatizer::appendContext(true)
+            ->handle($prompt, $input);
 
         $chat = Chat::firstOrCreateUsingOutput($output);
 

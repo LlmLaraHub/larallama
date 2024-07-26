@@ -28,7 +28,6 @@ class Templatizer
 
     public function handle(
         string $content,
-        array $token = [],
         string|null $replacement = null): string
     {
 
@@ -37,10 +36,9 @@ class Templatizer
         }
 
         $this->content = $content;
-        $this->token = (empty($token)) ? self::getTokens() : $token;
         $this->replacement = $replacement;
 
-        foreach ($this->token as $token) {
+        foreach ($this->getTokens() as $token) {
             $method = $this->makeMethod($token);
             if (method_exists($this, $method)) {
                 $this->{$method}();
@@ -122,7 +120,9 @@ class Templatizer
     }
 
     protected function context() : void{
-        $this->content =  str($this->content)->replace('[CONTEXT]', $this->replacement)->toString();
+        if(!empty($this->replacement)){
+            $this->content =  str($this->content)->replace('[CONTEXT]', $this->replacement)->toString();
+        }
     }
 
 }

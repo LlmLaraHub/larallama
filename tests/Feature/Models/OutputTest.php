@@ -45,9 +45,7 @@ class OutputTest extends TestCase
         $prompt = $output->getPrompt();
 
         $shouldBe = <<<'SHOULDBE'
-Foobar
-***below is the context to use in your summary***
-[CONTEXT]
+Foobar [CONTEXT]
 SHOULDBE;
 
         $this->assertEquals($shouldBe, $prompt);

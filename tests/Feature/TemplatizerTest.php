@@ -11,9 +11,6 @@ class TemplatizerTest extends TestCase
         $templatizer = new Templatizer();
         $context = $templatizer->handle(
             'Hello [CONTEXT]',
-            [
-                '[CONTEXT]'
-            ],
             'World!'
         );
 
@@ -26,8 +23,6 @@ class TemplatizerTest extends TestCase
         $templatizer = new Templatizer();
         $context = $templatizer->handle(
             'Hello [START_WEEK] to [END_WEEK] [CONTEXT]',
-            []
-            ,
             'World!'
         );
 
@@ -42,7 +37,6 @@ class TemplatizerTest extends TestCase
         $context = $templatizer->appendContext(true)
             ->handle(
             'Hello [START_WEEK] to [END_WEEK]',
-            [],
             'World!',
             true
         );
@@ -50,11 +44,17 @@ class TemplatizerTest extends TestCase
 
         $context = $templatizer->handle(
                 'Hello [START_WEEK] to [END_WEEK]',
-                [],
                 'World!',
                 true
             );
         $this->assertStringNotContainsString('World', $context);
+    }
+
+    public function test_no_context() {
+        $templatizer = new Templatizer();
+        $context = $templatizer->appendContext(true)->handle(
+            'Hello [START_WEEK] to [END_WEEK]');
+        $this->assertStringContainsString('[CONTEXT]', $context);
     }
 
     public function test_text_replace() {
@@ -63,7 +63,7 @@ class TemplatizerTest extends TestCase
 
         $template = new Templatizer();
         $prompt = $template->appendContext(true)
-            ->handle($somePrompt, [], $htmlResults);
+            ->handle($somePrompt,  $htmlResults);
 
         $this->assertStringContainsString('Some text here', $prompt);
     }
@@ -74,11 +74,6 @@ class TemplatizerTest extends TestCase
         $templatizer = new Templatizer();
         $context = $templatizer->handle(
             'Hello [START_WEEK] to [END_WEEK]',
-            [
-                '[START_WEEK]',
-                '[END_WEEK]'
-            ]
-            ,
             'World!'
         );
 

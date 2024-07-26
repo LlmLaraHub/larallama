@@ -66,7 +66,7 @@ class Output extends Model
 
     public function getPrompt(): string
     {
-        return Templatizer::handle($this->summary);
+        return Templatizer::appendContext(true)->handle($this->summary);
     }
 
     /**

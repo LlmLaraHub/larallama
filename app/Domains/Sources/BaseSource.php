@@ -3,6 +3,7 @@
 namespace App\Domains\Sources;
 
 use App\Domains\Prompts\PromptMerge;
+use Facades\App\Domains\Tokenizer\Templatizer;
 use App\Domains\UnStructured\StructuredTypeEnum;
 use App\Helpers\ChatHelperTrait;
 use App\Jobs\DocumentProcessingCompleteJob;
@@ -183,10 +184,9 @@ abstract class BaseSource
         }
 
         $content = implode("\n", $content);
-        $tokens = ['[CONTEXT]'];
-        $content = [$content];
 
-        $prompt = PromptMerge::merge($tokens, $content, $output->summary);
+        $prompt = Templatizer::appendContext(true)
+            ->handle($output->summary, $content);
 
         Log::info('[LaraChain] - Sending this prompt to LLM', [
             'prompt' => $prompt,

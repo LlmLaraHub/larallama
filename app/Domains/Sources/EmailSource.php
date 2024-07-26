@@ -4,6 +4,7 @@ namespace App\Domains\Sources;
 
 use App\Domains\Chat\MetaDataDto;
 use App\Domains\Documents\StatusEnum;
+use Facades\App\Domains\Tokenizer\Templatizer;
 use App\Domains\Documents\TypesEnum;
 use App\Domains\EmailParser\MailDto;
 use App\Domains\Messages\RoleEnum;
@@ -62,11 +63,8 @@ class EmailSource extends BaseSource
 
         $this->meta_data = $this->mailDto->toArray();
 
-        $prompt = PromptMerge::merge(
-            ['[CONTEXT]'],
-            [$this->content],
-            $source->getPrompt()
-        );
+        $prompt =Templatizer::appendContext(true)
+            ->handle($source->getPrompt(), $this->content);
 
         Log::info('[LaraChain] - Running Email Source', [
             'prompt' => $prompt,

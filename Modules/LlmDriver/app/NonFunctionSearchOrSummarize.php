@@ -3,8 +3,8 @@
 namespace LlmLaraHub\LlmDriver;
 
 use App\Domains\Prompts\DefaultPrompt;
-use App\Domains\Prompts\PromptMerge;
 use App\Domains\Prompts\SearchOrSummarize;
+use Facades\App\Domains\Tokenizer\Templatizer;
 use App\Domains\Prompts\SummarizeDocumentPrompt;
 use App\Domains\Prompts\SummarizePrompt;
 use App\Models\Collection;
@@ -82,11 +82,8 @@ class NonFunctionSearchOrSummarize
             $context = implode(' ', $content);
 
             if ($this->prompt !== '') {
-                $contentFlattened = PromptMerge::merge([
-                    '[CONTEXT]',
-                ], [
-                    $context,
-                ], $this->prompt);
+                $contentFlattened = Templatizer::appendContext(true)
+                    ->handle($this->prompt, $context);
             } else {
                 $contentFlattened = SummarizePrompt::prompt(
                     originalPrompt: $message->getContent(),
@@ -131,11 +128,8 @@ class NonFunctionSearchOrSummarize
             $context = implode(' ', $content);
 
             if ($this->prompt !== '') {
-                $contentFlattened = PromptMerge::merge([
-                    '[CONTEXT]',
-                ], [
-                    $context,
-                ], $this->prompt);
+                $contentFlattened = Templatizer::appendContext(true)
+                    ->handle($this->prompt, $context);
             } else {
                 $contentFlattened = $prompt = SummarizeDocumentPrompt::prompt($context);
             }

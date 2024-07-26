@@ -2,7 +2,6 @@
 
 namespace LlmLaraHub\LlmDriver\Functions;
 
-use App\Domains\Prompts\PromptMerge;
 use App\Domains\Reporting\ReportTypeEnum;
 use App\Domains\Reporting\StatusEnum;
 use Facades\App\Domains\Tokenizer\Templatizer;
@@ -96,7 +95,7 @@ class GatherInfoTool extends FunctionContract
                 $prompts = [];
                 foreach ($documentChunks as $document) {
                     $prompt = Templatizer::appendContext(true)
-                        ->handle($messagePrompt, [],$document->original_content);
+                        ->handle($messagePrompt,$document->original_content);
                     $prompts[] = $prompt;
                 }
 

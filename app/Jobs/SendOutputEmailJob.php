@@ -5,6 +5,7 @@ namespace App\Jobs;
 use App\Domains\Collections\CollectionStatusEnum;
 use App\Domains\Prompts\PromptMerge;
 use App\Mail\OutputMail;
+use Facades\App\Domains\Tokenizer\Templatizer;
 use App\Models\Output;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -53,10 +54,9 @@ class SendOutputEmailJob implements ShouldQueue
         $content = collect($content)
             ->implode("\n");
 
-        $tokens = ['[CONTEXT]'];
-        $content = [$content];
         $prompt = $this->output->getPrompt();
-        $prompt = PromptMerge::merge($tokens, $content, $prompt);
+        $prompt = Templatizer::appendContext(true)
+            ->handle($prompt, $content);
 
         notify_collection_ui(
             $this->output->collection,
