@@ -31,24 +31,6 @@ class SendOutputEmailJob implements ShouldQueue
      */
     public function handle(): void
     {
-        /**
-         * @TODO
-         * The output model type has to have the
-         * ability to build it's own context
-         * since Output of type NewsSummary
-         * will be different then output of Type EmailReport
-         * etc
-         * In the end they are driven by the prompt in
-         * output->summary
-         * but the query for some things (email type)
-         * might need more finness
-         * So in this case $this->output()->getContext()
-         *
-         * @see app/Domains/Sources/EmailSource.php:79
-         * Find the Class
-         * then run the class returning string
-         * Right now it is just generic
-         */
         $to = $this->output->fromMetaData('to');
 
         $tos = explode(',', $to);
@@ -57,8 +39,6 @@ class SendOutputEmailJob implements ShouldQueue
         $title = 'Summary '.$title;
 
         $content = $this->output->getContext();
-
-        //put_fixture("latest_content.json", $content);
 
         if (empty($content)) {
             notify_collection_ui(
