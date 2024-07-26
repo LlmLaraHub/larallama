@@ -33,11 +33,6 @@ class GatherInfoFinalPromptJob implements ShouldQueue
      */
     public function handle(): void
     {
-        //@NOTE
-        // if completion does not work I can make this a
-        // chat with all the results
-        //ok we have all the sections lets make a final prompt output
-        //
         $messages = [];
 
         $history = [];
@@ -55,11 +50,13 @@ class GatherInfoFinalPromptJob implements ShouldQueue
             ]);
         }
 
+
         $messages[] = MessageInDto::from([
             'content' => sprintf('Using the context of this chat can you '.
                 $this->report->message->getPrompt()),
             'role' => 'user',
         ]);
+
 
         $response = LlmDriverFacade::driver($this->report->getDriver())
             ->chat($messages);

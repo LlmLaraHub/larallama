@@ -5,6 +5,7 @@ namespace LlmLaraHub\LlmDriver\Functions;
 use App\Domains\Prompts\PromptMerge;
 use App\Domains\Reporting\ReportTypeEnum;
 use App\Domains\Reporting\StatusEnum;
+use Facades\App\Domains\Tokenizer\Templatizer;
 use App\Jobs\GatherInfoFinalPromptJob;
 use App\Jobs\GatherInfoReportSectionsJob;
 use App\Models\Collection;
@@ -88,16 +89,14 @@ class GatherInfoTool extends FunctionContract
 
     protected function buildUpSections(Collection $collection, Report $report, Message $message): void
     {
-        $collection->documents()->chunk(3, callback: function ($documentChunks) use ($message, $report) {
+        $messagePrompt = $message->getPrompt();
+        $collection->documents()->chunk(3, callback: function ($documentChunks) use ($message, $report, $messagePrompt) {
             try {
+
                 $prompts = [];
                 foreach ($documentChunks as $document) {
-                    $prompt = PromptMerge::merge(
-                        ['[CONTEXT]'],
-                        [$document->original_content],
-                        $message->getPrompt()
-                    );
-
+                    $prompt = Templatizer::appendContext(true)
+                        ->handle($messagePrompt, [],$document->original_content);
                     $prompts[] = $prompt;
                 }
 
@@ -108,6 +107,7 @@ class GatherInfoTool extends FunctionContract
                             report: $report,
                             document: $document);
                 }
+
 
             } catch (\Exception $e) {
                 Log::error('Error running Reporting Tool Checker', [
