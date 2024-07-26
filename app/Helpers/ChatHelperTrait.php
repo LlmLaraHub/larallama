@@ -18,6 +18,7 @@ trait ChatHelperTrait
         if (! $source->chat_id) {
             //@NOTE should I go to Source as the chatable?
             $chat = Chat::create([
+                'title' => sprintf('Chat Log for Source #%s', $source->title),
                 'chatable_id' => $source->collection_id,
                 'chatable_type' => Collection::class,
                 'user_id' => $source->collection->team?->user_id,
