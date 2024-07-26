@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Domains\Tokenizer\Templatizer;
 use App\Models\Setting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
@@ -62,6 +63,7 @@ class HandleInertiaRequests extends Middleware
                 return Feature::all();
             }),
             'tools' => LlmDriverFacade::getFunctionsForUi(),
+            'tokens' => Templatizer::getTokens(),
         ]);
     }
 }
