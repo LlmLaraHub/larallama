@@ -41,6 +41,19 @@ class MessageTest extends TestCase
 
     }
 
+    public function test_tokenizer() {
+        $Message = Message::factory()->create([
+            'body' => 'This [START_WEEK]',
+        ]);
+
+        $this->assertStringContainsString(
+            now()->startOfWeek()->format('M d, Y'),
+            $Message->getPrompt()
+        );
+
+    }
+
+
     public function test_get_filter(): void
     {
         $filter = Filter::factory()->create();

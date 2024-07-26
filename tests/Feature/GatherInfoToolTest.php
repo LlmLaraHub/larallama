@@ -22,7 +22,7 @@ class GatherInfoToolTest extends TestCase
 
         $collection = Collection::factory()->create();
 
-        Document::factory(9)
+        Document::factory(12)
             ->has(DocumentChunk::factory(), 'document_chunks')
             ->create([
                 'collection_id' => $collection->id,
@@ -35,6 +35,7 @@ class GatherInfoToolTest extends TestCase
 
         $message = Message::factory()->create([
             'chat_id' => $chat->id,
+            'body' => 'Foo bar prompt',
         ]);
 
         $this->assertDatabaseCount('sections', 0);
@@ -43,7 +44,7 @@ class GatherInfoToolTest extends TestCase
             ->handle($message);
 
         Bus::assertBatched(function (PendingBatch $batch) {
-            return $batch->jobs->count() === 3;
+            return $batch->jobs->count() === 4;
         });
     }
 }

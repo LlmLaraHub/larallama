@@ -6,6 +6,7 @@ use App\Models\Collection;
 use App\Models\Document;
 use App\Models\Message;
 use App\Models\Report;
+use App\Models\Section;
 use LlmLaraHub\LlmDriver\Functions\GatherInfoToolMakeSections;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
 use LlmLaraHub\LlmDriver\Responses\CompletionResponse;
@@ -62,5 +63,8 @@ class GatherInfoToolMakeSectionsTest extends TestCase
 
         //1 * 20
         $this->assertDatabaseCount('sections', 3);
+
+        $section = Section::first();
+        $this->assertEquals('foo bar', $section->prompt);
     }
 }
