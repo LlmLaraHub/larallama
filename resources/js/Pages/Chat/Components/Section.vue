@@ -27,6 +27,10 @@ const toggleTab = (tab) => {
         :class="{ 'tab-active': activeTab === 'document' }"
             @click="toggleTab('document')"
         >Document</a>
+        <a role="tab" class="tab"
+           :class="{ 'tab-active': activeTab === 'prompt' }"
+           @click="toggleTab('prompt')"
+        >Prompt</a>
     </div>
     <div v-if="activeTab === 'content'">
         <div class="prose" v-html="section.content"></div>
@@ -44,6 +48,9 @@ const toggleTab = (tab) => {
             Related Document: {{ section.document.file_path }}
         </h2>
         <div class="prose" v-html="section.document.original_content"></div>
+    </div>
+    <div v-if="activeTab === 'prompt'">
+        <div class="prose" v-html="section.prompt"></div>
     </div>
 </div>
 </template>
