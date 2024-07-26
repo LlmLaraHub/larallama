@@ -20,7 +20,8 @@ class SectionResource extends JsonResource
             'content' => $this->content,
             'content_formatted' => str($this->content)->markdown(),
             'sort_order' => $this->sort_order,
-            'document' => $this->document,
+            'document' => new DocumentResource($this->document),
+            'prompt' => str($this->prompt)->markdown(),
             'entries' => EntryResource::collection($this->entries),
         ];
     }
