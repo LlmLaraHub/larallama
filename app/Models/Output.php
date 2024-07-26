@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Facades\App\Domains\Tokenizer\Templatizer;
 use App\Domains\Outputs\OutputTypeEnum;
 use App\Domains\Recurring\RecurringTypeEnum;
 use Carbon\Carbon;
@@ -65,16 +66,7 @@ class Output extends Model
 
     public function getPrompt(): string
     {
-        $prompt = $this->summary;
-
-        if (! str($prompt)->contains('[CONTEXT]')) {
-            $prompt = str($prompt)
-                ->append("\n***below is the context to use in your summary***")
-                ->append("\n[CONTEXT]")
-                ->toString();
-        }
-
-        return $prompt;
+        return Templatizer::handle($this->summary);
     }
 
     /**
