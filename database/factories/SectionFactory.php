@@ -25,6 +25,7 @@ class SectionFactory extends Factory
             'sort_order' => $this->faker->numberBetween(0, 100),
             'document_id' => Document::factory(),
             'report_id' => Report::factory(),
+            'prompt' => $this->faker->sentence(),
         ];
     }
 }

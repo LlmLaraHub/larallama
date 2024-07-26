@@ -35,7 +35,12 @@ class GatherInfoToolMakeSections
 
         foreach ($results as $resultIndex => $result) {
             $content = $result->content;
-            $this->makeSectionFromContent($content, $document, $report);
+            $prompt = data_get($prompts, $resultIndex, 'no prompt found');
+            $this->makeSectionFromContent(
+                $content,
+                $document,
+                $report,
+                $prompt);
         }
 
         notify_ui($report->getChat(), 'Done gathering info');
@@ -45,7 +50,8 @@ class GatherInfoToolMakeSections
     protected function makeSectionFromContent(
         string $content,
         Document $document,
-        Report $report): void
+        Report $report,
+        string $prompt): void
     {
         try {
 
@@ -56,6 +62,7 @@ class GatherInfoToolMakeSections
             ], [
                 'subject' => str($content)->limit(128)->toString(),
                 'content' => $content,
+                'prompt' => $prompt,
             ]);
 
         } catch (\Exception $e) {
