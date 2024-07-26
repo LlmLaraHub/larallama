@@ -33,7 +33,7 @@ class Templatizer
     {
 
         if ($this->appendContext && !str($content)->contains('[CONTEXT]')) {
-            $content = str($content)->append('[CONTEXT]')->toString();
+            $content = str($content)->append(' [CONTEXT]')->toString();
         }
 
         $this->content = $content;
@@ -91,8 +91,8 @@ class Templatizer
     }
 
     protected function next_month() : void {
-        $replacement = now()->addMonth()->format('m/y');
-        $replacement = $replacement . " " . now()->addMonth()->format('M  Y');
+        $replacement = "Month of " . now()->addMonth()->format('m ');
+        $replacement = $replacement . " " . now()->addMonth()->format('M');
         $this->content =
             str($this->content)
                 ->replace('[NEXT_MONTH]', $replacement)
@@ -100,8 +100,8 @@ class Templatizer
     }
 
     protected function current_month() : void {
-        $replacement = now()->format('m/y');
-        $replacement = $replacement . " " . now()->format('M  Y');
+        $replacement = "Month of " . now()->format('m');
+        $replacement = $replacement . " " . now()->format('M');
         $this->content =
             str($this->content)
                 ->replace('[CURRENT_MONTH]', $replacement)
