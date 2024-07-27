@@ -4,8 +4,6 @@ namespace App\Domains\Sources;
 
 use App\Domains\Documents\StatusEnum;
 use App\Domains\Documents\TypesEnum;
-use App\Domains\Prompts\PromptMerge;
-use Facades\App\Domains\Tokenizer\Templatizer;
 use App\Helpers\TextChunker;
 use App\Jobs\DocumentProcessingCompleteJob;
 use App\Jobs\SummarizeDocumentJob;
@@ -13,6 +11,7 @@ use App\Jobs\VectorlizeDataJob;
 use App\Models\Document;
 use App\Models\DocumentChunk;
 use App\Models\Source;
+use Facades\App\Domains\Tokenizer\Templatizer;
 use Illuminate\Bus\Batch;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Bus;
@@ -60,7 +59,7 @@ class WebhookSource extends BaseSource
         $this->createSourceTask($this->source, $key);
         $encoded = json_encode($this->payload, 128);
 
-        $prompt =Templatizer::appendContext(true)
+        $prompt = Templatizer::appendContext(true)
             ->handle($this->source->getPrompt(), $encoded);
 
         $results = LlmDriverFacade::driver(

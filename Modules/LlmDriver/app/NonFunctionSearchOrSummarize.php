@@ -4,12 +4,12 @@ namespace LlmLaraHub\LlmDriver;
 
 use App\Domains\Prompts\DefaultPrompt;
 use App\Domains\Prompts\SearchOrSummarize;
-use Facades\App\Domains\Tokenizer\Templatizer;
 use App\Domains\Prompts\SummarizeDocumentPrompt;
 use App\Domains\Prompts\SummarizePrompt;
 use App\Models\Collection;
 use App\Models\DocumentChunk;
 use App\Models\Message;
+use Facades\App\Domains\Tokenizer\Templatizer;
 use Illuminate\Support\Facades\Log;
 use LlmLaraHub\LlmDriver\DistanceQuery\DistanceQueryFacade;
 use LlmLaraHub\LlmDriver\Responses\NonFunctionResponseDto;

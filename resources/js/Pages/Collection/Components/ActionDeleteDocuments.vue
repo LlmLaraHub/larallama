@@ -71,10 +71,10 @@ const confirmAll = () => {
 </script>
 
 <template>
-<button @click="confirm" class="btn btn-neutral">
+<button @click="confirm" class="btn btn-warning ">
     Delete {{documentIds.length}} Documents
 </button>
-<button @click="confirmAll" class="btn btn-warning">
+<button @click="confirmAll" class="btn btn-error">
     Delete  All Documents
 </button>
 

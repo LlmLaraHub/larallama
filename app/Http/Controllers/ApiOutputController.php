@@ -5,11 +5,10 @@ namespace App\Http\Controllers;
 use App\Domains\Messages\RoleEnum;
 use App\Domains\Outputs\OutputTypeEnum;
 use App\Domains\Prompts\ChatBotPrompt;
-use App\Domains\Prompts\PromptMerge;
-use Facades\App\Domains\Tokenizer\Templatizer;
 use App\Domains\Prompts\SupportChatBotPrompt;
 use App\Models\Chat;
 use App\Models\Output;
+use Facades\App\Domains\Tokenizer\Templatizer;
 use Facades\LlmLaraHub\LlmDriver\NonFunctionSearchOrSummarize;
 use Illuminate\Support\Facades\Log;
 use LlmLaraHub\LlmDriver\Responses\NonFunctionResponseDto;
@@ -38,7 +37,7 @@ class ApiOutputController extends OutputController
 
         $prompt = $output->summary;
 
-        $prompt =Templatizer::appendContext(true)
+        $prompt = Templatizer::appendContext(true)
             ->handle($prompt, $input);
 
         $chat = Chat::firstOrCreateUsingOutput($output);

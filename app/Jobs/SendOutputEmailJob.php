@@ -3,10 +3,9 @@
 namespace App\Jobs;
 
 use App\Domains\Collections\CollectionStatusEnum;
-use App\Domains\Prompts\PromptMerge;
 use App\Mail\OutputMail;
-use Facades\App\Domains\Tokenizer\Templatizer;
 use App\Models\Output;
+use Facades\App\Domains\Tokenizer\Templatizer;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;

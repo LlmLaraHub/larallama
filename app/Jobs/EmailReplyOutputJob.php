@@ -5,7 +5,6 @@ namespace App\Jobs;
 use App\Domains\Collections\CollectionStatusEnum;
 use App\Domains\EmailParser\MailDto;
 use App\Domains\Prompts\PromptMerge;
-use Facades\App\Domains\Tokenizer\Templatizer;
 use App\Mail\OutputMail;
 use App\Models\Output;
 use App\Models\Persona;

@@ -2,11 +2,11 @@
 
 namespace App\Models;
 
-use Facades\App\Domains\Tokenizer\Templatizer;
 use App\Domains\Outputs\OutputTypeEnum;
 use App\Domains\Recurring\RecurringTypeEnum;
 use Carbon\Carbon;
 use Facades\App\Domains\Outputs\DefaultOutput;
+use Facades\App\Domains\Tokenizer\Templatizer;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;

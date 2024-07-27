@@ -41,7 +41,8 @@ class MessageTest extends TestCase
 
     }
 
-    public function test_tokenizer() {
+    public function test_tokenizer()
+    {
         $Message = Message::factory()->create([
             'body' => 'This [START_WEEK]',
         ]);
@@ -52,7 +53,6 @@ class MessageTest extends TestCase
         );
 
     }
-
 
     public function test_get_filter(): void
     {

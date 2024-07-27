@@ -38,8 +38,7 @@ class PdfTransformerTest extends TestCase
             ->get());
 
         $document = Document::first();
-        $this->assertNotEquals("", $document->original_content);
-
+        $this->assertNotEquals('', $document->original_content);
 
         Bus::assertBatchCount(1);
 

@@ -2,8 +2,6 @@
 
 namespace App\Domains\Sources;
 
-use App\Domains\Prompts\PromptMerge;
-use Facades\App\Domains\Tokenizer\Templatizer;
 use App\Domains\UnStructured\StructuredTypeEnum;
 use App\Helpers\ChatHelperTrait;
 use App\Jobs\DocumentProcessingCompleteJob;
@@ -14,6 +12,7 @@ use App\Models\DocumentChunk;
 use App\Models\Output;
 use App\Models\Source;
 use App\Models\Transformer;
+use Facades\App\Domains\Tokenizer\Templatizer;
 use Illuminate\Bus\Batch;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Bus;

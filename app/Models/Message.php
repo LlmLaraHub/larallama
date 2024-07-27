@@ -5,11 +5,11 @@ namespace App\Models;
 use App\Domains\Chat\MetaDataDto;
 use App\Domains\Chat\ToolsDto;
 use App\Domains\Messages\RoleEnum;
-use Facades\App\Domains\Tokenizer\Templatizer;
 use App\Events\ChatUiUpdateEvent;
 use App\Events\MessageCreatedEvent;
 use App\Jobs\OrchestrateJob;
 use App\Jobs\SimpleSearchAndSummarizeOrchestrateJob;
+use Facades\App\Domains\Tokenizer\Templatizer;
 use Illuminate\Bus\Batch;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -127,8 +127,7 @@ class Message extends Model implements HasDrivers
 
     public function getPrompt(
         bool $appendContext = false
-    ): string
-    {
+    ): string {
         /**
          * Fix up dates and stuff
          * that are automatic tokens
