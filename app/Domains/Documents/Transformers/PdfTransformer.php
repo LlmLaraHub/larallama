@@ -4,6 +4,7 @@ namespace App\Domains\Documents\Transformers;
 
 use App\Domains\Collections\CollectionStatusEnum;
 use App\Helpers\TextChunker;
+use App\Jobs\DocumentProcessingCompleteJob;
 use App\Jobs\SummarizeDocumentJob;
 use App\Jobs\VectorlizeDataJob;
 use App\Models\Document;
@@ -30,6 +31,9 @@ class PdfTransformer
         $parser = new Parser();
         $pdf = $parser->parseFile($filePath);
         $pages = $pdf->getPages();
+        $this->document->update([
+            'original_content' => $pdf->getText(),
+        ]);
         $chunks = [];
         foreach ($pages as $page_number => $page) {
             try {
@@ -71,6 +75,7 @@ class PdfTransformer
                     [
                         new SummarizeDocumentJob($document),
                         new TagDocumentJob($document),
+                        new DocumentProcessingCompleteJob($document),
                     ],
                 ])
                     ->name("Summarizing and Tagging Document - {$document->id}")

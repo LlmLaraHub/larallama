@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Domains\Documents\Transformers\PdfTransformer;
+use App\Models\Document;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
@@ -35,6 +36,10 @@ class PdfTransformerTest extends TestCase
             ->where('section_number', 0)
             ->where('document_id', $this->document->id)
             ->get());
+
+        $document = Document::first();
+        $this->assertNotEquals("", $document->original_content);
+
 
         Bus::assertBatchCount(1);
 
