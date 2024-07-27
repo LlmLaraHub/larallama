@@ -3,9 +3,11 @@
 namespace Tests\Feature\Http\Controllers;
 
 use App\Jobs\ProcessFileJob;
+use App\Models\Chat;
 use App\Models\Collection;
 use App\Models\Document;
 use App\Models\DocumentChunk;
+use App\Models\Message;
 use App\Models\User;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Queue;
@@ -16,6 +18,29 @@ use Tests\TestCase;
 
 class CollectionControllerTest extends TestCase
 {
+    public function test_delete(): void
+    {
+        $user = User::factory()->create();
+        $collection = Collection::factory()->create();
+
+        $document = Document::factory(4)
+            ->has(DocumentChunk::factory(4), 'document_chunks')->create([
+                'collection_id' => $collection->id,
+            ]);
+
+        $chat = Chat::factory(3)
+            ->has(Message::factory(3))->create([
+                'chatable_id' => $collection->id,
+                'chatable_type' => Collection::class,
+            ]);
+
+        $this->actingAs($user)
+            ->delete(route('collections.delete', $collection));
+        $this->assertDatabaseMissing('collections', [
+            'id' => $collection->id,
+        ]);
+    }
+
     /**
      * A basic feature test example.
      */

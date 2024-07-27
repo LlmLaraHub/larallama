@@ -124,6 +124,7 @@ class ClaudeClient extends BaseClient
 
     public function getContentAndToolTypeFromResults(Response $results): array
     {
+        $data = 'No results found';
         $results = $results->json();
         $tool_used = null;
         $stop_reason = data_get($results, 'stop_reason', 'end_turn');

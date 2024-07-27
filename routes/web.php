@@ -282,6 +282,7 @@ Route::middleware([
             ->name('collections.documents.reset');
         Route::post('/collections', 'store')->name('collections.store');
         Route::put('/collections/{collection}', 'update')->name('collections.update');
+        Route::delete('/collections/{collection}', 'delete')->name('collections.delete');
         Route::get('/collections/{collection}', 'show')->name('collections.show');
         Route::any('/collections/{collection}/upload', 'filesUpload')->name('collections.upload');
     });

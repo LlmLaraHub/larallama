@@ -142,4 +142,13 @@ class CollectionController extends Controller
 
         return back();
     }
+
+    public function delete(Collection $collection)
+    {
+        $collection->delete();
+
+        request()->session()->flash('flash.banner', 'Collection deleted!');
+
+        return back();
+    }
 }
