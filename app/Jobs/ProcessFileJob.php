@@ -90,25 +90,19 @@ class ProcessFileJob implements ShouldQueue
                 'jobs' => [
                     ProcessTextFilesJob::class,
                 ],
-                'finally' => [
-                    DocumentProcessingCompleteJob::class,
-                ],
+                'finally' => [],
             ],
             TypesEnum::HTML->value => [
                 'jobs' => [
                     WebPageDocumentJob::class,
                 ],
-                'finally' => [
-                    DocumentProcessingCompleteJob::class,
-                ],
+                'finally' => [],
             ],
             TypesEnum::PDF->value => [
                 'jobs' => [
                     ParsePdfFileJob::class,
                 ],
-                'finally' => [
-                    DocumentProcessingCompleteJob::class,
-                ],
+                'finally' => [],
             ],
         ];
 

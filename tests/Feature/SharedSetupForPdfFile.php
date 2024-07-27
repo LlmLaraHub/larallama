@@ -13,6 +13,7 @@ trait SharedSetupForPdfFile
     {
         $document = Document::factory()->create([
             'file_path' => 'example.pdf',
+            'original_content' => '',
         ]);
 
         $from = base_path('tests/fixtures/example.pdf');
