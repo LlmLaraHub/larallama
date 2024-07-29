@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\SettingResource;
 use App\Models\Setting;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 
 class SettingController extends Controller
 {
@@ -29,7 +30,7 @@ class SettingController extends Controller
         $setting->secrets = $secrets;
         $setting->save();
         $setting->updateStep($setting);
-
+        $this->clearCache();
         return back();
     }
 
@@ -45,7 +46,7 @@ class SettingController extends Controller
         $setting->secrets = $secrets;
         $setting->save();
         $setting->updateStep($setting);
-
+        $this->clearCache();
         return back();
     }
 
@@ -61,7 +62,7 @@ class SettingController extends Controller
         $setting->secrets = $secrets;
         $setting->save();
         $setting->updateStep($setting);
-
+        $this->clearCache();
         return back();
     }
 
@@ -79,7 +80,12 @@ class SettingController extends Controller
         $setting->secrets = $secrets;
         $setting->save();
         $setting->updateStep($setting);
+        $this->clearCache();
 
         return back();
+    }
+
+    protected function clearCache() {
+        Artisan::call('optimize:clear');
     }
 }
