@@ -103,13 +103,17 @@ class OrchestrateVersionTwo
                     ->pluck('name')->toArray(),
             ]);
 
+            /**
+             * Might need toolid for claude :( )
+             */
             foreach ($response->tool_calls as $tool_call) {
                 $message = $chat->addInput(
-                    message: 'Calling tools',
+                    message: $response->content ?? "Calling Tools", //ollama, openai blank but claude needs this :(
                     role: RoleEnum::Assistant,
                     show_in_thread: false,
                     meta_data: MetaDataDto::from([
                         'tool' => $tool_call->name,
+                        'tool_id' => $tool_call->id,
                         'args' => $tool_call->arguments,
                     ]),
                 );

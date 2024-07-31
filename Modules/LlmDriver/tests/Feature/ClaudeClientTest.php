@@ -2,6 +2,8 @@
 
 namespace Tests\Feature;
 
+use App\Domains\Chat\MetaDataDto;
+use App\Domains\Messages\RoleEnum;
 use App\Models\Setting;
 use Feature;
 use Illuminate\Http\Client\Request;
@@ -304,4 +306,42 @@ class ClaudeClientTest extends TestCase
 
         $this->assertCount(3, $decoded);
     }
+
+    public function test_remap_messages_with_tools_as_history() {
+        $messages = [];
+        $messages[] = MessageInDto::from([
+            'content' => 'test',
+            'role' => 'user',
+        ]);
+        $messages[] = MessageInDto::from([
+            'content' => 'test',
+            'role' => 'assistant',
+        ]);
+        $messages[] = MessageInDto::from([
+            'content' => 'test',
+            'role' => RoleEnum::Tool->value,
+            'meta_data' => MetaDataDto::from([
+                'tool' => 'test',
+                'tool_id' => 'test_id',
+            ]),
+        ]);
+
+        $results = (new ClaudeClient)->remapMessages($messages);
+
+        $this->assertCount(3, $results);
+
+        $this->assertEquals('user', $results[0]['role']);
+        $this->assertEquals('assistant', $results[1]['role']);
+        $this->assertEquals('<thinking>test</thinking>', $results[1]['content'][0]['text']);
+
+
+        $this->assertEquals('user', $results[2]['role']);
+        $this->assertEquals('tool_result', $results[2]['content'][0]['type']);
+        $this->assertEquals('test', $results[2]['content'][0]['content']);
+        $this->assertEquals('test_id', $results[2]['content'][0]['tool_use_id']);
+
+        $this->assertArrayNotHasKey('tool_id', $results[2]);
+    }
 }
+
+

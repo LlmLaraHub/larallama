@@ -284,7 +284,7 @@ EOD;
      *
      * @param  MessageInDto[]  $messagess
      */
-    protected function remapMessages(array $messages): array
+    public function remapMessages(array $messages): array
     {
         return $messages;
     }

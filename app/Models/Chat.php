@@ -155,7 +155,11 @@ class Chat extends Model implements HasDrivers
 
         foreach ($latestMessages as $message) {
             $latestMessagesArray[] = MessageInDto::from([
-                'role' => $message->role->value, 'content' => $message->body,
+                'role' => $message->role->value,
+                'content' => $message->body,
+                'tool_id' => $message->meta_data?->tool_id,
+                'tool' => $message->meta_data?->tool,
+                'args' => $message->meta_data?->args,
             ]);
         }
 

@@ -19,7 +19,7 @@ class GetWebSiteFromUrlTool extends FunctionContract
     public function handle(
         Message $message): FunctionResponse
     {
-        Log::info('[LaraChain] GetWebSiteFromUrlTool  called');
+        Log::info('[LaraChain] GetWebSiteFromUrlTool called');
 
         $args = $message->meta_data->args;
 
