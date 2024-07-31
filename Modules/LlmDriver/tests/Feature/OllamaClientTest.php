@@ -98,7 +98,8 @@ class OllamaClientTest extends TestCase
 
     }
 
-    public function test_functions() {
+    public function test_functions()
+    {
         $client = new OllamaClient();
         $functions = $client->getFunctions();
 

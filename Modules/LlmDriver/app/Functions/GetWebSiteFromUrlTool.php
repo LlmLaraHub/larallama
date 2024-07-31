@@ -2,18 +2,8 @@
 
 namespace LlmLaraHub\LlmDriver\Functions;
 
-use App\Domains\Messages\RoleEnum;
-use App\Domains\Reporting\ReportTypeEnum;
-use App\Domains\Reporting\StatusEnum;
-use Facades\App\Domains\Sources\WebSearch\GetPage;
-use App\Jobs\GatherInfoFinalPromptJob;
-use App\Jobs\GatherInfoReportSectionsJob;
-use App\Models\Collection;
 use App\Models\Message;
-use App\Models\Report;
-use Facades\App\Domains\Tokenizer\Templatizer;
-use Illuminate\Bus\Batch;
-use Illuminate\Support\Facades\Bus;
+use Facades\App\Domains\Sources\WebSearch\GetPage;
 use Illuminate\Support\Facades\Log;
 use LlmLaraHub\LlmDriver\Responses\FunctionResponse;
 use LlmLaraHub\LlmDriver\ToolsHelper;
@@ -35,7 +25,7 @@ class GetWebSiteFromUrlTool extends FunctionContract
 
         $url = data_get($args, 'url', null);
 
-        if(!$url) {
+        if (! $url) {
             throw new \Exception('No url found');
         }
 
@@ -49,7 +39,6 @@ class GetWebSiteFromUrlTool extends FunctionContract
             'save_to_message' => false,
         ]);
     }
-
 
     /**
      * @return PropertyDto[]

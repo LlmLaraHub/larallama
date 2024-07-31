@@ -4,7 +4,6 @@ namespace LlmLaraHub\LlmDriver;
 
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Log;
-use Laravel\Pennant\Feature;
 use LlmLaraHub\LlmDriver\Functions\FunctionDto;
 use LlmLaraHub\LlmDriver\Requests\MessageInDto;
 use LlmLaraHub\LlmDriver\Responses\CompletionResponse;
@@ -39,6 +38,7 @@ abstract class BaseClient
         $payload = $this->addJsonFormat($payload);
 
         $payload['tools'] = $this->getFunctions();
+
         return $payload;
     }
 

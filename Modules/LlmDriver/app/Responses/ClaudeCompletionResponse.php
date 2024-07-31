@@ -11,8 +11,8 @@ class ClaudeCompletionResponse extends CompletionResponse
     public function __construct(
         #[WithCastable(ClaudeContentCaster::class)]
         public mixed $content,
-        public string $stop_reason = 'end_turn',
-        public ?string $tool_used = null,
+        public string $stop_reason,
+        public ?string $tool_used,
         /** @var array<ToolDto> */
         #[WithCastable(ClaudeToolCaster::class)]
         #[MapInputName('content')]

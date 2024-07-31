@@ -2,7 +2,6 @@
 
 namespace App\Jobs;
 
-use App\Domains\Chat\MetaDataDto;
 use App\Domains\Chat\ToolsDto;
 use App\Domains\Messages\RoleEnum;
 use App\Models\Message;
@@ -14,12 +13,11 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use LlmLaraHub\LlmDriver\Functions\FunctionContract;
 use LlmLaraHub\LlmDriver\Responses\FunctionResponse;
-use LlmLaraHub\LlmDriver\Responses\ToolDto;
 
 class ToolJob implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
     use Batchable;
+    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /**
      * Create a new job instance.
@@ -27,8 +25,7 @@ class ToolJob implements ShouldQueue
     public function __construct(
         public FunctionContract $function,
         public Message $message
-    )
-    {
+    ) {
         //
     }
 
@@ -61,6 +58,5 @@ class ToolJob implements ShouldQueue
          * Should I do anything with the results of above FunctionResponse
          * Should I set the batch and if so how to best use it
          */
-
     }
 }

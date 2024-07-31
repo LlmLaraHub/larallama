@@ -2,7 +2,6 @@
 
 namespace LlmLaraHub\LlmDriver\Responses;
 
-use Pgvector\Laravel\Vector;
 use Spatie\LaravelData\Casts\Cast;
 use Spatie\LaravelData\Casts\Castable;
 use Spatie\LaravelData\Support\Creation\CreationContext;
@@ -27,7 +26,7 @@ class ClaudeToolCaster implements Castable
                     }
                 )->toArray();
 
-                foreach($results as $index => $result) {
+                foreach ($results as $index => $result) {
                     $results[$index] = ToolDto::from(
                         [
                             'name' => $result['name'],
@@ -36,6 +35,7 @@ class ClaudeToolCaster implements Castable
                         ]
                     );
                 }
+
                 return $results;
             }
         };

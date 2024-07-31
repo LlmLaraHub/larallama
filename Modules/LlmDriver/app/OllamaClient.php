@@ -103,10 +103,8 @@ class OllamaClient extends BaseClient
             'stream' => false,
             'options' => [
                 'temperature' => 0,
-            ]
+            ],
         ];
-
-
 
         $payload = $this->modifyPayload($payload);
         Log::info('LlmDriver::Ollama::chat', [

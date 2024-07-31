@@ -2,16 +2,14 @@
 
 namespace LlmLaraHub\LlmDriver\Responses;
 
-
-use Spatie\LaravelData\Attributes\MapInputName;
 use Spatie\LaravelData\Optional;
 
 class CompletionResponse extends \Spatie\LaravelData\Data
 {
     public function __construct(
         public mixed $content,
-        public string $stop_reason = 'end_turn',
-        public ?string $tool_used = null,
+        public string $stop_reason,
+        public ?string $tool_used,
         /** @var array<ToolDto> */
         public array|Optional $tool_calls,
         public ?int $input_tokens = null,

@@ -2,8 +2,6 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Arr;
 use LlmLaraHub\LlmDriver\Responses\OllamaCompletionResponse;
 use LlmLaraHub\LlmDriver\Responses\OllamaToolDto;

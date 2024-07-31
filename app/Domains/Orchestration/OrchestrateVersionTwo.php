@@ -15,8 +15,6 @@ use LlmLaraHub\LlmDriver\LlmDriverFacade;
 
 class OrchestrateVersionTwo
 {
-
-
     public function handle(
         Chat $chat,
         Message $message)
@@ -98,16 +96,16 @@ class OrchestrateVersionTwo
         $response = LlmDriverFacade::driver($message->getDriver())
             ->chat($messages);
 
-        if(!empty($response->tool_calls)) {
+        if (! empty($response->tool_calls)) {
             $jobs = [];
             Log::info('Orchestration V2 Tools Found', [
                 'tool_calls' => collect($response->tool_calls)
                     ->pluck('name')->toArray(),
             ]);
 
-            foreach($response->tool_calls as $tool_call) {
+            foreach ($response->tool_calls as $tool_call) {
                 $message = $chat->addInput(
-                    message: "Calling tools",
+                    message: 'Calling tools',
                     role: RoleEnum::Assistant,
                     show_in_thread: false,
                     meta_data: MetaDataDto::from([
@@ -123,7 +121,7 @@ class OrchestrateVersionTwo
             }
 
             Bus::batch([
-                $jobs
+                $jobs,
             ])->name("Running tools for Chat {$message->getChat()->id} {$message->id}")
                 ->finally(function (Batch $batch) use ($chat) {
                     Bus::batch([

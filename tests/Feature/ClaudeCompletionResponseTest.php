@@ -2,13 +2,8 @@
 
 namespace Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Arr;
 use LlmLaraHub\LlmDriver\Responses\ClaudeCompletionResponse;
-use LlmLaraHub\LlmDriver\Responses\ClaudeToolDto;
-use LlmLaraHub\LlmDriver\Responses\OllamaCompletionResponse;
-use LlmLaraHub\LlmDriver\Responses\OllamaToolDto;
 use LlmLaraHub\LlmDriver\Responses\ToolDto;
 use Tests\TestCase;
 

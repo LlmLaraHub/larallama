@@ -2,7 +2,6 @@
 
 namespace LlmLaraHub\LlmDriver\Responses;
 
-use Pgvector\Laravel\Vector;
 use Spatie\LaravelData\Casts\Cast;
 use Spatie\LaravelData\Casts\Castable;
 use Spatie\LaravelData\Support\Creation\CreationContext;
@@ -26,6 +25,7 @@ class ClaudeContentCaster implements Castable
                         return $item['type'] === 'text';
                     }
                 )->first();
+
                 return data_get($results, 'text');
             }
         };

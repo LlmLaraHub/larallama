@@ -2,8 +2,8 @@
 
 namespace LlmLaraHub\LlmDriver\Responses;
 
-use Spatie\LaravelData\Optional;
 use Spatie\LaravelData\Attributes\MapInputName;
+use Spatie\LaravelData\Optional;
 
 class OllamaCompletionResponse extends CompletionResponse
 {
@@ -11,8 +11,8 @@ class OllamaCompletionResponse extends CompletionResponse
         #[MapInputName('message.content')]
         public mixed $content,
         #[MapInputName('done_reason')]
-        public string $stop_reason = 'end_turn',
-        public ?string $tool_used = null,
+        public string $stop_reason,
+        public ?string $tool_used,
         /** @var array<OllamaToolDto> */
         #[MapInputName('message.tool_calls')]
         public array|Optional $tool_calls,

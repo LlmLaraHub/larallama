@@ -31,6 +31,7 @@ class SettingController extends Controller
         $setting->save();
         $setting->updateStep($setting);
         $this->clearCache();
+
         return back();
     }
 
@@ -47,6 +48,7 @@ class SettingController extends Controller
         $setting->save();
         $setting->updateStep($setting);
         $this->clearCache();
+
         return back();
     }
 
@@ -63,6 +65,7 @@ class SettingController extends Controller
         $setting->save();
         $setting->updateStep($setting);
         $this->clearCache();
+
         return back();
     }
 
@@ -85,7 +88,8 @@ class SettingController extends Controller
         return back();
     }
 
-    protected function clearCache() {
+    protected function clearCache()
+    {
         Artisan::call('optimize:clear');
     }
 }

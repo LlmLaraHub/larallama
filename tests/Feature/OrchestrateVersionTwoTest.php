@@ -5,8 +5,6 @@ namespace Tests\Feature;
 use App\Models\Chat;
 use App\Models\Collection;
 use App\Models\Message;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Bus;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
 use LlmLaraHub\LlmDriver\Responses\OllamaCompletionResponse;
@@ -20,11 +18,11 @@ class OrchestrateVersionTwoTest extends TestCase
     public function test_example(): void
     {
         Bus::fake();
-        $data = get_fixture("ollama_response_tools.json");
+        $data = get_fixture('ollama_response_tools.json');
         LlmDriverFacade::shouldReceive('driver->chat')->once()->andReturn(
             OllamaCompletionResponse::from($data)
         );
-        $prompt = <<<PROMPT
+        $prompt = <<<'PROMPT'
 Get the content from the url https://dailyai.studio
 
 Then do a summary of the content breaking it down into
@@ -51,7 +49,6 @@ PROMPT;
         //and one message for the prompt
 
         Bus::assertBatchCount(1);
-
 
     }
 }
