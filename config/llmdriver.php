@@ -15,7 +15,7 @@ return [
         'text-embedding-3-small' => 384,
         'ollama' => 4096,
         'llama2' => 4096,
-        'llama3' => 4096,
+        'llama3.1' => 4096,
         'mistral' => 4096,
         'mxbai-embed-large' => 1024,
     ],
@@ -60,16 +60,16 @@ return [
             'api_url' => env('OLLAMA_API_URL', 'http://localhost:11434/api/'),
             'models' => [
                 //@see https://github.com/ollama/ollama/blob/main/docs/openai.md
-                'completion_model' => env('OLLAMA_COMPLETION_MODEL', 'llama3'),
+                'completion_model' => env('OLLAMA_COMPLETION_MODEL', 'llama3.1'),
                 'embedding_model' => env('OLLAMA_EMBEDDING_MODEL', 'mxbai-embed-large'),
-                'chat_output_model' => env('OLLAMA_COMPLETION_MODEL', 'llama3'), //this is good to use other systems for better repsonses to people in chat
+                'chat_output_model' => env('OLLAMA_COMPLETION_MODEL', 'llama3.1'), //this is good to use other systems for better repsonses to people in chat
             ],
         ],
     ],
     'features' => [
         'pptx' => true,
         'chatv2' => true,
-        'reference_collection' => env('FEATURE_REFERENCE_COLLECTION', false),
+        'reference_collection' => true,
         'date_range' => env('FEATURE_DATE_RANGE', true),
         'editor' => env('FEATURE_EDITOR', false),
         'all_tools' => env('FEATURE_ALL_TOOLS', false),

@@ -55,11 +55,7 @@ class AppServiceProvider extends ServiceProvider
         });
 
         Feature::define('all_tools', function (User $user) {
-            if (config('llmdriver.features.all_tools')) {
-                return true;
-            }
-
-            return false;
+            return true;
         });
 
         Feature::define('editor', function (User $user) {

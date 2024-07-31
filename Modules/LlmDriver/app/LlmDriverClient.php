@@ -3,6 +3,7 @@
 namespace LlmLaraHub\LlmDriver;
 
 use LlmLaraHub\LlmDriver\Functions\GatherInfoTool;
+use LlmLaraHub\LlmDriver\Functions\GetWebSiteFromUrlTool;
 use LlmLaraHub\LlmDriver\Functions\ReportingTool;
 use LlmLaraHub\LlmDriver\Functions\SearchAndSummarize;
 use LlmLaraHub\LlmDriver\Functions\StandardsChecker;
@@ -63,6 +64,7 @@ class LlmDriverClient
             (new StandardsChecker())->getFunction(),
             (new ReportingTool())->getFunction(),
             (new GatherInfoTool())->getFunction(),
+            (new GetWebSiteFromUrlTool())->getFunction(),
         ];
     }
 

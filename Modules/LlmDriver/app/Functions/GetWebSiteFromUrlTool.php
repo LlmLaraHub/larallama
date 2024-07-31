@@ -2,8 +2,10 @@
 
 namespace LlmLaraHub\LlmDriver\Functions;
 
+use App\Domains\Messages\RoleEnum;
 use App\Domains\Reporting\ReportTypeEnum;
 use App\Domains\Reporting\StatusEnum;
+use Facades\App\Domains\Sources\WebSearch\GetPage;
 use App\Jobs\GatherInfoFinalPromptJob;
 use App\Jobs\GatherInfoReportSectionsJob;
 use App\Models\Collection;
@@ -16,105 +18,38 @@ use Illuminate\Support\Facades\Log;
 use LlmLaraHub\LlmDriver\Responses\FunctionResponse;
 use LlmLaraHub\LlmDriver\ToolsHelper;
 
-class GatherInfoTool extends FunctionContract
+class GetWebSiteFromUrlTool extends FunctionContract
 {
     use ToolsHelper;
 
-    protected string $name = 'gather_info_tool';
+    protected string $name = 'get_web_site_from_url';
 
-    protected string $description = 'This will look at all documents using your prompt then return the results after once more using your prompt';
-
-    protected string $response = '';
-
-    protected array $results = [];
-
-    protected array $sectionJobs = [];
+    protected string $description = 'If you add urls to a prompt and ask the llm to get the web site using the url(s) you give it';
 
     public function handle(
         Message $message): FunctionResponse
     {
-        Log::info('[LaraChain] GatherInfoTool Function called');
+        Log::info('[LaraChain] GetWebSiteFromUrlTool  called');
 
-        $report = Report::firstOrCreate([
-            'chat_id' => $message->getChat()->id,
-            'message_id' => $message->id,
-            'reference_collection_id' => $message->getReferenceCollection()?->id,
-            'user_id' => $message->getChat()->user_id,
-        ], [
-            'type' => ReportTypeEnum::GatherInfo,
-            'user_message_id' => $message->id,
-            'status_sections_generation' => StatusEnum::Pending,
-            'status_entries_generation' => StatusEnum::Pending,
-        ]);
+        $args = $message->meta_data->args;
 
-        $collection = $message->getChatable();
+        $url = data_get($args, 'url', null);
 
-        notify_ui($message->getChat(), 'Going through all the documents to check requirements');
+        if(!$url) {
+            throw new \Exception('No url found');
+        }
 
-        $this->results = [];
-
-        Log::info('[LaraChain] - GatherInfo Tool');
-
-        $this->buildUpSections($collection, $report, $message);
-
-        Bus::batch($this->sectionJobs)
-            ->name(sprintf('GatherInfo Tool Sections Report id: %d Chat id %d', $report->id, $message->getChat()->id))
-            ->allowFailures()
-            ->finally(function (Batch $batch) use ($report) {
-                $report->update(['status_sections_generation' => StatusEnum::Complete]);
-                Bus::batch([
-                    new GatherInfoFinalPromptJob($report),
-                ])->name(sprintf('Reporting Tool Summarize Report Id %s', $report->id))
-                    ->allowFailures()
-                    ->dispatch();
-
-            })
-            ->dispatch();
-
-        $report->update([
-            'status_sections_generation' => StatusEnum::Running,
-        ]);
-
-        notify_ui($report->getChat(), 'Running');
+        $results = GetPage::handle($url);
 
         return FunctionResponse::from([
-            'content' => 'Gathering info and then running prompt',
-            'prompt' => $message->getPrompt(),
+            'content' => $results,
+            'prompt' => $results,
             'requires_followup' => false,
             'documentChunks' => collect([]),
             'save_to_message' => false,
         ]);
     }
 
-    protected function buildUpSections(Collection $collection, Report $report, Message $message): void
-    {
-        $messagePrompt = $message->getPrompt();
-        $collection->documents()->chunk(3, callback: function ($documentChunks) use ($report, $messagePrompt) {
-            try {
-
-                $prompts = [];
-                foreach ($documentChunks as $document) {
-                    $prompt = Templatizer::appendContext(true)
-                        ->handle($messagePrompt, $document->original_content);
-                    $prompts[] = $prompt;
-                }
-
-                if ($document?->id) {
-                    $this->sectionJobs[] =
-                        new GatherInfoReportSectionsJob(
-                            prompts: $prompts,
-                            report: $report,
-                            document: $document);
-                }
-
-            } catch (\Exception $e) {
-                Log::error('Error running Reporting Tool Checker', [
-                    'error' => $e->getMessage(),
-                    'line' => $e->getLine(),
-                ]);
-            }
-        });
-    }
 
     /**
      * @return PropertyDto[]
@@ -123,8 +58,8 @@ class GatherInfoTool extends FunctionContract
     {
         return [
             new PropertyDto(
-                name: 'prompt',
-                description: 'Using your prompt we will look at every document, run your prompt against each one and then against the final output',
+                name: 'url',
+                description: 'The URL To get',
                 type: 'string',
                 required: true,
             ),
@@ -133,6 +68,6 @@ class GatherInfoTool extends FunctionContract
 
     public function runAsBatch(): bool
     {
-        return true;
+        return false;
     }
 }

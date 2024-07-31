@@ -41,7 +41,7 @@ abstract class FunctionContract
         );
     }
 
-    protected function getName(): string
+    public function getName(): string
     {
         return $this->name;
     }

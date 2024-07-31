@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\Setting;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Http;
 use Laravel\Pennant\Feature;
 use LlmLaraHub\LlmDriver\OllamaClient;
@@ -94,6 +95,26 @@ class OllamaClientTest extends TestCase
 
             return count($message1) === 2;
         });
+
+    }
+
+    public function test_functions() {
+        $client = new OllamaClient();
+        $functions = $client->getFunctions();
+
+        $function = Arr::first($functions);
+
+        $this->assertArrayHasKey('type', $function);
+        $this->assertArrayHasKey('function', $function);
+        $function = data_get($function, 'function');
+        $this->assertArrayHasKey('name', $function);
+        $this->assertArrayHasKey('description', $function);
+        $this->assertArrayHasKey('parameters', $function);
+
+        $parameters = data_get($function, 'parameters');
+        $this->assertArrayHasKey('type', $parameters);
+        $this->assertArrayHasKey('properties', $parameters);
+        $this->assertArrayHasKey('required', $parameters);
 
     }
 

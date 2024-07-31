@@ -85,7 +85,8 @@ class Chat extends Model implements HasDrivers
     /**
      * Save the input message of the user
      */
-    public function addInput(string $message,
+    public function addInput(
+        string $message,
         RoleEnum $role = RoleEnum::User,
         ?string $systemPrompt = null,
         bool $show_in_thread = true,
@@ -154,7 +155,7 @@ class Chat extends Model implements HasDrivers
 
         foreach ($latestMessages as $message) {
             $latestMessagesArray[] = MessageInDto::from([
-                'role' => $message->role->value, 'content' => $message->compressed_body,
+                'role' => $message->role->value, 'content' => $message->body,
             ]);
         }
 

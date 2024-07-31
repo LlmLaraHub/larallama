@@ -11,6 +11,7 @@ use Laravel\Pennant\Feature;
 use LlmLaraHub\LlmDriver\Requests\MessageInDto;
 use LlmLaraHub\LlmDriver\Responses\CompletionResponse;
 use LlmLaraHub\LlmDriver\Responses\EmbeddingsResponseDto;
+use LlmLaraHub\LlmDriver\Responses\OllamaCompletionResponse;
 
 class OllamaClient extends BaseClient
 {
@@ -100,15 +101,21 @@ class OllamaClient extends BaseClient
             'model' => $this->getConfig('ollama')['models']['completion_model'],
             'messages' => $messages,
             'stream' => false,
+            'options' => [
+                'temperature' => 0,
+            ]
         ];
 
+
+
         $payload = $this->modifyPayload($payload);
+        Log::info('LlmDriver::Ollama::chat', [
+            'payload' => $payload,
+        ]);
 
         $response = $this->getClient()->post('/chat', $payload);
 
-        $results = $response->json()['message']['content'];
-
-        return new CompletionResponse($results);
+        return OllamaCompletionResponse::from($response->json());
     }
 
     /**
@@ -211,10 +218,6 @@ class OllamaClient extends BaseClient
     {
         $functions = LlmDriverFacade::getFunctions();
 
-        if (! Feature::activate('ollama-functions')) {
-            return [];
-        }
-
         return collect($functions)->map(function ($function) {
             $function = $function->toArray();
             $properties = [];
@@ -235,10 +238,17 @@ class OllamaClient extends BaseClient
             }
 
             return [
-                'name' => data_get($function, 'name'),
-                'description' => data_get($function, 'description'),
-                'parameters' => $properties,
-                'required' => $required,
+                'type' => 'function',
+                'function' => [
+                    'name' => data_get($function, 'name'),
+                    'description' => data_get($function, 'description'),
+                    'parameters' => [
+                        'type' => 'object',
+                        'properties' => $properties,
+                        'required' => $required,
+                    ],
+                ],
+
             ];
 
         })->toArray();
