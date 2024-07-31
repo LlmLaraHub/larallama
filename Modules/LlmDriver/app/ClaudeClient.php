@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Log;
 use Laravel\Pennant\Feature;
 use LlmLaraHub\LlmDriver\Functions\FunctionDto;
 use LlmLaraHub\LlmDriver\Requests\MessageInDto;
+use LlmLaraHub\LlmDriver\Responses\ClaudeCompletionResponse;
 use LlmLaraHub\LlmDriver\Responses\CompletionResponse;
 use LlmLaraHub\LlmDriver\Responses\EmbeddingsResponseDto;
 
@@ -69,12 +70,9 @@ class ClaudeClient extends BaseClient
 
         [$data, $tool_used, $stop_reason] = $this->getContentAndToolTypeFromResults($results);
 
-        return CompletionResponse::from([
+        return ClaudeCompletionResponse::from([
             'content' => $data,
             'tool_used' => $tool_used,
-            'stop_reason' => $stop_reason,
-            'input_tokens' => data_get($results, 'usage.input_tokens', null),
-            'output_tokens' => data_get($results, 'usage.output_tokens', null),
         ]);
     }
 

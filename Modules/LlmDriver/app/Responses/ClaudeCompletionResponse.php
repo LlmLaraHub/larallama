@@ -2,23 +2,24 @@
 
 namespace LlmLaraHub\LlmDriver\Responses;
 
-use Spatie\LaravelData\Optional;
 use Spatie\LaravelData\Attributes\MapInputName;
+use Spatie\LaravelData\Attributes\WithCastable;
+use Spatie\LaravelData\Optional;
 
-class OllamaCompletionResponse extends CompletionResponse
+class ClaudeCompletionResponse extends CompletionResponse
 {
     public function __construct(
-        #[MapInputName('message.content')]
+        #[WithCastable(ClaudeContentCaster::class)]
         public mixed $content,
-        #[MapInputName('done_reason')]
         public string $stop_reason = 'end_turn',
         public ?string $tool_used = null,
-        /** @var array<OllamaToolDto> */
-        #[MapInputName('message.tool_calls')]
+        /** @var array<ToolDto> */
+        #[WithCastable(ClaudeToolCaster::class)]
+        #[MapInputName('content')]
         public array|Optional $tool_calls,
-        #[MapInputName('prompt_eval_count')]
+        #[MapInputName('usage.input_tokens')]
         public ?int $input_tokens = null,
-        #[MapInputName('eval_count')]
+        #[MapInputName('usage.output_tokens')]
         public ?int $output_tokens = null,
         public ?string $model = null,
     ) {
