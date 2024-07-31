@@ -27,6 +27,7 @@ class GetPage
     public function handle(string $url, bool $parseHtml = true): string
     {
         $results = Browsershot::url($url)
+            ->userAgent('DailyAI Studio Browser 1.0, helping users automate workflows')
             ->dismissDialogs()
             ->fullPage();
 

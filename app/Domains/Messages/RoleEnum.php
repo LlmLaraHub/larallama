@@ -2,7 +2,7 @@
 
 namespace App\Domains\Messages;
 
-enum RoleEnum: string
+enum git pRoleEnum: string
 {
     case User = 'user';
     case System = 'system';
