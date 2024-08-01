@@ -51,8 +51,8 @@ class GatherInfoFinalPromptJob implements ShouldQueue
         }
 
         $messages[] = MessageInDto::from([
-            'content' => sprintf('Using the context of this chat can you '.
-                $this->report->message->getPrompt()),
+            'content' => 'Using the context of this chat can you '.
+                $this->report->message->getPrompt(),
             'role' => 'user',
         ]);
 
