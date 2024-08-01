@@ -93,6 +93,8 @@ class OrchestrateVersionTwo
 
         $messages = $chat->getChatResponse();
 
+        put_fixture('orchestrate_messages_fist_send.json', $messages);
+
         $response = LlmDriverFacade::driver($message->getDriver())
             ->chat($messages);
 
@@ -104,11 +106,12 @@ class OrchestrateVersionTwo
             ]);
 
             /**
-             * Might need toolid for claude :( )
+             * Might need toolid for claude :(
              */
             foreach ($response->tool_calls as $tool_call) {
+
                 $message = $chat->addInput(
-                    message: $response->content ?? "Calling Tools", //ollama, openai blank but claude needs this :(
+                    message: $response->content ?? 'Calling Tools', //ollama, openai blank but claude needs this :(
                     role: RoleEnum::Assistant,
                     show_in_thread: false,
                     meta_data: MetaDataDto::from([
@@ -121,7 +124,6 @@ class OrchestrateVersionTwo
                 $tool = app()->make($tool_call->name);
 
                 $jobs[] = new ToolJob($tool, $message);
-
             }
 
             Bus::batch([

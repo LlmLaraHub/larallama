@@ -12,6 +12,7 @@ use App\Models\Report;
 use App\Models\User;
 use Facades\LlmLaraHub\LlmDriver\Orchestrate;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Queue;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
 use LlmLaraHub\LlmDriver\Responses\CompletionResponse;
 use Tests\TestCase;
@@ -67,6 +68,7 @@ class MessageTest extends TestCase
 
     public function test_run(): void
     {
+        Queue::fake();
         $user = User::factory()->create();
         $collection = Collection::factory()->create();
         $chat = Chat::factory()->create([
@@ -79,14 +81,14 @@ class MessageTest extends TestCase
 
         $firstResponse = CompletionResponse::from([
             'content' => 'test',
+            'stop_reason' => 'stop',
         ]);
 
-        LlmDriverFacade::shouldReceive('driver->chat')->once()->andReturn($firstResponse);
+        LlmDriverFacade::shouldReceive('driver->hasFunctions')->once()->andReturn(false);
 
         $message = Message::factory()->user()->create([
-            'meta_data' => MetaDataDto::from([
-                'tool' => 'completion',
-            ]),
+            'tool' => 'completion',
+            'meta_data' => MetaDataDto::from([]),
         ]);
 
         $message->run();

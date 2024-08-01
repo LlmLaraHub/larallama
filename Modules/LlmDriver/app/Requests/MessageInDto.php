@@ -13,6 +13,9 @@ class MessageInDto extends Data
         public string $role,
         public bool $is_ai = false,
         public bool $show = true,
+        public mixed $tool = '',
+        public mixed $tool_id = '',
+        public array $args = [],
         public ?MetaDataDto $meta_data = null
     ) {
     }
@@ -22,9 +25,9 @@ class MessageInDto extends Data
         return [
             'content' => $this->content,
             'role' => $this->role,
-            'tool_id' => $this->meta_data?->tool_id,
-            'tool' => $this->meta_data?->tool,
-            'args' => $this->meta_data?->args,
+            'tool_id' => $this->tool_id,
+            'tool' => $this->tool,
+            'args' => $this->args,
         ];
     }
 

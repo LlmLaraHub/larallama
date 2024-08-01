@@ -11,8 +11,8 @@ class OllamaCompletionResponse extends CompletionResponse
         #[MapInputName('message.content')]
         public mixed $content,
         #[MapInputName('done_reason')]
-        public string $stop_reason,
-        public ?string $tool_used,
+        public string|Optional $stop_reason,
+        public string|Optional $tool_used,
         /** @var array<OllamaToolDto> */
         #[MapInputName('message.tool_calls')]
         public array|Optional $tool_calls,

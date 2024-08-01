@@ -41,11 +41,11 @@ class ToolsCompleteJob implements ShouldQueue
 
         $messages = $this->chat->getChatResponse();
 
-        put_fixture('messages_before_final_job.json', $messages);
+        put_fixture('messages_before_final_job_claude.json', $messages);
 
         $response = LlmDriverFacade::driver($this->chat->chatable->getDriver())->chat($messages);
 
-        put_fixture('tool_complete_response.json', $response);
+        put_fixture('tool_complete_response_claude.json', $response);
 
         $this->chat->addInput(
             message: $response->content,

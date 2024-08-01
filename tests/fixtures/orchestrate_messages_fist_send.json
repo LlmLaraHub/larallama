@@ -1,0 +1,12 @@
+[
+    {
+        "content": "Get the content from the url https:\/\/dailyai.studio\n\nThen do a summary of the content breaking it down into\nthree points that would make sense to a real-estate agent\n",
+        "role": "user",
+        "is_ai": false,
+        "show": true,
+        "tool": "",
+        "tool_id": "",
+        "args": [],
+        "meta_data": null
+    }
+]

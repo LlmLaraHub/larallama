@@ -23,6 +23,9 @@ class OllamaCompletionResponseTest extends TestCase
         $this->assertNotNull($dto->input_tokens);
         $this->assertNotNull($dto->output_tokens);
         $tool = Arr::first($dto->tool_calls);
+        foreach ($dto->tool_calls as $tool) {
+            $this->assertInstanceOf(OllamaToolDto::class, $tool);
+        }
         $this->assertInstanceOf(OllamaToolDto::class, $tool);
     }
 }

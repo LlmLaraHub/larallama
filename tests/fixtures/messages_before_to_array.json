@@ -1,0 +1,22 @@
+[
+    {
+        "content": "This is a test",
+        "role": "user",
+        "is_ai": false,
+        "show": true,
+        "tool": "foobar",
+        "tool_id": "",
+        "args": [],
+        "meta_data": null
+    },
+    {
+        "content": "This is a test",
+        "role": "tool",
+        "is_ai": false,
+        "show": true,
+        "tool": "test",
+        "tool_id": "test",
+        "args": [],
+        "meta_data": null
+    }
+]

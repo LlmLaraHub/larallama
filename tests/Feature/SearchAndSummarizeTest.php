@@ -47,8 +47,9 @@ class SearchAndSummarizeTest extends TestCase
 
         $data = 'Foo bar';
 
-        $dto = new \LlmLaraHub\LlmDriver\Responses\CompletionResponse($data);
-
+        $dto = \LlmLaraHub\LlmDriver\Responses\CompletionResponse::from([
+            'content' => $data,
+        ]);
         $functionCallDto = \LlmLaraHub\LlmDriver\Functions\FunctionCallDto::from([
             'function_name' => 'search_and_summarize',
             'arguments' => json_encode([

@@ -10,7 +10,6 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
-use Laravel\Pennant\Feature;
 use LlmLaraHub\LlmDriver\Functions\FunctionDto;
 use LlmLaraHub\LlmDriver\Requests\MessageInDto;
 use LlmLaraHub\LlmDriver\Responses\ClaudeCompletionResponse;
@@ -50,7 +49,6 @@ class ClaudeClient extends BaseClient
 
         $payload = [
             'model' => $model,
-            'system' => 'Return a markdown response.',
             'max_tokens' => $maxTokens,
             'messages' => $messages,
         ];
@@ -75,7 +73,6 @@ class ClaudeClient extends BaseClient
 
             throw new \Exception('Claude API Error Chat');
         }
-
 
         return ClaudeCompletionResponse::from($results->json());
     }
@@ -159,7 +156,6 @@ class ClaudeClient extends BaseClient
 
     public function modifyPayload(array $payload): array
     {
-
 
         $payload['tools'] = $this->getFunctions();
 
@@ -400,11 +396,12 @@ class ClaudeClient extends BaseClient
      */
     public function remapMessages(array $messages, bool $userLast = false): array
     {
-        $updatesToMessages = [];
-
         put_fixture('claude_messages_before_remap.json', $messages);
 
-        $messages = collect($messages)->map(function ($item) {
+        /**
+         * Claude needs to not start with a system message
+         */
+        $messages = collect($messages)->transform(function ($item) {
             if ($item->role === 'system') {
                 $item->role = 'assistant';
             }
@@ -412,72 +409,72 @@ class ClaudeClient extends BaseClient
             $item->content = str($item->content)->replaceEnd("\n", '')->trim()->toString();
 
             return $item->toArray();
-        })
-            ->transform(function ($item, $key) use (&$updatesToMessages)  {
-                if ($item['role'] === RoleEnum::Tool->value) {
-                    $toolId = data_get($item, 'tool_id', "toolu_" . Str::random(32));
-                    $tool = data_get($item, 'tool', "unknown_tool");
-                    $args = data_get($item, 'args', "{}");
+        });
 
-                    // Transform the previous assistant message
-                    if(!isset($updatesToMessages[$key - 1])) {
-                        $updatesToMessages[$key - 1] = [];
-                    }
+        /**
+         * Claude needs me to not use the role tool
+         * but instead set that to role user
+         * and make the content string an array
+         * and other odd stuff.
+         */
+        $updatesToMessages = [];
 
-                    $updatesToMessages[$key - 1] = [
-                        'role' => 'assistant',
-                        'content' => [
-                            [
-                                'type' => 'text',
-                                'text' => "<thinking>[THINKING_TOOL]</thinking>",
-                            ],
-                            [
-                                'type' => 'tool_use',
-                                'id' =>  $toolId,
-                                'name' => $tool,
-                                'input' => $args
-                            ]
+        $messages->map(function ($item, $key) use (&$updatesToMessages) {
+            if ($item['role'] === RoleEnum::Tool->value) {
+                $toolId = data_get($item, 'tool_id', 'toolu_'.Str::random(32));
+                $tool = data_get($item, 'tool', 'unknown_tool');
+                $args = data_get($item, 'args', '{}');
+                Log::info('Claude Tool Found', [
+                    'tool' => $tool,
+                    'tool_id' => $toolId,
+                    'args' => $args,
+                ]);
+
+                $content = $item['content'];
+
+                $updatesToMessages[] = [
+                    'role' => 'assistant',
+                    'content' => [
+                        [
+                            'type' => 'text',
+                            'text' => "<thinking>$content</thinking>",
                         ],
-                    ];
+                        [
+                            'type' => 'tool_use',
+                            'id' => $toolId,
+                            'name' => $tool,
+                            'input' => $args,
+                        ],
+                    ],
+                ];
 
-                    $item['role'] = 'user';
-                    $item['content'] = [
-                       [
-                           'type' => 'tool_result',
-                           'tool_use_id' => $toolId,
-                           'content' => $item['content'],
-                       ]
-                    ];
-                }
+                $updatesToMessages[] = [
+                    'role' => 'user',
+                    'content' => [
+                        [
+                            'type' => 'tool_result',
+                            'tool_use_id' => $toolId,
+                            'content' => $content,
+                        ],
+                    ],
+                ];
+            } else {
+                $updatesToMessages[] = [
+                    'role' => $item['role'],
+                    'content' => $item['content'],
+                ];
+            }
 
-                // Remove 'tool_id' and 'tool' keys
-                unset($item['tool_id'], $item['tool'], $item['args']);
+            return $item;
+        });
 
-                return $item;
-            })
-            ->transform(function ($item, $key) use ($updatesToMessages)  {
-                $hasTransform = data_get($updatesToMessages, $key, false);
-                if ($hasTransform) {
-                    $updates = $updatesToMessages[$key];
-                    $originalContent = $item['content'];
-                    $updates['content'][0]['text'] = str($updates['content'][0]['text'])
-                        ->replace(
-                            '[THINKING_TOOL]',
-                            $originalContent
-                        )->toString();
-                    $item = $updates;
-                }
-
-                return $item;
-
-            })
-            ->values();
-
+        /**
+         * Finally have to make the user assistant sandwich
+         * that Claude seems to require for the api
+         */
         $lastRole = null;
-
         $newMessagesArray = [];
-
-        foreach ($messages as $index => $message) {
+        foreach ($updatesToMessages as $index => $message) {
             $currentRole = data_get($message, 'role');
             if ($currentRole === $lastRole) {
                 if ($currentRole === 'assistant') {
@@ -513,6 +510,7 @@ class ClaudeClient extends BaseClient
         }
 
         put_fixture('claude_messages_after_remap.json', $newMessagesArray);
+
         return $newMessagesArray;
     }
 

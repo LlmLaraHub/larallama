@@ -307,18 +307,19 @@ class ClaudeClientTest extends TestCase
         $this->assertCount(3, $decoded);
     }
 
-    public function test_remap_messages_with_tools_as_history() {
+    public function test_remap_messages_with_tools_as_history()
+    {
         $messages = [];
         $messages[] = MessageInDto::from([
-            'content' => 'test',
+            'content' => 'test1',
             'role' => 'user',
         ]);
         $messages[] = MessageInDto::from([
-            'content' => 'test',
+            'content' => 'test2',
             'role' => 'assistant',
         ]);
         $messages[] = MessageInDto::from([
-            'content' => 'test',
+            'content' => 'test3',
             'role' => RoleEnum::Tool->value,
             'meta_data' => MetaDataDto::from([
                 'tool' => 'test',
@@ -334,7 +335,6 @@ class ClaudeClientTest extends TestCase
         $this->assertEquals('assistant', $results[1]['role']);
         $this->assertEquals('<thinking>test</thinking>', $results[1]['content'][0]['text']);
 
-
         $this->assertEquals('user', $results[2]['role']);
         $this->assertEquals('tool_result', $results[2]['content'][0]['type']);
         $this->assertEquals('test', $results[2]['content'][0]['content']);
@@ -343,5 +343,3 @@ class ClaudeClientTest extends TestCase
         $this->assertArrayNotHasKey('tool_id', $results[2]);
     }
 }
-
-

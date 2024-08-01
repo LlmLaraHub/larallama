@@ -20,8 +20,9 @@ class SummarizeDocumentJobTest extends TestCase
     {
 
         $data = 'Foo bar';
-        $dto = new \LlmLaraHub\LlmDriver\Responses\CompletionResponse($data);
-
+        $dto = \LlmLaraHub\LlmDriver\Responses\CompletionResponse::from([
+            'content' => $data,
+        ]);
         LlmDriverFacade::shouldReceive('driver->completion')
             ->once()
             ->andReturn($dto);
@@ -50,7 +51,9 @@ class SummarizeDocumentJobTest extends TestCase
     {
 
         $data = 'Foo bar';
-        $dto = new \LlmLaraHub\LlmDriver\Responses\CompletionResponse($data);
+        $dto = \LlmLaraHub\LlmDriver\Responses\CompletionResponse::from([
+            'content' => $data,
+        ]);
 
         $prompt = 'Foo Bar [CONTEXT]';
 
@@ -91,7 +94,9 @@ class SummarizeDocumentJobTest extends TestCase
     {
 
         $data = 'Foo bar';
-        $dto = new \LlmLaraHub\LlmDriver\Responses\CompletionResponse($data);
+        $dto = \LlmLaraHub\LlmDriver\Responses\CompletionResponse::from([
+            'content' => $data,
+        ]);
 
         LlmDriverFacade::shouldReceive('driver->completion')
             ->once()

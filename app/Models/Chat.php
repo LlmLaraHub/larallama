@@ -154,13 +154,28 @@ class Chat extends Model implements HasDrivers
         $latestMessagesArray = [];
 
         foreach ($latestMessages as $message) {
-            $latestMessagesArray[] = MessageInDto::from([
+            /**
+             * @NOTE
+             * I am super verbose here due to an odd BUG
+             * I keep losing the data due to some
+             * magic toArray() method that
+             * was not working
+             */
+            $asArray = [
                 'role' => $message->role->value,
                 'content' => $message->body,
                 'tool_id' => $message->meta_data?->tool_id,
                 'tool' => $message->meta_data?->tool,
                 'args' => $message->meta_data?->args,
-            ]);
+            ];
+            $dto = new MessageInDto(
+                content: $asArray['content'],
+                role: $asArray['role'],
+                tool_id: $asArray['tool_id'],
+                tool: $asArray['tool'],
+                args: $asArray['args'],
+            );
+            $latestMessagesArray[] = $dto;
         }
 
         return array_reverse($latestMessagesArray);

@@ -1,37 +1,36 @@
 {
     "model": "claude-3-5-sonnet-20240620",
+    "system": "Return a markdown response.",
     "max_tokens": 4096,
     "messages": [
         {
             "role": "user",
-            "content": "Get the content from the url https:\/\/dailyai.studio\n\nThen break the content down into\nthree points that would make sense to a real-estate agent\n\nFormat in Markdown with header sections and then some info\n\nDo not stray from the content"
+            "content": "Get the content from the url https://dailyai.studio Then break the content down int three points that would make sense to a real-estate agent Format in Markdown with header sections and then some info Do not stray from the content"
         },
         {
             "role": "assistant",
             "content": [
                 {
                     "type": "text",
-                    "text": "<thinking>This is Squarespace.  tarantula-seal-jnkt DailyAi End of Squarespace Headers       0          AutomateYour Daily WorkflowsEffortlessly streamline your tasks and save valuable time with our easy-to-use automation platform. Start bringing Ai to your day to day business needs today! No Coding Required             No Matter the Size of Your Business Take Advantage of Ai to Assist You Today  Marketing Agencies, Real Estate Agencies, and other small businesses can now streamline tedious tasks and elevate their operations with the power of DailyAi's workflow tools.The platform leverages your existing \"Solutions and Strategies\" content to quickly build personalized RFP replies, saving you time and ensuring consistency RFP Reply AssistanceAutomatically generate detailed case studies that showcase your expertise and achievements.Case Study Building Automatically generate detailed case studies that showcase your expertise and achievements. Property Listings Automation Streamline the process of creating and publishing listings across multiple channels, ensuring consistent branding and reducing manual effort.Lead Nurturing        Choose the Size that fits your needs Size Small $75 a MonthHosted for you, get going today for up to 3 users and 1000s of documents.  Size Large $250 a MonthBigger Server to handle more users and documents! 24 hour email support. Self Hosted $600 Setup FeeYour get to manage the service on your own servers!                      Discover the easy to use DailyAiMade for you to create time saving automations in a few clicks!       Let's ConnectWant to talk more about how DailAi can help your business? Or ready to start hosting your own private DailyAi.Studio? Name(required)First NameLast NameEmail(required)Message(required)SendSend          \u00ad\u00ad<\/thinking>"
+                    "text": "<thinking>Get the content from the url https:\/\/dailyai.studio\n\nThen break the content down into\nthree points that would make sense to a real-estate agent\n\nFormat in Markdown with header sections and then some info\n\nDo not stray from the content<\/thinking>"
                 },
                 {
                     "type": "tool_use",
-                    "id": "toolu_01XDciQSrvSaR8fM1zLRY7iA",
+                    "id": "toolu_01SvCLWga7qwVfaY4XbAcuP2",
                     "name": "get_web_site_from_url",
-                    "input": {
-                        "url": "https:\/\/dailyai.studio"
-                    }
+                    "input": {"url":"https:\/\/dailyai.studio"}
                 }
             ]
         },
         {
-            "role": "user",
             "content": [
                 {
                     "type": "tool_result",
-                    "tool_use_id": "toolu_01XDciQSrvSaR8fM1zLRY7iA",
+                    "tool_use_id": "toolu_01SvCLWga7qwVfaY4XbAcuP2",
                     "content": "This is Squarespace.  tarantula-seal-jnkt DailyAi End of Squarespace Headers       0          AutomateYour Daily WorkflowsEffortlessly streamline your tasks and save valuable time with our easy-to-use automation platform. Start bringing Ai to your day to day business needs today! No Coding Required             No Matter the Size of Your Business Take Advantage of Ai to Assist You Today  Marketing Agencies, Real Estate Agencies, and other small businesses can now streamline tedious tasks and elevate their operations with the power of DailyAi's workflow tools.The platform leverages your existing \"Solutions and Strategies\" content to quickly build personalized RFP replies, saving you time and ensuring consistency RFP Reply AssistanceAutomatically generate detailed case studies that showcase your expertise and achievements.Case Study Building Automatically generate detailed case studies that showcase your expertise and achievements. Property Listings Automation Streamline the process of creating and publishing listings across multiple channels, ensuring consistent branding and reducing manual effort.Lead Nurturing        Choose the Size that fits your needs Size Small $75 a MonthHosted for you, get going today for up to 3 users and 1000s of documents.  Size Large $250 a MonthBigger Server to handle more users and documents! 24 hour email support. Self Hosted $600 Setup FeeYour get to manage the service on your own servers!                      Discover the easy to use DailyAiMade for you to create time saving automations in a few clicks!       Let's ConnectWant to talk more about how DailAi can help your business? Or ready to start hosting your own private DailyAi.Studio? Name(required)First NameLast NameEmail(required)Message(required)SendSend          \u00ad\u00ad"
                 }
-            ]
+            ],
+            "role": "user"
         }
     ],
     "tools": [

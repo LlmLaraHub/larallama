@@ -15,7 +15,7 @@
         "is_ai": false,
         "show": true,
         "tool": "get_web_site_from_url",
-        "tool_id": "toolu_01XDciQSrvSaR8fM1zLRY7iA",
+        "tool_id": "",
         "args": {
             "url": "https:\/\/dailyai.studio"
         },

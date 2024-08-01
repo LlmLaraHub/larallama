@@ -8,8 +8,8 @@ class CompletionResponse extends \Spatie\LaravelData\Data
 {
     public function __construct(
         public mixed $content,
-        public string $stop_reason,
-        public ?string $tool_used,
+        public string|Optional $stop_reason,
+        public string|Optional $tool_used,
         /** @var array<ToolDto> */
         public array|Optional $tool_calls,
         public ?int $input_tokens = null,

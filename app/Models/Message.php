@@ -42,6 +42,7 @@ class Message extends Model implements HasDrivers
         'role' => RoleEnum::class,
         'tools' => ToolsDto::class,
         'meta_data' => MetaDataDto::class,
+        'args' => 'array',
         'in_out' => 'boolean',
     ];
 

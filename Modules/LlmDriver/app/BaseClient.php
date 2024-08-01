@@ -122,7 +122,10 @@ abstract class BaseClient
 
         $data = fake()->sentences(3, true);
 
-        return new CompletionResponse($data);
+        return CompletionResponse::from([
+            'content' => $data,
+            'stop_reason' => 'stop',
+        ]);
     }
 
     public function completion(string $prompt): CompletionResponse
@@ -137,7 +140,10 @@ abstract class BaseClient
         Voluptate irure cillum dolor anim officia reprehenderit dolor. Eiusmod veniam nostrud consectetur incididunt proident id. Anim adipisicing pariatur amet duis Lorem sunt veniam veniam est. Deserunt ea aliquip cillum pariatur consectetur. Dolor in reprehenderit adipisicing consectetur cupidatat ad cupidatat reprehenderit. Nostrud mollit voluptate aliqua anim pariatur excepteur eiusmod velit quis exercitation tempor quis excepteur.
 EOD;
 
-        return new CompletionResponse($data);
+        return CompletionResponse::from([
+            'content' => $data,
+            'stop_reason' => 'stop',
+        ]);
     }
 
     protected function getConfig(string $driver): array
