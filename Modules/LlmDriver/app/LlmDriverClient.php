@@ -2,6 +2,7 @@
 
 namespace LlmLaraHub\LlmDriver;
 
+use LlmLaraHub\LlmDriver\Functions\CreateDocument;
 use LlmLaraHub\LlmDriver\Functions\GatherInfoTool;
 use LlmLaraHub\LlmDriver\Functions\GetWebSiteFromUrlTool;
 use LlmLaraHub\LlmDriver\Functions\ReportingTool;
@@ -67,6 +68,7 @@ class LlmDriverClient
             (new GatherInfoTool())->getFunction(),
             (new GetWebSiteFromUrlTool())->getFunction(),
             (new SearchTheWeb())->getFunction(),
+            (new CreateDocument())->getFunction(),
         ];
     }
 

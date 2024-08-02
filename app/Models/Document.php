@@ -2,17 +2,27 @@
 
 namespace App\Models;
 
+use App\Domains\Collections\CollectionStatusEnum;
 use App\Domains\Documents\StatusEnum;
 use App\Domains\Documents\TypesEnum;
 use App\Domains\UnStructured\StructuredTypeEnum;
+use App\Helpers\TextChunker;
+use App\Jobs\DocumentProcessingCompleteJob;
+use App\Jobs\SummarizeDocumentJob;
+use App\Jobs\VectorlizeDataJob;
+use Illuminate\Bus\Batch;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Bus;
+use Illuminate\Support\Facades\Log;
 use LlmLaraHub\LlmDriver\HasDrivers;
+use LlmLaraHub\LlmDriver\LlmDriverFacade;
 use LlmLaraHub\TagFunction\Contracts\TaggableContract;
 use LlmLaraHub\TagFunction\Helpers\Taggable;
+use LlmLaraHub\TagFunction\Jobs\TagDocumentJob;
 use LlmLaraHub\TagFunction\Models\Tag;
 
 /**
@@ -148,5 +158,69 @@ class Document extends Model implements HasDrivers, TaggableContract
     public function children(): HasMany
     {
         return $this->hasMany(Document::class, 'parent_id');
+    }
+
+    public static function make(
+        string $content,
+        Collection $collection,
+        ?string $filePath = null
+    ) : Document {
+        return Document::create([
+            'file_path' => $filePath,
+            'collection_id' => $collection->id,
+            'type' => TypesEnum::Txt,
+            'subject' => str($content)->limit(256)->toString(),
+            'original_content' => $content,
+            'status_summary' => StatusEnum::Pending,
+        ]);
+    }
+
+    public function vectorizeDocument(): void
+    {
+        $document = $this;
+        $jobs = [];
+        $page_number = 1;
+        $chunked_chunks = TextChunker::handle($document->original_content);
+        foreach ($chunked_chunks as $chunkSection => $chunkContent) {
+            try {
+                $guid = md5($chunkContent);
+                $DocumentChunk = DocumentChunk::updateOrCreate(
+                    [
+                        'document_id' => $document->id,
+                        'sort_order' => $page_number,
+                        'section_number' => $chunkSection,
+                    ],
+                    [
+                        'guid' => $guid,
+                        'content' => $chunkContent,
+                        'sort_order' => $page_number,
+                    ]
+                );
+
+                $jobs[] = [
+                    new VectorlizeDataJob($DocumentChunk),
+                ];
+                notify_collection_ui($document->collection, CollectionStatusEnum::PROCESSING, 'Document Created working on pages');
+            } catch (\Exception $e) {
+                Log::error('Error parsing PDF', ['error' => $e->getMessage()]);
+            }
+        }
+
+        Bus::batch($jobs)
+            ->name("Chunking Document - $document->file_path")
+            ->finally(function (Batch $batch) use ($document) {
+                Bus::batch([
+                    [
+                        new SummarizeDocumentJob($document),
+                        new TagDocumentJob($document),
+                        new DocumentProcessingCompleteJob($document)
+                    ]
+                ])
+                    ->name("Finalizing Documents")
+                    ->allowFailures()
+                    ->dispatch();
+            })
+            ->allowFailures()
+            ->dispatch();
     }
 }

@@ -6,6 +6,7 @@ use App\Models\Setting;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\ServiceProvider;
 use LlmLaraHub\LlmDriver\DistanceQuery\DistanceQueryClient;
+use LlmLaraHub\LlmDriver\Functions\CreateDocument;
 use LlmLaraHub\LlmDriver\Functions\GatherInfoTool;
 use LlmLaraHub\LlmDriver\Functions\GetWebSiteFromUrlTool;
 use LlmLaraHub\LlmDriver\Functions\ReportingTool;
@@ -88,6 +89,9 @@ class LlmServiceProvider extends ServiceProvider
             return new SearchTheWeb();
         });
 
+        $this->app->bind('create_document', function () {
+            return new CreateDocument();
+        });
 
     }
 

@@ -5,7 +5,6 @@ namespace LlmLaraHub\LlmDriver\Functions;
 use App\Domains\Sources\WebSearch\Response\SearchResponseDto;
 use App\Domains\Sources\WebSearch\WebSearchFacade;
 use App\Helpers\ChatHelperTrait;
-use App\Jobs\GetWebContentJob;
 use App\Models\Message;
 use Facades\App\Domains\Sources\WebSearch\GetPage;
 use Illuminate\Support\Facades\Log;
@@ -15,7 +14,7 @@ use LlmLaraHub\LlmDriver\ToolsHelper;
 
 class SearchTheWeb extends FunctionContract
 {
-    use ToolsHelper, ChatHelperTrait;
+    use ChatHelperTrait, ToolsHelper;
 
     protected string $name = 'search_the_web';
 
@@ -96,7 +95,7 @@ PROMPT;
 
         $results = 'No results from web search that met the criteria';
 
-        if(!empty($finalResults)) {
+        if (! empty($finalResults)) {
             $results = implode("\n", $finalResults);
         }
 

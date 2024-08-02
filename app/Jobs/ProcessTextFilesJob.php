@@ -89,8 +89,15 @@ class ProcessTextFilesJob implements ShouldQueue
         Bus::batch($jobs)
             ->name("Chunking Document - $document->file_path")
             ->finally(function (Batch $batch) use ($document) {
-                TagDocumentJob::dispatch($document);
-                DocumentProcessingCompleteJob::dispatch($document);
+                Bus::batch([
+                    [
+                        new TagDocumentJob($document),
+                        new DocumentProcessingCompleteJob($document)
+                    ]
+                ])
+                    ->name("Finalizing Documents")
+                    ->allowFailures()
+                    ->dispatch();
             })
             ->allowFailures()
             ->dispatch();

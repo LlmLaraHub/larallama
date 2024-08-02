@@ -3,12 +3,10 @@
 namespace Tests\Feature;
 
 use App\Domains\Chat\MetaDataDto;
-use Facades\App\Domains\Sources\WebSearch\GetPage;
 use App\Domains\Sources\WebSearch\Response\WebResponseDto;
 use App\Domains\Sources\WebSearch\WebSearchFacade;
 use App\Models\Message;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
+use Facades\App\Domains\Sources\WebSearch\GetPage;
 use LlmLaraHub\LlmDriver\Functions\SearchTheWeb;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
 use LlmLaraHub\LlmDriver\Responses\CompletionResponse;
@@ -44,10 +42,10 @@ class SearchTheWebTest extends TestCase
         LlmDriverFacade::shouldReceive('driver->completionPool')
             ->andReturn([
                 CompletionResponse::from([
-                    'content' => "Foo bar",
+                    'content' => 'Foo bar',
                 ]),
                 CompletionResponse::from([
-                    'content' =>  "Foo bar",
+                    'content' => 'Foo bar',
                 ]),
             ]);
 
