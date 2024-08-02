@@ -9,9 +9,9 @@ use App\Models\Chat;
 use App\Models\Collection;
 use App\Models\Message;
 use App\Models\User;
-use Facades\App\Domains\Messages\SearchAndSummarizeChatRepo;
+use Facades\App\Domains\Messages\RetrieveRelatedChatRepo;
 use Illuminate\Support\Facades\Event;
-use LlmLaraHub\LlmDriver\Functions\SearchAndSummarize;
+use LlmLaraHub\LlmDriver\Functions\RetrieveRelated;
 use LlmLaraHub\LlmDriver\Functions\StandardsChecker;
 use LlmLaraHub\LlmDriver\Functions\SummarizeCollection;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
@@ -39,7 +39,7 @@ class OrchestrateTest extends TestCase
 
         LlmDriverFacade::shouldReceive('driver->chat')->never();
 
-        SearchAndSummarizeChatRepo::shouldReceive('search')->never();
+        RetrieveRelatedChatRepo::shouldReceive('search')->never();
 
         $this->instance(
             'summarize_collection',
@@ -149,11 +149,11 @@ class OrchestrateTest extends TestCase
 
         LlmDriverFacade::shouldReceive('driver->chat')->never();
 
-        SearchAndSummarizeChatRepo::shouldReceive('search')->never();
+        RetrieveRelatedChatRepo::shouldReceive('search')->never();
 
         $this->instance(
             'search_and_summarize',
-            Mockery::mock(SearchAndSummarize::class, function ($mock) {
+            Mockery::mock(RetrieveRelated::class, function ($mock) {
                 $mock->shouldReceive('handle')
                     ->once()
                     ->andReturn(

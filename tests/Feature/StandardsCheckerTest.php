@@ -19,9 +19,9 @@ class StandardsCheckerTest extends TestCase
      */
     public function test_can_generate_function_as_array(): void
     {
-        $searchAndSummarize = new \LlmLaraHub\LlmDriver\Functions\StandardsChecker();
+        $RetrieveRelated = new \LlmLaraHub\LlmDriver\Functions\StandardsChecker();
 
-        $function = $searchAndSummarize->getFunction();
+        $function = $RetrieveRelated->getFunction();
 
         $parameters = $function->parameters;
 

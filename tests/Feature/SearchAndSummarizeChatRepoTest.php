@@ -5,7 +5,7 @@ namespace Tests\Feature;
 use App\Domains\Agents\VerifyPromptOutputDto;
 use App\Domains\Chat\MetaDataDto;
 use App\Domains\Messages\RoleEnum;
-use App\Domains\Messages\SearchAndSummarizeChatRepo;
+use App\Domains\Messages\RetrieveRelatedChatRepo;
 use App\Models\Chat;
 use App\Models\Collection;
 use App\Models\Document;
@@ -16,7 +16,7 @@ use LlmLaraHub\LlmDriver\DistanceQuery\DistanceQueryFacade;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
 use Tests\TestCase;
 
-class SearchAndSummarizeChatRepoTest extends TestCase
+class RetrieveRelatedChatRepoTest extends TestCase
 {
     /**
      * A basic feature test example.
@@ -84,7 +84,7 @@ class SearchAndSummarizeChatRepoTest extends TestCase
             ]),
         ]);
 
-        $results = (new SearchAndSummarizeChatRepo())->search($chat, $message);
+        $results = (new RetrieveRelatedChatRepo())->search($chat, $message);
 
         $this->assertNotNull($results);
         $this->assertDatabaseCount('message_document_references', 3);

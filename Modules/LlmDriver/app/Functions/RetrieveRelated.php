@@ -14,21 +14,21 @@ use LlmLaraHub\LlmDriver\LlmDriverFacade;
 use LlmLaraHub\LlmDriver\Responses\CompletionResponse;
 use LlmLaraHub\LlmDriver\Responses\FunctionResponse;
 
-class SearchAndSummarize extends FunctionContract
+class RetrieveRelated extends FunctionContract
 {
     use CreateReferencesTrait;
 
-    protected string $name = 'search_and_summarize';
+    protected string $name = 'retrieve_related';
 
     protected string $description = 'Used to embed users prompt, search local database and return summarized results.
-    DOES NOT SEARCH THE WEB';
+    DOES NOT SEARCH THE WEB. This is only used for local database search.';
 
     protected string $response = '';
 
     public function handle(
         Message $message): FunctionResponse
     {
-        Log::info('[LaraChain] Using Function: SearchAndSummarize');
+        Log::info('[LaraChain] Using Function: RetrieveRelated');
 
         /**
          * @TODO
@@ -61,7 +61,7 @@ class SearchAndSummarize extends FunctionContract
 
         /**
          * @NOTE
-         * Yes this is a lot like the SearchAndSummarizeChatRepo
+         * Yes this is a lot like the RetrieveRelatedChatRepo
          * But just getting a sense of things
          */
         foreach ($documentChunkResults as $result) {

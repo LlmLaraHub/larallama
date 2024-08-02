@@ -8,6 +8,7 @@ use App\Domains\Messages\RoleEnum;
 use App\Events\ChatUiUpdateEvent;
 use App\Events\MessageCreatedEvent;
 use App\Jobs\OrchestrateJob;
+use App\Jobs\SimpleRetrieveRelatedOrchestrateJob;
 use App\Jobs\SimpleSearchAndSummarizeOrchestrateJob;
 use Facades\App\Domains\Tokenizer\Templatizer;
 use Illuminate\Bus\Batch;
@@ -259,7 +260,7 @@ class Message extends Model implements HasDrivers
         } else {
             Log::info('[LaraChain] Simple Search and Summarize added to queue');
             $this->batchJob([
-                new SimpleSearchAndSummarizeOrchestrateJob($message),
+                new SimpleRetrieveRelatedOrchestrateJob($message),
             ], $chat, 'simple_search_and_summarize');
         }
 

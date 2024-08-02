@@ -20,7 +20,7 @@ use LlmLaraHub\LlmDriver\Responses\CompletionResponse;
 use LlmLaraHub\LlmDriver\Responses\EmbeddingsResponseDto;
 use LlmLaraHub\LlmDriver\ToolsHelper;
 
-class SearchAndSummarizeChatRepo
+class RetrieveRelatedChatRepo
 {
     use CreateReferencesTrait;
     use ToolsHelper;

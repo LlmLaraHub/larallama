@@ -186,9 +186,8 @@ class OllamaClient extends BaseClient
             'stream' => false,
         ]);
 
-        $results = $response->json()['response'];
 
-        return new CompletionResponse($results);
+        return OllamaCompletionResponse::from($response->json());
     }
 
     protected function getClient()

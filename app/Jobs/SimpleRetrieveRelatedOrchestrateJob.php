@@ -22,7 +22,7 @@ use LlmLaraHub\LlmDriver\Responses\NonFunctionResponseDto;
  * This is used by LLMs that might not have functions
  * but still want to do a search and summarize
  */
-class SimpleSearchAndSummarizeOrchestrateJob implements ShouldQueue
+class SimpleRetrieveRelatedOrchestrateJob implements ShouldQueue
 {
     use Batchable;
     use CreateReferencesTrait;
@@ -42,7 +42,7 @@ class SimpleSearchAndSummarizeOrchestrateJob implements ShouldQueue
      */
     public function handle(): void
     {
-        Log::info('[LaraChain] Skipping over functions doing SimpleSearchAndSummarizeOrchestrateJob');
+        Log::info('[LaraChain] Skipping over functions doing SimpleRetrieveRelatedOrchestrateJob');
 
         notify_ui(
             $this->message->getChatable(),

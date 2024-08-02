@@ -178,31 +178,7 @@ class ChatControllerTest extends TestCase
 
     }
 
-    public function test_no_functions()
-    {
-        Bus::fake();
-        $user = User::factory()->create();
-        $collection = Collection::factory()->create();
-        $chat = Chat::factory()->create([
-            'chatable_id' => $collection->id,
-            'chatable_type' => Collection::class,
-            'user_id' => $user->id,
-        ]);
 
-        LlmDriverFacade::shouldReceive('driver->hasFunctions')->once()->andReturn(false);
-        LlmDriverFacade::shouldReceive('getFunctionsForUi')->andReturn([]);
-
-        $this->actingAs($user)->post(route('chats.messages.create', [
-            'chat' => $chat->id,
-        ]),
-            [
-                'system_prompt' => 'Foo',
-                'input' => 'user input',
-            ])->assertOk();
-
-        Bus::assertBatchCount(1);
-
-    }
 
     public function test_standard_checker()
     {

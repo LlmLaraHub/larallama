@@ -28,6 +28,7 @@ class DocumentTest extends TestCase
     public function test_parent()
     {
         $modelParent = \App\Models\Document::factory()->create();
+
         $model = \App\Models\Document::factory()->create([
             'parent_id' => $modelParent->id,
         ]);

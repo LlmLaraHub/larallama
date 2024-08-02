@@ -3,7 +3,7 @@
 namespace Tests\Feature;
 
 use App\Domains\Chat\MetaDataDto;
-use App\Jobs\SimpleSearchAndSummarizeOrchestrateJob;
+use App\Jobs\SimpleRetrieveRelatedOrchestrateJob;
 use App\Models\Chat;
 use App\Models\DocumentChunk;
 use App\Models\Message;
@@ -11,7 +11,7 @@ use Facades\LlmLaraHub\LlmDriver\NonFunctionSearchOrSummarize;
 use LlmLaraHub\LlmDriver\Responses\NonFunctionResponseDto;
 use Tests\TestCase;
 
-class SimpleSearchAndSummarizeOrchestrateJobTest extends TestCase
+class SimpleRetrieveRelatedOrchestrateJobTest extends TestCase
 {
     /**
      * A basic feature test example.
@@ -39,7 +39,7 @@ class SimpleSearchAndSummarizeOrchestrateJobTest extends TestCase
             ]),
         ]);
 
-        (new SimpleSearchAndSummarizeOrchestrateJob($message))->handle();
+        (new SimpleRetrieveRelatedOrchestrateJob($message))->handle();
 
         $this->assertDatabaseCount('prompt_histories', 1);
         $this->assertDatabaseCount('message_document_references', 3);

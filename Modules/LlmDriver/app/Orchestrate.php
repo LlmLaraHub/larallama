@@ -8,7 +8,7 @@ use App\Models\Chat;
 use App\Models\Filter;
 use App\Models\Message;
 use App\Models\PromptHistory;
-use Facades\App\Domains\Messages\SearchAndSummarizeChatRepo;
+use Facades\App\Domains\Messages\RetrieveRelatedChatRepo;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Log;
 use LlmLaraHub\LlmDriver\Functions\FunctionCallDto;
@@ -173,7 +173,7 @@ class Orchestrate
             } else {
                 Log::info('[LaraChain] Orchestration No Functions Default Search And Summarize');
 
-                return SearchAndSummarizeChatRepo::search($chat, $message);
+                return RetrieveRelatedChatRepo::search($chat, $message);
             }
         }
 

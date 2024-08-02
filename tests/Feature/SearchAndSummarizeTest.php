@@ -13,21 +13,21 @@ use Facades\App\Domains\Agents\VerifyResponseAgent;
 use LlmLaraHub\LlmDriver\DistanceQuery\DistanceQueryFacade;
 use LlmLaraHub\LlmDriver\Functions\ParametersDto;
 use LlmLaraHub\LlmDriver\Functions\PropertyDto;
-use LlmLaraHub\LlmDriver\Functions\SearchAndSummarize;
+use LlmLaraHub\LlmDriver\Functions\RetrieveRelated;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
 use LlmLaraHub\LlmDriver\Requests\MessageInDto;
 use Tests\TestCase;
 
-class SearchAndSummarizeTest extends TestCase
+class RetrieveRelatedTest extends TestCase
 {
     /**
      * A basic feature test example.
      */
     public function test_can_generate_function_as_array(): void
     {
-        $searchAndSummarize = new \LlmLaraHub\LlmDriver\Functions\SearchAndSummarize();
+        $RetrieveRelated = new \LlmLaraHub\LlmDriver\Functions\RetrieveRelated();
 
-        $function = $searchAndSummarize->getFunction();
+        $function = $RetrieveRelated->getFunction();
 
         $parameters = $function->parameters;
 
@@ -117,7 +117,7 @@ class SearchAndSummarizeTest extends TestCase
             ));
 
         $message = Message::factory()->user()->create(['chat_id' => $chat->id]);
-        $results = (new SearchAndSummarize())->handle($message);
+        $results = (new RetrieveRelated())->handle($message);
 
         $this->assertNotNull($results);
         $this->assertDatabaseCount('message_document_references', 3);

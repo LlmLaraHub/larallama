@@ -321,25 +321,22 @@ class ClaudeClientTest extends TestCase
         $messages[] = MessageInDto::from([
             'content' => 'test3',
             'role' => RoleEnum::Tool->value,
-            'meta_data' => MetaDataDto::from([
-                'tool' => 'test',
-                'tool_id' => 'test_id',
-            ]),
+            'tool' => 'test',
+            'tool_id' => 'test_id',
+            'meta_data' => MetaDataDto::from([]),
         ]);
 
         $results = (new ClaudeClient)->remapMessages($messages);
 
-        $this->assertCount(3, $results);
+        $this->assertCount(5, $results);
 
         $this->assertEquals('user', $results[0]['role']);
         $this->assertEquals('assistant', $results[1]['role']);
-        $this->assertEquals('<thinking>test</thinking>', $results[1]['content'][0]['text']);
+        $this->assertEquals('<thinking>test3</thinking>', $results[3]['content'][0]['text']);
 
         $this->assertEquals('user', $results[2]['role']);
-        $this->assertEquals('tool_result', $results[2]['content'][0]['type']);
-        $this->assertEquals('test', $results[2]['content'][0]['content']);
-        $this->assertEquals('test_id', $results[2]['content'][0]['tool_use_id']);
-
-        $this->assertArrayNotHasKey('tool_id', $results[2]);
+        $this->assertEquals('tool_use', $results[3]['content'][1]['type']);
+        $this->assertEquals('test', $results[3]['content'][1]['name']);
+        $this->assertEquals('test_id', $results[3]['content'][1]['id']);
     }
 }

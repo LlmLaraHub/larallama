@@ -3,10 +3,10 @@
 namespace LlmLaraHub\LlmDriver;
 
 use App\Models\Chat;
-use Facades\App\Domains\Messages\SearchAndSummarizeChatRepo;
+use Facades\App\Domains\Messages\RetrieveRelatedChatRepo;
 use Illuminate\Support\Facades\Log;
 
-class SimpleSearchAndSummarizeOrchestrate
+class SimpleRetrieveRelatedOrchestrate
 {
     protected string $response = '';
 
@@ -20,7 +20,7 @@ class SimpleSearchAndSummarizeOrchestrate
             $chat->chatable,
             'Searching data now to summarize content'
         );
-        $response = SearchAndSummarizeChatRepo::search($chat, $message);
+        $response = RetrieveRelatedChatRepo::search($chat, $message);
 
         return $response;
     }

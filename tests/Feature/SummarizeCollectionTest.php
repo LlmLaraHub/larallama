@@ -22,9 +22,9 @@ class SummarizeCollectionTest extends TestCase
      */
     public function test_can_generate_function_as_array(): void
     {
-        $searchAndSummarize = new \LlmLaraHub\LlmDriver\Functions\SummarizeCollection();
+        $RetrieveRelated = new \LlmLaraHub\LlmDriver\Functions\SummarizeCollection();
 
-        $function = $searchAndSummarize->getFunction();
+        $function = $RetrieveRelated->getFunction();
 
         $parameters = $function->parameters;
 
@@ -35,7 +35,7 @@ class SummarizeCollectionTest extends TestCase
 
     public function test_gathers_all_content()
     {
-        $searchAndSummarize = new \LlmLaraHub\LlmDriver\Functions\SummarizeCollection();
+        $RetrieveRelated = new \LlmLaraHub\LlmDriver\Functions\SummarizeCollection();
         $messageArray = [];
 
         $messageArray[] = MessageInDto::from([

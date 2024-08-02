@@ -1,10 +1,10 @@
 [
     {
-        "content": "<role>\nyou are helping me search the web for info and getting just the info I want out of it\n<task>\nSearch for news on Ollama and then for any articles that have to do with Ollama write a TLDR about the article with a link to the article.\n<format>\nTitle: \nSummary: 1-2 lines\nURL: \n\nIf a site does not have info just return 'false' the word so it will be ignored.",
+        "content": "Get the content from the url https:\/\/dailyai.studio\n\nThen do a summary of the content breaking it down into\nthree points that would make sense to a real-estate agent\n",
         "role": "user",
         "is_ai": false,
         "show": true,
-        "tool": null,
+        "tool": "",
         "tool_id": "",
         "args": [],
         "meta_data": null
