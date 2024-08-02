@@ -3,7 +3,6 @@
 namespace LlmLaraHub\LlmDriver\Functions;
 
 use App\Helpers\ChatHelperTrait;
-use App\Models\Document;
 use App\Models\Message;
 use Illuminate\Support\Facades\Log;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;

@@ -18,9 +18,9 @@ use LlmLaraHub\LlmDriver\ToolsHelper;
 
 class OrchestrateVersionTwo
 {
-
-    use ToolsHelper;
     use CreateReferencesTrait;
+    use ToolsHelper;
+
     public function handle(
         Chat $chat,
         Message $message)
@@ -156,6 +156,7 @@ class OrchestrateVersionTwo
             $response = LlmDriverFacade::driver($chat->getDriver())->chat($messages);
 
             put_fixture('orchestrate_messages_fist_send.json', $response);
+
             $assistantMessage = $chat->addInput(
                 message: $response->content,
                 role: RoleEnum::Assistant,
@@ -168,7 +169,6 @@ class OrchestrateVersionTwo
                 'prompt' => $message->getPrompt(),
                 'chat_id' => $chat->id,
                 'message_id' => $assistantMessage->id,
-                /** @phpstan-ignore-next-line */
                 'collection_id' => $chat->chatable_id,
             ]);
             notify_ui_complete($chat);

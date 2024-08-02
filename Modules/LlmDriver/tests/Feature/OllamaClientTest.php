@@ -120,7 +120,8 @@ class OllamaClientTest extends TestCase
 
     }
 
-    public function test_remap_functions() {
+    public function test_remap_functions()
+    {
         $functions = LlmDriverFacade::getFunctions();
         $results = (new OllamaClient)->remapFunctions($functions);
         put_fixture('ollama_functions.json', $results);

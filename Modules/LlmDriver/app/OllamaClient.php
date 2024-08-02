@@ -115,7 +115,7 @@ class OllamaClient extends BaseClient
 
         $response = $this->getClient()->post('/chat', $payload);
 
-        if($response->failed()){
+        if ($response->failed()) {
             Log::error('Ollama API Error ', [
                 'error' => $response->body(),
             ]);
@@ -194,8 +194,6 @@ class OllamaClient extends BaseClient
             'prompt' => $prompt,
             'stream' => false,
         ]);
-
-
 
         return OllamaCompletionResponse::from($response->json());
     }
@@ -279,14 +277,15 @@ class OllamaClient extends BaseClient
         })->toArray();
 
         if (in_array($this->getConfig('ollama')['models']['completion_model'], [
-              'llama3.1',
-                'llama3'
-            ])) {
+            'llama3.1',
+            'llama3',
+        ])) {
             Log::info('[LaraChain] LlmDriver::OllamaClient::remapMessages');
             $messages = collect($messages)->reverse();
         }
 
         put_fixture('ollama_messages_after_remap.json', $messages->values()->toArray());
+
         return $messages->values()->toArray();
 
     }
