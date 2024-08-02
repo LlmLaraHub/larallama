@@ -30,7 +30,7 @@ class SearchTheWebTest extends TestCase
                             'title' => 'Google',
                             'age' => 'January 1, 2023',
                             'description' => 'Google is a search engine that helps people find information on the internet.',
-                            'meta_data' => '{"key":"value"}',
+                            'meta_data' => [],
                             'thumbnail' => 'https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png',
                             'profile' => [],
                         ]),
@@ -41,11 +41,15 @@ class SearchTheWebTest extends TestCase
 
         GetPage::shouldReceive('handle')->once()->andReturn('Foo bar');
 
-        LlmDriverFacade::shouldReceive('driver->completion')->once()->andReturn(
-            CompletionResponse::from([
-                'content' => 'Foo bar',
-            ])
-        );
+        LlmDriverFacade::shouldReceive('driver->completionPool')
+            ->andReturn([
+                CompletionResponse::from([
+                    'content' => "Foo bar",
+                ]),
+                CompletionResponse::from([
+                    'content' =>  "Foo bar",
+                ]),
+            ]);
 
         $message = Message::factory()->create([
             'body' => 'Search the web for a topic',
@@ -57,6 +61,8 @@ class SearchTheWebTest extends TestCase
         ]);
 
         $results = (new SearchTheWeb())->handle($message);
+
+        $this->assertStringContainsString('Foo bar', $results->content);
 
     }
 }

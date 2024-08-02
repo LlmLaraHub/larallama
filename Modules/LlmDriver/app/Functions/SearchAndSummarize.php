@@ -20,7 +20,8 @@ class SearchAndSummarize extends FunctionContract
 
     protected string $name = 'search_and_summarize';
 
-    protected string $description = 'Used to embed users prompt, search database and return summarized results.';
+    protected string $description = 'Used to embed users prompt, search local database and return summarized results.
+    DOES NOT SEARCH THE WEB';
 
     protected string $response = '';
 

@@ -51,6 +51,8 @@ class SearchTheWeb extends FunctionContract
         foreach ($response->getWeb() as $web) {
             $results = GetPage::handle($web->url);
             $prompt = <<<PROMPT
+Web URL: {$web->url}
+
 {$message->getPrompt()}
 
 <RESULTS OF WEB SEARCH ARTICLE ONE OF A FIVE>
@@ -60,18 +62,18 @@ PROMPT;
             $html[] = $prompt;
         }
 
-        $results = LlmDriverFacade::driver($message->getDriver())
+        $poolResults = LlmDriverFacade::driver($message->getDriver())
             ->completionPool($html);
 
         $finalResults = [];
-        foreach ($results as $resultIndex => $result) {
+        foreach ($poolResults as $resultIndex => $result) {
             try {
                 /**
                  * @NOTE
                  * This is the feature that lets a user ask for false
                  * in a prompt so we ignore it
                  */
-                if ($this->ifNotActionRequired($results->content)) {
+                if ($this->ifNotActionRequired($result->content)) {
                     continue;
                 } else {
                     /**
@@ -79,7 +81,7 @@ PROMPT;
                      * This array thingy just allows the user to ask for the
                      * data as an array of objects
                      */
-                    $promptResultsOriginal = $results->content;
+                    $promptResultsOriginal = $result->content;
                     $promptResults = $this->arrifyPromptResults($promptResultsOriginal);
                     foreach ($promptResults as $promptResultIndex => $promptResult) {
                         $finalResults[] = json_encode($promptResult);

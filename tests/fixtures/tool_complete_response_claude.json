@@ -1,7 +1,7 @@
 {
-    "content": "**DailyAi for Real Estate Agents**\n=====================================\n\n### 1. **Streamline Property Listings**\n\nAutomate the process of creating and publishing property listings across multiple channels, ensuring consistent branding and reducing manual effort.\n\n### 2. **Effortlessly Generate Case Studies**\n\nUse DailyAi's workflow tools to automatically generate detailed case studies that showcase your expertise and achievements, saving you time and ensuring consistency.\n\n### 3. **Save Time with RFP Reply Assistance**\n\nLeverage DailyAi's platform to quickly build personalized RFP replies, saving you time and effort while maintaining consistency in your responses.",
+    "content": "Here are the TLDRs for each article:\n\n**Article 1:**\nTitle: Ollama - A Reliable Alternative to Copilot\nSummary: Ollama is a free and private AI code completion plugin for VSCode that surpasses GPT-3.5 in quality.\nURL: https:\/\/example.com\/ollama-article\n\n**Article 2:**\nTitle: Ollama - A Platform for Working with Large Language Models\nSummary: Ollama enables users to run and customize large language models, available on macOS, Linux, and Windows (preview).\nURL: https:\/\/example.com\/ollama-platform-article\n\n**Article 3:**\nTitle: Ollama - Y Combinator Startup Profile\nSummary: Ollama is a startup that helps users get up and running with large language models, based in Palo Alto.\nURL: https:\/\/ycombinator.com\/companies\/ollama",
     "stop_reason": "stop",
-    "input_tokens": 450,
-    "output_tokens": 122,
+    "input_tokens": 758,
+    "output_tokens": 187,
     "model": "llama3.1"
 }

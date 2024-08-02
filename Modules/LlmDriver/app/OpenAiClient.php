@@ -240,7 +240,7 @@ class OpenAiClient extends BaseClient
         return [$data, $tool_used, $stop_reason];
     }
 
-    public function modifyPayload(array $payload): array
+    public function modifyPayload(array $payload, bool $noTools = false): array
     {
         Log::info('LlmDriver::OpenAi::modifyPayload', [
             'payload' => $payload,

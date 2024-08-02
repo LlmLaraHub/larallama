@@ -154,7 +154,7 @@ class ClaudeClient extends BaseClient
         return $payload;
     }
 
-    public function modifyPayload(array $payload): array
+    public function modifyPayload(array $payload, bool $noTools = false): array
     {
 
         $payload['tools'] = $this->getFunctions();
