@@ -12,7 +12,7 @@ class ClaudeCompletionResponse extends CompletionResponse
         #[WithCastable(ClaudeContentCaster::class)]
         public mixed $content,
         public string|Optional $stop_reason,
-        public string|null $tool_used = "",
+        public ?string $tool_used = '',
         /** @var array<ToolDto> */
         #[WithCastable(ClaudeToolCaster::class)]
         #[MapInputName('content')]

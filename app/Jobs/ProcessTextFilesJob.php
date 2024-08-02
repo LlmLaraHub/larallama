@@ -92,10 +92,10 @@ class ProcessTextFilesJob implements ShouldQueue
                 Bus::batch([
                     [
                         new TagDocumentJob($document),
-                        new DocumentProcessingCompleteJob($document)
-                    ]
+                        new DocumentProcessingCompleteJob($document),
+                    ],
                 ])
-                    ->name("Finalizing Documents")
+                    ->name('Finalizing Documents')
                     ->allowFailures()
                     ->dispatch();
             })

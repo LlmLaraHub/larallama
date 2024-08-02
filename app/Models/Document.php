@@ -19,7 +19,6 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Log;
 use LlmLaraHub\LlmDriver\HasDrivers;
-use LlmLaraHub\LlmDriver\LlmDriverFacade;
 use LlmLaraHub\TagFunction\Contracts\TaggableContract;
 use LlmLaraHub\TagFunction\Helpers\Taggable;
 use LlmLaraHub\TagFunction\Jobs\TagDocumentJob;
@@ -164,7 +163,7 @@ class Document extends Model implements HasDrivers, TaggableContract
         string $content,
         Collection $collection,
         ?string $filePath = null
-    ) : Document {
+    ): Document {
         return Document::create([
             'file_path' => $filePath,
             'collection_id' => $collection->id,
@@ -213,10 +212,10 @@ class Document extends Model implements HasDrivers, TaggableContract
                     [
                         new SummarizeDocumentJob($document),
                         new TagDocumentJob($document),
-                        new DocumentProcessingCompleteJob($document)
-                    ]
+                        new DocumentProcessingCompleteJob($document),
+                    ],
                 ])
-                    ->name("Finalizing Documents")
+                    ->name('Finalizing Documents')
                     ->allowFailures()
                     ->dispatch();
             })

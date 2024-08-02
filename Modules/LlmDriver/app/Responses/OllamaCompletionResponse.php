@@ -12,7 +12,7 @@ class OllamaCompletionResponse extends CompletionResponse
         public mixed $content,
         #[MapInputName('done_reason')]
         public string|Optional $stop_reason,
-        public string|null $tool_used = "",
+        public ?string $tool_used = '',
         /** @var array<OllamaToolDto> */
         #[MapInputName('message.tool_calls')]
         public array $tool_calls = [],

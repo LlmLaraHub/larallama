@@ -37,7 +37,8 @@ class DocumentTest extends TestCase
             $model->parent->id);
     }
 
-    public function test_document_make() {
+    public function test_document_make()
+    {
         $collection = \App\Models\Collection::factory()->create();
         $document = Document::make('Foo bar',
             $collection);
@@ -48,7 +49,8 @@ class DocumentTest extends TestCase
         $this->assertNotNull($document->collection->documents()->first()->id);
     }
 
-    public function test_document_vectorize() {
+    public function test_document_vectorize()
+    {
         Bus::fake();
         $collection = \App\Models\Collection::factory()->create();
         $document = Document::make('Foo bar',

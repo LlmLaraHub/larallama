@@ -2,17 +2,10 @@
 
 namespace LlmLaraHub\LlmDriver\Functions;
 
-use App\Domains\Documents\StatusEnum;
-use App\Domains\Documents\TypesEnum;
-use App\Domains\Sources\WebSearch\Response\SearchResponseDto;
-use App\Domains\Sources\WebSearch\WebSearchFacade;
-use App\Models\Document;
-use Facades\App\Domains\Tokenizer\Templatizer;
 use App\Helpers\ChatHelperTrait;
+use App\Models\Document;
 use App\Models\Message;
-use Facades\App\Domains\Sources\WebSearch\GetPage;
 use Illuminate\Support\Facades\Log;
-use LlmLaraHub\LlmDriver\LlmDriverFacade;
 use LlmLaraHub\LlmDriver\Responses\FunctionResponse;
 use LlmLaraHub\LlmDriver\ToolsHelper;
 

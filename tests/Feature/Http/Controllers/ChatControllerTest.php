@@ -11,7 +11,6 @@ use App\Models\Message;
 use App\Models\User;
 use Facades\App\Domains\Agents\VerifyResponseAgent;
 use Facades\LlmLaraHub\LlmDriver\Orchestrate;
-use Illuminate\Support\Facades\Bus;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
 use LlmLaraHub\LlmDriver\Responses\CompletionResponse;
 use Tests\TestCase;
@@ -177,8 +176,6 @@ class ChatControllerTest extends TestCase
         $this->assertDatabaseCount('messages', 2);
 
     }
-
-
 
     public function test_standard_checker()
     {

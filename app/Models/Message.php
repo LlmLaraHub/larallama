@@ -9,7 +9,6 @@ use App\Events\ChatUiUpdateEvent;
 use App\Events\MessageCreatedEvent;
 use App\Jobs\OrchestrateJob;
 use App\Jobs\SimpleRetrieveRelatedOrchestrateJob;
-use App\Jobs\SimpleSearchAndSummarizeOrchestrateJob;
 use Facades\App\Domains\Tokenizer\Templatizer;
 use Illuminate\Bus\Batch;
 use Illuminate\Database\Eloquent\Factories\HasFactory;

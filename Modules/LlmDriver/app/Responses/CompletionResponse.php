@@ -9,7 +9,7 @@ class CompletionResponse extends \Spatie\LaravelData\Data
     public function __construct(
         public mixed $content,
         public string|Optional $stop_reason,
-        public string|null $tool_used = "",
+        public ?string $tool_used = '',
         /** @var array<ToolDto> */
         public array $tool_calls = [],
         public ?int $input_tokens = null,

@@ -186,7 +186,6 @@ class OllamaClient extends BaseClient
             'stream' => false,
         ]);
 
-
         return OllamaCompletionResponse::from($response->json());
     }
 
