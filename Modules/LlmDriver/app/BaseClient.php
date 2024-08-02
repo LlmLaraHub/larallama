@@ -33,11 +33,13 @@ abstract class BaseClient
         return $this;
     }
 
-    public function modifyPayload(array $payload): array
+    public function modifyPayload(array $payload, bool $noTools = false): array
     {
         $payload = $this->addJsonFormat($payload);
 
-        $payload['tools'] = $this->getFunctions();
+        if (! $noTools) {
+            $payload['tools'] = $this->getFunctions();
+        }
 
         return $payload;
     }

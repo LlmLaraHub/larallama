@@ -6,6 +6,7 @@ use LlmLaraHub\LlmDriver\Functions\GatherInfoTool;
 use LlmLaraHub\LlmDriver\Functions\GetWebSiteFromUrlTool;
 use LlmLaraHub\LlmDriver\Functions\ReportingTool;
 use LlmLaraHub\LlmDriver\Functions\SearchAndSummarize;
+use LlmLaraHub\LlmDriver\Functions\SearchTheWeb;
 use LlmLaraHub\LlmDriver\Functions\StandardsChecker;
 use LlmLaraHub\LlmDriver\Functions\SummarizeCollection;
 
@@ -65,6 +66,7 @@ class LlmDriverClient
             (new ReportingTool())->getFunction(),
             (new GatherInfoTool())->getFunction(),
             (new GetWebSiteFromUrlTool())->getFunction(),
+            (new SearchTheWeb())->getFunction(),
         ];
     }
 

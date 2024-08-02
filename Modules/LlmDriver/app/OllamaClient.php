@@ -143,7 +143,7 @@ class OllamaClient extends BaseClient
                     'stream' => false,
                 ];
 
-                $payload = $this->modifyPayload($payload);
+                $payload = $this->modifyPayload($payload, true);
 
                 Log::info('Ollama Request', [
                     'prompt' => $prompt,
