@@ -53,7 +53,7 @@ class ChatController extends Controller
                     }),
             'date_ranges' => DateRangesEnum::selectOptions(),
             'chat' => new ChatResource($chat),
-            'chats' => ChatResource::collection($collection->chats()->latest()->paginate(20)),
+            'chats' => ChatResource::collection($collection->chats()->latest()->paginate(10)),
             'filters' => FilterResource::collection($collection->filters),
             'personas' => PersonaResource::collection(Persona::all()),
             'audiences' => AudienceResource::collection(Audience::all()),
@@ -61,7 +61,7 @@ class ChatController extends Controller
             'settings' => [
                 'supports_functions' => LlmDriverFacade::driver($chat->getDriver())->hasFunctions(),
             ],
-            'messages' => MessageResource::collection($chat->latest_messages()->limit(20)->get()),
+            'messages' => MessageResource::collection($chat->latest_messages()->limit(10)->get()),
         ]);
     }
 
