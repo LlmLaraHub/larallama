@@ -18,5 +18,15 @@
         "tool_id": "",
         "args": [],
         "meta_data": null
+    },
+    {
+        "content": "can you just break that down into 4 bullet points",
+        "role": "user",
+        "is_ai": false,
+        "show": true,
+        "tool": "",
+        "tool_id": "",
+        "args": [],
+        "meta_data": null
     }
 ]

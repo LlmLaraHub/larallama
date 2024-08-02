@@ -2,6 +2,7 @@
 
 namespace LlmLaraHub\LlmDriver;
 
+use LlmLaraHub\LlmDriver\Functions\Chat;
 use LlmLaraHub\LlmDriver\Functions\CreateDocument;
 use LlmLaraHub\LlmDriver\Functions\GatherInfoTool;
 use LlmLaraHub\LlmDriver\Functions\GetWebSiteFromUrlTool;
@@ -69,6 +70,7 @@ class LlmDriverClient
             (new GetWebSiteFromUrlTool())->getFunction(),
             (new SearchTheWeb())->getFunction(),
             (new CreateDocument())->getFunction(),
+            (new Chat())->getFunction(),
         ];
     }
 

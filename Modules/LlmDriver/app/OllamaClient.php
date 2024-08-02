@@ -107,11 +107,20 @@ class OllamaClient extends BaseClient
         ];
 
         $payload = $this->modifyPayload($payload);
+
+        put_fixture('ollama_payloads.json', $payload);
         Log::info('LlmDriver::Ollama::chat', [
             'payload' => $payload,
         ]);
 
         $response = $this->getClient()->post('/chat', $payload);
+
+        if($response->failed()){
+            Log::error('Ollama API Error ', [
+                'error' => $response->body(),
+            ]);
+            throw new \Exception('Ollama API Error Chat');
+        }
 
         return OllamaCompletionResponse::from($response->json());
     }
@@ -185,6 +194,8 @@ class OllamaClient extends BaseClient
             'prompt' => $prompt,
             'stream' => false,
         ]);
+
+
 
         return OllamaCompletionResponse::from($response->json());
     }
@@ -262,16 +273,20 @@ class OllamaClient extends BaseClient
 
     public function remapMessages(array $messages): array
     {
-        $messages = collect($messages)->map(function ($message) {
-            return $message->toArray();
-        });
+        put_fixture('ollama_messages_before_remap.json', $messages);
+        $messages = collect($messages)->transform(function ($message) {
+            return collect($message->toArray())->only(['content', 'role', 'tool_calls', 'tool_used', 'input_tokens', 'output_tokens', 'model'])->toArray();
+        })->toArray();
 
-        if (in_array('llama3', [
-            $this->getConfig('ollama')['models']['completion_model']])) {
+        if (in_array($this->getConfig('ollama')['models']['completion_model'], [
+              'llama3.1',
+                'llama3'
+            ])) {
             Log::info('[LaraChain] LlmDriver::OllamaClient::remapMessages');
             $messages = collect($messages)->reverse();
         }
 
+        put_fixture('ollama_messages_after_remap.json', $messages->values()->toArray());
         return $messages->values()->toArray();
 
     }

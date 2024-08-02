@@ -6,6 +6,7 @@ use App\Models\Setting;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\ServiceProvider;
 use LlmLaraHub\LlmDriver\DistanceQuery\DistanceQueryClient;
+use LlmLaraHub\LlmDriver\Functions\Chat;
 use LlmLaraHub\LlmDriver\Functions\CreateDocument;
 use LlmLaraHub\LlmDriver\Functions\GatherInfoTool;
 use LlmLaraHub\LlmDriver\Functions\GetWebSiteFromUrlTool;
@@ -65,7 +66,7 @@ class LlmServiceProvider extends ServiceProvider
             return new SummarizeCollection();
         });
 
-        $this->app->bind('search_and_summarize', function () {
+        $this->app->bind('retrieve_related', function () {
             return new RetrieveRelated();
         });
 
@@ -91,6 +92,10 @@ class LlmServiceProvider extends ServiceProvider
 
         $this->app->bind('create_document', function () {
             return new CreateDocument();
+        });
+
+        $this->app->bind('chat_only', function () {
+            return new Chat();
         });
 
     }

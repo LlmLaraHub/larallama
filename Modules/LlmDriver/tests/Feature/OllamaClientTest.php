@@ -6,6 +6,7 @@ use App\Models\Setting;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Http;
 use Laravel\Pennant\Feature;
+use LlmLaraHub\LlmDriver\LlmDriverFacade;
 use LlmLaraHub\LlmDriver\OllamaClient;
 use LlmLaraHub\LlmDriver\Requests\MessageInDto;
 use LlmLaraHub\LlmDriver\Responses\CompletionResponse;
@@ -117,6 +118,12 @@ class OllamaClientTest extends TestCase
         $this->assertArrayHasKey('properties', $parameters);
         $this->assertArrayHasKey('required', $parameters);
 
+    }
+
+    public function test_remap_functions() {
+        $functions = LlmDriverFacade::getFunctions();
+        $results = (new OllamaClient)->remapFunctions($functions);
+        put_fixture('ollama_functions.json', $results);
     }
 
     public function test_functions_prompt(): void

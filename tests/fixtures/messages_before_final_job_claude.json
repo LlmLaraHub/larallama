@@ -1,6 +1,6 @@
 [
     {
-        "content": "<role>\nyou are helping me search the web for info and getting just the info I want out of it\n<task>\nSearch for news on Ollama and then for any articles that have to do with Ollama write a TLDR about the article with a link to the article.\n<format>\nTitle: \nSummary: 1-2 lines\nURL: \n\nIf a site does not have info just return 'false' the word so it will be ignored.",
+        "content": "<role>\nyou are helping me search the web for info and getting just the info I want out of it then making documents in the system\n<task>\nSearch for news on Ollama and then for any articles that have to do with Ollama then save the documents to my collection. The following is Markdown.\n\n<format>\nTitle: \nSummary: 1-2 lines\nOriginal Content: Markdown format of the content\nURL: the url of the content\n\nIf a site does not have info just return 'false' the word so it will be ignored.",
         "role": "user",
         "is_ai": false,
         "show": true,
@@ -10,14 +10,14 @@
         "meta_data": null
     },
     {
-        "content": "\"The article discusses an AI code completion plugin for Visual Studio Code (VSCode) called Ollama. Here are the key points:\\n\\n1. **100% free and private**: The plugin is completely free to use, with no login or proxy requirements.\\n2. **Creator's experience**: The creator, rjmacarthy, has used the plugin in their daily work as a front-end software engineer at a prominent cryptocurrency exchange, finding it an \\\"invaluable asset\\\".\\n3. **Hardware compatibility**: The plugin performs well on both Nvidia 3090 and Apple M1 Pro hardware.\\n4. **Chat functionality**: The creator uses codellama34b-instruct for the chat functionality, which has performance comparable to GPT-4 and surpasses GPT-3.5 in quality.\\n5. **Alternative to Copilot**: Ollama is marketed as a reliable alternative to Copilot, which the creator found had limitations such as rate limiting issues.\\n\\nThe article concludes by encouraging readers to try out Ollama and providing an invitation for contributions and collaborations to further develop the plugin.\"\n\"It appears that Ollama is a platform that allows users to work with large language models, such as Llama 3.1, Phi 3, Mistral, Gemma 2, and others. Here are the key points from the article:\\n\\n* Ollama enables users to run and customize these large language models.\\n* The platform is currently available for macOS, Linux, and Windows (preview).\\n* Users can explore and download different models from the platform.\\n\\nDo you have any specific questions about Ollama or its features?\"\n\"Based on the provided information from the Y Combinator website, here are some key points about Ollama:\\n\\n1. **Description**: Ollama helps users get up and running with large language models.\\n\\n2. **Location**: It is based in Palo Alto.\\n\\n3. **Founders**: Jeffrey Morgan is listed as a founder of Ollama.\\n\\n4. **Team Size and Founders**: The team size and the number of founders are not explicitly stated, but there are at least two mentioned (Jeffrey Morgan and Michael Chiang).\\n\\n5. **Availability and Updates**:\\n   - **Official Docker Image Availability**: As of October 2023, Ollama is available as an official Docker image.\\n   - **Running Llama 2 Uncensored Locally**: There was a blog update in August 2023 about running Llama 2 uncensored locally.\\n\\n6. **GitHub Presence**: The company has a presence on GitHub, with its repository at https:\\\/\\\/github.com\\\/ollama\\\/ollama.\\n\\n7. **Y Combinator Affiliation**: Ollama is part of Y Combinator's portfolio, indicating it has been through the accelerator program, which suggests an early-stage startup or product.\"",
+        "content": "No results from web search that met the criteria",
         "role": "tool",
         "is_ai": false,
         "show": true,
         "tool": "search_the_web",
-        "tool_id": "",
+        "tool_id": "toolu_01DpyQXH8qTrVLixm8GEDwFQ",
         "args": {
-            "search_phrase": "Ollama news"
+            "search_phrase": "Ollama news articles"
         },
         "meta_data": null
     }

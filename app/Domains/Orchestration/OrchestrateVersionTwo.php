@@ -8,13 +8,19 @@ use App\Jobs\ToolJob;
 use App\Jobs\ToolsCompleteJob;
 use App\Models\Chat;
 use App\Models\Message;
+use App\Models\PromptHistory;
 use Illuminate\Bus\Batch;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Log;
+use LlmLaraHub\LlmDriver\Helpers\CreateReferencesTrait;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
+use LlmLaraHub\LlmDriver\ToolsHelper;
 
 class OrchestrateVersionTwo
 {
+
+    use ToolsHelper;
+    use CreateReferencesTrait;
     public function handle(
         Chat $chat,
         Message $message)
@@ -144,6 +150,29 @@ class OrchestrateVersionTwo
         } else {
             //hmm
             Log::info('[LaraChain] - No Tools found');
+
+            $messages = $chat->getChatResponse();
+            put_fixture('orchestrate_messages_all.json', $messages);
+            $response = LlmDriverFacade::driver($chat->getDriver())->chat($messages);
+
+            put_fixture('orchestrate_messages_fist_send.json', $response);
+            $assistantMessage = $chat->addInput(
+                message: $response->content,
+                role: RoleEnum::Assistant,
+                show_in_thread: true,
+                meta_data: $message->meta_data,
+                tools: $message->tools,
+            );
+
+            PromptHistory::create([
+                'prompt' => $message->getPrompt(),
+                'chat_id' => $chat->id,
+                'message_id' => $assistantMessage->id,
+                /** @phpstan-ignore-next-line */
+                'collection_id' => $chat->chatable_id,
+            ]);
+            notify_ui_complete($chat);
+
         }
         //Ollama
         //@see https://github.com/ollama/ollama/blob/main/docs/api.md#chat-request-with-tools
