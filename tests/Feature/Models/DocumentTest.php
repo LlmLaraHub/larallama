@@ -44,6 +44,7 @@ class DocumentTest extends TestCase
             $collection);
         $this->assertNotNull($document->id);
         $this->assertNotNull($document->collection_id);
+        $this->assertNotNull($document->summary);
         $this->assertNotNull($document->collection->id);
         $this->assertCount(1, $document->collection->documents);
         $this->assertNotNull($document->collection->documents()->first()->id);

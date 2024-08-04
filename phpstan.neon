@@ -28,6 +28,7 @@ parameters:
         - vendor
         - app/Actions/*
         - app/Http/Resources/*
+        - Modules/*/tests/*
         - app/Http/Controllers/GoogleController.php
 
     checkMissingIterableValueType: false

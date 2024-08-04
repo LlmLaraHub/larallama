@@ -32,9 +32,18 @@ abstract class BaseClient
 
     protected ToolTypes $toolType;
 
+    protected bool $limitByShowInUi = false;
+
     public function setToolType(ToolTypes $toolType): self
     {
         $this->toolType = $toolType;
+
+        return $this;
+    }
+
+    public function setLimitByShowInUi(bool $limitByShowInUi): self
+    {
+        $this->limitByShowInUi = $limitByShowInUi;
 
         return $this;
     }
@@ -61,6 +70,7 @@ abstract class BaseClient
             $payload['tools'] = $this->getFunctions();
         }
 
+        put_fixture('ollama_modified_payload.json', $payload);
         return $payload;
     }
 
@@ -219,12 +229,17 @@ EOD;
             });
         }
 
+        if ($this->limitByShowInUi) {
+            $functions = $functions->filter(function (FunctionContract $function) {
+                return $function->showInUi;
+            });
+        }
+
         return $functions->transform(
             function (FunctionContract $function) {
                 return $function->getFunction();
             }
         )->toArray();
-
     }
 
     public function remapFunctions(array $functions): array

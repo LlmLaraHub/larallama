@@ -1,17 +1,9 @@
 {
-    "content": "Certainly, I'll search for news and articles about Ollama, then save the relevant information to your collection in the specified format. Let's start by searching the web for Ollama news articles.\n\nIt seems that the initial search didn't yield any results that met the criteria. Let's try a more specific search for recent Ollama developments.",
-    "stop_reason": "tool_use",
+    "content": "Here are the 4 bullet points saved to a document:\n\n**Laravel Developers**\n\n\u2022 **Summary:** Highly skilled Backend Developer with experience in PHP, Laravel, Vue.js, and other technologies.\n\u2022 **Proficient in:** Proficient in designing, developing, and deploying scalable applications using Agile methodologies.\n\u2022 **Key Skills:**\n\u2022 **Experience:** Professional Experience:",
+    "stop_reason": "stop",
     "tool_used": "",
-    "tool_calls": {
-        "1": {
-            "name": "search_the_web",
-            "arguments": {
-                "search_phrase": "Ollama AI latest developments"
-            },
-            "id": "toolu_01Bt2b3SWiDCzHLfmfDmDWTj"
-        }
-    },
-    "input_tokens": 1188,
-    "output_tokens": 135,
-    "model": "claude-3-5-sonnet-20240620"
+    "tool_calls": [],
+    "input_tokens": 439,
+    "output_tokens": 74,
+    "model": "llama3.1"
 }

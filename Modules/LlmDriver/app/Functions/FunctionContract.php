@@ -10,6 +10,8 @@ abstract class FunctionContract
 {
     protected string $name;
 
+    public bool $showInUi = true;
+
     public array $toolTypes = [
         ToolTypes::Chat,
         ToolTypes::ChatCompletion,

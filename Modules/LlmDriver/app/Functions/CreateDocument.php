@@ -20,7 +20,7 @@ class CreateDocument extends FunctionContract
 
     protected string $name = 'create_document';
 
-    protected string $description = 'Create a document in the collection of this local system';
+    protected string $description = 'Create or Save a document into the collection of this local system using the content provided';
 
     public function handle(
         Message $message): FunctionResponse

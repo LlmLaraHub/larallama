@@ -71,7 +71,6 @@ class SummarizeDocumentJob implements ShouldQueue
         } else {
             $prompt = Templatizer::appendContext(true)
                 ->handle($this->prompt, $content);
-
         }
 
         /** @var CompletionResponse $results */
@@ -80,30 +79,6 @@ class SummarizeDocumentJob implements ShouldQueue
         )->completion($prompt);
 
         $this->results = $results->content;
-
-        if (Feature::active('verification_prompt_summary')) {
-
-            $verifyPrompt = <<<'PROMPT'
-            This the content from all the documents in this collection.
-            Then that was passed into the LLM to summarize the results.
-            PROMPT;
-
-            $dto = VerifyPromptInputDto::from(
-                [
-                    'chattable' => $this->document->collection,
-                    'originalPrompt' => $prompt,
-                    'context' => $content,
-                    'llmResponse' => $this->results,
-                    'verifyPrompt' => $verifyPrompt,
-                ]
-            );
-
-            /** @var VerifyPromptOutputDto $response */
-            $response = VerifyResponseAgent::verify($dto);
-
-            $this->results = $response->response;
-
-        }
 
         $this->document->update([
             'summary' => $this->results,

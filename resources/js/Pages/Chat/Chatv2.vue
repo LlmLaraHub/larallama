@@ -365,7 +365,7 @@ text-secondary">
                     </svg>
 
                     Click a button below to choose a focus for your chat. This will help the system to be more specific on how it integrates your Collection and the Prompt.</h2>
-                <div class="flex justify-center items-center gap-3 flex-wrap">
+                <div class="flex justify-center items-center gap-3 flex-wrap mx-auto">
                     <template v-for="tool in usePage().props.tools" :key="tool.name">
                         <div class="tooltip tooltip-info"
                              :data-tip="tool.description">

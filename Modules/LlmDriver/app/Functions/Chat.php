@@ -13,6 +13,8 @@ class Chat extends FunctionContract
 {
     use ChatHelperTrait, ToolsHelper;
 
+    public bool $showInUi = false;
+
     public array $toolTypes = [
         ToolTypes::NoFunction,
     ];

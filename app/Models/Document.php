@@ -171,6 +171,7 @@ class Document extends Model implements HasDrivers, TaggableContract
             'collection_id' => $collection->id,
             'type' => TypesEnum::Txt,
             'subject' => str($content)->limit(256)->toString(),
+            'summary' => $content,
             'original_content' => $content,
             'status_summary' => StatusEnum::Pending,
         ]);

@@ -35,6 +35,7 @@ class OrchestrateVersionTwo
         Chat $chat,
         Message $message)
     {
+        $toolType = ToolTypes::ChatCompletion;
 
         //OpenAI
         //@see https://platform.openai.com/docs/guides/function-calling
@@ -78,28 +79,32 @@ class OrchestrateVersionTwo
          * Here the user is just forcing a chat
          * they want to continue with the thread
          */
-        if ($message->meta_data?->tool === 'chat') {
-            Log::info('[LaraChain] - Just Chatting');
-            $this->justChat($chat, $message, ToolTypes::Chat);
+        if ($message->meta_data?->tool === ToolTypes::Chat->value) {
+            $toolType = ToolTypes::Chat;
+
+            Log::info('[LaraChain] - Setting it as a chat tool scope', [
+                'tool_type' => $toolType,
+            ]);
+        }
+
+        $messages = $chat->getChatResponse();
+
+        put_fixture('orchestrate_messages_first_send.json', $messages);
+
+        Log::info('[LaraChain] - Looking for Tools');
+
+        $response = LlmDriverFacade::driver($message->getDriver())
+            ->setToolType($toolType)
+            ->chat($messages);
+
+        if (! empty($response->tool_calls)) {
+            Log::info('[LaraChain] - Tools Found');
+            $this->chatWithTools($chat, $message, $response);
+
         } else {
-            $messages = $chat->getChatResponse();
-
-            put_fixture('orchestrate_messages_fist_send.json', $messages);
-
-            Log::info('[LaraChain] - Looking for Tools');
-            $response = LlmDriverFacade::driver($message->getDriver())
-                ->setToolType(ToolTypes::ChatCompletion)
-                ->chat($messages);
-
-            if (! empty($response->tool_calls)) {
-                Log::info('[LaraChain] - Tools Found');
-                $this->chatWithTools($chat, $message, $response);
-
-            } else {
-                //hmm
-                Log::info('[LaraChain] - No Tools found just gonna chat');
-                $this->justChat($chat, $message, ToolTypes::NoFunction);
-            }
+            //hmm
+            Log::info('[LaraChain] - No Tools found just gonna chat');
+            $this->justChat($chat, $message, ToolTypes::NoFunction);
         }
     }
 

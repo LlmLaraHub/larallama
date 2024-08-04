@@ -2,6 +2,8 @@
 
 namespace LlmLaraHub\LlmDriver;
 
+use LlmLaraHub\LlmDriver\Functions\FunctionDto;
+
 class LlmDriverClient
 {
     protected $drivers = [];
@@ -42,7 +44,9 @@ class LlmDriverClient
     public function getFunctionsForUi(): array
     {
         return collect(
-            LlmDriverFacade::driver('mock')->getFunctions()
+            LlmDriverFacade::driver('mock')
+                ->setLimitByShowInUi(true)
+                ->getFunctions()
         )
             ->map(function ($item) {
                 $item['name_formatted'] = str($item['name'])->headline()->toString();

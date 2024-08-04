@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Domains\Chat\MetaDataDto;
 use App\Domains\Chat\ToolsDto;
 use App\Domains\Messages\RoleEnum;
+use Facades\App\Domains\Orchestration\OrchestrateVersionTwo;
 use App\Events\ChatUiUpdateEvent;
 use App\Events\MessageCreatedEvent;
 use App\Jobs\OrchestrateJob;
@@ -217,53 +218,12 @@ class Message extends Model implements HasDrivers
     public function run(): void
     {
         $message = $this;
-
         $chat = $message->getChat();
-
-        notify_ui($chat, 'Working on it!');
-
         $meta_data = $message->meta_data;
         $meta_data->driver = $chat->getDriver();
         $message->updateQuietly(['meta_data' => $meta_data]);
 
-        if ($message->meta_data?->tool === 'completion') {
-            Log::info('[LaraChain] Running Simple Completion');
-
-            $messages = $chat->getChatResponse();
-            $response = LlmDriverFacade::driver($chat->getDriver())->chat($messages);
-            $response = $response->content;
-
-            $chat->addInput(
-                message: $response,
-                role: RoleEnum::Assistant,
-                show_in_thread: true);
-
-            notify_ui_complete($chat);
-        } elseif ($message->meta_data?->tool) {
-            /**
-             * @NOTE
-             * Quick win area for Ollama
-             */
-            Log::info('[LaraChain] Running Tool that was chosen');
-
-            /** @phpstan-ignore-next-line */
-            $tool = $message->meta_data?->tool;
-
-            $this->batchJob([
-                new OrchestrateJob($chat, $message),
-            ], $chat, $tool);
-
-        } elseif (LlmDriverFacade::driver($chat->getDriver())->hasFunctions()) {
-            Log::info('[LaraChain] Running Orchestrate added to queue');
-            $this->batchJob([
-                new OrchestrateJob($chat, $message),
-            ], $chat, 'orchestrate');
-        } else {
-            Log::info('[LaraChain] Simple Search and Summarize added to queue');
-            $this->batchJob([
-                new SimpleRetrieveRelatedOrchestrateJob($message),
-            ], $chat, 'simple_search_and_summarize');
-        }
+        OrchestrateVersionTwo::handle($chat, $message);
 
     }
 

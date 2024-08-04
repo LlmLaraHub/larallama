@@ -48,17 +48,5 @@
         "tool_id": "",
         "args": [],
         "meta_data": null
-    },
-    {
-        "content": "\u2022 Highly skilled Backend Developer with experience in PHP, Laravel, Vue.js, and other technologies.\n\u2022 Proficient in designing, developing, and deploying scalable applications using Agile methodologies.\n\u2022 Summary:\n\u2022 Professional Experience:",
-        "role": "tool",
-        "is_ai": false,
-        "show": true,
-        "tool": "create_document",
-        "tool_id": "",
-        "args": {
-            "content": "\u2022 Highly skilled Backend Developer with experience in PHP, Laravel, Vue.js, and other technologies.\n\u2022 Proficient in designing, developing, and deploying scalable applications using Agile methodologies.\n\u2022 Summary:\n\u2022 Professional Experience:"
-        },
-        "meta_data": null
     }
 ]

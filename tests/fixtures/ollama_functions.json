@@ -2,109 +2,177 @@
     {
         "type": "function",
         "function": {
-            "name": null,
-            "description": null,
+            "name": "summarize_collection",
+            "description": "NOT FOR SEARCH, This is used when the prompt wants to summarize the entire collection of documents",
             "parameters": {
                 "type": "object",
-                "properties": []
-            },
-            "required": []
+                "properties": {
+                    "prompt": {
+                        "description": "The prompt the user is using the search for.",
+                        "type": "string",
+                        "default": ""
+                    }
+                },
+                "required": [
+                    "prompt"
+                ]
+            }
         }
     },
     {
         "type": "function",
         "function": {
-            "name": null,
-            "description": null,
+            "name": "retrieve_related",
+            "description": "Used to embed users prompt, search local database and return summarized results.\n    DOES NOT SEARCH THE WEB. This is only used for local database search.",
             "parameters": {
                 "type": "object",
-                "properties": []
-            },
-            "required": []
+                "properties": {
+                    "prompt": {
+                        "description": "This is the prompt the user is using to search the database and may or may not assist the results.",
+                        "type": "string",
+                        "default": ""
+                    }
+                },
+                "required": []
+            }
         }
     },
     {
         "type": "function",
         "function": {
-            "name": null,
-            "description": null,
+            "name": "standards_checker",
+            "description": "Checks the prompt data follows the standards of the documents in the collection",
             "parameters": {
                 "type": "object",
-                "properties": []
-            },
-            "required": []
+                "properties": {
+                    "prompt": {
+                        "description": "The prompt the user is using to check standards.",
+                        "type": "string",
+                        "default": ""
+                    }
+                },
+                "required": [
+                    "prompt"
+                ]
+            }
         }
     },
     {
         "type": "function",
         "function": {
-            "name": null,
-            "description": null,
+            "name": "reporting_tool",
+            "description": "Uses Reference collection to generate a report",
             "parameters": {
                 "type": "object",
-                "properties": []
-            },
-            "required": []
+                "properties": {
+                    "prompt": {
+                        "description": "The prompt the user is using to use as solutions to the report",
+                        "type": "string",
+                        "default": ""
+                    }
+                },
+                "required": [
+                    "prompt"
+                ]
+            }
         }
     },
     {
         "type": "function",
         "function": {
-            "name": null,
-            "description": null,
+            "name": "gather_info_tool",
+            "description": "This will look at all documents using your prompt then return the results after once more using your prompt",
             "parameters": {
                 "type": "object",
-                "properties": []
-            },
-            "required": []
+                "properties": {
+                    "prompt": {
+                        "description": "Using your prompt we will look at every document, run your prompt against each one and then against the final output",
+                        "type": "string",
+                        "default": ""
+                    }
+                },
+                "required": [
+                    "prompt"
+                ]
+            }
         }
     },
     {
         "type": "function",
         "function": {
-            "name": null,
-            "description": null,
+            "name": "get_web_site_from_url",
+            "description": "If you add urls to a prompt and ask the llm to get the web site using the url(s) you give it",
             "parameters": {
                 "type": "object",
-                "properties": []
-            },
-            "required": []
+                "properties": {
+                    "url": {
+                        "description": "The URL To get",
+                        "type": "string",
+                        "default": ""
+                    }
+                },
+                "required": [
+                    "url"
+                ]
+            }
         }
     },
     {
         "type": "function",
         "function": {
-            "name": null,
-            "description": null,
+            "name": "search_the_web",
+            "description": "Search the web for a topic",
             "parameters": {
                 "type": "object",
-                "properties": []
-            },
-            "required": []
+                "properties": {
+                    "search_phrase": {
+                        "description": "1-5 words to search for",
+                        "type": "string",
+                        "default": ""
+                    }
+                },
+                "required": [
+                    "search_phrase"
+                ]
+            }
         }
     },
     {
         "type": "function",
         "function": {
-            "name": null,
-            "description": null,
+            "name": "create_document",
+            "description": "Create or Save a document into the collection of this local system using the content provided",
             "parameters": {
                 "type": "object",
-                "properties": []
-            },
-            "required": []
+                "properties": {
+                    "content": {
+                        "description": "the content to use for the document",
+                        "type": "string",
+                        "default": ""
+                    }
+                },
+                "required": [
+                    "content"
+                ]
+            }
         }
     },
     {
         "type": "function",
         "function": {
-            "name": null,
-            "description": null,
+            "name": "chat_only",
+            "description": "User just wants to continue the chat no need to look in the collection for more documents",
             "parameters": {
                 "type": "object",
-                "properties": []
-            },
-            "required": []
+                "properties": {
+                    "prompt": {
+                        "description": "the prompt to go with the chat",
+                        "type": "string",
+                        "default": ""
+                    }
+                },
+                "required": []
+            }
         }
     }
 ]
