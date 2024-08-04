@@ -18,9 +18,7 @@ class TagTest extends TestCase
             ->has(Tag::factory(), 'tags')->create();
 
         $this->assertNotEmpty($document->tags);
-
         $tag = $document->tags()->first();
-
         $this->assertEquals(
             $document->id,
             $tag->documents->first()->id
