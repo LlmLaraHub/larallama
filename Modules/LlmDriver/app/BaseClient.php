@@ -227,7 +227,6 @@ EOD;
 
     }
 
-
     public function remapFunctions(array $functions): array
     {
         return collect($functions)->map(function ($function) {

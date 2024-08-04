@@ -71,7 +71,6 @@ class TagTest extends TestCase
 
         $tags = $document->siblingTags();
 
-
         $this->assertTrue(in_array('foobar1', $document->siblingTags()));
     }
 }
