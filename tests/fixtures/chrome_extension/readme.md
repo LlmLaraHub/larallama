@@ -2,6 +2,9 @@
 
 This will help with the extension for the chrome browser.
 
+![](example_screens.png)
+
+
 ### Authentication
 
 This is standard Bearer Token authentication.
@@ -94,3 +97,51 @@ curl -X GET \
 }
 ```
 
+
+# Get Sources
+
+```bash
+curl -X GET \
+  https://api.larallama.io/api/v1/sources \
+  -H 'Authorization: Bearer [TOKEN]'
+```
+
+## Response
+            
+```json
+{
+    "data": [
+        {
+            "id": 1,
+            "title": "Github",
+            "type": "github_source",
+            "details": "Github Source",
+            "active": true,
+            "recurring": "not",
+            "force": false,
+            "status": "pending",
+            "prompt": "[THE PROMPT THEY WANT TO USE]"
+        },
+        {
+            "id": 2,
+            "title": "Google Search",
+            "type": "google_search_source",
+            "details": "Google Search Source",
+            "active": true,
+            "recurring": "not",
+            "force": false,
+            "status": "pending",
+            "prompt": "[THE PROMPT THEY WANT TO USE]"
+        }
+    ],
+    "meta": {
+        "current_page": 1,
+        "from": 1,
+        "last_page": 1,
+        "path": "https://api.larallama.io/api/v1/sources",
+        "per_page": 15,
+        "to": 1,
+        "total": 2
+    }
+}
+```
