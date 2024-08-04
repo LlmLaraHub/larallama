@@ -20,12 +20,11 @@ class SearchTheWeb extends FunctionContract
         ToolTypes::ChatCompletion,
         ToolTypes::Source,
         ToolTypes::Output,
-        ToolTypes::Chat,
     ];
 
     protected string $name = 'search_the_web';
 
-    protected string $description = 'Search the web for a topic';
+    protected string $description = 'Search the web for a topic ONLY if the user asks for web search';
 
     public function handle(
         Message $message): FunctionResponse

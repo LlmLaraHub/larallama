@@ -16,7 +16,6 @@ class GetWebSiteFromUrlTool extends FunctionContract
         ToolTypes::ChatCompletion,
         ToolTypes::Source,
         ToolTypes::Output,
-        ToolTypes::Chat,
     ];
 
     protected string $name = 'get_web_site_from_url';

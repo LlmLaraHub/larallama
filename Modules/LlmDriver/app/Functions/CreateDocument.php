@@ -15,7 +15,6 @@ class CreateDocument extends FunctionContract
 
     public array $toolTypes = [
         ToolTypes::Source,
-        ToolTypes::Chat,
     ];
 
     protected string $name = 'create_document';

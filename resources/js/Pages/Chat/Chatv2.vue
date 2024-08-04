@@ -9,7 +9,7 @@ const toast = useToast();
 
 import ChatMessageV2 from "@/Pages/Chat/ChatMessageV2.vue";
 import DisplayMenu from "@/Components/DisplayMenu.vue";
-
+import {Switch, SwitchGroup, SwitchLabel} from '@headlessui/vue'
 const props = defineProps({
     loading: {
         type: Boolean,
@@ -40,6 +40,12 @@ const personaChosen = ref({})
 const dateRangeChosen = ref({});
 
 const referenceCollectionChosen = ref({});
+
+const chatOnly = ref(false);
+
+watch(chatOnly, () => {
+    form.tool = chatOnly.value ? 'chat' : '';
+})
 
 const dateRangeSelected = (dateRange) => {
     dateRangeChosen.value = dateRange;
@@ -229,9 +235,42 @@ const rerun = (message) => {
 
         <div class="w-full mx-auto px-4">
             <label class="form-control join-item">
-                <div class="label" v-if="false">
-                    <span class="label-text">Your bio</span>
-                    <span class="label-text-alt">Alt label</span>
+                <div class="label">
+                    <div class="border border-secondary rounded-md p-4">
+                        <SwitchGroup>
+                            <h2 class="text-lg font-medium leading-6 flex items-center justify-between gap-2 my-4 text-secondary">
+                                <div class="flex items-center gap-2 justify-start">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193-.34.027-.68.052-1.02.072v3.091l-3-3c-1.354 0-2.694-.055-4.02-.163a2.115 2.115 0 0 1-.825-.242m9.345-8.334a2.126 2.126 0 0 0-.476-.095 48.64 48.64 0 0 0-8.048 0c-1.131.094-1.976 1.057-1.976 2.192v4.286c0 .837.46 1.58 1.155 1.951m9.345-8.334V6.637c0-1.621-1.152-3.026-2.76-3.235A48.455 48.455 0 0 0 11.25 3c-2.115 0-4.198.137-6.24.402-1.608.209-2.76 1.614-2.76 3.235v6.226c0 1.621 1.152 3.026 2.76 3.235.577.075 1.157.14 1.74.194V21l4.155-4.155" />
+                                    </svg>
+                                    <span>
+                                    Enable Chat Only
+                                    </span>
+                                </div>
+
+                                <Switch
+                                    as="button"
+                                    v-model="chatOnly"
+                                    :class="form.tool !== 'chat' ? 'bg-neutral' : 'bg-secondary'"
+                                    class="relative inline-flex h-6 w-11 items-center rounded-full"
+                                >
+                                    <span class="sr-only">Enable notifications</span>
+                                    <span
+                                        :class="form.tool === 'chat' ? 'translate-x-6' : 'translate-x-1'"
+                                        class="inline-block h-4 w-4 transform rounded-full bg-white transition"
+                                    />
+                                </Switch>
+                            </h2>
+
+                            <SwitchLabel class="mr-4 prose">
+                                <p>
+                                    The system defaults to chatting with your Collection. But sometimes
+                                    you might want to just chat with this thread and what is in your prompt.
+                                    Check this to work that way. You will still have some tools like "search_the_web
+                                </p>
+                            </SwitchLabel>
+                        </SwitchGroup>
+                    </div>
                 </div>
 
                 <div class="flex mt-5 ">
@@ -269,10 +308,6 @@ const rerun = (message) => {
                             </svg>
                         </button>
                     </div>
-                </div>
-                <div class="label" v-if="false">
-                    <span class="label-text-alt">Your bio</span>
-                    <span class="label-text-alt">Alt label</span>
                 </div>
             </label>
         </div>
@@ -323,6 +358,7 @@ const rerun = (message) => {
             <div class="flex justify-start gap-2 items-center">
 
                 <Filters
+                    v-if="form.tool !== 'chat'"
                     @filter="filter"
                     :collection="chat.collection"></Filters>
                 <StyleGuide
@@ -332,13 +368,15 @@ const rerun = (message) => {
                 </StyleGuide>
 
                 <DisplayMenu
+                    v-if="form.tool !== 'chat'"
                     :items="usePage().props.date_ranges" @itemSelected="dateRangeSelected">
                     <template #title>
                         Date Range
                     </template>
                 </DisplayMenu>
                 <DisplayMenu
-                    search="true"
+                    v-if="form.tool !== 'chat'"
+                    :search="true"
                     :items="usePage().props.reference_collections"
                     @itemSelected="referenceCollectionSelected">
                     <template #title>
@@ -355,7 +393,8 @@ const rerun = (message) => {
                 </DisplayMenu>
             </div>
 
-            <div>
+            <div
+                v-if="form.tool !== 'chat'" v-auto-animate>
                 <h2
                     class="text-lg font-medium prose mt-4 px-2 mb-4 items-center justify-start flex gap-4"
                 >

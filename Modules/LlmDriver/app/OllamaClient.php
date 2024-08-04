@@ -118,6 +118,7 @@ class OllamaClient extends BaseClient
             throw new \Exception('Ollama API Error Chat');
         }
 
+        put_fixture('ollama_chat_response.json', $response->json());
         return OllamaChatCompletionResponse::from($response->json());
     }
 
@@ -141,7 +142,7 @@ class OllamaClient extends BaseClient
             $model,
             $baseUrl
         ) {
-            foreach ($prompts as $prompt) {
+            foreach ($prompts as $index => $prompt) {
                 $payload = [
                     'model' => $model,
                     'prompt' => $prompt,
@@ -150,10 +151,7 @@ class OllamaClient extends BaseClient
 
                 $payload = $this->modifyPayload($payload, true);
 
-                Log::info('Ollama Request', [
-                    'prompt' => $prompt,
-                    'payload' => $payload,
-                ]);
+                Log::info('Ollama Request index ' . $index);
 
                 $pool->withHeaders([
                     'content-type' => 'application/json',
@@ -197,8 +195,6 @@ class OllamaClient extends BaseClient
             ]);
             throw new \Exception('Ollama API Error Completion');
         }
-
-        put_fixture('ollama_completion.json', $response->json());
 
         return OllamaCompletionResponse::from($response->json());
     }
@@ -262,8 +258,6 @@ class OllamaClient extends BaseClient
 
         })->values()->toArray();
 
-        put_fixture('ollama_functions.json', $results);
-
         return $results;
     }
 
@@ -287,6 +281,7 @@ class OllamaClient extends BaseClient
                 ->only(['content', 'role', 'tool_calls', 'tool_used', 'input_tokens', 'output_tokens', 'model'])
                 ->toArray();
         })->toArray();
+
 
         return $messages;
     }

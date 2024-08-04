@@ -70,8 +70,6 @@ abstract class BaseClient
             $payload['tools'] = $this->getFunctions();
         }
 
-        put_fixture('ollama_modified_payload.json', $payload);
-
         return $payload;
     }
 

@@ -1,9 +1,9 @@
 {
-    "content": "Here are the 4 bullet points saved to a document:\n\n**Laravel Developers**\n\n\u2022 **Summary:** Highly skilled Backend Developer with experience in PHP, Laravel, Vue.js, and other technologies.\n\u2022 **Proficient in:** Proficient in designing, developing, and deploying scalable applications using Agile methodologies.\n\u2022 **Key Skills:**\n\u2022 **Experience:** Professional Experience:",
+    "content": "It seems that there was no original text to summarize, but rather a series of responses to hypothetical tool calls.\n\nHowever, based on the conversation, here are some possible summaries:\n\n* The first response was about summarizing solutions from a collection, but it appears that there was no actual text to work with.\n* The second response was about summarizing a passage about hotels and restaurants in Paris. The key points mentioned were:\n\t+ A list of 7 hotels in Paris, each with its own unique characteristics\n\t+ A mention of the best food tours in Paris\n\t+ A guide to secure luggage storage\n\t+ A local's food guide to Paris featuring the city's culinary scene\n* The third response was about summarizing a Tripadvisor page. However, it appears that the actual article text wasn't present, but rather a URL.\n* The fourth response was about helping with specific questions or requests related to the Tripadvisor page.\n\nIf you'd like me to help with anything specific, please let me know!",
     "stop_reason": "stop",
     "tool_used": "",
     "tool_calls": [],
-    "input_tokens": 439,
-    "output_tokens": 74,
+    "input_tokens": 1130,
+    "output_tokens": 206,
     "model": "llama3.1"
 }
