@@ -46,7 +46,7 @@ class SummarizeCollectionTest extends TestCase
         $dto = CompletionResponse::from([
             'content' => 'This is a summary of the content',
         ]);
-        LlmDriverFacade::shouldReceive('driver->chat')
+        LlmDriverFacade::shouldReceive('driver->setToolType->chat')
             ->once()
             ->andReturn($dto);
 

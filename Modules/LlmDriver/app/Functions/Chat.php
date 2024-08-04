@@ -29,7 +29,7 @@ class Chat extends FunctionContract
         $messages = $message->getChat()->getChatResponse();
 
         $response = LlmDriverFacade::driver($message->getDriver())
-            ->setToolTypes(ToolTypes::NoFunction)
+            ->setToolType(ToolTypes::NoFunction)
             ->chat($messages);
 
         return FunctionResponse::from([

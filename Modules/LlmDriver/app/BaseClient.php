@@ -227,16 +227,6 @@ EOD;
 
     }
 
-    public function getFunctionsForUi(): array
-    {
-        return collect($this->getFunctions())
-            ->map(function ($item) {
-                $item = $item->toArray();
-                $item['name_formatted'] = str($item['name'])->headline()->toString();
-
-                return $item;
-            })->toArray();
-    }
 
     public function remapFunctions(array $functions): array
     {

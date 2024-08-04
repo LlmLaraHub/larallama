@@ -1,16 +1,6 @@
 [
     {
-        "content": "test",
-        "role": "system",
-        "is_ai": false,
-        "show": true,
-        "tool": "",
-        "tool_id": "",
-        "args": [],
-        "meta_data": null
-    },
-    {
-        "content": "test",
+        "content": "test1",
         "role": "user",
         "is_ai": false,
         "show": true,
@@ -20,7 +10,7 @@
         "meta_data": null
     },
     {
-        "content": "test should not be last",
+        "content": "test2",
         "role": "assistant",
         "is_ai": false,
         "show": true,
@@ -28,5 +18,27 @@
         "tool_id": "",
         "args": [],
         "meta_data": null
+    },
+    {
+        "content": "test3",
+        "role": "tool",
+        "is_ai": false,
+        "show": true,
+        "tool": "test",
+        "tool_id": "test_id",
+        "args": [],
+        "meta_data": {
+            "persona": "",
+            "filter": null,
+            "completion": false,
+            "tool": "",
+            "tool_id": "",
+            "date_range": "",
+            "input": "",
+            "driver": "",
+            "source": "",
+            "reference_collection_id": "",
+            "args": []
+        }
     }
 ]

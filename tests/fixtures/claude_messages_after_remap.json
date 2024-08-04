@@ -1,18 +1,39 @@
 [
     {
-        "role": "assistant",
-        "content": "test"
-    },
-    {
         "role": "user",
-        "content": "test"
+        "content": "test1"
     },
     {
         "role": "assistant",
-        "content": "test should not be last"
+        "content": "test2"
     },
     {
         "role": "user",
         "content": "Using the surrounding context to continue this response thread"
+    },
+    {
+        "role": "assistant",
+        "content": [
+            {
+                "type": "text",
+                "text": "<thinking>test3<\/thinking>"
+            },
+            {
+                "type": "tool_use",
+                "id": "test_id",
+                "name": "test",
+                "input": []
+            }
+        ]
+    },
+    {
+        "role": "user",
+        "content": [
+            {
+                "type": "tool_result",
+                "tool_use_id": "test_id",
+                "content": "test3"
+            }
+        ]
     }
 ]

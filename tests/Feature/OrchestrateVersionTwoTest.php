@@ -21,7 +21,7 @@ class OrchestrateVersionTwoTest extends TestCase
 
         $data = get_fixture('ollama_response_tools.json');
 
-        LlmDriverFacade::shouldReceive('driver->chat')->once()->andReturn(
+        LlmDriverFacade::shouldReceive('driver->setToolType->chat')->once()->andReturn(
             OllamaCompletionResponse::from($data)
         );
 

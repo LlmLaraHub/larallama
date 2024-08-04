@@ -45,7 +45,7 @@ class ToolsCompleteJob implements ShouldQueue
         put_fixture('messages_before_final_job_claude.json', $messages);
 
         $response = LlmDriverFacade::driver($this->chat->chatable->getDriver())
-            ->setToolTypes(ToolTypes::NoFunction)
+            ->setToolType(ToolTypes::NoFunction)
             ->chat($messages);
 
         put_fixture('tool_complete_response_claude.json', $response);

@@ -51,7 +51,7 @@ class SummarizeCollection extends FunctionContract
         ]);
 
         $results = LlmDriverFacade::driver($message->getDriver())
-            ->setToolTypes(ToolTypes::NoFunction)
+            ->setToolType(ToolTypes::NoFunction)
             ->chat($messagesArray);
 
         $this->response = $results->content;

@@ -45,4 +45,12 @@ class LlmDriverClientTest extends TestCase
 
         $this->assertCount(3, $function);
     }
+
+    public function test_get_functions_for_ui()
+    {
+        $functions = LlmDriverFacade::getFunctionsForUi();
+
+        $this->assertCount(9, $functions);
+
+    }
 }

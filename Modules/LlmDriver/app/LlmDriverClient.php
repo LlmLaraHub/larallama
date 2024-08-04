@@ -39,6 +39,19 @@ class LlmDriverClient
         }
     }
 
+
+    public function getFunctionsForUi(): array
+    {
+        return collect(
+            LlmDriverFacade::driver('mock')->getFunctions()
+        )
+            ->map(function ($item) {
+                $item['name_formatted'] = str($item['name'])->headline()->toString();
+
+                return $item;
+            })->toArray();
+    }
+
     public static function getDrivers(): array
     {
         return array_keys(config('llmdriver.drivers'));
