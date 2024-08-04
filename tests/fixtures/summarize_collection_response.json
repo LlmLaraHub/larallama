@@ -1,0 +1,9 @@
+{
+    "content": "It seems there's no specific content to summarize. However, I can provide a general template that you can fill in:\n\n# Summary\n=====================================\n\n**Key Takeaways**\n\n* [Insert key points or insights]\n* [Additional information or context]\n\n**Recommendations\/Implications**\n\n* [Actionable steps or implications based on the retrieved data]\n* [Potential benefits or outcomes]\n\n**Next Steps**\n\n* [Future actions or plans based on the summary]\n* [Any additional context or considerations]\n\nFeel free to modify this template as per your needs!",
+    "stop_reason": "stop",
+    "tool_used": "",
+    "tool_calls": [],
+    "input_tokens": 1026,
+    "output_tokens": 112,
+    "model": "llama3.1"
+}

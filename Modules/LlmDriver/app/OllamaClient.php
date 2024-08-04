@@ -96,7 +96,11 @@ class OllamaClient extends BaseClient
     {
         Log::info('LlmDriver::OllamaClient::chat');
 
+        put_fixture('ollama_chat_payload_before_remap.json', $messages);
+
         $messages = $this->remapMessages($messages);
+
+        put_fixture('ollama_chat_payload.json', $messages);
 
         $payload = [
             'model' => $this->getConfig('ollama')['models']['completion_model'],
