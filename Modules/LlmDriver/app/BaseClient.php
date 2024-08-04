@@ -30,7 +30,6 @@ abstract class BaseClient
 
     protected ?FunctionDto $forceTool = null;
 
-
     protected ToolTypes $toolType;
 
     public function setToolType(ToolTypes $toolType): self
@@ -238,7 +237,6 @@ EOD;
                 return $item;
             })->toArray();
     }
-
 
     public function remapFunctions(array $functions): array
     {

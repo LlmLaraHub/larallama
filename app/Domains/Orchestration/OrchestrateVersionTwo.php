@@ -15,15 +15,16 @@ use Illuminate\Support\Facades\Log;
 use LlmLaraHub\LlmDriver\Functions\ToolTypes;
 use LlmLaraHub\LlmDriver\Helpers\CreateReferencesTrait;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
+use LlmLaraHub\LlmDriver\Responses\CompletionResponse;
 use LlmLaraHub\LlmDriver\ToolsHelper;
 
 /**
  * Ollama
+ *
  * @see https://github.com/ollama/ollama/blob/main/docs/api.md#chat-request-with-tools
  *
  * Claude
  * @see https://docs.anthropic.com/en/docs/build-with-claude/tool-use#example-simple-tool-definition
- *
  */
 class OrchestrateVersionTwo
 {
@@ -77,9 +78,9 @@ class OrchestrateVersionTwo
          * Here the user is just forcing a chat
          * they want to continue with the thread
          */
-        if($message->meta_data?->tool === 'chat') {
-             Log::info('[LaraChain] - Just Chatting');
-             $this->justChat($chat, $message, ToolTypes::Chat);
+        if ($message->meta_data?->tool === 'chat') {
+            Log::info('[LaraChain] - Just Chatting');
+            $this->justChat($chat, $message, ToolTypes::Chat);
         } else {
             $messages = $chat->getChatResponse();
 
