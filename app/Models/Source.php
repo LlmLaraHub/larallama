@@ -20,9 +20,9 @@ use LlmLaraHub\LlmDriver\HasDriversTrait;
  */
 class Source extends Model implements HasDrivers
 {
+    use HasDriversTrait;
     use HasFactory;
     use SoftDeletes;
-    use HasDriversTrait;
 
     protected $guarded = [];
 
@@ -49,7 +49,6 @@ class Source extends Model implements HasDrivers
     {
         return $this->details;
     }
-
 
     public function getChatable(): HasDrivers
     {
@@ -85,8 +84,6 @@ class Source extends Model implements HasDrivers
     {
         return $this->belongsTo(Chat::class);
     }
-
-
 
     public function getEmbeddingDriver(): string
     {

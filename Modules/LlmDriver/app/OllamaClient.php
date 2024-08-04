@@ -268,8 +268,7 @@ class OllamaClient extends BaseClient
     }
 
     /**
-     * @param MessageInDto[] $messages
-     * @return array
+     * @param  MessageInDto[]  $messages
      */
     public function remapMessages(array $messages): array
     {

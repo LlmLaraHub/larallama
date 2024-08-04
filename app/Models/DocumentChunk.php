@@ -19,9 +19,9 @@ use Pgvector\Laravel\Vector;
  */
 class DocumentChunk extends Model implements HasDrivers, TaggableContract
 {
+    use HasDriversTrait;
     use HasFactory;
     use HasNeighbors;
-    use HasDriversTrait;
     use Taggable;
 
     protected $casts = [

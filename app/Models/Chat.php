@@ -22,8 +22,8 @@ use OpenAI\Laravel\Facades\OpenAI;
  */
 class Chat extends Model implements HasDrivers
 {
-    use HasFactory;
     use HasDriversTrait;
+    use HasFactory;
 
     protected $guarded = [];
 

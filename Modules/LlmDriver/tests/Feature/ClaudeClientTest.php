@@ -15,7 +15,6 @@ use LlmLaraHub\LlmDriver\Functions\ParametersDto;
 use LlmLaraHub\LlmDriver\Functions\PropertyDto;
 use LlmLaraHub\LlmDriver\Requests\MessageInDto;
 use LlmLaraHub\LlmDriver\Responses\CompletionResponse;
-use LlmLaraHub\LlmDriver\Responses\EmbeddingsResponseDto;
 use Tests\TestCase;
 
 class ClaudeClientTest extends TestCase
@@ -27,8 +26,6 @@ class ClaudeClientTest extends TestCase
         Http::preventStrayRequests();
         Setting::factory()->all_have_keys()->create();
     }
-
-
 
     public function test_completion(): void
     {

@@ -36,7 +36,7 @@ class MockClientTest extends TestCase
                 'content' => 'test',
                 'role' => 'user',
             ]),
-            ['search_and_summarize']
+            ['search_and_summarize'],
         ]);
 
         $this->assertCount(1, $results);
