@@ -88,6 +88,20 @@ class SettingController extends Controller
         return back();
     }
 
+    public function updateMainCollection(Request $request, Setting $setting)
+    {
+        $validated = $request->validate([
+            'main_collection_prompt' => 'required',
+        ]);
+
+        $setting->main_collection_prompt = $validated['main_collection_prompt'];
+        $setting->save();
+        $setting->updateStep($setting);
+        $this->clearCache();
+
+        return back();
+    }
+
     protected function clearCache()
     {
         Artisan::call('optimize:clear');
