@@ -108,7 +108,6 @@ class OllamaClient extends BaseClient
 
         $payload = $this->modifyPayload($payload);
 
-        put_fixture('ollama_payloads.json', $payload);
         Log::info('LlmDriver::Ollama::chat', [
             'payload' => $payload,
         ]);
@@ -221,10 +220,9 @@ class OllamaClient extends BaseClient
 
     public function getFunctions(): array
     {
-        $functions = LlmDriverFacade::getFunctions();
+        $functions = parent::getFunctions();
 
         return collect($functions)->map(function ($function) {
-            $function = $function->toArray();
             $properties = [];
             $required = [];
 

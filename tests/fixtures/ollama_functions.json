@@ -2,35 +2,11 @@
     {
         "type": "function",
         "function": {
-            "name": "summarize_collection",
-            "description": "NOT FOR SEARCH, This is used when the prompt wants to summarize the entire collection of documents",
+            "name": null,
+            "description": null,
             "parameters": {
                 "type": "object",
-                "properties": {
-                    "prompt": {
-                        "description": "The prompt the user is using the search for.",
-                        "default": ""
-                    }
-                }
-            },
-            "required": [
-                "prompt"
-            ]
-        }
-    },
-    {
-        "type": "function",
-        "function": {
-            "name": "retrieve_related",
-            "description": "Used to embed users prompt, search local database and return summarized results.\n    DOES NOT SEARCH THE WEB. This is only used for local database search.",
-            "parameters": {
-                "type": "object",
-                "properties": {
-                    "prompt": {
-                        "description": "This is the prompt the user is using to search the database and may or may not assist the results.",
-                        "default": ""
-                    }
-                }
+                "properties": []
             },
             "required": []
         }
@@ -38,122 +14,92 @@
     {
         "type": "function",
         "function": {
-            "name": "standards_checker",
-            "description": "Checks the prompt data follows the standards of the documents in the collection",
+            "name": null,
+            "description": null,
             "parameters": {
                 "type": "object",
-                "properties": {
-                    "prompt": {
-                        "description": "The prompt the user is using to check standards.",
-                        "default": ""
-                    }
-                }
+                "properties": []
             },
-            "required": [
-                "prompt"
-            ]
+            "required": []
         }
     },
     {
         "type": "function",
         "function": {
-            "name": "reporting_tool",
-            "description": "Uses Reference collection to generate a report",
+            "name": null,
+            "description": null,
             "parameters": {
                 "type": "object",
-                "properties": {
-                    "prompt": {
-                        "description": "The prompt the user is using to use as solutions to the report",
-                        "default": ""
-                    }
-                }
+                "properties": []
             },
-            "required": [
-                "prompt"
-            ]
+            "required": []
         }
     },
     {
         "type": "function",
         "function": {
-            "name": "gather_info_tool",
-            "description": "This will look at all documents using your prompt then return the results after once more using your prompt",
+            "name": null,
+            "description": null,
             "parameters": {
                 "type": "object",
-                "properties": {
-                    "prompt": {
-                        "description": "Using your prompt we will look at every document, run your prompt against each one and then against the final output",
-                        "default": ""
-                    }
-                }
+                "properties": []
             },
-            "required": [
-                "prompt"
-            ]
+            "required": []
         }
     },
     {
         "type": "function",
         "function": {
-            "name": "get_web_site_from_url",
-            "description": "If you add urls to a prompt and ask the llm to get the web site using the url(s) you give it",
+            "name": null,
+            "description": null,
             "parameters": {
                 "type": "object",
-                "properties": {
-                    "url": {
-                        "description": "The URL To get",
-                        "default": ""
-                    }
-                }
+                "properties": []
             },
-            "required": [
-                "url"
-            ]
+            "required": []
         }
     },
     {
         "type": "function",
         "function": {
-            "name": "search_the_web",
-            "description": "Search the web for a topic",
+            "name": null,
+            "description": null,
             "parameters": {
                 "type": "object",
-                "properties": {
-                    "search_phrase": {
-                        "description": "1-5 words to search for",
-                        "default": ""
-                    }
-                }
+                "properties": []
             },
-            "required": [
-                "search_phrase"
-            ]
+            "required": []
         }
     },
     {
         "type": "function",
         "function": {
-            "name": "create_document",
-            "description": "Create a document in the collection of this local system",
+            "name": null,
+            "description": null,
             "parameters": {
                 "type": "object",
-                "properties": {
-                    "content": {
-                        "description": "the content to use for the document",
-                        "default": ""
-                    }
-                }
+                "properties": []
             },
-            "required": [
-                "content"
-            ]
+            "required": []
         }
     },
     {
         "type": "function",
         "function": {
-            "name": "chat_only",
-            "description": "User just wants to continue the chat no need to look in the collection for more documents",
+            "name": null,
+            "description": null,
+            "parameters": {
+                "type": "object",
+                "properties": []
+            },
+            "required": []
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": null,
+            "description": null,
             "parameters": {
                 "type": "object",
                 "properties": []

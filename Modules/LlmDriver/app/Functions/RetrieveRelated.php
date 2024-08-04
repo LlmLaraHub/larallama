@@ -115,7 +115,9 @@ class RetrieveRelated extends FunctionContract
         /** @var CompletionResponse $response */
         $response = LlmDriverFacade::driver(
             $message->getChatable()->getDriver()
-        )->chat($messages);
+        )
+            ->setToolTypes(ToolTypes::NoFunction)
+            ->chat($messages);
 
         $this->response = $response->content;
 

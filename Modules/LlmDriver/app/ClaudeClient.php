@@ -330,7 +330,7 @@ class ClaudeClient extends BaseClient
      */
     public function getFunctions(): array
     {
-        $functions = LlmDriverFacade::getFunctions();
+        $functions = parent::getFunctions();
 
         return $this->remapFunctions($functions);
     }
@@ -341,7 +341,6 @@ class ClaudeClient extends BaseClient
     public function remapFunctions(array $functions): array
     {
         return collect($functions)->map(function ($function) {
-            $function = $function->toArray();
             $properties = [];
             $required = [];
 

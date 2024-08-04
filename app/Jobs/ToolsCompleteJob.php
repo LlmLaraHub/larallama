@@ -11,6 +11,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
+use LlmLaraHub\LlmDriver\Functions\ToolTypes;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
 
 class ToolsCompleteJob implements ShouldQueue
@@ -43,7 +44,9 @@ class ToolsCompleteJob implements ShouldQueue
 
         put_fixture('messages_before_final_job_claude.json', $messages);
 
-        $response = LlmDriverFacade::driver($this->chat->chatable->getDriver())->chat($messages);
+        $response = LlmDriverFacade::driver($this->chat->chatable->getDriver())
+            ->setToolTypes(ToolTypes::NoFunction)
+            ->chat($messages);
 
         put_fixture('tool_complete_response_claude.json', $response);
 

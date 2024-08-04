@@ -14,7 +14,7 @@ class Chat extends FunctionContract
     use ChatHelperTrait, ToolsHelper;
 
     public array $toolTypes = [
-        ToolTypes::Chat,
+        ToolTypes::NoFunction,
     ];
 
     protected string $name = 'chat_only';
@@ -28,7 +28,9 @@ class Chat extends FunctionContract
 
         $messages = $message->getChat()->getChatResponse();
 
-        $response = LlmDriverFacade::driver($message->getDriver())->chat($messages);
+        $response = LlmDriverFacade::driver($message->getDriver())
+            ->setToolTypes(ToolTypes::NoFunction)
+            ->chat($messages);
 
         return FunctionResponse::from([
             'content' => $response->content,

@@ -16,16 +16,8 @@ use LlmLaraHub\LlmDriver\Functions\ToolTypes;
 
 class LlmDriverClient
 {
+
     protected $drivers = [];
-
-    protected ToolTypes $toolType;
-
-    public function setToolType(ToolTypes $toolType): self
-    {
-        $this->toolType = $toolType;
-
-        return $this;
-    }
 
     public function driver($name = null)
     {
@@ -70,42 +62,6 @@ class LlmDriverClient
         return 'mock';
     }
 
-    public function getFunctions(): array
-    {
-        $functions = collect(
-            [
-                new SummarizeCollection(),
-                new RetrieveRelated(),
-                new StandardsChecker(),
-                new ReportingTool(),
-                new GatherInfoTool(),
-                new GetWebSiteFromUrlTool(),
-                new SearchTheWeb(),
-                new CreateDocument(),
-                new Chat(),
-            ]
-        );
-
-        if (isset($this->toolType)) {
-            $functions = $functions->filter(function (FunctionContract $function) {
-                return in_array($this->toolType, $function->toolTypes);
-            });
-        }
-
-        return $functions->toArray();
-
-    }
-
-    public function getFunctionsForUi(): array
-    {
-        return collect($this->getFunctions())
-            ->map(function ($item) {
-                $item = $item->toArray();
-                $item['name_formatted'] = str($item['name'])->headline()->toString();
-
-                return $item;
-            })->toArray();
-    }
 
     /**
      * @NOTE

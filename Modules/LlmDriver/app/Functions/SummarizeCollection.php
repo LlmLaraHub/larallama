@@ -50,7 +50,9 @@ class SummarizeCollection extends FunctionContract
             'role' => 'user',
         ]);
 
-        $results = LlmDriverFacade::driver($message->getDriver())->chat($messagesArray);
+        $results = LlmDriverFacade::driver($message->getDriver())
+            ->setToolTypes(ToolTypes::NoFunction)
+            ->chat($messagesArray);
 
         $this->response = $results->content;
 

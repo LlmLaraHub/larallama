@@ -4,7 +4,18 @@ namespace LlmLaraHub\LlmDriver;
 
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Log;
+use LlmLaraHub\LlmDriver\Functions\Chat;
+use LlmLaraHub\LlmDriver\Functions\CreateDocument;
+use LlmLaraHub\LlmDriver\Functions\FunctionContract;
 use LlmLaraHub\LlmDriver\Functions\FunctionDto;
+use LlmLaraHub\LlmDriver\Functions\GatherInfoTool;
+use LlmLaraHub\LlmDriver\Functions\GetWebSiteFromUrlTool;
+use LlmLaraHub\LlmDriver\Functions\ReportingTool;
+use LlmLaraHub\LlmDriver\Functions\RetrieveRelated;
+use LlmLaraHub\LlmDriver\Functions\SearchTheWeb;
+use LlmLaraHub\LlmDriver\Functions\StandardsChecker;
+use LlmLaraHub\LlmDriver\Functions\SummarizeCollection;
+use LlmLaraHub\LlmDriver\Functions\ToolTypes;
 use LlmLaraHub\LlmDriver\Requests\MessageInDto;
 use LlmLaraHub\LlmDriver\Responses\CompletionResponse;
 use LlmLaraHub\LlmDriver\Responses\EmbeddingsResponseDto;
@@ -18,6 +29,16 @@ abstract class BaseClient
     protected bool $formatJson = false;
 
     protected ?FunctionDto $forceTool = null;
+
+
+    protected ToolTypes $toolType;
+
+    public function setToolType(ToolTypes $toolType): self
+    {
+        $this->toolType = $toolType;
+
+        return $this;
+    }
 
     public function setForceTool(FunctionDto $tool): self
     {
@@ -179,15 +200,49 @@ EOD;
 
     public function getFunctions(): array
     {
-        $functions = LlmDriverFacade::getFunctions();
+        $functions = collect(
+            [
+                new SummarizeCollection(),
+                new RetrieveRelated(),
+                new StandardsChecker(),
+                new ReportingTool(),
+                new GatherInfoTool(),
+                new GetWebSiteFromUrlTool(),
+                new SearchTheWeb(),
+                new CreateDocument(),
+                new Chat(),
+            ]
+        );
 
-        return $this->remapFunctions($functions);
+        if (isset($this->toolType)) {
+            $functions = $functions->filter(function (FunctionContract $function) {
+                return in_array($this->toolType, $function->toolTypes);
+            });
+        }
+
+        return $functions->transform(
+            function (FunctionContract $function) {
+                return $function->getFunction();
+            }
+        )->toArray();
+
     }
+
+    public function getFunctionsForUi(): array
+    {
+        return collect($this->getFunctions())
+            ->map(function ($item) {
+                $item = $item->toArray();
+                $item['name_formatted'] = str($item['name'])->headline()->toString();
+
+                return $item;
+            })->toArray();
+    }
+
 
     public function remapFunctions(array $functions): array
     {
         return collect($functions)->map(function ($function) {
-            $function = $function->toArray();
             $properties = [];
             $required = [];
 
