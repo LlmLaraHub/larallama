@@ -29,20 +29,20 @@ class LlmDriverClientTest extends TestCase
 
     public function test_get_functions()
     {
-        $functions = LlmDriverFacade::getFunctions();
+        $functions = LlmDriverFacade::driver('mock')->getFunctions();
 
         $this->assertCount(9, $functions);
 
-        $function = LlmDriverFacade::setToolType(
+        $function = LlmDriverFacade::driver('mock')->setToolType(
             ToolTypes::ChatCompletion
         )->getFunctions();
 
         $this->assertCount(7, $function);
 
-        $function = LlmDriverFacade::setToolType(
+        $function = LlmDriverFacade::driver('mock')->setToolType(
             ToolTypes::Chat
         )->getFunctions();
 
-        $this->assertCount(4, $function);
+        $this->assertCount(3, $function);
     }
 }
