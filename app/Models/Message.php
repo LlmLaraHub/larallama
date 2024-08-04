@@ -5,11 +5,9 @@ namespace App\Models;
 use App\Domains\Chat\MetaDataDto;
 use App\Domains\Chat\ToolsDto;
 use App\Domains\Messages\RoleEnum;
-use Facades\App\Domains\Orchestration\OrchestrateVersionTwo;
 use App\Events\ChatUiUpdateEvent;
 use App\Events\MessageCreatedEvent;
-use App\Jobs\OrchestrateJob;
-use App\Jobs\SimpleRetrieveRelatedOrchestrateJob;
+use Facades\App\Domains\Orchestration\OrchestrateVersionTwo;
 use Facades\App\Domains\Tokenizer\Templatizer;
 use Illuminate\Bus\Batch;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -18,10 +16,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Facades\Bus;
-use Illuminate\Support\Facades\Log;
 use LlmLaraHub\LlmDriver\HasDrivers;
 use LlmLaraHub\LlmDriver\HasDriversTrait;
-use LlmLaraHub\LlmDriver\LlmDriverFacade;
 
 class Message extends Model implements HasDrivers
 {

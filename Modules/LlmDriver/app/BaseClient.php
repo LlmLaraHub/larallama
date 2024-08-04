@@ -71,6 +71,7 @@ abstract class BaseClient
         }
 
         put_fixture('ollama_modified_payload.json', $payload);
+
         return $payload;
     }
 

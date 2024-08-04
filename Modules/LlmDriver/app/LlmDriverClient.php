@@ -2,8 +2,6 @@
 
 namespace LlmLaraHub\LlmDriver;
 
-use LlmLaraHub\LlmDriver\Functions\FunctionDto;
-
 class LlmDriverClient
 {
     protected $drivers = [];

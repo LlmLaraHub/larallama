@@ -2,9 +2,7 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Support\Arr;
 use LlmLaraHub\LlmDriver\Responses\OllamaCompletionResponse;
-use LlmLaraHub\LlmDriver\Responses\OllamaToolDto;
 use Tests\TestCase;
 
 class OllamaCompletionResponseTest extends TestCase

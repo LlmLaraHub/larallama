@@ -7,7 +7,6 @@ use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Http\Client\Pool;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Str;
 use Laravel\Pennant\Feature;
 use LlmLaraHub\LlmDriver\Requests\MessageInDto;
 use LlmLaraHub\LlmDriver\Responses\CompletionResponse;
@@ -200,6 +199,7 @@ class OllamaClient extends BaseClient
         }
 
         put_fixture('ollama_completion.json', $response->json());
+
         return OllamaCompletionResponse::from($response->json());
     }
 
