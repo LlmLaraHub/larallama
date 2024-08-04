@@ -19,6 +19,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Log;
 use LlmLaraHub\LlmDriver\HasDrivers;
+use LlmLaraHub\LlmDriver\HasDriversTrait;
 use LlmLaraHub\TagFunction\Contracts\TaggableContract;
 use LlmLaraHub\TagFunction\Helpers\Taggable;
 use LlmLaraHub\TagFunction\Jobs\TagDocumentJob;
@@ -38,6 +39,7 @@ class Document extends Model implements HasDrivers, TaggableContract
 {
     use HasFactory;
     use Taggable;
+    use HasDriversTrait;
 
     protected $guarded = [];
 
@@ -161,7 +163,7 @@ class Document extends Model implements HasDrivers, TaggableContract
 
     public static function make(
         string $content,
-        Collection $collection,
+        Collection|HasDrivers $collection,
         ?string $filePath = null
     ): Document {
         return Document::create([

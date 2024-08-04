@@ -35,9 +35,10 @@ class CreateDocument extends FunctionContract
             throw new \Exception('No Content Given');
         }
 
+        /** @phpstan-ignore-next-line */
         $document = Document::make(
             $content,
-            $message->getChat()->collection
+            $message->getChatable()
         );
 
         $document->vectorizeDocument();

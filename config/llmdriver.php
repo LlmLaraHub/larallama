@@ -28,6 +28,7 @@ return [
             ],
         ],
         'openai' => [
+            'request_timeout' => env('OPENAI_REQUEST_TIMEOUT', 120),
             'api_key' => env('OPENAI_API_KEY'),
             'api_url' => env('OPENAI_API_URL', 'https://api.openai.com/v1'),
             'models' => [

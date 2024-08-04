@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 use LlmLaraHub\LlmDriver\HasDrivers;
+use LlmLaraHub\LlmDriver\HasDriversTrait;
 
 /**
  * @property string $subject
@@ -21,6 +22,7 @@ class Source extends Model implements HasDrivers
 {
     use HasFactory;
     use SoftDeletes;
+    use HasDriversTrait;
 
     protected $guarded = [];
 
@@ -48,9 +50,10 @@ class Source extends Model implements HasDrivers
         return $this->details;
     }
 
+
     public function getChatable(): HasDrivers
     {
-        return $this->collection->getChatable();
+        return $this->collection;
     }
 
     public function getChat(): ?Chat
@@ -82,6 +85,8 @@ class Source extends Model implements HasDrivers
     {
         return $this->belongsTo(Chat::class);
     }
+
+
 
     public function getEmbeddingDriver(): string
     {

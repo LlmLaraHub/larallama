@@ -30,9 +30,6 @@ class Orchestrate
 
     protected bool $requiresFollowup = false;
 
-    /**
-     * @param  MessageInDto[]  $messagesArray
-     */
     public function handle(
         Chat $chat,
         Message $message): ?string
@@ -185,9 +182,6 @@ class Orchestrate
         return is_array($functions) && count($functions) > 0;
     }
 
-    /**
-     * @return MessageInDto[]
-     */
     protected function handleResponse(
         FunctionResponse $response,
         Chat $chat,

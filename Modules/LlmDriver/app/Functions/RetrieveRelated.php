@@ -80,14 +80,10 @@ class RetrieveRelated extends FunctionContract
             context: $context
         );
 
-        /**
-         * @TODO @WHY
-         * Why do I do this system prompt thing?
-         */
         $assistantMessage = $message->getChat()->addInput(
             message: $contentFlattened,
             role: RoleEnum::Assistant,
-            systemPrompt: $message->getChat()->getChatable()->systemPrompt(),
+            systemPrompt: '',
             show_in_thread: false,
             meta_data: $message->meta_data,
             tools: $message->tools

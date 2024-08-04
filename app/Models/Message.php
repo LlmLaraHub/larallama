@@ -19,11 +19,13 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Log;
 use LlmLaraHub\LlmDriver\HasDrivers;
+use LlmLaraHub\LlmDriver\HasDriversTrait;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
 
 class Message extends Model implements HasDrivers
 {
     use HasFactory;
+    use HasDriversTrait;
 
     public $fillable = [
         'body',
@@ -181,6 +183,8 @@ class Message extends Model implements HasDrivers
         return $this->chat->getChatable();
     }
 
+
+
     public function getChat(): ?Chat
     {
         return $this->chat;
@@ -280,4 +284,6 @@ class Message extends Model implements HasDrivers
             ->allowFailures()
             ->dispatch();
     }
+
+
 }

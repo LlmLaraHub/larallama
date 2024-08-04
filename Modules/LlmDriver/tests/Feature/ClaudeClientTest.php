@@ -28,21 +28,7 @@ class ClaudeClientTest extends TestCase
         Setting::factory()->all_have_keys()->create();
     }
 
-    /**
-     * A basic feature test example.
-     */
-    public function test_embeddings(): void
-    {
 
-        $this->markTestSkipped('@TODO: Requires another server');
-
-        $client = new ClaudeClient();
-
-        $results = $client->embedData('test');
-
-        $this->assertInstanceOf(EmbeddingsResponseDto::class, $results);
-
-    }
 
     public function test_completion(): void
     {

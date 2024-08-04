@@ -332,7 +332,7 @@ EOD;
      * Some systems like Claude have to do this
      * So adding it here as a standar options
      *
-     * @param  MessageInDto[]  $messagess
+     * @param  MessageInDto[]  $messages
      */
     public function remapMessages(array $messages): array
     {

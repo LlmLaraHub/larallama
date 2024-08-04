@@ -35,7 +35,7 @@ class LlmServiceProvider extends ServiceProvider
                 throw new \Exception('OpenAI API Key is missing');
             }
 
-            $timeout = Setting::getSecret('openai', 'request_timeout', 120);
+            $timeout = config('llmdriver.openai.request_timeout', 120);
 
             return \OpenAI::factory()
                 ->withApiKey($apiKey)

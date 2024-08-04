@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use LlmLaraHub\LlmDriver\HasDrivers;
+use LlmLaraHub\LlmDriver\HasDriversTrait;
 
 /**
  * @property StatusEnum $status_sections_generation
@@ -18,6 +19,7 @@ use LlmLaraHub\LlmDriver\HasDrivers;
 class Report extends Model implements HasDrivers
 {
     use HasFactory;
+    use HasDriversTrait;
     use SoftDeletes;
 
     protected $guarded = [];

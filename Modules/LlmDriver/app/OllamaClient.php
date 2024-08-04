@@ -267,17 +267,19 @@ class OllamaClient extends BaseClient
         return 'ollama';
     }
 
+    /**
+     * @param MessageInDto[] $messages
+     * @return array
+     */
     public function remapMessages(array $messages): array
     {
-        put_fixture('ollama_messages_before_remap.json', $messages);
-        $messages = collect($messages)->transform(function ($message) {
-            return collect($message->toArray())->only(['content', 'role', 'tool_calls', 'tool_used', 'input_tokens', 'output_tokens', 'model'])->toArray();
+        $messages = collect($messages)->transform(function (MessageInDto $message): array {
+            return collect($message->toArray())
+                ->only(['content', 'role', 'tool_calls', 'tool_used', 'input_tokens', 'output_tokens', 'model'])
+                ->toArray();
         })->toArray();
 
-        if (in_array($this->getConfig('ollama')['models']['completion_model'], [
-            'llama3.1',
-            'llama3',
-        ])) {
+        if (in_array($this->getConfig('ollama')['models']['completion_model'], ['llama3.1', 'llama3'])) {
             Log::info('[LaraChain] LlmDriver::OllamaClient::remapMessages');
             $messages = collect($messages)->reverse();
         }
@@ -285,6 +287,5 @@ class OllamaClient extends BaseClient
         put_fixture('ollama_messages_after_remap.json', $messages->values()->toArray());
 
         return $messages->values()->toArray();
-
     }
 }

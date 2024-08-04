@@ -214,6 +214,7 @@ class OpenAiClient extends BaseClient
 
     public function getContentAndToolTypeFromResults(Response $results): array
     {
+        $data = '';
         $results = $results->json();
         $tool_used = null;
         $stop_reason = data_get($results, 'choices.0.finish_reason', 'stop');

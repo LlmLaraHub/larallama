@@ -15,7 +15,12 @@ class MockClientTest extends TestCase
 
         $client = new MockClient();
 
-        $results = $client->functionPromptChat(['test']);
+        $results = $client->functionPromptChat([
+            MessageInDto::from([
+                'content' => 'test',
+                'role' => 'user',
+            ]),
+        ]);
 
         $this->assertCount(1, $results);
 
@@ -26,7 +31,13 @@ class MockClientTest extends TestCase
     {
         $client = new MockClient();
 
-        $results = $client->functionPromptChat(['test'], ['search_and_summarize']);
+        $results = $client->functionPromptChat([
+            MessageInDto::from([
+                'content' => 'test',
+                'role' => 'user',
+            ]),
+            ['search_and_summarize']
+        ]);
 
         $this->assertCount(1, $results);
     }

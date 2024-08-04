@@ -7,6 +7,7 @@ use App\Domains\UnStructured\StructuredTypeEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use LlmLaraHub\LlmDriver\HasDrivers;
+use LlmLaraHub\LlmDriver\HasDriversTrait;
 use LlmLaraHub\TagFunction\Contracts\TaggableContract;
 use LlmLaraHub\TagFunction\Helpers\Taggable;
 use Pgvector\Laravel\HasNeighbors;
@@ -20,6 +21,7 @@ class DocumentChunk extends Model implements HasDrivers, TaggableContract
 {
     use HasFactory;
     use HasNeighbors;
+    use HasDriversTrait;
     use Taggable;
 
     protected $casts = [
