@@ -4,16 +4,169 @@
     "messages": [
         {
             "role": "user",
-            "content": "using the follow requirements list what are some solutions we have in this collection.\nWhen you find them just share a 1 liner to explain what they are about and another as to why you chose it\n\n---- requirements below ---\n# Request for Proposal: Website Enhancement and API Integration\n## 1. Introduction\nOur company, TechInnovate Solutions, is seeking proposals from qualified web development\nagencies or freelance developers to enhance our existing website and resolve critical issues\nwith our API and frontend components. This project aims to improve our website's\nfunctionality, performance, and user experience.\n## 2. Company Background\nTechInnovate Solutions is a leading provider of cloud-based software solutions for small to\nmedium-sized businesses. Founded in 2015, we have grown to serve over 10,000 customers\nacross North America. Our flagship product, CloudManage Pro, helps businesses streamline\ntheir operations, manage customer relationships, and optimize their supply chain processes.\n## 3. Project Overview\nWe are looking to address two main issues with our current website:\n1. API Integration Problem: Our website's backend, built with Laravel, is experiencing issues\nwith API calls, affecting data retrieval and submission processes.\n2. Frontend Banner Quality: The VueJS-powered banner on our homepage is displaying low-\nquality images, impacting the overall user experience and brand perception.\n## 4. Scope of Work\n### 4.1 API Issue Resolution\n- Diagnose the current API integration problems\n- Implement necessary fixes to ensure smooth data flow between frontend and backend\n- Optimize API calls for improved performance\n- Ensure proper error handling and logging\n- Update API documentation as needed\n### 4.2 VueJS Banner Enhancement\n- Investigate the cause of low-quality images in the banner\n- Implement image optimization techniques\n- Ensure responsive design across various devices and screen sizes\n- Improve loading times for banner images\n- Implement lazy loading if appropriate\n### 4.3 General Improvements\n- Conduct a brief audit of the existing codebase\n- Suggest and implement any critical optimizations\n- Ensure cross-browser compatibility\n- Improve overall website performance\n## 5. Technical Requirements\n### 5.1 Backend\n- Laravel framework (version 8.0 or higher)\n- PHP 7.4 or higher\n- MySQL database\n- RESTful API architecture\n### 5.2 Frontend\n- VueJS framework (version 3.0 or higher)\n- HTML5, CSS3, JavaScript\n- Responsive design principles\n- Modern browser compatibility (Chrome, Firefox, Safari, Edge)\n## 6. Deliverables\n1. Fully functional API with resolved integration issues\n2. Optimized VueJS banner with high-quality images\n3. Updated codebase with implemented improvements\n4. Comprehensive documentation of changes and optimizations\n5. Knowledge transfer session with our in-house development team\n## 7. Timeline\nWe anticipate this project to be completed within 2-3 weeks from the start date. Here's a\nproposed timeline:\n- Week 1: API diagnosis and initial fixes\n- Week 2: VueJS banner optimization and general improvements\n- Week 3: Final testing, documentation, and knowledge transfer\n## 8. Budget\nWhile we value quality work, we also have budget constraints. We are looking for the most\ncost-effective solution that meets our requirements. Please provide a detailed breakdown of\nyour costs in your proposal.\n## 9. Proposal Requirements\nYour proposal should include:\n1. Company\/Individual overview and relevant experience\n2. Detailed approach to solving our issues\n3. Proposed timeline\n4. Cost breakdown\n5. Team structure (if applicable)\n6. At least two references from similar projects\n## 10. Evaluation Criteria\nProposals will be evaluated based on the following criteria:\n1. Technical expertise (40%)\n2. Proposed approach and methodology (25%)\n3. Cost effectiveness (20%)\n4. Timeline and ability to meet deadlines (10%)\n5. References and past performance (5%)\n## 11. Submission Guidelines\nPlease submit your proposal in PDF format to rfp@techinnovatesolutions.com by [Insert Date].\nThe subject line should read \"Proposal - Website Enhancement Project\".\n## 12. Contact Information\nFor any questions or clarifications regarding this RFP, please contact:\nJohn Doe\nProject Manager, TechInnovate Solutions\nEmail: john.doe@techinnovatesolutions.com\nPhone: (555) 123-4567\nWe look forward to reviewing your proposals and potentially working with you to enhance our\nwebsite and improve our user experience."
+            "content": "test"
         },
         {
             "role": "assistant",
-            "content": "Based on the requirements and the solutions presented in our conversation, here are some relevant solutions from our collection:\n\n1. Experienced Laravel developer:\n   One-liner: Developer with extensive Laravel experience, including 10 years as a lead contractor at Pfizer.\n   Why chosen: Directly addresses the technical expertise requirement for Laravel backend development.\n\n2. Full-stack development capability:\n   One-liner: Comprehensive development skills covering both backend (API) and frontend (VueJS) issues.\n   Why chosen: Aligns with the project's need for both API resolution and frontend banner enhancement.\n\n3. Build-measure-learn philosophy:\n   One-liner: Iterative development approach focusing on continuous improvement and optimization.\n   Why chosen: Fits the project's timeline and scope, allowing for ongoing refinement of both API and frontend components.\n\n4. Filament for Laravel:\n   One-liner: Powerful admin panel and application framework for Laravel.\n   Why chosen: Can address API integration issues and provide an easy-to-use interface for managing backend operations.\n\n5. Inertia and Vue for the frontend:\n   One-liner: Approach combining Inertia and Vue for seamless frontend development.\n   Why chosen: Aligns with the VueJS requirements and can help resolve frontend banner quality issues.\n\n6. Agile development approach:\n   One-liner: Iterative development with frequent feedback and adjustments.\n   Why chosen: Matches the need for flexibility and rapid development within the tight project timeline.\n\n7. Performance optimization techniques:\n   One-liner: Methods to enhance website speed and responsiveness.\n   Why chosen: Directly addresses the requirement for improving loading times and overall website performance."
+            "content": "test 1"
         },
         {
             "role": "user",
-            "content": "can you tldr this thread for me"
+            "content": "Using the surrounding context to continue this response thread"
+        },
+        {
+            "role": "assistant",
+            "content": "test 2"
+        },
+        {
+            "role": "user",
+            "content": "Using the surrounding context to continue this response thread"
+        },
+        {
+            "role": "assistant",
+            "content": "test 3"
         }
     ],
-    "tools": []
+    "tools": [
+        {
+            "name": "summarize_collection",
+            "description": "NOT FOR SEARCH, This is used when the prompt wants to summarize the entire collection of documents",
+            "input_schema": {
+                "type": "object",
+                "properties": {
+                    "prompt": {
+                        "description": "The prompt the user is using the search for.",
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "prompt"
+                ]
+            }
+        },
+        {
+            "name": "retrieve_related",
+            "description": "Used to embed users prompt, search local database and return summarized results.\n    DOES NOT SEARCH THE WEB. This is only used for local database search.",
+            "input_schema": {
+                "type": "object",
+                "properties": {
+                    "prompt": {
+                        "description": "This is the prompt the user is using to search the database and may or may not assist the results.",
+                        "type": "string"
+                    }
+                },
+                "required": []
+            }
+        },
+        {
+            "name": "standards_checker",
+            "description": "Checks the prompt data follows the standards of the documents in the collection",
+            "input_schema": {
+                "type": "object",
+                "properties": {
+                    "prompt": {
+                        "description": "The prompt the user is using to check standards.",
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "prompt"
+                ]
+            }
+        },
+        {
+            "name": "reporting_tool",
+            "description": "Uses Reference collection to generate a report",
+            "input_schema": {
+                "type": "object",
+                "properties": {
+                    "prompt": {
+                        "description": "The prompt the user is using to use as solutions to the report",
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "prompt"
+                ]
+            }
+        },
+        {
+            "name": "gather_info_tool",
+            "description": "This will look at all documents using your prompt then return the results after once more using your prompt",
+            "input_schema": {
+                "type": "object",
+                "properties": {
+                    "prompt": {
+                        "description": "Using your prompt we will look at every document, run your prompt against each one and then against the final output",
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "prompt"
+                ]
+            }
+        },
+        {
+            "name": "get_web_site_from_url",
+            "description": "If you add urls to a prompt and ask the llm to get the web site using the url(s) you give it",
+            "input_schema": {
+                "type": "object",
+                "properties": {
+                    "url": {
+                        "description": "The URL To get",
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "url"
+                ]
+            }
+        },
+        {
+            "name": "search_the_web",
+            "description": "Search the web for a topic ONLY if the user asks for web search",
+            "input_schema": {
+                "type": "object",
+                "properties": {
+                    "search_phrase": {
+                        "description": "1-5 words to search for",
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "search_phrase"
+                ]
+            }
+        },
+        {
+            "name": "create_document",
+            "description": "Create or Save a document into the collection of this local system using the content provided",
+            "input_schema": {
+                "type": "object",
+                "properties": {
+                    "content": {
+                        "description": "the content to use for the document",
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "content"
+                ]
+            }
+        },
+        {
+            "name": "chat_only",
+            "description": "User just wants to continue the chat no need to look in the collection for more documents",
+            "input_schema": {
+                "type": "object",
+                "properties": {
+                    "prompt": {
+                        "description": "the prompt to go with the chat",
+                        "type": "string"
+                    }
+                },
+                "required": []
+            }
+        }
+    ]
 }

@@ -10,7 +10,7 @@ use App\Models\Filter;
 use App\Models\Message;
 use App\Models\Report;
 use App\Models\User;
-use Facades\LlmLaraHub\LlmDriver\Orchestrate;
+use Facades\App\Domains\Orchestration\OrchestrateVersionTwo;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Queue;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
@@ -77,14 +77,12 @@ class MessageTest extends TestCase
             'user_id' => $user->id,
         ]);
 
-        Orchestrate::shouldReceive('handle')->never();
+        OrchestrateVersionTwo::shouldReceive('handle')->once();
 
         $firstResponse = CompletionResponse::from([
             'content' => 'test',
             'stop_reason' => 'stop',
         ]);
-
-        LlmDriverFacade::shouldReceive('driver->hasFunctions')->once()->andReturn(false);
 
         $message = Message::factory()->user()->create([
             'tool' => 'completion',
@@ -106,13 +104,13 @@ class MessageTest extends TestCase
             'user_id' => $user->id,
         ]);
 
-        Orchestrate::shouldReceive('handle')->never();
+        OrchestrateVersionTwo::shouldReceive('handle')->once();
 
         $firstResponse = CompletionResponse::from([
             'content' => 'test',
         ]);
 
-        LlmDriverFacade::shouldReceive('driver->chat')->once()->andReturn($firstResponse);
+        LlmDriverFacade::shouldReceive('driver->chat')->never();
 
         $message = Message::factory()->user()->create([
             'chat_id' => $chat->id,
@@ -130,6 +128,6 @@ class MessageTest extends TestCase
 
         $messageAssistant->reRun();
 
-        $this->assertDatabaseCount('messages', 2);
+        $this->assertDatabaseCount('messages', 1);
     }
 }

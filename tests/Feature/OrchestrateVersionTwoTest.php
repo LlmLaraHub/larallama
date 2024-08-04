@@ -7,7 +7,7 @@ use App\Models\Collection;
 use App\Models\Message;
 use Illuminate\Support\Facades\Bus;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
-use LlmLaraHub\LlmDriver\Responses\OllamaCompletionResponse;
+use LlmLaraHub\LlmDriver\Responses\OllamaChatCompletionResponse;
 use Tests\TestCase;
 
 class OrchestrateVersionTwoTest extends TestCase
@@ -22,7 +22,7 @@ class OrchestrateVersionTwoTest extends TestCase
         $data = get_fixture('ollama_response_tools.json');
 
         LlmDriverFacade::shouldReceive('driver->setToolType->chat')->once()->andReturn(
-            OllamaCompletionResponse::from($data)
+            OllamaChatCompletionResponse::from($data)
         );
 
         $prompt = <<<'PROMPT'

@@ -119,6 +119,7 @@ class OllamaClient extends BaseClient
         }
 
         put_fixture('ollama_chat_response.json', $response->json());
+
         return OllamaChatCompletionResponse::from($response->json());
     }
 
@@ -151,7 +152,7 @@ class OllamaClient extends BaseClient
 
                 $payload = $this->modifyPayload($payload, true);
 
-                Log::info('Ollama Request index ' . $index);
+                Log::info('Ollama Request index '.$index);
 
                 $pool->withHeaders([
                     'content-type' => 'application/json',
@@ -281,7 +282,6 @@ class OllamaClient extends BaseClient
                 ->only(['content', 'role', 'tool_calls', 'tool_used', 'input_tokens', 'output_tokens', 'model'])
                 ->toArray();
         })->toArray();
-
 
         return $messages;
     }

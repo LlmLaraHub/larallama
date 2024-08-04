@@ -154,11 +154,9 @@ class OrchestrateVersionTwo
 
     protected function justChat(Chat $chat, Message $message, ToolTypes $toolType): void
     {
-        Log::info('[LaraChain] - Just Chatting ' . $chat->getDriver());
+        Log::info('[LaraChain] - Just Chatting '.$chat->getDriver());
 
         $messages = $chat->getChatResponse();
-
-        put_fixture('orchestrate_messages_first_send.json', $messages);
 
         $response = LlmDriverFacade::driver($chat->getDriver())
             ->setToolType($toolType)

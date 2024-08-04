@@ -10,7 +10,7 @@ use App\Models\Collection;
 use App\Models\Message;
 use App\Models\User;
 use Facades\App\Domains\Agents\VerifyResponseAgent;
-use Facades\LlmLaraHub\LlmDriver\Orchestrate;
+use Facades\App\Domains\Orchestration\OrchestrateVersionTwo;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
 use LlmLaraHub\LlmDriver\Responses\CompletionResponse;
 use Tests\TestCase;
@@ -44,7 +44,7 @@ class ChatControllerTest extends TestCase
             'user_id' => $user->id,
         ]);
 
-        Orchestrate::shouldReceive('handle')->never();
+        OrchestrateVersionTwo::shouldReceive('handle')->never();
 
         $firstResponse = CompletionResponse::from([
             'content' => 'test',
@@ -89,7 +89,7 @@ class ChatControllerTest extends TestCase
             'user_id' => $user->id,
         ]);
 
-        Orchestrate::shouldReceive('handle')->once()->andReturn('Yo');
+        OrchestrateVersionTwo::shouldReceive('handle')->once();
 
         $this->assertDatabaseCount('messages', 0);
         $this->actingAs($user)->post(route('chats.messages.create', [
@@ -117,7 +117,7 @@ class ChatControllerTest extends TestCase
             'user_id' => $user->id,
         ]);
 
-        Orchestrate::shouldReceive('handle')->once()->andReturn('Yo');
+        OrchestrateVersionTwo::shouldReceive('handle')->once();
         $this->actingAs($user)->post(route('chats.messages.create', [
             'chat' => $chat->id,
         ]),
@@ -142,7 +142,7 @@ class ChatControllerTest extends TestCase
             'user_id' => $user->id,
         ]);
 
-        Orchestrate::shouldReceive('handle')->once()->andReturn('Yo');
+        OrchestrateVersionTwo::shouldReceive('handle')->once()->andReturn('Yo');
 
         $this->assertDatabaseCount('messages', 0);
         $this->actingAs($user)->post(route('chats.messages.create', [
@@ -179,7 +179,7 @@ class ChatControllerTest extends TestCase
 
     public function test_standard_checker()
     {
-        Orchestrate::shouldReceive('handle')->once()->andReturn('Yo');
+        OrchestrateVersionTwo::shouldReceive('handle')->once()->andReturn('Yo');
 
         $user = User::factory()->create();
         $collection = Collection::factory()->create();

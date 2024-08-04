@@ -43,14 +43,14 @@ class LlmDriverClientTest extends TestCase
             ToolTypes::Chat
         )->getFunctions();
 
-        $this->assertCount(3, $function);
+        $this->assertCount(0, $function);
     }
 
     public function test_get_functions_for_ui()
     {
         $functions = LlmDriverFacade::getFunctionsForUi();
 
-        $this->assertCount(9, $functions);
+        $this->assertCount(8, $functions);
 
     }
 }
