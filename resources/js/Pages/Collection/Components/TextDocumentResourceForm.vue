@@ -3,7 +3,6 @@
 
         <div class="col-span-6 sm:col-span-6">
             <InputLabel value="Name" />
-            {{ modelValue.name }}
             <TextInput v-model="modelValue.name" type="text" class="mt-1 block w-full" />
             <InputError :message="modelValue.errors.name" class="mt-2" />
         </div>
