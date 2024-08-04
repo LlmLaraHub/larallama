@@ -4,6 +4,7 @@ namespace LlmLaraHub\LlmDriver;
 
 use LlmLaraHub\LlmDriver\Functions\Chat;
 use LlmLaraHub\LlmDriver\Functions\CreateDocument;
+use LlmLaraHub\LlmDriver\Functions\FunctionContract;
 use LlmLaraHub\LlmDriver\Functions\GatherInfoTool;
 use LlmLaraHub\LlmDriver\Functions\GetWebSiteFromUrlTool;
 use LlmLaraHub\LlmDriver\Functions\ReportingTool;
@@ -11,10 +12,20 @@ use LlmLaraHub\LlmDriver\Functions\RetrieveRelated;
 use LlmLaraHub\LlmDriver\Functions\SearchTheWeb;
 use LlmLaraHub\LlmDriver\Functions\StandardsChecker;
 use LlmLaraHub\LlmDriver\Functions\SummarizeCollection;
+use LlmLaraHub\LlmDriver\Functions\ToolTypes;
 
 class LlmDriverClient
 {
     protected $drivers = [];
+
+    protected ToolTypes $toolType;
+
+    public function setToolType(ToolTypes $toolType): self
+    {
+        $this->toolType = $toolType;
+
+        return $this;
+    }
 
     public function driver($name = null)
     {
@@ -61,17 +72,28 @@ class LlmDriverClient
 
     public function getFunctions(): array
     {
-        return [
-            (new SummarizeCollection())->getFunction(),
-            (new RetrieveRelated())->getFunction(),
-            (new StandardsChecker())->getFunction(),
-            (new ReportingTool())->getFunction(),
-            (new GatherInfoTool())->getFunction(),
-            (new GetWebSiteFromUrlTool())->getFunction(),
-            (new SearchTheWeb())->getFunction(),
-            (new CreateDocument())->getFunction(),
-            (new Chat())->getFunction(),
-        ];
+        $functions = collect(
+            [
+                new SummarizeCollection(),
+                new RetrieveRelated(),
+                new StandardsChecker(),
+                new ReportingTool(),
+                new GatherInfoTool(),
+                new GetWebSiteFromUrlTool(),
+                new SearchTheWeb(),
+                new CreateDocument(),
+                new Chat(),
+            ]
+        );
+
+        if (isset($this->toolType)) {
+            $functions = $functions->filter(function (FunctionContract $function) {
+                return in_array($this->toolType, $function->toolTypes);
+            });
+        }
+
+        return $functions->toArray();
+
     }
 
     public function getFunctionsForUi(): array

@@ -13,6 +13,11 @@ class CreateDocument extends FunctionContract
 {
     use ChatHelperTrait, ToolsHelper;
 
+    public array $toolTypes = [
+        ToolTypes::Source,
+        ToolTypes::Chat,
+    ];
+
     protected string $name = 'create_document';
 
     protected string $description = 'Create a document in the collection of this local system';

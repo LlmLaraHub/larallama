@@ -16,6 +16,13 @@ class SearchTheWeb extends FunctionContract
 {
     use ChatHelperTrait, ToolsHelper;
 
+    public array $toolTypes = [
+        ToolTypes::ChatCompletion,
+        ToolTypes::Source,
+        ToolTypes::Output,
+        ToolTypes::Chat,
+    ];
+
     protected string $name = 'search_the_web';
 
     protected string $description = 'Search the web for a topic';

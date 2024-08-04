@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use LlmLaraHub\LlmDriver\Functions\ToolTypes;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
 use LlmLaraHub\LlmDriver\MockClient;
 use LlmLaraHub\LlmDriver\OpenAiClient;
@@ -28,6 +29,20 @@ class LlmDriverClientTest extends TestCase
 
     public function test_get_functions()
     {
-        $this->assertNotEmpty(LlmDriverFacade::getFunctions());
+        $functions = LlmDriverFacade::getFunctions();
+
+        $this->assertCount(9, $functions);
+
+        $function = LlmDriverFacade::setToolType(
+            ToolTypes::ChatCompletion
+        )->getFunctions();
+
+        $this->assertCount(7, $function);
+
+        $function = LlmDriverFacade::setToolType(
+            ToolTypes::Chat
+        )->getFunctions();
+
+        $this->assertCount(4, $function);
     }
 }

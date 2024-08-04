@@ -18,6 +18,10 @@ class RetrieveRelated extends FunctionContract
 {
     use CreateReferencesTrait;
 
+    public array $toolTypes = [
+        ToolTypes::ChatCompletion,
+    ];
+
     protected string $name = 'retrieve_related';
 
     protected string $description = 'Used to embed users prompt, search local database and return summarized results.

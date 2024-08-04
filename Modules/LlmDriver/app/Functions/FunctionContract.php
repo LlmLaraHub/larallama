@@ -10,6 +10,14 @@ abstract class FunctionContract
 {
     protected string $name;
 
+    public array $toolTypes = [
+        ToolTypes::Chat,
+        ToolTypes::ChatCompletion,
+        ToolTypes::Source,
+        ToolTypes::Output,
+        ToolTypes::NoFunction,
+    ];
+
     protected string $description;
 
     protected string $type = 'object';

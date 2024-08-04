@@ -12,6 +12,7 @@ use App\Models\PromptHistory;
 use Illuminate\Bus\Batch;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Log;
+use LlmLaraHub\LlmDriver\Functions\ToolTypes;
 use LlmLaraHub\LlmDriver\Helpers\CreateReferencesTrait;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
 use LlmLaraHub\LlmDriver\ToolsHelper;
@@ -102,6 +103,7 @@ class OrchestrateVersionTwo
         put_fixture('orchestrate_messages_fist_send.json', $messages);
 
         $response = LlmDriverFacade::driver($message->getDriver())
+            ->setToolTypes(ToolTypes::ChatCompletion)
             ->chat($messages);
 
         if (! empty($response->tool_calls)) {

@@ -12,6 +12,13 @@ class GetWebSiteFromUrlTool extends FunctionContract
 {
     use ToolsHelper;
 
+    public array $toolTypes = [
+        ToolTypes::ChatCompletion,
+        ToolTypes::Source,
+        ToolTypes::Output,
+        ToolTypes::Chat,
+    ];
+
     protected string $name = 'get_web_site_from_url';
 
     protected string $description = 'If you add urls to a prompt and ask the llm to get the web site using the url(s) you give it';

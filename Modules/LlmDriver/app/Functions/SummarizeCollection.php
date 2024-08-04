@@ -17,6 +17,10 @@ class SummarizeCollection extends FunctionContract
 
     protected string $response = '';
 
+    public array $toolTypes = [
+        ToolTypes::ChatCompletion,
+    ];
+
     public function handle(
         Message $message): FunctionResponse
     {

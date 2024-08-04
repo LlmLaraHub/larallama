@@ -13,6 +13,10 @@ class Chat extends FunctionContract
 {
     use ChatHelperTrait, ToolsHelper;
 
+    public array $toolTypes = [
+        ToolTypes::Chat,
+    ];
+
     protected string $name = 'chat_only';
 
     protected string $description = 'User just wants to continue the chat no need to look in the collection for more documents';
