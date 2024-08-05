@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\Setting;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class CopySeeder extends Seeder
@@ -15,10 +14,10 @@ class CopySeeder extends Seeder
     {
         $setting = Setting::first();
 
-        if($setting) {
+        if ($setting) {
             $mainPrompt = $setting->main_collection_prompt;
-            if(!$mainPrompt) {
-                $prompt = <<<PROMPT
+            if (! $mainPrompt) {
+                $prompt = <<<'PROMPT'
 Your primary function is to assist users in interacting with their "collection" of data within a Retrieval Augmented Generation (RAG) system. This collection comprises documents uploaded by the user or imported from web searches, serving as contextual information for our interactions.
 Your responsibilities include:
 1. Answering questions based on the provided context

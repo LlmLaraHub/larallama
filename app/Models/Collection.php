@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use LlmLaraHub\LlmDriver\DriversEnum;
 use LlmLaraHub\LlmDriver\HasDrivers;
-use LlmLaraHub\LlmDriver\HasDriversTrait;
 use LlmLaraHub\TagFunction\Contracts\TaggableContract;
 use LlmLaraHub\TagFunction\Helpers\Taggable;
 
@@ -48,7 +47,6 @@ class Collection extends Model implements HasDrivers, TaggableContract
     {
         return $this->description;
     }
-
 
     public function filters(): HasMany
     {

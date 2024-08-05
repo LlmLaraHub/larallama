@@ -3,7 +3,6 @@
 namespace LlmLaraHub\LlmDriver\Functions;
 
 use App\Helpers\ChatHelperTrait;
-use App\Models\Document;
 use App\Models\Message;
 use Illuminate\Support\Facades\Log;
 use LlmLaraHub\LlmDriver\Responses\FunctionResponse;
@@ -26,9 +25,8 @@ class SatisfyToolsRequired extends FunctionContract
     {
         Log::info('[LaraChain] SatisfyToolsRequired');
 
-
         return FunctionResponse::from([
-            'content' => "Should not be called",
+            'content' => 'Should not be called',
             'prompt' => $message->getPrompt(),
             'requires_followup' => false,
             'documentChunks' => collect([]),
