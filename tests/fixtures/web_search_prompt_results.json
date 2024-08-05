@@ -1,0 +1,9 @@
+{
+    "content": "[]",
+    "stop_reason": "tool_use",
+    "tool_used": "create_document",
+    "tool_calls": [],
+    "input_tokens": 1526,
+    "output_tokens": 274,
+    "model": null
+}

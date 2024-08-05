@@ -11,10 +11,7 @@ trait HasDriversTrait
         return $this->getChatable()->documents();
     }
 
-    public function description(): string
-    {
-        return $this->getChatable()->description();
-    }
+
 
     public function systemPrompt(): string
     {

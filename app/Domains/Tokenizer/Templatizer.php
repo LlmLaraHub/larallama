@@ -2,6 +2,8 @@
 
 namespace App\Domains\Tokenizer;
 
+use App\Models\Setting;
+
 class Templatizer
 {
     protected string $content;
@@ -11,6 +13,7 @@ class Templatizer
     protected ?string $replacement;
 
     protected bool $appendContext = false;
+    protected bool $addMainCollectionPrompt = false;
 
     public static function getTokens(): array
     {
@@ -46,6 +49,12 @@ class Templatizer
             }
         }
 
+        if($this->addMainCollectionPrompt) {
+            $this->content = str($this->content)
+                ->prepend(Setting::first()?->main_collection_prompt)
+                ->toString();
+        }
+
         return $this->content;
 
     }
@@ -79,6 +88,12 @@ class Templatizer
     {
         $this->appendContext = $appendContext;
 
+        return $this;
+    }
+
+    public function setMainCollectionPromptOn(): self
+    {
+        $this->addMainCollectionPrompt = true;
         return $this;
     }
 

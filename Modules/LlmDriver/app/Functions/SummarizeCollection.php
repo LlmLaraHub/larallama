@@ -43,6 +43,7 @@ class SummarizeCollection extends FunctionContract
         $content = $message->getContent();
 
         $prompt = Templatizer::appendContext(true)
+            ->setMainCollectionPromptOn()
             ->handle(
                 content: $content,
                 replacement: $summary,

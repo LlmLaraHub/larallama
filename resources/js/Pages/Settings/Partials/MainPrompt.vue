@@ -9,6 +9,7 @@ import PrimaryButton from '@/Components/PrimaryButton.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import SecretInput from "@/Components/SecretInput.vue";
+import TextArea from "@/Components/TextArea.vue";
 
 const props = defineProps({
     setting: Object,
@@ -16,19 +17,16 @@ const props = defineProps({
 
 const form = useForm({
     _method: 'PUT',
-    api_key: props.setting.secrets?.openai?.api_key,
-    api_url: props.setting.secrets?.openai?.api_url,
-    organization: props.setting.secrets?.openai?.organization,
-    request_timeout: props.setting.secrets?.openai?.request_timeout,
+    main_collection_prompt: props.setting.main_collection_prompt,
 });
 
 
 const updateSecrets = () => {
 
-    form.put(route('settings.update.open_ai', {
+    form.put(route('settings.update.main_collection', {
         setting: props.setting.id,
     }), {
-        errorBag: 'updateProfileInformation',
+        errorBag: 'updateMainCollection',
         preserveScroll: true,
     });
 };
@@ -37,63 +35,27 @@ const updateSecrets = () => {
 <template>
     <FormSection @submitted="updateSecrets">
         <template #title>
-            Add OpenAI Token and Url
+            Main Collection Prompt
         </template>
 
         <template #description>
-            If you want to use this service make sure to setup your API Token.
-            You can leave the url as is unless you are using Azure for example.
-            You can get your keys
-            <a
-                class="underline"
-                href="https://platform.openai.com/api-keys" target="_blank">here</a>
+            This will guide the overall chat experience while in the Collection.
+            The LLM will use this to help guide it.
         </template>
 
         <template #form>
 
 
-            <!-- Name -->
-            <div class="col-span-6 sm:col-span-4">
-                <InputLabel for="name" value="Api Token" />
-                <SecretInput
-                    v-model="form.api_key" class="mt-1 block w-full" />
 
-                <InputError :message="form.errors.api_key" class="mt-2" />
-
-            </div>
 
             <div class="col-span-6 sm:col-span-4">
-                <InputLabel for="name" value="Api Url" />
-                <TextInput
+                <InputLabel for="organization" value="Main Collection Prompt" />
+                <TextArea
                     id="name"
-                    v-model="form.api_url"
-                    type="text"
-                    class="mt-1 block w-full"
-                    required
-                />
-                <InputError :message="form.errors.api_url" class="mt-2" />
-            </div>
-
-            <div class="col-span-6 sm:col-span-4">
-                <InputLabel for="organization" value="Organization" />
-                <TextInput
-                    id="name"
-                    v-model="form.organization"
-                    type="text"
+                    v-model="form.main_collection_prompt"
                     class="mt-1 block w-full"
                 />
-                <InputError :message="form.errors.organization" class="mt-2" />
-            </div>
-
-            <div class="col-span-6 sm:col-span-4">
-                <InputLabel for="organization" value="RequestTimeout" />
-                <TextInput
-                    id="name"
-                    v-model="form.request_timeout"
-                    type="text"
-                    class="mt-1 block w-full"
-                />
-                <InputError :message="form.errors.request_timeout" class="mt-2" />
+                <InputError :message="form.errors.main_collection_prompt" class="mt-2" />
             </div>
         </template>
 

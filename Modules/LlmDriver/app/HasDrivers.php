@@ -19,7 +19,6 @@ interface HasDrivers
 
     public function documents(): HasMany;
 
-    public function description(): string;
 
     public function getChatable(): HasDrivers;
 

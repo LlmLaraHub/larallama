@@ -12,6 +12,7 @@ use LlmLaraHub\LlmDriver\Functions\GatherInfoTool;
 use LlmLaraHub\LlmDriver\Functions\GetWebSiteFromUrlTool;
 use LlmLaraHub\LlmDriver\Functions\ReportingTool;
 use LlmLaraHub\LlmDriver\Functions\RetrieveRelated;
+use LlmLaraHub\LlmDriver\Functions\SatisfyToolsRequired;
 use LlmLaraHub\LlmDriver\Functions\SearchTheWeb;
 use LlmLaraHub\LlmDriver\Functions\StandardsChecker;
 use LlmLaraHub\LlmDriver\Functions\SummarizeCollection;
@@ -97,6 +98,11 @@ class LlmServiceProvider extends ServiceProvider
         $this->app->bind('chat_only', function () {
             return new Chat();
         });
+
+        $this->app->bind('satisfy_tools_required', function () {
+            return new SatisfyToolsRequired();
+        });
+
 
     }
 

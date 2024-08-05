@@ -382,7 +382,7 @@ class ClaudeClient extends BaseClient
                     'required' => $required,
                 ],
             ];
-        })->toArray();
+        })->values()->toArray();
     }
 
     /**

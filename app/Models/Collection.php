@@ -28,7 +28,6 @@ use LlmLaraHub\TagFunction\Helpers\Taggable;
  */
 class Collection extends Model implements HasDrivers, TaggableContract
 {
-    use HasDriversTrait;
     use HasFactory;
     use Taggable;
 
@@ -44,6 +43,12 @@ class Collection extends Model implements HasDrivers, TaggableContract
     {
         return $this;
     }
+
+    public function description(): string
+    {
+        return $this->description;
+    }
+
 
     public function filters(): HasMany
     {

@@ -12,6 +12,7 @@ use LlmLaraHub\LlmDriver\Functions\GatherInfoTool;
 use LlmLaraHub\LlmDriver\Functions\GetWebSiteFromUrlTool;
 use LlmLaraHub\LlmDriver\Functions\ReportingTool;
 use LlmLaraHub\LlmDriver\Functions\RetrieveRelated;
+use LlmLaraHub\LlmDriver\Functions\SatisfyToolsRequired;
 use LlmLaraHub\LlmDriver\Functions\SearchTheWeb;
 use LlmLaraHub\LlmDriver\Functions\StandardsChecker;
 use LlmLaraHub\LlmDriver\Functions\SummarizeCollection;
@@ -218,6 +219,7 @@ EOD;
                 new GetWebSiteFromUrlTool(),
                 new SearchTheWeb(),
                 new CreateDocument(),
+                new SatisfyToolsRequired(),
                 new Chat(),
             ]
         );
