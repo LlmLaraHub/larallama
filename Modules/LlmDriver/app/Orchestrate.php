@@ -8,12 +8,11 @@ use App\Models\Chat;
 use App\Models\Filter;
 use App\Models\Message;
 use App\Models\PromptHistory;
-use Facades\App\Domains\Messages\SearchAndSummarizeChatRepo;
+use Facades\App\Domains\Messages\RetrieveRelatedChatRepo;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Log;
 use LlmLaraHub\LlmDriver\Functions\FunctionCallDto;
 use LlmLaraHub\LlmDriver\Helpers\CreateReferencesTrait;
-use LlmLaraHub\LlmDriver\Requests\MessageInDto;
 use LlmLaraHub\LlmDriver\Responses\FunctionResponse;
 
 /**
@@ -30,9 +29,6 @@ class Orchestrate
 
     protected bool $requiresFollowup = false;
 
-    /**
-     * @param  MessageInDto[]  $messagesArray
-     */
     public function handle(
         Chat $chat,
         Message $message): ?string
@@ -173,7 +169,7 @@ class Orchestrate
             } else {
                 Log::info('[LaraChain] Orchestration No Functions Default Search And Summarize');
 
-                return SearchAndSummarizeChatRepo::search($chat, $message);
+                return RetrieveRelatedChatRepo::search($chat, $message);
             }
         }
 
@@ -185,9 +181,6 @@ class Orchestrate
         return is_array($functions) && count($functions) > 0;
     }
 
-    /**
-     * @return MessageInDto[]
-     */
     protected function handleResponse(
         FunctionResponse $response,
         Chat $chat,

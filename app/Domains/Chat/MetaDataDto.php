@@ -12,11 +12,13 @@ class MetaDataDto extends Data
         public mixed $filter = null,
         public bool $completion = false,
         public mixed $tool = '',
+        public mixed $tool_id = '',
         public mixed $date_range = '',
         public mixed $input = '',
         public mixed $driver = '',
         public mixed $source = '',
         public mixed $reference_collection_id = '',
+        public array $args = []
     ) {
 
     }

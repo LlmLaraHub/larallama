@@ -4,7 +4,19 @@ namespace LlmLaraHub\LlmDriver;
 
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Log;
+use LlmLaraHub\LlmDriver\Functions\Chat;
+use LlmLaraHub\LlmDriver\Functions\CreateDocument;
+use LlmLaraHub\LlmDriver\Functions\FunctionContract;
 use LlmLaraHub\LlmDriver\Functions\FunctionDto;
+use LlmLaraHub\LlmDriver\Functions\GatherInfoTool;
+use LlmLaraHub\LlmDriver\Functions\GetWebSiteFromUrlTool;
+use LlmLaraHub\LlmDriver\Functions\ReportingTool;
+use LlmLaraHub\LlmDriver\Functions\RetrieveRelated;
+use LlmLaraHub\LlmDriver\Functions\SatisfyToolsRequired;
+use LlmLaraHub\LlmDriver\Functions\SearchTheWeb;
+use LlmLaraHub\LlmDriver\Functions\StandardsChecker;
+use LlmLaraHub\LlmDriver\Functions\SummarizeCollection;
+use LlmLaraHub\LlmDriver\Functions\ToolTypes;
 use LlmLaraHub\LlmDriver\Requests\MessageInDto;
 use LlmLaraHub\LlmDriver\Responses\CompletionResponse;
 use LlmLaraHub\LlmDriver\Responses\EmbeddingsResponseDto;
@@ -18,6 +30,24 @@ abstract class BaseClient
     protected bool $formatJson = false;
 
     protected ?FunctionDto $forceTool = null;
+
+    protected ToolTypes $toolType;
+
+    protected bool $limitByShowInUi = false;
+
+    public function setToolType(ToolTypes $toolType): self
+    {
+        $this->toolType = $toolType;
+
+        return $this;
+    }
+
+    public function setLimitByShowInUi(bool $limitByShowInUi): self
+    {
+        $this->limitByShowInUi = $limitByShowInUi;
+
+        return $this;
+    }
 
     public function setForceTool(FunctionDto $tool): self
     {
@@ -33,9 +63,13 @@ abstract class BaseClient
         return $this;
     }
 
-    public function modifyPayload(array $payload): array
+    public function modifyPayload(array $payload, bool $noTools = false): array
     {
         $payload = $this->addJsonFormat($payload);
+
+        if (! $noTools) {
+            $payload['tools'] = $this->getFunctions();
+        }
 
         return $payload;
     }
@@ -120,7 +154,10 @@ abstract class BaseClient
 
         $data = fake()->sentences(3, true);
 
-        return new CompletionResponse($data);
+        return CompletionResponse::from([
+            'content' => $data,
+            'stop_reason' => 'stop',
+        ]);
     }
 
     public function completion(string $prompt): CompletionResponse
@@ -135,7 +172,10 @@ abstract class BaseClient
         Voluptate irure cillum dolor anim officia reprehenderit dolor. Eiusmod veniam nostrud consectetur incididunt proident id. Anim adipisicing pariatur amet duis Lorem sunt veniam veniam est. Deserunt ea aliquip cillum pariatur consectetur. Dolor in reprehenderit adipisicing consectetur cupidatat ad cupidatat reprehenderit. Nostrud mollit voluptate aliqua anim pariatur excepteur eiusmod velit quis exercitation tempor quis excepteur.
 EOD;
 
-        return new CompletionResponse($data);
+        return CompletionResponse::from([
+            'content' => $data,
+            'stop_reason' => 'stop',
+        ]);
     }
 
     protected function getConfig(string $driver): array
@@ -169,15 +209,43 @@ EOD;
 
     public function getFunctions(): array
     {
-        $functions = LlmDriverFacade::getFunctions();
+        $functions = collect(
+            [
+                new SummarizeCollection(),
+                new RetrieveRelated(),
+                new StandardsChecker(),
+                new ReportingTool(),
+                new GatherInfoTool(),
+                new GetWebSiteFromUrlTool(),
+                new SearchTheWeb(),
+                new CreateDocument(),
+                new SatisfyToolsRequired(),
+                new Chat(),
+            ]
+        );
 
-        return $this->remapFunctions($functions);
+        if (isset($this->toolType)) {
+            $functions = $functions->filter(function (FunctionContract $function) {
+                return in_array($this->toolType, $function->toolTypes);
+            });
+        }
+
+        if ($this->limitByShowInUi) {
+            $functions = $functions->filter(function (FunctionContract $function) {
+                return $function->showInUi;
+            });
+        }
+
+        return $functions->transform(
+            function (FunctionContract $function) {
+                return $function->getFunction();
+            }
+        )->toArray();
     }
 
     public function remapFunctions(array $functions): array
     {
         return collect($functions)->map(function ($function) {
-            $function = $function->toArray();
             $properties = [];
             $required = [];
 
@@ -280,9 +348,9 @@ EOD;
      * Some systems like Claude have to do this
      * So adding it here as a standar options
      *
-     * @param  MessageInDto[]  $messagess
+     * @param  MessageInDto[]  $messages
      */
-    protected function remapMessages(array $messages): array
+    public function remapMessages(array $messages): array
     {
         return $messages;
     }

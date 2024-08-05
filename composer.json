@@ -95,7 +95,8 @@
         "fix": "vendor/bin/pint",
         "test": "php artisan test",
         "test-local": "XDEBUG_MODE=coverage herd php artisan test --coverage  --min=40",
-        "stan": "vendor/bin/phpstan analyse --memory-limit 2G"
+        "stan": "vendor/bin/phpstan analyse --memory-limit 2G",
+        "stan-local": "XDEBUG_MODE=OFF vendor/bin/phpstan analyse --memory-limit 2G"
     },
     "repositories": [
         {

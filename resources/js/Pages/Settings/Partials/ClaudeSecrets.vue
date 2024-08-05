@@ -26,7 +26,7 @@ const updateSecrets = () => {
     form.put(route('settings.update.claude', {
         setting: props.setting.id,
     }), {
-        errorBag: 'updateProfileInformation',
+        errorBag: 'updateClaude',
         preserveScroll: true,
     });
 };

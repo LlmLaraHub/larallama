@@ -2,6 +2,8 @@
 
 namespace Tests\Feature;
 
+use App\Domains\Chat\MetaDataDto;
+use App\Domains\Messages\RoleEnum;
 use App\Models\Setting;
 use Feature;
 use Illuminate\Http\Client\Request;
@@ -13,7 +15,6 @@ use LlmLaraHub\LlmDriver\Functions\ParametersDto;
 use LlmLaraHub\LlmDriver\Functions\PropertyDto;
 use LlmLaraHub\LlmDriver\Requests\MessageInDto;
 use LlmLaraHub\LlmDriver\Responses\CompletionResponse;
-use LlmLaraHub\LlmDriver\Responses\EmbeddingsResponseDto;
 use Tests\TestCase;
 
 class ClaudeClientTest extends TestCase
@@ -24,22 +25,6 @@ class ClaudeClientTest extends TestCase
 
         Http::preventStrayRequests();
         Setting::factory()->all_have_keys()->create();
-    }
-
-    /**
-     * A basic feature test example.
-     */
-    public function test_embeddings(): void
-    {
-
-        $this->markTestSkipped('@TODO: Requires another server');
-
-        $client = new ClaudeClient();
-
-        $results = $client->embedData('test');
-
-        $this->assertInstanceOf(EmbeddingsResponseDto::class, $results);
-
     }
 
     public function test_completion(): void
@@ -303,5 +288,38 @@ class ClaudeClientTest extends TestCase
         $decoded = json_decode($content, true, 512, JSON_THROW_ON_ERROR);
 
         $this->assertCount(3, $decoded);
+    }
+
+    public function test_remap_messages_with_tools_as_history()
+    {
+        $messages = [];
+        $messages[] = MessageInDto::from([
+            'content' => 'test1',
+            'role' => 'user',
+        ]);
+        $messages[] = MessageInDto::from([
+            'content' => 'test2',
+            'role' => 'assistant',
+        ]);
+        $messages[] = MessageInDto::from([
+            'content' => 'test3',
+            'role' => RoleEnum::Tool->value,
+            'tool' => 'test',
+            'tool_id' => 'test_id',
+            'meta_data' => MetaDataDto::from([]),
+        ]);
+
+        $results = (new ClaudeClient)->remapMessages($messages);
+
+        $this->assertCount(5, $results);
+
+        $this->assertEquals('user', $results[0]['role']);
+        $this->assertEquals('assistant', $results[1]['role']);
+        $this->assertEquals('<thinking>test3</thinking>', $results[3]['content'][0]['text']);
+
+        $this->assertEquals('user', $results[2]['role']);
+        $this->assertEquals('tool_use', $results[3]['content'][1]['type']);
+        $this->assertEquals('test', $results[3]['content'][1]['name']);
+        $this->assertEquals('test_id', $results[3]['content'][1]['id']);
     }
 }

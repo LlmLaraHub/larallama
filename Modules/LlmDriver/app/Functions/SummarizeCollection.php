@@ -3,10 +3,9 @@
 namespace LlmLaraHub\LlmDriver\Functions;
 
 use App\Models\Message;
+use Facades\App\Domains\Tokenizer\Templatizer;
 use Illuminate\Support\Facades\Log;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
-use LlmLaraHub\LlmDriver\Prompts\SummarizeCollectionPrompt;
-use LlmLaraHub\LlmDriver\Requests\MessageInDto;
 use LlmLaraHub\LlmDriver\Responses\FunctionResponse;
 
 class SummarizeCollection extends FunctionContract
@@ -16,6 +15,10 @@ class SummarizeCollection extends FunctionContract
     protected string $description = 'NOT FOR SEARCH, This is used when the prompt wants to summarize the entire collection of documents';
 
     protected string $response = '';
+
+    public array $toolTypes = [
+        ToolTypes::ChatCompletion,
+    ];
 
     public function handle(
         Message $message): FunctionResponse
@@ -37,23 +40,28 @@ class SummarizeCollection extends FunctionContract
             'token_count_v1' => token_counter($summary),
         ]);
 
-        $prompt = SummarizeCollectionPrompt::prompt($summary, $message->getContent());
+        $content = $message->getContent();
 
-        $messagesArray = [];
+        $prompt = Templatizer::appendContext(true)
+            ->setMainCollectionPromptOn()
+            ->handle(
+                content: $content,
+                replacement: $summary,
+            );
 
-        $messagesArray[] = MessageInDto::from([
-            'content' => $prompt,
-            'role' => 'user',
-        ]);
-
-        $results = LlmDriverFacade::driver($message->getDriver())->chat($messagesArray);
-
-        $this->response = $results->content;
+        /**
+         * @NOTE
+         * I treat chat like completion
+         * just same results
+         */
+        $results = LlmDriverFacade::driver($message->getDriver())
+            ->setToolType(ToolTypes::NoFunction)
+            ->completion($prompt);
 
         notify_ui($message->getChat(), 'Summary complete');
 
         return FunctionResponse::from([
-            'content' => $this->response,
+            'content' => $results->content,
             'prompt' => $prompt,
             'requires_followup' => true,
             'documentChunks' => collect([]),

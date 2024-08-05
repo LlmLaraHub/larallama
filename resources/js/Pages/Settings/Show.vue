@@ -5,6 +5,7 @@ import OpenAiSecrets from "@/Pages/Settings/Partials/OpenAiSecrets.vue";
 import ClaudeSecrets from "@/Pages/Settings/Partials/ClaudeSecrets.vue";
 import OllamaApiSecrets from "@/Pages/Settings/Partials/OllamaApiSecrets.vue";
 import GroqSecrets from "@/Pages/Settings/Partials/GroqSecrets.vue";
+import MainPrompt from "@/Pages/Settings/Partials/MainPrompt.vue";
 
 const props = defineProps({
     setting: Object,
@@ -39,6 +40,10 @@ const props = defineProps({
 
                 <div>
                     <GroqSecrets :setting="setting.data"/>
+                    <SectionBorder/>
+                </div>
+                <div>
+                    <MainPrompt :setting="setting.data"/>
                     <SectionBorder/>
                 </div>
             </div>

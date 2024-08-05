@@ -15,6 +15,7 @@ const props = defineProps({
                             Persona being used: </span>
                 <span class="font-bold">{{message.meta_data.persona}}</span>
             </div>
+
             <div v-if="message.meta_data?.filter" class="flex justify-start gap-2 items-center">
                         <span class="text-secondary">
                             Filter being used: </span>

@@ -6,9 +6,14 @@ use App\Models\Setting;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\ServiceProvider;
 use LlmLaraHub\LlmDriver\DistanceQuery\DistanceQueryClient;
+use LlmLaraHub\LlmDriver\Functions\Chat;
+use LlmLaraHub\LlmDriver\Functions\CreateDocument;
 use LlmLaraHub\LlmDriver\Functions\GatherInfoTool;
+use LlmLaraHub\LlmDriver\Functions\GetWebSiteFromUrlTool;
 use LlmLaraHub\LlmDriver\Functions\ReportingTool;
-use LlmLaraHub\LlmDriver\Functions\SearchAndSummarize;
+use LlmLaraHub\LlmDriver\Functions\RetrieveRelated;
+use LlmLaraHub\LlmDriver\Functions\SatisfyToolsRequired;
+use LlmLaraHub\LlmDriver\Functions\SearchTheWeb;
 use LlmLaraHub\LlmDriver\Functions\StandardsChecker;
 use LlmLaraHub\LlmDriver\Functions\SummarizeCollection;
 use OpenAI\Client;
@@ -31,7 +36,7 @@ class LlmServiceProvider extends ServiceProvider
                 throw new \Exception('OpenAI API Key is missing');
             }
 
-            $timeout = Setting::getSecret('openai', 'request_timeout', 120);
+            $timeout = config('llmdriver.openai.request_timeout', 120);
 
             return \OpenAI::factory()
                 ->withApiKey($apiKey)
@@ -62,8 +67,8 @@ class LlmServiceProvider extends ServiceProvider
             return new SummarizeCollection();
         });
 
-        $this->app->bind('search_and_summarize', function () {
-            return new SearchAndSummarize();
+        $this->app->bind('retrieve_related', function () {
+            return new RetrieveRelated();
         });
 
         $this->app->bind('standards_checker', function () {
@@ -76,6 +81,26 @@ class LlmServiceProvider extends ServiceProvider
 
         $this->app->bind('gather_info_tool', function () {
             return new GatherInfoTool();
+        });
+
+        $this->app->bind('get_web_site_from_url', function () {
+            return new GetWebSiteFromUrlTool();
+        });
+
+        $this->app->bind('search_the_web', function () {
+            return new SearchTheWeb();
+        });
+
+        $this->app->bind('create_document', function () {
+            return new CreateDocument();
+        });
+
+        $this->app->bind('chat_only', function () {
+            return new Chat();
+        });
+
+        $this->app->bind('satisfy_tools_required', function () {
+            return new SatisfyToolsRequired();
         });
 
     }

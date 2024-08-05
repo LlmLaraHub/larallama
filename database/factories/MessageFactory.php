@@ -30,10 +30,12 @@ class MessageFactory extends Factory
                 'persona' => 1,
                 'filter' => 1,
                 'completion' => false,
-                'tool' => 'foobar',
                 'date_range' => 'this_week',
                 'input' => 'my input here',
             ]),
+            'tool_id' => '',
+            'tool' => '',
+            'args' => [],
             'tools' => ToolsDto::from([
                 'tools' => [
                     FunctionCallDto::from([

@@ -2,6 +2,8 @@
 
 namespace Tests\Feature\Models;
 
+use App\Models\Document;
+use Illuminate\Support\Facades\Bus;
 use Tests\TestCase;
 
 class DocumentTest extends TestCase
@@ -26,11 +28,35 @@ class DocumentTest extends TestCase
     public function test_parent()
     {
         $modelParent = \App\Models\Document::factory()->create();
+
         $model = \App\Models\Document::factory()->create([
             'parent_id' => $modelParent->id,
         ]);
 
         $this->assertEquals($modelParent->id,
             $model->parent->id);
+    }
+
+    public function test_document_make()
+    {
+        $collection = \App\Models\Collection::factory()->create();
+        $document = Document::make('Foo bar',
+            $collection);
+        $this->assertNotNull($document->id);
+        $this->assertNotNull($document->collection_id);
+        $this->assertNotNull($document->summary);
+        $this->assertNotNull($document->collection->id);
+        $this->assertCount(1, $document->collection->documents);
+        $this->assertNotNull($document->collection->documents()->first()->id);
+    }
+
+    public function test_document_vectorize()
+    {
+        Bus::fake();
+        $collection = \App\Models\Collection::factory()->create();
+        $document = Document::make('Foo bar',
+            $collection);
+        $document->vectorizeDocument();
+        Bus::assertBatchCount(1);
     }
 }

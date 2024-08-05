@@ -170,6 +170,8 @@ Route::middleware([
                 ->name('settings.update.ollama');
             Route::put('/settings/{setting}/groq', 'updateGroq')
                 ->name('settings.update.groq');
+            Route::put('/settings/{setting}/main_collection', 'updateMainCollection')
+                ->name('settings.update.main_collection');
         }
     );
 

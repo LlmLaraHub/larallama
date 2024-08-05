@@ -73,7 +73,10 @@ class GetWebContentJob implements ShouldQueue
             ->handle($this->webResponseDto->url, true);
 
         $prompt = Templatizer::appendContext(true)
-            ->handle($this->source->getPrompt(), $htmlResults);
+            ->setMainCollectionPromptOn()
+            ->handle(
+                content: $this->source->getPrompt(),
+                replacement: $htmlResults);
 
         $results = LlmDriverFacade::driver(
             $this->source->getDriver()

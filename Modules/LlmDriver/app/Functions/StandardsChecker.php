@@ -11,6 +11,10 @@ use LlmLaraHub\LlmDriver\Responses\FunctionResponse;
 
 class StandardsChecker extends FunctionContract
 {
+    public array $toolTypes = [
+        ToolTypes::ChatCompletion,
+    ];
+
     protected string $name = 'standards_checker';
 
     protected string $description = 'Checks the prompt data follows the standards of the documents in the collection';

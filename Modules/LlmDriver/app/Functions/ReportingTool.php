@@ -21,6 +21,10 @@ class ReportingTool extends FunctionContract
 {
     use ToolsHelper;
 
+    public array $toolTypes = [
+        ToolTypes::ChatCompletion,
+    ];
+
     protected string $name = 'reporting_tool';
 
     protected string $description = 'Uses Reference collection to generate a report';
@@ -48,6 +52,12 @@ class ReportingTool extends FunctionContract
             'status_entries_generation' => StatusEnum::Pending,
         ]);
 
+        /**
+         * Stan is right but
+         * I need to refactor chatable to just be
+         * a Collection not sure why I made it so open ended
+         */
+        /** @phpstan-ignore-next-line */
         $documents = $message->getChatable()->documents;
 
         notify_ui($message->getChat(), 'Going through all the documents to check requirements');

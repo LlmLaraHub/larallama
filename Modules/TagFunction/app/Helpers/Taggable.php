@@ -16,6 +16,6 @@ trait Taggable
     {
         $tag = str($tag)->lower()->trim()->toString();
         $tag = Tag::firstOrCreate(['name' => $tag]);
-        $this->tags()->syncWithoutDetaching($tag->id);
+        $this->tags()->syncWithoutDetaching([$tag->id]);
     }
 }

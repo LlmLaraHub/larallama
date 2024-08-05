@@ -2,12 +2,6 @@
 
 namespace LlmLaraHub\LlmDriver;
 
-use LlmLaraHub\LlmDriver\Functions\GatherInfoTool;
-use LlmLaraHub\LlmDriver\Functions\ReportingTool;
-use LlmLaraHub\LlmDriver\Functions\SearchAndSummarize;
-use LlmLaraHub\LlmDriver\Functions\StandardsChecker;
-use LlmLaraHub\LlmDriver\Functions\SummarizeCollection;
-
 class LlmDriverClient
 {
     protected $drivers = [];
@@ -45,6 +39,20 @@ class LlmDriverClient
         }
     }
 
+    public function getFunctionsForUi(): array
+    {
+        return collect(
+            LlmDriverFacade::driver('mock')
+                ->setLimitByShowInUi(true)
+                ->getFunctions()
+        )
+            ->map(function ($item) {
+                $item['name_formatted'] = str($item['name'])->headline()->toString();
+
+                return $item;
+            })->toArray();
+    }
+
     public static function getDrivers(): array
     {
         return array_keys(config('llmdriver.drivers'));
@@ -53,28 +61,6 @@ class LlmDriverClient
     protected function getDefaultDriver()
     {
         return 'mock';
-    }
-
-    public function getFunctions(): array
-    {
-        return [
-            (new SummarizeCollection())->getFunction(),
-            (new SearchAndSummarize())->getFunction(),
-            (new StandardsChecker())->getFunction(),
-            (new ReportingTool())->getFunction(),
-            (new GatherInfoTool())->getFunction(),
-        ];
-    }
-
-    public function getFunctionsForUi(): array
-    {
-        return collect($this->getFunctions())
-            ->map(function ($item) {
-                $item = $item->toArray();
-                $item['name_formatted'] = str($item['name'])->headline()->toString();
-
-                return $item;
-            })->toArray();
     }
 
     /**

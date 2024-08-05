@@ -6,6 +6,7 @@ use App\Domains\Chat\MetaDataDto;
 use App\Domains\Messages\RoleEnum;
 use App\Models\Chat;
 use App\Models\Collection;
+use App\Models\Message;
 use App\Models\Output;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -73,5 +74,41 @@ class ChatTest extends TestCase
         $chat = Chat::firstOrCreateUsingOutput($output);
         $this->assertNotNull($chat->session_id);
         $this->assertNotNull($chat->id);
+    }
+
+    public function test_get_chat_response()
+    {
+        $chat = Chat::factory()->create();
+        $message = Message::factory()->create([
+            'body' => 'This is a test',
+            'role' => 'user',
+            'chat_id' => $chat->id,
+            'meta_data' => MetaDataDto::from([
+                'tool_id' => 'test1',
+                'tool' => 'test1',
+                'args' => ['foo'],
+            ]),
+        ]);
+        $messageTool = Message::factory()->create([
+            'body' => 'This is a test',
+            'role' => 'tool',
+            'chat_id' => $chat->id,
+            'meta_data' => MetaDataDto::from([
+                'tool_id' => 'test2',
+                'tool' => 'test2',
+                'args' => [],
+            ]),
+        ]);
+
+        $messages = $chat->getChatResponse();
+
+        $message = $messages[0];
+
+        $this->assertEquals($message->role, RoleEnum::User->value);
+        $this->assertEquals($message->content, 'This is a test');
+        $this->assertEquals($message->tool_id, 'test1');
+        $this->assertEquals($message->tool, 'test1');
+        $this->assertEquals($message->args, ['foo']);
+
     }
 }

@@ -7,8 +7,7 @@ use App\Domains\Chat\ToolsDto;
 use App\Domains\Messages\RoleEnum;
 use App\Events\ChatUiUpdateEvent;
 use App\Events\MessageCreatedEvent;
-use App\Jobs\OrchestrateJob;
-use App\Jobs\SimpleSearchAndSummarizeOrchestrateJob;
+use Facades\App\Domains\Orchestration\OrchestrateVersionTwo;
 use Facades\App\Domains\Tokenizer\Templatizer;
 use Illuminate\Bus\Batch;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -17,12 +16,12 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Facades\Bus;
-use Illuminate\Support\Facades\Log;
 use LlmLaraHub\LlmDriver\HasDrivers;
-use LlmLaraHub\LlmDriver\LlmDriverFacade;
+use LlmLaraHub\LlmDriver\HasDriversTrait;
 
 class Message extends Model implements HasDrivers
 {
+    use HasDriversTrait;
     use HasFactory;
 
     public $fillable = [
@@ -42,6 +41,7 @@ class Message extends Model implements HasDrivers
         'role' => RoleEnum::class,
         'tools' => ToolsDto::class,
         'meta_data' => MetaDataDto::class,
+        'args' => 'array',
         'in_out' => 'boolean',
     ];
 
@@ -214,53 +214,12 @@ class Message extends Model implements HasDrivers
     public function run(): void
     {
         $message = $this;
-
         $chat = $message->getChat();
-
-        notify_ui($chat, 'Working on it!');
-
         $meta_data = $message->meta_data;
         $meta_data->driver = $chat->getDriver();
         $message->updateQuietly(['meta_data' => $meta_data]);
 
-        if ($message->meta_data?->tool === 'completion') {
-            Log::info('[LaraChain] Running Simple Completion');
-
-            $messages = $chat->getChatResponse();
-            $response = LlmDriverFacade::driver($chat->getDriver())->chat($messages);
-            $response = $response->content;
-
-            $chat->addInput(
-                message: $response,
-                role: RoleEnum::Assistant,
-                show_in_thread: true);
-
-            notify_ui_complete($chat);
-        } elseif ($message->meta_data?->tool) {
-            /**
-             * @NOTE
-             * Quick win area for Ollama
-             */
-            Log::info('[LaraChain] Running Tool that was chosen');
-
-            /** @phpstan-ignore-next-line */
-            $tool = $message->meta_data?->tool;
-
-            $this->batchJob([
-                new OrchestrateJob($chat, $message),
-            ], $chat, $tool);
-
-        } elseif (LlmDriverFacade::driver($chat->getDriver())->hasFunctions()) {
-            Log::info('[LaraChain] Running Orchestrate added to queue');
-            $this->batchJob([
-                new OrchestrateJob($chat, $message),
-            ], $chat, 'orchestrate');
-        } else {
-            Log::info('[LaraChain] Simple Search and Summarize added to queue');
-            $this->batchJob([
-                new SimpleSearchAndSummarizeOrchestrateJob($message),
-            ], $chat, 'simple_search_and_summarize');
-        }
+        OrchestrateVersionTwo::handle($chat, $message);
 
     }
 

@@ -48,13 +48,15 @@ class MessageInDtoTest extends TestCase
          */
         $dto = MessageInDto::from([
             'content' => 'test',
+            'tool' => 'test',
             'role' => 'user',
+            'tool_id' => '',
+            'args' => [],
             'meta_data' => MetaDataDto::from(
                 [
                     'persona' => 'test',
                     'filter' => 'test',
                     'completion' => true,
-                    'tool' => 'test',
                     'date_range' => 'test',
                     'input' => 'test',
                 ]
@@ -63,6 +65,10 @@ class MessageInDtoTest extends TestCase
 
         $this->assertEquals([
             'content' => 'test',
-            'role' => 'user'], $dto->toArray());
+            'role' => 'user',
+            'tool_id' => '',
+            'tool' => 'test',
+            'args' => [],
+        ], $dto->toArray());
     }
 }

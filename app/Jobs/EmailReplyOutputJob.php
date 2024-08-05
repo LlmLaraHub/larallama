@@ -87,7 +87,7 @@ class EmailReplyOutputJob implements ShouldQueue
 
         /**
          * @NOTE
-         * Yes this is a lot like the SearchAndSummarizeChatRepo
+         * Yes this is a lot like the RetrieveRelatedChatRepo
          * But just getting a sense of things
          */
         foreach ($documentChunkResults as $result) {

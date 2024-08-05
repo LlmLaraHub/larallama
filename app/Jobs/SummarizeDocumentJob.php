@@ -2,12 +2,9 @@
 
 namespace App\Jobs;
 
-use App\Domains\Agents\VerifyPromptInputDto;
-use App\Domains\Agents\VerifyPromptOutputDto;
 use App\Domains\Documents\StatusEnum;
 use App\Domains\Prompts\SummarizeDocumentPrompt;
 use App\Models\Document;
-use Facades\App\Domains\Agents\VerifyResponseAgent;
 use Facades\App\Domains\Tokenizer\Templatizer;
 use Illuminate\Bus\Batchable;
 use Illuminate\Bus\Queueable;
@@ -16,7 +13,6 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
-use Laravel\Pennant\Feature;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
 use LlmLaraHub\LlmDriver\Responses\CompletionResponse;
 
@@ -71,7 +67,6 @@ class SummarizeDocumentJob implements ShouldQueue
         } else {
             $prompt = Templatizer::appendContext(true)
                 ->handle($this->prompt, $content);
-
         }
 
         /** @var CompletionResponse $results */
@@ -80,30 +75,6 @@ class SummarizeDocumentJob implements ShouldQueue
         )->completion($prompt);
 
         $this->results = $results->content;
-
-        if (Feature::active('verification_prompt_summary')) {
-
-            $verifyPrompt = <<<'PROMPT'
-            This the content from all the documents in this collection.
-            Then that was passed into the LLM to summarize the results.
-            PROMPT;
-
-            $dto = VerifyPromptInputDto::from(
-                [
-                    'chattable' => $this->document->collection,
-                    'originalPrompt' => $prompt,
-                    'context' => $content,
-                    'llmResponse' => $this->results,
-                    'verifyPrompt' => $verifyPrompt,
-                ]
-            );
-
-            /** @var VerifyPromptOutputDto $response */
-            $response = VerifyResponseAgent::verify($dto);
-
-            $this->results = $response->response;
-
-        }
 
         $this->document->update([
             'summary' => $this->results,

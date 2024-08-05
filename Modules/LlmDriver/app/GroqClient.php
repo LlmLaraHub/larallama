@@ -231,10 +231,9 @@ class GroqClient extends BaseClient
      */
     public function getFunctions(): array
     {
-        $functions = LlmDriverFacade::getFunctions();
+        $functions = parent::getFunctions();
 
         return collect($functions)->map(function ($function) {
-            $function = $function->toArray();
             $properties = [];
             $required = [];
 

@@ -7,6 +7,8 @@ use LlmLaraHub\LlmDriver\DistanceQuery\Drivers\PostGres;
 
 class DistanceQueryClient
 {
+    protected array $drivers = [];
+
     public function driver($name = null)
     {
         $name = $name ?: $this->getDefaultDriver();

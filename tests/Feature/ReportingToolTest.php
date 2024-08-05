@@ -25,9 +25,9 @@ class ReportingToolTest extends TestCase
      */
     public function test_can_generate_function_as_array(): void
     {
-        $searchAndSummarize = new \LlmLaraHub\LlmDriver\Functions\ReportingTool();
+        $RetrieveRelated = new \LlmLaraHub\LlmDriver\Functions\ReportingTool();
 
-        $function = $searchAndSummarize->getFunction();
+        $function = $RetrieveRelated->getFunction();
 
         $parameters = $function->parameters;
 

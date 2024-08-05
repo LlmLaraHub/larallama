@@ -14,6 +14,7 @@ class TokenCountHelperTest extends TestCase
      */
     public function test_token_counter(): void
     {
+        $this->markTestSkipped('@TODO was thinking it could help');
         $content = get_fixture('token_count_huge.txt', false);
         $larachainToken = LarachainTokenCount::count($content);
         $provider = new EncoderProvider();

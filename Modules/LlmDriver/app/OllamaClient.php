@@ -11,6 +11,8 @@ use Laravel\Pennant\Feature;
 use LlmLaraHub\LlmDriver\Requests\MessageInDto;
 use LlmLaraHub\LlmDriver\Responses\CompletionResponse;
 use LlmLaraHub\LlmDriver\Responses\EmbeddingsResponseDto;
+use LlmLaraHub\LlmDriver\Responses\OllamaChatCompletionResponse;
+use LlmLaraHub\LlmDriver\Responses\OllamaCompletionResponse;
 
 class OllamaClient extends BaseClient
 {
@@ -92,7 +94,7 @@ class OllamaClient extends BaseClient
      */
     public function chat(array $messages): CompletionResponse
     {
-        Log::info('LlmDriver::OllamaClient::completion');
+        Log::info('LlmDriver::OllamaClient::chat');
 
         $messages = $this->remapMessages($messages);
 
@@ -100,15 +102,23 @@ class OllamaClient extends BaseClient
             'model' => $this->getConfig('ollama')['models']['completion_model'],
             'messages' => $messages,
             'stream' => false,
+            'options' => [
+                'temperature' => 0,
+            ],
         ];
 
         $payload = $this->modifyPayload($payload);
 
         $response = $this->getClient()->post('/chat', $payload);
 
-        $results = $response->json()['message']['content'];
+        if ($response->failed()) {
+            Log::error('Ollama API Error ', [
+                'error' => $response->body(),
+            ]);
+            throw new \Exception('Ollama API Error Chat');
+        }
 
-        return new CompletionResponse($results);
+        return OllamaChatCompletionResponse::from($response->json());
     }
 
     /**
@@ -131,19 +141,16 @@ class OllamaClient extends BaseClient
             $model,
             $baseUrl
         ) {
-            foreach ($prompts as $prompt) {
+            foreach ($prompts as $index => $prompt) {
                 $payload = [
                     'model' => $model,
                     'prompt' => $prompt,
                     'stream' => false,
                 ];
 
-                $payload = $this->modifyPayload($payload);
+                $payload = $this->modifyPayload($payload, true);
 
-                Log::info('Ollama Request', [
-                    'prompt' => $prompt,
-                    'payload' => $payload,
-                ]);
+                Log::info('Ollama Request index '.$index);
 
                 $pool->withHeaders([
                     'content-type' => 'application/json',
@@ -181,9 +188,14 @@ class OllamaClient extends BaseClient
             'stream' => false,
         ]);
 
-        $results = $response->json()['response'];
+        if ($response->failed()) {
+            Log::error('Ollama Completion API Error ', [
+                'error' => $response->body(),
+            ]);
+            throw new \Exception('Ollama API Error Completion');
+        }
 
-        return new CompletionResponse($results);
+        return OllamaCompletionResponse::from($response->json());
     }
 
     protected function getClient()
@@ -209,14 +221,9 @@ class OllamaClient extends BaseClient
 
     public function getFunctions(): array
     {
-        $functions = LlmDriverFacade::getFunctions();
+        $functions = parent::getFunctions();
 
-        if (! Feature::activate('ollama-functions')) {
-            return [];
-        }
-
-        return collect($functions)->map(function ($function) {
-            $function = $function->toArray();
+        $results = collect($functions)->map(function ($function) {
             $properties = [];
             $required = [];
 
@@ -235,13 +242,22 @@ class OllamaClient extends BaseClient
             }
 
             return [
-                'name' => data_get($function, 'name'),
-                'description' => data_get($function, 'description'),
-                'parameters' => $properties,
-                'required' => $required,
+                'type' => 'function',
+                'function' => [
+                    'name' => data_get($function, 'name'),
+                    'description' => data_get($function, 'description'),
+                    'parameters' => [
+                        'type' => 'object',
+                        'properties' => $properties,
+                        'required' => $required,
+                    ],
+                ],
+
             ];
 
-        })->toArray();
+        })->values()->toArray();
+
+        return $results;
     }
 
     public function isAsync(): bool
@@ -254,19 +270,17 @@ class OllamaClient extends BaseClient
         return 'ollama';
     }
 
-    protected function remapMessages(array $messages): array
+    /**
+     * @param  MessageInDto[]  $messages
+     */
+    public function remapMessages(array $messages): array
     {
-        $messages = collect($messages)->map(function ($message) {
-            return $message->toArray();
-        });
+        $messages = collect($messages)->transform(function (MessageInDto $message): array {
+            return collect($message->toArray())
+                ->only(['content', 'role', 'tool_calls', 'tool_used', 'input_tokens', 'output_tokens', 'model'])
+                ->toArray();
+        })->toArray();
 
-        if (in_array('llama3', [
-            $this->getConfig('ollama')['models']['completion_model']])) {
-            Log::info('[LaraChain] LlmDriver::OllamaClient::remapMessages');
-            $messages = collect($messages)->reverse();
-        }
-
-        return $messages->values()->toArray();
-
+        return $messages;
     }
 }

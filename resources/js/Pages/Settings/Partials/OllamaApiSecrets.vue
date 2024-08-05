@@ -26,7 +26,7 @@ const updateSecrets = () => {
     form.put(route('settings.update.ollama', {
         setting: props.setting.id,
     }), {
-        errorBag: 'updateProfileInformation',
+        errorBag: 'updateOllama',
         preserveScroll: true,
     });
 };

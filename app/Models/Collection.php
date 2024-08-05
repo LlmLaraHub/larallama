@@ -43,6 +43,11 @@ class Collection extends Model implements HasDrivers, TaggableContract
         return $this;
     }
 
+    public function description(): string
+    {
+        return $this->description;
+    }
+
     public function filters(): HasMany
     {
         return $this->hasMany(Filter::class);

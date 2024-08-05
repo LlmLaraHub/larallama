@@ -214,6 +214,7 @@ class OpenAiClient extends BaseClient
 
     public function getContentAndToolTypeFromResults(Response $results): array
     {
+        $data = '';
         $results = $results->json();
         $tool_used = null;
         $stop_reason = data_get($results, 'choices.0.finish_reason', 'stop');
@@ -240,7 +241,7 @@ class OpenAiClient extends BaseClient
         return [$data, $tool_used, $stop_reason];
     }
 
-    public function modifyPayload(array $payload): array
+    public function modifyPayload(array $payload, bool $noTools = false): array
     {
         Log::info('LlmDriver::OpenAi::modifyPayload', [
             'payload' => $payload,
@@ -339,7 +340,7 @@ class OpenAiClient extends BaseClient
      */
     public function getFunctions(): array
     {
-        $functions = LlmDriverFacade::getFunctions();
+        $functions = parent::getFunctions();
 
         return $this->remapFunctions($functions);
 
@@ -351,7 +352,6 @@ class OpenAiClient extends BaseClient
     public function remapFunctions(array $functions): array
     {
         return collect($functions)->map(function ($function) {
-            $function = $function->toArray();
             $properties = [];
             $required = [];
 

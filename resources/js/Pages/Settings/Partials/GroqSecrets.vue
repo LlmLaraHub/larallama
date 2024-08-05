@@ -26,7 +26,7 @@ const updateSecrets = () => {
     form.put(route('settings.update.groq', {
         setting: props.setting.id,
     }), {
-        errorBag: 'updateProfileInformation',
+        errorBag: 'updateGroq',
         preserveScroll: true,
     });
 };
