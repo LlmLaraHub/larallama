@@ -10,14 +10,14 @@ class FireCrawResultsDto extends WebContentResultsDto
     public function __construct(
         #[MapInputName('data.metadata.title')]
         public string $title,
-        #[MapInputName('data.metadata.description')]
-        public string $description,
         #[MapInputName('data.markdown')]
         public string $content,
         #[MapInputName('data.content')]
         public string $content_raw,
         #[MapInputName('data.metadata.sourceURL')]
         public string $url,
+        #[MapInputName('data.metadata.description')]
+        public string $description = '',
     ) {
 
     }

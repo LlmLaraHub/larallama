@@ -17,7 +17,7 @@ class FireCrawlClientTest extends TestCase
             'secrets' => [
                 'fire_crawl' => [
                     'api_url' => 'https://api.firecrawl.dev',
-                    'api_token' => 'foo',
+                    'api_key' => 'foo',
                 ],
             ],
         ]);

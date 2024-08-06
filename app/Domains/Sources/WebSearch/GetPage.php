@@ -2,11 +2,11 @@
 
 namespace App\Domains\Sources\WebSearch;
 
-use Facades\App\Domains\WebParser\DefaultClient;
-use Facades\App\Domains\WebParser\FireCrawlClient;
 use App\Domains\WebParser\WebContentResultsDto;
 use App\Models\Collection;
 use App\Models\Setting;
+use Facades\App\Domains\WebParser\DefaultClient;
+use Facades\App\Domains\WebParser\FireCrawlClient;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use League\HTMLToMarkdown\Converter\CodeConverter;
@@ -15,7 +15,6 @@ use League\HTMLToMarkdown\Converter\TableConverter;
 use League\HTMLToMarkdown\Converter\TextConverter;
 use League\HTMLToMarkdown\Environment;
 use League\HTMLToMarkdown\HtmlConverter;
-use Spatie\Browsershot\Browsershot;
 
 class GetPage
 {
@@ -36,15 +35,14 @@ class GetPage
          * @TODO
          * Make this a driver like the rest of the system
          */
-        if(Setting::getSecret('fire_crawl', 'api_token')) {
+        if (Setting::getSecret('fire_crawl', 'api_key')) {
             Log::info('Using FireCrawl');
             $results = FireCrawlClient::scrape($url);
         } else {
             Log::info('Using Default Browsershot');
             /** @var WebContentResultsDto $results */
             $results = DefaultClient::scrape($url);
-            /** @phpstan-ignore-next-line */
-            Storage::disk('collections')->put($this->collection->id.'/'.$name, $results->pdf());
+            Storage::disk('collections')->put($this->collection->id.'/'.$name, $results->browserShot->pdf());
         }
 
         return $results;

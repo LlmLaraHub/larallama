@@ -62,11 +62,11 @@ const checkTemplate = (label) => {
         </div>
 
         <template v-for="(prompt, label) in prompts" :key="label">
-            <div class="collapse bg-base-200">
+            <div class="collapse collapse-arrow bg-base-200">
                 <input type="radio" name="templates" :checked="checkedTemplate === label"/>
                 <button type="button"
                         @click="checkTemplate(label)"
-                        class="collapse-title text-xl font-medium">Type: <span class="uppercase">{{label}}</span>
+                        class="collapse-title text-md font-medium">Type: <span class="uppercase">{{label}}</span>
                 </button>
                 <div class="collapse-content">
                     <div class="overflow-y-scroll prose">

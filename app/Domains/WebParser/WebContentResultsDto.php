@@ -9,9 +9,9 @@ class WebContentResultsDto extends Data
 {
     public function __construct(
         public string $title,
-        public string $description,
         public string $content,
         public string $url,
+        public string $description = '',
         public ?Browsershot $browserShot = null,
     ) {
 

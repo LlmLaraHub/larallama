@@ -27,7 +27,7 @@ class FireCrawlClient extends BaseWebParserClient
     protected function getClient(): PendingRequest
     {
         $url = Setting::getSecret('fire_crawl', 'api_url');
-        $token = Setting::getSecret('fire_crawl', 'api_token');
+        $token = Setting::getSecret('fire_crawl', 'api_key');
 
         return Http::baseUrl($url)->withHeaders([
             'Authorization' => 'Bearer '.$token,

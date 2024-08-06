@@ -2,7 +2,6 @@
 
 namespace App\Domains\WebParser;
 
-use App\Domains\Sources\WebSearch\GetPage;
 use League\HTMLToMarkdown\Converter\CodeConverter;
 use League\HTMLToMarkdown\Converter\PreformattedConverter;
 use League\HTMLToMarkdown\Converter\TableConverter;
@@ -14,13 +13,12 @@ use Spatie\Browsershot\Browsershot;
 
 class DefaultClient extends BaseClient
 {
-
-    public function scrape(string $url): WebContentResultsDto {
+    public function scrape(string $url): WebContentResultsDto
+    {
         $results = Browsershot::url($url)
             ->userAgent('DailyAI Studio Browser 1.0, helping users automate workflows')
             ->dismissDialogs()
             ->fullPage();
-
 
         $plainResults = $this->parseHtml($results->bodyHtml());
 
