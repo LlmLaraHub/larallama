@@ -73,7 +73,7 @@ class GetWebContentJob implements ShouldQueue
             ->handle($this->webResponseDto->url, true);
 
         $prompt = Templatizer::appendContext(true)
-            ->handle($this->source->getPrompt(), $htmlResults);
+            ->handle($this->source->getPrompt(), $htmlResults->content);
 
         $results = LlmDriverFacade::driver(
             $this->source->getDriver()
@@ -112,7 +112,7 @@ class GetWebContentJob implements ShouldQueue
                         'source_id' => $this->source->id,
                         'type' => TypesEnum::HTML,
                         'subject' => to_utf8($title),
-                        'document_md5' => md5($htmlResults),
+                        'document_md5' => md5($htmlResults->content),
                         'link' => $this->webResponseDto->url,
                         'collection_id' => $this->source->collection_id,
                     ],
@@ -121,7 +121,7 @@ class GetWebContentJob implements ShouldQueue
                         'file_path' => $this->webResponseDto->url,
                         'status_summary' => StatusEnum::Pending,
                         'meta_data' => $this->webResponseDto->toArray(),
-                        'original_content' => $htmlResults,
+                        'original_content' => $htmlResults->content,
                     ]
                 );
 

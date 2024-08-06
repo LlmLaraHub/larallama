@@ -3,6 +3,7 @@
 namespace Tests\Feature\Jobs;
 
 use App\Domains\Sources\WebSearch\Response\WebResponseDto;
+use App\Domains\WebParser\WebContentResultsDto;
 use App\Jobs\GetWebContentJob;
 use App\Models\Document;
 use App\Models\Source;
@@ -37,7 +38,12 @@ class GetWebContentJobTest extends TestCase
 
         $html = get_fixture('test_medium_2.html', false);
 
-        GetPage::shouldReceive('make->handle')->once()->andReturn($html);
+        GetPage::shouldReceive('make->handle')->once()->andReturn(WebContentResultsDto::from([
+            'title' => 'Example',
+            'description' => 'Example description',
+            'content' => $html,
+            'url' => 'https://example.com',
+        ]));
 
         LlmDriverFacade::shouldReceive('driver->onQueue')->andReturn('default');
 
@@ -78,7 +84,12 @@ class GetWebContentJobTest extends TestCase
 
         $html = get_fixture('test_medium_2.html', false);
 
-        GetPage::shouldReceive('make->handle')->once()->andReturn($html);
+        GetPage::shouldReceive('make->handle')->once()->andReturn(WebContentResultsDto::from([
+            'title' => 'Example',
+            'description' => 'Example description',
+            'content' => $html,
+            'url' => 'https://example.com',
+        ]));
 
         LlmDriverFacade::shouldReceive('driver->onQueue')->andReturn('default');
 

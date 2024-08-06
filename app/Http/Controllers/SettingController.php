@@ -52,6 +52,23 @@ class SettingController extends Controller
         return back();
     }
 
+    public function updateFireCrawl(Request $request, Setting $setting)
+    {
+        $validated = $request->validate([
+            'api_key' => 'string|required',
+            'api_url' => 'string|required',
+        ]);
+
+        $secrets = $setting->secrets;
+        $secrets['fire_crawl'] = $validated;
+        $setting->secrets = $secrets;
+        $setting->save();
+        $setting->updateStep($setting);
+        $this->clearCache();
+
+        return back();
+    }
+
     public function updateGroq(Request $request, Setting $setting)
     {
         $validated = $request->validate([

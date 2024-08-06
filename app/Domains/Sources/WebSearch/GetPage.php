@@ -2,7 +2,12 @@
 
 namespace App\Domains\Sources\WebSearch;
 
+use Facades\App\Domains\WebParser\DefaultClient;
+use Facades\App\Domains\WebParser\FireCrawlClient;
+use App\Domains\WebParser\WebContentResultsDto;
 use App\Models\Collection;
+use App\Models\Setting;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use League\HTMLToMarkdown\Converter\CodeConverter;
 use League\HTMLToMarkdown\Converter\PreformattedConverter;
@@ -24,27 +29,25 @@ class GetPage
         return new static($collection);
     }
 
-    public function handle(string $url, bool $parseHtml = true): string
+    public function handle(string $url, bool $parseHtml = true): WebContentResultsDto
     {
-        $results = Browsershot::url($url)
-            ->userAgent('DailyAI Studio Browser 1.0, helping users automate workflows')
-            ->dismissDialogs()
-            ->fullPage();
-
-        /**
-         * @TODO this can repeat
-         */
         $name = md5($url).'.pdf';
-
-        Storage::disk('collections')->put($this->collection->id.'/'.$name, $results->pdf());
-
-        $body = $results->bodyHtml();
-
-        if ($parseHtml) {
-            $body = $this->parseHtml($body);
+        /**
+         * @TODO
+         * Make this a driver like the rest of the system
+         */
+        if(Setting::getSecret('fire_crawl', 'api_token')) {
+            Log::info('Using FireCrawl');
+            $results = FireCrawlClient::scrape($url);
+        } else {
+            Log::info('Using Default Browsershot');
+            /** @var WebContentResultsDto $results */
+            $results = DefaultClient::scrape($url);
+            /** @phpstan-ignore-next-line */
+            Storage::disk('collections')->put($this->collection->id.'/'.$name, $results->pdf());
         }
 
-        return $body;
+        return $results;
     }
 
     public function parseHtml(string $html): string

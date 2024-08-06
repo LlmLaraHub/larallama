@@ -8,6 +8,7 @@ import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
+import SecretInput from "@/Components/SecretInput.vue";
 
 const props = defineProps({
     setting: Object,
@@ -15,18 +16,17 @@ const props = defineProps({
 
 const form = useForm({
     _method: 'PUT',
-    api_key: props.setting.secrets?.ollama?.api_key,
-    api_url: props.setting.secrets?.ollama?.api_url,
+    api_key: props.setting.secrets?.fire_crawl?.api_key ,
+    api_url: props.setting.secrets?.fire_crawl?.api_url ?? "https://api.firecrawl.dev/v0",
 });
-
 
 
 const updateSecrets = () => {
 
-    form.put(route('settings.update.ollama', {
+    form.put(route('settings.update.fire_crawl', {
         setting: props.setting.id,
     }), {
-        errorBag: 'updateOllama',
+        errorBag: 'updateFireCrawlInformation',
         preserveScroll: true,
     });
 };
@@ -36,15 +36,15 @@ const updateSecrets = () => {
 <template>
     <FormSection @submitted="updateSecrets">
         <template #title>
-            Add Ollama Token and Url
+            Add FireCrawl Token and Url
         </template>
 
         <template #description>
-            This service runs locally but sometimes is hosted
-            see the docs
+            This service can boost the web scraping quality over the
+            default scraper built in.
             <a
                 class="underline"
-                href="https://github.com/ollama/ollama/blob/main/docs/api.md" target="_blank">here</a>
+                href="https://docs.firecrawl.dev/features/scrape" target="_blank">here</a>
         </template>
 
         <template #form>
@@ -53,14 +53,8 @@ const updateSecrets = () => {
             <!-- Name -->
             <div class="col-span-6 sm:col-span-4">
                 <InputLabel for="name" value="Api Token" />
-                <TextInput
-                    id="name"
-                    v-model="form.api_key"
-                    type="text"
-                    class="mt-1 block w-full"
-                />
+                <SecretInput v-model="form.api_key" class="mt-1 block w-full" />
                 <InputError :message="form.errors.api_key" class="mt-2" />
-
             </div>
 
             <div class="col-span-6 sm:col-span-4">
