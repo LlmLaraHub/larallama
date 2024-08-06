@@ -7,6 +7,8 @@ import Filters from "@/Pages/Collection/Components/Filters.vue";
 import StyleGuide from "@/Pages/Collection/Components/StyleGuide.vue";
 const toast = useToast();
 
+import ScrollButton from "@/Components/ScrollButton.vue";
+
 import ChatMessageV2 from "@/Pages/Chat/ChatMessageV2.vue";
 import DisplayMenu from "@/Components/DisplayMenu.vue";
 import {Switch, SwitchGroup, SwitchLabel} from '@headlessui/vue'
@@ -18,6 +20,7 @@ const props = defineProps({
     chat: Object,
     messages: Object,
 })
+
 
 const emits = defineEmits(['chatSubmitted'])
 
@@ -78,7 +81,14 @@ const alreadyCompleted = ref(false);
 
 const getting_results = ref(false)
 
+const scrollButton = ref(null)
+const bottomTarget = ref(null)
+
 onMounted(() => {
+
+    if (scrollButton.value) {
+        scrollButton.value.bottomTarget = bottomTarget.value
+    }
 
     chatMessages.value = props.messages;
     Echo.private(`collection.chat.${props.chat.chatable_id}.${props.chat.id}`)
@@ -187,7 +197,7 @@ const rerun = (message) => {
 
 <template>
     <div class="flex-1 flex flex-col mx-auto px-5 ">
-
+        <ScrollButton ref="scrollButton" />
         <div v-if="chat?.id && chatMessages.length === 0">
             Ask a question below to get started.
         </div>
@@ -272,6 +282,7 @@ const rerun = (message) => {
                             </SwitchGroup>
                         </div>
                     </div>
+                    <div ref="bottomTarget"></div>
 
                     <div class="flex mt-5 ">
                         <!--                    add anchor below so I cal scroll to it-->
