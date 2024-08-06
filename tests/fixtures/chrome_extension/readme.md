@@ -69,6 +69,7 @@ curl -X POST \
     "recurring": "not",
     "force": false,
     "prompt": "[THE PROMPT THEY WANT TO USE]",
+    "content": base64(site_html)
 }
 ```
 
