@@ -85,7 +85,7 @@ class MessageTest extends TestCase
 
         $message = Message::factory()->user()->create([
             'meta_data' => MetaDataDto::from([
-                'tool' => 'completion',
+                'tool' => 'chat',
             ]),
         ]);
 
@@ -115,14 +115,14 @@ class MessageTest extends TestCase
         $message = Message::factory()->user()->create([
             'chat_id' => $chat->id,
             'meta_data' => MetaDataDto::from([
-                'tool' => 'completion',
+                'tool' => 'chat',
             ]),
         ]);
 
         $messageAssistant = Message::factory()->assistant()->create([
             'chat_id' => $chat->id,
             'meta_data' => MetaDataDto::from([
-                'tool' => 'completion',
+                'tool' => 'chat',
             ]),
         ]);
 
