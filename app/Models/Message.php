@@ -223,11 +223,12 @@ class Message extends Model implements HasDrivers
         $meta_data->driver = $chat->getDriver();
         $message->updateQuietly(['meta_data' => $meta_data]);
 
-        if ($message->meta_data?->tool === 'completion') {
+        if ($message->meta_data?->tool === 'chat') {
             Log::info('[LaraChain] Running Simple Completion');
 
             $messages = $chat->getChatResponse();
-            $response = LlmDriverFacade::driver($chat->getDriver())->chat($messages);
+            $response = LlmDriverFacade::driver($chat->getDriver())
+                ->chat($messages);
             $response = $response->content;
 
             $chat->addInput(

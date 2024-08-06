@@ -18,7 +18,6 @@ Using the context of the prompt and the users query return a concise, clear, and
 **Format**
 Deliver the response in a concise, clear Markdown format (Text). Use quotes as needed from the context.
 
-[DO NOT INCLUDE THE ABOVE IN THE RESPONSE]
 
 **The User's Query**:
 ```$originalPrompt```

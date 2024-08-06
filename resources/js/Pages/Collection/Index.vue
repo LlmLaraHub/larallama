@@ -8,6 +8,7 @@ import { ref } from 'vue';
 import PrimaryButtonLink from '@/Components/PrimaryButtonLink.vue';
 import {usePage} from "@inertiajs/vue3";
 import ApplicationLogo from "@/Components/ApplicationLogo.vue";
+import Pagination from "@/Pages/Collection/Components/Pagination.vue";
 
 
 const props = defineProps({
@@ -111,6 +112,7 @@ const closeEditCollectionSlideOut = () => {
 
                                                     </div>
                                                 </div>
+
                                             </template>
                                         </div>
                                     </div>
