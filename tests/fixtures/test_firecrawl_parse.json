@@ -1,0 +1,14 @@
+{
+    "success": true,
+    "data": {
+        "content": "Raw Content ",
+        "markdown": "# Markdown Content",
+        "provider": "web-scraper",
+        "metadata": {
+            "title": "Mendable | AI for CX and Sales",
+            "description": "AI for CX and Sales",
+            "language": null,
+            "sourceURL": "https://www.mendable.ai/"
+        }
+    }
+}

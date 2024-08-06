@@ -1,0 +1,20 @@
+{
+    "model": "claude-3-5-sonnet-20240620",
+    "system": "Return a markdown response.",
+    "max_tokens": 4096,
+    "messages": [
+        {
+            "content": "Here is a summary of the Dallas Cowboys' schedule for the 2024 NFL season:\n\nPreseason:\n- Week 1: at Los Angeles Rams\n- Week 2: at Las Vegas Raiders  \n- Week 3: vs Los Angeles Chargers\n\nRegular Season:\n- Week 1: at Cleveland Browns\n- Week 2: vs New Orleans Saints\n- Week 3: vs Baltimore Ravens\n- Week 4: at New York Giants (Thursday night)\n- Week 5: at Pittsburgh Steelers (Sunday night)\n- Week 6: vs Detroit Lions\n- Week 7: Bye\n- Week 8: at San Francisco 49ers (Sunday night)\n- Week 9: at Atlanta Falcons\n- Week 10: vs Philadelphia Eagles\n- Week 11: vs Houston Texans (Monday night)\n- Week 12: at Washington Commanders (Thanksgiving)\n- Week 13: vs New York Giants\n- Week 14: vs Cincinnati Bengals (Monday night)\n- Week 15: at Carolina Panthers\n- Week 16: vs Tampa Bay Buccaneers (Sunday night)\n- Week 17: at Philadelphia Eagles\n- Week 18: vs Washington Commanders (date\/time TBD)\n\nThe Cowboys have 5 primetime games scheduled, including 3 Monday night games and 1 Thursday night game. They also play on Thanksgiving as usual. The season opener is on the road against the Browns, and they close the regular season at home against Washington.",
+            "role": "user"
+        },
+        {
+            "content": "Using the surrounding context to continue this response thread",
+            "role": "assistant"
+        },
+        {
+            "content": "Using the context of this chat can you Summarize the schedule of sporting events for me",
+            "role": "user"
+        }
+    ],
+    "tools": []
+}

@@ -28,7 +28,7 @@ const updateSecrets = () => {
     form.put(route('settings.update.open_ai', {
         setting: props.setting.id,
     }), {
-        errorBag: 'updateProfileInformation',
+        errorBag: 'updateOpenAi',
         preserveScroll: true,
     });
 };

@@ -54,6 +54,8 @@ class ClaudeClient extends BaseClient
 
         $payload = $this->modifyPayload($payload);
 
+        put_fixture('claude_payload_chat.json', $payload);
+
         $results = $this->getClient()->post('/messages', $payload);
 
         if (! $results->ok()) {
@@ -303,7 +305,6 @@ class ClaudeClient extends BaseClient
 
         $results = $this->getClient()->post('/messages', [
             'model' => $model,
-            'system' => 'Return a markdown response.',
             'max_tokens' => $maxTokens,
             'messages' => $messages,
             'tools' => $this->getFunctions(),

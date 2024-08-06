@@ -1,0 +1,1046 @@
+<ROLE>
+You are an AI assistant tasked with extracting sporting event data from website content. This can be matches, soccer, football, all sports.
+
+<INSTRUCTIONS>
+1. Analyze the provided website HTML content below the <CONTENT> tag.
+2. Look for information about sporting events within the content.
+3. If no event data is found summarize what is on the page
+4. If event data is found, extract the following information for each event:
+   - Event Title
+   - Start Date
+   - End Date
+   - Location
+   - Description
+   - Any other relevant data
+5. Format the extracted data as a Markdown according to the specifications below.
+
+<OUTPUT_FORMAT>
+If events are found, return a Markdown with the following structure for each event on the page:
+"title": "Event Title",
+"startDate": "Start Date",
+"endDate": "End Date",
+"location": "Location",
+"description": "Description",
+"additionalInfo": "Any other relevant data"
+
+
+If no events are found, return the words "No Content Found" and summarize what was on the page
+
+
+<CONTENT>
+[Skip to main content](#main-content)
+
+   [![](https://static.clubs.nfl.com/f_auto/cowboys/qb3gsczo7x48ijfyjkqy)](https://www.dallascowboys.com/)
+
+ [![Dallas Cowboys logo](https://static.www.nfl.com/t_q-best/league/api/clubs/logos/DAL)](https://www.dallascowboys.com "Link to club's homepage")
+Open menu button
+
+Primary nav
+
+*   [TRAINING CAMP](https://www.dallascowboys.com/training-camp/index "TRAINING CAMP")
+    
+*   [NEWS](https://www.dallascowboys.com/news/index "NEWS")
+    
+*   [MULTIMEDIA](https://www.dallascowboys.com/all-media/index "MULTIMEDIA")
+    
+*   [SCHEDULE](https://www.dallascowboys.com/schedule/ "SCHEDULE")
+    
+*   [TEAM](https://www.dallascowboys.com/team/players-roster "TEAM")
+    
+*   [TICKETS](https://www.dallascowboys.com/tickets/ "TICKETS")
+    
+*   [DRAFT](https://www.dallascowboys.com/draft-central/ "DRAFT")
+    
+*   [FANS](https://www.dallascowboys.com/fans/index "FANS")
+    
+*   [STADIUM](https://www.dallascowboys.com/stadium/index "STADIUM")
+    
+*   [CHEERLEADERS](https://dallascowboyscheerleaders.com/ "CHEERLEADERS")
+    
+*   [COMMUNITY](https://www.dallascowboys.com/community/index "COMMUNITY")
+    
+*   [SPANISH](https://www.dallascowboys.com/spanish "SPANISH")
+    
+
+*   [SHOP](https://shop.dallascowboys.com/?_s=bm-cowboys-header-topnav-shop-091421 "SHOP")
+    
+*   [TICKETS](https://www.dallascowboys.com/tickets/index "TICKETS")
+    
+
+Search 
+
+Action related nav
+
+*   [TICKETS](https://seatgeek.com/dallas-cowboys-tickets/primary-only?aid=13144&pid=24sgt_web&rid=3&utm_medium=partnership&utm_source=cowboys&utm_campaign=24sgt_web "TICKETS")
+    
+*   [WATCH](https://www.pntra.com/t/RkFIS01FSklBTEdIREdBSUlMRUg "WATCH")
+    
+*   [PRO SHOP](https://shop.dallascowboys.com/?_s=bm-cowboys-header-topnav-shop-091421 "PRO SHOP")
+    
+*   [LIVE NFL GAMES](https://sports.yahoo.com/nfl/live-video/?is_retargeting=true&af_sub1=Acquisition&c=US_Acquisition_YMktg_NFLLive_NFLinapp_NFLteamappusers&pid=partnership&af_sub5=NFLteamapps__Static_&af_sub2=US_YMktg "LIVE NFL GAMES")
+    
+
+*   [Schedule](https://www.dallascowboys.com/schedule/index "Schedule")
+    
+*   [Event Calendar](https://www.dallascowboys.com/schedule/event-calendar "Event Calendar")
+    
+*   [League Schedule](https://www.nfl.com/schedule "League Schedule")
+    
+
+Advertising
+
+Dallas Cowboys Schedule
+=======================
+
+Dallas Cowboys Schedule
+-----------------------
+
+Presented by
+
+![ScheduleHeader_2460x1440](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)
+
+[DOWNLOADABLE SCHEDULE](javascript:void(0);)
+
+Calendar event(s) copied!
+
+1\. Access your calendar
+
+2\. Add url to calendar and subscribe
+
+3\. Ensure that newly added Cowboys's calendar is synced to your account
+
+### Pick your method to subscribe to the calendar
+
+1\. Automatically Download to System Default Mail App (Recommended)
+
+[Add to Calendar](javascript:void(0); "Add to Calendar")
+
+2\. Connect to Calendar Provider of Choice (Manual)
+
+Add to Calendar
+
+Calendar event(s) copied!
+
+1\. Access your calendar
+
+2\. Add url to calendar and subscribe
+
+3\. Ensure that newly added Cowboys's calendar is synced to your account
+
+[PRINTABLE SCHEDULE](https://static.clubs.nfl.com/image/upload/cowboys/rvflkozyaxlolkaccnag "Printable Schedule")
+
+[facebook](https://www.facebook.com/DallasCowboys)
+
+[instagram](https://www.instagram.com/DallasCowboys)
+
+[x](https://twitter.com/DallasCowboys)
+
+PRESEASON
+---------
+
+**WEEK 1** · Sun 08/11 · 3:30 PM CDT
+
+AT
+
+![Los Angeles Rams](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)
+
+Rams
+
+Los Angeles Rams
+
+CBS 11
+
+105.3 The FAN
+
+[Add to Calendar](webcal://www.dallascowboys.com/api/addToCalendar/ag/d?text=)
+
+SoFi Stadium
+
+[NFL+](https://www.gopjn.com/t/RkFJSUZLSkVBTEdIREdBSUlMRUg)
+ [Tickets](https://www.ticketmaster.com/event/0A00609AD0134665?wt.mc_id=NFL_TEAM_DAL_SCHED_PG_LINK_AWAY_PR1&utm_source=NFL.com&utm_medium=client&utm_campaign=NFL_TEAM_DAL&utm_content=SCHED_PG_LINK_AWAY_PR1)
+
+[![Airplane-Travel-Icon-BLUE](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)\
+\
+Book Flights](https://www.aa.com/homePage.do?c=SPNS|DSP|COW|2024|SCH|_COWBOYS_SCHEDULE_PAGE)
+[![Lodging-Travel-Icon-BLUE](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)\
+\
+Book Hotels](https://www.omnihotels.com/campaigns/stay-a-part-of-the-cowboys?utm_source=dallascowboys&utm_medium=banner&utm_campaign=omni_ohr_prospecting_dallascowboyscorporate_reach&dclid=CjkKEQjw9-KTBhCDoMXt98iMssMBEiQAk8T7DxgiZvcRw1woXiG012ihmG5YxScK4Gxf4A5PA20z0l_w_wcB)
+
+**WEEK 2** · Sat 08/17 · 9:00 PM CDT
+
+AT
+
+![Las Vegas Raiders](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)
+
+Raiders
+
+Las Vegas Raiders
+
+CBS 11
+
+[Add to Calendar](webcal://www.dallascowboys.com/api/addToCalendar/ag/d?text=)
+
+Allegiant Stadium
+
+[NFL+](https://www.gopjn.com/t/RkFJSUZLSkVBTEdIREdBSUlMRUg)
+ [Tickets](https://www.ticketmaster.com/event/1700608FA11A0F8F?wt.mc_id=NFL_TEAM_DAL_SCHED_PG_LINK_AWAY_PR2&utm_source=NFL.com&utm_medium=client&utm_campaign=NFL_TEAM_DAL&utm_content=SCHED_PG_LINK_AWAY_PR2)
+
+[![Airplane-Travel-Icon-BLUE](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)\
+\
+Book Flights](https://www.aa.com/homePage.do?c=SPNS|DSP|COW|2024|SCH|_COWBOYS_SCHEDULE_PAGE)
+[![Lodging-Travel-Icon-BLUE](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)\
+\
+Book Hotels](https://www.omnihotels.com/campaigns/stay-a-part-of-the-cowboys?utm_source=dallascowboys&utm_medium=banner&utm_campaign=omni_ohr_prospecting_dallascowboyscorporate_reach&dclid=CjkKEQjw9-KTBhCDoMXt98iMssMBEiQAk8T7DxgiZvcRw1woXiG012ihmG5YxScK4Gxf4A5PA20z0l_w_wcB)
+
+**WEEK 3** · Sat 08/24 · 3:00 PM CDT
+
+![Los Angeles Chargers](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)
+
+Chargers
+
+Los Angeles Chargers
+
+CBS 11
+
+105.3 The FAN
+
+[Add to Calendar](webcal://www.dallascowboys.com/api/addToCalendar/ag/d?text=)
+
+AT&T Stadium
+
+[NFL+](https://www.gopjn.com/t/RkFJSUZLSkVBTEdIREdBSUlMRUg)
+ [Tickets](https://seatgeek.com/dallas-cowboys-tickets/primary-only/event/6446601?aid=13144&pid=24lac_sched&rid=2&utm_medium=partnership&utm_source=cowboys&utm_campaign=24lac_sched)
+
+[![Airplane-Travel-Icon-BLUE](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)\
+\
+Book Flights](https://www.aa.com/homePage.do?c=SPNS|DSP|COW|2024|SCH|_COWBOYS_SCHEDULE_PAGE)
+[![Lodging-Travel-Icon-BLUE](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)\
+\
+Book Hotels](https://www.omnihotels.com/campaigns/stay-a-part-of-the-cowboys?utm_source=dallascowboys&utm_medium=banner&utm_campaign=omni_ohr_prospecting_dallascowboyscorporate_reach&dclid=CjkKEQjw9-KTBhCDoMXt98iMssMBEiQAk8T7DxgiZvcRw1woXiG012ihmG5YxScK4Gxf4A5PA20z0l_w_wcB)
+
+Presented By
+
+REGULAR SEASON
+--------------
+
+**WEEK 1** · Sun 09/08 · 3:25 PM CDT
+
+AT
+
+![Cleveland Browns](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)
+
+Browns
+
+Cleveland Browns
+
+FOX
+
+105.3 The FAN
+
+[Add to Calendar](webcal://www.dallascowboys.com/api/addToCalendar/ag/d?text=)
+
+Cleveland Browns Stadium
+
+[NFL+](https://www.gopjn.com/t/RkFJSUZLSkVBTEdIREdBSUlMRUg)
+ [Tickets](https://www.ticketmaster.com/event/05006090E8D25C40?wt.mc_id=NFL_TEAM_DAL_SCHED_PG_LINK_AWAY_COWBOYS_BROWNS&utm_source=NFL.com&utm_medium=client&utm_campaign=NFL_TEAM_DAL&utm_content=SCHED_PG_LINK_AWAY_COWBOYS_BROWNS)
+
+[Travel Packages](https://www.groupminder.com/internet/resEvt.cfm?cstId=76&evtId=242)
+ [Book Flights](https://www.aa.com/homePage.do?c=SPNS|DSP|COW|2024|SCH|_COWBOYS_SCHEDULE_PAGE)
+[![Lodging-Travel-Icon-BLUE](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)\
+\
+Book Hotels](https://www.omnihotels.com/campaigns/stay-a-part-of-the-cowboys?utm_source=dallascowboys&utm_medium=banner&utm_campaign=omni_ohr_prospecting_dallascowboyscorporate_reach&dclid=CjkKEQjw9-KTBhCDoMXt98iMssMBEiQAk8T7DxgiZvcRw1woXiG012ihmG5YxScK4Gxf4A5PA20z0l_w_wcB)
+
+**WEEK 2** · Sun 09/15 · 12:00 PM CDT
+
+![New Orleans Saints](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)
+
+Saints
+
+New Orleans Saints
+
+FOX
+
+105.3 The FAN
+
+[Add to Calendar](webcal://www.dallascowboys.com/api/addToCalendar/ag/d?text=)
+
+AT&T Stadium
+
+[NFL+](https://www.gopjn.com/t/RkFJSUZLSkVBTEdIREdBSUlMRUg)
+ [Tickets](https://seatgeek.com/dallas-cowboys-tickets/primary-only/event/6446876?aid=13144&pid=24no_sched&rid=2&utm_medium=partnership&utm_source=cowboys&utm_campaign=24no_sched)
+
+[![Star-Icon-BLUE](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)\
+\
+Travel Packages](https://www.groupminder.com/internet/resEvt.cfm?cstId=76&evtId=239)
+[![Airplane-Travel-Icon-BLUE](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)\
+\
+Book Flights](https://www.aa.com/homePage.do?c=SPNS|DSP|COW|2024|SCH|_COWBOYS_SCHEDULE_PAGE)
+[![Lodging-Travel-Icon-BLUE](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)\
+\
+Book Hotels](https://www.omnihotels.com/campaigns/stay-a-part-of-the-cowboys?utm_source=dallascowboys&utm_medium=banner&utm_campaign=omni_ohr_prospecting_dallascowboyscorporate_reach&dclid=CjkKEQjw9-KTBhCDoMXt98iMssMBEiQAk8T7DxgiZvcRw1woXiG012ihmG5YxScK4Gxf4A5PA20z0l_w_wcB)
+
+Presented By
+
+**WEEK 3** · Sun 09/22 · 3:25 PM CDT
+
+![Baltimore Ravens](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)
+
+Ravens
+
+Baltimore Ravens
+
+FOX
+
+105.3 The FAN
+
+[Add to Calendar](webcal://www.dallascowboys.com/api/addToCalendar/ag/d?text=)
+
+AT&T Stadium
+
+[NFL+](https://www.gopjn.com/t/RkFJSUZLSkVBTEdIREdBSUlMRUg)
+ [Tickets](https://seatgeek.com/dallas-cowboys-tickets/primary-only/event/6446862?aid=13144&pid=24bal_sched&rid=2&utm_medium=partnership&utm_source=cowboys&utm_campaign=24bal_sched)
+
+[![Star-Icon-BLUE](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)\
+\
+Travel Packages](https://www.groupminder.com/internet/resEvt.cfm?cstId=76&evtId=233)
+[![Airplane-Travel-Icon-BLUE](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)\
+\
+Book Flights](https://www.aa.com/homePage.do?c=SPNS|DSP|COW|2024|SCH|_COWBOYS_SCHEDULE_PAGE)
+[![Lodging-Travel-Icon-BLUE](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)\
+\
+Book Hotels](https://www.omnihotels.com/campaigns/stay-a-part-of-the-cowboys?utm_source=dallascowboys&utm_medium=banner&utm_campaign=omni_ohr_prospecting_dallascowboyscorporate_reach&dclid=CjkKEQjw9-KTBhCDoMXt98iMssMBEiQAk8T7DxgiZvcRw1woXiG012ihmG5YxScK4Gxf4A5PA20z0l_w_wcB)
+
+Presented By
+
+**WEEK 4** · Thu 09/26 · 7:15 PM CDT
+
+AT
+
+![New York Giants](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)
+
+Giants
+
+New York Giants
+
+Prime Video
+
+105.3 The FAN
+
+[Add to Calendar](webcal://www.dallascowboys.com/api/addToCalendar/ag/d?text=)
+
+MetLife Stadium
+
+[NFL+](https://www.gopjn.com/t/RkFJSUZLSkVBTEdIREdBSUlMRUg)
+ [Tickets](https://www.ticketmaster.com/event/00006096DC1E4DE8?wt.mc_id=NFL_TEAM_DAL_SCHED_PG_LINK_AWAY_COWBOYS_GIANTS&utm_source=NFL.com&utm_medium=client&utm_campaign=NFL_TEAM_DAL&utm_content=SCHED_PG_LINK_AWAY_COWBOYS_GIANTS)
+
+[![Star-Icon-BLUE](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)\
+\
+Travel Packages](https://www.starsportstours.com/)
+[![Airplane-Travel-Icon-BLUE](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)\
+\
+Book Flights](https://www.aa.com/homePage.do?c=SPNS|DSP|COW|2024|SCH|_COWBOYS_SCHEDULE_PAGE)
+[![Lodging-Travel-Icon-BLUE](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)\
+\
+Book Hotels](https://www.omnihotels.com/campaigns/stay-a-part-of-the-cowboys?utm_source=dallascowboys&utm_medium=banner&utm_campaign=omni_ohr_prospecting_dallascowboyscorporate_reach&dclid=CjkKEQjw9-KTBhCDoMXt98iMssMBEiQAk8T7DxgiZvcRw1woXiG012ihmG5YxScK4Gxf4A5PA20z0l_w_wcB)
+
+**WEEK 5** · Sun 10/06 · 7:20 PM CDT
+
+AT
+
+![Pittsburgh Steelers](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)
+
+Steelers
+
+Pittsburgh Steelers
+
+NBC
+
+105.3 The FAN
+
+[Add to Calendar](webcal://www.dallascowboys.com/api/addToCalendar/ag/d?text=)
+
+Acrisure Stadium
+
+[NFL+](https://www.gopjn.com/t/RkFJSUZLSkVBTEdIREdBSUlMRUg)
+ [Tickets](https://www.ticketmaster.com/event/16006065B92533E6?wt.mc_id=NFL_TEAM_DAL_SCHED_PG_LINK_AWAY_COWBOYS_STEELERS&utm_source=NFL.com&utm_medium=client&utm_campaign=NFL_TEAM_DAL&utm_content=SCHED_PG_LINK_AWAY_COWBOYS_STEELERS)
+
+[![Star-Icon-BLUE](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)\
+\
+Travel Packages](https://www.groupminder.com/internet/resEvt.cfm?cstId=76&evtId=243)
+[![Airplane-Travel-Icon-BLUE](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)\
+\
+Book Flights](https://www.aa.com/homePage.do?c=SPNS|DSP|COW|2024|SCH|_COWBOYS_SCHEDULE_PAGE)
+[![Lodging-Travel-Icon-BLUE](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)\
+\
+Book Hotels](https://www.omnihotels.com/campaigns/stay-a-part-of-the-cowboys?utm_source=dallascowboys&utm_medium=banner&utm_campaign=omni_ohr_prospecting_dallascowboyscorporate_reach&dclid=CjkKEQjw9-KTBhCDoMXt98iMssMBEiQAk8T7DxgiZvcRw1woXiG012ihmG5YxScK4Gxf4A5PA20z0l_w_wcB)
+
+**WEEK 6** · Sun 10/13 · 3:25 PM CDT
+
+![Detroit Lions](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)
+
+Lions
+
+Detroit Lions
+
+FOX
+
+105.3 The FAN
+
+[Add to Calendar](webcal://www.dallascowboys.com/api/addToCalendar/ag/d?text=)
+
+AT&T Stadium
+
+[NFL+](https://www.gopjn.com/t/RkFJSUZLSkVBTEdIREdBSUlMRUg)
+ [Tickets](https://seatgeek.com/dallas-cowboys-tickets/primary-only/event/6446863?aid=13144&pid=24det_sched&rid=2&utm_medium=partnership&utm_source=cowboys&utm_campaign=24det_sched)
+
+[![Star-Icon-BLUE](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)\
+\
+Travel Packages](https://www.groupminder.com/internet/resEvt.cfm?cstId=76&evtId=234)
+[![Airplane-Travel-Icon-BLUE](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)\
+\
+Book Flights](https://www.aa.com/homePage.do?c=SPNS|DSP|COW|2024|SCH|_COWBOYS_SCHEDULE_PAGE)
+[![Lodging-Travel-Icon-BLUE](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)\
+\
+Book Hotels](https://www.omnihotels.com/campaigns/stay-a-part-of-the-cowboys?utm_source=dallascowboys&utm_medium=banner&utm_campaign=omni_ohr_prospecting_dallascowboyscorporate_reach&dclid=CjkKEQjw9-KTBhCDoMXt98iMssMBEiQAk8T7DxgiZvcRw1woXiG012ihmG5YxScK4Gxf4A5PA20z0l_w_wcB)
+
+Presented By
+
+**WEEK 7**
+
+BYE
+
+**WEEK 8** · Sun 10/27 · 7:20 PM CDT
+
+AT
+
+![San Francisco 49ers](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)
+
+49ers
+
+San Francisco 49ers
+
+NBC
+
+105.3 The FAN
+
+[Add to Calendar](webcal://www.dallascowboys.com/api/addToCalendar/ag/d?text=)
+
+Levi's® Stadium
+
+[NFL+](https://www.gopjn.com/t/RkFJSUZLSkVBTEdIREdBSUlMRUg)
+ [Tickets](https://www.ticketmaster.com/event/1C00608B84DF2EA9?wt.mc_id=NFL_TEAM_DAL_SCHED_PG_LINK_AWAY_COWBOYS_49ERS&utm_source=NFL.com&utm_medium=client&utm_campaign=NFL_TEAM_DAL&utm_content=SCHED_PG_LINK_AWAY_COWBOYS_49ERS)
+
+[![Star-Icon-BLUE](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)\
+\
+Travel Packages](https://www.groupminder.com/internet/resEvt.cfm?cstId=76&evtId=244)
+[![Airplane-Travel-Icon-BLUE](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)\
+\
+Book Flights](https://www.aa.com/homePage.do?c=SPNS|DSP|COW|2024|SCH|_COWBOYS_SCHEDULE_PAGE)
+[![Lodging-Travel-Icon-BLUE](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)\
+\
+Book Hotels](https://www.omnihotels.com/campaigns/stay-a-part-of-the-cowboys?utm_source=dallascowboys&utm_medium=banner&utm_campaign=omni_ohr_prospecting_dallascowboyscorporate_reach&dclid=CjkKEQjw9-KTBhCDoMXt98iMssMBEiQAk8T7DxgiZvcRw1woXiG012ihmG5YxScK4Gxf4A5PA20z0l_w_wcB)
+
+**WEEK 9** · Sun 11/03 · 12:00 PM CST
+
+AT
+
+![Atlanta Falcons](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)
+
+Falcons
+
+Atlanta Falcons
+
+FOX
+
+105.3 The FAN
+
+[Add to Calendar](webcal://www.dallascowboys.com/api/addToCalendar/ag/d?text=)
+
+Mercedes-Benz Stadium
+
+[NFL+](https://www.gopjn.com/t/RkFJSUZLSkVBTEdIREdBSUlMRUg)
+ [Tickets](https://www.ticketmaster.com/event/0E00608BDFC5711D?wt.mc_id=NFL_TEAM_DAL_SCHED_PG_LINK_AWAY_COWBOYS_FALCONS&utm_source=NFL.com&utm_medium=client&utm_campaign=NFL_TEAM_DAL&utm_content=SCHED_PG_LINK_AWAY_COWBOYS_FALCONS)
+
+[![Star-Icon-BLUE](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)\
+\
+Travel Packages](https://www.groupminder.com/internet/resEvt.cfm?cstId=76&evtId=241)
+[![Airplane-Travel-Icon-BLUE](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)\
+\
+Book Flights](https://www.aa.com/homePage.do?c=SPNS|DSP|COW|2024|SCH|_COWBOYS_SCHEDULE_PAGE)
+[![Lodging-Travel-Icon-BLUE](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)\
+\
+Book Hotels](https://www.omnihotels.com/campaigns/stay-a-part-of-the-cowboys?utm_source=dallascowboys&utm_medium=banner&utm_campaign=omni_ohr_prospecting_dallascowboyscorporate_reach&dclid=CjkKEQjw9-KTBhCDoMXt98iMssMBEiQAk8T7DxgiZvcRw1woXiG012ihmG5YxScK4Gxf4A5PA20z0l_w_wcB)
+
+**WEEK 10** · Sun 11/10 · 3:25 PM CST
+
+![Philadelphia Eagles](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)
+
+Eagles
+
+Philadelphia Eagles
+
+CBS
+
+105.3 The FAN
+
+[Add to Calendar](webcal://www.dallascowboys.com/api/addToCalendar/ag/d?text=)
+
+AT&T Stadium
+
+[NFL+](https://www.gopjn.com/t/RkFJSUZLSkVBTEdIREdBSUlMRUg)
+ [Tickets](https://seatgeek.com/dallas-cowboys-tickets/primary-only/event/6446878?aid=13144&pid=24phi_sched&rid=2&utm_medium=partnership&utm_source=cowboys&utm_campaign=24phi_sched)
+
+[![Star-Icon-BLUE](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)\
+\
+Travel Packages](https://www.groupminder.com/internet/resEvt.cfm?cstId=76&evtId=232)
+[![Airplane-Travel-Icon-BLUE](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)\
+\
+Book Flights](https://www.aa.com/homePage.do?c=SPNS|DSP|COW|2024|SCH|_COWBOYS_SCHEDULE_PAGE)
+[![Lodging-Travel-Icon-BLUE](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)\
+\
+Book Hotels](https://www.omnihotels.com/campaigns/stay-a-part-of-the-cowboys?utm_source=dallascowboys&utm_medium=banner&utm_campaign=omni_ohr_prospecting_dallascowboyscorporate_reach&dclid=CjkKEQjw9-KTBhCDoMXt98iMssMBEiQAk8T7DxgiZvcRw1woXiG012ihmG5YxScK4Gxf4A5PA20z0l_w_wcB)
+
+Presented By
+
+**WEEK 11** · Mon 11/18 · 7:15 PM CST
+
+![Houston Texans](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)
+
+Texans
+
+Houston Texans
+
+ESPN
+
+105.3 The FAN
+
+[Add to Calendar](webcal://www.dallascowboys.com/api/addToCalendar/ag/d?text=)
+
+AT&T Stadium
+
+[NFL+](https://www.gopjn.com/t/RkFJSUZLSkVBTEdIREdBSUlMRUg)
+ [Tickets](https://seatgeek.com/dallas-cowboys-tickets/primary-only/event/6446875?aid=13144&pid=24hou_sched&rid=2&utm_medium=partnership&utm_source=cowboys&utm_campaign=24hou_sched)
+
+[![Star-Icon-BLUE](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)\
+\
+Travel Packages](https://www.groupminder.com/internet/resEvt.cfm?cstId=76&evtId=235)
+[![Airplane-Travel-Icon-BLUE](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)\
+\
+Book Flights](https://www.aa.com/homePage.do?c=SPNS|DSP|COW|2024|SCH|_COWBOYS_SCHEDULE_PAGE)
+[![Lodging-Travel-Icon-BLUE](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)\
+\
+Book Hotels](https://www.omnihotels.com/campaigns/stay-a-part-of-the-cowboys?utm_source=dallascowboys&utm_medium=banner&utm_campaign=omni_ohr_prospecting_dallascowboyscorporate_reach&dclid=CjkKEQjw9-KTBhCDoMXt98iMssMBEiQAk8T7DxgiZvcRw1woXiG012ihmG5YxScK4Gxf4A5PA20z0l_w_wcB)
+
+Presented By
+
+**WEEK 12** · Sun 11/24 · 12:00 PM CST
+
+AT
+
+![Washington Commanders](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)
+
+Commanders
+
+Washington Commanders
+
+FOX
+
+105.3 The FAN
+
+[Add to Calendar](webcal://www.dallascowboys.com/api/addToCalendar/ag/d?text=)
+
+Commanders Field
+
+[NFL+](https://www.gopjn.com/t/RkFJSUZLSkVBTEdIREdBSUlMRUg)
+ [Tickets](https://seatgeek.com/washington-commanders-tickets/primary-only/event/6461434?wt.mc_id=NFL_TEAM_DAL_SCHED_PG_LINK_AWAY_COWBOYS_COMMANDERS&utm_source=NFL.com&utm_medium=client&utm_campaign=NFL_TEAM_DAL&utm_content=SCHED_PG_LINK_AWAY_COWBOYS_COMMANDERS)
+
+[![Star-Icon-BLUE](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)\
+\
+Travel Packages](https://www.starsportstours.com/)
+[![Airplane-Travel-Icon-BLUE](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)\
+\
+Book Flights](https://www.aa.com/homePage.do?c=SPNS|DSP|COW|2024|SCH|_COWBOYS_SCHEDULE_PAGE)
+[![Lodging-Travel-Icon-BLUE](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)\
+\
+Book Hotels](https://www.omnihotels.com/campaigns/stay-a-part-of-the-cowboys?utm_source=dallascowboys&utm_medium=banner&utm_campaign=omni_ohr_prospecting_dallascowboyscorporate_reach&dclid=CjkKEQjw9-KTBhCDoMXt98iMssMBEiQAk8T7DxgiZvcRw1woXiG012ihmG5YxScK4Gxf4A5PA20z0l_w_wcB)
+
+**WEEK 13** · Thu 11/28 · 3:30 PM CST
+
+![New York Giants](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)
+
+Giants
+
+New York Giants
+
+FOX
+
+105.3 The FAN
+
+[Add to Calendar](webcal://www.dallascowboys.com/api/addToCalendar/ag/d?text=)
+
+AT&T Stadium
+
+[NFL+](https://www.gopjn.com/t/RkFJSUZLSkVBTEdIREdBSUlMRUg)
+ [Tickets](https://seatgeek.com/dallas-cowboys-tickets/primary-only/event/6446877?aid=13144&pid=24nyg_sched&rid=2&utm_medium=partnership&utm_source=cowboys&utm_campaign=24nyg_sched)
+
+[![Star-Icon-BLUE](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)\
+\
+Travel Packages](https://www.groupminder.com/internet/resEvt.cfm?cstId=76&evtId=238)
+[![Airplane-Travel-Icon-BLUE](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)\
+\
+Book Flights](https://www.aa.com/homePage.do?c=SPNS|DSP|COW|2024|SCH|_COWBOYS_SCHEDULE_PAGE)
+[![Lodging-Travel-Icon-BLUE](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)\
+\
+Book Hotels](https://www.omnihotels.com/campaigns/stay-a-part-of-the-cowboys?utm_source=dallascowboys&utm_medium=banner&utm_campaign=omni_ohr_prospecting_dallascowboyscorporate_reach&dclid=CjkKEQjw9-KTBhCDoMXt98iMssMBEiQAk8T7DxgiZvcRw1woXiG012ihmG5YxScK4Gxf4A5PA20z0l_w_wcB)
+
+Presented By
+
+**WEEK 14** · Mon 12/09 · 7:15 PM CST
+
+![Cincinnati Bengals](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)
+
+Bengals
+
+Cincinnati Bengals
+
+ESPN • ABC
+
+105.3 The FAN
+
+[Add to Calendar](webcal://www.dallascowboys.com/api/addToCalendar/ag/d?text=)
+
+AT&T Stadium
+
+[NFL+](https://www.gopjn.com/t/RkFJSUZLSkVBTEdIREdBSUlMRUg)
+ [Tickets](https://seatgeek.com/dallas-cowboys-tickets/primary-only/event/6446866?aid=13144&pid=24cin_sched&rid=2&utm_medium=partnership&utm_source=cowboys&utm_campaign=24cin_sched)
+
+[![Star-Icon-BLUE](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)\
+\
+Travel Packages](https://www.groupminder.com/internet/resEvt.cfm?cstId=76&evtId=236)
+[![Airplane-Travel-Icon-BLUE](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)\
+\
+Book Flights](https://www.aa.com/homePage.do?c=SPNS|DSP|COW|2024|SCH|_COWBOYS_SCHEDULE_PAGE)
+[![Lodging-Travel-Icon-BLUE](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)\
+\
+Book Hotels](https://www.omnihotels.com/campaigns/stay-a-part-of-the-cowboys?utm_source=dallascowboys&utm_medium=banner&utm_campaign=omni_ohr_prospecting_dallascowboyscorporate_reach&dclid=CjkKEQjw9-KTBhCDoMXt98iMssMBEiQAk8T7DxgiZvcRw1woXiG012ihmG5YxScK4Gxf4A5PA20z0l_w_wcB)
+
+Presented By
+
+**WEEK 15** · Sun 12/15 · 12:00 PM CST
+
+AT
+
+![Carolina Panthers](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)
+
+Panthers
+
+Carolina Panthers
+
+FOX
+
+105.3 The FAN
+
+[Add to Calendar](webcal://www.dallascowboys.com/api/addToCalendar/ag/d?text=)
+
+Bank of America Stadium
+
+[NFL+](https://www.gopjn.com/t/RkFJSUZLSkVBTEdIREdBSUlMRUg)
+ [Tickets](https://www.ticketmaster.com/event/2D00606EC75F5D41?wt.mc_id=NFL_TEAM_DAL_SCHED_PG_LINK_AWAY_COWBOYS_PANTHERS&utm_source=NFL.com&utm_medium=client&utm_campaign=NFL_TEAM_DAL&utm_content=SCHED_PG_LINK_AWAY_COWBOYS_PANTHERS)
+
+[![Star-Icon-BLUE](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)\
+\
+Travel Packages](https://www.groupminder.com/internet/resEvt.cfm?cstId=76&evtId=231)
+[![Airplane-Travel-Icon-BLUE](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)\
+\
+Book Flights](https://www.aa.com/homePage.do?c=SPNS|DSP|COW|2024|SCH|_COWBOYS_SCHEDULE_PAGE)
+[![Lodging-Travel-Icon-BLUE](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)\
+\
+Book Hotels](https://www.omnihotels.com/campaigns/stay-a-part-of-the-cowboys?utm_source=dallascowboys&utm_medium=banner&utm_campaign=omni_ohr_prospecting_dallascowboyscorporate_reach&dclid=CjkKEQjw9-KTBhCDoMXt98iMssMBEiQAk8T7DxgiZvcRw1woXiG012ihmG5YxScK4Gxf4A5PA20z0l_w_wcB)
+
+**WEEK 16** · Sun 12/22 · 7:20 PM CST
+
+![Tampa Bay Buccaneers](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)
+
+Buccaneers
+
+Tampa Bay Buccaneers
+
+NBC
+
+105.3 The FAN
+
+[Add to Calendar](webcal://www.dallascowboys.com/api/addToCalendar/ag/d?text=)
+
+AT&T Stadium
+
+[NFL+](https://www.gopjn.com/t/RkFJSUZLSkVBTEdIREdBSUlMRUg)
+ [Tickets](https://seatgeek.com/dallas-cowboys-tickets/primary-only/event/6446879?aid=13144&pid=24tb_sched&rid=2&utm_medium=partnership&utm_source=cowboys&utm_campaign=24tb_sched)
+
+[![Star-Icon-BLUE](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)\
+\
+Travel Packages](https://www.groupminder.com/internet/resEvt.cfm?cstId=76&evtId=240)
+[![Airplane-Travel-Icon-BLUE](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)\
+\
+Book Flights](https://www.aa.com/homePage.do?c=SPNS|DSP|COW|2024|SCH|_COWBOYS_SCHEDULE_PAGE)
+[![Lodging-Travel-Icon-BLUE](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)\
+\
+Book Hotels](https://www.omnihotels.com/campaigns/stay-a-part-of-the-cowboys?utm_source=dallascowboys&utm_medium=banner&utm_campaign=omni_ohr_prospecting_dallascowboyscorporate_reach&dclid=CjkKEQjw9-KTBhCDoMXt98iMssMBEiQAk8T7DxgiZvcRw1woXiG012ihmG5YxScK4Gxf4A5PA20z0l_w_wcB)
+
+Presented By
+
+**WEEK 17** · Sun 12/29 · 3:25 PM CST
+
+AT
+
+![Philadelphia Eagles](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)
+
+Eagles
+
+Philadelphia Eagles
+
+FOX
+
+105.3 The FAN
+
+[Add to Calendar](webcal://www.dallascowboys.com/api/addToCalendar/ag/d?text=)
+
+Lincoln Financial Field
+
+[NFL+](https://www.gopjn.com/t/RkFJSUZLSkVBTEdIREdBSUlMRUg)
+ [Tickets](https://www.ticketmaster.com/event/0200609DD2B44827?wt.mc_id=NFL_TEAM_DAL_SCHED_PG_LINK_AWAY_COWBOYS_EAGLES&utm_source=NFL.com&utm_medium=client&utm_campaign=NFL_TEAM_DAL&utm_content=SCHED_PG_LINK_AWAY_COWBOYS_EAGLES)
+
+[![Star-Icon-BLUE](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)\
+\
+Travel Packages](https://www.starsportstours.com/)
+[![Airplane-Travel-Icon-BLUE](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)\
+\
+Book Flights](https://www.aa.com/homePage.do?c=SPNS|DSP|COW|2024|SCH|_COWBOYS_SCHEDULE_PAGE)
+[![Lodging-Travel-Icon-BLUE](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)\
+\
+Book Hotels](https://www.omnihotels.com/campaigns/stay-a-part-of-the-cowboys?utm_source=dallascowboys&utm_medium=banner&utm_campaign=omni_ohr_prospecting_dallascowboyscorporate_reach&dclid=CjkKEQjw9-KTBhCDoMXt98iMssMBEiQAk8T7DxgiZvcRw1woXiG012ihmG5YxScK4Gxf4A5PA20z0l_w_wcB)
+
+**WEEK 18** · TBD
+
+![Washington Commanders](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)
+
+Commanders
+
+Washington Commanders
+
+TBD
+
+105.3 The FAN
+
+[Add to Calendar](webcal://www.dallascowboys.com/api/addToCalendar/ag/d?text=)
+
+AT&T Stadium
+
+[NFL+](https://www.gopjn.com/t/RkFJSUZLSkVBTEdIREdBSUlMRUg)
+ [Tickets](https://seatgeek.com/dallas-cowboys-tickets/primary-only/event/6446882?aid=13144&pid=24was_sched&rid=2&utm_medium=partnership&utm_source=cowboys&utm_campaign=24was_sched)
+
+[![Star-Icon-BLUE](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)\
+\
+Travel Packages](https://www.groupminder.com/internet/resEvt.cfm?cstId=76&evtId=237)
+[![Airplane-Travel-Icon-BLUE](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)\
+\
+Book Flights](https://www.aa.com/homePage.do?c=SPNS|DSP|COW|2024|SCH|_COWBOYS_SCHEDULE_PAGE)
+[![Lodging-Travel-Icon-BLUE](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)\
+\
+Book Hotels](https://www.omnihotels.com/campaigns/stay-a-part-of-the-cowboys?utm_source=dallascowboys&utm_medium=banner&utm_campaign=omni_ohr_prospecting_dallascowboyscorporate_reach&dclid=CjkKEQjw9-KTBhCDoMXt98iMssMBEiQAk8T7DxgiZvcRw1woXiG012ihmG5YxScK4Gxf4A5PA20z0l_w_wcB)
+
+Presented By
+
+Please be aware that there are certain games that are subject to flexible scheduling and the date and time of those games may be changed from what is currently reflected on the schedule and what may appear on the ticket. For more detailed information about NFL flexible scheduling procedures for the 2024 NFL Season, please visit **[https://www.nfl.com/schedules/flexible-scheduling-procedures](https://www.nfl.com/schedules/flexible-scheduling-procedures)
+.**
+
+Network Information
+-------------------
+
+[TV NETWORK INFORMATION](/video/tv-network-information "TV Network Information")
+
+[RADIO BROADCAST INFORMATION](/podcast/radio-broadcast-information "Radio Broadcast Information")
+
+[Have Questions? Click here to chat](https://chat.satis.fi/?pageID=10004)
+
+Advertising
+
+### Club Links
+
+Club Links
+
+*   What we're all about
+*   [Privacy Policy](https://www.dallascowboys.com/privacy-policy)
+    
+*   [Terms of Use](https://www.dallascowboys.com/terms)
+    
+*   [Purchase Policy](https://www.dallascowboys.com/purchase-policy)
+    
+*   [SMS Terms and Conditions](https://www.dallascowboys.com/sms-terms-and-conditions/)
+    
+*   [Unsolicited Submissions Policy](https://www.dallascowboys.com/unsolicited-submissions-policy)
+    
+*   [Career opportunities](https://www.dallascowboys.com/career-opportunities)
+    
+*   [Accessibility](https://www.dallascowboys.com/accessibility)
+    
+
+*   Cowboys on the Web
+*   [Dallas Cowboys Cheerleaders](https://dallascowboyscheerleaders.com/)
+    
+*   [AT&T Stadium](http://attstadium.com/)
+    
+*   [The Star in Frisco](http://www.thestarinfrisco.com/)
+    
+*   [Contact Us](https://www.dallascowboys.com/contact)
+    
+*   [Cowboys Club at The Star](https://www.thestarinfrisco.com/cowboys-club)
+    
+*   [Cowboys Golf Club](https://www.cowboysgolfclub.com/)
+    
+*   [Somos Cowboys](https://www.dallascowboys.com/spanish)
+    
+
+*   TICKET CENTER
+*   [Account Manager](https://seatgeek.com/cowboys)
+    
+*   [Season Tickets](https://premium.dallascowboys.com/season-tickets/)
+    
+*   [Single Game Tickets](https://seatgeek.com/dallas-cowboys-tickets/primary-only?aid=13144&pid=24sgt_app&rid=7&utm_medium=partnership&utm_source=cowboys&utm_campaign=24sgt_app)
+    
+*   [Luxury Suites](https://premium.dallascowboys.com/luxury-suites)
+    
+*   [NFL Ticket Exchange](https://www.ticketmaster.com/artist/805931?intcmp=tm107794&wt.mc_id=NFL_TEAM_DAL_TIX_PG_TILE)
+    
+*   [Fan Travel](http://www.starsportstours.com/?campaign=tix_dal_landing_travelpackages)
+    
+
+*   Shop Online
+*   [Mens Apparel](https://shop.dallascowboys.com/mens/)
+    
+*   [Womens Apparel](https://shop.dallascowboys.com/womens/)
+    
+*   [Kids Apparel](https://shop.dallascowboys.com/kids/)
+    
+*   [Dallas Cowboys Jerseys](https://shop.dallascowboys.com/mens/jerseys/)
+    
+*   [Dallas Cowboys Accessories](https://shop.dallascowboys.com/gear/)
+    
+*   [Clearance](https://shop.dallascowboys.com/sale/)
+    
+
+### NFL Clubs
+
+NFL Clubs
+
+*   AFC North
+*   [![Baltimore Ravens](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)](https://www.baltimoreravens.com/)
+    
+*   [![Cincinnati Bengals](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)](https://www.bengals.com/)
+    
+*   [![Cleveland Browns](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)](https://www.clevelandbrowns.com/)
+    
+*   [![Pittsburgh Steelers](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)](https://www.steelers.com/)
+    
+
+*   AFC East
+*   [![Buffalo Bills](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)](https://www.buffalobills.com/)
+    
+*   [![Miami Dolphins](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)](https://www.miamidolphins.com/)
+    
+*   [![New England Patriots](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)](https://www.patriots.com/)
+    
+*   [![New York Jets](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)](https://www.newyorkjets.com/)
+    
+
+*   AFC South
+*   [![Houston Texans](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)](https://www.houstontexans.com/)
+    
+*   [![Indianapolis Colts](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)](https://www.colts.com/)
+    
+*   [![Jacksonville Jaguars](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)](https://www.jaguars.com/)
+    
+*   [![Tennessee Titans](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)](https://tennesseetitans.com/)
+    
+
+*   AFC West
+*   [![Denver Broncos](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)](https://www.denverbroncos.com/)
+    
+*   [![Kansas City Chiefs](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)](https://www.chiefs.com/)
+    
+*   [![Los Angeles Chargers](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)](https://www.chargers.com/)
+    
+*   [![Las Vegas Raiders](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)](https://www.raiders.com/)
+    
+
+*   NFC North
+*   [![Chicago Bears](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)](https://www.chicagobears.com/)
+    
+*   [![Detroit Lions](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)](https://www.detroitlions.com/)
+    
+*   [![Green Bay Packers](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)](https://www.packers.com/)
+    
+*   [![Minnesota Vikings](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)](https://www.vikings.com/)
+    
+
+*   NFC East
+*   [![Dallas Cowboys](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)](https://www.dallascowboys.com/)
+    
+*   [![New York Giants](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)](https://www.giants.com/)
+    
+*   [![Philadelphia Eagles](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)](https://www.philadelphiaeagles.com/)
+    
+*   [![Washington Redskins](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)](https://www.commanders.com/)
+    
+
+*   NFC South
+*   [![Atlanta Falcons](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)](https://www.atlantafalcons.com/)
+    
+*   [![Carolina Panthers](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)](https://www.panthers.com/)
+    
+*   [![New Orleans Saints](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)](https://www.neworleanssaints.com/)
+    
+*   [![Tampa Bay Buccaneers](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)](https://www.buccaneers.com/)
+    
+
+*   NFC West
+*   [![Arizona Cardinals](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)](https://www.azcardinals.com/)
+    
+*   [![Los Angeles Rams](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)](https://www.therams.com/)
+    
+*   [![San Francisco 49ers](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)](https://www.49ers.com/)
+    
+*   [![Seattle Seahawks](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)](https://www.seahawks.com/)
+    
+
+### More NFL Sites
+
+More NFL Sites
+
+*   [NFL Football Operations](https://operations.nfl.com/)
+    
+*   [NFL Shop](https://www.nflshop.com/source/bm-nflcom-2017-BottomBanner-shopgeneric)
+    
+*   [NFL On Location](https://nflonlocation.com/?utm_campaign=OLE&utm_medium=referral&utm_source=nfl&utm_content=footerlink)
+    
+*   [Pro Football Hall of Fame](https://www.profootballhof.com/)
+    
+*   [Licensing](https://www.nfl.info/NFLConsProd/Welcome/index.html)
+    
+
+*   [USA Football](https://www.usafootball.com/)
+    
+*   [Play Football](https://playfootball.nfl.com/)
+    
+*   [NFL Extra Points](https://www.nflextrapoints.com/nfl-extra-points-credit-card/?campaignId=2038&shopperid=&cellNumber=706&referrerid=NFLB070911&referrerid=NFLB070911&publisherid=&advertisementid=#national-football-league)
+    
+*   [NFL Ticket Exchange](https://www.ticketmaster.com/nfl?wt.mc_id=NFL_LEAGUE_FOOTER_LINK&utm_source=NFL.com&utm_medium=client&utm_campaign=NFL_LEAGUE&utm_content=FOOTER_LINK)
+    
+
+Download apps
+
+Download Apps
+
+*   [![Download on the Apple Store](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)](https://itunes.apple.com/app/dallas-cowboys/id548528027)
+    
+*   [![Get it on Google Play](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)](https://play.google.com/store/apps/details?id=com.yinzcam.nfl.cowboys)
+    
+
+[![Dallas Cowboys](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)](https://www.dallascowboys.com)
+
+©2024 Dallas Cowboys. All rights reserved. Do not duplicate in any form without permission of the Dallas Cowboys.
+
+Legal
+
+*   [Privacy Policy](/privacy-policy "Privacy Policy")
+    
+*   [Accessibility](/accessibility "Accessibility")
+    
+*   [Site Map](https://www.dallascowboys.com/sitemap/0 "Site Map")
+    
+*   [Ad Choices](https://www.dallascowboys.com/privacy-policy/#Advertising "Ad Choices")
+    
+*   [Your Privacy Choices](https://privacyportal.onetrust.com/webform/46acd508-0e8d-40cd-af22-1a8bdfa6da60/224a3598-1b25-497d-9273-be255f55461c)
+    
+*   Cookie Settings
+
+Big left arrow icon Big right arrow icon Close icon Copy Url Three dots icon Down arrow icon Email icon Email icon Exit Fullscreen icon External link icon Facebook logo Football icon Facebook logo Instagram logo Snapchat logo YouTube logo TikTok logo Spotify logo LinkedIn logo Grid icon Key icon Left arrow icon Link icon Location icon Mail icon Menu icon Open icon Phone icon Play icon Radio icon Rewind icon Right arrow icon Search icon Select icon Selected icon TV icon Up arrow icon User icon Audio icon Add to calendar iconNFC icon AFC icon NFL icon Carousel IconList ViewWebsite InstagramTwitterFacebookSnapchatShop IconProfile Overlay AvatarAddAirplayArrow LeftArrow RightArrow UpArrow DownAudioBack 5sBack 10sBack 30sCalendarChartCheckDownLeftRightUpChromecast OffChromecast OnCloseClosed CaptionsBench OffBench OnBroad OffBroad OnVertical OffVertical OnCommentDockDoneDownloadDraftFantasyFilterForward 5sForward 10sForward 30sFull Screen OffFull Screen OnGamepassGamesInsightsKeyLeaveLiveCombineDraftFantasyMenu GamesMenu NetworkMenu NewsMenu PlayoffsMenu Pro BowlMenu ShopMenu StandingsMenu StatsMenu Super BowlMenu TeamsMenu TicketsMenuMore HorizontalMore VerticalMy LocationNetworkNewsPauseplayMultiple PlayersSingle PlayerPlaylistPlayoffsPro BowlPurgeRefreshRemoveSearchSettingsShare AndroidShare Copy URLShare EmailShare FacebookShare InstagramShare iOSShare SnapchatShare TwitterSkip NextSkip PreviousStandingsStarStatsSwapTeamsTicketsVideoVisibility OffVisibility OnVolume HiVolume LowVolume MediumVolume MuteWarningWebsite Caret downCaret upAtNewsPlayAudioGalleryPromo Chevron right
+
+The browser you are using is no longer supported on this site. It is highly recommended that you use the latest versions of a supported browser in order to receive an optimal viewing experience. The following browsers are supported: Chrome, Edge (v80 and later), Firefox and Safari.
+
+Got it!
+
+Unless you click “Reject Optional Cookies” you are agreeing to the continued collection, storage, and use of cookies and similar technologies on this specific property, device, and browser. Cookies and similar technologies are used for a variety of purposes such as enhancing site navigation, analyzing site usage, and assisting in our marketing and advertising efforts, including targeted advertising through third parties. You can further customize your cookie preferences and opt out of optional cookies by clicking the “Cookies Settings” link in this banner or in the footer of this website’s homepage. For more information, please refer to our[Privacy Policy](https://www.dallascowboys.com/privacy-policy/)
+
+Cookie Settings Reject Optional Cookies Accept Cookies
+
+![Company Logo](https://cdn.cookielaw.org/logos/46acd508-0e8d-40cd-af22-1a8bdfa6da60/e9c29623-f807-422e-9944-964ce7fff1e0/a67792a1-43d4-44d0-8d5e-99ce69b835d9/National_Football_League_logo.svg.png)
+
+Your Privacy Choices
+--------------------
+
+Your Opt Out Preference Signal is Honored
+
+*   ### Your Privacy Choices
+    
+*   ### Strictly Necessary
+    
+*   ### Performance
+    
+*   ### Functional
+    
+*   ### Selling, Sharing, Targeted Advertising
+    
+
+#### Your Privacy Choices
+
+In order to provide you with free high-quality content that you love to watch and offers that are more relevant to you, the National Football League collects and shares certain personal information. Because we respect your privacy, we also provide you choices with respect to your personal information. You may use the toggles in the sections below to opt out of certain cookies, including the use of targeting cookies that may be deemed to result in the “sale” or “sharing” of personal information under certain United States laws. If you choose to opt out of these cookies, you will still see ads, though they may be less relevant to you. You are always free to turn optional cookies back on using this cookie preference center. For more information about how we collect and share your personal information and other privacy choices you may have, refer to our  
+[Privacy Policy.](https://www.dallascowboys.com/privacy-policy/)
+
+#### Strictly Necessary
+
+These cookies are necessary for the website to function and cannot be switched off in our systems. They are usually only set in response to actions made by you which amount to a request for services, such as setting your privacy preferences, logging in or filling in forms. You can set your browser to block or alert you about these cookies, but some parts of the site might not work as a result.
+
+#### Performance
+
+ Performance
+
+These cookies allow us to count visits and traffic sources so we can measure and improve the performance of our site. They help us to know which pages are the most and least popular and see how visitors move around the site. If you do not allow these cookies we will not know when you have visited our site, and will not be able to monitor its performance.
+
+#### Functional
+
+ Functional
+
+These cookies enable the website to provide enhanced functionality and personalization. They may be set by us or by third party providers whose services we have added to our pages. If you do not allow these cookies then some or all of these services may not function properly.
+
+#### Selling, Sharing, Targeted Advertising
+
+ Selling, Sharing, Targeted Advertising
+
+Under certain state laws in the United States, “sale” or “sharing” of personal information is defined broadly and in a way that may include allowing third parties to receive certain information for certain functions, including but not limited to targeted advertising. These laws may provide residents with the right to opt out of such sales or sharing of their personal information. To opt out of the sale or sharing of your personal information collected through cookies, move the toggle to the left and select "Confirm My Choices". If you choose to opt out of this data sharing, you will still see ads, though they may be less relevant to you. These ads may be based on historical information or information shared or sold by other sources. You will need to renew this choice each time you clear your cookies or use a new browser or device. This opt-out applies only to certain cookie (“online”) data we have about you. If you wish to communicate your opt out choices with respect to selling or sharing other types of data beyond cookies (e.g., “offline” data) you may do so by submitting a privacy request form via the “Your Privacy Choices” link located in the footer of this website’s homepage.
+
+Back Button
+
+### Cookie List
+
+Filter Button
+
+Consent Leg.Interest
+
+ checkbox label label
+
+ checkbox label label
+
+ checkbox label label
+
+Clear
+
+ checkbox label label
+
+Apply Cancel
+
+Confirm My Choices
+
+Allow All
+
+[![Powered by Onetrust](https://cdn.cookielaw.org/logos/static/powered_by_logo.svg "Powered by OneTrust Opens in a new Tab")](https://www.onetrust.com/products/cookie-consent/)
+</CONTENT>

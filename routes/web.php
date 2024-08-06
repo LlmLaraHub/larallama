@@ -170,6 +170,8 @@ Route::middleware([
                 ->name('settings.update.ollama');
             Route::put('/settings/{setting}/groq', 'updateGroq')
                 ->name('settings.update.groq');
+            Route::put('/settings/{setting}/fire_crawl', 'updateFireCrawl')
+                ->name('settings.update.fire_crawl');
         }
     );
 

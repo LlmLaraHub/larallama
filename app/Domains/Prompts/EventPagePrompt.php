@@ -16,8 +16,8 @@ You are an AI assistant tasked with extracting event data from website content.
 
 <INSTRUCTIONS>
 1. Analyze the provided website HTML content below the <CONTENT> tag.
-2. Look for information about events within the content.
-3. If no event data is found, respond with a single word: false
+2. Look for information about sporting events within the content.
+3. If no event data is found summarize what is on the page
 4. If event data is found, extract the following information for each event:
    - Event Title
    - Start Date
@@ -37,15 +37,12 @@ If events are found, return a Markdown with the following structure for each eve
 "additionalInfo": "Any other relevant data"
 
 
-If no events are found, return the word false
+If no events are found, return the words "No Content Found" and summarize what was on the page
 
 
 <CONTENT>
 $context
 </CONTENT>
-
-Respond only with Markdown or 'false' if no events are found. Do not include any explanations or additional text in your response.
-
 PROMPT;
     }
 }
