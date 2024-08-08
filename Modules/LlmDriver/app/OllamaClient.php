@@ -106,14 +106,12 @@ class OllamaClient extends BaseClient
 
         $response = $this->getClient()->post('/chat', $payload);
 
-
-        if(!$response->ok()) {
+        if (! $response->ok()) {
             Log::error('Ollama API Error', [
                 'error' => $response->json(),
             ]);
             throw new \Exception('Ollama API Error');
         }
-
 
         return new CompletionResponse($response->json()['message']['content']);
     }
