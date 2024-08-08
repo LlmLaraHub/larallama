@@ -244,7 +244,6 @@ const rerun = (message) => {
             </div>
 
             <div class="w-full mx-auto px-4">
-                <label class="form-control join-item">
                     <div class="label">
                         <div class="border border-secondary rounded-md p-4">
                             <SwitchGroup>
@@ -320,7 +319,6 @@ const rerun = (message) => {
                             </button>
                         </div>
                     </div>
-                </label>
             </div>
             <div class="join-item px-4 mt-4">
                 <div class="flex justify-start gap-2 items-center ml-1 mb-2">
