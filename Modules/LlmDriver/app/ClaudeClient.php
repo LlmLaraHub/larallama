@@ -278,7 +278,8 @@ class ClaudeClient extends BaseClient
             'anthropic-beta' => 'tools-2024-04-04',
             'anthropic-version' => $this->version,
             'content-type' => 'application/json',
-        ])->baseUrl($api_url);
+        ])->retry(3, 6000)
+            ->baseUrl($api_url);
     }
 
     /**
