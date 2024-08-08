@@ -1,0 +1,16 @@
+{
+    "model": "llama3",
+    "created_at": "2024-08-08T18:48:13.088242Z",
+    "message": {
+        "role": "assistant",
+        "content": "You're absolutely right! I was hoping there would be some hidden context, but alas, there aren't any events mentioned in August according to the chat history. Thanks for keeping me honest!"
+    },
+    "done_reason": "stop",
+    "done": true,
+    "total_duration": 1729117625,
+    "load_duration": 11645334,
+    "prompt_eval_count": 91,
+    "prompt_eval_duration": 47429000,
+    "eval_count": 39,
+    "eval_duration": 1667871000
+}

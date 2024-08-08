@@ -92,7 +92,7 @@ class OllamaClient extends BaseClient
      */
     public function chat(array $messages): CompletionResponse
     {
-        Log::info('LlmDriver::OllamaClient::completion');
+        Log::info('LlmDriver::OllamaClient::chat');
 
         $messages = $this->remapMessages($messages);
 
@@ -106,9 +106,16 @@ class OllamaClient extends BaseClient
 
         $response = $this->getClient()->post('/chat', $payload);
 
-        $results = $response->json()['message']['content'];
 
-        return new CompletionResponse($results);
+        if(!$response->ok()) {
+            Log::error('Ollama API Error', [
+                'error' => $response->json(),
+            ]);
+            throw new \Exception('Ollama API Error');
+        }
+
+
+        return new CompletionResponse($response->json()['message']['content']);
     }
 
     /**
