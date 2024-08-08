@@ -6,14 +6,10 @@ use App\Domains\Sources\SourceTypeEnum;
 use App\Models\Collection;
 use App\Models\Source;
 use App\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class ApiChromeExtensionControllerTest extends TestCase
 {
-
-
     public function test_index()
     {
         $user = User::factory()->create();
@@ -64,12 +60,11 @@ class ApiChromeExtensionControllerTest extends TestCase
 
         $this->assertEquals($source->id, $response['id']);
         $this->assertEquals($source->title, $response['title']);
-        $this->assertEquals($source->details, $response['details']);
         $this->assertEquals($source->details, $response['prompt']);
         $this->assertEquals($source->active, $response['active']);
         $this->assertEquals($source->recurring->name, $response['recurring']);
         $this->assertEquals($source->force, $response['force']);
-        $this->assertEquals("non needed", $response['status']);
+        $this->assertEquals('non needed', $response['status']);
         $this->assertEquals(data_get($source->meta_data, 'urls.0'), $response['url']);
     }
 

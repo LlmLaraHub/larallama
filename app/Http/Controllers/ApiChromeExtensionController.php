@@ -3,17 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Domains\Sources\SourceTypeEnum;
-use App\Http\Resources\CollectionCollection;
-use App\Http\Resources\CollectionResource;
 use App\Models\Collection;
 use App\Models\Source;
-use Illuminate\Http\Request;
 
 class ApiChromeExtensionController extends Controller
 {
     public function index()
     {
-        $collections = Collection::orderBy("name")
+        $collections = Collection::orderBy('name')
             ->paginate(20);
 
         return response()->json(
@@ -22,7 +19,8 @@ class ApiChromeExtensionController extends Controller
 
     }
 
-    public function createSource(Collection $collection) {
+    public function createSource(Collection $collection)
+    {
         $validated = request()->validate([
             'url' => 'required|string',
             'recurring' => 'required|string',
@@ -42,16 +40,16 @@ class ApiChromeExtensionController extends Controller
             'user_id' => auth()->user()->id,
             'meta_data' => [
                 'urls' => [
-                    $validated['url']
+                    $validated['url'],
                 ],
             ],
         ]);
 
-
-        return response()->json("OK");
+        return response()->json('OK');
     }
 
-    public function getSource(Collection $collection, Source $source) {
+    public function getSource(Collection $collection, Source $source)
+    {
         return response()->json(
             [
                 'id' => $source->id,
@@ -60,7 +58,7 @@ class ApiChromeExtensionController extends Controller
                 'active' => $source->active,
                 'recurring' => $source->recurring?->name,
                 'force' => $source->force,
-                'status' => "non needed",
+                'status' => 'non needed',
                 'type' => $source->type,
                 'collection_id' => $collection->id,
                 'url' => data_get($source->meta_data, 'urls.0'),
@@ -68,7 +66,8 @@ class ApiChromeExtensionController extends Controller
         );
     }
 
-    public function getSources() {
+    public function getSources()
+    {
         $sources = Source::orderBy('id')
             ->whereType(SourceTypeEnum::WebPageSource)
             ->with('collection')
