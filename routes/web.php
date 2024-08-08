@@ -117,6 +117,7 @@ Route::middleware([
         }
     );
 
+
     Route::controller(\App\Http\Controllers\AssistantEmailBoxSourceController::class)->group(
         function () {
             Route::get('/collections/{collection}/sources/email_source/create', 'create')

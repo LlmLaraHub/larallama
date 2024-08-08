@@ -64,6 +64,12 @@ const theme = ref('dark')
                             </Link>
                         </li>
                         <li class="hidden sm:flex">
+                            <Link :href="route('api-tokens.index')"
+                                  :class="{ 'underline' : route().current('api-tokens.index') }">
+                                Api Tokens
+                            </Link>
+                        </li>
+                        <li class="hidden sm:flex">
                             <Link :href="route('batches.index')"
                                   :class="{ 'underline' : route().current('batches.index') }">
                                 Running Tasks
