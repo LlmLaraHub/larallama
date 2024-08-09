@@ -24,8 +24,8 @@ class GatherInfoFinalPromptJobTest extends TestCase
             ]
         );
 
-        LlmDriverFacade::shouldReceive('driver->chat')
-            ->once()
+        LlmDriverFacade::shouldReceive('driver->completion')
+            ->twice()
             ->andReturn(
                 CompletionResponse::from([
                     'content' => 'Foo bar',

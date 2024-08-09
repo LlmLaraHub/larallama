@@ -3,15 +3,17 @@
 namespace App\Jobs;
 
 use App\Domains\Messages\RoleEnum;
+use App\Domains\Prompts\VerifyPrompt;
 use App\Domains\Reporting\StatusEnum;
+use Facades\App\Domains\Tokenizer\Templatizer;
 use Illuminate\Bus\Batchable;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Log;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
-use LlmLaraHub\LlmDriver\Requests\MessageInDto;
 use LlmLaraHub\LlmDriver\ToolsHelper;
 
 class GatherInfoFinalPromptJob implements ShouldQueue
@@ -35,29 +37,30 @@ class GatherInfoFinalPromptJob implements ShouldQueue
     {
         $messages = [];
 
-        $history = [];
+        $context = [];
+
         foreach ($this->report->sections as $section) {
-            $messages[] = MessageInDto::from([
-                'content' => $section->content,
-                'role' => 'user',
-            ]);
-
-            $history[] = $section->content;
-
-            $messages[] = MessageInDto::from([
-                'content' => 'Using the surrounding context to continue this response thread',
-                'role' => 'assistant',
-            ]);
+            $context[] = $section->content;
         }
 
-        $messages[] = MessageInDto::from([
-            'content' => 'Using the context of this chat can you '.
-                $this->report->message->getPrompt(),
-            'role' => 'user',
-        ]);
+        $context = implode("\n", $context);
+
+        $prompt = Templatizer::appendContext(true)
+            ->handle($this->report->message->getContent(), $context);
 
         $response = LlmDriverFacade::driver($this->report->getDriver())
-            ->chat($messages);
+            ->completion($prompt);
+
+        Log::info('GatherInfoReportSectionsJob doing one more check', [
+            'response' => $response->content,
+        ]);
+
+        $prompt = VerifyPrompt::prompt(
+            originalResults: $response->content,
+            context: $context);
+
+        $response = LlmDriverFacade::driver($this->report->getDriver())
+            ->completion($prompt);
 
         $assistantMessage = $this->report->getChat()->addInput(
             message: $response->content,
@@ -73,8 +76,7 @@ class GatherInfoFinalPromptJob implements ShouldQueue
         $this->report->status_entries_generation = StatusEnum::Complete;
         $this->report->save();
 
-        $this->savePromptHistory($assistantMessage,
-            implode("\n", $history));
+        $this->savePromptHistory($assistantMessage, $prompt);
 
         notify_ui($this->report->getChat(), 'Building Solutions list');
         notify_ui_report($this->report, 'Building Solutions list');
