@@ -33,7 +33,7 @@ const toggleTab = (tab) => {
         >Prompt</a>
     </div>
     <div v-if="activeTab === 'content'">
-        <div class="prose" v-html="section.content"></div>
+        <div class="prose" v-html="section.content_formatted"></div>
         <div class="flex justify-end gap-2 items-center text-sm text-gray-500">
             <div> sort: {{ section.sort_order + 1 }}</div>
         </div>
