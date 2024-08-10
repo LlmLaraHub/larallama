@@ -1,7 +1,5 @@
 {
     "TagFunction": true,
-    "Foundation": true,
     "LlmDriver": true,
-    "EmailSource": true,
     "WebSearch": true
 }
