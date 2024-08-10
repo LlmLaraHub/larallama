@@ -7,8 +7,11 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\ServiceProvider;
 use LlmLaraHub\LlmDriver\DistanceQuery\DistanceQueryClient;
 use LlmLaraHub\LlmDriver\Functions\GatherInfoTool;
+use LlmLaraHub\LlmDriver\Functions\GetWebSiteFromUrlTool;
 use LlmLaraHub\LlmDriver\Functions\ReportingTool;
+use LlmLaraHub\LlmDriver\Functions\SatisfyToolsRequired;
 use LlmLaraHub\LlmDriver\Functions\SearchAndSummarize;
+use LlmLaraHub\LlmDriver\Functions\SearchTheWeb;
 use LlmLaraHub\LlmDriver\Functions\StandardsChecker;
 use LlmLaraHub\LlmDriver\Functions\SummarizeCollection;
 use OpenAI\Client;
@@ -76,6 +79,18 @@ class LlmServiceProvider extends ServiceProvider
 
         $this->app->bind('gather_info_tool', function () {
             return new GatherInfoTool();
+        });
+
+        $this->app->bind('search_the_web', function () {
+            return new SearchTheWeb();
+        });
+
+        $this->app->bind('get_web_site_from_url', function () {
+            return new GetWebSiteFromUrlTool();
+        });
+
+        $this->app->bind('satisfy_tools_required', function () {
+            return new SatisfyToolsRequired();
         });
 
     }
