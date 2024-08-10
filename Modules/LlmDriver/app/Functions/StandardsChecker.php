@@ -19,6 +19,10 @@ class StandardsChecker extends FunctionContract
 
     protected array $results = [];
 
+    public array $toolTypes = [
+        ToolTypes::ChatCompletion,
+    ];
+
     protected array $promptHistory = [];
 
     public function handle(

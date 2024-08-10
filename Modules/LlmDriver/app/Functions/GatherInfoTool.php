@@ -20,6 +20,10 @@ class GatherInfoTool extends FunctionContract
 {
     use ToolsHelper;
 
+    public array $toolTypes = [
+        ToolTypes::ChatCompletion,
+    ];
+
     protected string $name = 'gather_info_tool';
 
     protected string $description = 'This will look at all documents using your prompt then return the results after once more using your prompt';

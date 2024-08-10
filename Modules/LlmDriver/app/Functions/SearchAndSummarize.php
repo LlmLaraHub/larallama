@@ -20,6 +20,11 @@ class SearchAndSummarize extends FunctionContract
 
     protected string $name = 'search_and_summarize';
 
+    public array $toolTypes = [
+        ToolTypes::ChatCompletion,
+    ];
+
+
     protected string $description = 'Used to embed users prompt, search database and return summarized results.';
 
     protected string $response = '';
