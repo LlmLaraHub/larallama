@@ -6,6 +6,7 @@ use App\Domains\Chat\MetaDataDto;
 use App\Domains\Messages\RoleEnum;
 use App\Models\Chat;
 use App\Models\Collection;
+use App\Models\Message;
 use App\Models\Output;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -45,6 +46,11 @@ class ChatTest extends TestCase
             'filter' => 1,
             'completion' => false,
             'tool' => 'foobar',
+            'tool_id' => 'foobaz',
+            'driver' => 'mock',
+            'args' => [
+                'foo' => 'bar',
+            ],
             'date_range' => 'this_week',
             'input' => 'my input here',
         ]);
@@ -59,6 +65,12 @@ class ChatTest extends TestCase
         );
 
         $this->assertDatabaseCount('messages', 2);
+
+        $message = Message::whereRole(RoleEnum::User)->first();
+        $this->assertEquals("foobar", $message->meta_data->tool);
+        $this->assertEquals("foobaz", $message->meta_data->tool_id);
+        $this->assertEquals("mock", $message->meta_data->driver);
+        $this->assertEquals(["foo" => "bar"], $message->meta_data->args);
 
         $chat->addInput(
             message: 'Test',

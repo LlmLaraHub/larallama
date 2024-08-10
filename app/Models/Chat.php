@@ -112,6 +112,9 @@ class Chat extends Model implements HasDrivers
                     'chat_id' => $this->id,
                     'is_chat_ignored' => ! $show_in_thread,
                     'meta_data' => $meta_data,
+                    'tool_name' => $meta_data->tool,
+                    'tool_id' => $meta_data->tool_id,
+                    'driver' => $meta_data->driver,
                     'tools' => $tools,
                 ]);
         });
