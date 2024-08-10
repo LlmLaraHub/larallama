@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Log;
 use Laravel\Pennant\Feature;
 use LlmLaraHub\LlmDriver\Functions\FunctionDto;
 use LlmLaraHub\LlmDriver\Requests\MessageInDto;
+use LlmLaraHub\LlmDriver\Responses\ClaudeCompletionResponse;
 use LlmLaraHub\LlmDriver\Responses\CompletionResponse;
 use LlmLaraHub\LlmDriver\Responses\EmbeddingsResponseDto;
 
@@ -37,24 +38,15 @@ class ClaudeClient extends BaseClient
 
         Log::info('LlmDriver::Claude::chat');
 
-        /**
-         * I need to iterate over each item
-         * then if there are two rows with role assistant I need to insert
-         * in between a user row with some copy to make it work like "And the user search results had"
-         * using the Laravel Collection library
-         */
         $messages = $this->remapMessages($messages);
 
         $payload = [
             'model' => $model,
-            'system' => 'Return a markdown response.',
             'max_tokens' => $maxTokens,
             'messages' => $messages,
         ];
 
         $payload = $this->modifyPayload($payload);
-
-        put_fixture('claude_payload_chat.json', $payload);
 
         $results = $this->getClient()->post('/messages', $payload);
 
@@ -69,15 +61,7 @@ class ClaudeClient extends BaseClient
             throw new \Exception('Claude API Error Chat');
         }
 
-        [$data, $tool_used, $stop_reason] = $this->getContentAndToolTypeFromResults($results);
-
-        return CompletionResponse::from([
-            'content' => $data,
-            'tool_used' => $tool_used,
-            'stop_reason' => $stop_reason,
-            'input_tokens' => data_get($results, 'usage.input_tokens', null),
-            'output_tokens' => data_get($results, 'usage.output_tokens', null),
-        ]);
+        return ClaudeCompletionResponse::from($results->json());
     }
 
     public function completion(string $prompt): CompletionResponse

@@ -47,9 +47,7 @@ class MockClientTest extends TestCase
         $client = new MockClient();
 
         $results = $client->completion('test');
-
         $this->assertInstanceOf(CompletionResponse::class, $results);
-
     }
 
     public function test_Chat(): void

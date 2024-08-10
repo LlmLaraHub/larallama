@@ -113,7 +113,10 @@ class OllamaClient extends BaseClient
             throw new \Exception('Ollama API Error');
         }
 
-        return new CompletionResponse($response->json()['message']['content']);
+        return CompletionResponse::from([
+            'content' => $response->json()['message']['content'],
+            'stop_reason' => 'stop',
+        ]);
     }
 
     /**
@@ -186,9 +189,15 @@ class OllamaClient extends BaseClient
             'stream' => false,
         ]);
 
+        /**
+         * @see https://github.com/ollama/ollama/blob/main/docs/api.md#generate-a-chat-completion
+         */
         $results = $response->json()['response'];
 
-        return new CompletionResponse($results);
+        return CompletionResponse::from([
+            'content' => $results,
+            'stop_reason' => 'stop',
+        ]);
     }
 
     protected function getClient()

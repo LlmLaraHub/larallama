@@ -28,7 +28,6 @@ class GroqClient extends BaseClient
     public function chat(array $messages): CompletionResponse
     {
         $model = $this->getConfig('groq')['models']['completion_model'];
-        $maxTokens = $this->getConfig('groq')['max_tokens'];
 
         Log::info('LlmDriver::Groq::chat');
 
@@ -36,7 +35,6 @@ class GroqClient extends BaseClient
 
         $results = $this->getClient()->post('/chat/completions', [
             'model' => $model,
-            'max_tokens' => $maxTokens,
             'messages' => $this->messagesToArray($messages),
         ]);
 
