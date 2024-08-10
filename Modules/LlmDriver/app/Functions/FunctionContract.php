@@ -10,6 +10,16 @@ abstract class FunctionContract
 {
     protected string $name;
 
+    public bool $showInUi = true;
+
+    public array $toolTypes = [
+        ToolTypes::Chat,
+        ToolTypes::ChatCompletion,
+        ToolTypes::Source,
+        ToolTypes::Output,
+        ToolTypes::NoFunction,
+    ];
+
     protected string $description;
 
     protected string $type = 'object';
@@ -41,17 +51,17 @@ abstract class FunctionContract
         );
     }
 
-    protected function getName(): string
+    public function getName(): string
     {
         return $this->name;
     }
 
-    protected function getKey(): string
+    public function getKey(): string
     {
         return $this->name;
     }
 
-    protected function getDescription(): string
+    public function getDescription(): string
     {
         return $this->description;
     }

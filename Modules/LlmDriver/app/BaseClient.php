@@ -4,7 +4,20 @@ namespace LlmLaraHub\LlmDriver;
 
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Log;
+use LlmLaraHub\LlmDriver\Functions\Chat;
+use LlmLaraHub\LlmDriver\Functions\CreateDocument;
+use LlmLaraHub\LlmDriver\Functions\FunctionContract;
 use LlmLaraHub\LlmDriver\Functions\FunctionDto;
+use LlmLaraHub\LlmDriver\Functions\GatherInfoTool;
+use LlmLaraHub\LlmDriver\Functions\GetWebSiteFromUrlTool;
+use LlmLaraHub\LlmDriver\Functions\ReportingTool;
+use LlmLaraHub\LlmDriver\Functions\RetrieveRelated;
+use LlmLaraHub\LlmDriver\Functions\SatisfyToolsRequired;
+use LlmLaraHub\LlmDriver\Functions\SearchAndSummarize;
+use LlmLaraHub\LlmDriver\Functions\SearchTheWeb;
+use LlmLaraHub\LlmDriver\Functions\StandardsChecker;
+use LlmLaraHub\LlmDriver\Functions\SummarizeCollection;
+use LlmLaraHub\LlmDriver\Functions\ToolTypes;
 use LlmLaraHub\LlmDriver\Requests\MessageInDto;
 use LlmLaraHub\LlmDriver\Responses\CompletionResponse;
 use LlmLaraHub\LlmDriver\Responses\EmbeddingsResponseDto;
@@ -14,10 +27,65 @@ abstract class BaseClient
     protected string $driver = 'mock';
 
     protected int $poolSize = 3;
+    protected bool $limitByShowInUi = false;
+
+    protected ToolTypes $toolType;
 
     protected bool $formatJson = false;
 
     protected ?FunctionDto $forceTool = null;
+
+    public function setToolType(ToolTypes $toolType): self
+    {
+        $this->toolType = $toolType;
+
+        return $this;
+    }
+
+    public function setLimitByShowInUi(bool $limitByShowInUi): self
+    {
+        $this->limitByShowInUi = $limitByShowInUi;
+
+        return $this;
+    }
+
+    public function getFunctions(): array
+    {
+        $functions = collect(
+            [
+                new SummarizeCollection(),
+                //new RetrieveRelated(),
+                new SearchAndSummarize(),
+                new StandardsChecker(),
+                new ReportingTool(),
+                new GatherInfoTool(),
+                new GetWebSiteFromUrlTool(),
+                new SearchTheWeb(),
+                //new CreateDocument(),
+                new SatisfyToolsRequired(),
+                //new Chat(),
+            ]
+        );
+
+        if (isset($this->toolType)) {
+            $functions = $functions->filter(function (FunctionContract $function) {
+                return in_array($this->toolType, $function->toolTypes);
+            });
+        }
+
+        if ($this->limitByShowInUi) {
+            $functions = $functions->filter(function (FunctionContract $function) {
+                return $function->showInUi;
+            });
+        }
+
+        return $functions->transform(
+            function (FunctionContract $function) {
+                return $function->getFunction();
+            }
+        )->toArray();
+    }
+
 
     public function setForceTool(FunctionDto $tool): self
     {
@@ -173,12 +241,7 @@ EOD;
         ];
     }
 
-    public function getFunctions(): array
-    {
-        $functions = LlmDriverFacade::getFunctions();
 
-        return $this->remapFunctions($functions);
-    }
 
     public function remapFunctions(array $functions): array
     {
