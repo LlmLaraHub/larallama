@@ -75,8 +75,6 @@ class GetWebContentJob implements ShouldQueue
         $prompt = Templatizer::appendContext(true)
             ->handle($this->source->getPrompt(), $htmlResults->content);
 
-        put_fixture('web_page_prompt.txt', $prompt, false);
-
         $results = LlmDriverFacade::driver(
             $this->source->getDriver()
         )->completion($prompt);
