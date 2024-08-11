@@ -27,7 +27,7 @@ class SummarizeDocumentJobTest extends TestCase
             ]
         );
 
-        LlmDriverFacade::shouldReceive('driver->completion')
+        LlmDriverFacade::shouldReceive('driver->setToolType->chat')
             ->once()
             ->andReturn($dto);
 
@@ -69,9 +69,8 @@ class SummarizeDocumentJobTest extends TestCase
             ['Foo Baz'],
             $prompt);
 
-        LlmDriverFacade::shouldReceive('driver->completion')
+        LlmDriverFacade::shouldReceive('driver->setToolType->chat')
             ->once()
-            ->withSomeOfArgs($shouldBe)
             ->andReturn($dto);
 
         $collection = Collection::factory()->create();
@@ -107,7 +106,7 @@ class SummarizeDocumentJobTest extends TestCase
                 'stop_reason' => 'stop',
             ]
         );
-        LlmDriverFacade::shouldReceive('driver->completion')
+        LlmDriverFacade::shouldReceive('driver->setToolType->chat')
             ->once()
             ->andReturn($dto);
 

@@ -1,0 +1,27 @@
+[
+    {
+        "name": "reporting_json",
+        "description": "JSON Summary of the report",
+        "parameters": {
+            "type": "array",
+            "properties": [
+                {
+                    "name": "title",
+                    "description": "The title of the section",
+                    "type": "string",
+                    "enum": [],
+                    "default": "",
+                    "required": true
+                },
+                {
+                    "name": "content",
+                    "description": "The content of the section",
+                    "type": "string",
+                    "enum": [],
+                    "default": "",
+                    "required": true
+                }
+            ]
+        }
+    }
+]

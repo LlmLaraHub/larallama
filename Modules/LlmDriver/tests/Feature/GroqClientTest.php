@@ -35,6 +35,24 @@ class GroqClientTest extends TestCase
 
     }
 
+    public function test_remap_messages(): void
+    {
+        $client = new GroqClient();
+        $messages = [
+            MessageInDto::from([
+                'content' => 'test',
+                'role' => 'user',
+            ]),
+        ];
+        $remapped = $client->remapMessages($messages);
+
+        $first = $remapped[0];
+
+        $this->assertEquals('test', $first['content']);
+        $this->assertEquals('user', $first['role']);
+        $this->assertCount(2, $first);
+    }
+
     public function test_completion_pool(): void
     {
         Setting::factory()->all_have_keys()->create();

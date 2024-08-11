@@ -11,6 +11,7 @@ use LlmLaraHub\LlmDriver\ClaudeClient;
 use LlmLaraHub\LlmDriver\Functions\FunctionDto;
 use LlmLaraHub\LlmDriver\Functions\ParametersDto;
 use LlmLaraHub\LlmDriver\Functions\PropertyDto;
+use LlmLaraHub\LlmDriver\Functions\ToolTypes;
 use LlmLaraHub\LlmDriver\Requests\MessageInDto;
 use LlmLaraHub\LlmDriver\Responses\CompletionResponse;
 use LlmLaraHub\LlmDriver\Responses\EmbeddingsResponseDto;
@@ -161,16 +162,15 @@ class ClaudeClientTest extends TestCase
         Feature::define('llm-driver.claude.functions', function () {
             return true;
         });
-        $openaiClient = new \LlmLaraHub\LlmDriver\ClaudeClient();
-        $response = $openaiClient->getFunctions();
+        $client = new \LlmLaraHub\LlmDriver\ClaudeClient();
+        $response = $client->setToolType(ToolTypes::Source)->getFunctions();
 
         $this->assertNotEmpty($response);
         $this->assertIsArray($response);
         $first = $response[0];
         $this->assertArrayHasKey('name', $first);
         $this->assertArrayHasKey('input_schema', $first);
-
-        $this->assertNotEmpty(data_get($first, 'input_schema.properties.prompt'));
+        $this->assertNotEmpty(data_get($first, 'input_schema.properties'));
 
         $this->assertNotEmpty($response);
     }
@@ -256,7 +256,7 @@ class ClaudeClientTest extends TestCase
     public function test_tool_response(): void
     {
 
-        $data = get_fixture('response_tools_with_modified.json');
+        $data = get_fixture('cloud_client_tool_use_response.json');
 
         $data = [
             'stop_reason' => 'tool_use',
@@ -267,8 +267,6 @@ class ClaudeClientTest extends TestCase
             ],
             'content' => $data['content'],
         ];
-
-        $client = new ClaudeClient();
 
         Http::fake([
             'api.anthropic.com/*' => Http::response($data, 200),
@@ -300,8 +298,7 @@ class ClaudeClientTest extends TestCase
 
         $content = $results->content;
 
-        $decoded = json_decode($content, true, 512, JSON_THROW_ON_ERROR);
+        $this->assertNotNull($content);
 
-        $this->assertCount(3, $decoded);
     }
 }

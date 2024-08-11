@@ -2,7 +2,6 @@
 
 namespace App\Jobs;
 
-use App\Domains\Chat\ToolsDto;
 use App\Domains\Messages\RoleEnum;
 use App\Models\Message;
 use Illuminate\Bus\Batchable;
@@ -45,7 +44,7 @@ class ToolJob implements ShouldQueue
         $this->message->updateQuietly([
             'is_chat_ignored' => true,
             'role' => RoleEnum::Tool,
-            'body' => $results->content
+            'body' => $results->content,
         ]);
 
         /**

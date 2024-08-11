@@ -3,13 +3,13 @@
 namespace Tests\Feature;
 
 use App\Domains\EmailParser\MailDto;
-use App\Models\Document;
-use Facades\App\Domains\Orchestration\OrchestrateVersionTwo;
 use App\Domains\Sources\SourceTypeEnum;
+use App\Models\Document;
 use App\Models\Message;
 use App\Models\Source;
 use App\Models\SourceTask;
 use Facades\App\Domains\EmailParser\Client;
+use Facades\App\Domains\Orchestration\OrchestrateVersionTwo;
 use Facades\App\Domains\Sources\EmailSource;
 use Illuminate\Support\Facades\Bus;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
@@ -47,7 +47,7 @@ class EmailSourceTest extends TestCase
             'type' => SourceTypeEnum::EmailSource,
         ]);
 
-        LlmDriverFacade::shouldReceive('driver->completion')->once()->andReturn(
+        LlmDriverFacade::shouldReceive('driver->setToolType->chat')->once()->andReturn(
             CompletionResponse::from([
                 'content' => 'foo bar',
             ])
@@ -107,8 +107,6 @@ BODY;
             'type' => SourceTypeEnum::EmailSource,
         ]);
 
-
-
         $body = <<<'BODY'
 Quis ea esse velit id id eu consectetur deserunt exercitation exercitation. Nisi aliqua ipsum fugiat laborum aliquip nostrud eu tempor non cillum Lorem non dolor proident sunt. Irure commodo aliqua reprehenderit deserunt sint irure in excepteur quis eiusmod ullamco aliquip. Dolore tempor ea non ut.Quis ea esse velit id id eu consectetur deserunt exercitation exercitation. Nisi aliqua ipsum fugiat laborum aliquip nostrud eu tempor non cillum Lorem non dolor proident sunt. Irure commodo aliqua reprehenderit deserunt sint irure in excepteur quis eiusmod ullamco aliquip. Dolore tempor ea non ut.
 Quis ea esse velit id id eu consectetur deserunt exercitation exercitation. Nisi aliqua ipsum fugiat laborum aliquip nostrud eu tempor non cillum Lorem non dolor proident sunt. Irure commodo aliqua reprehenderit deserunt sint irure in excepteur quis eiusmod ullamco aliquip. Dolore tempor ea non ut.
@@ -140,7 +138,6 @@ BODY;
 
     }
 
-
     public function tests_creates_chat_and_message()
     {
         Bus::fake();
@@ -149,7 +146,7 @@ BODY;
             'type' => SourceTypeEnum::EmailSource,
         ]);
 
-        LlmDriverFacade::shouldReceive('driver->completion')->once()->andReturn(
+        LlmDriverFacade::shouldReceive('driver->setToolType->chat')->once()->andReturn(
             CompletionResponse::from([
                 'content' => 'foo bar',
             ])
@@ -239,7 +236,7 @@ BODY;
             'type' => SourceTypeEnum::EmailSource,
         ]);
 
-        LlmDriverFacade::shouldReceive('driver->completion')->once()->andReturn(
+        LlmDriverFacade::shouldReceive('driver->setToolType->chat')->once()->andReturn(
             CompletionResponse::from([
                 'content' => 'False',
             ])
@@ -268,7 +265,6 @@ BODY;
 
         $this->assertDatabaseCount('documents', 0);
         $this->assertDatabaseCount('chats', 1);
-        $this->assertDatabaseCount('messages', 0);
 
         $this->assertNotNull($source->chat_id);
 

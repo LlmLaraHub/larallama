@@ -1,0 +1,28 @@
+{
+    "model": "claude-3-5-sonnet-20240620",
+    "max_tokens": 4096,
+    "messages": [
+        {
+            "role": "user",
+            "content": "test"
+        }
+    ],
+    "tools": [
+        {
+            "name": "satisfy_tools_required",
+            "description": "This tool has no use just for example purposes",
+            "input_schema": {
+                "type": "object",
+                "properties": {
+                    "example_arg": {
+                        "description": "Example argument",
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "example_arg"
+                ]
+            }
+        }
+    ]
+}

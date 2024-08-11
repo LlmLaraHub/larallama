@@ -27,9 +27,10 @@ abstract class BaseClient
     protected string $driver = 'mock';
 
     protected int $poolSize = 3;
+
     protected bool $limitByShowInUi = false;
 
-    protected ToolTypes $toolType;
+    protected ToolTypes $toolType = ToolTypes::NoFunction;
 
     protected bool $formatJson = false;
 
@@ -86,7 +87,6 @@ abstract class BaseClient
         )->toArray();
     }
 
-
     public function setForceTool(FunctionDto $tool): self
     {
         $this->forceTool = $tool;
@@ -101,8 +101,22 @@ abstract class BaseClient
         return $this;
     }
 
-    public function modifyPayload(array $payload): array
+    public function modifyPayload(array $payload, bool $noTools = false): array
     {
+        /**
+         * @NOTE
+         * Claude can not send an empty tool array
+         * The system has a placeholder for
+         * a tool that just does nothing.
+         * I create ToolTypes so I might just use that
+         * instead of Not Tools
+         */
+        if ($noTools === false) {
+            $this->setToolType(ToolTypes::NoFunction);
+        }
+
+        $payload['tools'] = $this->getFunctions();
+
         $payload = $this->addJsonFormat($payload);
 
         return $payload;
@@ -126,7 +140,11 @@ abstract class BaseClient
     protected function messagesToArray(array $messages): array
     {
         return collect($messages)->map(function ($message) {
-            return $message->toArray();
+            if (! is_array($message)) {
+                $message = $message->toArray();
+            }
+
+            return $message;
         })->toArray();
     }
 
@@ -241,8 +259,6 @@ EOD;
         ];
     }
 
-
-
     public function remapFunctions(array $functions): array
     {
         return collect($functions)->map(function ($function) {
@@ -281,6 +297,8 @@ EOD;
     }
 
     /**
+     * @DEPRECATED
+     *
      * @param  MessageInDto[]  $messages
      */
     protected function insertFunctionsIntoMessageArray(array $messages): array
@@ -345,14 +363,16 @@ EOD;
     }
 
     /**
-     * @NOTE
-     * Some systems like Claude have to do this
-     * So adding it here as a standar options
-     *
-     * @param  MessageInDto[]  $messagess
+     * @param  MessageInDto[]  $messages
      */
     public function remapMessages(array $messages): array
     {
+        $messages = collect($messages)->transform(function (MessageInDto $message): array {
+            return collect($message->toArray())
+                ->only(['content', 'role', 'tool_calls', 'tool_used', 'input_tokens', 'output_tokens', 'model'])
+                ->toArray();
+        })->toArray();
+
         return $messages;
     }
 

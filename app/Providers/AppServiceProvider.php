@@ -47,7 +47,7 @@ class AppServiceProvider extends ServiceProvider
         });
 
         Feature::define('ollama-functions', function (User $user) {
-            return config('llmdriver.drivers.ollama.feature_flags.functions'); //just not ready yet
+            return false;
         });
 
         Feature::define('reference_collection', function (User $user) {

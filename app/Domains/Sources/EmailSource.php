@@ -2,23 +2,18 @@
 
 namespace App\Domains\Sources;
 
-use App\Domains\Chat\MetaDataDto;
 use App\Domains\Documents\StatusEnum;
 use App\Domains\Documents\TypesEnum;
 use App\Domains\EmailParser\MailDto;
-use App\Domains\Messages\RoleEnum;
-use App\Models\Message;
-use Facades\App\Domains\Orchestration\OrchestrateVersionTwo;
 use App\Jobs\ChunkDocumentJob;
 use App\Models\Document;
+use App\Models\Message;
 use App\Models\Source;
 use Facades\App\Domains\EmailParser\Client;
+use Facades\App\Domains\Orchestration\OrchestrateVersionTwo;
 use Facades\App\Domains\Tokenizer\Templatizer;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Log;
-use LlmLaraHub\LlmDriver\Functions\ToolTypes;
-use LlmLaraHub\LlmDriver\LlmDriverFacade;
-use LlmLaraHub\LlmDriver\Requests\MessageInDto;
 
 class EmailSource extends BaseSource
 {
@@ -77,7 +72,6 @@ class EmailSource extends BaseSource
             $prompt
         );
 
-
         if ($this->ifNotActionRequired($assistantMessage->getContent())) {
             Log::info('[LaraChain] - Email Source Skipping', [
                 'prompt' => $prompt,
@@ -101,7 +95,7 @@ class EmailSource extends BaseSource
                     'subject' => $title,
                     'collection_id' => $source->collection_id,
                 ], [
-                    'summary' =>  $promptResult,
+                    'summary' => $promptResult,
                     'meta_data' => $this->mailDto->toArray(),
                     'original_content' => $promptResult,
                     'status_summary' => StatusEnum::Pending,
@@ -113,7 +107,6 @@ class EmailSource extends BaseSource
                     ->allowFailures()
                     ->dispatch();
             }
-
 
         }
 

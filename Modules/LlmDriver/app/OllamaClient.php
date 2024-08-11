@@ -11,6 +11,7 @@ use Laravel\Pennant\Feature;
 use LlmLaraHub\LlmDriver\Requests\MessageInDto;
 use LlmLaraHub\LlmDriver\Responses\CompletionResponse;
 use LlmLaraHub\LlmDriver\Responses\EmbeddingsResponseDto;
+use LlmLaraHub\LlmDriver\Responses\OllamaChatCompletionResponse;
 
 class OllamaClient extends BaseClient
 {
@@ -100,23 +101,23 @@ class OllamaClient extends BaseClient
             'model' => $this->getConfig('ollama')['models']['completion_model'],
             'messages' => $messages,
             'stream' => false,
+            'options' => [
+                'temperature' => 0,
+            ],
         ];
 
         $payload = $this->modifyPayload($payload);
 
         $response = $this->getClient()->post('/chat', $payload);
 
-        if (! $response->ok()) {
-            Log::error('Ollama API Error', [
-                'error' => $response->json(),
+        if ($response->failed()) {
+            Log::error('Ollama API Error ', [
+                'error' => $response->body(),
             ]);
-            throw new \Exception('Ollama API Error');
+            throw new \Exception('Ollama API Error Chat');
         }
 
-        return CompletionResponse::from([
-            'content' => $response->json()['message']['content'],
-            'stop_reason' => 'stop',
-        ]);
+        return OllamaChatCompletionResponse::from($response->json());
     }
 
     /**
@@ -224,14 +225,18 @@ class OllamaClient extends BaseClient
 
     public function getFunctions(): array
     {
-        $functions = LlmDriverFacade::getFunctions();
+        if (Feature::active('ollama-functions')) {
+            $functions = parent::getFunctions();
 
-        if (! Feature::activate('ollama-functions')) {
+            return $this->remapFunctions($functions);
+        } else {
             return [];
         }
+    }
 
-        return collect($functions)->map(function ($function) {
-            $function = $function->toArray();
+    public function remapFunctions(array $functions): array
+    {
+        $results = collect($functions)->map(function ($function) {
             $properties = [];
             $required = [];
 
@@ -250,13 +255,24 @@ class OllamaClient extends BaseClient
             }
 
             return [
-                'name' => data_get($function, 'name'),
-                'description' => data_get($function, 'description'),
-                'parameters' => $properties,
-                'required' => $required,
+                'type' => 'function',
+                'function' => [
+                    'name' => data_get($function, 'name'),
+                    'description' => data_get($function, 'description'),
+                    'parameters' => [
+                        'type' => 'object',
+                        'properties' => $properties,
+                        'required' => $required,
+                    ],
+                ],
+
             ];
 
-        })->toArray();
+        })->values()->toArray();
+
+        put_fixture('ollama_functions_remapped.json', $functions);
+
+        return $functions;
     }
 
     public function isAsync(): bool
@@ -269,19 +285,17 @@ class OllamaClient extends BaseClient
         return 'ollama';
     }
 
+    /**
+     * @param  MessageInDto[]  $messages
+     */
     public function remapMessages(array $messages): array
     {
-        $messages = collect($messages)->map(function ($message) {
-            return $message->toArray();
-        });
+        $messages = collect($messages)->transform(function (MessageInDto $message): array {
+            return collect($message->toArray())
+                ->only(['content', 'role', 'tool_calls', 'tool_used', 'input_tokens', 'output_tokens', 'model'])
+                ->toArray();
+        })->toArray();
 
-        if (in_array('llama3', [
-            $this->getConfig('ollama')['models']['completion_model']])) {
-            Log::info('[LaraChain] LlmDriver::OllamaClient::remapMessages');
-            $messages = collect($messages)->reverse();
-        }
-
-        return $messages->values()->toArray();
-
+        return $messages;
     }
 }

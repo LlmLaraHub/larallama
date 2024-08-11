@@ -10,8 +10,8 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
-use Laravel\Pennant\Feature;
 use LlmLaraHub\LlmDriver\Functions\FunctionDto;
+use LlmLaraHub\LlmDriver\Functions\ToolTypes;
 use LlmLaraHub\LlmDriver\Requests\MessageInDto;
 use LlmLaraHub\LlmDriver\Responses\ClaudeCompletionResponse;
 use LlmLaraHub\LlmDriver\Responses\CompletionResponse;
@@ -66,47 +66,34 @@ class ClaudeClient extends BaseClient
         return ClaudeCompletionResponse::from($results->json());
     }
 
-    public function completion(string $prompt): CompletionResponse
+    public function modifyPayload(array $payload, bool $noTools = false): array
     {
-        $model = $this->getConfig('claude')['models']['completion_model'];
-        $maxTokens = $this->getConfig('claude')['max_tokens'];
 
-        Log::info('LlmDriver::Claude::completion');
-
-        $payload = [
-            'model' => $model,
-            'max_tokens' => $maxTokens,
-            'messages' => [
-                [
-                    'role' => 'user',
-                    'content' => $prompt,
-                ],
-            ],
-        ];
-
-        $payload = $this->modifyPayload($payload);
-
-        $results = $this->getClient()->post('/messages', $payload);
-
-        if ($results->failed()) {
-            $error = $results->json()['error']['type'];
-            $message = $results->json()['error']['message'];
-            Log::error('Claude API Error Chat', [
-                'type' => $error,
-                'message' => $message,
-            ]);
-
-            throw new \Exception('Claude API Error Chat');
+        /**
+         * @NOTE
+         * Claude can not have tools if empty it just then
+         * assumes it needs them
+         */
+        if (($noTools === false && $this->toolType !== ToolTypes::NoFunction) || $this->forceTool !== null) {
+            $payload['tools'] = $this->getFunctions();
         }
 
-        [$data, $tool_used, $stop_reason] = $this->getContentAndToolTypeFromResults($results);
+        $payload = $this->addJsonFormat($payload);
 
-        return CompletionResponse::from([
-            'content' => $data,
-            'tool_used' => $tool_used,
-            'stop_reason' => $stop_reason,
-            'input_tokens' => data_get($results, 'usage.input_tokens', null),
-            'output_tokens' => data_get($results, 'usage.output_tokens', null),
+        return $payload;
+    }
+
+    public function completion(string $prompt): CompletionResponse
+    {
+        Log::info('LlmDriver::Claude::completion using chat');
+
+        $prompt = MessageInDto::from([
+            'content' => $prompt,
+            'role' => 'user',
+        ]);
+
+        return $this->chat([
+            $prompt,
         ]);
     }
 
@@ -140,15 +127,6 @@ class ClaudeClient extends BaseClient
     public function addJsonFormat(array $payload): array
     {
         //not available for Claude
-        return $payload;
-    }
-
-    public function modifyPayload(array $payload): array
-    {
-        $payload['tools'] = $this->getFunctions();
-
-        $payload = $this->addJsonFormat($payload);
-
         return $payload;
     }
 
@@ -488,7 +466,6 @@ class ClaudeClient extends BaseClient
                 ];
             }
         }
-
 
         return $newMessagesArray;
     }

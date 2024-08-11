@@ -2,19 +2,17 @@
 
 namespace Tests\Feature;
 
-use App\Models\Message;
-use Facades\App\Domains\Orchestration\OrchestrateVersionTwo;
 use App\Models\Chat;
 use App\Models\Collection;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
+use App\Models\Message;
+use Facades\App\Domains\Orchestration\OrchestrateVersionTwo;
 use LlmLaraHub\LlmDriver\Functions\GetWebSiteFromUrlTool;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
 use LlmLaraHub\LlmDriver\Responses\CompletionResponse;
 use LlmLaraHub\LlmDriver\Responses\FunctionResponse;
+use Mockery;
 use Mockery\MockInterface;
 use Tests\TestCase;
-use Mockery;
 
 class OrchestrateVersionTwoTest extends TestCase
 {
@@ -32,21 +30,21 @@ class OrchestrateVersionTwoTest extends TestCase
         $prompt = 'Test prompt';
 
         $this->instance(
-            "get_web_site_from_url",
+            'get_web_site_from_url',
             Mockery::mock(GetWebSiteFromUrlTool::class,
                 function (MockInterface $mock) {
-                $mock->shouldReceive('handle')
-                    ->once()
-                ->andReturn(
-                    FunctionResponse::from([
-                        'content' => "Test",
-                        'prompt' => "test",
-                        'requires_followup' => false,
-                        'documentChunks' => collect([]),
-                        'save_to_message' => false,
-                    ])
-                );
-            })
+                    $mock->shouldReceive('handle')
+                        ->once()
+                        ->andReturn(
+                            FunctionResponse::from([
+                                'content' => 'Test',
+                                'prompt' => 'test',
+                                'requires_followup' => false,
+                                'documentChunks' => collect([]),
+                                'save_to_message' => false,
+                            ])
+                        );
+                })
         );
         LlmDriverFacade::shouldReceive('driver->setToolType->chat')->twice()->andReturn(
             CompletionResponse::from([
@@ -55,8 +53,8 @@ class OrchestrateVersionTwoTest extends TestCase
                     'tool_calls' => [
                         'name' => 'get_web_site_from_url',
                         'arguments' => ['prompt' => 'Test prompt'],
-                    ]
-                ]
+                    ],
+                ],
             ])
         );
 

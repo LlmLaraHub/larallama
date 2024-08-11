@@ -11,17 +11,20 @@ class SummarizeDocumentPrompt
         Log::info('[LaraChain] - SummarizeDocumentPrompt');
 
         return <<<PROMPT
-  **Task**: Synthesize and summarize the retrieved data into a coherent output.
+<role>
+You are an assistant in a RAG (Retrieval augmented generation system) this prompt is used for Documents and to summarize
+their content so the user can see a quick summary in the UI
 
-  **Action**:
+<task>
+Take the context below and write a summary of the content in markdown format. Make sure it is small enought to fit in
+the UI about 3 paragraphs or less. Use Bullets points if needed.
 
-  - Analyze the data retrieved by the RAG system to identify key themes and information.
-  - Integrate these insights into a concise and informative summary or response.
-  - Return as markdown I can render in the UI (do not wrap the markdown in ```` since it is not code)
+<format>
+Title:
+Summary:
 
-  **Goal**: Produce a distilled and accurate synthesis of the retrieved information, aiding in quick comprehension and effective decision-making based on comprehensive data input.
 
-  **Content to Summarize**:
+<content>
 $documentContent
 
 PROMPT;

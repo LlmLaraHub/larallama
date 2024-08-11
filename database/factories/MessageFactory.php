@@ -34,10 +34,10 @@ class MessageFactory extends Factory
                 'date_range' => 'this_week',
                 'input' => 'my input here',
             ]),
-            "tool_name" => "standards_checker",
-            "tool_id" => "foobar",
-            "driver" => "mock",
-            "args" => ['url' => 'https://www.larallama.io'],
+            'tool_name' => 'standards_checker',
+            'tool_id' => 'foobar',
+            'driver' => 'mock',
+            'args' => ['url' => 'https://www.larallama.io'],
             'tools' => ToolsDto::from([
                 'tools' => [
                     FunctionCallDto::from([

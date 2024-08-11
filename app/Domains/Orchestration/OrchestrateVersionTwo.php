@@ -90,19 +90,16 @@ class OrchestrateVersionTwo
 
         $this->toolCallOrJustChat($chat, $message, $toolType);
 
-
-
-
     }
 
     protected function toolCallOrJustChat(
         Chat $chat,
         Message $message,
-        ToolTypes $toolType) : CompletionResponse {
+        ToolTypes $toolType): CompletionResponse
+    {
         $messages = $chat->getChatResponse();
 
         Log::info('[LaraChain] - Looking for Tools');
-
 
         $response = LlmDriverFacade::driver($message->getDriver())
             ->setToolType($toolType)
@@ -121,7 +118,8 @@ class OrchestrateVersionTwo
         return $response;
     }
 
-    public function sourceOrchestrate(Chat $chat, string $prompt): Message {
+    public function sourceOrchestrate(Chat $chat, string $prompt): Message
+    {
         Log::info('[LaraChain] - Looking for Tools');
 
         $toolType = ToolTypes::Source;
@@ -140,7 +138,7 @@ class OrchestrateVersionTwo
         $response = LlmDriverFacade::driver($chat->getDriver())
             ->setToolType($toolType)
             ->chat([
-                $messageInDto
+                $messageInDto,
             ]);
 
         if (! empty($response->tool_calls)) {
@@ -154,7 +152,7 @@ class OrchestrateVersionTwo
              */
             $count = 1;
             foreach ($response->tool_calls as $tool_call) {
-                Log::info('[LaraChain] - Tool Call ' . $count, [
+                Log::info('[LaraChain] - Tool Call '.$count, [
                     'tool_call' => $tool_call->name,
                 ]);
 
@@ -174,7 +172,7 @@ class OrchestrateVersionTwo
                 $message->updateQuietly([
                     'is_chat_ignored' => true,
                     'role' => RoleEnum::Tool,
-                    'body' => $results->content
+                    'body' => $results->content,
                 ]);
                 $count++;
             }
@@ -186,8 +184,13 @@ class OrchestrateVersionTwo
 
             $messages = $chat->getChatResponse();
 
+            /**
+             * @NOTE
+             * I have to continue to pass in tools once used above
+             * Since Claude needs them.
+             */
             $response = LlmDriverFacade::driver($chat->getDriver())
-                ->setToolType(ToolTypes::NoFunction)
+                ->setToolType(ToolTypes::Source)
                 ->chat($messages);
 
             $assistantMessage = $chat->addInput(
@@ -215,7 +218,6 @@ class OrchestrateVersionTwo
         return $assistantMessage;
 
     }
-
 
     public function chatWithTools(Chat $chat, Message $message, CompletionResponse $response): void
     {

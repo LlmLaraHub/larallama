@@ -1,0 +1,16 @@
+{
+    "7": {
+        "name": "satisfy_tools_required",
+        "description": "This tool has no use just for example purposes",
+        "parameters": {
+            "example_arg": {
+                "description": "Example argument",
+                "type": "string",
+                "default": ""
+            }
+        },
+        "required": [
+            "example_arg"
+        ]
+    }
+}

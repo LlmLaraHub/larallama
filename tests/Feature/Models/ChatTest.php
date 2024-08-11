@@ -67,10 +67,10 @@ class ChatTest extends TestCase
         $this->assertDatabaseCount('messages', 2);
 
         $message = Message::whereRole(RoleEnum::User)->first();
-        $this->assertEquals("foobar", $message->meta_data->tool);
-        $this->assertEquals("foobaz", $message->meta_data->tool_id);
-        $this->assertEquals("mock", $message->meta_data->driver);
-        $this->assertEquals(["foo" => "bar"], $message->meta_data->args);
+        $this->assertEquals('foobar', $message->meta_data->tool);
+        $this->assertEquals('foobaz', $message->meta_data->tool_id);
+        $this->assertEquals('mock', $message->meta_data->driver);
+        $this->assertEquals(['foo' => 'bar'], $message->meta_data->args);
 
         $chat->addInput(
             message: 'Test',
@@ -87,7 +87,7 @@ class ChatTest extends TestCase
         $this->assertNotNull($chat->id);
     }
 
-    public function test_add_input_tools_and_args() : void
+    public function test_add_input_tools_and_args(): void
     {
         $chat = Chat::factory()->create();
         $message = $chat->addInput(
@@ -117,7 +117,7 @@ class ChatTest extends TestCase
             'body' => 'Foo bar',
             'tool_name' => 'standards_checker',
             'tool_id' => 'foobar',
-            'args' => ['foo' => 'bar']
+            'args' => ['foo' => 'bar'],
         ]);
         $response = $chat->getChatResponse();
         $message1 = $response[0];

@@ -2,12 +2,9 @@
 
 namespace App\Jobs;
 
-use App\Domains\Agents\VerifyPromptInputDto;
-use App\Domains\Agents\VerifyPromptOutputDto;
 use App\Domains\Documents\StatusEnum;
 use App\Domains\Prompts\SummarizeDocumentPrompt;
 use App\Models\Document;
-use Facades\App\Domains\Agents\VerifyResponseAgent;
 use Facades\App\Domains\Tokenizer\Templatizer;
 use Illuminate\Bus\Batchable;
 use Illuminate\Bus\Queueable;
@@ -16,7 +13,6 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
-use Laravel\Pennant\Feature;
 use LlmLaraHub\LlmDriver\Functions\ToolTypes;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
 use LlmLaraHub\LlmDriver\Requests\MessageInDto;
@@ -63,8 +59,6 @@ class SummarizeDocumentJob implements ShouldQueue
 
         $content = implode(' ', $content);
 
-
-
         if (empty($this->prompt)) {
             $prompt = SummarizeDocumentPrompt::prompt($content);
         } else {
@@ -85,7 +79,7 @@ class SummarizeDocumentJob implements ShouldQueue
                 MessageInDto::from([
                     'content' => $prompt,
                     'role' => 'user',
-                ])
+                ]),
             ]);
 
         Log::info('[LaraChain] Summarizing Document Results', [

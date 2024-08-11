@@ -240,7 +240,7 @@ class OpenAiClient extends BaseClient
         return [$data, $tool_used, $stop_reason];
     }
 
-    public function modifyPayload(array $payload): array
+    public function modifyPayload(array $payload, bool $noTools = false): array
     {
         Log::info('LlmDriver::OpenAi::modifyPayload', [
             'payload' => $payload,
@@ -259,13 +259,8 @@ class OpenAiClient extends BaseClient
                 ],
             ];
         } else {
-            //I should add all the tools here?
-            if (Feature::active('all_tools')) {
-                $payload['tools'] = $this->getFunctions();
-                $payload['tool_choice'] = 'auto';
-            } else {
-                //$payload['tool_choice'] = 'none';
-            }
+            //@TODO
+            //is this needed any more see how base client does it
         }
 
         $payload = $this->addJsonFormat($payload);
@@ -339,9 +334,13 @@ class OpenAiClient extends BaseClient
      */
     public function getFunctions(): array
     {
-        $functions = LlmDriverFacade::getFunctions();
+        if (Feature::active('openai-functions')) {
+            $functions = parent::getFunctions();
 
-        return $this->remapFunctions($functions);
+            return $this->remapFunctions($functions);
+        } else {
+            return [];
+        }
 
     }
 
@@ -351,7 +350,6 @@ class OpenAiClient extends BaseClient
     public function remapFunctions(array $functions): array
     {
         return collect($functions)->map(function ($function) {
-            $function = $function->toArray();
             $properties = [];
             $required = [];
 

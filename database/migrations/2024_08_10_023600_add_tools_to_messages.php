@@ -12,13 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('messages', function (Blueprint $table) {
-            $table->string("tool_name")->nullable();
-            $table->string("tool_id")->nullable();
-            $table->string("driver")->nullable();
+            $table->string('tool_name')->nullable();
+            $table->string('tool_id')->nullable();
+            $table->string('driver')->nullable();
             $table->json('args')->nullable();
 
         });
     }
+
     /**
      * Reverse the migrations.
      */

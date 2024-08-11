@@ -7,6 +7,7 @@ use Illuminate\Http\Client\Pool;
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use Laravel\Pennant\Feature;
 use LlmLaraHub\LlmDriver\Requests\MessageInDto;
 use LlmLaraHub\LlmDriver\Responses\CompletionResponse;
 use LlmLaraHub\LlmDriver\Responses\EmbeddingsResponseDto;
@@ -35,7 +36,7 @@ class GroqClient extends BaseClient
 
         $results = $this->getClient()->post('/chat/completions', [
             'model' => $model,
-            'messages' => $this->messagesToArray($messages),
+            'messages' => $messages,
         ]);
 
         if (! $results->ok()) {
@@ -175,6 +176,9 @@ class GroqClient extends BaseClient
     }
 
     /**
+     * @NOTE
+     *
+     * @DEPRECATED
      * This is to get functions out of the llm
      * if none are returned your system
      * can error out or try another way.
@@ -184,6 +188,7 @@ class GroqClient extends BaseClient
     public function functionPromptChat(array $messages, array $only = []): array
     {
         $messages = $this->remapMessages($messages);
+
         Log::info('LlmDriver::GroqClient::functionPromptChat', $messages);
 
         $model = $this->getConfig('groq')['models']['completion_model'];
@@ -229,10 +234,18 @@ class GroqClient extends BaseClient
      */
     public function getFunctions(): array
     {
-        $functions = LlmDriverFacade::getFunctions();
+        if (Feature::active('groq-functions')) {
+            $functions = parent::getFunctions();
 
+            return $this->remapFunctions($functions);
+        } else {
+            return [];
+        }
+    }
+
+    public function remapFunctions(array $functions): array
+    {
         return collect($functions)->map(function ($function) {
-            $function = $function->toArray();
             $properties = [];
             $required = [];
 

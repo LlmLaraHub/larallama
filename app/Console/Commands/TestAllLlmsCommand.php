@@ -3,17 +3,10 @@
 namespace App\Console\Commands;
 
 use App\Domains\Messages\RoleEnum;
-use App\Models\Setting;
-use Facades\App\Domains\Sources\EmailSource;
-use App\Models\Source;
-use Facades\App\Domains\Sources\WebSearch\GetPage;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Http;
-use LlmLaraHub\LlmDriver\LlmDriverFacade;
-use App\Domains\EmailParser\MailDto;
-use LlmLaraHub\LlmDriver\Requests\MessageInDto;
 use Illuminate\Console\Command;
+use LlmLaraHub\LlmDriver\Functions\ToolTypes;
+use LlmLaraHub\LlmDriver\LlmDriverFacade;
+use LlmLaraHub\LlmDriver\Requests\MessageInDto;
 
 class TestAllLlmsCommand extends Command
 {
@@ -36,28 +29,62 @@ class TestAllLlmsCommand extends Command
      */
     public function handle()
     {
-        $prompt = <<<PROMPT
-What do you know about Laravel
+        $prompt = <<<'PROMPT'
+What do you know about Laravel in one sentence
 PROMPT;
 
         $messages = [];
         $messages[] = MessageInDto::from([
-            "role" => RoleEnum::User->value,
-            "content" => $prompt
+            'role' => RoleEnum::User->value,
+            'content' => $prompt,
         ]);
-        $drivers = ["groq", "openai", "claude"];
+        $drivers = ['groq', 'openai', 'claude', 'ollama'];
         $content = [];
         foreach ($drivers as $driver) {
-            $results = LlmDriverFacade::driver($driver)->chat($messages);
-            $content[] = [
-                'driver' => $driver,
-                'content' => $results->content,
-            ];
-            $this->info("Driver: " . $driver . " >>> " . $results->content);
+            if ($driver === 'ollama' && app()->environment() !== 'local') {
+                $this->info('Skipping '.$driver.' since it is not local');
+
+                continue;
+            }
+
+            try {
+                $start_time = microtime(true);
+                $this->info('Driver: '.$driver);
+                $results = LlmDriverFacade::driver($driver)
+                    ->setToolType(ToolTypes::NoFunction)
+                    ->chat($messages);
+                $end_time = microtime(true);
+                $execution_time = $end_time - $start_time;
+                $content[$driver] = [
+                    'driver' => $driver,
+                    'execution_time' => $execution_time,
+                    'content' => str($results->content)->limit(75),
+                ];
+            } catch (\Exception $e) {
+                $this->error('Error running '.$driver);
+                $this->error($e->getMessage());
+                break;
+            }
         }
 
-        put_fixture('test_all_llms.json', $content);
+        $this->table(
+            ['Driver', 'Time', 'Content'],
+            $content,
+        );
 
-        $this->info('Done see file at ' . base_path('tests/fixtures/test_all_llms.json'));
+        foreach ($drivers as $driver) {
+            if ($driver === 'ollama' && app()->environment() !== 'local') {
+                $this->info('Skipping '.$driver.' since it is not local');
+
+                continue;
+            }
+
+            $results = data_get($content, $driver);
+
+            if (empty($results)) {
+                $this->error('No results for driver: '.$driver);
+                break;
+            }
+        }
     }
 }
