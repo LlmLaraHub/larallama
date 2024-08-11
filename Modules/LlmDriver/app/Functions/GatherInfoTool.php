@@ -13,6 +13,7 @@ use Facades\App\Domains\Tokenizer\Templatizer;
 use Illuminate\Bus\Batch;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Log;
+use LlmLaraHub\LlmDriver\HasDrivers;
 use LlmLaraHub\LlmDriver\Responses\FunctionResponse;
 use LlmLaraHub\LlmDriver\ToolsHelper;
 
@@ -90,7 +91,7 @@ class GatherInfoTool extends FunctionContract
         ]);
     }
 
-    protected function buildUpSections(Collection $collection, Report $report, Message $message): void
+    protected function buildUpSections(Collection|HasDrivers $collection, Report $report, Message $message): void
     {
         $messagePrompt = $message->getPrompt();
         $collection->documents()->chunk(3, callback: function ($documentChunks) use ($report, $messagePrompt) {

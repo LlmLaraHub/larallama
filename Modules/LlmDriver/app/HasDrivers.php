@@ -3,6 +3,7 @@
 namespace LlmLaraHub\LlmDriver;
 
 use App\Models\Chat;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 interface HasDrivers
 {
@@ -17,6 +18,8 @@ interface HasDrivers
     public function getType(): string;
 
     public function getChatable(): HasDrivers;
+
+    public function documents(): HasMany;
 
     public function getChat(): ?Chat;
 }

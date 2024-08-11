@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Support\Facades\DB;
 use LlmLaraHub\LlmDriver\HasDrivers;
+use LlmLaraHub\LlmDriver\HasDriversTrait;
 use LlmLaraHub\LlmDriver\Requests\MessageInDto;
 use OpenAI\Laravel\Facades\OpenAI;
 
@@ -22,6 +23,7 @@ use OpenAI\Laravel\Facades\OpenAI;
 class Chat extends Model implements HasDrivers
 {
     use HasFactory;
+    use HasDriversTrait;
 
     protected $guarded = [];
 

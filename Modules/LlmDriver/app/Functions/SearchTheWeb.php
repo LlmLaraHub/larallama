@@ -4,6 +4,7 @@ namespace LlmLaraHub\LlmDriver\Functions;
 
 use App\Domains\Sources\WebSearch\Response\SearchResponseDto;
 use App\Domains\Sources\WebSearch\WebSearchFacade;
+use App\Domains\WebParser\WebContentResultsDto;
 use App\Helpers\ChatHelperTrait;
 use App\Models\Message;
 use Facades\App\Domains\Sources\WebSearch\GetPage;
@@ -54,14 +55,19 @@ class SearchTheWeb extends FunctionContract
         $html = [];
         $prompt = '';
         foreach ($response->getWeb() as $web) {
+            /** @var WebContentResultsDto $results */
             $results = GetPage::handle($web->url);
+            $resultsContent = $results->content;
             $prompt = <<<PROMPT
 Web URL: {$web->url}
 
 {$message->getPrompt()}
 
 <RESULTS OF WEB SEARCH ARTICLE ONE OF A FIVE>
-{$results}
+Title: {$results->title}
+Description: {$results->description}
+Content:
+{$resultsContent}
 PROMPT;
 
             $html[] = $prompt;

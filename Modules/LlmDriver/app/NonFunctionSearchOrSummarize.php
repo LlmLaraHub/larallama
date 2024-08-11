@@ -30,7 +30,7 @@ class NonFunctionSearchOrSummarize
     ): NonFunctionResponseDto {
         $collection = $message->getChatable();
 
-        if (! get_class($collection) === Collection::class) {
+        if (get_class($collection) !== Collection::class) {
             throw new \Exception('Can only do Collection class right now');
         }
 

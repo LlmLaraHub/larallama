@@ -5,17 +5,31 @@ parameters:
 
     paths:
         - app
+        - Modules
 
     # The level 8 is the highest level
     level: 5
 
-    #ignoreErrors:
+    ignoreErrors:
+        - '#Parameter \#1 \$callback of method Illuminate\\Support\\Collection<int,LlmLaraHub\\LlmDriver\\Functions\\.*>::transform\(\) expects callable\(LlmLaraHub\\LlmDriver\\Functions\\.*\), Closure\(LlmLaraHub\\LlmDriver\\Functions\\FunctionContract\): LlmLaraHub\\LlmDriver\\Functions\\FunctionDto given\.#'
+        - '#Call to an undefined static method LlmLaraHub\\LlmDriver\\DistanceQuery\\DistanceQueryFacade::cosineDistance\(\)\.#'
+        - '#Using nullsafe property access on non-nullable type App\\Models\\.*#'
+        - '#Call to an undefined method LlmLaraHub\\LlmDriver\\HasDrivers::systemPrompt\(\)\.#'
+        - '#Access to an undefined property LlmLaraHub\\LlmDriver\\HasDrivers::\$.*#'
+        - '#Access to an undefined property Illuminate\\Database\\Eloquent\\Model::\$(original_content|id)\.#'
+        - '#Using nullsafe property access on non-nullable type Illuminate\\Database\\Eloquent\\Model\. Use -> instead\.#'
+        - '#Variable \$document might not be defined\.#'
+        - '#Parameter \#1 \$callback of method Illuminate\\Support\\Collection<\(int\|string\),LlmLaraHub\\LlmDriver\\Requests\\MessageInDto>::transform\(\) expects callable\(LlmLaraHub\\LlmDriver\\Requests\\MessageInDto, int\|string\): LlmLaraHub\\LlmDriver\\Requests\\MessageInDto, Closure\(LlmLaraHub\\LlmDriver\\Requests\\MessageInDto\): array given\.#'
+        - '#Parameter \$document of class App\\Jobs\\GatherInfoReportSectionsJob constructor expects App\\Models\\Document, Illuminate\\Database\\Eloquent\\Model given\.#'
+        - '#Using nullsafe property access on non-nullable type LlmLaraHub\\LlmDriver\\.*#'
+        # - '#Access to an undefined property LlmLaraHub\\LlmDriver\\HasDrivers::\$id\.#'
 
     excludePaths:
         - vendor
         - app/Actions/*
         - app/Http/Resources/*
         - app/Http/Controllers/GoogleController.php
+        - Modules/LlmDriver/tests/*
 
     checkMissingIterableValueType: false
     treatPhpDocTypesAsCertain: false

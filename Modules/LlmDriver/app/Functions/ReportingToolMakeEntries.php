@@ -71,6 +71,9 @@ class ReportingToolMakeEntries
 
     protected function buildPrompts(\Illuminate\Support\Collection $sectionChunk, Report $report, Collection $referenceCollection): array
     {
+        $prompts = [];
+        $sections = [];
+
         /** @var Section $section */
         foreach ($sectionChunk as $section) {
             try {

@@ -216,6 +216,7 @@ class OpenAiClient extends BaseClient
     {
         $results = $results->json();
         $tool_used = null;
+        $data = null;
         $stop_reason = data_get($results, 'choices.0.finish_reason', 'stop');
         $tool_calls = data_get($results, 'choices.0.message.tool_calls', []);
 

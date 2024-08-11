@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 use LlmLaraHub\LlmDriver\HasDrivers;
+use LlmLaraHub\LlmDriver\HasDriversTrait;
 
 /**
  * @property string $subject
@@ -21,6 +22,7 @@ class Source extends Model implements HasDrivers
 {
     use HasFactory;
     use SoftDeletes;
+    use HasDriversTrait;
 
     protected $guarded = [];
 
