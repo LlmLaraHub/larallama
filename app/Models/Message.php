@@ -25,14 +25,7 @@ class Message extends Model implements HasDrivers
 {
     use HasFactory;
 
-    public $fillable = [
-        'body',
-        'role',
-        'in_out',
-        'is_chat_ignored',
-        'meta_data',
-        'tools',
-    ];
+    public $guarded = [];
 
     protected $dispatchesEvents = [
         'created' => MessageCreatedEvent::class,
@@ -42,6 +35,7 @@ class Message extends Model implements HasDrivers
         'role' => RoleEnum::class,
         'tools' => ToolsDto::class,
         'meta_data' => MetaDataDto::class,
+        'args' => 'array',
         'in_out' => 'boolean',
     ];
 

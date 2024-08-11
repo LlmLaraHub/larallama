@@ -15,16 +15,20 @@ return new class extends Migration
             $table->string("tool_name")->nullable();
             $table->string("tool_id")->nullable();
             $table->string("driver")->nullable();
+            $table->json('args')->nullable();
+
         });
     }
-
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
         Schema::table('messages', function (Blueprint $table) {
-            //
+            $table->dropColumn('args');
+            $table->dropColumn('tool_id');
+            $table->dropColumn('tool_name');
+            $table->dropColumn('driver');
         });
     }
 };

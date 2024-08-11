@@ -37,6 +37,7 @@ class MessageFactory extends Factory
             "tool_name" => "standards_checker",
             "tool_id" => "foobar",
             "driver" => "mock",
+            "args" => ['url' => 'https://www.larallama.io'],
             'tools' => ToolsDto::from([
                 'tools' => [
                     FunctionCallDto::from([
