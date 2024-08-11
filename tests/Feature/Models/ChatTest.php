@@ -86,4 +86,44 @@ class ChatTest extends TestCase
         $this->assertNotNull($chat->session_id);
         $this->assertNotNull($chat->id);
     }
+
+    public function test_add_input_tools_and_args() : void
+    {
+        $chat = Chat::factory()->create();
+        $message = $chat->addInput(
+            message: 'Foo bar',
+            role: RoleEnum::User,
+            systemPrompt: 'Foo bar',
+            show_in_thread: true,
+            meta_data: MetaDataDto::from(
+                [
+                    'tool' => 'standards_checker',
+                    'tool_id' => 'foobar',
+                    'args' => ['foo' => 'bar'],
+                ]
+            )
+        );
+        $this->assertEquals('Foo bar', $message->body);
+        $this->assertEquals('foobar', $message->tool_id);
+        $this->assertEquals('standards_checker', $message->tool_name);
+        $this->assertEquals(['foo' => 'bar'], $message->args);
+    }
+
+    public function test_get_chat_response(): void
+    {
+        $chat = Chat::factory()->create();
+        $message = Message::factory()->create([
+            'chat_id' => $chat->id,
+            'body' => 'Foo bar',
+            'tool_name' => 'standards_checker',
+            'tool_id' => 'foobar',
+            'args' => ['foo' => 'bar']
+        ]);
+        $response = $chat->getChatResponse();
+        $message1 = $response[0];
+        $this->assertEquals('Foo bar', $message1->content);
+        $this->assertEquals('foobar', $message1->tool_id);
+        $this->assertEquals('standards_checker', $message1->tool);
+        $this->assertEquals(['foo' => 'bar'], $message1->args);
+    }
 }
