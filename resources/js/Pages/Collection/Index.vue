@@ -83,7 +83,7 @@ const closeEditCollectionSlideOut = () => {
                                                 </PrimaryButton>
                                             </div>
                                         </div>
-                                        <div v-else class="grid grid-cols-1 gap-x-4 gap-y-10 lg:grid-cols-3 lg:gap-x-8 lg:gap-y-16">
+                                        <div v-else class="grid grid-cols-1 gap-x-4 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 lg:gap-x-8 lg:gap-y-16">
                                             <template
                                                  v-for="collectionItem in collections.data" :key="collectionItem.id">
                                                 <div class="card w-96 bg-base-100 shadow-xl border border-neutral">

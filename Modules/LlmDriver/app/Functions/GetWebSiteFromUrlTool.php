@@ -12,6 +12,9 @@ class GetWebSiteFromUrlTool extends FunctionContract
 {
     use ToolsHelper;
 
+    public bool $showInUi = false;
+
+
     public array $toolTypes = [
         ToolTypes::ChatCompletion,
         ToolTypes::Source,

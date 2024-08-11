@@ -8,6 +8,7 @@ import {useForm} from "@inertiajs/vue3";
 import {onMounted, ref} from "vue";
 import Report from "@/Pages/Chat/Components/Report.vue";
 import MessageMetaData from "@/Pages/Chat/Components/MessageMetaData.vue";
+import DeleteMessage from "@/Pages/Chat/Components/DeleteMessage.vue";
 
 const props = defineProps({
     message: Object
@@ -140,14 +141,20 @@ const reuse = (prompt) => {
                 <div class="grow leading-loose prose" v-html="message.body_markdown">
                 </div>
 
-                <MessageMetaData :message="message">
-                    <button type="button" class="btn btn-ghost" @click="reuse(message.body)">
-                        <span>Reuse Prompt</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
-                        </svg>
-                    </button>
-                </MessageMetaData>
+                <div class="flex justify-between items-center">
+                    <div>
+                        <MessageMetaData :message="message"/>
+                    </div>
+                    <div class="flex justify-end items-center -mb-2 gap-2 ">
+                        <button type="button" class="btn btn-sm btn-ghost" @click="reuse(message.body)">
+                            <span>Reuse Prompt</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                            </svg>
+                        </button>
+                        <DeleteMessage  :message="message"></DeleteMessage>
+                    </div>
+                </div>
             </div>
 
 

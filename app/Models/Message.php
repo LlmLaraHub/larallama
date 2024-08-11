@@ -18,6 +18,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Log;
+use LlmLaraHub\LlmDriver\Functions\ToolTypes;
 use LlmLaraHub\LlmDriver\HasDrivers;
 use LlmLaraHub\LlmDriver\HasDriversTrait;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
@@ -224,6 +225,7 @@ class Message extends Model implements HasDrivers
 
             $messages = $chat->getChatResponse();
             $response = LlmDriverFacade::driver($chat->getDriver())
+                ->setToolType(ToolTypes::NoFunction)
                 ->chat($messages);
             $response = $response->content;
 

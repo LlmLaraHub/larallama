@@ -19,6 +19,7 @@ class SearchAndSummarize extends FunctionContract
     use CreateReferencesTrait;
 
     protected string $name = 'search_and_summarize';
+    public bool $showInUi = false;
 
     public array $toolTypes = [
         ToolTypes::ChatCompletion,

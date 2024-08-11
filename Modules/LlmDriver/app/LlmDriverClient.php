@@ -68,9 +68,12 @@ class LlmDriverClient
 
     public function getFunctionsForUi(): array
     {
-        return collect($this->getFunctions())
+        return collect(
+            LlmDriverFacade::driver('mock')
+                ->setLimitByShowInUi(true)
+                ->getFunctions()
+        )
             ->map(function ($item) {
-                $item = $item->toArray();
                 $item['name_formatted'] = str($item['name'])->headline()->toString();
 
                 return $item;

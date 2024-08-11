@@ -14,6 +14,7 @@ use App\Http\Resources\PersonaResource;
 use App\Models\Audience;
 use App\Models\Chat;
 use App\Models\Collection;
+use App\Models\Message;
 use App\Models\Persona;
 use Illuminate\Support\Facades\Log;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
@@ -81,7 +82,7 @@ class ChatController extends Controller
             'filter' => ['nullable', 'integer'],
             'persona' => ['nullable', 'integer'],
             'date_range' => ['nullable', 'string'],
-            'reference_collection_id' => ['nullable', 'integer'],
+            'reference_collection_id' => ['required_if:tool,gather_info_tool', 'integer'],
         ]);
 
         try {
@@ -112,5 +113,16 @@ class ChatController extends Controller
 
             return response()->json(['message' => $e->getMessage()], 400);
         }
+    }
+
+    public function deleteMessage(Message $message)
+    {
+        $chat = $message->chat;
+        $message->delete();
+        request()->session()->flash('flash.banner', 'Message deleted!');
+        return to_route('chats.collection.show', [
+            'collection' => $chat->getId(),
+            'chat' => $chat->id,
+        ]);
     }
 }

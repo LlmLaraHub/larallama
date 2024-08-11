@@ -50,6 +50,8 @@ class ClaudeClient extends BaseClient
 
         $payload = $this->modifyPayload($payload);
 
+        put_fixture("claude_messages.json", $payload);
+
         $results = $this->getClient()->post('/messages', $payload);
 
         if (! $results->ok()) {
@@ -63,25 +65,12 @@ class ClaudeClient extends BaseClient
             throw new \Exception('Claude API Error Chat');
         }
 
+        put_fixture("claude_response_pre_dto.json", $results);
+
         return ClaudeCompletionResponse::from($results->json());
     }
 
-    public function modifyPayload(array $payload, bool $noTools = false): array
-    {
 
-        /**
-         * @NOTE
-         * Claude can not have tools if empty it just then
-         * assumes it needs them
-         */
-        if (($noTools === false && $this->toolType !== ToolTypes::NoFunction) || $this->forceTool !== null) {
-            $payload['tools'] = $this->getFunctions();
-        }
-
-        $payload = $this->addJsonFormat($payload);
-
-        return $payload;
-    }
 
     public function completion(string $prompt): CompletionResponse
     {

@@ -32,6 +32,7 @@ class TextDocumentController extends Controller
             'type' => TypesEnum::Txt,
             'subject' => str($validated['content'])->limit(256)->toString(),
             'summary' => $validated['content'],
+            'original_content' => $validated['content'],
             'status_summary' => StatusEnum::Pending,
         ]);
 

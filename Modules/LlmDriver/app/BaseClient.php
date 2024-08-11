@@ -68,7 +68,7 @@ abstract class BaseClient
             ]
         );
 
-        if (isset($this->toolType)) {
+        if (isset($this->toolType) && $this->toolType !== ToolTypes::NoFunction) {
             $functions = $functions->filter(function (FunctionContract $function) {
                 return in_array($this->toolType, $function->toolTypes);
             });
@@ -111,11 +111,9 @@ abstract class BaseClient
          * I create ToolTypes so I might just use that
          * instead of Not Tools
          */
-        if ($noTools === false) {
-            $this->setToolType(ToolTypes::NoFunction);
+        if (($noTools === false && $this->toolType !== ToolTypes::NoFunction) || $this->forceTool !== null) {
+            $payload['tools'] = $this->getFunctions();
         }
-
-        $payload['tools'] = $this->getFunctions();
 
         $payload = $this->addJsonFormat($payload);
 

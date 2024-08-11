@@ -20,12 +20,12 @@ const props = defineProps({
                             Filter being used: </span>
                 <span class="font-bold">{{message.meta_data.filter.name}}</span>
             </div>
-            <div v-if="message.meta_data?.driver" class="flex justify-start gap-2 items-center">
-                        <span class="text-secondary">
+            <div v-if="message.meta_data?.driver" class="flex justify-start gap-1 items-center">
+                        <span class="text-secondary w-20">
                             LLM Used: </span>
-                <span class="font-bold">{{message.meta_data.driver}}</span>
+                        <span class="font-bold">{{message.meta_data.driver}}</span>
             </div>
-            <div v-if="message.meta_data?.date_range" class="flex justify-start gap-2 items-center">
+            <div v-if="message.meta_data?.date_range" class="flex justify-start gap-1 items-center">
                         <span class="text-secondary">
                             Date Range used: </span>
                 <span class="font-bold">{{message.meta_data.date_range}}</span>
@@ -39,10 +39,9 @@ const props = defineProps({
             </div>
 
             <div v-if="
-            message.tools?.tools?.length > 0" class="flex justify-start gap-2 items-center"
-
+            message.tools?.tools?.length > 0" class="flex justify-start gap-1 items-center"
             >
-                        <span class="text-secondary">
+                        <span class="text-secondary  w-20">
                             Tools used: </span>
                         <span
                             v-for="tool in message.tools.tools" :key="tool.function_name"

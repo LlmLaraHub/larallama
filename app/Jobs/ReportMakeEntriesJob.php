@@ -10,6 +10,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Log;
 
 class ReportMakeEntriesJob implements ShouldQueue
 {
@@ -37,7 +38,15 @@ class ReportMakeEntriesJob implements ShouldQueue
             return;
         }
 
-        ReportingToolMakeEntries::handle($this->report);
+        try {
+            ReportingToolMakeEntries::handle($this->report);
+        } catch (\Exception $e) {
+            Log::error('Error running Reporting Tool Checker', [
+                'error' => $e->getMessage(),
+                'line' => $e->getLine(),
+            ]);
+            throw $e;
+        }
 
     }
 }

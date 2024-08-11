@@ -297,6 +297,7 @@ Route::middleware([
 
         Route::post('/chats/{chat}/messages/create', 'chat')
             ->name('chats.messages.create');
+        Route::delete('/chats/{message}/delete', 'deleteMessage')->name('chats.messages.delete');
     });
 
     Route::controller(\App\Http\Controllers\ReRunController::class)->group(function () {

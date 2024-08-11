@@ -59,13 +59,11 @@ class GroqClient extends BaseClient
     public function completion(string $prompt): CompletionResponse
     {
         $model = $this->getConfig('groq')['models']['completion_model'];
-        $maxTokens = $this->getConfig('groq')['max_tokens'];
 
         Log::info('LlmDriver::Groq::completion');
 
         $results = $this->getClient()->post('/chat/completions', [
             'model' => $model,
-            'max_tokens' => $maxTokens,
             'messages' => [
                 [
                     'role' => 'user',
@@ -110,13 +108,11 @@ class GroqClient extends BaseClient
         }
 
         $model = $this->getConfig('groq')['models']['completion_model'];
-        $maxTokens = $this->getConfig('groq')['max_tokens'];
 
         $responses = Http::pool(function (Pool $pool) use (
             $prompts,
             $token,
             $model,
-            $maxTokens
         ) {
             foreach ($prompts as $prompt) {
                 $pool->withHeaders([
@@ -128,7 +124,6 @@ class GroqClient extends BaseClient
                     ->baseUrl($this->baseUrl)
                     ->post('/chat/completions', [
                         'model' => $model,
-                        'max_tokens' => $maxTokens,
                         'messages' => [
                             [
                                 'role' => 'user',

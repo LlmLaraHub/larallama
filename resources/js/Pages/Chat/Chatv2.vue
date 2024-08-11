@@ -141,6 +141,8 @@ const save = () => {
     form.reset({
         input: message,
     });
+
+    form.errors = [];
     alreadyCompleted.value = false;
     axios.post(route('chats.messages.create', {
         chat: props.chat.id
@@ -160,6 +162,7 @@ const save = () => {
             getting_results.value = false
             toast.error('An error occurred. Please try again.')
             console.log(error)
+            form.errors = error.response.data.errors;
         });
 }
 
@@ -319,6 +322,15 @@ const rerun = (message) => {
                             </button>
                         </div>
                     </div>
+
+                <div v-if="form.errors.length > 0" class="mt-2 text-sm text-red-600">
+                    <h2 class="text-primary"> Errors:</h2>
+                    <div v-for="formError in form.errors" :key="formError">
+                        <div v-for="error in formError" :key="error" class="italic text-sm text-red-600">
+                            {{ error }}
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="join-item px-4 mt-4">
                 <div class="flex justify-start gap-2 items-center ml-1 mb-2">
@@ -383,8 +395,9 @@ const rerun = (message) => {
                             Date Range
                         </template>
                     </DisplayMenu>
+
                     <DisplayMenu
-                        v-if="form.tool !== 'chat'"
+                        v-if="form.tool === 'reporting_tool'"
                         :search="true"
                         :items="usePage().props.reference_collections"
                         @itemSelected="referenceCollectionSelected">

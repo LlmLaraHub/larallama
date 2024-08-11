@@ -21,13 +21,15 @@ class ReportingTool extends FunctionContract
 {
     use ToolsHelper;
 
+    public bool $showInUi = true;
+
     public array $toolTypes = [
         ToolTypes::ChatCompletion,
     ];
 
     protected string $name = 'reporting_tool';
 
-    protected string $description = 'Uses Reference collection to generate a report';
+    protected string $description = 'Uses Reference collection to generate a report based on your prompt. Example use my solutions collection to build an RFP reply';
 
     protected string $response = '';
 

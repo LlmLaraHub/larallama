@@ -17,6 +17,7 @@ class SummarizeCollection extends FunctionContract
 
     protected string $response = '';
 
+    public bool $showInUi = false;
     public array $toolTypes = [
         ToolTypes::ChatCompletion,
     ];

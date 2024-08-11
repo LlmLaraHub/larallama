@@ -13,7 +13,7 @@ class StandardsChecker extends FunctionContract
 {
     protected string $name = 'standards_checker';
 
-    protected string $description = 'Checks the prompt data follows the standards of the documents in the collection';
+    protected string $description = 'Checks the prompt data follows the standards of the documents in the collection. Example usage paste a Blog post and then make sure it matches you standards.';
 
     protected string $response = '';
 

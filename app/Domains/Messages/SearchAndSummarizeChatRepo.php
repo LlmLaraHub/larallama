@@ -16,6 +16,7 @@ use LlmLaraHub\LlmDriver\DistanceQuery\DistanceQueryFacade;
 use LlmLaraHub\LlmDriver\Functions\FunctionCallDto;
 use LlmLaraHub\LlmDriver\Helpers\CreateReferencesTrait;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
+use LlmLaraHub\LlmDriver\Requests\MessageInDto;
 use LlmLaraHub\LlmDriver\Responses\CompletionResponse;
 use LlmLaraHub\LlmDriver\Responses\EmbeddingsResponseDto;
 use LlmLaraHub\LlmDriver\ToolsHelper;
@@ -87,30 +88,18 @@ class SearchAndSummarizeChatRepo
             context: $context
         );
 
-        $assistantMessage = $chat->addInput(
-            message: $contentFlattened,
-            role: RoleEnum::Assistant,
-            systemPrompt: $chat->chatable->systemPrompt(),
-            show_in_thread: false,
-            meta_data: $message->meta_data,
-        );
-
-        $assistantMessage = $this->addToolsToMessage($assistantMessage, $functionDto);
-
-        /** @TODO coming back to chat shorly just moved to completion to focus on prompt */
-        $latestMessagesArray = $assistantMessage->getLatestMessages();
-
-        Log::info('[LaraChain] Getting the Summary', [
-            'driver' => $chat->chatable->getDriver(),
-            'messages' => count($latestMessagesArray),
-        ]);
-
         notify_ui($chat, 'Building Summary');
 
         /** @var CompletionResponse $response */
         $response = LlmDriverFacade::driver(
             $chat->chatable->getDriver()
-        )->chat($latestMessagesArray);
+        )->chat([
+            MessageInDto::from([
+                'content' => $message->getContent() . ' \n <context> \n' . $contentFlattened,
+                'role' => 'user',
+            ]),
+        ]);
+
 
         $this->response = $response->content;
 
