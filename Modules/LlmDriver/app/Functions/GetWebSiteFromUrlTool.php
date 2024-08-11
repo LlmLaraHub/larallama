@@ -35,6 +35,10 @@ class GetWebSiteFromUrlTool extends FunctionContract
             throw new \Exception('No url found');
         }
 
+        Log::info('[LaraChain] GetWebSiteFromUrlTool called', [
+            'url' => $url,
+        ]);
+
         $results = GetPage::handle($url);
 
         $results = <<<CONTENT
