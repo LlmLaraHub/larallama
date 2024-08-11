@@ -3,7 +3,10 @@
 namespace Tests\Feature;
 
 use App\Domains\EmailParser\MailDto;
+use App\Models\Document;
+use Facades\App\Domains\Orchestration\OrchestrateVersionTwo;
 use App\Domains\Sources\SourceTypeEnum;
+use App\Models\Message;
 use App\Models\Source;
 use App\Models\SourceTask;
 use Facades\App\Domains\EmailParser\Client;
@@ -88,6 +91,55 @@ BODY;
 
         $source->run();
     }
+
+    public function test_uses_orchestrate()
+    {
+        Bus::fake();
+
+        OrchestrateVersionTwo::shouldReceive('sourceOrchestrate')->once()->andReturn(
+            Message::factory()->create([
+                'body' => 'foo bar',
+            ])
+        );
+
+        $source = Source::factory()->create([
+            'slug' => 'test',
+            'type' => SourceTypeEnum::EmailSource,
+        ]);
+
+
+
+        $body = <<<'BODY'
+Quis ea esse velit id id eu consectetur deserunt exercitation exercitation. Nisi aliqua ipsum fugiat laborum aliquip nostrud eu tempor non cillum Lorem non dolor proident sunt. Irure commodo aliqua reprehenderit deserunt sint irure in excepteur quis eiusmod ullamco aliquip. Dolore tempor ea non ut.Quis ea esse velit id id eu consectetur deserunt exercitation exercitation. Nisi aliqua ipsum fugiat laborum aliquip nostrud eu tempor non cillum Lorem non dolor proident sunt. Irure commodo aliqua reprehenderit deserunt sint irure in excepteur quis eiusmod ullamco aliquip. Dolore tempor ea non ut.
+Quis ea esse velit id id eu consectetur deserunt exercitation exercitation. Nisi aliqua ipsum fugiat laborum aliquip nostrud eu tempor non cillum Lorem non dolor proident sunt. Irure commodo aliqua reprehenderit deserunt sint irure in excepteur quis eiusmod ullamco aliquip. Dolore tempor ea non ut.
+Quis ea esse velit id id eu consectetur deserunt exercitation exercitation. Nisi aliqua ipsum fugiat laborum aliquip nostrud eu tempor non cillum Lorem non dolor proident sunt. Irure commodo aliqua reprehenderit deserunt sint irure in excepteur quis eiusmod ullamco aliquip. Dolore tempor ea non ut.
+Quis ea esse velit id id eu consectetur deserunt exercitation exercitation. Nisi aliqua ipsum fugiat laborum aliquip nostrud eu tempor non cillum Lorem non dolor proident sunt. Irure commodo aliqua reprehenderit deserunt sint irure in excepteur quis eiusmod ullamco aliquip. Dolore tempor ea non ut.
+Quis ea esse velit id id eu consectetur deserunt exercitation exercitation. Nisi aliqua ipsum fugiat laborum aliquip nostrud eu tempor non cillum Lorem non dolor proident sunt. Irure commodo aliqua reprehenderit deserunt sint irure in excepteur quis eiusmod ullamco aliquip. Dolore tempor ea non ut.
+Quis ea esse velit id id eu consectetur deserunt exercitation exercitation. Nisi aliqua ipsum fugiat laborum aliquip nostrud eu tempor non cillum Lorem non dolor proident sunt. Irure commodo aliqua reprehenderit deserunt sint irure in excepteur quis eiusmod ullamco aliquip. Dolore tempor ea non ut.
+
+BODY;
+
+        $dto = MailDto::from([
+            'to' => 'info+12345@llmassistant.io',
+            'from' => 'foo@var.com',
+            'subject' => 'This is it',
+            'header' => 'This is header',
+            'body' => $body,
+        ]);
+
+        $this->assertDatabaseCount('documents', 0);
+        $emailSource = new \App\Domains\Sources\EmailSource();
+        $emailSource->setMailDto($dto)->handle($source);
+
+        $this->assertNotNull($source->chat_id);
+        $this->assertDatabaseCount('documents', 1);
+
+        $document = Document::first();
+
+        $this->assertStringContainsString('foo bar', $document->summary);
+
+    }
+
 
     public function tests_creates_chat_and_message()
     {

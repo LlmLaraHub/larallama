@@ -7,6 +7,8 @@ use App\Domains\Documents\StatusEnum;
 use App\Domains\Documents\TypesEnum;
 use App\Domains\EmailParser\MailDto;
 use App\Domains\Messages\RoleEnum;
+use App\Models\Message;
+use Facades\App\Domains\Orchestration\OrchestrateVersionTwo;
 use App\Jobs\ChunkDocumentJob;
 use App\Models\Document;
 use App\Models\Source;
@@ -14,7 +16,9 @@ use Facades\App\Domains\EmailParser\Client;
 use Facades\App\Domains\Tokenizer\Templatizer;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Log;
+use LlmLaraHub\LlmDriver\Functions\ToolTypes;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
+use LlmLaraHub\LlmDriver\Requests\MessageInDto;
 
 class EmailSource extends BaseSource
 {
@@ -44,8 +48,6 @@ class EmailSource extends BaseSource
             return;
         }
 
-        $assistantMessage = null;
-
         $this->source = $this->checkForChat($source);
 
         $key = md5($this->mailDto->date.$this->mailDto->from.$source->id);
@@ -69,18 +71,22 @@ class EmailSource extends BaseSource
             'prompt' => $prompt,
         ]);
 
-        $results = LlmDriverFacade::driver(
-            $source->getDriver()
-        )->completion($prompt);
+        /** @var Message $assistantMessage */
+        $assistantMessage = OrchestrateVersionTwo::sourceOrchestrate(
+            $source->refresh()->chat,
+            $prompt
+        );
 
-        if ($this->ifNotActionRequired($results->content)) {
+
+        if ($this->ifNotActionRequired($assistantMessage->getContent())) {
             Log::info('[LaraChain] - Email Source Skipping', [
                 'prompt' => $prompt,
             ]);
         } else {
-            $this->addUserMessage($source, $prompt);
-
-            $promptResultsOriginal = $results->content;
+            Log::info('[LaraChain] - Email Source Results from Orchestrate', [
+                'assistant_message' => $assistantMessage->id,
+            ]);
+            $promptResultsOriginal = $assistantMessage->getContent();
             $promptResults = $this->arrifyPromptResults($promptResultsOriginal);
             foreach ($promptResults as $promptResultIndex => $promptResult) {
                 $promptResult = json_encode($promptResult);
@@ -95,9 +101,9 @@ class EmailSource extends BaseSource
                     'subject' => $title,
                     'collection_id' => $source->collection_id,
                 ], [
-                    'summary' => $promptResult,
+                    'summary' =>  $promptResult,
                     'meta_data' => $this->mailDto->toArray(),
-                    'original_content' => $this->mailDto->body,
+                    'original_content' => $promptResult,
                     'status_summary' => StatusEnum::Pending,
                     'status' => StatusEnum::Pending,
                 ]);
@@ -106,23 +112,8 @@ class EmailSource extends BaseSource
                     ->name("Processing Email {$this->mailDto->subject}")
                     ->allowFailures()
                     ->dispatch();
-
-                $assistantMessage = $source->getChat()->addInput(
-                    message: $results->content,
-                    role: RoleEnum::Assistant,
-                    show_in_thread: true,
-                    meta_data: MetaDataDto::from([
-                        'driver' => $source->getDriver(),
-                        'source' => $source->title,
-                    ]),
-                );
             }
 
-            if ($assistantMessage?->id) {
-                $this->savePromptHistory(
-                    message: $assistantMessage,
-                    prompt: $prompt);
-            }
 
         }
 
