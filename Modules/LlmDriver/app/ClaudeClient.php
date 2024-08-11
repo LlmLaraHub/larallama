@@ -2,12 +2,14 @@
 
 namespace LlmLaraHub\LlmDriver;
 
+use App\Domains\Messages\RoleEnum;
 use App\Models\Setting;
 use Illuminate\Http\Client\Pool;
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 use Laravel\Pennant\Feature;
 use LlmLaraHub\LlmDriver\Functions\FunctionDto;
 use LlmLaraHub\LlmDriver\Requests\MessageInDto;
@@ -143,29 +145,7 @@ class ClaudeClient extends BaseClient
 
     public function modifyPayload(array $payload): array
     {
-        Log::info('LlmDriver::ClaudeClient::modifyPayload', [
-            'payload' => $payload,
-            'forceTool' => $this->forceTool,
-        ]);
-
-        if (! empty($this->forceTool)) {
-            $function = [$this->forceTool];
-
-            $function = $this->remapFunctions($function);
-
-            $payload['tools'] = $function;
-
-            $payload['tool_choice'] = [
-                'type' => 'tool',
-                'name' => $this->forceTool->name,
-            ];
-        } else {
-            if (Feature::active('all_tools')) {
-                $payload['tools'] = $this->getFunctions();
-            } else {
-                $payload['tools'] = [];
-            }
-        }
+        $payload['tools'] = $this->getFunctions();
 
         $payload = $this->addJsonFormat($payload);
 
@@ -330,15 +310,9 @@ class ClaudeClient extends BaseClient
         return $functions;
     }
 
-    /**
-     * @NOTE
-     * Since this abstraction layer is based on OpenAi
-     * Not much needs to happen here
-     * but on the others I might need to do XML?
-     */
     public function getFunctions(): array
     {
-        $functions = LlmDriverFacade::getFunctions();
+        $functions = parent::getFunctions();
 
         return $this->remapFunctions($functions);
     }
@@ -349,7 +323,6 @@ class ClaudeClient extends BaseClient
     public function remapFunctions(array $functions): array
     {
         return collect($functions)->map(function ($function) {
-            $function = $function->toArray();
             $properties = [];
             $required = [];
 
@@ -391,7 +364,7 @@ class ClaudeClient extends BaseClient
                     'required' => $required,
                 ],
             ];
-        })->toArray();
+        })->values()->toArray();
     }
 
     /**
@@ -402,9 +375,13 @@ class ClaudeClient extends BaseClient
      *
      * @param  MessageInDto[]  $messages
      */
-    protected function remapMessages(array $messages, bool $userLast = false): array
+    public function remapMessages(array $messages, bool $userLast = false): array
     {
-        $messages = collect($messages)->map(function ($item) {
+
+        /**
+         * Claude needs to not start with a system message
+         */
+        $messages = collect($messages)->transform(function ($item) {
             if ($item->role === 'system') {
                 $item->role = 'assistant';
             }
@@ -412,16 +389,73 @@ class ClaudeClient extends BaseClient
             $item->content = str($item->content)->replaceEnd("\n", '')->trim()->toString();
 
             return $item->toArray();
-        })
-            ->values();
+        });
 
+        /**
+         * Claude needs me to not use the role tool
+         * but instead set that to role user
+         * and make the content string an array
+         * and other odd stuff.
+         */
+        $updatesToMessages = [];
+
+        $messages->map(function ($item, $key) use (&$updatesToMessages) {
+            if ($item['role'] === RoleEnum::Tool->value) {
+                $toolId = data_get($item, 'tool_id', 'toolu_'.Str::random(32));
+                $tool = data_get($item, 'tool', 'unknown_tool');
+                $args = data_get($item, 'args', '{}');
+                Log::info('Claude Tool Found', [
+                    'tool' => $tool,
+                    'tool_id' => $toolId,
+                    'args' => $args,
+                ]);
+
+                $content = $item['content'];
+
+                $updatesToMessages[] = [
+                    'role' => 'assistant',
+                    'content' => [
+                        [
+                            'type' => 'text',
+                            'text' => "<thinking>$content</thinking>",
+                        ],
+                        [
+                            'type' => 'tool_use',
+                            'id' => $toolId,
+                            'name' => $tool,
+                            'input' => $args,
+                        ],
+                    ],
+                ];
+
+                $updatesToMessages[] = [
+                    'role' => 'user',
+                    'content' => [
+                        [
+                            'type' => 'tool_result',
+                            'tool_use_id' => $toolId,
+                            'content' => $content,
+                        ],
+                    ],
+                ];
+            } else {
+                $updatesToMessages[] = [
+                    'role' => $item['role'],
+                    'content' => $item['content'],
+                ];
+            }
+
+            return $item;
+        });
+
+        /**
+         * Finally have to make the user assistant sandwich
+         * that Claude seems to require for the api
+         */
         $lastRole = null;
-
         $newMessagesArray = [];
-
-        foreach ($messages as $index => $message) {
+        foreach ($updatesToMessages as $index => $message) {
             $currentRole = data_get($message, 'role');
-
             if ($currentRole === $lastRole) {
                 if ($currentRole === 'assistant') {
                     $newMessagesArray[] = [
@@ -454,6 +488,7 @@ class ClaudeClient extends BaseClient
                 ];
             }
         }
+
 
         return $newMessagesArray;
     }
