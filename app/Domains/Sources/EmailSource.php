@@ -51,6 +51,7 @@ class EmailSource extends BaseSource
                 $key = md5($this->mailDto->getContent());
 
                 if ($this->skip($this->source, $key)) {
+                    $this->mailDto->email_message->delete();
                     continue;
                 }
 
@@ -97,10 +98,10 @@ class EmailSource extends BaseSource
                             'type' => TypesEnum::Email,
                             'subject' => $title,
                             'collection_id' => $source->collection_id,
+                            'original_content' => $this->content,
                         ], [
                             'summary' => $promptResult,
                             'meta_data' => $this->mailDto->toArray(),
-                            'original_content' => $promptResult,
                             'status_summary' => StatusEnum::Pending,
                             'status' => StatusEnum::Pending,
                         ]);
@@ -109,6 +110,8 @@ class EmailSource extends BaseSource
                             ->name("Processing Email {$this->mailDto->subject}")
                             ->allowFailures()
                             ->dispatch();
+
+                        $this->mailDto->email_message->delete();
                     }
 
                 }
