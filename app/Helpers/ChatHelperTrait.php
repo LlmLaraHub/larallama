@@ -73,7 +73,7 @@ trait ChatHelperTrait
 
     public function createSourceTask(Source $source, string $key): SourceTask
     {
-        return SourceTask::create([
+        return SourceTask::updateOrCreate([
             'source_id' => $source->id,
             'task_key' => $key,
         ]);
