@@ -236,6 +236,7 @@ BODY;
             'subject' => 'This is it',
             'header' => 'This is header',
             'body' => 'Test',
+            'email_message' => null,
         ]);
 
         Client::shouldReceive('getEmails')->once()->andReturn([

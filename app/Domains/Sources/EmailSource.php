@@ -51,7 +51,7 @@ class EmailSource extends BaseSource
                 $key = md5($this->mailDto->getContent());
 
                 if ($this->skip($this->source, $key)) {
-                    $this->mailDto->email_message->delete();
+                    $this->mailDto->email_message?->delete();
 
                     continue;
                 }
@@ -112,7 +112,7 @@ class EmailSource extends BaseSource
                             ->allowFailures()
                             ->dispatch();
 
-                        $this->mailDto->email_message->delete();
+                        $this->mailDto->email_message?->delete();
                     }
 
                 }
