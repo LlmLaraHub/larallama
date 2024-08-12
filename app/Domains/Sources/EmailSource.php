@@ -40,8 +40,9 @@ class EmailSource extends BaseSource
         $mailsComingIn = Client::getEmails($source->slug);
         $this->source = $this->checkForChat($source);
 
-        if(empty($mailsComingIn)) {
-            Log::info('No mails coming in Source ' . $source->id);
+        if (empty($mailsComingIn)) {
+            Log::info('No mails coming in Source '.$source->id);
+
             return;
         } else {
             foreach ($mailsComingIn as $mailDto) {
@@ -113,11 +114,6 @@ class EmailSource extends BaseSource
                 }
             }
         }
-
-
-
-
-
 
     }
 }

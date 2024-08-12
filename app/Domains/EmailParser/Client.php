@@ -85,7 +85,7 @@ class Client
         }
     }
 
-    public function getEmails(string $slug , int $limit = 10): array
+    public function getEmails(string $slug, int $limit = 10): array
     {
         $mail = [];
 

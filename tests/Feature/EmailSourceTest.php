@@ -122,7 +122,7 @@ BODY;
             'from' => 'foo@var.com',
             'subject' => 'This is it',
             'header' => 'This is header',
-            'body' => "Test",
+            'body' => 'Test',
         ]);
 
         Client::shouldReceive('getEmails')->once()->andReturn([
@@ -178,13 +178,12 @@ BODY;
             'from' => 'foo@var.com',
             'subject' => 'This is it',
             'header' => 'This is header',
-            'body' => "Test",
+            'body' => 'Test',
         ]);
 
         Client::shouldReceive('getEmails')->once()->andReturn([
             $dto,
         ]);
-
 
         LlmDriverFacade::shouldReceive('driver->setToolType->chat')->once()->andReturn(
             CompletionResponse::from([
@@ -236,13 +235,12 @@ BODY;
             'from' => 'foo@var.com',
             'subject' => 'This is it',
             'header' => 'This is header',
-            'body' => "Test",
+            'body' => 'Test',
         ]);
 
         Client::shouldReceive('getEmails')->once()->andReturn([
             $dto,
         ]);
-
 
         LlmDriverFacade::shouldReceive('driver->setToolType->chat')->never();
 
@@ -255,7 +253,6 @@ Quis ea esse velit id id eu consectetur deserunt exercitation exercitation. Nisi
 Quis ea esse velit id id eu consectetur deserunt exercitation exercitation. Nisi aliqua ipsum fugiat laborum aliquip nostrud eu tempor non cillum Lorem non dolor proident sunt. Irure commodo aliqua reprehenderit deserunt sint irure in excepteur quis eiusmod ullamco aliquip. Dolore tempor ea non ut.
 
 BODY;
-
 
         SourceTask::factory()->create([
             'source_id' => $source->id,
@@ -286,14 +283,12 @@ BODY;
             'from' => 'foo@var.com',
             'subject' => 'This is it',
             'header' => 'This is header',
-            'body' => "Test",
+            'body' => 'Test',
         ]);
 
         Client::shouldReceive('getEmails')->once()->andReturn([
             $dto,
         ]);
-
-
 
         LlmDriverFacade::shouldReceive('driver->setToolType->chat')->once()->andReturn(
             CompletionResponse::from([
