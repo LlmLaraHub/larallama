@@ -95,11 +95,10 @@ class SearchAndSummarizeChatRepo
             $chat->chatable->getDriver()
         )->chat([
             MessageInDto::from([
-                'content' => $message->getContent() . ' \n <context> \n' . $contentFlattened,
+                'content' => $message->getContent().' \n <context> \n'.$contentFlattened,
                 'role' => 'user',
             ]),
         ]);
-
 
         $this->response = $response->content;
 
