@@ -28,8 +28,8 @@ use LlmLaraHub\TagFunction\Models\Tag;
  */
 class Document extends Model implements HasDrivers, TaggableContract
 {
-    use HasFactory;
     use HasDriversTrait;
+    use HasFactory;
     use Taggable;
 
     protected $guarded = [];

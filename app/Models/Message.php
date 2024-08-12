@@ -25,8 +25,8 @@ use LlmLaraHub\LlmDriver\LlmDriverFacade;
 
 class Message extends Model implements HasDrivers
 {
-    use HasFactory;
     use HasDriversTrait;
+    use HasFactory;
 
     public $guarded = [];
 

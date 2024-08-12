@@ -20,9 +20,9 @@ use LlmLaraHub\LlmDriver\HasDriversTrait;
  */
 class Source extends Model implements HasDrivers
 {
+    use HasDriversTrait;
     use HasFactory;
     use SoftDeletes;
-    use HasDriversTrait;
 
     protected $guarded = [];
 

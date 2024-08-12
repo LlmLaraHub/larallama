@@ -18,10 +18,9 @@ use LlmLaraHub\LlmDriver\HasDriversTrait;
  */
 class Report extends Model implements HasDrivers
 {
-    use HasFactory;
     use HasDriversTrait;
+    use HasFactory;
     use SoftDeletes;
-
 
     protected $guarded = [];
 
