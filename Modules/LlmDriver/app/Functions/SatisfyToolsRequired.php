@@ -14,7 +14,6 @@ class SatisfyToolsRequired extends FunctionContract
 
     public bool $showInUi = false;
 
-
     public array $toolTypes = [
         ToolTypes::NoFunction,
     ];

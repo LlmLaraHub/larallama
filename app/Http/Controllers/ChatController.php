@@ -120,6 +120,7 @@ class ChatController extends Controller
         $chat = $message->chat;
         $message->delete();
         request()->session()->flash('flash.banner', 'Message deleted!');
+
         return to_route('chats.collection.show', [
             'collection' => $chat->getId(),
             'chat' => $chat->id,

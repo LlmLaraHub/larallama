@@ -18,6 +18,7 @@ class SearchTheWeb extends FunctionContract
     use ChatHelperTrait, ToolsHelper;
 
     public bool $showInUi = false;
+
     public array $toolTypes = [
         ToolTypes::ChatCompletion,
         ToolTypes::Source,
