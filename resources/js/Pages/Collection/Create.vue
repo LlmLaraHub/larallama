@@ -83,6 +83,7 @@ const closeSlideOut = () => {
 const form = useForm({
   name: "",
   driver: "mock",
+  summary_prompt: "<task>\nConvert the document to a recipe for the summary\n<format>\nTitle: \nIngredients: \nCooking Instructions:", 
   embedding_driver: "mock",
   description: "Some details about your collection that will help give the ai system some context."
 })

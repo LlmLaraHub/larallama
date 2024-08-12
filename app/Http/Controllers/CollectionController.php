@@ -33,6 +33,7 @@ class CollectionController extends Controller
         $validated = request()->validate([
             'name' => 'required',
             'description' => 'required',
+            'summary_prompt' => 'nullable',
             'driver' => 'required',
             'embedding_driver' => 'required',
         ]);
@@ -55,6 +56,7 @@ class CollectionController extends Controller
             'name' => 'required',
             'description' => 'required',
             'driver' => 'required',
+            'summary_prompt' => 'nullable',
             'embedding_driver' => 'required',
         ]);
 

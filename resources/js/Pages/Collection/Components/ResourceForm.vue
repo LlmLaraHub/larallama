@@ -13,6 +13,14 @@
                       class="mt-1 block w-full" />
             <InputError :message="modelValue.errors.description" class="mt-2" />
         </div>
+        <div class="col-span-6 sm:col-span-6">
+            <InputLabel value="Summary Prompt used when building summary of documents (leave null for defaults)" />
+            <TextArea v-model="modelValue.summary_prompt" type="text"
+                      class="mt-1 block w-full" />
+            <InputError :message="modelValue.errors.summary_prompt" class="mt-2" />
+
+            <div>Say your documents are all recipes, your prompt could help the system format them as needed</div>
+        </div>
         <div class="col-span-6 sm:col-span-6 ">
             <div>Choose the system to Interact with the data
             </div>

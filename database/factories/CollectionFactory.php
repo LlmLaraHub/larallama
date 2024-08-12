@@ -23,6 +23,7 @@ class CollectionFactory extends Factory
             'description' => $this->faker->paragraph,
             'active' => $this->faker->boolean,
             'team_id' => Team::factory(),
+            'summary_prompt' => '<role>Assisant building summary of the document<task>',
             'driver' => DriversEnum::Mock,
             'embedding_driver' => DriversEnum::Mock,
         ];

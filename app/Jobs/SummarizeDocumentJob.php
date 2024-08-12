@@ -60,7 +60,14 @@ class SummarizeDocumentJob implements ShouldQueue
         $content = implode(' ', $content);
 
         if (empty($this->prompt)) {
-            $prompt = SummarizeDocumentPrompt::prompt($content);
+            $prompt = $this->document->collection->summary_prompt;
+            if (! empty($prompt)) {
+                $prompt = Templatizer::appendContext(true)
+                    ->handle($prompt, $content);
+            } else {
+                $prompt = SummarizeDocumentPrompt::prompt($content);
+            }
+
         } else {
             $prompt = Templatizer::appendContext(true)
                 ->handle($this->prompt, $content);

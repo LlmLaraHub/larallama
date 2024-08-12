@@ -78,6 +78,7 @@ const closeSlideOut = () => {
 const form = useForm({
   name: props.collection.name,
   driver: props.collection.driver,
+  summary_prompt: props.collection.summary_prompt,
   embedding_driver: props.collection.embedding_driver,
   description: props.collection.description,
 })

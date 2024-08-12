@@ -71,12 +71,14 @@ class CollectionControllerTest extends TestCase
         $response = $this->post(route('collections.store'), [
             'name' => 'Test',
             'driver' => 'mock',
+            'summary_prompt' => 'foo bar',
             'embedding_driver' => DriversEnum::Claude->value,
             'description' => 'Test Description',
         ])->assertStatus(302);
         $this->assertDatabaseCount('collections', 1);
         $collection = Collection::first();
         $this->assertEquals(DriversEnum::Claude, $collection->embedding_driver);
+        $this->assertEquals('foo bar', $collection->summary_prompt);
 
     }
 
