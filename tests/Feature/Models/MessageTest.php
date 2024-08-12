@@ -81,7 +81,7 @@ class MessageTest extends TestCase
             'content' => 'test',
         ]);
 
-        LlmDriverFacade::shouldReceive('driver->chat')->once()->andReturn($firstResponse);
+        LlmDriverFacade::shouldReceive('driver->setToolType->chat')->once()->andReturn($firstResponse);
 
         $message = Message::factory()->user()->create([
             'meta_data' => MetaDataDto::from([
@@ -110,7 +110,7 @@ class MessageTest extends TestCase
             'content' => 'test',
         ]);
 
-        LlmDriverFacade::shouldReceive('driver->chat')->once()->andReturn($firstResponse);
+        LlmDriverFacade::shouldReceive('driver->setToolType->chat')->once()->andReturn($firstResponse);
 
         $message = Message::factory()->user()->create([
             'chat_id' => $chat->id,
