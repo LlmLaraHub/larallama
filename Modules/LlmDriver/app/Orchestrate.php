@@ -13,7 +13,6 @@ use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Log;
 use LlmLaraHub\LlmDriver\Functions\FunctionCallDto;
 use LlmLaraHub\LlmDriver\Helpers\CreateReferencesTrait;
-use LlmLaraHub\LlmDriver\Requests\MessageInDto;
 use LlmLaraHub\LlmDriver\Responses\FunctionResponse;
 
 /**

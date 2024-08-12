@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use LlmLaraHub\LlmDriver\Functions\FunctionDto;
-use LlmLaraHub\LlmDriver\Functions\ToolTypes;
 use LlmLaraHub\LlmDriver\Requests\MessageInDto;
 use LlmLaraHub\LlmDriver\Responses\ClaudeCompletionResponse;
 use LlmLaraHub\LlmDriver\Responses\CompletionResponse;
@@ -50,8 +49,6 @@ class ClaudeClient extends BaseClient
 
         $payload = $this->modifyPayload($payload);
 
-        put_fixture("claude_messages.json", $payload);
-
         $results = $this->getClient()->post('/messages', $payload);
 
         if (! $results->ok()) {
@@ -65,12 +62,8 @@ class ClaudeClient extends BaseClient
             throw new \Exception('Claude API Error Chat');
         }
 
-        put_fixture("claude_response_pre_dto.json", $results);
-
         return ClaudeCompletionResponse::from($results->json());
     }
-
-
 
     public function completion(string $prompt): CompletionResponse
     {
