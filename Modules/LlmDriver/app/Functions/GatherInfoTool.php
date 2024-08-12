@@ -27,7 +27,7 @@ class GatherInfoTool extends FunctionContract
 
     protected string $name = 'gather_info_tool';
 
-    protected string $description = 'This will look at all documents using your prompt then return the results after once more using your prompt. This is great for say Find all events from my collection of data';
+    protected string $description = 'This will look at all documents using your prompt then return the results after once more using your prompt. This is great for say Find all events from my collection of data and build a list of Event Dates, Titles Grouped by Month';
 
     protected string $response = '';
 

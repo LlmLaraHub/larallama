@@ -82,7 +82,7 @@ class ChatController extends Controller
             'filter' => ['nullable', 'integer'],
             'persona' => ['nullable', 'integer'],
             'date_range' => ['nullable', 'string'],
-            'reference_collection_id' => ['required_if:tool,gather_info_tool', 'integer'],
+            'reference_collection_id' => ['required_if:tool,reporting_tool'],
         ]);
 
         try {
