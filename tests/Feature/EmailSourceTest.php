@@ -71,8 +71,11 @@ BODY;
             'body' => $body,
         ]);
 
+        Client::shouldReceive('getEmails')->once()->andReturn([
+            $dto,
+        ]);
         $emailSource = new \App\Domains\Sources\EmailSource();
-        $emailSource->setMailDto($dto)->handle($source);
+        $emailSource->handle($source);
 
         $this->assertDatabaseCount('documents', 1);
 
@@ -82,7 +85,19 @@ BODY;
 
     public function test_run()
     {
-        Client::shouldReceive('handle')->once();
+        Bus::fake();
+
+        $dto = MailDto::from([
+            'to' => 'info+12345@llmassistant.io',
+            'from' => 'foo@var.com',
+            'subject' => 'This is it',
+            'header' => 'This is header',
+            'body' => 'This is the body',
+        ]);
+
+        Client::shouldReceive('getEmails')->once()->andReturn([
+            $dto,
+        ]);
 
         $source = Source::factory()->create([
             'slug' => 'test',
@@ -101,6 +116,18 @@ BODY;
                 'body' => 'foo bar',
             ])
         );
+
+        $dto = MailDto::from([
+            'to' => 'info+12345@llmassistant.io',
+            'from' => 'foo@var.com',
+            'subject' => 'This is it',
+            'header' => 'This is header',
+            'body' => "Test",
+        ]);
+
+        Client::shouldReceive('getEmails')->once()->andReturn([
+            $dto,
+        ]);
 
         $source = Source::factory()->create([
             'slug' => 'test',
@@ -145,6 +172,19 @@ BODY;
             'slug' => 'test',
             'type' => SourceTypeEnum::EmailSource,
         ]);
+
+        $dto = MailDto::from([
+            'to' => 'info+12345@llmassistant.io',
+            'from' => 'foo@var.com',
+            'subject' => 'This is it',
+            'header' => 'This is header',
+            'body' => "Test",
+        ]);
+
+        Client::shouldReceive('getEmails')->once()->andReturn([
+            $dto,
+        ]);
+
 
         LlmDriverFacade::shouldReceive('driver->setToolType->chat')->once()->andReturn(
             CompletionResponse::from([
@@ -191,6 +231,19 @@ BODY;
             'type' => SourceTypeEnum::EmailSource,
         ]);
 
+        $dto = MailDto::from([
+            'to' => 'info+12345@llmassistant.io',
+            'from' => 'foo@var.com',
+            'subject' => 'This is it',
+            'header' => 'This is header',
+            'body' => "Test",
+        ]);
+
+        Client::shouldReceive('getEmails')->once()->andReturn([
+            $dto,
+        ]);
+
+
         LlmDriverFacade::shouldReceive('driver->setToolType->chat')->never();
 
         $body = <<<'BODY'
@@ -203,13 +256,6 @@ Quis ea esse velit id id eu consectetur deserunt exercitation exercitation. Nisi
 
 BODY;
 
-        $dto = MailDto::from([
-            'to' => 'info+12345@llmassistant.io',
-            'from' => 'foo@var.com',
-            'subject' => 'This is it',
-            'header' => 'This is header',
-            'body' => $body,
-        ]);
 
         SourceTask::factory()->create([
             'source_id' => $source->id,
@@ -217,7 +263,7 @@ BODY;
         ]);
 
         $emailSource = new \App\Domains\Sources\EmailSource();
-        $emailSource->setMailDto($dto)->handle($source);
+        $emailSource->handle($source);
 
         $this->assertDatabaseCount('documents', 0);
         $this->assertDatabaseCount('chats', 1);
@@ -235,6 +281,19 @@ BODY;
             'slug' => 'test',
             'type' => SourceTypeEnum::EmailSource,
         ]);
+        $dto = MailDto::from([
+            'to' => 'info+12345@llmassistant.io',
+            'from' => 'foo@var.com',
+            'subject' => 'This is it',
+            'header' => 'This is header',
+            'body' => "Test",
+        ]);
+
+        Client::shouldReceive('getEmails')->once()->andReturn([
+            $dto,
+        ]);
+
+
 
         LlmDriverFacade::shouldReceive('driver->setToolType->chat')->once()->andReturn(
             CompletionResponse::from([

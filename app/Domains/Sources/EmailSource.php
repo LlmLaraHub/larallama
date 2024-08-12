@@ -37,78 +37,87 @@ class EmailSource extends BaseSource
 
     public function handle(Source $source): void
     {
-        if (! $this->mailDto) {
-            Client::handle();
-
-            return;
-        }
-
+        $mailsComingIn = Client::getEmails($source->slug);
         $this->source = $this->checkForChat($source);
 
-        $key = md5($this->mailDto->getContent());
-
-        if ($this->skip($this->source, $key)) {
+        if(empty($mailsComingIn)) {
+            Log::info('No mails coming in Source ' . $source->id);
             return;
-        }
-
-        $this->createSourceTask($this->source, $key);
-
-        $this->content = $this->mailDto->getContent();
-
-        $this->documentSubject = $this->mailDto->subject;
-
-        $this->meta_data = $this->mailDto->toArray();
-
-        $prompt = Templatizer::appendContext(true)
-            ->handle($source->getPrompt(), $this->content);
-
-        Log::info('[LaraChain] - Running Email Source', [
-            'prompt' => $prompt,
-        ]);
-
-        /** @var Message $assistantMessage */
-        $assistantMessage = OrchestrateVersionTwo::sourceOrchestrate(
-            $source->refresh()->chat,
-            $prompt
-        );
-
-        if ($this->ifNotActionRequired($assistantMessage->getContent())) {
-            Log::info('[LaraChain] - Email Source Skipping', [
-                'prompt' => $prompt,
-            ]);
         } else {
-            Log::info('[LaraChain] - Email Source Results from Orchestrate', [
-                'assistant_message' => $assistantMessage->id,
-            ]);
-            $promptResultsOriginal = $assistantMessage->getContent();
-            $promptResults = $this->arrifyPromptResults($promptResultsOriginal);
-            foreach ($promptResults as $promptResultIndex => $promptResult) {
-                $promptResult = json_encode($promptResult);
+            foreach ($mailsComingIn as $mailDto) {
+                $this->mailDto = $mailDto;
 
-                $title = sprintf('Email Subject - item #%d -%s',
-                    $promptResultIndex + 1,
-                    $this->mailDto->subject);
+                $key = md5($this->mailDto->getContent());
 
-                $document = Document::updateOrCreate([
-                    'source_id' => $source->id,
-                    'type' => TypesEnum::Email,
-                    'subject' => $title,
-                    'collection_id' => $source->collection_id,
-                ], [
-                    'summary' => $promptResult,
-                    'meta_data' => $this->mailDto->toArray(),
-                    'original_content' => $promptResult,
-                    'status_summary' => StatusEnum::Pending,
-                    'status' => StatusEnum::Pending,
+                if ($this->skip($this->source, $key)) {
+                    continue;
+                }
+
+                $this->createSourceTask($this->source, $key);
+
+                $this->content = $this->mailDto->getContent();
+
+                $this->documentSubject = $this->mailDto->subject;
+
+                $this->meta_data = $this->mailDto->toArray();
+
+                $prompt = Templatizer::appendContext(true)
+                    ->handle($source->getPrompt(), $this->content);
+
+                Log::info('[LaraChain] - Running Email Source', [
+                    'prompt' => $prompt,
                 ]);
 
-                Bus::batch([new ChunkDocumentJob($document)])
-                    ->name("Processing Email {$this->mailDto->subject}")
-                    ->allowFailures()
-                    ->dispatch();
-            }
+                /** @var Message $assistantMessage */
+                $assistantMessage = OrchestrateVersionTwo::sourceOrchestrate(
+                    $source->refresh()->chat,
+                    $prompt
+                );
 
+                if ($this->ifNotActionRequired($assistantMessage->getContent())) {
+                    Log::info('[LaraChain] - Email Source Skipping', [
+                        'prompt' => $prompt,
+                    ]);
+                } else {
+                    Log::info('[LaraChain] - Email Source Results from Orchestrate', [
+                        'assistant_message' => $assistantMessage->id,
+                    ]);
+                    $promptResultsOriginal = $assistantMessage->getContent();
+                    $promptResults = $this->arrifyPromptResults($promptResultsOriginal);
+                    foreach ($promptResults as $promptResultIndex => $promptResult) {
+                        $promptResult = json_encode($promptResult);
+
+                        $title = sprintf('Email Subject - item #%d -%s',
+                            $promptResultIndex + 1,
+                            $this->mailDto->subject);
+
+                        $document = Document::updateOrCreate([
+                            'source_id' => $source->id,
+                            'type' => TypesEnum::Email,
+                            'subject' => $title,
+                            'collection_id' => $source->collection_id,
+                        ], [
+                            'summary' => $promptResult,
+                            'meta_data' => $this->mailDto->toArray(),
+                            'original_content' => $promptResult,
+                            'status_summary' => StatusEnum::Pending,
+                            'status' => StatusEnum::Pending,
+                        ]);
+
+                        Bus::batch([new ChunkDocumentJob($document)])
+                            ->name("Processing Email {$this->mailDto->subject}")
+                            ->allowFailures()
+                            ->dispatch();
+                    }
+
+                }
+            }
         }
+
+
+
+
+
 
     }
 }
