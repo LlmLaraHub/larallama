@@ -52,6 +52,7 @@ class EmailSource extends BaseSource
 
                 if ($this->skip($this->source, $key)) {
                     $this->mailDto->email_message->delete();
+
                     continue;
                 }
 
