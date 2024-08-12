@@ -45,7 +45,7 @@ class EmailSource extends BaseSource
 
         $this->source = $this->checkForChat($source);
 
-        $key = md5($this->mailDto->date.$this->mailDto->from.$source->id);
+        $key = md5($this->mailDto->getContent());
 
         if ($this->skip($this->source, $key)) {
             return;

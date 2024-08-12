@@ -191,7 +191,7 @@ BODY;
             'type' => SourceTypeEnum::EmailSource,
         ]);
 
-        LlmDriverFacade::shouldReceive('driver->completion')->never();
+        LlmDriverFacade::shouldReceive('driver->setToolType->chat')->never();
 
         $body = <<<'BODY'
 Quis ea esse velit id id eu consectetur deserunt exercitation exercitation. Nisi aliqua ipsum fugiat laborum aliquip nostrud eu tempor non cillum Lorem non dolor proident sunt. Irure commodo aliqua reprehenderit deserunt sint irure in excepteur quis eiusmod ullamco aliquip. Dolore tempor ea non ut.Quis ea esse velit id id eu consectetur deserunt exercitation exercitation. Nisi aliqua ipsum fugiat laborum aliquip nostrud eu tempor non cillum Lorem non dolor proident sunt. Irure commodo aliqua reprehenderit deserunt sint irure in excepteur quis eiusmod ullamco aliquip. Dolore tempor ea non ut.
@@ -213,7 +213,7 @@ BODY;
 
         SourceTask::factory()->create([
             'source_id' => $source->id,
-            'task_key' => md5($dto->date.$dto->from.$source->id),
+            'task_key' => md5($dto->getContent()),
         ]);
 
         $emailSource = new \App\Domains\Sources\EmailSource();
