@@ -297,12 +297,12 @@ EOD;
     /**
      * @DEPRECATED
      * This was before all the LLMs had tools
-     * 
+     *
      * @param  MessageInDto[]  $messages
      */
     protected function insertFunctionsIntoMessageArray(array $messages): array
     {
-        $functions = $this->setToolType(ToolTypes::Source)->getFunctions();
+        $functions = $this->setToolType(ToolTypes::ChatCompletion)->getFunctions();
 
         $functionsEncoded = collect($functions)->transform(
             function ($item) {

@@ -13,4 +13,5 @@ enum ToolTypes: string
     case Source = 'source';
     case Output = 'output';
     case NoFunction = 'no_function';
+    case ManualChoice = 'manual_choice';
 }

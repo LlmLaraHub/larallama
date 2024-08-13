@@ -24,7 +24,7 @@ class ReportingTool extends FunctionContract
     public bool $showInUi = true;
 
     public array $toolTypes = [
-        ToolTypes::ChatCompletion,
+        ToolTypes::ManualChoice,
     ];
 
     protected string $name = 'reporting_tool';

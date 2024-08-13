@@ -22,7 +22,7 @@ class GatherInfoTool extends FunctionContract
     use ToolsHelper;
 
     public array $toolTypes = [
-        ToolTypes::ChatCompletion,
+        ToolTypes::ManualChoice,
     ];
 
     protected string $name = 'gather_info_tool';

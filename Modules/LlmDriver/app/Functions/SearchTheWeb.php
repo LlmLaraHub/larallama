@@ -20,7 +20,7 @@ class SearchTheWeb extends FunctionContract
     public bool $showInUi = false;
 
     public array $toolTypes = [
-        ToolTypes::ChatCompletion,
+        ToolTypes::ManualChoice,
         ToolTypes::Source,
         ToolTypes::Output,
     ];
