@@ -2,9 +2,8 @@
 
 namespace App\Domains\Events;
 
-enum EventTypes : string
+enum EventTypes: string
 {
-
     case Event = 'event';
     case Task = 'task';
 }
