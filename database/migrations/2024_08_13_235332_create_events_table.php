@@ -15,9 +15,13 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->longText('description')->nullable();
-            $table->dateTime('start_date')->nullable();
-            $table->dateTime('end_date')->nullable();
+            $table->date('start_date')->nullable();
+            $table->time('start_time')->nullable();
+            $table->date('end_date')->nullable();
+            $table->time('end_time')->nullable();
             $table->string('location')->nullable();
+            $table->boolean('assigned_to_assistant')->default(false);
+            $table->boolean('all_day')->default(false);
             $table->string('type')
                 ->default(\App\Domains\Events\EventTypes::Event->value);
             $table->foreignIdFor(\App\Models\User::class, 'assigned_to_id')->nullable();

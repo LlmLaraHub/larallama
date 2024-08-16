@@ -154,6 +154,7 @@ class OrchestrateVersionTwo
             foreach ($response->tool_calls as $tool_call) {
                 Log::info('[LaraChain] - Tool Call '.$count, [
                     'tool_call' => $tool_call->name,
+                    'tool_count' => count($response->tool_calls),
                 ]);
 
                 $message = $chat->addInput(

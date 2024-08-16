@@ -9,6 +9,7 @@ class PropertyDto extends \Spatie\LaravelData\Data
         public string $description,
         public string $type = 'string',
         public array $enum = [],
+        public array $properties = [],
         public string $default = '',
         public bool $required = false,
     ) {

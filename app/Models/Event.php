@@ -15,8 +15,12 @@ class Event extends Model
 
     protected $casts = [
         'type' => EventTypes::class,
-        'start_date' => 'datetime',
-        'end_date' => 'datetime',
+        'start_date' => 'date',
+        'start_time' => 'timestamp',
+        'all_day' => 'boolean',
+        'assigned_to_assistant' => 'boolean',
+        'end_date' => 'date',
+        'end_time' => 'timestamp',
     ];
 
     public function collection(): BelongsTo

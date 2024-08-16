@@ -1,0 +1,19 @@
+{
+    "persona": "",
+    "filter": null,
+    "completion": false,
+    "tool": "create_event_tool",
+    "tool_id": "toolu_01B9J3CvibZpoAS7Bcswnmdo",
+    "date_range": "",
+    "input": "",
+    "driver": "claude",
+    "source": "",
+    "reference_collection_id": "",
+    "args": {
+        "title": "Dallas Cowboys at Cleveland Browns",
+        "start_date": "09\/08\/2024",
+        "start_time": "15:25",
+        "description": "NFL Week 1: Dallas Cowboys at Cleveland Browns",
+        "location": "Cleveland Browns Stadium"
+    }
+}

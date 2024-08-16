@@ -6,6 +6,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Log;
 use LlmLaraHub\LlmDriver\Functions\Chat;
 use LlmLaraHub\LlmDriver\Functions\CreateDocument;
+use LlmLaraHub\LlmDriver\Functions\CreateEventTool;
 use LlmLaraHub\LlmDriver\Functions\FunctionContract;
 use LlmLaraHub\LlmDriver\Functions\FunctionDto;
 use LlmLaraHub\LlmDriver\Functions\GatherInfoTool;
@@ -62,6 +63,7 @@ abstract class BaseClient
                 new GatherInfoTool(),
                 new GetWebSiteFromUrlTool(),
                 new SearchTheWeb(),
+                new CreateEventTool(),
                 //new CreateDocument(),
                 new SatisfyToolsRequired(),
                 //new Chat(),

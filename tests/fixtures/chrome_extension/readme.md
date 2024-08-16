@@ -35,7 +35,7 @@ curl --location 'https://[THEIR DAILYAI SERVER]/api/v1/collections' \
     "data": [
         {
             "id": 62,
-            "name": "Claude Testing Collection",
+            "title": "Claude Testing Collection",
             "description": "Some details about your collection that will help give the ai system some context.",
             "active": true,
             "team_id": 1,
@@ -46,7 +46,7 @@ curl --location 'https://[THEIR DAILYAI SERVER]/api/v1/collections' \
         },
         {
             "id": 22,
-            "name": "CMS Content",
+            "title": "CMS Content",
             "description": "These are webhooks from our CMS so we have all the data n one place and can provider output for editors and users of that site",
             "active": true,
             "team_id": 1,
@@ -57,7 +57,7 @@ curl --location 'https://[THEIR DAILYAI SERVER]/api/v1/collections' \
         },
         {
             "id": 24,
-            "name": "Coding Standards",
+            "title": "Coding Standards",
             "description": "This is a collection of Coding Standards",
             "active": true,
             "team_id": 1,
@@ -68,7 +68,7 @@ curl --location 'https://[THEIR DAILYAI SERVER]/api/v1/collections' \
         },
         {
             "id": 63,
-            "name": "Content from FireCrawl",
+            "title": "Content from FireCrawl",
             "description": "Some details about your collection that will help give the ai system some context.",
             "active": true,
             "team_id": 1,
@@ -79,7 +79,7 @@ curl --location 'https://[THEIR DAILYAI SERVER]/api/v1/collections' \
         },
         {
             "id": 34,
-            "name": "CSV and Excel",
+            "title": "CSV and Excel",
             "description": "Some details about your collection that will help give the ai system some context.",
             "active": true,
             "team_id": 1,
@@ -90,7 +90,7 @@ curl --location 'https://[THEIR DAILYAI SERVER]/api/v1/collections' \
         },
         {
             "id": 19,
-            "name": "Customer Chat Bot",
+            "title": "Customer Chat Bot",
             "description": "These are customer support emails that we will reply to and make a report out of",
             "active": true,
             "team_id": 1,
@@ -101,7 +101,7 @@ curl --location 'https://[THEIR DAILYAI SERVER]/api/v1/collections' \
         },
         {
             "id": 53,
-            "name": "Emails Sources",
+            "title": "Emails Sources",
             "description": "Some details about your collection that will help give the ai system some context.",
             "active": true,
             "team_id": 1,
@@ -112,7 +112,7 @@ curl --location 'https://[THEIR DAILYAI SERVER]/api/v1/collections' \
         },
         {
             "id": 8,
-            "name": "Example Collection with Filters",
+            "title": "Example Collection with Filters",
             "description": "This will be an example collection to show the use of filters",
             "active": true,
             "team_id": 1,
@@ -123,7 +123,7 @@ curl --location 'https://[THEIR DAILYAI SERVER]/api/v1/collections' \
         },
         {
             "id": 1,
-            "name": "Example Content",
+            "title": "Example Content",
             "description": "Some details about your collection that will help give the ai system some context.",
             "active": true,
             "team_id": 1,
@@ -134,7 +134,7 @@ curl --location 'https://[THEIR DAILYAI SERVER]/api/v1/collections' \
         },
         {
             "id": 49,
-            "name": "Firehouse Google Sheet",
+            "title": "Firehouse Google Sheet",
             "description": "Some details about your collection that will help give the ai system some context.",
             "active": true,
             "team_id": 1,
@@ -145,7 +145,7 @@ curl --location 'https://[THEIR DAILYAI SERVER]/api/v1/collections' \
         },
         {
             "id": 33,
-            "name": "Firehouse SiteMap",
+            "title": "Firehouse SiteMap",
             "description": "Here is the site from the sitemap",
             "active": true,
             "team_id": 1,
@@ -156,7 +156,7 @@ curl --location 'https://[THEIR DAILYAI SERVER]/api/v1/collections' \
         },
         {
             "id": 26,
-            "name": "Groq - Blogging Standards",
+            "title": "Groq - Blogging Standards",
             "description": "These are some standards to help when blogging",
             "active": true,
             "team_id": 1,
@@ -167,7 +167,7 @@ curl --location 'https://[THEIR DAILYAI SERVER]/api/v1/collections' \
         },
         {
             "id": 46,
-            "name": "Hospitable",
+            "title": "Hospitable",
             "description": "Some details about your collection that will help give the ai system some context.",
             "active": true,
             "team_id": 1,
@@ -178,7 +178,7 @@ curl --location 'https://[THEIR DAILYAI SERVER]/api/v1/collections' \
         },
         {
             "id": 32,
-            "name": "HR Data",
+            "title": "HR Data",
             "description": "HR Data",
             "active": true,
             "team_id": 1,
@@ -189,7 +189,7 @@ curl --location 'https://[THEIR DAILYAI SERVER]/api/v1/collections' \
         },
         {
             "id": 29,
-            "name": "HR Email Response Collection",
+            "title": "HR Email Response Collection",
             "description": "This is a collection of HR related data that can be used to reply to emails for level 1 support",
             "active": true,
             "team_id": 1,
@@ -200,7 +200,7 @@ curl --location 'https://[THEIR DAILYAI SERVER]/api/v1/collections' \
         },
         {
             "id": 31,
-            "name": "LaraLlama.io",
+            "title": "LaraLlama.io",
             "description": "News and Articles about LaraLlama",
             "active": true,
             "team_id": 1,
@@ -211,7 +211,7 @@ curl --location 'https://[THEIR DAILYAI SERVER]/api/v1/collections' \
         },
         {
             "id": 38,
-            "name": "Large XLSX Import",
+            "title": "Large XLSX Import",
             "description": "Some details about your collection that will help give the ai system some context.",
             "active": true,
             "team_id": 1,
@@ -222,7 +222,7 @@ curl --location 'https://[THEIR DAILYAI SERVER]/api/v1/collections' \
         },
         {
             "id": 6,
-            "name": "My Technology Presentation",
+            "title": "My Technology Presentation",
             "description": "This presentation emphasizes the importance of establishing a solid technological base to efficiently manage 90% of standard project needs, allowing teams to focus on the unique 10%. Drawing on extensive experience, including at Pfizer, it explores key practices like CI/CD from the outset, effective local development environments, and team-friendly tooling. Through real-world examples and strategies, the talk highlights how these foundations enhance productivity and adapt to various project challenges, paving the way for successful outcomes.",
             "active": true,
             "team_id": 1,
@@ -233,7 +233,7 @@ curl --location 'https://[THEIR DAILYAI SERVER]/api/v1/collections' \
         },
         {
             "id": 50,
-            "name": "New Business RFIs",
+            "title": "New Business RFIs",
             "description": "Some details about your collection that will help give the ai system some context.",
             "active": true,
             "team_id": 1,
@@ -244,7 +244,7 @@ curl --location 'https://[THEIR DAILYAI SERVER]/api/v1/collections' \
         },
         {
             "id": 7,
-            "name": "News Feed about PHP and Laravel",
+            "title": "News Feed about PHP and Laravel",
             "description": "This will be a news feed from the web about laravel and php",
             "active": true,
             "team_id": 1,
@@ -310,6 +310,7 @@ curl --location 'https://[THEIR DAILYAI SERVER]/api/v1/collections/62/source' \
 --data '{
     "url": "[THE URL THEY ARE GETTING DATA FROM]",
     "recurring": "not",
+    "title": "Title User Enters",
     "force": false,
     "prompt": "[THE PROMPT THEY WANT TO USE]",
     "content": "123456"
@@ -351,7 +352,7 @@ curl --location 'https://[THEIR DAILYAI SERVER]/api/v1/sources' \
             "force": false,
             "collection": {
                 "id": 9,
-                "name": "Search the web for PHP News",
+                "title": "Search the web for PHP News",
                 "description": "This collection will be a daily search of the web for PHP news",
                 "active": true,
                 "team_id": 1,
@@ -381,7 +382,7 @@ curl --location 'https://[THEIR DAILYAI SERVER]/api/v1/sources' \
             "force": false,
             "collection": {
                 "id": 9,
-                "name": "Search the web for PHP News",
+                "title": "Search the web for PHP News",
                 "description": "This collection will be a daily search of the web for PHP news",
                 "active": true,
                 "team_id": 1,
@@ -414,7 +415,7 @@ curl --location 'https://[THEIR DAILYAI SERVER]/api/v1/sources' \
             "force": false,
             "collection": {
                 "id": 13,
-                "name": "State of Dev Ops",
+                "title": "State of Dev Ops",
                 "description": "These reports are form the Dora project and will show the state of devops over the years.",
                 "active": true,
                 "team_id": 1,
@@ -447,7 +448,7 @@ curl --location 'https://[THEIR DAILYAI SERVER]/api/v1/sources' \
             "force": false,
             "collection": {
                 "id": 17,
-                "name": "Testing Updates 0.0.8",
+                "title": "Testing Updates 0.0.8",
                 "description": "State of Devlops",
                 "active": true,
                 "team_id": 1,
@@ -480,7 +481,7 @@ curl --location 'https://[THEIR DAILYAI SERVER]/api/v1/sources' \
             "force": false,
             "collection": {
                 "id": 18,
-                "name": "Web Searches",
+                "title": "Web Searches",
                 "description": "Laravel Related news",
                 "active": true,
                 "team_id": 1,
@@ -510,7 +511,7 @@ curl --location 'https://[THEIR DAILYAI SERVER]/api/v1/sources' \
             "force": false,
             "collection": {
                 "id": 16,
-                "name": "State of DevOps Reports",
+                "title": "State of DevOps Reports",
                 "description": "These are the state of devops reports from the DORA project that span over a couple of years.",
                 "active": true,
                 "team_id": 1,
@@ -561,7 +562,7 @@ curl --location 'https://[THEIR DAILYAI SERVER]/api/v1/sources' \
             "force": false,
             "collection": {
                 "id": 19,
-                "name": "Customer Chat Bot",
+                "title": "Customer Chat Bot",
                 "description": "These are customer support emails that we will reply to and make a report out of",
                 "active": true,
                 "team_id": 1,
@@ -600,7 +601,7 @@ curl --location 'https://[THEIR DAILYAI SERVER]/api/v1/sources' \
             "force": false,
             "collection": {
                 "id": 20,
-                "name": "Pull Requests around Documentation",
+                "title": "Pull Requests around Documentation",
                 "description": "These are pull requests related to our team docs",
                 "active": true,
                 "team_id": 1,
@@ -632,7 +633,7 @@ curl --location 'https://[THEIR DAILYAI SERVER]/api/v1/sources' \
             "force": false,
             "collection": {
                 "id": 20,
-                "name": "Pull Requests around Documentation",
+                "title": "Pull Requests around Documentation",
                 "description": "These are pull requests related to our team docs",
                 "active": true,
                 "team_id": 1,
@@ -664,7 +665,7 @@ curl --location 'https://[THEIR DAILYAI SERVER]/api/v1/sources' \
             "force": false,
             "collection": {
                 "id": 20,
-                "name": "Pull Requests around Documentation",
+                "title": "Pull Requests around Documentation",
                 "description": "These are pull requests related to our team docs",
                 "active": true,
                 "team_id": 1,
@@ -697,7 +698,7 @@ curl --location 'https://[THEIR DAILYAI SERVER]/api/v1/sources' \
             "force": false,
             "collection": {
                 "id": 20,
-                "name": "Pull Requests around Documentation",
+                "title": "Pull Requests around Documentation",
                 "description": "These are pull requests related to our team docs",
                 "active": true,
                 "team_id": 1,
@@ -729,7 +730,7 @@ curl --location 'https://[THEIR DAILYAI SERVER]/api/v1/sources' \
             "force": false,
             "collection": {
                 "id": 22,
-                "name": "CMS Content",
+                "title": "CMS Content",
                 "description": "These are webhooks from our CMS so we have all the data n one place and can provider output for editors and users of that site",
                 "active": true,
                 "team_id": 1,
@@ -761,7 +762,7 @@ curl --location 'https://[THEIR DAILYAI SERVER]/api/v1/sources' \
             "force": false,
             "collection": {
                 "id": 22,
-                "name": "CMS Content",
+                "title": "CMS Content",
                 "description": "These are webhooks from our CMS so we have all the data n one place and can provider output for editors and users of that site",
                 "active": true,
                 "team_id": 1,
@@ -793,7 +794,7 @@ curl --location 'https://[THEIR DAILYAI SERVER]/api/v1/sources' \
             "force": false,
             "collection": {
                 "id": 28,
-                "name": "Testing new UI",
+                "title": "Testing new UI",
                 "description": "Some details about your collection that will help give the ai system some context.",
                 "active": true,
                 "team_id": 1,
@@ -826,7 +827,7 @@ curl --location 'https://[THEIR DAILYAI SERVER]/api/v1/sources' \
             "force": false,
             "collection": {
                 "id": 28,
-                "name": "Testing new UI",
+                "title": "Testing new UI",
                 "description": "Some details about your collection that will help give the ai system some context.",
                 "active": true,
                 "team_id": 1,
@@ -858,7 +859,7 @@ curl --location 'https://[THEIR DAILYAI SERVER]/api/v1/sources' \
             "force": false,
             "collection": {
                 "id": 31,
-                "name": "LaraLlama.io",
+                "title": "LaraLlama.io",
                 "description": "News and Articles about LaraLlama",
                 "active": true,
                 "team_id": 1,
@@ -890,7 +891,7 @@ curl --location 'https://[THEIR DAILYAI SERVER]/api/v1/sources' \
             "force": false,
             "collection": {
                 "id": 33,
-                "name": "Firehouse SiteMap",
+                "title": "Firehouse SiteMap",
                 "description": "Here is the site from the sitemap",
                 "active": true,
                 "team_id": 1,
@@ -920,7 +921,7 @@ curl --location 'https://[THEIR DAILYAI SERVER]/api/v1/sources' \
             "force": false,
             "collection": {
                 "id": 33,
-                "name": "Firehouse SiteMap",
+                "title": "Firehouse SiteMap",
                 "description": "Here is the site from the sitemap",
                 "active": true,
                 "team_id": 1,
@@ -953,7 +954,7 @@ curl --location 'https://[THEIR DAILYAI SERVER]/api/v1/sources' \
             "force": false,
             "collection": {
                 "id": 33,
-                "name": "Firehouse SiteMap",
+                "title": "Firehouse SiteMap",
                 "description": "Here is the site from the sitemap",
                 "active": true,
                 "team_id": 1,
@@ -985,7 +986,7 @@ curl --location 'https://[THEIR DAILYAI SERVER]/api/v1/sources' \
             "force": false,
             "collection": {
                 "id": 45,
-                "name": "Tet 007",
+                "title": "Tet 007",
                 "description": "This is a CSV file",
                 "active": true,
                 "team_id": 1,

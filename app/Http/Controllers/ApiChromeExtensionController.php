@@ -24,13 +24,14 @@ class ApiChromeExtensionController extends Controller
         $validated = request()->validate([
             'url' => 'required|string',
             'recurring' => 'required|string',
+            'title' => 'required|string',
             'force' => 'required|boolean',
             'prompt' => 'required|string',
             'content' => 'required|string',
         ]);
 
         $source = Source::create([
-            'title' => str($validated['url'])->after('://')->toString(),
+            'title' => $validated['title'],
             'details' => $validated['prompt'],
             'recurring' => data_get($validated, 'recurring', 'not'),
             'active' => 1,

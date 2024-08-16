@@ -1,0 +1,43 @@
+{
+    "name": "WorkoutPlan",
+    "description": "Model for WorkoutPlan",
+    "input_schema": {
+        "type": "object",
+        "properties": {
+            "weeks": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "days": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "description": {
+                                        "type": "string",
+                                        "description": "Description of the workout"
+                                    },
+                                    "duration": {
+                                        "type": "number",
+                                        "description": "Duration of the workout in minutes"
+                                    }
+                                },
+                                "required": [
+                                    "description",
+                                    "duration"
+                                ]
+                            }
+                        }
+                    },
+                    "required": [
+                        "days"
+                    ]
+                }
+            }
+        },
+        "required": [
+            "weeks"
+        ]
+    }
+}

@@ -21,11 +21,15 @@ class EventFactory extends Factory
         return [
             'title' => $this->faker->sentence,
             'description' => $this->faker->paragraph,
-            'start_date' => $this->faker->dateTime,
-            'end_date' => $this->faker->dateTime,
+            'start_date' => $this->faker->date,
+            'start_time' => $this->faker->time,
+            'end_date' => $this->faker->date,
+            'end_time' => $this->faker->time,
             'location' => $this->faker->sentence,
             'type' => \App\Domains\Events\EventTypes::Event,
             'assigned_to_id' => User::factory(),
+            'assigned_to_assistant' => false,
+            'all_day' => false,
             'collection_id' => Collection::factory(),
         ];
     }
