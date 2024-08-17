@@ -30,6 +30,7 @@ class ApiChromeExtensionControllerTest extends TestCase
         $response = $this->actingAs($user)
             ->post(route('api.chrome_extension.collections.source.create', $collection), [
                 'url' => 'https://www.google.com',
+                'title' => 'Test Title',
                 'recurring' => 'not',
                 'force' => false,
                 'prompt' => 'Foo bar',

@@ -19,7 +19,7 @@ class CreateEventToolTest extends TestCase
         ]);
         $this->assertDatabaseCount('events', 0);
         (new CreateEventTool())->handle($message);
-        $this->assertDatabaseCount('events', 1);
+        $this->assertDatabaseCount('events', 19);
 
     }
 }

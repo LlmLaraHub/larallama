@@ -15,8 +15,8 @@
                 "type": "object",
                 "properties": {
                     "prompt": {
-                        "type": "string",
-                        "description": "The prompt the user is using the search for."
+                        "description": "The prompt the user is using the search for.",
+                        "type": "string"
                     }
                 },
                 "required": [
@@ -30,51 +30,12 @@
             "input_schema": {
                 "type": "object",
                 "properties": {
-                    "events": {
-                        "type": "array",
-                        "items": {
-                            "type": "object",
-                            "properties": {
-                                "items": {
-                                    "type": "object",
-                                    "properties": {
-                                        "start_time": {
-                                            "type": "string",
-                                            "description": "Start time of the event"
-                                        },
-                                        "end_time": {
-                                            "type": "string",
-                                            "description": "End time of the event"
-                                        },
-                                        "title": {
-                                            "type": "string",
-                                            "description": "Title of the event"
-                                        },
-                                        "location": {
-                                            "type": "string",
-                                            "description": "Location of the event"
-                                        },
-                                        "summary": {
-                                            "type": "string",
-                                            "description": "Summary or description of the event"
-                                        }
-                                    },
-                                    "required": [
-                                        "start_time",
-                                        "title",
-                                        "summary"
-                                    ]
-                                }
-                            },
-                            "required": [
-                                "items"
-                            ]
-                        }
+                    "prompt": {
+                        "description": "This is the prompt the user is using to search the database and may or may not assist the results.",
+                        "type": "string"
                     }
                 },
-                "required": [
-                    "events"
-                ]
+                "required": []
             }
         },
         {
@@ -84,8 +45,8 @@
                 "type": "object",
                 "properties": {
                     "prompt": {
-                        "type": "string",
-                        "description": "The prompt the user is using to check standards."
+                        "description": "The prompt the user is using to check standards.",
+                        "type": "string"
                     }
                 },
                 "required": [
@@ -100,8 +61,8 @@
                 "type": "object",
                 "properties": {
                     "prompt": {
-                        "type": "string",
-                        "description": "The prompt the user is using to use as solutions to the report"
+                        "description": "The prompt the user is using to use as solutions to the report",
+                        "type": "string"
                     }
                 },
                 "required": [
@@ -116,8 +77,8 @@
                 "type": "object",
                 "properties": {
                     "prompt": {
-                        "type": "string",
-                        "description": "Using your prompt we will look at every document, run your prompt against each one and then against the final output"
+                        "description": "Using your prompt we will look at every document, run your prompt against each one and then against the final output",
+                        "type": "string"
                     }
                 },
                 "required": [
@@ -132,8 +93,8 @@
                 "type": "object",
                 "properties": {
                     "url": {
-                        "type": "string",
-                        "description": "The URL To get"
+                        "description": "The URL To get",
+                        "type": "string"
                     }
                 },
                 "required": [
@@ -148,8 +109,8 @@
                 "type": "object",
                 "properties": {
                     "search_phrase": {
-                        "type": "string",
-                        "description": "1-5 words to search for"
+                        "description": "1-5 words to search for",
+                        "type": "string"
                     }
                 },
                 "required": [
@@ -159,11 +120,43 @@
         },
         {
             "name": "create_event_tool",
-            "description": "If the user needs to create an event this tool help",
+            "description": "If the user needs to create one or more events this tool help",
             "input_schema": {
                 "type": "object",
-                "properties": [],
-                "required": []
+                "properties": {
+                    "events": {
+                        "description": "Array of event objects",
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "start_time": {
+                                    "type": "string",
+                                    "description": "Start time of the event"
+                                },
+                                "end_time": {
+                                    "type": "string",
+                                    "description": "End time of the event"
+                                },
+                                "title": {
+                                    "type": "string",
+                                    "description": "Title of the event"
+                                },
+                                "location": {
+                                    "type": "string",
+                                    "description": "Location of the event"
+                                },
+                                "description": {
+                                    "type": "string",
+                                    "description": "Description of the event"
+                                }
+                            }
+                        }
+                    }
+                },
+                "required": [
+                    "events"
+                ]
             }
         },
         {
@@ -173,8 +166,8 @@
                 "type": "object",
                 "properties": {
                     "example_arg": {
-                        "type": "string",
-                        "description": "Example argument"
+                        "description": "Example argument",
+                        "type": "string"
                     }
                 },
                 "required": [

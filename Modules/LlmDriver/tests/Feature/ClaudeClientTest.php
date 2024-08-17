@@ -8,6 +8,7 @@ use Illuminate\Http\Client\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Http;
 use LlmLaraHub\LlmDriver\ClaudeClient;
+use LlmLaraHub\LlmDriver\Functions\CreateEventTool;
 use LlmLaraHub\LlmDriver\Functions\FunctionDto;
 use LlmLaraHub\LlmDriver\Functions\ParametersDto;
 use LlmLaraHub\LlmDriver\Functions\PropertyDto;
@@ -219,33 +220,11 @@ class ClaudeClientTest extends TestCase
     public function test_remap_array(): void
     {
 
-        $payload = get_fixture('payload_modified.json');
+        $shouldBe = get_fixture('claude_remap_functions_results_v2.json');
 
-        $shouldBe = data_get($payload, 'tools');
+        $function = (new CreateEventTool)->getFunction();
 
-        $dto = FunctionDto::from([
-            'name' => 'reporting_json',
-            'description' => 'JSON Summary of the report',
-            'parameters' => ParametersDto::from([
-                'type' => 'array',
-                'properties' => [
-                    PropertyDto::from([
-                        'name' => 'title',
-                        'description' => 'The title of the section',
-                        'type' => 'string',
-                        'required' => true,
-                    ]),
-                    PropertyDto::from([
-                        'name' => 'content',
-                        'description' => 'The content of the section',
-                        'type' => 'string',
-                        'required' => true,
-                    ]),
-                ],
-            ]),
-        ]);
-
-        $results = (new ClaudeClient)->remapFunctions([$dto]);
+        $results = (new ClaudeClient)->remapFunctions(collect([$function])->toArray());
 
         $this->assertEquals(
             $shouldBe,

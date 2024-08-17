@@ -49,7 +49,7 @@ class ClaudeClient extends BaseClient
 
         $payload = $this->modifyPayload($payload);
 
-        put_fixture('claude_payload_with_tools.json', $payload);
+        put_fixture('error_claude_payload.json', $payload);
 
         $results = $this->getClient()->post('/messages', $payload);
 
@@ -297,25 +297,30 @@ class ClaudeClient extends BaseClient
                     $required[] = $name;
                 }
 
+                $subType = data_get($property, 'type', 'string');
                 $properties[$name] = [
                     'description' => data_get($property, 'description', null),
-                    'type' => data_get($property, 'type', 'string'),
+                    'type' => $subType,
                 ];
+
+                if ($subType === 'array') {
+                    $subItems = $property['properties'][0]->properties; //stop at this for now
+                    $subItemsMapped = [];
+                    foreach ($subItems as $subItemKey => $subItemValue) {
+                        $subItemsMapped[$subItemValue->name] = [
+                            'type' => $subItemValue->type,
+                            'description' => $subItemValue->description,
+                        ];
+                    }
+
+                    $properties[$name]['items'] = [
+                        'type' => 'object',
+                        'properties' => $subItemsMapped,
+                    ];
+                }
             }
 
             $itemsOrProperties = $properties;
-
-            if ($type === 'array') {
-                $itemsOrProperties = [
-                    'results' => [
-                        'type' => 'array',
-                        'items' => [
-                            'type' => 'object',
-                            'properties' => $properties,
-                        ],
-                    ],
-                ];
-            }
 
             return [
                 'name' => data_get($function, 'name'),

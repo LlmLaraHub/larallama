@@ -1,0 +1,43 @@
+[
+    {
+        "name": "create_event_tool",
+        "description": "If the user needs to create one or more events this tool help",
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "events": {
+                    "description": "Array of event objects",
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "start_time": {
+                                "type": "string",
+                                "description": "Start time of the event"
+                            },
+                            "end_time": {
+                                "type": "string",
+                                "description": "End time of the event"
+                            },
+                            "title": {
+                                "type": "string",
+                                "description": "Title of the event"
+                            },
+                            "location": {
+                                "type": "string",
+                                "description": "Location of the event"
+                            },
+                            "description": {
+                                "type": "string",
+                                "description": "Description of the event"
+                            }
+                        }
+                    }
+                }
+            },
+            "required": [
+                "events"
+            ]
+        }
+    }
+]

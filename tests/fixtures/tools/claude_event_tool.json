@@ -1,0 +1,59 @@
+{
+    "model": "claude-3-5-sonnet-20240620",
+    "max_tokens": 4096,
+    "messages": [
+        {
+            "role": "user",
+            "content": "Can you parse the events out of this content Dallas Cowboys | Official Site of the Dallas Cowboys OneTrust Cookies Consent Notice start OneTrust Cookies Consent Notice end IAB CCPA script start IAB CCPA script end Skip to main content Interstitial OOP SLOT Background-Skin SLOT [if IE 9]><![endif] Advertising Dallas Cowboys Schedule Dallas Cowboys Schedule Presented by [if IE 9]><![endif] DOWNLOADABLE SCHEDULE Calendar event(s) copied!1. Access your calendar2. Add url to calendar and subscribe3. Ensure that newly added Cowboys's calendar is synced to your account Pick your method to subscribe to the calendar 1. Automatically Download to System Default Mail App (Recommended) Add to Calendar 2. Connect to Calendar Provider of Choice (Manual) Add to Calendar Calendar event(s) copied!1. Access your calendar2. Add url to calendar and subscribe3. Ensure that newly added Cowboys's calendar is synced to your account PRINTABLE SCHEDULE facebook instagram x PRESEASON WEEK 1 · Sun 08/11 · 3:30 PM CDT AT [if IE 9]><![endif] Rams Los Angeles Rams CBS 11 105.3 The FAN Add to Calendar SoFi Stadium NFL+ Tickets [if IE 9]><![endif] Book Flights [if IE 9]><![endif] Book Hotels WEEK 2 · Sat 08/17 · 9:00 PM CDT AT [if IE 9]><![endif] Raiders Las Vegas Raiders CBS 11 Add to Calendar Allegiant Stadium NFL+ Tickets [if IE 9]><![endif] Book Flights [if IE 9]><![endif] Book Hotels WEEK 3 · Sat 08/24 · 3:00 PM CDT [if IE 9]><![endif] Chargers Los Angeles Chargers CBS 11 105.3 The FAN Add to Calendar AT&T Stadium NFL+ Tickets [if IE 9]><![endif] Book Flights [if IE 9]><![endif] Book Hotels Presented By REGULAR SEASON WEEK 1 · Sun 09/08 · 3:25 PM CDT AT [if IE 9]><![endif] Browns Cleveland Browns FOX 105.3 The FAN Add to Calendar Cleveland Browns Stadium NFL+ Tickets Travel Packages Book Flights [if IE 9]><![endif] Book Hotels WEEK 2 · Sun 09/15 · 12:00 PM CDT [if IE 9]><![endif] Saints New Orleans Saints FOX 105.3 The FAN Add to Calendar AT&T Stadium NFL+ Tickets [if IE 9]><![endif] Travel Packages [if IE 9]><![endif] Book Flights [if IE 9]><![endif] Book Hotels Presented By WEEK 3 · Sun 09/22 · 3:25 PM CDT [if IE 9]><![endif] Ravens Baltimore Ravens FOX 105.3 The FAN Add to Calendar AT&T Stadium NFL+ Tickets [if IE 9]><![endif] Travel Packages [if IE 9]><![endif] Book Flights [if IE 9]><![endif] Book Hotels Presented By WEEK 4 · Thu 09/26 · 7:15 PM CDT AT [if IE 9]><![endif] Giants New York Giants Prime Video 105.3 The FAN Add to Calendar MetLife Stadium NFL+ Tickets [if IE 9]><![endif] Travel Packages [if IE 9]><![endif] Book Flights [if IE 9]><![endif] Book Hotels WEEK 5 · Sun 10/06 · 7:20 PM CDT AT [if IE 9]><![endif] Steelers Pittsburgh Steelers NBC 105.3 The FAN Add to Calendar Acrisure Stadium NFL+ Tickets [if IE 9]><![endif] Travel Packages [if IE 9]><![endif] Book Flights [if IE 9]><![endif] Book Hotels WEEK 6 · Sun 10/13 · 3:25 PM CDT [if IE 9]><![endif] Lions Detroit Lions FOX 105.3 The FAN Add to Calendar AT&T Stadium NFL+ Tickets [if IE 9]><![endif] Travel Packages [if IE 9]><![endif] Book Flights [if IE 9]><![endif] Book Hotels Presented By WEEK 7 BYE WEEK 8 · Sun 10/27 · 7:20 PM CDT AT [if IE 9]><![endif] 49ers San Francisco 49ers NBC 105.3 The FAN Add to Calendar Levi's® Stadium NFL+ Tickets [if IE 9]><![endif] Travel Packages [if IE 9]><![endif] Book Flights [if IE 9]><![endif] Book Hotels WEEK 9 · Sun 11/03 · 12:00 PM CST AT [if IE 9]><![endif] Falcons Atlanta Falcons FOX 105.3 The FAN Add to Calendar Mercedes-Benz Stadium NFL+ Tickets [if IE 9]><![endif] Travel Packages [if IE 9]><![endif] Book Flights [if IE 9]><![endif] Book Hotels WEEK 10 · Sun 11/10 · 3:25 PM CST [if IE 9]><![endif] Eagles Philadelphia Eagles CBS 105.3 The FAN Add to Calendar AT&T Stadium NFL+ Tickets [if IE 9]><![endif] Travel Packages [if IE 9]><![endif] Book Flights [if IE 9]><![endif] Book Hotels Presented By WEEK 11 · Mon 11/18 · 7:15 PM CST [if IE 9]><![endif] Texans Houston Texans ESPN 105.3 The FAN Add to Calendar AT&T Stadium NFL+ Tickets [if IE 9]><![endif] Travel Packages [if IE 9]><![endif] Book Flights [if IE 9]><![endif] Book Hotels Presented By WEEK 12 · Sun 11/24 · 12:00 PM CST AT [if IE 9]><![endif] Commanders Washington Commanders FOX 105.3 The FAN Add to Calendar Commanders Field NFL+ Tickets [if IE 9]><![endif] Travel Packages [if IE 9]><![endif] Book Flights [if IE 9]><![endif] Book Hotels WEEK 13 · Thu 11/28 · 3:30 PM CST [if IE 9]><![endif] Giants New York Giants FOX 105.3 The FAN Add to Calendar AT&T Stadium NFL+ Tickets [if IE 9]><![endif] Travel Packages [if IE 9]><![endif] Book Flights [if IE 9]><![endif] Book Hotels Presented By WEEK 14 · Mon 12/09 · 7:15 PM CST [if IE 9]><![endif] Bengals Cincinnati Bengals ESPN • ABC 105.3 The FAN Add to Calendar AT&T Stadium NFL+ Tickets [if IE 9]><![endif] Travel Packages [if IE 9]><![endif] Book Flights [if IE 9]><![endif] Book Hotels Presented By WEEK 15 · Sun 12/15 · 12:00 PM CST AT [if IE 9]><![endif] Panthers Carolina Panthers FOX 105.3 The FAN Add to Calendar Bank of America Stadium NFL+ Tickets [if IE 9]><![endif] Travel Packages [if IE 9]><![endif] Book Flights [if IE 9]><![endif] Book Hotels WEEK 16 · Sun 12/22 · 7:20 PM CST [if IE 9]><![endif] Buccaneers Tampa Bay Buccaneers NBC 105.3 The FAN Add to Calendar AT&T Stadium NFL+ Tickets [if IE 9]><![endif] Travel Packages [if IE 9]><![endif] Book Flights [if IE 9]><![endif] Book Hotels Presented By WEEK 17 · Sun 12/29 · 3:25 PM CST AT [if IE 9]><![endif] Eagles Philadelphia Eagles FOX 105.3 The FAN Add to Calendar Lincoln Financial Field NFL+ Tickets [if IE 9]><![endif] Travel Packages [if IE 9]><![endif] Book Flights [if IE 9]><![endif] Book Hotels WEEK 18 · TBD [if IE 9]><![endif] Commanders Washington Commanders TBD 105.3 The FAN Add to Calendar AT&T Stadium NFL+ Tickets [if IE 9]><![endif] Travel Packages [if IE 9]><![endif] Book Flights [if IE 9]><![endif] Book Hotels Presented By Please be aware that there are certain games that are subject to flexible scheduling and the date and time of those games may be changed from what is currently reflected on the schedule and what may appear on the ticket. For more detailed information about NFL flexible scheduling procedures for"
+        }
+    ],
+    "tools": [
+        {
+            "name": "create_event_tool",
+            "description": "If the user needs to create one or more events this tool help",
+            "input_schema": {
+                "type": "object",
+                "properties": {
+                    "events": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "start_time": {
+                                    "type": "string",
+                                    "description": "Start time of the event"
+                                },
+                                "end_time": {
+                                    "type": "string",
+                                    "description": "End time of the event"
+                                },
+                                "title": {
+                                    "type": "string",
+                                    "description": "Title of the event"
+                                },
+                                "location": {
+                                    "type": "string",
+                                    "description": "Location of the event"
+                                },
+                                "summary": {
+                                    "type": "string",
+                                    "description": "Summary or description of the event"
+                                }
+                            },
+                            "required": [
+                                "start_time",
+                                "end_time",
+                                "title",
+                                "location",
+                                "summary"
+                            ]
+                        }
+                    }
+                },
+                "required": [
+                    "events"
+                ]
+            }
+        }
+    ]
+}

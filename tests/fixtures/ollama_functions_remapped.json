@@ -10,6 +10,7 @@
                     "description": "The title of the section",
                     "type": "string",
                     "enum": [],
+                    "properties": [],
                     "default": "",
                     "required": true
                 },
@@ -18,6 +19,7 @@
                     "description": "The content of the section",
                     "type": "string",
                     "enum": [],
+                    "properties": [],
                     "default": "",
                     "required": true
                 }

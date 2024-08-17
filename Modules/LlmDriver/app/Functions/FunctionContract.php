@@ -71,6 +71,11 @@ abstract class FunctionContract
         return false;
     }
 
+    public function getParameters(): array
+    {
+        return $this->getProperties();
+    }
+
     /**
      * @return PropertyDto[]
      */
