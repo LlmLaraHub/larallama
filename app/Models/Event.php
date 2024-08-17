@@ -46,7 +46,7 @@ class Event extends Model
 
     private function formatDateTime($date, $time)
     {
-        if (!$date) {
+        if (! $date) {
             return null;
         }
 
@@ -57,7 +57,6 @@ class Event extends Model
             $formattedTime = date('H:i:s', strtotime($time));
             $dateTime->setTimeFromTimeString($formattedTime);
         }
-
 
         return $dateTime->toIso8601String();
     }

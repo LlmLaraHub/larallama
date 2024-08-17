@@ -7,7 +7,6 @@ use App\Http\Resources\EventResource;
 use App\Models\Collection;
 use App\Models\Event;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 
@@ -18,7 +17,7 @@ class EventsController extends Controller
         $startMonth = now()->startOfMonth();
         $endMonth = now()->endOfMonth();
 
-        if(request()->has('start')) {
+        if (request()->has('start')) {
             $startMonth = Carbon::parse(request()->get('start'));
             $endMonth = Carbon::parse(request()->get('end'));
         }

@@ -53,7 +53,6 @@ Route::middleware([
         }
     );
 
-
     Route::controller(\App\Http\Controllers\EventsController::class)->group(
         function () {
             Route::get('/collections/{collection}/events', 'index')

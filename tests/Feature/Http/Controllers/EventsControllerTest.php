@@ -4,9 +4,6 @@ namespace Tests\Feature\Http\Controllers;
 
 use App\Models\Collection;
 use App\Models\Event;
-use App\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class EventsControllerTest extends TestCase
@@ -26,7 +23,7 @@ class EventsControllerTest extends TestCase
         ]);
 
         $this->actingAs($user)->get(route('collections.events.index', $collection))
-        ->assertOk();
+            ->assertOk();
 
     }
 }
