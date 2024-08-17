@@ -17,6 +17,8 @@ import FeedSource from "@/Pages/Sources/FeedSource/Components/Card.vue";
 import WebPageSource from "@/Pages/Sources/WebPageSource/Components/Card.vue";
 import SiteMapSource from "@/Pages/Sources/SiteMapSource/Components/Card.vue";
 import GoogleSheetSource from "@/Pages/Sources/GoogleSheetSource/Components/Card.vue";
+import FileUploader from "@/Pages/Collection/Components/FileUploader.vue";
+import TextDocumentCreate from "@/Pages/Collection/Components/TextDocumentCreate.vue";
 
 const toast = useToast();
 
@@ -40,6 +42,24 @@ const props = defineProps({
     available_sources: Object
 });
 
+
+const sourceView = ref('file_upload');
+
+
+const changeSourceView = (view) => {
+    sourceView.value = view;
+};
+
+
+const showSlideOut = ref(null);
+
+const toggleShowSlideOut = (slideOut) => {
+    showSlideOut.value = slideOut;
+};
+
+const closeSlideOut = () => {
+    showSlideOut.value = null;
+};
 
 </script>
 
@@ -98,6 +118,42 @@ const props = defineProps({
                         </div>
                     </div>
 
+                 <div>
+                     <h2>Upload Files or use our Text Editor to add content</h2>
+                     <!-- Files upload -->
+
+                     <div class="mx-auto max-7xl flex justify-center">
+                         <div role="tablist" class="tabs tabs-bordered gap-4">
+                             <button @click="changeSourceView('file_upload')" type="button" role="tab" class="tab"
+                                     :class="{ 'tab-active font-bold': sourceView === 'file_upload' }">Upload
+                                 Files</button>
+                             <button @click="changeSourceView('text')" type="button" role="tab" class="tab"
+                                     :class="{ 'tab-active font-bold': sourceView === 'text' }">
+                                 Other Integrations
+                             </button>
+                         </div>
+                     </div>
+
+                     <FileUploader :collection="collection" v-show="sourceView === 'file_upload'" />
+
+                     <div v-show="sourceView === 'text'" class="grid grid-cols-3 max-w-4xl mt-10 mb-10 mx-auto">
+                         <div class="card w-96 bg-base-100 shadow-xl">
+                             <div class="card-body">
+                                 <button class="btn btn-ghost" type="button"
+                                         @click="toggleShowSlideOut('textDocument')"
+                                 >
+                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                          stroke="currentColor" class="w-10 h-10">
+                                         <path stroke-linecap="round" stroke-linejoin="round"
+                                               d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
+                                     </svg>
+                                     Add Document using Text Editor
+                                 </button>
+                             </div>
+                         </div>
+                     </div>
+                 </div>
+
                  <div class="mt-10">
                     <Documents :collection="collection.data"
                                :documents="documents"></Documents>
@@ -107,5 +163,8 @@ const props = defineProps({
             </div>
 
         </div>
+
+        <TextDocumentCreate :collection="collection.data" :open="showSlideOut === 'textDocument'"
+                            @closing="closeSlideOut" />
     </AppLayout>
 </template>

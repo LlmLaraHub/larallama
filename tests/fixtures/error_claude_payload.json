@@ -4,88 +4,178 @@
     "messages": [
         {
             "role": "user",
-            "content": "test"
+            "content": "Please analyze the following Dallas Cowboys 2024 schedule and create an event for each game using the create_event_tool. For each game, extract the following information:\n\n1. Title (e.g., \"Cowboys vs [Opponent]\")\n2. Description (including the week number and whether it's preseason or regular season)\n3. Start date (in MM\/DD\/YYYY format)\n4. Start time (in HH:MM format, converted to 24-hour time)\n5. Location\n\nCall the create_event_tool for each event with the appropriate information. After processing all games, provide a summary of how many events were created.\n\nHere's the schedule:\n\n\n<content>\n\nDallas Cowboys | Official Site of the Dallas Cowboys OneTrust Cookies Consent Notice start OneTrust Cookies Consent Notice end IAB CCPA script start IAB CCPA script end Skip to main content Interstitial OOP SLOT Background-Skin SLOT [if IE 9]><![endif] Advertising Dallas Cowboys Schedule Dallas Cowboys Schedule Presented by [if IE 9]><![endif] DOWNLOADABLE SCHEDULE Calendar event(s) copied!1. Access your calendar2. Add url to calendar and subscribe3. Ensure that newly added Cowboys's calendar is synced to your account Pick your method to subscribe to the calendar 1. Automatically Download to System Default Mail App (Recommended) Add to Calendar 2. Connect to Calendar Provider of Choice (Manual) Add to Calendar Calendar event(s) copied!1. Access your calendar2. Add url to calendar and subscribe3. Ensure that newly added Cowboys's calendar is synced to your account PRINTABLE SCHEDULE facebook instagram x PRESEASON WEEK 1 \u00b7 Sun 08\/11 \u00b7 3:30 PM CDT AT [if IE 9]><![endif] Rams Los Angeles Rams CBS 11 105.3 The FAN Add to Calendar SoFi Stadium NFL+ Tickets [if IE 9]><![endif] Book Flights [if IE 9]><![endif] Book Hotels WEEK 2 \u00b7 Sat 08\/17 \u00b7 9:00 PM CDT AT [if IE 9]><![endif] Raiders Las Vegas Raiders CBS 11 Add to Calendar Allegiant Stadium NFL+ Tickets [if IE 9]><![endif] Book Flights [if IE 9]><![endif] Book Hotels WEEK 3 \u00b7 Sat 08\/24 \u00b7 3:00 PM CDT [if IE 9]><![endif] Chargers Los Angeles Chargers CBS 11 105.3 The FAN Add to Calendar AT&T Stadium NFL+ Tickets [if IE 9]><![endif] Book Flights [if IE 9]><![endif] Book Hotels Presented By REGULAR SEASON WEEK 1 \u00b7 Sun 09\/08 \u00b7 3:25 PM CDT AT [if IE 9]><![endif] Browns Cleveland Browns FOX 105.3 The FAN Add to Calendar Cleveland Browns Stadium NFL+ Tickets Travel Packages Book Flights [if IE 9]><![endif] Book Hotels WEEK 2 \u00b7 Sun 09\/15 \u00b7 12:00 PM CDT [if IE 9]><![endif] Saints New Orleans Saints FOX 105.3 The FAN Add to Calendar AT&T Stadium NFL+ Tickets [if IE 9]><![endif] Travel Packages [if IE 9]><![endif] Book Flights [if IE 9]><![endif] Book Hotels Presented By WEEK 3 \u00b7 Sun 09\/22 \u00b7 3:25 PM CDT [if IE 9]><![endif] Ravens Baltimore Ravens FOX 105.3 The FAN Add to Calendar AT&T Stadium NFL+ Tickets [if IE 9]><![endif] Travel Packages [if IE 9]><![endif] Book Flights [if IE 9]><![endif] Book Hotels Presented By WEEK 4 \u00b7 Thu 09\/26 \u00b7 7:15 PM CDT AT [if IE 9]><![endif] Giants New York Giants Prime Video 105.3 The FAN Add to Calendar MetLife Stadium NFL+ Tickets [if IE 9]><![endif] Travel Packages [if IE 9]><![endif] Book Flights [if IE 9]><![endif] Book Hotels WEEK 5 \u00b7 Sun 10\/06 \u00b7 7:20 PM CDT AT [if IE 9]><![endif] Steelers Pittsburgh Steelers NBC 105.3 The FAN Add to Calendar Acrisure Stadium NFL+ Tickets [if IE 9]><![endif] Travel Packages [if IE 9]><![endif] Book Flights [if IE 9]><![endif] Book Hotels WEEK 6 \u00b7 Sun 10\/13 \u00b7 3:25 PM CDT [if IE 9]><![endif] Lions Detroit Lions FOX 105.3 The FAN Add to Calendar AT&T Stadium NFL+ Tickets [if IE 9]><![endif] Travel Packages [if IE 9]><![endif] Book Flights [if IE 9]><![endif] Book Hotels Presented By WEEK 7 BYE WEEK 8 \u00b7 Sun 10\/27 \u00b7 7:20 PM CDT AT [if IE 9]><![endif] 49ers San Francisco 49ers NBC 105.3 The FAN Add to Calendar Levi's\u00ae Stadium NFL+ Tickets [if IE 9]><![endif] Travel Packages [if IE 9]><![endif] Book Flights [if IE 9]><![endif] Book Hotels WEEK 9 \u00b7 Sun 11\/03 \u00b7 12:00 PM CST AT [if IE 9]><![endif] Falcons Atlanta Falcons FOX 105.3 The FAN Add to Calendar Mercedes-Benz Stadium NFL+ Tickets [if IE 9]><![endif] Travel Packages [if IE 9]><![endif] Book Flights [if IE 9]><![endif] Book Hotels WEEK 10 \u00b7 Sun 11\/10 \u00b7 3:25 PM CST [if IE 9]><![endif] Eagles Philadelphia Eagles CBS 105.3 The FAN Add to Calendar AT&T Stadium NFL+ Tickets [if IE 9]><![endif] Travel Packages [if IE 9]><![endif] Book Flights [if IE 9]><![endif] Book Hotels Presented By WEEK 11 \u00b7 Mon 11\/18 \u00b7 7:15 PM CST [if IE 9]><![endif] Texans Houston Texans ESPN 105.3 The FAN Add to Calendar AT&T Stadium NFL+ Tickets [if IE 9]><![endif] Travel Packages [if IE 9]><![endif] Book Flights [if IE 9]><![endif] Book Hotels Presented By WEEK 12 \u00b7 Sun 11\/24 \u00b7 12:00 PM CST AT [if IE 9]><![endif] Commanders Washington Commanders FOX 105.3 The FAN Add to Calendar Commanders Field NFL+ Tickets [if IE 9]><![endif] Travel Packages [if IE 9]><![endif] Book Flights [if IE 9]><![endif] Book Hotels WEEK 13 \u00b7 Thu 11\/28 \u00b7 3:30 PM CST [if IE 9]><![endif] Giants New York Giants FOX 105.3 The FAN Add to Calendar AT&T Stadium NFL+ Tickets [if IE 9]><![endif] Travel Packages [if IE 9]><![endif] Book Flights [if IE 9]><![endif] Book Hotels Presented By WEEK 14 \u00b7 Mon 12\/09 \u00b7 7:15 PM CST [if IE 9]><![endif] Bengals Cincinnati Bengals ESPN \u2022 ABC 105.3 The FAN Add to Calendar AT&T Stadium NFL+ Tickets [if IE 9]><![endif] Travel Packages [if IE 9]><![endif] Book Flights [if IE 9]><![endif] Book Hotels Presented By WEEK 15 \u00b7 Sun 12\/15 \u00b7 12:00 PM CST AT [if IE 9]><![endif] Panthers Carolina Panthers FOX 105.3 The FAN Add to Calendar Bank of America Stadium NFL+ Tickets [if IE 9]><![endif] Travel Packages [if IE 9]><![endif] Book Flights [if IE 9]><![endif] Book Hotels WEEK 16 \u00b7 Sun 12\/22 \u00b7 7:20 PM CST [if IE 9]><![endif] Buccaneers Tampa Bay Buccaneers NBC 105.3 The FAN Add to Calendar AT&T Stadium NFL+ Tickets [if IE 9]><![endif] Travel Packages [if IE 9]><![endif] Book Flights [if IE 9]><![endif] Book Hotels Presented By WEEK 17 \u00b7 Sun 12\/29 \u00b7 3:25 PM CST AT [if IE 9]><![endif] Eagles Philadelphia Eagles FOX 105.3 The FAN Add to Calendar Lincoln Financial Field NFL+ Tickets [if IE 9]><![endif] Travel Packages [if IE 9]><![endif] Book Flights [if IE 9]><![endif] Book Hotels WEEK 18 \u00b7 TBD [if IE 9]><![endif] Commanders Washington Commanders TBD 105.3 The FAN Add to Calendar AT&T Stadium NFL+ Tickets [if IE 9]><![endif] Travel Packages [if IE 9]><![endif] Book Flights [if IE 9]><![endif] Book Hotels Presented By Please be aware that there are certain games that are subject to flexible scheduling and the date and time of those games may be changed from what is currently reflected on the schedule and what may appear on the ticket. For more detailed information about NFL flexible scheduling procedures for the 2024 NFL Season, please visit https:\/\/www.nfl.com\/schedules\/flexible-scheduling-procedures. Network Information TV NETWORK INFORMATION RADIO BROADCAST INFORMATION Have Questions? Click here to chat Advertising Big left arrow icon Big right arrow icon Close icon Copy Url Three dots icon Down arrow icon Email icon Email icon Exit Fullscreen icon External link icon Facebook logo Football icon Facebook logo Instagram logo Snapchat logo YouTube logo TikTok logo Spotify logo LinkedIn logo Grid icon Key icon Left arrow icon Link icon Location icon Mail icon Menu icon Open icon Phone icon Play icon Radio icon Rewind icon Right arrow icon Search icon Select icon Selected icon TV icon Up arrow icon User icon Audio icon Add to calendar iconNFC icon AFC icon NFL icon Carousel IconList ViewWebsite InstagramTwitterFacebookSnapchatShop IconProfile Overlay AvatarAddAirplayArrow LeftArrow RightArrow UpArrow DownAudioBack 5sBack 10sBack 30sCalendarChartCheckDownLeftRightUpChromecast OffChromecast OnCloseClosed CaptionsBench OffBench OnBroad OffBroad OnVertical OffVertical OnCommentDockDoneDownloadDraftFantasyFilterForward 5sForward 10sForward 30sFull Screen OffFull Screen OnGamepassGamesInsightsKeyLeaveLiveCombineDraftFantasyMenu GamesMenu NetworkMenu NewsMenu PlayoffsMenu Pro BowlMenu ShopMenu StandingsMenu StatsMenu Super BowlMenu TeamsMenu TicketsMenuMore HorizontalMore VerticalMy LocationNetworkNewsPauseplayMultiple PlayersSingle PlayerPlaylistPlayoffsPro BowlPurgeRefreshRemoveSearchSettingsShare AndroidShare Copy URLShare EmailShare FacebookShare InstagramShare iOSShare SnapchatShare TwitterSkip NextSkip PreviousStandingsStarStatsSwapTeamsTicketsVideoVisibility OffVisibility OnVolume HiVolume LowVolume MediumVolume MuteWarningWebsite Caret downCaret upAtNewsPlayAudioGalleryPromo Chevron right Interstitial 1x4\/3x4 SLOT The browser you are using is no longer supported on this site. It is highly recommended that you use the latest versions of a supported browser in order to receive an optimal viewing experience. The following browsers are supported: Chrome, Edge (v80 and later), Firefox and Safari. Got it! Unless you click \u201cReject Optional Cookies\u201d you are agreeing to the continued collection, storage, and use of cookies and similar technologies on this specific property, device, and browser. Cookies and similar technologies are used for a variety of purposes such as enhancing site navigation, analyzing site usage, and assisting in our marketing and advertising efforts, including targeted advertising through third parties. You can further customize your cookie preferences and opt out of optional cookies by clicking the \u201cCookies Settings\u201d link in this banner or in the footer of this website\u2019s homepage. For more information, please refer to ourPrivacy PolicyCookie Settings Reject Optional Cookies Accept Cookies Close Button Close Button END pc header Header logo Your Privacy Choices content Groups \/ Sub groups with cookies Your Opt Out Preference Signal is Honored About Privacy container Your Privacy ChoicesStrictly"
+        },
+        {
+            "role": "assistant",
+            "content": [
+                {
+                    "type": "text",
+                    "text": "<thinking>[{\"title\":\"Cowboys vs Rams\",\"description\":\"Preseason Week 1\",\"start_time\":\"2024-08-11 15:30\",\"end_time\":\"2024-08-11 18:30\",\"location\":\"SoFi Stadium\"},{\"title\":\"Cowboys vs Raiders\",\"description\":\"Preseason Week 2\",\"start_time\":\"2024-08-17 21:00\",\"end_time\":\"2024-08-18 00:00\",\"location\":\"Allegiant Stadium\"},{\"title\":\"Cowboys vs Chargers\",\"description\":\"Preseason Week 3\",\"start_time\":\"2024-08-24 15:00\",\"end_time\":\"2024-08-24 18:00\",\"location\":\"AT&T Stadium\"},{\"title\":\"Cowboys vs Browns\",\"description\":\"Regular Season Week 1\",\"start_time\":\"2024-09-08 15:25\",\"end_time\":\"2024-09-08 18:25\",\"location\":\"Cleveland Browns Stadium\"},{\"title\":\"Cowboys vs Saints\",\"description\":\"Regular Season Week 2\",\"start_time\":\"2024-09-15 12:00\",\"end_time\":\"2024-09-15 15:00\",\"location\":\"AT&T Stadium\"},{\"title\":\"Cowboys vs Ravens\",\"description\":\"Regular Season Week 3\",\"start_time\":\"2024-09-22 15:25\",\"end_time\":\"2024-09-22 18:25\",\"location\":\"AT&T Stadium\"},{\"title\":\"Cowboys vs Giants\",\"description\":\"Regular Season Week 4\",\"start_time\":\"2024-09-26 19:15\",\"end_time\":\"2024-09-26 22:15\",\"location\":\"MetLife Stadium\"},{\"title\":\"Cowboys vs Steelers\",\"description\":\"Regular Season Week 5\",\"start_time\":\"2024-10-06 19:20\",\"end_time\":\"2024-10-06 22:20\",\"location\":\"Acrisure Stadium\"},{\"title\":\"Cowboys vs Lions\",\"description\":\"Regular Season Week 6\",\"start_time\":\"2024-10-13 15:25\",\"end_time\":\"2024-10-13 18:25\",\"location\":\"AT&T Stadium\"},{\"title\":\"Cowboys vs 49ers\",\"description\":\"Regular Season Week 8\",\"start_time\":\"2024-10-27 19:20\",\"end_time\":\"2024-10-27 22:20\",\"location\":\"Levi's\\u00ae Stadium\"},{\"title\":\"Cowboys vs Falcons\",\"description\":\"Regular Season Week 9\",\"start_time\":\"2024-11-03 12:00\",\"end_time\":\"2024-11-03 15:00\",\"location\":\"Mercedes-Benz Stadium\"},{\"title\":\"Cowboys vs Eagles\",\"description\":\"Regular Season Week 10\",\"start_time\":\"2024-11-10 15:25\",\"end_time\":\"2024-11-10 18:25\",\"location\":\"AT&T Stadium\"},{\"title\":\"Cowboys vs Texans\",\"description\":\"Regular Season Week 11\",\"start_time\":\"2024-11-18 19:15\",\"end_time\":\"2024-11-18 22:15\",\"location\":\"AT&T Stadium\"},{\"title\":\"Cowboys vs Commanders\",\"description\":\"Regular Season Week 12\",\"start_time\":\"2024-11-24 12:00\",\"end_time\":\"2024-11-24 15:00\",\"location\":\"Commanders Field\"},{\"title\":\"Cowboys vs Giants\",\"description\":\"Regular Season Week 13\",\"start_time\":\"2024-11-28 15:30\",\"end_time\":\"2024-11-28 18:30\",\"location\":\"AT&T Stadium\"},{\"title\":\"Cowboys vs Bengals\",\"description\":\"Regular Season Week 14\",\"start_time\":\"2024-12-09 19:15\",\"end_time\":\"2024-12-09 22:15\",\"location\":\"AT&T Stadium\"},{\"title\":\"Cowboys vs Panthers\",\"description\":\"Regular Season Week 15\",\"start_time\":\"2024-12-15 12:00\",\"end_time\":\"2024-12-15 15:00\",\"location\":\"Bank of America Stadium\"},{\"title\":\"Cowboys vs Buccaneers\",\"description\":\"Regular Season Week 16\",\"start_time\":\"2024-12-22 19:20\",\"end_time\":\"2024-12-22 22:20\",\"location\":\"AT&T Stadium\"},{\"title\":\"Cowboys vs Eagles\",\"description\":\"Regular Season Week 17\",\"start_time\":\"2024-12-29 15:25\",\"end_time\":\"2024-12-29 18:25\",\"location\":\"Lincoln Financial Field\"},{\"title\":\"Cowboys vs Commanders\",\"description\":\"Regular Season Week 18\",\"start_time\":\"2025-01-05 12:00\",\"end_time\":\"2025-01-05 15:00\",\"location\":\"AT&T Stadium\"}]<\/thinking>"
+                },
+                {
+                    "type": "tool_use",
+                    "id": "toolu_0117NUdQTn3GUP1eeGmzJvNe",
+                    "name": "create_event_tool",
+                    "input": {
+                        "events": [
+                            {
+                                "title": "Cowboys vs Rams",
+                                "description": "Preseason Week 1",
+                                "start_time": "2024-08-11 15:30",
+                                "end_time": "2024-08-11 18:30",
+                                "location": "SoFi Stadium"
+                            },
+                            {
+                                "title": "Cowboys vs Raiders",
+                                "description": "Preseason Week 2",
+                                "start_time": "2024-08-17 21:00",
+                                "end_time": "2024-08-18 00:00",
+                                "location": "Allegiant Stadium"
+                            },
+                            {
+                                "title": "Cowboys vs Chargers",
+                                "description": "Preseason Week 3",
+                                "start_time": "2024-08-24 15:00",
+                                "end_time": "2024-08-24 18:00",
+                                "location": "AT&T Stadium"
+                            },
+                            {
+                                "title": "Cowboys vs Browns",
+                                "description": "Regular Season Week 1",
+                                "start_time": "2024-09-08 15:25",
+                                "end_time": "2024-09-08 18:25",
+                                "location": "Cleveland Browns Stadium"
+                            },
+                            {
+                                "title": "Cowboys vs Saints",
+                                "description": "Regular Season Week 2",
+                                "start_time": "2024-09-15 12:00",
+                                "end_time": "2024-09-15 15:00",
+                                "location": "AT&T Stadium"
+                            },
+                            {
+                                "title": "Cowboys vs Ravens",
+                                "description": "Regular Season Week 3",
+                                "start_time": "2024-09-22 15:25",
+                                "end_time": "2024-09-22 18:25",
+                                "location": "AT&T Stadium"
+                            },
+                            {
+                                "title": "Cowboys vs Giants",
+                                "description": "Regular Season Week 4",
+                                "start_time": "2024-09-26 19:15",
+                                "end_time": "2024-09-26 22:15",
+                                "location": "MetLife Stadium"
+                            },
+                            {
+                                "title": "Cowboys vs Steelers",
+                                "description": "Regular Season Week 5",
+                                "start_time": "2024-10-06 19:20",
+                                "end_time": "2024-10-06 22:20",
+                                "location": "Acrisure Stadium"
+                            },
+                            {
+                                "title": "Cowboys vs Lions",
+                                "description": "Regular Season Week 6",
+                                "start_time": "2024-10-13 15:25",
+                                "end_time": "2024-10-13 18:25",
+                                "location": "AT&T Stadium"
+                            },
+                            {
+                                "title": "Cowboys vs 49ers",
+                                "description": "Regular Season Week 8",
+                                "start_time": "2024-10-27 19:20",
+                                "end_time": "2024-10-27 22:20",
+                                "location": "Levi's\u00ae Stadium"
+                            },
+                            {
+                                "title": "Cowboys vs Falcons",
+                                "description": "Regular Season Week 9",
+                                "start_time": "2024-11-03 12:00",
+                                "end_time": "2024-11-03 15:00",
+                                "location": "Mercedes-Benz Stadium"
+                            },
+                            {
+                                "title": "Cowboys vs Eagles",
+                                "description": "Regular Season Week 10",
+                                "start_time": "2024-11-10 15:25",
+                                "end_time": "2024-11-10 18:25",
+                                "location": "AT&T Stadium"
+                            },
+                            {
+                                "title": "Cowboys vs Texans",
+                                "description": "Regular Season Week 11",
+                                "start_time": "2024-11-18 19:15",
+                                "end_time": "2024-11-18 22:15",
+                                "location": "AT&T Stadium"
+                            },
+                            {
+                                "title": "Cowboys vs Commanders",
+                                "description": "Regular Season Week 12",
+                                "start_time": "2024-11-24 12:00",
+                                "end_time": "2024-11-24 15:00",
+                                "location": "Commanders Field"
+                            },
+                            {
+                                "title": "Cowboys vs Giants",
+                                "description": "Regular Season Week 13",
+                                "start_time": "2024-11-28 15:30",
+                                "end_time": "2024-11-28 18:30",
+                                "location": "AT&T Stadium"
+                            },
+                            {
+                                "title": "Cowboys vs Bengals",
+                                "description": "Regular Season Week 14",
+                                "start_time": "2024-12-09 19:15",
+                                "end_time": "2024-12-09 22:15",
+                                "location": "AT&T Stadium"
+                            },
+                            {
+                                "title": "Cowboys vs Panthers",
+                                "description": "Regular Season Week 15",
+                                "start_time": "2024-12-15 12:00",
+                                "end_time": "2024-12-15 15:00",
+                                "location": "Bank of America Stadium"
+                            },
+                            {
+                                "title": "Cowboys vs Buccaneers",
+                                "description": "Regular Season Week 16",
+                                "start_time": "2024-12-22 19:20",
+                                "end_time": "2024-12-22 22:20",
+                                "location": "AT&T Stadium"
+                            },
+                            {
+                                "title": "Cowboys vs Eagles",
+                                "description": "Regular Season Week 17",
+                                "start_time": "2024-12-29 15:25",
+                                "end_time": "2024-12-29 18:25",
+                                "location": "Lincoln Financial Field"
+                            },
+                            {
+                                "title": "Cowboys vs Commanders",
+                                "description": "Regular Season Week 18",
+                                "start_time": "2025-01-05 12:00",
+                                "end_time": "2025-01-05 15:00",
+                                "location": "AT&T Stadium"
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "role": "user",
+            "content": [
+                {
+                    "type": "tool_result",
+                    "tool_use_id": "toolu_0117NUdQTn3GUP1eeGmzJvNe",
+                    "content": "[{\"title\":\"Cowboys vs Rams\",\"description\":\"Preseason Week 1\",\"start_time\":\"2024-08-11 15:30\",\"end_time\":\"2024-08-11 18:30\",\"location\":\"SoFi Stadium\"},{\"title\":\"Cowboys vs Raiders\",\"description\":\"Preseason Week 2\",\"start_time\":\"2024-08-17 21:00\",\"end_time\":\"2024-08-18 00:00\",\"location\":\"Allegiant Stadium\"},{\"title\":\"Cowboys vs Chargers\",\"description\":\"Preseason Week 3\",\"start_time\":\"2024-08-24 15:00\",\"end_time\":\"2024-08-24 18:00\",\"location\":\"AT&T Stadium\"},{\"title\":\"Cowboys vs Browns\",\"description\":\"Regular Season Week 1\",\"start_time\":\"2024-09-08 15:25\",\"end_time\":\"2024-09-08 18:25\",\"location\":\"Cleveland Browns Stadium\"},{\"title\":\"Cowboys vs Saints\",\"description\":\"Regular Season Week 2\",\"start_time\":\"2024-09-15 12:00\",\"end_time\":\"2024-09-15 15:00\",\"location\":\"AT&T Stadium\"},{\"title\":\"Cowboys vs Ravens\",\"description\":\"Regular Season Week 3\",\"start_time\":\"2024-09-22 15:25\",\"end_time\":\"2024-09-22 18:25\",\"location\":\"AT&T Stadium\"},{\"title\":\"Cowboys vs Giants\",\"description\":\"Regular Season Week 4\",\"start_time\":\"2024-09-26 19:15\",\"end_time\":\"2024-09-26 22:15\",\"location\":\"MetLife Stadium\"},{\"title\":\"Cowboys vs Steelers\",\"description\":\"Regular Season Week 5\",\"start_time\":\"2024-10-06 19:20\",\"end_time\":\"2024-10-06 22:20\",\"location\":\"Acrisure Stadium\"},{\"title\":\"Cowboys vs Lions\",\"description\":\"Regular Season Week 6\",\"start_time\":\"2024-10-13 15:25\",\"end_time\":\"2024-10-13 18:25\",\"location\":\"AT&T Stadium\"},{\"title\":\"Cowboys vs 49ers\",\"description\":\"Regular Season Week 8\",\"start_time\":\"2024-10-27 19:20\",\"end_time\":\"2024-10-27 22:20\",\"location\":\"Levi's\\u00ae Stadium\"},{\"title\":\"Cowboys vs Falcons\",\"description\":\"Regular Season Week 9\",\"start_time\":\"2024-11-03 12:00\",\"end_time\":\"2024-11-03 15:00\",\"location\":\"Mercedes-Benz Stadium\"},{\"title\":\"Cowboys vs Eagles\",\"description\":\"Regular Season Week 10\",\"start_time\":\"2024-11-10 15:25\",\"end_time\":\"2024-11-10 18:25\",\"location\":\"AT&T Stadium\"},{\"title\":\"Cowboys vs Texans\",\"description\":\"Regular Season Week 11\",\"start_time\":\"2024-11-18 19:15\",\"end_time\":\"2024-11-18 22:15\",\"location\":\"AT&T Stadium\"},{\"title\":\"Cowboys vs Commanders\",\"description\":\"Regular Season Week 12\",\"start_time\":\"2024-11-24 12:00\",\"end_time\":\"2024-11-24 15:00\",\"location\":\"Commanders Field\"},{\"title\":\"Cowboys vs Giants\",\"description\":\"Regular Season Week 13\",\"start_time\":\"2024-11-28 15:30\",\"end_time\":\"2024-11-28 18:30\",\"location\":\"AT&T Stadium\"},{\"title\":\"Cowboys vs Bengals\",\"description\":\"Regular Season Week 14\",\"start_time\":\"2024-12-09 19:15\",\"end_time\":\"2024-12-09 22:15\",\"location\":\"AT&T Stadium\"},{\"title\":\"Cowboys vs Panthers\",\"description\":\"Regular Season Week 15\",\"start_time\":\"2024-12-15 12:00\",\"end_time\":\"2024-12-15 15:00\",\"location\":\"Bank of America Stadium\"},{\"title\":\"Cowboys vs Buccaneers\",\"description\":\"Regular Season Week 16\",\"start_time\":\"2024-12-22 19:20\",\"end_time\":\"2024-12-22 22:20\",\"location\":\"AT&T Stadium\"},{\"title\":\"Cowboys vs Eagles\",\"description\":\"Regular Season Week 17\",\"start_time\":\"2024-12-29 15:25\",\"end_time\":\"2024-12-29 18:25\",\"location\":\"Lincoln Financial Field\"},{\"title\":\"Cowboys vs Commanders\",\"description\":\"Regular Season Week 18\",\"start_time\":\"2025-01-05 12:00\",\"end_time\":\"2025-01-05 15:00\",\"location\":\"AT&T Stadium\"}]"
+                }
+            ]
         }
     ],
     "tools": [
-        {
-            "name": "summarize_collection",
-            "description": "NOT FOR SEARCH, This is used when the prompt wants to summarize the entire collection of documents",
-            "input_schema": {
-                "type": "object",
-                "properties": {
-                    "prompt": {
-                        "description": "The prompt the user is using the search for.",
-                        "type": "string"
-                    }
-                },
-                "required": [
-                    "prompt"
-                ]
-            }
-        },
-        {
-            "name": "search_and_summarize",
-            "description": "Used to embed users prompt, search database and return summarized results.",
-            "input_schema": {
-                "type": "object",
-                "properties": {
-                    "prompt": {
-                        "description": "This is the prompt the user is using to search the database and may or may not assist the results.",
-                        "type": "string"
-                    }
-                },
-                "required": []
-            }
-        },
-        {
-            "name": "standards_checker",
-            "description": "Checks the prompt data follows the standards of the documents in the collection. Example usage paste a Blog post and then make sure it matches you standards.",
-            "input_schema": {
-                "type": "object",
-                "properties": {
-                    "prompt": {
-                        "description": "The prompt the user is using to check standards.",
-                        "type": "string"
-                    }
-                },
-                "required": [
-                    "prompt"
-                ]
-            }
-        },
-        {
-            "name": "reporting_tool",
-            "description": "Uses Reference collection to generate a report based on your prompt. Example use my solutions collection to build an RFP reply",
-            "input_schema": {
-                "type": "object",
-                "properties": {
-                    "prompt": {
-                        "description": "The prompt the user is using to use as solutions to the report",
-                        "type": "string"
-                    }
-                },
-                "required": [
-                    "prompt"
-                ]
-            }
-        },
-        {
-            "name": "gather_info_tool",
-            "description": "This will look at all documents using your prompt then return the results after once more using your prompt. This is great for say Find all events from my collection of data and build a list of Event Dates, Titles Grouped by Month",
-            "input_schema": {
-                "type": "object",
-                "properties": {
-                    "prompt": {
-                        "description": "Using your prompt we will look at every document, run your prompt against each one and then against the final output",
-                        "type": "string"
-                    }
-                },
-                "required": [
-                    "prompt"
-                ]
-            }
-        },
         {
             "name": "get_web_site_from_url",
             "description": "If you add urls to a prompt and ask the llm to get the web site using the url(s) you give it",
@@ -156,22 +246,6 @@
                 },
                 "required": [
                     "events"
-                ]
-            }
-        },
-        {
-            "name": "satisfy_tools_required",
-            "description": "This tool has no use just for example purposes",
-            "input_schema": {
-                "type": "object",
-                "properties": {
-                    "example_arg": {
-                        "description": "Example argument",
-                        "type": "string"
-                    }
-                },
-                "required": [
-                    "example_arg"
                 ]
             }
         }

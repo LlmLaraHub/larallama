@@ -10,7 +10,17 @@
         <NavButton
             name="collections.show"
             :href="route('collections.show', {collection: collection.id})"
-        >Collection</NavButton>
+        >
+            <div class="tooltip tooltip-info"
+                 data-tip="This is your context for all your chat interactions and automations">
+                <div class="flex gap-2 items-center">
+                    Collection
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-4">
+                        <path fill-rule="evenodd" d="M15 8A7 7 0 1 1 1 8a7 7 0 0 1 14 0Zm-6 3.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0ZM7.293 5.293a1 1 0 1 1 .99 1.667c-.459.134-1.033.566-1.033 1.29v.25a.75.75 0 1 0 1.5 0v-.115a2.5 2.5 0 1 0-2.518-4.153.75.75 0 1 0 1.061 1.06Z" clip-rule="evenodd" />
+                    </svg>
+                </div>
+            </div>
+        </NavButton>
 
         <NavButton v-if="chat?.id"
                    name="chats.collection.show"
@@ -27,14 +37,34 @@
                    :href="route('collections.sources.index', {
             collection: collection.id
         })"
-        >Sources</NavButton>
+        >
+            <div class="tooltip tooltip-info"
+                 data-tip="Upload files or use our Sources to get content from Emails, Web Pages etc.">
+                <div class="flex gap-2 items-center">
+                    Add Content to Collection
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-4">
+                        <path fill-rule="evenodd" d="M15 8A7 7 0 1 1 1 8a7 7 0 0 1 14 0Zm-6 3.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0ZM7.293 5.293a1 1 0 1 1 .99 1.667c-.459.134-1.033.566-1.033 1.29v.25a.75.75 0 1 0 1.5 0v-.115a2.5 2.5 0 1 0-2.518-4.153.75.75 0 1 0 1.061 1.06Z" clip-rule="evenodd" />
+                    </svg>
+                </div>
+            </div>
+        </NavButton>
 
         <NavButton
             name="collections.outputs.index"
             :href="route('collections.outputs.index', {
             collection: collection.id
         })"
-        >Outputs</NavButton>
+        >
+            <div class="tooltip tooltip-info"
+                 data-tip="Numerous way to share your collection with other systems like Email, Webhooks, APIs and more">
+                <div class="flex gap-2 items-center">
+                    Share Collection
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-4">
+                        <path fill-rule="evenodd" d="M15 8A7 7 0 1 1 1 8a7 7 0 0 1 14 0Zm-6 3.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0ZM7.293 5.293a1 1 0 1 1 .99 1.667c-.459.134-1.033.566-1.033 1.29v.25a.75.75 0 1 0 1.5 0v-.115a2.5 2.5 0 1 0-2.518-4.153.75.75 0 1 0 1.061 1.06Z" clip-rule="evenodd" />
+                    </svg>
+                </div>
+            </div>
+        </NavButton>
     </div>
 
 </template>
