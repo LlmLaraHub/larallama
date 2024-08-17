@@ -53,6 +53,14 @@ Route::middleware([
         }
     );
 
+
+    Route::controller(\App\Http\Controllers\EventsController::class)->group(
+        function () {
+            Route::get('/collections/{collection}/events', 'index')
+                ->name('collections.events.index');
+        }
+    );
+
     Route::controller(\App\Http\Controllers\PasswordController::class)->group(
         function () {
             Route::put('/users/password/update', 'update')

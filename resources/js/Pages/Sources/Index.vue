@@ -164,7 +164,8 @@ const closeSlideOut = () => {
 
         </div>
 
-        <TextDocumentCreate :collection="collection.data" :open="showSlideOut === 'textDocument'"
+        <TextDocumentCreate :collection="collection.data"
+                            :open="showSlideOut === 'textDocument'"
                             @closing="closeSlideOut" />
     </AppLayout>
 </template>

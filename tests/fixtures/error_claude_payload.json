@@ -11,153 +11,146 @@
             "content": [
                 {
                     "type": "text",
-                    "text": "<thinking>[{\"title\":\"Cowboys vs Rams\",\"description\":\"Preseason Week 1\",\"start_time\":\"2024-08-11 15:30\",\"end_time\":\"2024-08-11 18:30\",\"location\":\"SoFi Stadium\"},{\"title\":\"Cowboys vs Raiders\",\"description\":\"Preseason Week 2\",\"start_time\":\"2024-08-17 21:00\",\"end_time\":\"2024-08-18 00:00\",\"location\":\"Allegiant Stadium\"},{\"title\":\"Cowboys vs Chargers\",\"description\":\"Preseason Week 3\",\"start_time\":\"2024-08-24 15:00\",\"end_time\":\"2024-08-24 18:00\",\"location\":\"AT&T Stadium\"},{\"title\":\"Cowboys vs Browns\",\"description\":\"Regular Season Week 1\",\"start_time\":\"2024-09-08 15:25\",\"end_time\":\"2024-09-08 18:25\",\"location\":\"Cleveland Browns Stadium\"},{\"title\":\"Cowboys vs Saints\",\"description\":\"Regular Season Week 2\",\"start_time\":\"2024-09-15 12:00\",\"end_time\":\"2024-09-15 15:00\",\"location\":\"AT&T Stadium\"},{\"title\":\"Cowboys vs Ravens\",\"description\":\"Regular Season Week 3\",\"start_time\":\"2024-09-22 15:25\",\"end_time\":\"2024-09-22 18:25\",\"location\":\"AT&T Stadium\"},{\"title\":\"Cowboys vs Giants\",\"description\":\"Regular Season Week 4\",\"start_time\":\"2024-09-26 19:15\",\"end_time\":\"2024-09-26 22:15\",\"location\":\"MetLife Stadium\"},{\"title\":\"Cowboys vs Steelers\",\"description\":\"Regular Season Week 5\",\"start_time\":\"2024-10-06 19:20\",\"end_time\":\"2024-10-06 22:20\",\"location\":\"Acrisure Stadium\"},{\"title\":\"Cowboys vs Lions\",\"description\":\"Regular Season Week 6\",\"start_time\":\"2024-10-13 15:25\",\"end_time\":\"2024-10-13 18:25\",\"location\":\"AT&T Stadium\"},{\"title\":\"Cowboys vs 49ers\",\"description\":\"Regular Season Week 8\",\"start_time\":\"2024-10-27 19:20\",\"end_time\":\"2024-10-27 22:20\",\"location\":\"Levi's\\u00ae Stadium\"},{\"title\":\"Cowboys vs Falcons\",\"description\":\"Regular Season Week 9\",\"start_time\":\"2024-11-03 12:00\",\"end_time\":\"2024-11-03 15:00\",\"location\":\"Mercedes-Benz Stadium\"},{\"title\":\"Cowboys vs Eagles\",\"description\":\"Regular Season Week 10\",\"start_time\":\"2024-11-10 15:25\",\"end_time\":\"2024-11-10 18:25\",\"location\":\"AT&T Stadium\"},{\"title\":\"Cowboys vs Texans\",\"description\":\"Regular Season Week 11\",\"start_time\":\"2024-11-18 19:15\",\"end_time\":\"2024-11-18 22:15\",\"location\":\"AT&T Stadium\"},{\"title\":\"Cowboys vs Commanders\",\"description\":\"Regular Season Week 12\",\"start_time\":\"2024-11-24 12:00\",\"end_time\":\"2024-11-24 15:00\",\"location\":\"Commanders Field\"},{\"title\":\"Cowboys vs Giants\",\"description\":\"Regular Season Week 13\",\"start_time\":\"2024-11-28 15:30\",\"end_time\":\"2024-11-28 18:30\",\"location\":\"AT&T Stadium\"},{\"title\":\"Cowboys vs Bengals\",\"description\":\"Regular Season Week 14\",\"start_time\":\"2024-12-09 19:15\",\"end_time\":\"2024-12-09 22:15\",\"location\":\"AT&T Stadium\"},{\"title\":\"Cowboys vs Panthers\",\"description\":\"Regular Season Week 15\",\"start_time\":\"2024-12-15 12:00\",\"end_time\":\"2024-12-15 15:00\",\"location\":\"Bank of America Stadium\"},{\"title\":\"Cowboys vs Buccaneers\",\"description\":\"Regular Season Week 16\",\"start_time\":\"2024-12-22 19:20\",\"end_time\":\"2024-12-22 22:20\",\"location\":\"AT&T Stadium\"},{\"title\":\"Cowboys vs Eagles\",\"description\":\"Regular Season Week 17\",\"start_time\":\"2024-12-29 15:25\",\"end_time\":\"2024-12-29 18:25\",\"location\":\"Lincoln Financial Field\"},{\"title\":\"Cowboys vs Commanders\",\"description\":\"Regular Season Week 18\",\"start_time\":\"2025-01-05 12:00\",\"end_time\":\"2025-01-05 15:00\",\"location\":\"AT&T Stadium\"}]<\/thinking>"
+                    "text": "<thinking>[{\"title\":\"Cowboys vs Rams\",\"description\":\"Preseason Week 1 game\",\"start_time\":\"2024-08-11T15:30:00\",\"end_time\":\"2024-08-11T18:30:00\",\"location\":\"SoFi Stadium\"},{\"title\":\"Cowboys vs Raiders\",\"description\":\"Preseason Week 2 game\",\"start_time\":\"2024-08-17T21:00:00\",\"end_time\":\"2024-08-18T00:00:00\",\"location\":\"Allegiant Stadium\"},{\"title\":\"Cowboys vs Chargers\",\"description\":\"Preseason Week 3 game\",\"start_time\":\"2024-08-24T15:00:00\",\"end_time\":\"2024-08-24T18:00:00\",\"location\":\"AT&T Stadium\"},{\"title\":\"Cowboys vs Browns\",\"description\":\"Regular Season Week 1 game\",\"start_time\":\"2024-09-08T15:25:00\",\"end_time\":\"2024-09-08T18:25:00\",\"location\":\"Cleveland Browns Stadium\"},{\"title\":\"Cowboys vs Saints\",\"description\":\"Regular Season Week 2 game\",\"start_time\":\"2024-09-15T12:00:00\",\"end_time\":\"2024-09-15T15:00:00\",\"location\":\"AT&T Stadium\"},{\"title\":\"Cowboys vs Ravens\",\"description\":\"Regular Season Week 3 game\",\"start_time\":\"2024-09-22T15:25:00\",\"end_time\":\"2024-09-22T18:25:00\",\"location\":\"AT&T Stadium\"},{\"title\":\"Cowboys vs Giants\",\"description\":\"Regular Season Week 4 game\",\"start_time\":\"2024-09-26T19:15:00\",\"end_time\":\"2024-09-26T22:15:00\",\"location\":\"MetLife Stadium\"},{\"title\":\"Cowboys vs Steelers\",\"description\":\"Regular Season Week 5 game\",\"start_time\":\"2024-10-06T19:20:00\",\"end_time\":\"2024-10-06T22:20:00\",\"location\":\"Acrisure Stadium\"},{\"title\":\"Cowboys vs Lions\",\"description\":\"Regular Season Week 6 game\",\"start_time\":\"2024-10-13T15:25:00\",\"end_time\":\"2024-10-13T18:25:00\",\"location\":\"AT&T Stadium\"},{\"title\":\"Cowboys vs 49ers\",\"description\":\"Regular Season Week 8 game\",\"start_time\":\"2024-10-27T19:20:00\",\"end_time\":\"2024-10-27T22:20:00\",\"location\":\"Levi's\\u00ae Stadium\"},{\"title\":\"Cowboys vs Falcons\",\"description\":\"Regular Season Week 9 game\",\"start_time\":\"2024-11-03T12:00:00\",\"end_time\":\"2024-11-03T15:00:00\",\"location\":\"Mercedes-Benz Stadium\"},{\"title\":\"Cowboys vs Eagles\",\"description\":\"Regular Season Week 10 game\",\"start_time\":\"2024-11-10T15:25:00\",\"end_time\":\"2024-11-10T18:25:00\",\"location\":\"AT&T Stadium\"},{\"title\":\"Cowboys vs Texans\",\"description\":\"Regular Season Week 11 game\",\"start_time\":\"2024-11-18T19:15:00\",\"end_time\":\"2024-11-18T22:15:00\",\"location\":\"AT&T Stadium\"},{\"title\":\"Cowboys vs Commanders\",\"description\":\"Regular Season Week 12 game\",\"start_time\":\"2024-11-24T12:00:00\",\"end_time\":\"2024-11-24T15:00:00\",\"location\":\"Commanders Field\"},{\"title\":\"Cowboys vs Giants\",\"description\":\"Regular Season Week 13 game\",\"start_time\":\"2024-11-28T15:30:00\",\"end_time\":\"2024-11-28T18:30:00\",\"location\":\"AT&T Stadium\"},{\"title\":\"Cowboys vs Bengals\",\"description\":\"Regular Season Week 14 game\",\"start_time\":\"2024-12-09T19:15:00\",\"end_time\":\"2024-12-09T22:15:00\",\"location\":\"AT&T Stadium\"},{\"title\":\"Cowboys vs Panthers\",\"description\":\"Regular Season Week 15 game\",\"start_time\":\"2024-12-15T12:00:00\",\"end_time\":\"2024-12-15T15:00:00\",\"location\":\"Bank of America Stadium\"},{\"title\":\"Cowboys vs Buccaneers\",\"description\":\"Regular Season Week 16 game\",\"start_time\":\"2024-12-22T19:20:00\",\"end_time\":\"2024-12-22T22:20:00\",\"location\":\"AT&T Stadium\"},{\"title\":\"Cowboys vs Eagles\",\"description\":\"Regular Season Week 17 game\",\"start_time\":\"2024-12-29T15:25:00\",\"end_time\":\"2024-12-29T18:25:00\",\"location\":\"Lincoln Financial Field\"}]<\/thinking>"
                 },
                 {
                     "type": "tool_use",
-                    "id": "toolu_0117NUdQTn3GUP1eeGmzJvNe",
+                    "id": "toolu_01EkEa6X8i2sF213bp7ibqNx",
                     "name": "create_event_tool",
                     "input": {
                         "events": [
                             {
                                 "title": "Cowboys vs Rams",
-                                "description": "Preseason Week 1",
-                                "start_time": "2024-08-11 15:30",
-                                "end_time": "2024-08-11 18:30",
+                                "description": "Preseason Week 1 game",
+                                "start_time": "2024-08-11T15:30:00",
+                                "end_time": "2024-08-11T18:30:00",
                                 "location": "SoFi Stadium"
                             },
                             {
                                 "title": "Cowboys vs Raiders",
-                                "description": "Preseason Week 2",
-                                "start_time": "2024-08-17 21:00",
-                                "end_time": "2024-08-18 00:00",
+                                "description": "Preseason Week 2 game",
+                                "start_time": "2024-08-17T21:00:00",
+                                "end_time": "2024-08-18T00:00:00",
                                 "location": "Allegiant Stadium"
                             },
                             {
                                 "title": "Cowboys vs Chargers",
-                                "description": "Preseason Week 3",
-                                "start_time": "2024-08-24 15:00",
-                                "end_time": "2024-08-24 18:00",
+                                "description": "Preseason Week 3 game",
+                                "start_time": "2024-08-24T15:00:00",
+                                "end_time": "2024-08-24T18:00:00",
                                 "location": "AT&T Stadium"
                             },
                             {
                                 "title": "Cowboys vs Browns",
-                                "description": "Regular Season Week 1",
-                                "start_time": "2024-09-08 15:25",
-                                "end_time": "2024-09-08 18:25",
+                                "description": "Regular Season Week 1 game",
+                                "start_time": "2024-09-08T15:25:00",
+                                "end_time": "2024-09-08T18:25:00",
                                 "location": "Cleveland Browns Stadium"
                             },
                             {
                                 "title": "Cowboys vs Saints",
-                                "description": "Regular Season Week 2",
-                                "start_time": "2024-09-15 12:00",
-                                "end_time": "2024-09-15 15:00",
+                                "description": "Regular Season Week 2 game",
+                                "start_time": "2024-09-15T12:00:00",
+                                "end_time": "2024-09-15T15:00:00",
                                 "location": "AT&T Stadium"
                             },
                             {
                                 "title": "Cowboys vs Ravens",
-                                "description": "Regular Season Week 3",
-                                "start_time": "2024-09-22 15:25",
-                                "end_time": "2024-09-22 18:25",
+                                "description": "Regular Season Week 3 game",
+                                "start_time": "2024-09-22T15:25:00",
+                                "end_time": "2024-09-22T18:25:00",
                                 "location": "AT&T Stadium"
                             },
                             {
                                 "title": "Cowboys vs Giants",
-                                "description": "Regular Season Week 4",
-                                "start_time": "2024-09-26 19:15",
-                                "end_time": "2024-09-26 22:15",
+                                "description": "Regular Season Week 4 game",
+                                "start_time": "2024-09-26T19:15:00",
+                                "end_time": "2024-09-26T22:15:00",
                                 "location": "MetLife Stadium"
                             },
                             {
                                 "title": "Cowboys vs Steelers",
-                                "description": "Regular Season Week 5",
-                                "start_time": "2024-10-06 19:20",
-                                "end_time": "2024-10-06 22:20",
+                                "description": "Regular Season Week 5 game",
+                                "start_time": "2024-10-06T19:20:00",
+                                "end_time": "2024-10-06T22:20:00",
                                 "location": "Acrisure Stadium"
                             },
                             {
                                 "title": "Cowboys vs Lions",
-                                "description": "Regular Season Week 6",
-                                "start_time": "2024-10-13 15:25",
-                                "end_time": "2024-10-13 18:25",
+                                "description": "Regular Season Week 6 game",
+                                "start_time": "2024-10-13T15:25:00",
+                                "end_time": "2024-10-13T18:25:00",
                                 "location": "AT&T Stadium"
                             },
                             {
                                 "title": "Cowboys vs 49ers",
-                                "description": "Regular Season Week 8",
-                                "start_time": "2024-10-27 19:20",
-                                "end_time": "2024-10-27 22:20",
+                                "description": "Regular Season Week 8 game",
+                                "start_time": "2024-10-27T19:20:00",
+                                "end_time": "2024-10-27T22:20:00",
                                 "location": "Levi's\u00ae Stadium"
                             },
                             {
                                 "title": "Cowboys vs Falcons",
-                                "description": "Regular Season Week 9",
-                                "start_time": "2024-11-03 12:00",
-                                "end_time": "2024-11-03 15:00",
+                                "description": "Regular Season Week 9 game",
+                                "start_time": "2024-11-03T12:00:00",
+                                "end_time": "2024-11-03T15:00:00",
                                 "location": "Mercedes-Benz Stadium"
                             },
                             {
                                 "title": "Cowboys vs Eagles",
-                                "description": "Regular Season Week 10",
-                                "start_time": "2024-11-10 15:25",
-                                "end_time": "2024-11-10 18:25",
+                                "description": "Regular Season Week 10 game",
+                                "start_time": "2024-11-10T15:25:00",
+                                "end_time": "2024-11-10T18:25:00",
                                 "location": "AT&T Stadium"
                             },
                             {
                                 "title": "Cowboys vs Texans",
-                                "description": "Regular Season Week 11",
-                                "start_time": "2024-11-18 19:15",
-                                "end_time": "2024-11-18 22:15",
+                                "description": "Regular Season Week 11 game",
+                                "start_time": "2024-11-18T19:15:00",
+                                "end_time": "2024-11-18T22:15:00",
                                 "location": "AT&T Stadium"
                             },
                             {
                                 "title": "Cowboys vs Commanders",
-                                "description": "Regular Season Week 12",
-                                "start_time": "2024-11-24 12:00",
-                                "end_time": "2024-11-24 15:00",
+                                "description": "Regular Season Week 12 game",
+                                "start_time": "2024-11-24T12:00:00",
+                                "end_time": "2024-11-24T15:00:00",
                                 "location": "Commanders Field"
                             },
                             {
                                 "title": "Cowboys vs Giants",
-                                "description": "Regular Season Week 13",
-                                "start_time": "2024-11-28 15:30",
-                                "end_time": "2024-11-28 18:30",
+                                "description": "Regular Season Week 13 game",
+                                "start_time": "2024-11-28T15:30:00",
+                                "end_time": "2024-11-28T18:30:00",
                                 "location": "AT&T Stadium"
                             },
                             {
                                 "title": "Cowboys vs Bengals",
-                                "description": "Regular Season Week 14",
-                                "start_time": "2024-12-09 19:15",
-                                "end_time": "2024-12-09 22:15",
+                                "description": "Regular Season Week 14 game",
+                                "start_time": "2024-12-09T19:15:00",
+                                "end_time": "2024-12-09T22:15:00",
                                 "location": "AT&T Stadium"
                             },
                             {
                                 "title": "Cowboys vs Panthers",
-                                "description": "Regular Season Week 15",
-                                "start_time": "2024-12-15 12:00",
-                                "end_time": "2024-12-15 15:00",
+                                "description": "Regular Season Week 15 game",
+                                "start_time": "2024-12-15T12:00:00",
+                                "end_time": "2024-12-15T15:00:00",
                                 "location": "Bank of America Stadium"
                             },
                             {
                                 "title": "Cowboys vs Buccaneers",
-                                "description": "Regular Season Week 16",
-                                "start_time": "2024-12-22 19:20",
-                                "end_time": "2024-12-22 22:20",
+                                "description": "Regular Season Week 16 game",
+                                "start_time": "2024-12-22T19:20:00",
+                                "end_time": "2024-12-22T22:20:00",
                                 "location": "AT&T Stadium"
                             },
                             {
                                 "title": "Cowboys vs Eagles",
-                                "description": "Regular Season Week 17",
-                                "start_time": "2024-12-29 15:25",
-                                "end_time": "2024-12-29 18:25",
+                                "description": "Regular Season Week 17 game",
+                                "start_time": "2024-12-29T15:25:00",
+                                "end_time": "2024-12-29T18:25:00",
                                 "location": "Lincoln Financial Field"
-                            },
-                            {
-                                "title": "Cowboys vs Commanders",
-                                "description": "Regular Season Week 18",
-                                "start_time": "2025-01-05 12:00",
-                                "end_time": "2025-01-05 15:00",
-                                "location": "AT&T Stadium"
                             }
                         ]
                     }
@@ -169,8 +162,8 @@
             "content": [
                 {
                     "type": "tool_result",
-                    "tool_use_id": "toolu_0117NUdQTn3GUP1eeGmzJvNe",
-                    "content": "[{\"title\":\"Cowboys vs Rams\",\"description\":\"Preseason Week 1\",\"start_time\":\"2024-08-11 15:30\",\"end_time\":\"2024-08-11 18:30\",\"location\":\"SoFi Stadium\"},{\"title\":\"Cowboys vs Raiders\",\"description\":\"Preseason Week 2\",\"start_time\":\"2024-08-17 21:00\",\"end_time\":\"2024-08-18 00:00\",\"location\":\"Allegiant Stadium\"},{\"title\":\"Cowboys vs Chargers\",\"description\":\"Preseason Week 3\",\"start_time\":\"2024-08-24 15:00\",\"end_time\":\"2024-08-24 18:00\",\"location\":\"AT&T Stadium\"},{\"title\":\"Cowboys vs Browns\",\"description\":\"Regular Season Week 1\",\"start_time\":\"2024-09-08 15:25\",\"end_time\":\"2024-09-08 18:25\",\"location\":\"Cleveland Browns Stadium\"},{\"title\":\"Cowboys vs Saints\",\"description\":\"Regular Season Week 2\",\"start_time\":\"2024-09-15 12:00\",\"end_time\":\"2024-09-15 15:00\",\"location\":\"AT&T Stadium\"},{\"title\":\"Cowboys vs Ravens\",\"description\":\"Regular Season Week 3\",\"start_time\":\"2024-09-22 15:25\",\"end_time\":\"2024-09-22 18:25\",\"location\":\"AT&T Stadium\"},{\"title\":\"Cowboys vs Giants\",\"description\":\"Regular Season Week 4\",\"start_time\":\"2024-09-26 19:15\",\"end_time\":\"2024-09-26 22:15\",\"location\":\"MetLife Stadium\"},{\"title\":\"Cowboys vs Steelers\",\"description\":\"Regular Season Week 5\",\"start_time\":\"2024-10-06 19:20\",\"end_time\":\"2024-10-06 22:20\",\"location\":\"Acrisure Stadium\"},{\"title\":\"Cowboys vs Lions\",\"description\":\"Regular Season Week 6\",\"start_time\":\"2024-10-13 15:25\",\"end_time\":\"2024-10-13 18:25\",\"location\":\"AT&T Stadium\"},{\"title\":\"Cowboys vs 49ers\",\"description\":\"Regular Season Week 8\",\"start_time\":\"2024-10-27 19:20\",\"end_time\":\"2024-10-27 22:20\",\"location\":\"Levi's\\u00ae Stadium\"},{\"title\":\"Cowboys vs Falcons\",\"description\":\"Regular Season Week 9\",\"start_time\":\"2024-11-03 12:00\",\"end_time\":\"2024-11-03 15:00\",\"location\":\"Mercedes-Benz Stadium\"},{\"title\":\"Cowboys vs Eagles\",\"description\":\"Regular Season Week 10\",\"start_time\":\"2024-11-10 15:25\",\"end_time\":\"2024-11-10 18:25\",\"location\":\"AT&T Stadium\"},{\"title\":\"Cowboys vs Texans\",\"description\":\"Regular Season Week 11\",\"start_time\":\"2024-11-18 19:15\",\"end_time\":\"2024-11-18 22:15\",\"location\":\"AT&T Stadium\"},{\"title\":\"Cowboys vs Commanders\",\"description\":\"Regular Season Week 12\",\"start_time\":\"2024-11-24 12:00\",\"end_time\":\"2024-11-24 15:00\",\"location\":\"Commanders Field\"},{\"title\":\"Cowboys vs Giants\",\"description\":\"Regular Season Week 13\",\"start_time\":\"2024-11-28 15:30\",\"end_time\":\"2024-11-28 18:30\",\"location\":\"AT&T Stadium\"},{\"title\":\"Cowboys vs Bengals\",\"description\":\"Regular Season Week 14\",\"start_time\":\"2024-12-09 19:15\",\"end_time\":\"2024-12-09 22:15\",\"location\":\"AT&T Stadium\"},{\"title\":\"Cowboys vs Panthers\",\"description\":\"Regular Season Week 15\",\"start_time\":\"2024-12-15 12:00\",\"end_time\":\"2024-12-15 15:00\",\"location\":\"Bank of America Stadium\"},{\"title\":\"Cowboys vs Buccaneers\",\"description\":\"Regular Season Week 16\",\"start_time\":\"2024-12-22 19:20\",\"end_time\":\"2024-12-22 22:20\",\"location\":\"AT&T Stadium\"},{\"title\":\"Cowboys vs Eagles\",\"description\":\"Regular Season Week 17\",\"start_time\":\"2024-12-29 15:25\",\"end_time\":\"2024-12-29 18:25\",\"location\":\"Lincoln Financial Field\"},{\"title\":\"Cowboys vs Commanders\",\"description\":\"Regular Season Week 18\",\"start_time\":\"2025-01-05 12:00\",\"end_time\":\"2025-01-05 15:00\",\"location\":\"AT&T Stadium\"}]"
+                    "tool_use_id": "toolu_01EkEa6X8i2sF213bp7ibqNx",
+                    "content": "[{\"title\":\"Cowboys vs Rams\",\"description\":\"Preseason Week 1 game\",\"start_time\":\"2024-08-11T15:30:00\",\"end_time\":\"2024-08-11T18:30:00\",\"location\":\"SoFi Stadium\"},{\"title\":\"Cowboys vs Raiders\",\"description\":\"Preseason Week 2 game\",\"start_time\":\"2024-08-17T21:00:00\",\"end_time\":\"2024-08-18T00:00:00\",\"location\":\"Allegiant Stadium\"},{\"title\":\"Cowboys vs Chargers\",\"description\":\"Preseason Week 3 game\",\"start_time\":\"2024-08-24T15:00:00\",\"end_time\":\"2024-08-24T18:00:00\",\"location\":\"AT&T Stadium\"},{\"title\":\"Cowboys vs Browns\",\"description\":\"Regular Season Week 1 game\",\"start_time\":\"2024-09-08T15:25:00\",\"end_time\":\"2024-09-08T18:25:00\",\"location\":\"Cleveland Browns Stadium\"},{\"title\":\"Cowboys vs Saints\",\"description\":\"Regular Season Week 2 game\",\"start_time\":\"2024-09-15T12:00:00\",\"end_time\":\"2024-09-15T15:00:00\",\"location\":\"AT&T Stadium\"},{\"title\":\"Cowboys vs Ravens\",\"description\":\"Regular Season Week 3 game\",\"start_time\":\"2024-09-22T15:25:00\",\"end_time\":\"2024-09-22T18:25:00\",\"location\":\"AT&T Stadium\"},{\"title\":\"Cowboys vs Giants\",\"description\":\"Regular Season Week 4 game\",\"start_time\":\"2024-09-26T19:15:00\",\"end_time\":\"2024-09-26T22:15:00\",\"location\":\"MetLife Stadium\"},{\"title\":\"Cowboys vs Steelers\",\"description\":\"Regular Season Week 5 game\",\"start_time\":\"2024-10-06T19:20:00\",\"end_time\":\"2024-10-06T22:20:00\",\"location\":\"Acrisure Stadium\"},{\"title\":\"Cowboys vs Lions\",\"description\":\"Regular Season Week 6 game\",\"start_time\":\"2024-10-13T15:25:00\",\"end_time\":\"2024-10-13T18:25:00\",\"location\":\"AT&T Stadium\"},{\"title\":\"Cowboys vs 49ers\",\"description\":\"Regular Season Week 8 game\",\"start_time\":\"2024-10-27T19:20:00\",\"end_time\":\"2024-10-27T22:20:00\",\"location\":\"Levi's\\u00ae Stadium\"},{\"title\":\"Cowboys vs Falcons\",\"description\":\"Regular Season Week 9 game\",\"start_time\":\"2024-11-03T12:00:00\",\"end_time\":\"2024-11-03T15:00:00\",\"location\":\"Mercedes-Benz Stadium\"},{\"title\":\"Cowboys vs Eagles\",\"description\":\"Regular Season Week 10 game\",\"start_time\":\"2024-11-10T15:25:00\",\"end_time\":\"2024-11-10T18:25:00\",\"location\":\"AT&T Stadium\"},{\"title\":\"Cowboys vs Texans\",\"description\":\"Regular Season Week 11 game\",\"start_time\":\"2024-11-18T19:15:00\",\"end_time\":\"2024-11-18T22:15:00\",\"location\":\"AT&T Stadium\"},{\"title\":\"Cowboys vs Commanders\",\"description\":\"Regular Season Week 12 game\",\"start_time\":\"2024-11-24T12:00:00\",\"end_time\":\"2024-11-24T15:00:00\",\"location\":\"Commanders Field\"},{\"title\":\"Cowboys vs Giants\",\"description\":\"Regular Season Week 13 game\",\"start_time\":\"2024-11-28T15:30:00\",\"end_time\":\"2024-11-28T18:30:00\",\"location\":\"AT&T Stadium\"},{\"title\":\"Cowboys vs Bengals\",\"description\":\"Regular Season Week 14 game\",\"start_time\":\"2024-12-09T19:15:00\",\"end_time\":\"2024-12-09T22:15:00\",\"location\":\"AT&T Stadium\"},{\"title\":\"Cowboys vs Panthers\",\"description\":\"Regular Season Week 15 game\",\"start_time\":\"2024-12-15T12:00:00\",\"end_time\":\"2024-12-15T15:00:00\",\"location\":\"Bank of America Stadium\"},{\"title\":\"Cowboys vs Buccaneers\",\"description\":\"Regular Season Week 16 game\",\"start_time\":\"2024-12-22T19:20:00\",\"end_time\":\"2024-12-22T22:20:00\",\"location\":\"AT&T Stadium\"},{\"title\":\"Cowboys vs Eagles\",\"description\":\"Regular Season Week 17 game\",\"start_time\":\"2024-12-29T15:25:00\",\"end_time\":\"2024-12-29T18:25:00\",\"location\":\"Lincoln Financial Field\"}]"
                 }
             ]
         }

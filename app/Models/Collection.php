@@ -123,6 +123,11 @@ EOD;
         return $this->hasMany(Output::class);
     }
 
+    public function events(): HasMany
+    {
+        return $this->hasMany(Event::class);
+    }
+
     public function prompt_history(): HasMany
     {
         return $this->hasMany(PromptHistory::class);

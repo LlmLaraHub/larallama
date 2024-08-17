@@ -15,5 +15,8 @@ class EventTest extends TestCase
         $model = Event::factory()->create();
         $this->assertNotNull($model->collection?->id);
         $this->assertNotNull($model->assigned_to?->id);
+
+        $this->assertNotNull($model->start);
+        $this->assertNotNull($model->end);
     }
 }

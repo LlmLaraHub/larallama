@@ -18,6 +18,7 @@ import Tags from '@/Components/Tags.vue';
 import ReindexAllDocuments from './Components/ReindexAllDocuments.vue';
 import TextDocumentCreate from './Components/TextDocumentCreate.vue';
 import { useToast } from 'vue-toastification';
+import CollectionNav from "@/Pages/Collection/Components/CollectionNav.vue";
 
 const props = defineProps({
     collection: {
@@ -76,6 +77,8 @@ const reset = () => {
                     :collection="collection.data"></CollectionHeader>
 
 
+
+                    <CollectionNav :collection="collection.data"></CollectionNav>
 
                     <!-- show related files -->
                     <Documents

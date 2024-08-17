@@ -6,7 +6,7 @@
 
                 <CollectionTags :collection="collection"></CollectionTags>
 
-                <details ref="openMenu" class="dropdown">
+                <details ref="openMenu" class="dropdown" v-if="showEdit">
                     <summary class="m-1 btn btn-ghost border-neutral">
                         <EllipsisVerticalIcon class="h-5 w-5" />
                     </summary>
@@ -49,6 +49,10 @@ const closeMenu = () => {
 }
 
 const props = defineProps({
+    showEdit: {
+        type: Boolean,
+        default: true,
+    },
     collection: {
         type: Object,
         required: true,
