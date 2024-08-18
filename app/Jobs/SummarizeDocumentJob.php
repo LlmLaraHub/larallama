@@ -37,27 +37,7 @@ class SummarizeDocumentJob implements ShouldQueue
      */
     public function handle(): void
     {
-
-        $content = [];
-
-        /**
-         * @NOTE
-         * Hit max payload on system here so
-         * not 100% sure the best way to break this up.
-         */
-        $divisor = too_large_for_json($this->document->document_chunks()->count());
-
-        Log::info('[LaraChain] Divisor', [
-            'count' => $divisor,
-        ]);
-
-        foreach ($this->document->document_chunks as $chunkIndex => $chunk) {
-            if ($chunkIndex % $divisor == 0) {
-                $content[] = $chunk->content;
-            }
-        }
-
-        $content = implode(' ', $content);
+        $content = $this->document->original_content;
 
         if (empty($this->prompt)) {
             $prompt = $this->document->collection->summary_prompt;
