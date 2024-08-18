@@ -55,20 +55,22 @@ class CreateEventTool extends FunctionContract
                 $end_time = Carbon::parse($end_time)->format('H:i:s');
             }
 
-            Event::create([
+            Event::updateOrCreate([
                 'title' => $title,
-                'description' => $description,
                 'start_date' => $start_date,
                 'start_time' => $start_time,
-                'end_date' => $end_date,
-                'end_time' => $end_time,
                 'location' => $location,
-                'type' => $type,
-                'assigned_to_id' => null,
-                'assigned_to_assistant' => $assigned_to_assistant,
-                'all_day' => $all_day,
                 'collection_id' => $message->getChatable()->id,
-            ]);
+            ],
+                [
+                    'description' => $description,
+                    'end_date' => $end_date,
+                    'end_time' => $end_time,
+                    'type' => $type,
+                    'assigned_to_id' => null,
+                    'assigned_to_assistant' => $assigned_to_assistant,
+                    'all_day' => $all_day,
+                ]);
         }
 
         return FunctionResponse::from([

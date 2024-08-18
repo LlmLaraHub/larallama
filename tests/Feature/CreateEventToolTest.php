@@ -22,4 +22,20 @@ class CreateEventToolTest extends TestCase
         $this->assertDatabaseCount('events', 19);
 
     }
+
+    public function test_updates_not_duplicates(): void
+    {
+        $data = get_fixture('create_event_tool.json');
+        $message = Message::factory()->create([
+            'meta_data' => MetaDataDto::from([
+                'args' => $data['args'],
+            ]),
+        ]);
+        $this->assertDatabaseCount('events', 0);
+        (new CreateEventTool())->handle($message);
+        $this->assertDatabaseCount('events', 19);
+        (new CreateEventTool())->handle($message);
+        $this->assertDatabaseCount('events', 19);
+
+    }
 }

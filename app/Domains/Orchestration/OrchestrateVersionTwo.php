@@ -40,41 +40,8 @@ class OrchestrateVersionTwo
 
         //OpenAI
         //@see https://platform.openai.com/docs/guides/function-calling
-        //response_message = response.choices[0].message
-        //NOTE: tool_calls is plural so we will process it that way
-        //if response_message.tool_calls
-        //  add the response_message to the message array for record keeping
-        //  then call the tool
-        //  and append to the message array
-        //  foreach($tool_calls as $tool_call
-        //    function_name = tool_call.function.name
-        //    function_to_call = available_functions[function_name]
-        //    function_args = json.loads(tool_call.function.arguments)
-        //    //@NOTE this assumes immediate response
-        //    function_response = function_to_call(
-        //        location=function_args.get("location"),
-        //        unit=function_args.get("unit")
-        //    tool_call_id = tool_call.id
-        //    role = "tool": //wow they have a role no one elas has
-        //    name = function_name (tool_call.function.name)
-        //    content = function_response.
-        //Now we have all these extra messages in here that we can send again to chat.
-
-        //Groq
+        //Grok
         //@see https://console.groq.com/docs/tool-use
-        //models recommended
-        //  llama3-groq-70b-8192-tool-use-preview
-        //  llama3-groq-8b-8192-tool-use-preview
-        //all models that support tool use
-        //    llama-3.1-405b-reasoning
-        //    llama-3.1-70b-versatile
-        //    llama-3.1-8b-instant
-        //    llama3-70b-8192
-        //    llama3-8b-8192
-        //    mixtral-8x7b-32768
-        //    gemma-7b-it
-        //    gemma2-9b-it
-
         /**
          * @NOTE
          * Here the user is just forcing a chat
