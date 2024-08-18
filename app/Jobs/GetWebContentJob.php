@@ -2,19 +2,14 @@
 
 namespace App\Jobs;
 
-use App\Domains\Chat\MetaDataDto;
-use App\Domains\Documents\StatusEnum;
 use App\Domains\Documents\TypesEnum;
-use App\Domains\Messages\RoleEnum;
 use App\Domains\Sources\DocumentDto;
-use Facades\App\Domains\Sources\CreateDocumentFromSource;
 use App\Domains\Sources\WebSearch\Response\WebResponseDto;
 use App\Helpers\ChatHelperTrait;
-use App\Helpers\TextChunker;
 use App\Models\Document;
-use App\Models\DocumentChunk;
 use App\Models\Source;
 use Facades\App\Domains\Orchestration\OrchestrateVersionTwo;
+use Facades\App\Domains\Sources\CreateDocumentFromSource;
 use Facades\App\Domains\Sources\WebSearch\GetPage;
 use Facades\App\Domains\Tokenizer\Templatizer;
 use Illuminate\Bus\Batch;
@@ -24,11 +19,9 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Log;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
 use LlmLaraHub\LlmDriver\ToolsHelper;
-use LlmLaraHub\TagFunction\Jobs\TagDocumentJob;
 
 class GetWebContentJob implements ShouldQueue
 {
@@ -108,7 +101,6 @@ class GetWebContentJob implements ShouldQueue
              * Make this a tool and or pull it out for now in a
              * shared Class for Sources since it is the same for all of them
              */
-
             CreateDocumentFromSource::handle(
                 source: $this->source,
                 content: $htmlResults->content,
@@ -122,7 +114,6 @@ class GetWebContentJob implements ShouldQueue
                     'meta_data' => $this->webResponseDto->toArray(),
                 ])
             );
-
 
         }
     }

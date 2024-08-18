@@ -4,7 +4,6 @@ namespace App\Domains\Sources;
 
 use App\Domains\Chat\MetaDataDto;
 use App\Domains\Documents\StatusEnum;
-use App\Domains\Documents\TypesEnum;
 use App\Domains\Messages\RoleEnum;
 use App\Helpers\ChatHelperTrait;
 use App\Helpers\TextChunker;
@@ -26,10 +25,10 @@ class CreateDocumentFromSource
 {
     use ChatHelperTrait, ToolsHelper;
 
-
     protected Source $source;
 
-    public function handle(Source $source, string $content, DocumentDto $documentDto): void {
+    public function handle(Source $source, string $content, DocumentDto $documentDto): void
+    {
         $this->source = $this->checkForChat($source);
 
         $promptUsingCollection = Templatizer::appendContext(true)

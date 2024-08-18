@@ -7,7 +7,6 @@ use Spatie\LaravelData\Data;
 
 class DocumentDto extends Data
 {
-
     public function __construct(
         public string $link = '',
         public string $title = '',

@@ -5,8 +5,6 @@ namespace Tests\Feature;
 use App\Domains\Documents\TypesEnum;
 use App\Domains\Sources\DocumentDto;
 use App\Models\Source;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Bus;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
 use LlmLaraHub\LlmDriver\Responses\CompletionResponse;
@@ -38,15 +36,15 @@ class CreateDocumentFromSourceTest extends TestCase
         $handle->handle(
             $source,
             $fixture,
-        DocumentDto::from([
-            'type' => TypesEnum::HTML,
-            'link' => "foo.com",
-            'title' => "Foo Bar",
-            'subject' => "Foo Bar",
-            'file_path' => "foo.com",
-            'document_md5' => md5($fixture),
-            'meta_data' => [],
-        ]));
+            DocumentDto::from([
+                'type' => TypesEnum::HTML,
+                'link' => 'foo.com',
+                'title' => 'Foo Bar',
+                'subject' => 'Foo Bar',
+                'file_path' => 'foo.com',
+                'document_md5' => md5($fixture),
+                'meta_data' => [],
+            ]));
 
         $this->assertDatabaseCount('documents', 1);
         $this->assertDatabaseCount('document_chunks', 17);
