@@ -3,15 +3,12 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\EventResource\Pages;
-use App\Filament\Resources\EventResource\RelationManagers;
 use App\Models\Event;
-use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Malzariey\FilamentDaterangepickerFilter\Filters\DateRangeFilter;
 
 class EventResource extends Resource
 {
@@ -29,15 +26,21 @@ class EventResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('title'),
+                Tables\Columns\TextColumn::make('title')->searchable(),
                 Tables\Columns\TextColumn::make('start')
-                    ->dateTime("Y-m-d"),
-                Tables\Columns\TextColumn::make('end')
-                    ->dateTime("Y-m-d"),
-                Tables\Columns\TextColumn::make('location'),
+                    ->sortable()
+                    ->dateTime('Y-m-d'),
+                Tables\Columns\TextColumn::make('start_time')
+                    ->sortable()
+                    ->dateTime('h:i'),
+                Tables\Columns\TextColumn::make('location')->searchable(),
             ])
             ->filters([
-                //
+                Tables\Filters\SelectFilter::make('location')
+                    ->options(Event::distinct('location')->orderBy('location')->pluck('location', 'location')),
+                Tables\Filters\SelectFilter::make('title')
+                    ->options(Event::distinct('title')->orderBy('title')->pluck('title', 'title')),
+                DateRangeFilter::make('start_date'),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
@@ -47,7 +50,7 @@ class EventResource extends Resource
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ])
-            ->defaultSort('start_date', "desc");
+            ->defaultSort('start_date', 'desc');
     }
 
     public static function getRelations(): array
@@ -63,6 +66,8 @@ class EventResource extends Resource
             'index' => Pages\ListEvents::route('/'),
             'create' => Pages\CreateEvent::route('/create'),
             'edit' => Pages\EditEvent::route('/{record}/edit'),
+            'view' => Pages\ViewEvent::route('/{record}'),
+            'calendar' => Pages\CalendarPage::route('/calendar'),
         ];
     }
 }

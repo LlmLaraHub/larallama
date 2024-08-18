@@ -13,6 +13,8 @@ use Flowframe\Trend\TrendValue;
 
 class StatsOverview extends BaseWidget
 {
+    protected static ?int $sort = 1;
+
     protected function getStats(): array
     {
 
@@ -23,32 +25,32 @@ class StatsOverview extends BaseWidget
 
     protected function getChatMessages()
     {
-        $title = "Chats";
-        $description = "Chats in the past 7 days";
+        $title = 'Chats';
+        $description = 'Chats in the past 7 days';
 
         return $this->getTrend($title, $description, Chat::class);
     }
 
     protected function getDocuments()
     {
-        $title = "Documents";
-        $description = "Documents in the past 7 days";
+        $title = 'Documents';
+        $description = 'Documents in the past 7 days';
 
         return $this->getTrend($title, $description, Document::class);
     }
 
     protected function getEvents()
     {
-        $title = "Events";
-        $description = "Events in the past 7 days";
+        $title = 'Events';
+        $description = 'Events in the past 7 days';
 
         return $this->getTrend($title, $description, Event::class);
     }
 
     protected function getMessages()
     {
-        $title = "Messages";
-        $description = "Messages in the past 7 days";
+        $title = 'Messages';
+        $description = 'Messages in the past 7 days';
 
         return $this->getTrend($title, $description, Message::class);
     }

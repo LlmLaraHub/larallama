@@ -16,7 +16,7 @@ use Laravel\Sanctum\HasApiTokens;
 /**
  * @property bool $is_admin
  */
-class User extends Authenticatable  implements FilamentUser
+class User extends Authenticatable implements FilamentUser
 {
     use HasApiTokens;
     use HasFactory;

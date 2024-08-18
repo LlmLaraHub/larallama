@@ -18,12 +18,14 @@ class EventFactory extends Factory
      */
     public function definition(): array
     {
+        $start = now()->subDays(rand(1, 10));
+
         return [
             'title' => $this->faker->sentence,
             'description' => $this->faker->paragraph,
-            'start_date' => $this->faker->date,
+            'start_date' => $start->format('Y-m-d'),
             'start_time' => now()->format('H:i:s'),
-            'end_date' => $this->faker->date,
+            'end_date' => $start->addDays(rand(1, 10))->format('Y-m-d'),
             'end_time' => now()->format('H:i:s'),
             'location' => $this->faker->sentence,
             'type' => \App\Domains\Events\EventTypes::Event,

@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Domains\Events\EventTypes;
 use Carbon\Carbon;
 use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\TimePicker;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -30,16 +31,28 @@ class Event extends Model
     public static function getForm(): array
     {
         return [
-            TextInput::make('title')->required(),
-            TextInput::make('description')->required(),
-            DatePicker::make('start_date')->required(),
-            TimePicker::make('start_time')->required(),
-            DatePicker::make('end_date')->required(),
-            TimePicker::make('end_time')->required(),
-            TextInput::make('location')->required(),
-            TextInput::make('summary'),
+            Section::make('Event')
+                ->description('Manage an Event')
+
+                ->columns(1)
+                ->schema([
+                    TextInput::make('title')->required(),
+                    TextInput::make('description')->required(),
+                    TextInput::make('location'),
+                ]),
+            Section::make('Dates')
+                ->description('Manage an Event')
+
+                ->columns(2)
+                ->schema([
+                    DatePicker::make('start_date')->required(),
+                    TimePicker::make('start_time')->required(),
+                    DatePicker::make('end_date')->required(),
+                    TimePicker::make('end_time')->required(),
+                ]),
         ];
     }
+
     public function collection(): BelongsTo
     {
         return $this->belongsTo(Collection::class);
