@@ -8,10 +8,8 @@
         >Documents</NavButton>
 
         <NavButton
-            name="collections.events.index"
-            :href="route('collections.events.index', {
-            collection: collection.id
-        })"
+            name="filament.admin.resources.events.index"
+            :href="route('filament.admin.resources.events.index')"
         >Events</NavButton>
     </div>
 

@@ -8,6 +8,8 @@
         "php": "^8.2",
         "archtechx/enums": "^0.3.2",
         "fakerphp/faker": "^1.23",
+        "filament/filament": "^3.2",
+        "flowframe/laravel-trend": "^0.2.0",
         "inertiajs/inertia-laravel": "^1.0",
         "laravel/framework": "^11.0",
         "laravel/horizon": "^5.23",
@@ -79,7 +81,8 @@
     "scripts": {
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
-            "@php artisan package:discover --ansi"
+            "@php artisan package:discover --ansi",
+            "@php artisan filament:upgrade"
         ],
         "post-update-cmd": [
             "@php artisan vendor:publish --tag=laravel-assets --ansi --force"
@@ -99,8 +102,8 @@
     },
     "repositories": [
         {
-          "type": "vcs",
-          "url": "https://github.com/alnutile/php-presentation-fix"
+            "type": "vcs",
+            "url": "https://github.com/alnutile/php-presentation-fix"
         }
     ],
     "extra": {
