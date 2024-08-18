@@ -5,7 +5,6 @@ namespace Tests\Feature\Jobs;
 use App\Domains\Sources\WebSearch\Response\WebResponseDto;
 use App\Domains\WebParser\WebContentResultsDto;
 use App\Jobs\GetWebContentJob;
-use App\Models\Document;
 use App\Models\Source;
 use Facades\App\Domains\Sources\WebSearch\GetPage;
 use Illuminate\Support\Facades\Bus;
@@ -62,5 +61,4 @@ class GetWebContentJobTest extends TestCase
         $this->assertDatabaseCount('document_chunks', 17);
 
     }
-
 }
