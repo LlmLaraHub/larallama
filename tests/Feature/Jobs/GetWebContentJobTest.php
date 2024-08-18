@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Jobs;
 
+use Facades\App\Domains\Sources\CreateDocumentFromSource;
 use App\Domains\Sources\WebSearch\Response\WebResponseDto;
 use App\Domains\WebParser\WebContentResultsDto;
 use App\Jobs\GetWebContentJob;
@@ -24,6 +25,7 @@ class GetWebContentJobTest extends TestCase
 
         Bus::fake();
 
+        CreateDocumentFromSource::shouldReceive('handle')->once();
         $source = Source::factory()->create();
 
         $webResponseDto = WebResponseDto::from([
@@ -50,18 +52,14 @@ class GetWebContentJobTest extends TestCase
         LlmDriverFacade::shouldReceive('driver->onQueue')->andReturn('default');
 
         LlmDriverFacade::shouldReceive('driver->completion')
-            ->twice()
+            ->once()
             ->andReturn(CompletionResponse::from([
                 'content' => get_fixture('test_block_of_text.txt', false),
             ]));
 
-        $this->assertDatabaseCount('documents', 0);
-        $this->assertDatabaseCount('document_chunks', 0);
         [$job, $batch] = (new GetWebContentJob($source, $webResponseDto))->withFakeBatch();
 
         $job->handle();
-        $this->assertDatabaseCount('documents', 1);
-        $this->assertDatabaseCount('document_chunks', 17);
 
     }
 }

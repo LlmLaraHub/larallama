@@ -6,6 +6,8 @@ use App\Domains\Chat\MetaDataDto;
 use App\Domains\Documents\StatusEnum;
 use App\Domains\Documents\TypesEnum;
 use App\Domains\Messages\RoleEnum;
+use App\Domains\Sources\DocumentDto;
+use Facades\App\Domains\Sources\CreateDocumentFromSource;
 use App\Domains\Sources\WebSearch\Response\WebResponseDto;
 use App\Helpers\ChatHelperTrait;
 use App\Helpers\TextChunker;
@@ -106,105 +108,21 @@ class GetWebContentJob implements ShouldQueue
              * Make this a tool and or pull it out for now in a
              * shared Class for Sources since it is the same for all of them
              */
-            $promptUsingCollection = Templatizer::appendContext(true)
-                ->handle($this->source->collection->getPrompt(), $htmlResults->content);
 
-            $results = LlmDriverFacade::driver(
-                $this->source->getDriver()
-            )->completion($promptUsingCollection);
-
-            $promptResults = $results->content;
-
-            $this->addUserMessage($this->source, $promptResults);
-
-            $title = sprintf('WebPageSource - %s',
-                $this->webResponseDto->url);
-
-            /**
-             * Document can reference a source
-             */
-            $document = Document::updateOrCreate(
-                [
-                    'source_id' => $this->source->id,
+            CreateDocumentFromSource::handle(
+                source: $this->source,
+                content: $htmlResults->content,
+                documentDto: DocumentDto::from([
                     'type' => TypesEnum::HTML,
-                    'subject' => to_utf8($title),
-                    'document_md5' => md5($htmlResults->content),
                     'link' => $this->webResponseDto->url,
-                    'collection_id' => $this->source->collection_id,
-                ],
-                [
-                    'status' => StatusEnum::Pending,
+                    'title' => sprintf('WebPageSource - %s', $this->webResponseDto->url),
+                    'subject' => sprintf('WebPageSource - %s', $this->webResponseDto->url),
                     'file_path' => $this->webResponseDto->url,
-                    'status_summary' => StatusEnum::Pending,
+                    'document_md5' => md5($htmlResults->content),
                     'meta_data' => $this->webResponseDto->toArray(),
-                    'original_content' => $htmlResults->content,
-                ]
+                ])
             );
 
-            $page_number = 1;
-
-            $chunked_chunks = TextChunker::handle($promptResults);
-
-            $chunks = [];
-
-            foreach ($chunked_chunks as $chunkSection => $chunkContent) {
-                $guid = md5($chunkContent);
-
-                $DocumentChunk = DocumentChunk::updateOrCreate(
-                    [
-                        'document_id' => $document->id,
-                        'guid' => $guid,
-                    ],
-                    [
-                        'sort_order' => $page_number,
-                        'section_number' => $chunkSection,
-                        'content' => to_utf8($chunkContent),
-                    ]
-                );
-
-                Log::info('[LaraChain] adding to new batch');
-
-                $chunks[] = new VectorlizeDataJob($DocumentChunk);
-
-                $page_number++;
-            }
-
-            Bus::batch($chunks)
-                ->name("Chunking Document from Web - {$this->webResponseDto->url}")
-                ->allowFailures()
-                ->finally(function (Batch $batch) use ($document) {
-                    Bus::batch([
-                        [
-                            new SummarizeDocumentJob($document),
-                            new TagDocumentJob($document),
-                            new DocumentProcessingCompleteJob($document),
-                        ],
-                    ])
-                        ->name(sprintf('Final Document Steps Document %s id %d', $document->type->name, $document->id))
-                        ->allowFailures()
-                        ->onQueue(LlmDriverFacade::driver($document->getDriver())->onQueue())
-                        ->dispatch();
-                })
-                ->onQueue(LlmDriverFacade::driver($this->source->getDriver())->onQueue())
-                ->dispatch();
-            /**
-             * @NOTE
-             * I could move this into the loop if it is not
-             * enough here
-             */
-            $assistantMessage = $this->source->getChat()->addInput(
-                message: json_encode($promptResults),
-                role: RoleEnum::Assistant,
-                show_in_thread: true,
-                meta_data: MetaDataDto::from([
-                    'driver' => $this->source->getDriver(),
-                    'source' => $this->source->title,
-                ]),
-            );
-
-            $this->savePromptHistory(
-                message: $assistantMessage,
-                prompt: $prompt);
 
         }
     }
