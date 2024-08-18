@@ -132,4 +132,9 @@ EOD;
     {
         return $this->hasMany(PromptHistory::class);
     }
+
+    public function getPrompt(): string
+    {
+        return $this->summary_prompt;
+    }
 }

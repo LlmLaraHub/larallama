@@ -6,6 +6,7 @@ use App\Domains\Sources\WebSearch\Response\WebResponseDto;
 use App\Domains\WebParser\WebContentResultsDto;
 use App\Jobs\GetWebContentJob;
 use App\Models\Source;
+use Facades\App\Domains\Orchestration\OrchestrateVersionTwo;
 use Facades\App\Domains\Sources\WebSearch\GetPage;
 use Illuminate\Support\Facades\Bus;
 use Laravel\Pennant\Feature;
@@ -44,10 +45,12 @@ class GetWebContentJobTest extends TestCase
             'url' => 'https://example.com',
         ]));
 
+        OrchestrateVersionTwo::shouldReceive('sourceOrchestrate')->once();
+
         LlmDriverFacade::shouldReceive('driver->onQueue')->andReturn('default');
 
         LlmDriverFacade::shouldReceive('driver->completion')
-            ->once()
+            ->twice()
             ->andReturn(CompletionResponse::from([
                 'content' => get_fixture('test_block_of_text.txt', false),
             ]));

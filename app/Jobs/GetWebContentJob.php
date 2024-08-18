@@ -12,6 +12,7 @@ use App\Helpers\TextChunker;
 use App\Models\Document;
 use App\Models\DocumentChunk;
 use App\Models\Source;
+use Facades\App\Domains\Orchestration\OrchestrateVersionTwo;
 use Facades\App\Domains\Sources\WebSearch\GetPage;
 use Facades\App\Domains\Tokenizer\Templatizer;
 use Illuminate\Bus\Batch;
@@ -75,6 +76,10 @@ class GetWebContentJob implements ShouldQueue
         $prompt = Templatizer::appendContext(true)
             ->handle($this->source->getPrompt(), $htmlResults->content);
 
+        /**
+         * Do we care about the results
+         * No tools
+         */
         $results = LlmDriverFacade::driver(
             $this->source->getDriver()
         )->completion($prompt);
@@ -86,6 +91,28 @@ class GetWebContentJob implements ShouldQueue
 
             return;
         } else {
+
+            OrchestrateVersionTwo::sourceOrchestrate(
+                $this->source->getchat(),
+                $prompt);
+
+            /**
+             * @NOTE
+             * this should be driven by tools as well
+             * maybe we do not want a Document
+             * Maybe this is making an event
+             *
+             * @TODO
+             * Make this a tool and or pull it out for now in a
+             * shared Class for Sources since it is the same for all of them
+             */
+            $promptUsingCollection = Templatizer::appendContext(true)
+                ->handle($this->source->collection->getPrompt(), $htmlResults->content);
+
+            $results = LlmDriverFacade::driver(
+                $this->source->getDriver()
+            )->completion($promptUsingCollection);
+
             $promptResults = $results->content;
 
             $this->addUserMessage($this->source, $promptResults);
