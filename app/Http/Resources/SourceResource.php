@@ -17,7 +17,6 @@ class SourceResource extends JsonResource
     public function toArray(Request $request): array
     {
 
-        $recurring = $this->getRecurring();
         $lastRun = $this->getLastRun();
 
         return [
@@ -27,7 +26,7 @@ class SourceResource extends JsonResource
             'collection_id' => $this->collection_id,
             'details' => $this->details,
             'active' => $this->active ? 'Yes' : 'No',
-            'recurring' => $recurring,
+            'recurring' => $this->recurring?->value,
             'description' => $this->description,
             'slug' => $this->slug,
             'last_run' => $lastRun,

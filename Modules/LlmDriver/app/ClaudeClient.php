@@ -49,8 +49,6 @@ class ClaudeClient extends BaseClient
 
         $payload = $this->modifyPayload($payload);
 
-        put_fixture('error_claude_payload.json', $payload);
-
         $results = $this->getClient()->post('/messages', $payload);
 
         if (! $results->ok()) {

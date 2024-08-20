@@ -30,7 +30,7 @@
         <env name="LARALAMMA_SEARCH_SOURCE" value="mock"/>
         <env name="BRAVE_API_TOKEN" value="FOOBAR"/>
         <!-- this is a fake token! -->
-        <env name="OPENAI_API_KEY" value="sk-m8ox9NVgboSLRCr5TESTBXbkFJzP1QGUedbQxGmmuAQWRT"/>
+        <env name="OPENAI_MOCK" value="true"/>
         <env name="QUEUE_CONNECTION" value="sync"/>
         <env name="SESSION_DRIVER" value="array"/>
         <env name="OPENAI_MOCK" value="true"/>
