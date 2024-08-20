@@ -7,10 +7,10 @@
         })"
         >Documents</NavButton>
 
-        <NavButton
+        <a
             name="filament.admin.resources.events.index"
             :href="route('filament.admin.resources.events.index')"
-        >Events</NavButton>
+        >Events</a>
     </div>
 
 </template>
