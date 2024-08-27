@@ -1,0 +1,19 @@
+{
+    "title": "Harum illo id ut consectetur natus et provident.",
+    "description": "Quo rerum praesentium nihil iste praesentium. Tempore dolorem veniam reiciendis laudantium. Aliquid et et consequuntur libero voluptate. Et sunt voluptatem pariatur modi temporibus. Asperiores aut nam sed perspiciatis.",
+    "start_date": "2024-08-07T00:00:00.000000Z",
+    "start_time": 1724785109,
+    "end_date": "2024-08-07T00:00:00.000000Z",
+    "end_time": 1724785109,
+    "location": "Voluptatem odit enim vero voluptatem eum.",
+    "type": "event",
+    "assigned_to_id": 1,
+    "assigned_to_assistant": false,
+    "all_day": false,
+    "collection_id": 1,
+    "updated_at": "2024-08-27T18:58:29.000000Z",
+    "created_at": "2024-08-27T18:58:29.000000Z",
+    "id": 1,
+    "start": "2024-08-08 04:00:00",
+    "end": "2024-08-08 04:00:00"
+}
