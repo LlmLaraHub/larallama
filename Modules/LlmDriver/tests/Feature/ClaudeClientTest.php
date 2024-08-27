@@ -225,7 +225,6 @@ class ClaudeClientTest extends TestCase
         $function = (new CreateEventTool)->getFunction();
 
         $results = (new ClaudeClient)->remapFunctions(collect([$function])->toArray());
-
         $this->assertEquals(
             $shouldBe,
             $results

@@ -31,6 +31,7 @@
         <env name="BRAVE_API_TOKEN" value="FOOBAR"/>
         <!-- this is a fake token! -->
         <env name="OPENAI_MOCK" value="true"/>
+        <env name="OPENAI_API_KEY" value="test"/>
         <env name="QUEUE_CONNECTION" value="sync"/>
         <env name="SESSION_DRIVER" value="array"/>
         <env name="OPENAI_MOCK" value="true"/>

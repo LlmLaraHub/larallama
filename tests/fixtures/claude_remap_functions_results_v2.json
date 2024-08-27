@@ -13,11 +13,11 @@
                         "properties": {
                             "start_time": {
                                 "type": "string",
-                                "description": "Start time of the event"
+                                "description": "Start date and time of the event using format \"Y-m-d H:i\""
                             },
                             "end_time": {
                                 "type": "string",
-                                "description": "End time of the event"
+                                "description": "End date and time of the event using format \"Y-m-d H:i\""
                             },
                             "title": {
                                 "type": "string",
