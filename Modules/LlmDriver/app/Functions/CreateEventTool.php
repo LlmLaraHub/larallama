@@ -4,7 +4,6 @@ namespace LlmLaraHub\LlmDriver\Functions;
 
 use App\Models\Event;
 use App\Models\Message;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
 use LlmLaraHub\LlmDriver\Responses\FunctionResponse;
 use LlmLaraHub\LlmDriver\ToolsHelper;
@@ -34,8 +33,6 @@ class CreateEventTool extends FunctionContract
         $eventArray = data_get($args, 'events', []);
 
         foreach ($eventArray as $event) {
-            $start_date = null;
-            $end_date = null;
             $assigned_to_assistant = data_get($event, 'assigned_to_assistant', false);
             $description = data_get($event, 'description', null);
             $start_time = data_get($event, 'start_time', null);
@@ -45,27 +42,15 @@ class CreateEventTool extends FunctionContract
             $title = data_get($event, 'title', 'No Title Found');
             $all_day = data_get($event, 'all_day', false);
 
-            if ($start_time != '' || $start_time != null) {
-                $start_date = Carbon::parse($start_time)->format('Y-m-d');
-                $start_time = Carbon::parse($start_time)->format('H:i:s');
-            }
-
-            if ($end_time != '' || $end_time != null) {
-                $end_date = Carbon::parse($end_time)->format('Y-m-d');
-                $end_time = Carbon::parse($end_time)->format('H:i:s');
-            }
-
             Event::updateOrCreate([
                 'title' => $title,
-                'start_date' => $start_date,
-                'start_time' => $start_time,
+                'start_date' => $start_time,
                 'location' => $location,
                 'collection_id' => $message->getChatable()->id,
             ],
                 [
                     'description' => $description,
-                    'end_date' => $end_date,
-                    'end_time' => $end_time,
+                    'end_date' => $end_time,
                     'type' => $type,
                     'assigned_to_id' => null,
                     'assigned_to_assistant' => $assigned_to_assistant,
@@ -102,13 +87,13 @@ class CreateEventTool extends FunctionContract
                         properties: [
                             new PropertyDto(
                                 name: 'start_time',
-                                description: 'Start time of the event',
+                                description: 'Start date and time of the event using format "Y-m-d H:i"',
                                 type: 'string',
                                 required: true
                             ),
                             new PropertyDto(
                                 name: 'end_time',
-                                description: 'End time of the event',
+                                description: 'End date and time of the event using format "Y-m-d H:i"',
                                 type: 'string',
                                 required: false
                             ),

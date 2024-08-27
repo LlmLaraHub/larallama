@@ -25,7 +25,7 @@ class EditEvent extends EditRecord
             Actions\EditAction::make()
                 ->mountUsing(
                     function (Event $record, Form $form, array $arguments) {
-                           put_fixture('event_arguments.json', $arguments);
+                        put_fixture('event_arguments.json', $arguments);
                         $form->fill([
                             'title' => $record->title,
                             'start_date' => $arguments['event']['start'] ?? $record->start_date,

@@ -5,8 +5,6 @@ namespace Tests\Feature;
 use App\Filament\Widgets\CalendarWidget;
 use App\Models\Event;
 use Carbon\Carbon;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class CalendarWidgetTest extends TestCase
@@ -28,17 +26,15 @@ class CalendarWidgetTest extends TestCase
 
         $widget = new CalendarWidget();
         $widget->onEventDrop(
-                event: $updated,
-                oldEvent: $event->toArray(),
-                relatedEvents: [],
-                delta: [],
-                oldResource: null,
-                newResource: null
-            );
+            event: $updated,
+            oldEvent: $event->toArray(),
+            relatedEvents: [],
+            delta: [],
+            oldResource: null,
+            newResource: null
+        );
 
         $this->assertEquals(Carbon::parse('2024-08-08 04:00:00'),
             $widget->record->start_date);
     }
-
-
 }

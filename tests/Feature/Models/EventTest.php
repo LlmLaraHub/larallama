@@ -16,7 +16,7 @@ class EventTest extends TestCase
         $this->assertNotNull($model->collection?->id);
         $this->assertNotNull($model->assigned_to?->id);
 
-        $this->assertNotNull($model->start);
-        $this->assertNotNull($model->end);
+        $this->assertNotNull($model->start_date);
+        $this->assertNotNull($model->end_date);
     }
 }

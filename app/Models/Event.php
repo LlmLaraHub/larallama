@@ -4,15 +4,17 @@ namespace App\Models;
 
 use App\Domains\Events\EventTypes;
 use Carbon\Carbon;
-use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\TimePicker;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+/**
+ * @property Carbon $start_date
+ * @property Carbon $end_date
+ */
 class Event extends Model
 {
     use HasFactory;
@@ -59,7 +61,4 @@ class Event extends Model
     {
         return $this->belongsTo(User::class, 'assigned_to_id');
     }
-
-
-
 }
