@@ -27,12 +27,12 @@ class EventResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('title')->searchable(),
-                Tables\Columns\TextColumn::make('start')
+                Tables\Columns\TextColumn::make('start_date')
                     ->sortable()
-                    ->dateTime('Y-m-d'),
-                Tables\Columns\TextColumn::make('start_time')
+                    ->dateTime('Y-m-d h:i'),
+                Tables\Columns\TextColumn::make('end_date')
                     ->sortable()
-                    ->dateTime('h:i'),
+                    ->dateTime('Y-m-d h:i'),
                 Tables\Columns\TextColumn::make('location')->searchable(),
             ])
             ->filters([

@@ -60,8 +60,8 @@ class CalendarWidget extends FullCalendarWidget
                 fn (Event $event) => [
                     'id' => $event->id,
                     'title' => $event->title,
-                    'start' => $event->start,
-                    'end' => $event->end,
+                    'start' => $event->start_date,
+                    'end' => $event->end_date,
                     'url' => EventResource::getUrl(name: 'view', parameters: ['record' => $event]),
                     'shouldOpenUrlInNewTab' => true,
                 ]
@@ -82,8 +82,6 @@ class CalendarWidget extends FullCalendarWidget
      */
     public function onEventDrop(array $event, array $oldEvent, array $relatedEvents, array $delta, ?array $oldResource, ?array $newResource): bool
     {
-
-        put_fixture('event_new.json', $event);
         if ($this->getModel()) {
             $this->record = $this->resolveRecord($event['id']);
         }
@@ -95,8 +93,6 @@ class CalendarWidget extends FullCalendarWidget
 
         $this->record->start_date = $start_date;
         $this->record->end_date = $end_date;
-        $this->record->start_time = $start_date;
-        $this->record->end_time = $end_date;
 
         $this->mountAction('edit', [
             'type' => 'drop',

@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Domains\Events\EventTypes;
 use Carbon\Carbon;
 use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\TimePicker;
@@ -20,12 +21,10 @@ class Event extends Model
 
     protected $casts = [
         'type' => EventTypes::class,
-        'start_date' => 'date',
-        'start_time' => 'timestamp',
+        'start_date' => 'datetime',
         'all_day' => 'boolean',
         'assigned_to_assistant' => 'boolean',
-        'end_date' => 'date',
-        'end_time' => 'timestamp',
+        'end_date' => 'datetime',
     ];
 
     public static function getForm(): array
@@ -45,10 +44,8 @@ class Event extends Model
 
                 ->columns(2)
                 ->schema([
-                    DatePicker::make('start_date')->required(),
-                    TimePicker::make('start_time')->required(),
-                    DatePicker::make('end_date')->required(),
-                    TimePicker::make('end_time')->required(),
+                    DateTimePicker::make('start_date')->required(),
+                    DateTimePicker::make('end_date')->required(),
                 ]),
         ];
     }
@@ -63,30 +60,6 @@ class Event extends Model
         return $this->belongsTo(User::class, 'assigned_to_id');
     }
 
-    public function getStartAttribute()
-    {
-        return $this->formatDateTime($this->start_date, $this->start_time);
-    }
 
-    public function getEndAttribute()
-    {
-        return $this->formatDateTime($this->end_date, $this->end_time);
-    }
 
-    private function formatDateTime($date, $time)
-    {
-        if (! $date) {
-            return null;
-        }
-
-        $dateTime = Carbon::parse($date);
-
-        if ($time) {
-            // Convert the Postgres time(0) to a format Carbon can understand
-            $formattedTime = date('H:i:s', strtotime($time));
-            $dateTime->setTimeFromTimeString($formattedTime);
-        }
-
-        return $dateTime->toIso8601String();
-    }
 }

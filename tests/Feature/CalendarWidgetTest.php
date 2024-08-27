@@ -37,13 +37,8 @@ class CalendarWidgetTest extends TestCase
             );
 
         $this->assertEquals(Carbon::parse('2024-08-08 04:00:00'),
-            $widget->record->start_time);
-        $this->assertEquals(Carbon::parse('2024-08-08 04:00:00'),
             $widget->record->start_date);
     }
 
-    public function test_no_end_date()
-    {
 
-    }
 }

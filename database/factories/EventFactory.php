@@ -23,10 +23,8 @@ class EventFactory extends Factory
         return [
             'title' => $this->faker->sentence,
             'description' => $this->faker->paragraph,
-            'start_date' => $start->format('Y-m-d'),
-            'start_time' => now()->format('H:i:s'),
+            'start_date' => $start,
             'end_date' => $start->addDays(rand(1, 10))->format('Y-m-d'),
-            'end_time' => now()->format('H:i:s'),
             'location' => $this->faker->sentence,
             'type' => \App\Domains\Events\EventTypes::Event,
             'assigned_to_id' => User::factory(),

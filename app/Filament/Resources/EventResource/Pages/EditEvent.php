@@ -30,8 +30,6 @@ class EditEvent extends EditRecord
                             'title' => $record->title,
                             'start_date' => $arguments['event']['start'] ?? $record->start_date,
                             'end_date' => $arguments['event']['end'] ?? $record->end_date,
-                            'start_time' => $arguments['event']['start'] ?? $record->start_time,
-                            'end_time' => $arguments['event']['end'] ?? $record->end_time
                         ]);
                     }
                 ),
