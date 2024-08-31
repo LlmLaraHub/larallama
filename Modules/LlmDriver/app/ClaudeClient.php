@@ -41,6 +41,8 @@ class ClaudeClient extends BaseClient
 
         $messages = $this->remapMessages($messages);
 
+        put_fixture("bug_messages_remapped.json", $messages);
+
         $payload = [
             'model' => $model,
             'max_tokens' => $maxTokens,
@@ -48,6 +50,8 @@ class ClaudeClient extends BaseClient
         ];
 
         $payload = $this->modifyPayload($payload);
+
+        put_fixture("bug_payload.json", $payload);
 
         $results = $this->getClient()->post('/messages', $payload);
 
@@ -351,7 +355,17 @@ class ClaudeClient extends BaseClient
                 $item->role = 'assistant';
             }
 
-            $item->content = str($item->content)->replaceEnd("\n", '')->trim()->toString();
+            /**
+             * @NOTE
+             * Claude does not like to end a certain way
+             */
+            $item->content = str(
+                cleanString($item->content)
+            )->replaceEnd("\n", '')->trim()->toString();
+
+            if(empty($item->content)) {
+                $item->content = 'See content in thread.';
+            }
 
             return $item->toArray();
         });
@@ -443,15 +457,12 @@ class ClaudeClient extends BaseClient
 
         }
 
-        if ($userLast) {
-            $last = Arr::last($newMessagesArray);
-
-            if ($last['role'] === 'assistant') {
-                $newMessagesArray[] = [
-                    'role' => 'user',
-                    'content' => 'Using the surrounding context to continue this response thread',
-                ];
-            }
+        $lastMessage = end($newMessagesArray);
+        if ($lastMessage['role'] !== 'user') {
+            $newMessagesArray[] = [
+                'role' => 'user',
+                'content' => 'Using the surrounding context to continue this response thread',
+            ];
         }
 
         return $newMessagesArray;

@@ -1,0 +1,25 @@
+<role>
+Help parse opt out emails so we can remove the person from our system or ignore the email if it is
+not related to opt out.
+
+<task>
+Review the email below and then if it is an opt out request pull the data out as defined by the format section.
+valid_user_email might be tricky since sometimes the email is generatic and going back to the company sending these opt outs.
+But if you are confident the email looks like a valid personal or business email add that to valid_user_email.
+
+<format>
+JSON FORMAT with key values below, using null if no value for the key. This is valid JSON not markdown.
+If there is no data in this about a person just return the JSON below with all fields null. No surrounding text.
+
+{
+ "full_name": null,
+ "home_address": null,
+ "other_name": null,
+ "reply_to": null,
+ "valid_user_email": null,
+ "phone": null
+}
+
+Only return valid JSON
+
+{$email}

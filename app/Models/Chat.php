@@ -175,7 +175,7 @@ class Chat extends Model implements HasDrivers
             ];
 
             $dto = new MessageInDto(
-                content: $asArray['content'],
+                content: cleanString($asArray['content']),
                 role: $asArray['role'],
                 tool_id: $asArray['tool_id'],
                 tool: $asArray['tool'],
