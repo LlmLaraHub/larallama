@@ -65,7 +65,6 @@ class ChunkDocumentJob implements ShouldQueue
 
         foreach ($chunked_chunks as $chunkSection => $chunkContent) {
 
-
             $guid = md5($chunkContent);
 
             $DocumentChunk = DocumentChunk::updateOrCreate(

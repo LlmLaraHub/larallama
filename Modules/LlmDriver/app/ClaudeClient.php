@@ -6,7 +6,6 @@ use App\Domains\Messages\RoleEnum;
 use App\Models\Setting;
 use Illuminate\Http\Client\Pool;
 use Illuminate\Http\Client\Response;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
@@ -41,8 +40,6 @@ class ClaudeClient extends BaseClient
 
         $messages = $this->remapMessages($messages);
 
-        put_fixture("bug_messages_remapped.json", $messages);
-
         $payload = [
             'model' => $model,
             'max_tokens' => $maxTokens,
@@ -50,8 +47,6 @@ class ClaudeClient extends BaseClient
         ];
 
         $payload = $this->modifyPayload($payload);
-
-        put_fixture("bug_payload.json", $payload);
 
         $results = $this->getClient()->post('/messages', $payload);
 
@@ -363,7 +358,7 @@ class ClaudeClient extends BaseClient
                 cleanString($item->content)
             )->replaceEnd("\n", '')->trim()->toString();
 
-            if(empty($item->content)) {
+            if (empty($item->content)) {
                 $item->content = 'See content in thread.';
             }
 

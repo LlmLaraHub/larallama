@@ -248,7 +248,6 @@ if (! function_exists('to_utf8')) {
     }
 }
 
-
 if (! function_exists('cleanString')) {
     function cleanString($string): string
     {
@@ -264,8 +263,6 @@ if (! function_exists('cleanString')) {
         return trim($string);
     }
 }
-
-
 
 if (! function_exists('get_fixture')) {
     function get_fixture($file_name, $decode = true)
@@ -284,7 +281,8 @@ if (! function_exists('get_fixture')) {
 }
 
 if (! function_exists('cleanPDFText')) {
-    function cleanPDFText($text) {
+    function cleanPDFText($text)
+    {
         // Remove non-printable ASCII characters except newline and carriage return
         $text = preg_replace('/[\x00-\x09\x0B\x0C\x0E-\x1F\x7F]/u', '', $text);
 

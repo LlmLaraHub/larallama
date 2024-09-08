@@ -52,8 +52,6 @@ class SearchAndSummarizeChatRepo
 
         $message = $this->addToolsToMessage($message, $functionDto);
 
-
-
         $originalPrompt = $input;
 
         /** @var EmbeddingsResponseDto $embedding */
