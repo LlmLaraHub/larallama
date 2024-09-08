@@ -6,6 +6,8 @@ use App\Domains\Projects\StatusEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class Project extends Model
 {
@@ -19,8 +21,14 @@ class Project extends Model
         'status' => StatusEnum::class,
     ];
 
-    public function team() : BelongsTo
+    public function team(): BelongsTo
     {
         return $this->belongsTo(Team::class);
+    }
+
+
+    public function chats(): MorphMany
+    {
+        return $this->morphMany(Chat::class, 'chatable');
     }
 }

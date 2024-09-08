@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class ProjectResource extends JsonResource
+class ProjectResourceShow extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -22,9 +22,6 @@ class ProjectResource extends JsonResource
             'status' => $this->status->value,
             'status_formatted' => str($this->status->name)->headline(),
             'content' => $this->content,
-            'users' => $this->team->allUsers(),
-            'team' => TeamResource::make($this->team),
-            'content_formatted' => str($this->content)->markdown(),
         ];
     }
 }

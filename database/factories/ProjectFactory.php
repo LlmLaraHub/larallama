@@ -3,7 +3,6 @@
 namespace Database\Factories;
 
 use App\Models\Team;
-use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -24,7 +23,7 @@ class ProjectFactory extends Factory
             'end_date' => $this->faker->date(),
             'status' => \App\Domains\Projects\StatusEnum::Draft,
             'team_id' => Team::factory(),
-            'content' => $this->faker->paragraph()
+            'content' => $this->faker->paragraph(),
         ];
     }
 }
