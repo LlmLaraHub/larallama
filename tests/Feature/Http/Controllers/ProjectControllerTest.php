@@ -102,4 +102,51 @@ class ProjectControllerTest extends TestCase
         $this->assertDatabaseCount('chats', 1);
     }
 
+    public function test_edit(): void
+    {
+        $user = User::factory()->create();
+
+        $campaign = Project::factory()->create();
+
+        $this->actingAs($user)->get(
+            route('projects.edit', $campaign)
+        )->assertStatus(200)
+            ->assertInertia(fn (Assert $assert) => $assert
+                ->has('project.data')
+            );
+    }
+
+    public function test_update(): void
+    {
+        $user = User::factory()->create();
+
+        $project = Project::factory()->create();
+
+        $this->actingAs($user)->put(
+            route('projects.update', $project), [
+                "name" => "Test Campaign 2",
+                'start_date' => '2023-01-01',
+                'end_date' => '2023-01-01',
+                'content' => 'Test Description',
+                'status' => StatusEnum::Draft->value,
+            ]
+        )->assertSessionHasNoErrors()
+            ->assertStatus(302);
+
+        $this->assertEquals('Test Campaign 2', $project->refresh()->name);
+    }
+
+    public function test_destroy(): void
+    {
+        $user = User::factory()->create();
+
+        $project = Project::factory()->create();
+
+        $this->actingAs($user)->delete(
+            route('projects.destroy', $project)
+        )->assertStatus(302);
+
+        $this->assertDatabaseCount('projects', 0);
+    }
+
 }

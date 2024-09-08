@@ -75,16 +75,15 @@ class ProjectController extends Controller
         ]);
     }
 
-    public function edit(Project $Project)
+    public function edit(Project $project)
     {
         return inertia('Projects/Edit', [
             'statuses' => StatusEnum::selectOptions(),
-            'productServices' => ProductServiceEnum::selectOptions(),
-            'Project' => new ProjectResource($Project),
+            'project' => new ProjectResource($project),
         ]);
     }
 
-    public function update(Project $Project)
+    public function update(Project $project)
     {
         $validated = request()->validate([
             'name' => 'required',
@@ -92,28 +91,25 @@ class ProjectController extends Controller
             'end_date' => 'required',
             'status' => 'required',
             'content' => 'required',
-            'product_or_service' => 'required',
-            'target_audience' => 'required',
-            'budget' => 'required',
         ]);
 
-        $Project->update($validated);
+        $project->update($validated);
 
         request()->session()->flash('flash.banner', 'Updated');
 
         return back();
     }
 
-    public function destroy(Project $Project)
+    public function destroy(Project $project)
     {
-        $Project->delete();
+        $project->delete();
 
-        return redirect()->route('Projects.index');
+        return redirect()->route('projects.index');
     }
 
-    public function kickOff(Project $Project)
+    public function kickOff(Project $project)
     {
-        KickOffProject::handle($Project);
+        KickOffProject::handle($project);
         request()->session()->flash('flash.banner', 'Done!');
 
         return back();
