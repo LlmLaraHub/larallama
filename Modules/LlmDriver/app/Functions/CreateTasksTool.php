@@ -5,6 +5,7 @@ namespace LlmLaraHub\LlmDriver\Functions;
 use App\Models\Message;
 use App\Models\Project;
 use App\Models\Task;
+use App\Models\User;
 use Facades\App\Domains\Sources\WebSearch\GetPage;
 use Illuminate\Support\Facades\Log;
 use LlmLaraHub\LlmDriver\Responses\FunctionResponse;
@@ -27,11 +28,11 @@ class CreateTasksTool extends FunctionContract
 
 
     public function handle(
-        Message $message,
-        array $args = []): FunctionResponse
+        Message $message): FunctionResponse
     {
         Log::info('TaskTool called');
 
+        $args = $message->args;
         foreach (data_get($args, 'tasks', []) as $taskArg) {
             $name = data_get($taskArg, 'name', null);
             $details = data_get($taskArg, 'details', null);
@@ -49,7 +50,7 @@ class CreateTasksTool extends FunctionContract
                     'details' => $details,
                     'due_date' => $due_date,
                     'assistant' => $assistant,
-                    'user_id' => $user_id,
+                    'user_id' => ($user_id !== "" && User::whereId($user_id)->exists()) ? $user_id : null,
                 ]);
         }
 

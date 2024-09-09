@@ -37,15 +37,15 @@ class Orchestrate
                     'tool_count' => count($response->tool_calls),
                 ]);
 
-                $tool = app()->make($tool_call->name);
-                $tool->handle($chat, $tool_call->arguments);
-
-                $chat->addInputWithTools(
-                    message: sprintf('Tool %s complete', $tool_call->name),
+                $message = $chat->addInputWithTools(
+                    message: sprintf('Tool %s', $tool_call->name),
                     tool_id: $tool_call->id,
                     tool_name: $tool_call->name,
                     tool_args: $tool_call->arguments,
                 );
+
+                $tool = app()->make($tool_call->name);
+                $tool->handle($message, $tool_call->arguments);
 
                 $count++;
             }

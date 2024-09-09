@@ -31,15 +31,22 @@ class ProjectOrchestrateTest extends TestCase
         $this->assertDatabaseCount('messages', 0);
         $this->assertDatabaseCount('tasks', 0);
 
+        LlmDriverFacade::shouldReceive('driver->setToolType->chat')
+            ->once()
+            ->andReturn(
+                CompletionResponse::from($response)
+            );
+
+
         LlmDriverFacade::shouldReceive('driver->chat')
-            ->twice()
+            ->once()
             ->andReturn(
                 CompletionResponse::from($response)
             );
 
         (new Orchestrate())->handle($chat, 'Test Prompt', "System Prompt");
 
-        $this->assertDatabaseCount('messages', 3);
+        $this->assertDatabaseCount('messages', 4);
         $this->assertDatabaseCount('tasks', 5);
     }
 }

@@ -71,6 +71,11 @@ class Message extends Model implements HasDrivers
     }
 
 
+    public function scopeNotTool(Builder $query)
+    {
+        return $query->where('role', '!=', RoleEnum::Tool->value);
+    }
+
     /**
      * Return a compressed message
      */

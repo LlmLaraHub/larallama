@@ -94,6 +94,7 @@ class ProjectController extends Controller
             'chat' => new ChatResource($chat),
             'messages' => MessageResource::collection($chat->messages()
                 ->notSystem()
+                ->notTool()
                 ->latest()
                 ->paginate(3)),
         ]);

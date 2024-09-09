@@ -107,7 +107,7 @@ const activeLlms = computed(() => {
             </div>
 
             <div class="col-span-12 sm:col-span-6">
-                <InputLabel for="Content" value="Content" />
+                <InputLabel for="Content" value="Prompt" />
                 <textarea
                     v-model="form.content"
                     class="

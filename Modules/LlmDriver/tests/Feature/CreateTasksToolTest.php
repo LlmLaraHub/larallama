@@ -30,27 +30,24 @@ class CreateTasksToolTest extends TestCase
             'chatable_type' => Project::class,
         ]);
 
-        $message = Message::factory()->create([
-            'chat_id' => $chat->id,
-        ]);
-
-
         $data = get_fixture('claude_chat_response.json');
 
         $data = data_get($data, 'tool_calls.1.arguments.tasks');
 
-        $this->assertDatabaseCount('tasks', 0);
-
-
-        (new CreateTasksTool())->handle($message, [
-            'tasks' => $data,
+        $message = Message::factory()->create([
+            'chat_id' => $chat->id,
+            'args' => [
+                'tasks' => $data,
+            ]
         ]);
 
+        $this->assertDatabaseCount('tasks', 0);
+
+        (new CreateTasksTool())->handle($message);
 
         $this->assertDatabaseCount('tasks', 5);
 
         $this->assertCount(5, $project->refresh()->tasks);
 
     }
-
 }
