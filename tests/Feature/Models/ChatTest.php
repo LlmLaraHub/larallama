@@ -8,7 +8,10 @@ use App\Models\Chat;
 use App\Models\Collection;
 use App\Models\Message;
 use App\Models\Output;
+use App\Models\Project;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use LlmLaraHub\LlmDriver\DriversEnum;
 use Tests\TestCase;
 
 class ChatTest extends TestCase
@@ -31,6 +34,19 @@ class ChatTest extends TestCase
         $this->assertEquals($collection->id, $model->chatable->id);
         $this->assertNotNull($model->chatable->systemPrompt());
         $this->assertNotNull($collection->chats()->first()->id);
+    }
+
+    public function test_default_driver() {
+        $project = Project::factory()->create();
+
+        $chat = Chat::factory()->create([
+            'chatable_id' => $project->id,
+            "chatable_type" => Project::class,
+            "chat_driver" => DriversEnum::Claude,
+            "embedding_driver" => DriversEnum::Ollama,
+        ]);
+
+        $this->assertEquals(DriversEnum::Claude->value, $chat->getDriver());
     }
 
     public function test_system_message(): void
@@ -85,6 +101,21 @@ class ChatTest extends TestCase
         $chat = Chat::firstOrCreateUsingOutput($output);
         $this->assertNotNull($chat->session_id);
         $this->assertNotNull($chat->id);
+    }
+
+    public function test_adds_user_id(): void
+    {
+        $user = User::factory()->create();
+        $this->be($user);
+
+        $chat = Chat::factory()->create();
+        $message = $chat->addInput(
+            message: 'Foo bar',
+            role: RoleEnum::User,
+            systemPrompt: 'Foo bar',
+            show_in_thread: true
+        );
+        $this->assertEquals($user->id, $message->user_id);
     }
 
     public function test_add_input_tools_and_args(): void

@@ -6,6 +6,7 @@ use App\Domains\Messages\RoleEnum;
 use App\Models\Setting;
 use Illuminate\Http\Client\Pool;
 use Illuminate\Http\Client\Response;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
@@ -345,11 +346,17 @@ class ClaudeClient extends BaseClient
         /**
          * Claude needs to not start with a system message
          */
-        $messages = collect($messages)->transform(function ($item) {
-            if ($item->role === 'system') {
-                $item->role = 'assistant';
-            }
+        $messages = collect($messages)
+            ->filter(function ($item) {
+                if ($item->role === 'system') {
+                    $this->system = $item->content;
 
+                    return false;
+                }
+
+                return true;
+            })
+            ->transform(function (MessageInDto $item) {
             /**
              * @NOTE
              * Claude does not like to end a certain way
@@ -378,11 +385,6 @@ class ClaudeClient extends BaseClient
                 $toolId = data_get($item, 'tool_id', 'toolu_'.Str::random(32));
                 $tool = data_get($item, 'tool', 'unknown_tool');
                 $args = data_get($item, 'args', '{}');
-                Log::info('Claude Tool Found', [
-                    'tool' => $tool,
-                    'tool_id' => $toolId,
-                    'args' => $args,
-                ]);
 
                 $content = $item['content'];
 
@@ -452,12 +454,15 @@ class ClaudeClient extends BaseClient
 
         }
 
-        $lastMessage = end($newMessagesArray);
-        if ($lastMessage['role'] !== 'user') {
-            $newMessagesArray[] = [
-                'role' => 'user',
-                'content' => 'Using the surrounding context to continue this response thread',
-            ];
+        if ($userLast) {
+            $last = Arr::last($newMessagesArray);
+
+            if ($last['role'] === 'assistant') {
+                $newMessagesArray[] = [
+                    'role' => 'user',
+                    'content' => 'Using the surrounding context to continue this response thread',
+                ];
+            }
         }
 
         return $newMessagesArray;

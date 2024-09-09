@@ -20,6 +20,7 @@ const form = useForm({
     end_date: props.project.data.end_date,
     status: props.project.data.status,
     content: props.project.data.content,
+    system_prompt: props.project.data.system_prompt,
     product_or_service: props.project.data.product_or_service,
     target_audience: props.project.data.target_audience,
     budget: props.project.data.budget,
@@ -62,6 +63,19 @@ const save = () => {
                     autocomplete="name"
                 />
                 <InputError :message="form.errors.name" class="mt-2" />
+            </div>
+
+            <div class="col-span-12 sm:col-span-6">
+                <InputLabel for="Content" value="System Prompt" />
+                <textarea
+                    v-model="form.system_prompt"
+                    class="
+                    text-lg
+                    w-full border-gray-300 textarea textarea-bordered"
+                    id="content" rows="10">
+
+                </textarea>
+                <InputError :message="form.errors.system_prompt" class="mt-2" />
             </div>
 
             <div class="col-span-12 sm:col-span-6">

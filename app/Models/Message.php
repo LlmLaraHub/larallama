@@ -11,6 +11,7 @@ use App\Jobs\OrchestrateJob;
 use App\Jobs\SimpleSearchAndSummarizeOrchestrateJob;
 use Facades\App\Domains\Tokenizer\Templatizer;
 use Illuminate\Bus\Batch;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -57,6 +58,18 @@ class Message extends Model implements HasDrivers
     {
         return $this->role !== RoleEnum::User;
     }
+
+    public function user() : BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+
+
+    public function scopeNotSystem(Builder $query)
+    {
+        return $query->where('role', '!=', RoleEnum::System->value);
+    }
+
 
     /**
      * Return a compressed message

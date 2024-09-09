@@ -2,6 +2,7 @@
 
 namespace LlmLaraHub\LlmDriver;
 
+use LlmLaraHub\LlmDriver\Functions\CreateTasksTool;
 use LlmLaraHub\LlmDriver\Functions\GatherInfoTool;
 use LlmLaraHub\LlmDriver\Functions\ReportingTool;
 use LlmLaraHub\LlmDriver\Functions\SearchAndSummarize;
@@ -63,6 +64,7 @@ class LlmDriverClient
             (new StandardsChecker())->getFunction(),
             (new ReportingTool())->getFunction(),
             (new GatherInfoTool())->getFunction(),
+            (new CreateTasksTool())->getFunction(),
         ];
     }
 

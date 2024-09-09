@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class UserResource extends JsonResource
+class TaskResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -17,10 +17,11 @@ class UserResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'email' => $this->email,
-            'profile_photo_url' => $this->profile_photo_url,
-            'email_verified_at' => $this->email_verified_at,
-            'current_team_id' => $this->current_team_id,
+            'details' => $this->details,
+            'completed_at' => $this->completed_at?->format('Y-m-d'),
+            'due_date' => $this->due_date?->format('Y-m-d'),
+            'assistant' => $this->assistant ? 'Assistant' : null,
+            'user' => ($this->user_id) ? $this->user->name : null,
         ];
     }
 }

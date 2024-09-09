@@ -39,6 +39,7 @@
         "@vitejs/plugin-basic-ssl": "^1.1.0",
         "apexcharts": "^3.47.0",
         "axios": "^1.6.4",
+        "clipboard": "^2.0.11",
         "easymde": "^2.18.0",
         "laravel-echo": "^1.16.1",
         "laravel-vite-plugin": "^1.0",

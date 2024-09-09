@@ -182,6 +182,13 @@ Route::middleware([
         }
     );
 
+    Route::controller(\App\Http\Controllers\TaskController::class)->group(
+        function () {
+            Route::get('/tasks/{project}', 'index')->name('tasks.index');
+            Route::post('/tasks/{task}/complete', 'markAsComplete')->name('tasks.complete');
+        }
+    );
+
     Route::controller(\App\Http\Controllers\ProjectController::class)->group(
         function () {
             Route::get('/projects', 'index')
@@ -192,6 +199,8 @@ Route::middleware([
                 ->name('projects.store');
             Route::get('/projects/{project}', 'show')
                 ->name('projects.show');
+            Route::get('/projects/{project}/chat/{chat}', 'showWithChat')
+                ->name('projects.showWithChat');
             Route::get('/projects/{project}/edit', 'edit')
                 ->name('projects.edit');
             Route::put('/projects/{project}', 'update')
@@ -200,6 +209,7 @@ Route::middleware([
                 ->name('projects.destroy');
             Route::post('/projects/{project}', 'kickOff')
                 ->name('projects.kickoff');
+            Route::post('/projects/{project}/chat/{chat}', 'chat')->name('project.chat');
         }
     );
 

@@ -2,10 +2,11 @@
 
 namespace Tests\Feature;
 
-use App\Domains\Campaigns\KickOffCampaign;
-use App\Models\Campaign;
+use App\Domains\Projects\KickOffProject;
+use App\Models\Chat;
+use App\Models\Project;
 use App\Models\User;
-use Facades\App\Services\LlmServices\Orchestration\Orchestrate;
+use Facades\App\Domains\Projects\Orchestrate;
 use Tests\TestCase;
 
 class KickOffProjectTest extends TestCase
@@ -15,7 +16,12 @@ class KickOffProjectTest extends TestCase
      */
     public function test_kickoff(): void
     {
-        $campaign = Campaign::factory()->create();
+        $project = Project::factory()->create();
+
+        $chat = Chat::factory()->create([
+            'chatable_id' => $project->id,
+            'chatable_type' => Project::class,
+        ]);
 
         $user = User::factory()->create();
 
@@ -23,7 +29,7 @@ class KickOffProjectTest extends TestCase
 
         Orchestrate::shouldReceive('handle')->once();
 
-        (new KickOffCampaign)->handle($campaign);
+        (new KickOffProject())->handle($project);
 
     }
 }

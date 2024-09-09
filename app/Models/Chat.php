@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Domains\Chat\MetaDataDto;
 use App\Domains\Chat\ToolsDto;
+use App\Domains\Chat\UiStatusEnum;
 use App\Domains\Messages\RoleEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -11,6 +12,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Support\Facades\DB;
+use LlmLaraHub\LlmDriver\DriversEnum;
 use LlmLaraHub\LlmDriver\HasDrivers;
 use LlmLaraHub\LlmDriver\HasDriversTrait;
 use LlmLaraHub\LlmDriver\Requests\MessageInDto;
@@ -27,8 +29,17 @@ class Chat extends Model implements HasDrivers
 
     protected $guarded = [];
 
+    protected $casts = [
+        'chat_status' => UiStatusEnum::class,
+        'chat_driver' => DriversEnum::class,
+        'embedding_driver' => DriversEnum::class,
+    ];
+
     public function getDriver(): string
     {
+        if($this->chat_driver) {
+            return $this->chat_driver->value;
+        }
 
         return $this->chatable->getDriver();
     }
@@ -60,6 +71,9 @@ class Chat extends Model implements HasDrivers
 
     public function getEmbeddingDriver(): string
     {
+        if($this->embedding_driver) {
+            return $this->embedding_driver->value;
+        }
         return $this->chatable->getEmbeddingDriver();
     }
 
@@ -87,7 +101,8 @@ class Chat extends Model implements HasDrivers
     /**
      * Save the input message of the user
      */
-    public function addInput(string $message,
+    public function addInput(
+        string $message,
         RoleEnum $role = RoleEnum::User,
         ?string $systemPrompt = null,
         bool $show_in_thread = true,
@@ -112,6 +127,7 @@ class Chat extends Model implements HasDrivers
                     'created_at' => now(),
                     'updated_at' => now(),
                     'chat_id' => $this->id,
+                    'user_id' => ($role === RoleEnum::User && auth()->check()) ? auth()->user()->id : null,
                     'is_chat_ignored' => ! $show_in_thread,
                     'meta_data' => $meta_data,
                     'tool_name' => $meta_data->tool,
@@ -119,6 +135,32 @@ class Chat extends Model implements HasDrivers
                     'driver' => $meta_data->driver,
                     'args' => $meta_data->args,
                     'tools' => $tools,
+                ]);
+        });
+
+    }
+
+    public function addInputWithTools(
+        string $message,
+        mixed $tool_id,
+        mixed $tool_name,
+        mixed $tool_args) : Message
+    {
+
+        return DB::transaction(function () use ($message, $tool_id, $tool_name, $tool_args) {
+
+            return $this->messages()->create(
+                [
+                    'body' => $message,
+                    'role' => RoleEnum::Tool,
+                    'in_out' => false,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                    'chat_id' => $this->id,
+                    'is_chat_ignored' => true,
+                    'tool_name' => $tool_name,
+                    'tool_id' => $tool_id,
+                    'args' => $tool_args,
                 ]);
         });
 
@@ -148,6 +190,10 @@ class Chat extends Model implements HasDrivers
         }
 
         return $this->getChatResponse();
+    }
+
+    public function getMessageThread(int $limit = 5): array {
+        return $this->getChatResponse($limit);
     }
 
     public function getChatResponse(int $limit = 5): array

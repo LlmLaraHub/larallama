@@ -9,7 +9,8 @@ import Index from "@/Pages/Tasks/Index.vue";
 import Pagination from "@/Components/Pagination.vue";
 
 const props = defineProps({
-    campaign: Object,
+    project: Object,
+    chat: Object,
     messages: Object
 })
 
@@ -20,8 +21,9 @@ const form = useForm({
 const chatCompleted = ref(false)
 
 const chat = () => {
-    form.post(route('chat.chat', {
-        campaign: props.campaign.data.id
+    form.post(route('project.chat', {
+        project: props.project.data.id,
+        chat: props.project.data.chat.id
     }), {
         errorBag: 'chat',
         preserveScroll: true,
@@ -41,7 +43,7 @@ const dailyReportForm = useForm({})
 
 const sendDailyReport = () => {
     dailyReportForm.post(route('daily-report.send', {
-        campaign: props.campaign.data.id
+        project: props.project.data.id
     }), {
         errorBag: 'dailyReport',
         preserveScroll: true,
@@ -54,41 +56,39 @@ const sendDailyReport = () => {
     <AppLayout title="Campaign">
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                🚀 Campaign: {{ campaign.data.name}}
-
-
+                🚀 Campaign: {{ project.data.name}}
             </h2>
 
         </template>
 
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
+                <div class="overflow-hidden shadow-xl sm:rounded-lg">
                     <div class="flex justify-between p-4">
                         <div>
                             <div class="hidden sm:flex justify-between gap-2 ">
                                 <span class="badge badge-accent">
-                                    status: {{ campaign.data.status_formatted }}
+                                    status: {{ project.data.status_formatted }}
                                 </span>
 
                                 <span class="badge badge-neutral">
-                                    ai: {{ campaign.data.chat_status_formatted }}
+                                    ai: {{ project.data.chat.chat_status_formatted }}
                                  </span>
 
                                 <span class="badge badge-secondary">
-                                    start: {{ campaign.data.start_date }}
+                                    start: {{ project.data.start_date }}
                                  </span>
 
                                 <span class="badge badge-ghost">
-                                    end: {{ campaign.data.end_date }}
+                                    end: {{ project.data.end_date }}
                                  </span>
                             </div>
                         </div>
 
                         <div class="flex justify-end gap-2 items-center">
-                            <Kickoff :campaign="campaign.data"/>
+                            <Kickoff :project="project.data"/>
                             <Link
-                                :href="route('projects.edit', campaign.data.id)"
+                                :href="route('projects.edit', project.data.id)"
                                 class="btn btn-primary rounded-none">Edit</Link>
                             <button @click="sendDailyReport"
                                     type="button"
@@ -105,13 +105,19 @@ const sendDailyReport = () => {
 
                     <div class="grid grid-cols-1 sm:grid-cols-12 p-4">
                         <div class="col-span-8">
-                            <div v-auto-animate>
+                            <div v-if="messages.data.length === 0" class="flex justify-center items-center gap-4 align-middle pt-10">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 3.104v5.714a2.25 2.25 0 0 1-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 0 1 4.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0 1 12 15a9.065 9.065 0 0 0-6.23-.693L5 14.5m14.8.8 1.402 1.402c1.232 1.232.65 3.318-1.067 3.611A48.309 48.309 0 0 1 12 21c-2.773 0-5.491-.235-8.135-.687-1.718-.293-2.3-2.379-1.067-3.61L5 14.5" />
+                                </svg>
+                                No Messages yet! Either Kick Off the project or chat.
+                            </div>
+                            <div v-auto-animate v-else>
                                 <template v-for="message in messages.data">
                                     <div class="border border-gray-300 rounded-md p-4 mb-4 overflow-scroll ">
                                         <div class="flex justify-end gap-2 items-center -mb-6">
-                                            <span class="badge badge-ghost text-xs">{{ message.updated_at }}</span>
+                                            <span class="badge badge-ghost text-xs">{{ message.diff_for_humans }}</span>
                                             <span class="badge badge-outline text-xs">{{ message.id }}</span>
-                                            <Clipboard :content="message.content_raw"/>
+                                            <Clipboard :content="message.body"/>
                                         </div>
                                         <div  class="font-bold flex justify-start gap-2 items-center" v-if="message.role != 'user'">
                                             <div class="avatar placeholder">
@@ -126,15 +132,15 @@ const sendDailyReport = () => {
                                         <div v-else class="font-bold flex justify-start gap-2 items-center">
                                             <div class="avatar">
                                                 <div class="w-8 rounded-full">
-                                                    <img :src="message.user?.profile_photo_url" />
+                                                    <img :src="message.user.profile_photo_url" />
                                                 </div>
                                             </div>
 
                                         </div>
-                                        <div class="prose" v-html="message.content"></div>
+                                        <div class="prose" v-html="message.body_markdown"></div>
 
                                         <div class="flex justify-end gap-2 items-center">
-                                            <Clipboard :content="message.content_raw"/>
+                                            <Clipboard :content="message.body"/>
                                         </div>
                                     </div>
                                 </template>
@@ -175,7 +181,7 @@ const sendDailyReport = () => {
 
                                 <Index
                                     :chat-completed="chatCompleted"
-                                    :campaign="campaign.data"/>
+                                    :project="project.data"/>
                             </div>
                         </div>
                     </div>

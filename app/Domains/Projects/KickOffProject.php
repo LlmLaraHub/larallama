@@ -2,31 +2,28 @@
 
 namespace App\Domains\Projects;
 
-use App\Domains\Campaigns\CampaignKickOffPrompt;
-use App\Domains\Campaigns\ChatStatusEnum;
-use App\Models\Campaign;
-use Facades\App\Services\LlmServices\Orchestration\Orchestrate;
+use App\Domains\Chat\UiStatusEnum;
+use App\Models\Project;
+use Facades\App\Domains\Projects\Orchestrate;
 
 class KickOffProject
 {
-    public function handle(Campaign $campaign)
+    public function handle(Project $project)
     {
-        $campaign->updateQuietly([
-            'chat_status' => ChatStatusEnum::InProgress,
+        $chat = $project->chats?->first();
+
+        $chat->updateQuietly([
+            'chat_status' => UiStatusEnum::InProgress,
         ]);
 
-        $campaign->messages()->delete();
+        $chat->messages()->delete();
 
-        $campaign->tasks()->delete();
+        $project->tasks()->delete();
 
-        $campaignContext = $campaign->getContext();
+        Orchestrate::handle($chat, $project->content, $project->system_prompt);
 
-        $prompt = CampaignKickOffPrompt::getPrompt($campaignContext);
-
-        Orchestrate::handle($campaign, $prompt);
-
-        $campaign->updateQuietly([
-            'chat_status' => ChatStatusEnum::Complete,
+        $chat->updateQuietly([
+            'chat_status' => UiStatusEnum::Complete,
         ]);
     }
 }

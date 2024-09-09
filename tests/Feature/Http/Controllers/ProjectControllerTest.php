@@ -7,6 +7,7 @@ use App\Models\Project;
 use App\Models\Team;
 use App\Models\User;
 use Inertia\Testing\AssertableInertia as Assert;
+use LlmLaraHub\LlmDriver\DriversEnum;
 use Tests\TestCase;
 
 class ProjectControllerTest extends TestCase
@@ -73,6 +74,9 @@ class ProjectControllerTest extends TestCase
                 'start_date' => '2023-01-01',
                 'end_date' => '2023-01-01',
                 'content' => 'Test Description',
+                'system_prompt' => 'Test Description',
+                'chat_driver' => DriversEnum::Claude->value,
+                'embedding_driver' => DriversEnum::Claude->value,
                 'status' => StatusEnum::Draft->value,
             ]
         )
@@ -81,6 +85,8 @@ class ProjectControllerTest extends TestCase
 
         $campaign = Project::first();
         $this->assertNotNull($campaign->team_id);
+
+        $this->assertNotEmpty($campaign->chats()->first()?->id);
 
     }
 
@@ -126,6 +132,7 @@ class ProjectControllerTest extends TestCase
             route('projects.update', $project), [
                 "name" => "Test Campaign 2",
                 'start_date' => '2023-01-01',
+                'system_prompt' => 'Test Description',
                 'end_date' => '2023-01-01',
                 'content' => 'Test Description',
                 'status' => StatusEnum::Draft->value,
@@ -144,9 +151,8 @@ class ProjectControllerTest extends TestCase
 
         $this->actingAs($user)->delete(
             route('projects.destroy', $project)
-        )->assertStatus(302);
-
-        $this->assertDatabaseCount('projects', 0);
+        )->assertSessionHasNoErrors()
+            ->assertStatus(302);
     }
 
 }

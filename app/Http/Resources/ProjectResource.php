@@ -22,9 +22,11 @@ class ProjectResource extends JsonResource
             'status' => $this->status->value,
             'status_formatted' => str($this->status->name)->headline(),
             'content' => $this->content,
+            'system_prompt' => $this->system_prompt,
             'users' => $this->team->allUsers(),
             'team' => TeamResource::make($this->team),
             'content_formatted' => str($this->content)->markdown(),
+            'system_prompt_formatted' => str($this->system_prompt)->markdown(),
         ];
     }
 }

@@ -24,6 +24,7 @@ class ProjectFactory extends Factory
             'status' => \App\Domains\Projects\StatusEnum::Draft,
             'team_id' => Team::factory(),
             'content' => $this->faker->paragraph(),
+            'system_prompt' => $this->faker->paragraph(),
         ];
     }
 }
