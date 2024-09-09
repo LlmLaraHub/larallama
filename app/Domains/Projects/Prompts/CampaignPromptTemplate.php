@@ -4,8 +4,8 @@ namespace App\Domains\Projects\Prompts;
 
 class CampaignPromptTemplate
 {
-
-    public static function systemPrompt(): string {
+    public static function systemPrompt(): string
+    {
         $now = now()->toISOString();
 
         return <<<PROMPT
@@ -40,7 +40,7 @@ PROMPT;
     public static function prompt(): string
     {
 
-        return <<<PROMPT
+        return <<<'PROMPT'
 ## Unique Selling Proposition (USP)
 [What makes your product/service unique? Why should your target audience choose you over competitors?]
 
@@ -66,7 +66,6 @@ PROMPT;
 [Any other important information or considerations for this campaign]
 
 PROMPT;
-
 
     }
 }

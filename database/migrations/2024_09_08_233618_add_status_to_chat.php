@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('chats', function (Blueprint $table) {
-            $table->string("chat_status")
+            $table->string('chat_status')
                 ->nullable()
                 ->default(\App\Domains\Chat\UiStatusEnum::NotStarted->value);
         });

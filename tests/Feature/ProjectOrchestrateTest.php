@@ -37,14 +37,13 @@ class ProjectOrchestrateTest extends TestCase
                 CompletionResponse::from($response)
             );
 
-
         LlmDriverFacade::shouldReceive('driver->chat')
             ->once()
             ->andReturn(
                 CompletionResponse::from($response)
             );
 
-        (new Orchestrate())->handle($chat, 'Test Prompt', "System Prompt");
+        (new Orchestrate())->handle($chat, 'Test Prompt', 'System Prompt');
 
         $this->assertDatabaseCount('messages', 4);
         $this->assertDatabaseCount('tasks', 5);

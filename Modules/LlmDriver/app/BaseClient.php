@@ -121,11 +121,9 @@ abstract class BaseClient
             $payload['tools'] = $this->getFunctions();
         }
 
-
         if ($this->system) {
             $payload['system'] = $this->system;
         }
-
 
         $payload = $this->addJsonFormat($payload);
 

@@ -3,13 +3,10 @@
 namespace LlmLaraHub\LlmDriver\Functions;
 
 use App\Models\Message;
-use App\Models\Project;
 use App\Models\Task;
 use App\Models\User;
-use Facades\App\Domains\Sources\WebSearch\GetPage;
 use Illuminate\Support\Facades\Log;
 use LlmLaraHub\LlmDriver\Responses\FunctionResponse;
-use LlmLaraHub\LlmDriver\ToolsHelper;
 
 class CreateTasksTool extends FunctionContract
 {
@@ -25,7 +22,6 @@ class CreateTasksTool extends FunctionContract
         ToolTypes::Chat,
         ToolTypes::ChatCompletion,
     ];
-
 
     public function handle(
         Message $message): FunctionResponse
@@ -50,7 +46,7 @@ class CreateTasksTool extends FunctionContract
                     'details' => $details,
                     'due_date' => $due_date,
                     'assistant' => $assistant,
-                    'user_id' => ($user_id !== "" && User::whereId($user_id)->exists()) ? $user_id : null,
+                    'user_id' => ($user_id !== '' && User::whereId($user_id)->exists()) ? $user_id : null,
                 ]);
         }
 

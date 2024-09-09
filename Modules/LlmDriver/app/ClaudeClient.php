@@ -357,20 +357,20 @@ class ClaudeClient extends BaseClient
                 return true;
             })
             ->transform(function (MessageInDto $item) {
-            /**
-             * @NOTE
-             * Claude does not like to end a certain way
-             */
-            $item->content = str(
-                cleanString($item->content)
-            )->replaceEnd("\n", '')->trim()->toString();
+                /**
+                 * @NOTE
+                 * Claude does not like to end a certain way
+                 */
+                $item->content = str(
+                    cleanString($item->content)
+                )->replaceEnd("\n", '')->trim()->toString();
 
-            if (empty($item->content)) {
-                $item->content = 'See content in thread.';
-            }
+                if (empty($item->content)) {
+                    $item->content = 'See content in thread.';
+                }
 
-            return $item->toArray();
-        });
+                return $item->toArray();
+            });
 
         /**
          * Claude needs me to not use the role tool

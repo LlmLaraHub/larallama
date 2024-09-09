@@ -4,7 +4,6 @@ namespace App\Domains\Projects;
 
 use App\Domains\Messages\RoleEnum;
 use App\Models\Chat;
-use App\Models\Project;
 use Illuminate\Support\Facades\Log;
 use LlmLaraHub\LlmDriver\Functions\ToolTypes;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;

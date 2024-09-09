@@ -15,9 +15,10 @@ class MessageResource extends JsonResource
     public function toArray(Request $request): array
     {
         $user = [];
-        if($this->user_id) {
+        if ($this->user_id) {
             $user = new UserResource($this->user);
         }
+
         return [
             'id' => $this->id,
             'role' => $this->role->value,

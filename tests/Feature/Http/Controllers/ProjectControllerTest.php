@@ -130,7 +130,7 @@ class ProjectControllerTest extends TestCase
 
         $this->actingAs($user)->put(
             route('projects.update', $project), [
-                "name" => "Test Campaign 2",
+                'name' => 'Test Campaign 2',
                 'start_date' => '2023-01-01',
                 'system_prompt' => 'Test Description',
                 'end_date' => '2023-01-01',
@@ -154,5 +154,4 @@ class ProjectControllerTest extends TestCase
         )->assertSessionHasNoErrors()
             ->assertStatus(302);
     }
-
 }

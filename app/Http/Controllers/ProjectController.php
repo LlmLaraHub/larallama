@@ -3,16 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Domains\Chat\UiStatusEnum;
-use Facades\App\Domains\Projects\KickOffProject;
 use App\Domains\Projects\Prompts\CampaignPromptTemplate;
 use App\Domains\Projects\StatusEnum;
 use App\Http\Resources\ChatResource;
-use App\Http\Resources\ProjectResource;
 use App\Http\Resources\MessageResource;
+use App\Http\Resources\ProjectResource;
 use App\Http\Resources\ProjectResourceShow;
 use App\Models\Chat;
 use App\Models\Project;
-use Illuminate\Http\Request;
+use Facades\App\Domains\Projects\KickOffProject;
 use Facades\App\Domains\Projects\Orchestrate;
 
 class ProjectController extends Controller
@@ -36,12 +35,12 @@ class ProjectController extends Controller
         return inertia('Projects/Create', [
             'content_start' => [
                 [
-                    'key' => "Campaign Template",
+                    'key' => 'Campaign Template',
                     'content' => CampaignPromptTemplate::prompt(),
                     'system_prompt' => CampaignPromptTemplate::systemPrompt(),
-                ]
+                ],
             ],
-            'statuses' => StatusEnum::selectOptions()
+            'statuses' => StatusEnum::selectOptions(),
         ]);
     }
 
@@ -87,7 +86,8 @@ class ProjectController extends Controller
         ]);
     }
 
-    public function showWithChat(Project $project, Chat$chat) {
+    public function showWithChat(Project $project, Chat $chat)
+    {
 
         return inertia('Projects/Show', [
             'project' => new ProjectResourceShow($project),

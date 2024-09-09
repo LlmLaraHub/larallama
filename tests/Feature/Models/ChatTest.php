@@ -36,14 +36,15 @@ class ChatTest extends TestCase
         $this->assertNotNull($collection->chats()->first()->id);
     }
 
-    public function test_default_driver() {
+    public function test_default_driver()
+    {
         $project = Project::factory()->create();
 
         $chat = Chat::factory()->create([
             'chatable_id' => $project->id,
-            "chatable_type" => Project::class,
-            "chat_driver" => DriversEnum::Claude,
-            "embedding_driver" => DriversEnum::Ollama,
+            'chatable_type' => Project::class,
+            'chat_driver' => DriversEnum::Claude,
+            'embedding_driver' => DriversEnum::Ollama,
         ]);
 
         $this->assertEquals(DriversEnum::Claude->value, $chat->getDriver());

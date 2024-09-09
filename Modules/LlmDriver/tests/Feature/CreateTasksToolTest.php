@@ -2,19 +2,10 @@
 
 namespace LlmLaraHub\LlmDriver\Tests\Feature;
 
-use App\Domains\Chat\DateRangesEnum;
-use App\Domains\Chat\MetaDataDto;
 use App\Models\Chat;
-use App\Models\Document;
-use App\Models\DocumentChunk;
-use App\Models\Filter;
 use App\Models\Message;
 use App\Models\Project;
-use Illuminate\Support\Facades\File;
-use LlmLaraHub\LlmDriver\DistanceQuery\DistanceQueryFacade;
-use LlmLaraHub\LlmDriver\DistanceQuery\Drivers\PostGres;
 use LlmLaraHub\LlmDriver\Functions\CreateTasksTool;
-use Pgvector\Laravel\Vector;
 use Tests\TestCase;
 
 class CreateTasksToolTest extends TestCase
@@ -38,7 +29,7 @@ class CreateTasksToolTest extends TestCase
             'chat_id' => $chat->id,
             'args' => [
                 'tasks' => $data,
-            ]
+            ],
         ]);
 
         $this->assertDatabaseCount('tasks', 0);

@@ -59,17 +59,15 @@ class Message extends Model implements HasDrivers
         return $this->role !== RoleEnum::User;
     }
 
-    public function user() : BelongsTo
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
-
 
     public function scopeNotSystem(Builder $query)
     {
         return $query->where('role', '!=', RoleEnum::System->value);
     }
-
 
     public function scopeNotTool(Builder $query)
     {

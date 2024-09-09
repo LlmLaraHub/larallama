@@ -37,7 +37,7 @@ class Chat extends Model implements HasDrivers
 
     public function getDriver(): string
     {
-        if($this->chat_driver) {
+        if ($this->chat_driver) {
             return $this->chat_driver->value;
         }
 
@@ -71,9 +71,10 @@ class Chat extends Model implements HasDrivers
 
     public function getEmbeddingDriver(): string
     {
-        if($this->embedding_driver) {
+        if ($this->embedding_driver) {
             return $this->embedding_driver->value;
         }
+
         return $this->chatable->getEmbeddingDriver();
     }
 
@@ -144,7 +145,7 @@ class Chat extends Model implements HasDrivers
         string $message,
         mixed $tool_id,
         mixed $tool_name,
-        mixed $tool_args) : Message
+        mixed $tool_args): Message
     {
 
         return DB::transaction(function () use ($message, $tool_id, $tool_name, $tool_args) {
@@ -192,7 +193,8 @@ class Chat extends Model implements HasDrivers
         return $this->getChatResponse();
     }
 
-    public function getMessageThread(int $limit = 5): array {
+    public function getMessageThread(int $limit = 5): array
+    {
         return $this->getChatResponse($limit);
     }
 

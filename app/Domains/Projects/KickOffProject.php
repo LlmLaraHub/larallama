@@ -10,7 +10,7 @@ class KickOffProject
 {
     public function handle(Project $project)
     {
-        $chat = $project->chats?->first();
+        $chat = $project->chats()->first();
 
         $chat->updateQuietly([
             'chat_status' => UiStatusEnum::InProgress,
