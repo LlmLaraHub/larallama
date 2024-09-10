@@ -40,7 +40,7 @@ const theme = ref('dark')
                         <ApplicationMark class="block h-9 w-auto" />
                     </Link>
                     <ul class="menu menu-horizontal px-1">
-                        <li class="hidden lg:flex">
+                        <li class="hidden sm:flex">
                             <Link :href="route('projects.index')"
                                   :class="{ 'underline' : route().current('projects.index') }">
                                 Projects

@@ -26,6 +26,7 @@ class ProjectResourceShow extends JsonResource
             'status_formatted' => str($this->status->name)->headline(),
             'content' => $this->content,
             'system_prompt' => $this->system_prompt,
+            'team' => TeamResource::make($this->team),
         ];
     }
 }

@@ -83,8 +83,15 @@ const sendDailyReport = () => {
                                     end: {{ project.data.end_date }}
                                  </span>
                             </div>
-                        </div>
 
+                            <div class="avatar-group -space-x-6 rtl:space-x-reverse mt-2">
+                                <div class="avatar" v-for="user in project.data.team.users" :key="user.id">
+                                    <div class="w-10">
+                                        <img :src="user.profile_photo_url" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="flex justify-end gap-2 items-center">
                             <Kickoff :project="project.data"/>
                             <Link
