@@ -61,7 +61,7 @@ class SearchAndSummarizeTest extends TestCase
             ]),
         ]);
 
-        LlmDriverFacade::shouldReceive('driver->chat')
+        LlmDriverFacade::shouldReceive('driver->setToolType->chat')
             ->once()
             ->andReturn($dto);
 
