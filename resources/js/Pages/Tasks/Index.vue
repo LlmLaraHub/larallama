@@ -65,13 +65,13 @@ watch(() => props.chatCompleted, (newValue) => {
         </div>
 
         <template v-for="task in tasks" :key="task.id">
-            <div class="p-2 border border-gray-300 rounded-md my-2">
-                <div class="text-gray-600 text-md flex justify-between items-center">
+            <div class="p-2 border border-gray-500 rounded-md my-2">
+                <div class="text-gray-400 text-md flex justify-between items-center">
                     {{ task.name }} <span class="badge badge-ghost text-xs">{{ task.id }} </span>
                 </div>
 
 
-                <div class="whitespace-pre-wrap text-gray-600 text-sm prose py-2 px-1">
+                <div class="whitespace-pre-wrap text-gray-500 text-sm prose py-2 px-1">
                     {{ task.details }}
                 </div>
 

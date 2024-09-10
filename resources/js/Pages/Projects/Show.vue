@@ -113,7 +113,7 @@ const sendDailyReport = () => {
                             </div>
                             <div v-auto-animate v-else>
                                 <template v-for="message in messages.data">
-                                    <div class="border border-gray-300 rounded-md p-4 mb-4 overflow-scroll ">
+                                    <div class="border border-gray-500 rounded-md p-4 mb-4 overflow-scroll ">
                                         <div class="flex justify-end gap-2 items-center -mb-6">
                                             <span class="badge badge-ghost text-xs">{{ message.diff_for_humans }}</span>
                                             <span class="badge badge-outline text-xs">{{ message.id }}</span>
@@ -160,7 +160,7 @@ const sendDailyReport = () => {
                                     v-model="form.input"
                                     placeholder="Ask a question..."
                                     required
-                                    class="textarea textarea-bordered textarea-lg w-full"></textarea>
+                                    class="textarea textarea-bordered border-gray-500 textarea-lg w-full"></textarea>
                                 <div class="flex justify-end mt-2">
                                     <button
                                         :disabled="form.processing"
