@@ -31,13 +31,13 @@ class ProjectOrchestrateTest extends TestCase
         $this->assertDatabaseCount('messages', 0);
         $this->assertDatabaseCount('tasks', 0);
 
-        LlmDriverFacade::shouldReceive('driver->setToolType->chat')
+        LlmDriverFacade::shouldReceive('driver->setSystemPrompt->setToolType->chat')
             ->once()
             ->andReturn(
                 CompletionResponse::from($response)
             );
 
-        LlmDriverFacade::shouldReceive('driver->chat')
+        LlmDriverFacade::shouldReceive('driver->setToolType->setSystemPrompt->chat')
             ->once()
             ->andReturn(
                 CompletionResponse::from($response)
