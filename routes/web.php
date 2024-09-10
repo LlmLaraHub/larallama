@@ -126,7 +126,6 @@ Route::middleware([
 
     Route::post('/daily-report/{project}', \App\Http\Controllers\DailyReportSendController::class)->name('daily-report.send');
 
-
     Route::controller(\App\Http\Controllers\AssistantEmailBoxSourceController::class)->group(
         function () {
             Route::get('/collections/{collection}/sources/email_source/create', 'create')

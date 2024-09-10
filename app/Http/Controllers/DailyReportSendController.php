@@ -11,6 +11,7 @@ class DailyReportSendController extends Controller
     {
         DailyReportService::sendReport($project);
         \request()->session()->flash('flash.banner', 'Sent!');
+
         return back();
     }
 }

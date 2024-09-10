@@ -42,8 +42,6 @@ class DailyReportServiceTest extends TestCase
             'team_id' => $team->id,
         ]);
 
-
-
         $chat = Chat::factory()->withDrivers()->create([
             'chatable_id' => $project->id,
             'chatable_type' => Project::class,

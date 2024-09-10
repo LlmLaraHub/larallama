@@ -3,8 +3,8 @@
 namespace App\Domains\Projects;
 
 use App\Domains\Messages\RoleEnum;
-use App\Models\Task;
 use App\Models\Project;
+use App\Models\Task;
 use App\Notifications\DailyReport;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Notification;

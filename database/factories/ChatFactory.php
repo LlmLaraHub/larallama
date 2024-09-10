@@ -36,5 +36,4 @@ class ChatFactory extends Factory
             ];
         });
     }
-
 }
