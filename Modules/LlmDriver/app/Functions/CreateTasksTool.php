@@ -4,7 +4,6 @@ namespace LlmLaraHub\LlmDriver\Functions;
 
 use App\Models\Message;
 use App\Models\Task;
-use App\Models\User;
 use Illuminate\Support\Facades\Log;
 use LlmLaraHub\LlmDriver\Responses\FunctionResponse;
 
