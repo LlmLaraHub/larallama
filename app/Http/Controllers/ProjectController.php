@@ -65,7 +65,7 @@ class ProjectController extends Controller
         $validated['team_id'] = auth()->user()->current_team_id;
         $project = Project::create($validated);
 
-        Chat::create([
+        $chat = Chat::create([
             'chatable_id' => $project->id,
             'chatable_type' => Project::class,
             'chat_driver' => $chat_driver,
@@ -73,7 +73,10 @@ class ProjectController extends Controller
             'embedding_driver' => $embedding_driver,
         ]);
 
-        return redirect()->route('projects.show', $project);
+        return to_route('projects.showWithChat', [
+            'project' => $project,
+            'chat' => $chat,
+        ]);
     }
 
     public function show(Project $project)
@@ -138,8 +141,6 @@ class ProjectController extends Controller
             'system_prompt' => 'required',
             'status' => 'required',
             'content' => 'required',
-            'chat_driver' => 'required',
-            'embedding_driver' => 'required',
         ]);
 
         $project->update($validated);

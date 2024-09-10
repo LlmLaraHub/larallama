@@ -3,6 +3,7 @@
 namespace Tests\Feature\Http\Controllers;
 
 use App\Domains\Projects\StatusEnum;
+use App\Models\Chat;
 use App\Models\Project;
 use App\Models\Team;
 use App\Models\User;
@@ -96,14 +97,20 @@ class ProjectControllerTest extends TestCase
 
         $campaign = Project::factory()->create();
 
-        $this->assertDatabaseCount('chats', 0);
+        Chat::factory()->create([
+            'chatable_id' => $campaign->id,
+            'chatable_type' => Project::class,
+            'chat_driver' => DriversEnum::Claude->value,
+            'embedding_driver' => DriversEnum::Claude->value,
+        ]);
 
         $this->actingAs($user)->get(
             route('projects.show', $campaign)
-        )->assertStatus(200)
-            ->assertInertia(fn (Assert $assert) => $assert
-                ->has('project.data')
-            );
+        )->assertStatus(302)
+            ->assertRedirect(route('projects.showWithChat', [
+                'project' => $campaign,
+                'chat' => $campaign->chats->first(),
+            ]));
 
         $this->assertDatabaseCount('chats', 1);
     }
