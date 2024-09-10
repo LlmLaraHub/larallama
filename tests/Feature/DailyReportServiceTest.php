@@ -26,7 +26,7 @@ class DailyReportServiceTest extends TestCase
 
         $user = User::factory()->create();
 
-        LlmDriverFacade::shouldReceive('driver->chat')
+        LlmDriverFacade::shouldReceive('driver->setToolType->chat')
             ->once()
             ->andReturn(
                 CompletionResponse::from([
