@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Domains\Projects\StatusEnum;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -43,6 +44,12 @@ class Project extends Model implements HasDrivers
         return $this->chats()->first()->chat_driver?->value;
     }
 
+    public function scopeActive(Builder $query): Builder
+    {
+        return $query->where('end_date', '>=', now())
+            ->orWhere('end_date', null);
+    }
+
     public function getEmbeddingDriver(): string
     {
         return $this->chats()->first()->embedding_driver->value;
@@ -76,5 +83,31 @@ class Project extends Model implements HasDrivers
     public function getChat(): ?Chat
     {
         return $this->chats->first();
+    }
+
+    public function getContent(): string
+    {
+        $context = $this->content;
+        $now = now()->toISOString();
+
+        return <<<PROMPT
+        Current Date: $now
+
+        $context
+
+        PROMPT;
+    }
+
+    public function getSystemPrompt(): string
+    {
+        $context = $this->system_prompt;
+        $now = now()->toISOString();
+
+        return <<<PROMPT
+        Current Date: $now
+
+        $context
+
+        PROMPT;
     }
 }

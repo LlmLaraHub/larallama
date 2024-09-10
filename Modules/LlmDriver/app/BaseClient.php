@@ -47,6 +47,13 @@ abstract class BaseClient
         return $this;
     }
 
+    public function setSystemPrompt(string $systemPrompt = ''): self
+    {
+        $this->system = $systemPrompt;
+
+        return $this;
+    }
+
     public function setLimitByShowInUi(bool $limitByShowInUi): self
     {
         $this->limitByShowInUi = $limitByShowInUi;

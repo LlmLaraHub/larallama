@@ -20,7 +20,7 @@ class KickOffProject
 
         $project->tasks()->delete();
 
-        Orchestrate::handle($chat, $project->content, $project->system_prompt);
+        Orchestrate::handle($chat, $project->getContent(), $project->getSystemPrompt());
 
         $chat->updateQuietly([
             'chat_status' => UiStatusEnum::Complete,

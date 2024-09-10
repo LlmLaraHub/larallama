@@ -113,7 +113,11 @@ class ProjectController extends Controller
             'chat_status' => UiStatusEnum::InProgress->value,
         ]);
 
-        Orchestrate::handle($chat, $validated['input']);
+        Orchestrate::handle(
+            chat: $chat,
+            prompt: $validated['input'],
+            systemPrompt: $project->getSystemPrompt()
+        );
 
         $chat->update([
             'chat_status' => UiStatusEnum::Complete->value,

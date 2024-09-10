@@ -20,6 +20,7 @@ class Orchestrate
         $messages = $chat->getMessageThread();
 
         $response = LlmDriverFacade::driver($chat->getDriver())
+            ->setSystemPrompt($systemPrompt)
             ->setToolType(ToolTypes::Chat)
             ->chat($messages);
 
@@ -61,6 +62,8 @@ class Orchestrate
             $response = LlmDriverFacade::driver(
                 $chat->getDriver()
             )
+                ->setToolType(ToolTypes::Chat)
+                ->setSystemPrompt($systemPrompt)
                 ->chat($messages);
 
             $chat->addInput(

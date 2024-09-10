@@ -5,6 +5,7 @@ namespace Database\Factories;
 use App\Models\Collection;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use LlmLaraHub\LlmDriver\DriversEnum;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Chat>
@@ -25,4 +26,15 @@ class ChatFactory extends Factory
             'chatable_type' => Collection::class,
         ];
     }
+
+    public function withDrivers(): Factory
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'chat_driver' => DriversEnum::Claude->value,
+                'embedding_driver' => DriversEnum::Claude->value,
+            ];
+        });
+    }
+
 }
