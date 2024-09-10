@@ -24,4 +24,14 @@ class ProjectTest extends TestCase
         $this->assertNotNull($model->team->id);
         $this->assertNotNull($model->tasks->first()->id);
     }
+
+    public function test_active() {
+        $model = Project::factory()->create([
+            'start_date' => now()->subDays(5),
+            'end_date' => now()->subDays(2),
+        ]);
+
+        $this->assertEmpty(Project::active()->get());
+    }
+
 }
