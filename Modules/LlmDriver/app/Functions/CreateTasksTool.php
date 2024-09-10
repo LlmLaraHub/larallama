@@ -40,10 +40,10 @@ class CreateTasksTool extends FunctionContract
             Task::updateOrCreate([
                 'name' => $name,
                 'project_id' => $project->id,
+                'due_date' => $due_date,
             ],
                 [
                     'details' => $details,
-                    'due_date' => $due_date,
                     'assistant' => $assistant,
                     'user_id' => null, //@TODO coming back to this
                 ]);
