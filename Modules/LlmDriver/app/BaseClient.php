@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Log;
 use LlmLaraHub\LlmDriver\Functions\Chat;
 use LlmLaraHub\LlmDriver\Functions\CreateDocument;
 use LlmLaraHub\LlmDriver\Functions\CreateEventTool;
+use LlmLaraHub\LlmDriver\Functions\CreateTasksTool;
 use LlmLaraHub\LlmDriver\Functions\FunctionContract;
 use LlmLaraHub\LlmDriver\Functions\FunctionDto;
 use LlmLaraHub\LlmDriver\Functions\GatherInfoTool;
@@ -28,6 +29,8 @@ abstract class BaseClient
     protected string $driver = 'mock';
 
     protected int $poolSize = 3;
+
+    protected ?string $system = null;
 
     protected bool $limitByShowInUi = false;
 
@@ -66,6 +69,7 @@ abstract class BaseClient
                 new CreateEventTool(),
                 //new CreateDocument(),
                 new SatisfyToolsRequired(),
+                new CreateTasksTool(),
                 //new Chat(),
             ]
         );
@@ -115,6 +119,10 @@ abstract class BaseClient
          */
         if (($noTools === false && $this->toolType !== ToolTypes::NoFunction) || $this->forceTool !== null) {
             $payload['tools'] = $this->getFunctions();
+        }
+
+        if ($this->system) {
+            $payload['system'] = $this->system;
         }
 
         $payload = $this->addJsonFormat($payload);

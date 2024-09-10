@@ -85,7 +85,7 @@ class SearchAndSummarize extends FunctionContract
          * @TODO @WHY
          * Why do I do this system prompt thing?
          */
-        $assistantMessage = $message->getChat()->addInput(
+        $message->getChat()->addInput(
             message: $contentFlattened,
             role: RoleEnum::Assistant,
             systemPrompt: $message->getChat()->getChatable()->systemPrompt(),
@@ -116,7 +116,8 @@ class SearchAndSummarize extends FunctionContract
         /** @var CompletionResponse $response */
         $response = LlmDriverFacade::driver(
             $message->getChatable()->getDriver()
-        )->chat($messages);
+        )->setToolType(ToolTypes::NoFunction)
+            ->chat($messages);
 
         $this->response = $response->content;
 

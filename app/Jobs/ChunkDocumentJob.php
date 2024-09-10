@@ -57,11 +57,14 @@ class ChunkDocumentJob implements ShouldQueue
 
         $pageContent = $this->document->original_content;
 
+        $pageContent = cleanPDFText($pageContent);
+
         $size = config('llmdriver.chunking.default_size');
 
         $chunked_chunks = TextChunker::handle($pageContent, $size);
 
         foreach ($chunked_chunks as $chunkSection => $chunkContent) {
+
             $guid = md5($chunkContent);
 
             $DocumentChunk = DocumentChunk::updateOrCreate(

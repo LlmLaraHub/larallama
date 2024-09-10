@@ -41,12 +41,13 @@ const theme = ref('dark')
                     </Link>
                     <ul class="menu menu-horizontal px-1">
                         <li class="hidden lg:flex">
-                            <a href="https://larallama.io" target="_blank">
-                                LaraLlama.io
-                            </a>
+                            <Link :href="route('projects.index')"
+                                  :class="{ 'underline' : route().current('projects.index') }">
+                                Projects
+                            </Link>
                         </li>
                         <li class="hidden sm:flex">
-                            <Link :href="route('dashboard')"
+                            <Link :href="route('collections.index')"
                                   :class="{ 'underline' : route().current('collections.index') }">
                                 Collections
                             </Link>

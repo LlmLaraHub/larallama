@@ -14,12 +14,21 @@ class MessageResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        $user = [];
+        if ($this->user_id) {
+            $user = new UserResource($this->user);
+        }
+
         return [
             'id' => $this->id,
+            'role' => $this->role->value,
             'from_ai' => $this->from_ai,
             'initials' => ($this->from_ai) ? 'Ai' : 'You',
             'type' => 'text', //@TODO
             'body' => $this->body,
+            'user' => $user,
+            'user_id' => $this->user_id,
+            'content_raw' => $this->body,
             'collection_id' => $this->chat->chatable_id,
             'body_markdown' => str($this->body)->markdown(),
             'meta_data' => $this->meta_data,

@@ -53,6 +53,7 @@ const logout = () => {
                 Main Menu
             </summary>
             <ul class="p-2 z-50">
+                <li class="flex sm:hidden"><Link :href="route('projects.index')">Projects</Link></li>
                 <li class="flex sm:hidden"><Link :href="route('collections.index')">Collections</Link></li>
                 <li class="flex sm:hidden"><Link :href="route('style_guide.show')">Style Guides</Link></li>
                 <li><Link :href="route('profile.show')">Profile</Link></li>

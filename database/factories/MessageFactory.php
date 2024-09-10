@@ -6,6 +6,7 @@ use App\Domains\Chat\MetaDataDto;
 use App\Domains\Chat\ToolsDto;
 use App\Domains\Messages\RoleEnum;
 use App\Models\Chat;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use LlmLaraHub\LlmDriver\Functions\FunctionCallDto;
 
@@ -36,6 +37,7 @@ class MessageFactory extends Factory
             ]),
             'tool_name' => 'standards_checker',
             'tool_id' => 'foobar',
+            'user_id' => User::factory(),
             'driver' => 'mock',
             'args' => ['url' => 'https://www.larallama.io'],
             'tools' => ToolsDto::from([

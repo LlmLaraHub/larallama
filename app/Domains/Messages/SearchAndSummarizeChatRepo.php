@@ -35,6 +35,11 @@ class SearchAndSummarizeChatRepo
 
         $input = $message->body;
 
+        Log::info('[LaraChain] Search and Summarize Default Function', [
+            'note' => 'Showing input since some system grab the last on the array',
+            'input' => $input,
+        ]);
+
         $filter = $message->getFilter();
 
         $functionDto = FunctionCallDto::from([
@@ -46,11 +51,6 @@ class SearchAndSummarizeChatRepo
         ]);
 
         $message = $this->addToolsToMessage($message, $functionDto);
-
-        Log::info('[LaraChain] Search and Summarize Default Function', [
-            'note' => 'Showing input since some system grab the last on the array',
-            'input' => $input,
-        ]);
 
         $originalPrompt = $input;
 

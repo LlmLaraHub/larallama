@@ -1,0 +1,88 @@
+{
+    "tasks": [
+        {
+            "name": "Refine and finalize USP",
+            "details": "Craft a compelling one-sentence USP and create 3-5 key bullet points highlighting unique aspects of the book",
+            "due_date": "2023-08-07",
+            "user_id": "1",
+            "assistant": "false"
+        },
+        {
+            "name": "Set up book landing page",
+            "details": "Design and launch a dedicated landing page for the book. Implement email sign-up form for updates and pre-orders",
+            "due_date": "2023-08-14",
+            "user_id": "1",
+            "assistant": "false"
+        },
+        {
+            "name": "Develop content marketing calendar",
+            "details": "Plan Twitter content (20 tweets), outline 5 LinkedIn posts, draft 3 Medium articles, and script 5 YouTube tutorial videos",
+            "due_date": "2023-08-21",
+            "user_id": "1",
+            "assistant": "false"
+        },
+        {
+            "name": "Leverage larallama.io",
+            "details": "Write a blog post connecting larallama.io to book concepts. Create a video showcasing larallama.io and its relation to the book",
+            "due_date": "2023-08-28",
+            "user_id": "1",
+            "assistant": "false"
+        },
+        {
+            "name": "Launch pre-order campaign",
+            "details": "Set up pre-order system, create early-bird offer, and design a contest for free book copies",
+            "due_date": "2023-09-04",
+            "user_id": "1",
+            "assistant": "false"
+        },
+        {
+            "name": "Conduct influencer outreach",
+            "details": "Identify 10 key influencers, craft personalized messages, and coordinate potential collaborations or reviews",
+            "due_date": "2023-09-11",
+            "user_id": "1",
+            "assistant": "false"
+        },
+        {
+            "name": "Plan and host webinar",
+            "details": "Decide on webinar topic, create outline, set up registration page, and promote across all social channels",
+            "due_date": "2023-09-18",
+            "user_id": "1",
+            "assistant": "false"
+        },
+        {
+            "name": "Set up targeted advertising",
+            "details": "Research platforms, create ad copy and visuals, set budget and launch campaigns",
+            "due_date": "2023-09-25",
+            "user_id": "1",
+            "assistant": "false"
+        },
+        {
+            "name": "Engage with online communities",
+            "details": "Identify 5 relevant online communities and create a schedule for regular participation",
+            "due_date": "2023-10-02",
+            "user_id": "1",
+            "assistant": "false"
+        },
+        {
+            "name": "Implement tracking and analytics",
+            "details": "Set up unique tracking links for each promotional channel and create a spreadsheet to monitor sales",
+            "due_date": "2023-10-09",
+            "user_id": "1",
+            "assistant": "false"
+        },
+        {
+            "name": "Schedule progress review meetings",
+            "details": "Set bi-weekly check-ins to review sales numbers and strategy effectiveness",
+            "due_date": "2023-10-16",
+            "user_id": "1",
+            "assistant": "false"
+        },
+        {
+            "name": "Prepare for book launch",
+            "details": "Plan launch day activities and promotions. Coordinate with partners or collaborators for launch support",
+            "due_date": "2023-10-23",
+            "user_id": "1",
+            "assistant": "false"
+        }
+    ]
+}

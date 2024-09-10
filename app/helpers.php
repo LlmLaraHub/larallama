@@ -248,6 +248,22 @@ if (! function_exists('to_utf8')) {
     }
 }
 
+if (! function_exists('cleanString')) {
+    function cleanString($string): string
+    {
+        // Remove Unicode escape sequences
+        $string = preg_replace('/\\\\u[0-9A-F]{4}/i', '', $string);
+
+        // Remove all non-printable characters except for newlines and tabs
+        $string = preg_replace('/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/u', '', $string);
+
+        // Optionally, you can also remove extra whitespace:
+        $string = preg_replace('/\s+/', ' ', $string);
+
+        return trim($string);
+    }
+}
+
 if (! function_exists('get_fixture')) {
     function get_fixture($file_name, $decode = true)
     {
@@ -261,6 +277,26 @@ if (! function_exists('get_fixture')) {
         }
 
         return json_decode($results, true);
+    }
+}
+
+if (! function_exists('cleanPDFText')) {
+    function cleanPDFText($text)
+    {
+        // Remove non-printable ASCII characters except newline and carriage return
+        $text = preg_replace('/[\x00-\x09\x0B\x0C\x0E-\x1F\x7F]/u', '', $text);
+
+        // Replace multiple newlines and spaces with a single occurrence
+        $text = preg_replace('/\s+/u', ' ', $text);
+
+        // Remove any remaining Unicode control characters
+        $text = preg_replace('/[\p{C}]/u', '', $text);
+
+        // Optionally, you can also remove specific Unicode characters often found in PDFs
+        $text = str_replace(["\u{FEFF}", "\u{200B}", "\u{200C}", "\u{200D}"], '', $text);
+
+        // Trim whitespace from the beginning and end
+        return trim($text);
     }
 }
 

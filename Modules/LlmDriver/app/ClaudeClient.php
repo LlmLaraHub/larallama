@@ -346,15 +346,31 @@ class ClaudeClient extends BaseClient
         /**
          * Claude needs to not start with a system message
          */
-        $messages = collect($messages)->transform(function ($item) {
-            if ($item->role === 'system') {
-                $item->role = 'assistant';
-            }
+        $messages = collect($messages)
+            ->filter(function ($item) {
+                if ($item->role === 'system') {
+                    $this->system = $item->content;
 
-            $item->content = str($item->content)->replaceEnd("\n", '')->trim()->toString();
+                    return false;
+                }
 
-            return $item->toArray();
-        });
+                return true;
+            })
+            ->transform(function (MessageInDto $item) {
+                /**
+                 * @NOTE
+                 * Claude does not like to end a certain way
+                 */
+                $item->content = str(
+                    cleanString($item->content)
+                )->replaceEnd("\n", '')->trim()->toString();
+
+                if (empty($item->content)) {
+                    $item->content = 'See content in thread.';
+                }
+
+                return $item->toArray();
+            });
 
         /**
          * Claude needs me to not use the role tool
@@ -369,11 +385,6 @@ class ClaudeClient extends BaseClient
                 $toolId = data_get($item, 'tool_id', 'toolu_'.Str::random(32));
                 $tool = data_get($item, 'tool', 'unknown_tool');
                 $args = data_get($item, 'args', '{}');
-                Log::info('Claude Tool Found', [
-                    'tool' => $tool,
-                    'tool_id' => $toolId,
-                    'args' => $args,
-                ]);
 
                 $content = $item['content'];
 

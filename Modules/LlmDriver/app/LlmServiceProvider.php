@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\ServiceProvider;
 use LlmLaraHub\LlmDriver\DistanceQuery\DistanceQueryClient;
 use LlmLaraHub\LlmDriver\Functions\CreateEventTool;
+use LlmLaraHub\LlmDriver\Functions\CreateTasksTool;
 use LlmLaraHub\LlmDriver\Functions\GatherInfoTool;
 use LlmLaraHub\LlmDriver\Functions\GetWebSiteFromUrlTool;
 use LlmLaraHub\LlmDriver\Functions\ReportingTool;
@@ -96,6 +97,10 @@ class LlmServiceProvider extends ServiceProvider
 
         $this->app->bind('create_event_tool', function () {
             return new CreateEventTool();
+        });
+
+        $this->app->bind('create_tasks_tool', function () {
+            return new CreateTasksTool();
         });
 
     }

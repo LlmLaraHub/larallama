@@ -18,6 +18,9 @@ class ChatResource extends JsonResource
             'id' => $this->id,
             'title' => $this->title ?? 'Chat #'.$this->id,
             'chatable_id' => $this->chatable_id,
+            'chatable_type' => $this->chatable_type,
+            'chat_status' => $this->chat_status?->value,
+            'chat_status_formatted' => str($this->chat_status?->name)->headline(),
             'user_id' => new UserResource($this->user),
         ];
     }
