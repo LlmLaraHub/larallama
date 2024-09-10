@@ -46,7 +46,7 @@ class CreateTasksTool extends FunctionContract
                     'details' => $details,
                     'due_date' => $due_date,
                     'assistant' => $assistant,
-                    'user_id' => ($user_id !== '' && User::whereId($user_id)->exists()) ? $user_id : null,
+                    'user_id' => null, //@TODO coming back to this
                 ]);
         }
 

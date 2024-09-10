@@ -20,8 +20,6 @@ Artisan::command('inspire', function () {
 \Illuminate\Support\Facades\Schedule::command('app:check_email')
     ->everyMinute();
 
-
-
 \Illuminate\Support\Facades\Schedule::call(function () {
     (new \App\Domains\Projects\DailyReportService())->handle();
 })->dailyAt('05:00');
