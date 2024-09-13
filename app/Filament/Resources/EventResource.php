@@ -28,6 +28,8 @@ class EventResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('title')->searchable(),
+                Tables\Columns\TextColumn::make('collection.name')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('start_date')
                     ->sortable()
                     ->dateTime('Y-m-d h:i'),
