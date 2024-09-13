@@ -44,7 +44,7 @@ class EventResource extends Resource
                 DateRangeFilter::make('start_date'),
                 Tables\Filters\SelectFilter::make('collection_id')
                     ->label('Collection')
-                    ->options(Collection::orderBy("name")->get()->pluck('name', 'id')),
+                    ->options(Collection::orderBy('name')->get()->pluck('name', 'id')),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
