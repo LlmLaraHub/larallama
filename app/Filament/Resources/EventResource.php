@@ -3,6 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\EventResource\Pages;
+use App\Models\Collection;
 use App\Models\Event;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -41,6 +42,9 @@ class EventResource extends Resource
                 Tables\Filters\SelectFilter::make('title')
                     ->options(Event::distinct('title')->orderBy('title')->pluck('title', 'title')),
                 DateRangeFilter::make('start_date'),
+                Tables\Filters\SelectFilter::make('collection_id')
+                    ->label('Collection')
+                    ->options(Collection::orderBy("name")->get()->pluck('name', 'id')),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
