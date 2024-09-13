@@ -8,8 +8,14 @@
         >Documents</NavButton>
 
         <a
-            name="filament.admin.resources.events.index"
-            :href="route('filament.admin.resources.events.index')"
+            name="`filament.admin.resources.events.index"
+            :href="route('filament.admin.resources.events.index', {
+                tableFilters: {
+                    collection_id: {
+                        value: collection.id
+                    }
+                }
+            })"
         >Events</a>
     </div>
 
