@@ -39,6 +39,11 @@ Route::middleware([
     'verified',
 ])->group(function () {
 
+    Route::controller(\App\Http\Controllers\CalendarController::class)->group(function () {
+        Route::get('/calendar/{collection}', 'show')->name('calendar.show');
+    });
+
+
     Route::get('/auth/google', [\App\Http\Controllers\GoogleController::class, 'redirectToGoogle'])
         ->name('auth.google');
     Route::get('/auth/google/callback', [\App\Http\Controllers\GoogleController::class, 'handleGoogleCallback'])
