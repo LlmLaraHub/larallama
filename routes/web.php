@@ -43,7 +43,6 @@ Route::middleware([
         Route::get('/calendar/{collection}', 'show')->name('calendar.show');
     });
 
-
     Route::get('/auth/google', [\App\Http\Controllers\GoogleController::class, 'redirectToGoogle'])
         ->name('auth.google');
     Route::get('/auth/google/callback', [\App\Http\Controllers\GoogleController::class, 'handleGoogleCallback'])
@@ -245,6 +244,19 @@ Route::middleware([
                 ->name('collections.outputs.web_page.summary');
             Route::put('/collections/{collection}/outputs/web_page/{output:id}/update', 'update')
                 ->name('collections.outputs.web_page.update');
+        }
+    );
+
+    Route::controller(\App\Http\Controllers\Outputs\CalendarOutputController::class)->group(
+        function () {
+            Route::get('/collections/{collection}/outputs/calendar/create', 'create')
+                ->name('collections.outputs.calendar_output.create');
+            Route::get('/collections/{collection}/outputs/calendar/{output:id}/edit', 'edit')
+                ->name('collections.outputs.calendar_output.edit');
+            Route::post('/collections/{collection}/outputs/calendar', 'store')
+                ->name('collections.outputs.calendar_output.store');
+            Route::put('/collections/{collection}/outputs/calendar/{output:id}/update', 'update')
+                ->name('collections.outputs.calendar_output.update');
         }
     );
 

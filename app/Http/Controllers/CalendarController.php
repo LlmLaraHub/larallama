@@ -2,17 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use App\Domains\Outputs\OutputTypeEnum;
 use App\Http\Resources\CollectionResource;
 use App\Http\Resources\EventResource;
 use App\Models\Collection;
 use App\Models\Event;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 
 class CalendarController extends Controller
 {
     public function show(Collection $collection)
     {
+        //for now if there is no related output we do a 404
+        if (! $collection->outputs()->where('type', OutputTypeEnum::CalendarOutput)->first()) {
+            abort(404);
+        }
+
         // Parse the date from the query string, or use the current date if not provided
         $date = request()->input('date') ? Carbon::parse(request()->input('date')) : now();
 
@@ -26,7 +31,7 @@ class CalendarController extends Controller
             ->get();
 
         return inertia('Calendar/Show', [
-            "collection" => new CollectionResource($collection),
+            'collection' => new CollectionResource($collection),
             'events' => EventResource::collection($events),
             'startDate' => $startOfCalendar->format('Y-m-d'),
             'endDate' => $endOfCalendar->format('Y-m-d'),

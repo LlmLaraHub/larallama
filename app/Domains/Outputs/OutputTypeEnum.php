@@ -11,6 +11,7 @@ enum OutputTypeEnum: string
 
     case WebPage = 'web_page';
     case EmailOutput = 'email_output';
+    case CalendarOutput = 'calendar_output';
     case ApiOutput = 'api_output';
     case EmailReplyOutput = 'email_reply_output';
     //leave for scripting
