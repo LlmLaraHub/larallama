@@ -14,7 +14,9 @@ class CalendarController extends Controller
     public function show(Collection $collection)
     {
         //for now if there is no related output we do a 404
-        if (! $collection->outputs()->where('type', OutputTypeEnum::CalendarOutput)->first()) {
+        if (! $collection->outputs()
+            ->active()
+            ->where('type', OutputTypeEnum::CalendarOutput)->first()) {
             abort(404);
         }
 

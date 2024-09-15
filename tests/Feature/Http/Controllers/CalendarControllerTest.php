@@ -18,11 +18,31 @@ class CalendarControllerTest extends TestCase
 
         Output::factory()->create([
             'collection_id' => $collection->id,
+            'active' => true,
             'type' => \App\Domains\Outputs\OutputTypeEnum::CalendarOutput,
         ]);
 
         $this->actingAs(User::factory()->create())->get(route('calendar.show', [
             'collection' => $collection->id,
         ]))->assertStatus(200);
+    }
+
+    public function test_404(): void
+    {
+        $collection = Collection::factory()->create();
+
+        $this->actingAs(User::factory()->create())->get(route('calendar.show', [
+            'collection' => $collection->id,
+        ]))->assertStatus(404);
+
+        Output::factory()->create([
+            'collection_id' => $collection->id,
+            'active' => false,
+            'type' => \App\Domains\Outputs\OutputTypeEnum::CalendarOutput,
+        ]);
+
+        $this->actingAs(User::factory()->create())->get(route('calendar.show', [
+            'collection' => $collection->id,
+        ]))->assertStatus(404);
     }
 }
