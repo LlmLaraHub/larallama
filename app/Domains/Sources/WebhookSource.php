@@ -16,6 +16,7 @@ use Illuminate\Bus\Batch;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Log;
+use LlmLaraHub\LlmDriver\Functions\ToolTypes;
 use LlmLaraHub\LlmDriver\LlmDriverFacade;
 use LlmLaraHub\TagFunction\Jobs\TagDocumentJob;
 
@@ -64,7 +65,8 @@ class WebhookSource extends BaseSource
 
         $results = LlmDriverFacade::driver(
             $source->getDriver()
-        )->completion($prompt);
+        )->setToolType(ToolTypes::Source)
+            ->completion($prompt);
 
         if ($this->ifNotActionRequired($results->content)) {
             Log::info('[LaraChain] - Webhook Skipping', [
