@@ -4,21 +4,15 @@ namespace App\Domains\Sources;
 
 use App\Domains\Documents\StatusEnum;
 use App\Domains\Documents\TypesEnum;
-use App\Helpers\TextChunker;
-use App\Jobs\DocumentProcessingCompleteJob;
-use App\Jobs\SummarizeDocumentJob;
-use App\Jobs\VectorlizeDataJob;
+use App\Jobs\ChunkDocumentJob;
 use App\Models\Document;
-use App\Models\DocumentChunk;
+use App\Models\Message;
 use App\Models\Source;
+use Facades\App\Domains\Orchestration\OrchestrateVersionTwo;
 use Facades\App\Domains\Tokenizer\Templatizer;
-use Illuminate\Bus\Batch;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Log;
-use LlmLaraHub\LlmDriver\Functions\ToolTypes;
-use LlmLaraHub\LlmDriver\LlmDriverFacade;
-use LlmLaraHub\TagFunction\Jobs\TagDocumentJob;
 
 class WebhookSource extends BaseSource
 {
@@ -63,21 +57,22 @@ class WebhookSource extends BaseSource
         $prompt = Templatizer::appendContext(true)
             ->handle($this->source->getPrompt(), $encoded);
 
-        $results = LlmDriverFacade::driver(
-            $source->getDriver()
-        )->setToolType(ToolTypes::Source)
-            ->completion($prompt);
+        /** @var Message $assistantMessage */
+        $assistantMessage = OrchestrateVersionTwo::sourceOrchestrate(
+            $source->refresh()->chat,
+            $prompt
+        );
 
-        if ($this->ifNotActionRequired($results->content)) {
+        if ($this->ifNotActionRequired($assistantMessage->getContent())) {
             Log::info('[LaraChain] - Webhook Skipping', [
                 'prompt' => $prompt,
             ]);
         } else {
             Log::info('[LaraChain] - WebhookSource Transformation Results', [
-                'results' => $results,
+                'assistant_message' => $assistantMessage->id,
             ]);
 
-            $promptResultsOriginal = $results->content;
+            $promptResultsOriginal = $assistantMessage->getContent();
 
             $this->addUserMessage($source, $promptResultsOriginal);
 
@@ -86,10 +81,6 @@ class WebhookSource extends BaseSource
             foreach ($promptResults as $promptResultIndex => $promptResult) {
                 $promptResult = json_encode($promptResult);
 
-                /**
-                 * Could even do ONE more look at the data
-                 * with the Source Prompt and LLM
-                 */
                 $title = sprintf('WebhookSource - item #%d source: %s',
                     $promptResultIndex + 1, md5($promptResult));
 
@@ -106,52 +97,9 @@ class WebhookSource extends BaseSource
                     'original_content' => $promptResult,
                 ]);
 
-                $page_number = 1;
-
-                $chunked_chunks = TextChunker::handle($promptResult);
-
-                $chunks = [];
-
-                foreach ($chunked_chunks as $chunkSection => $chunkContent) {
-                    $guid = md5($chunkContent);
-
-                    $DocumentChunk = DocumentChunk::updateOrCreate(
-                        [
-                            'document_id' => $document->id,
-                            'guid' => $guid,
-                        ],
-                        [
-                            'sort_order' => $page_number,
-                            'section_number' => $chunkSection,
-                            'content' => to_utf8($chunkContent),
-                            'original_content' => to_utf8($chunkContent),
-                        ]
-                    );
-
-                    Log::info('[LaraLlama] WebhookSource adding to new batch');
-
-                    $chunks[] = new VectorlizeDataJob($DocumentChunk);
-
-                    $page_number++;
-                }
-
-                Bus::batch($chunks)
-                    ->name("Chunking Document from WebhookSource - {$this->source->id}")
+                Bus::batch([new ChunkDocumentJob($document)])
+                    ->name('Processing '.$title)
                     ->allowFailures()
-                    ->finally(function (Batch $batch) use ($document) {
-                        Bus::batch([
-                            [
-                                new SummarizeDocumentJob($document),
-                                new TagDocumentJob($document),
-                                new DocumentProcessingCompleteJob($document),
-                            ],
-                        ])
-                            ->name(sprintf('Final Document Steps Document %s id %d', $document->type->name, $document->id))
-                            ->allowFailures()
-                            ->onQueue(LlmDriverFacade::driver($document->getDriver())->onQueue())
-                            ->dispatch();
-                    })
-                    ->onQueue(LlmDriverFacade::driver($this->source->getDriver())->onQueue())
                     ->dispatch();
             }
 

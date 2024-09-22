@@ -16,15 +16,11 @@ class WebhookSourceTest extends TestCase
 
         $payload = get_fixture('example_github.json');
 
-        LlmDriverFacade::shouldReceive('driver->onQueue')
-            ->twice()->andReturn('default');
-
-        LlmDriverFacade::shouldReceive('driver->completion')
-            ->once()->andReturn(
-                CompletionResponse::from([
-                    'content' => get_fixture('github_transformed.json', false),
-                ])
-            );
+        LlmDriverFacade::shouldReceive('driver->setToolType->chat')->once()->andReturn(
+            CompletionResponse::from([
+                'content' => 'foo bar',
+            ])
+        );
 
         $source = Source::factory()->create();
 
@@ -32,10 +28,9 @@ class WebhookSourceTest extends TestCase
             ->payload($payload)
             ->handle($source);
 
-        $this->assertDatabaseCount('documents', 2);
-        $this->assertDatabaseCount('document_chunks', 2);
+        $this->assertDatabaseCount('documents', 1);
 
-        Bus::assertBatchCount(2);
+        Bus::assertBatchCount(1);
 
     }
 
@@ -45,15 +40,11 @@ class WebhookSourceTest extends TestCase
 
         $payload = get_fixture('example_github.json');
 
-        LlmDriverFacade::shouldReceive('driver->onQueue')
-            ->once()->andReturn('default');
-
-        LlmDriverFacade::shouldReceive('driver->completion')
-            ->once()->andReturn(
-                CompletionResponse::from([
-                    'content' => 'Foo Bar',
-                ])
-            );
+        LlmDriverFacade::shouldReceive('driver->setToolType->chat')->once()->andReturn(
+            CompletionResponse::from([
+                'content' => 'foo bar',
+            ])
+        );
 
         $source = Source::factory()->create();
 
@@ -62,7 +53,6 @@ class WebhookSourceTest extends TestCase
             ->handle($source);
 
         $this->assertDatabaseCount('documents', 1);
-        $this->assertDatabaseCount('document_chunks', 1);
 
         Bus::assertBatchCount(1);
 
@@ -74,15 +64,11 @@ class WebhookSourceTest extends TestCase
 
         $payload = get_fixture('example_github.json');
 
-        LlmDriverFacade::shouldReceive('driver->onQueue')
-            ->times(2)->andReturn('default');
-
-        LlmDriverFacade::shouldReceive('driver->completion')
-            ->once()->andReturn(
-                CompletionResponse::from([
-                    'content' => get_fixture('github_transformed.json', false),
-                ])
-            );
+        LlmDriverFacade::shouldReceive('driver->setToolType->chat')->once()->andReturn(
+            CompletionResponse::from([
+                'content' => 'foo bar',
+            ])
+        );
 
         $source = Source::factory()->create();
 
@@ -94,10 +80,9 @@ class WebhookSourceTest extends TestCase
             ->payload($payload)
             ->handle($source);
 
-        $this->assertDatabaseCount('documents', 2);
-        $this->assertDatabaseCount('document_chunks', 2);
+        $this->assertDatabaseCount('documents', 1);
 
-        Bus::assertBatchCount(2);
+        Bus::assertBatchCount(1);
 
     }
 
@@ -110,15 +95,11 @@ class WebhookSourceTest extends TestCase
         $payload['id'] = 'fake_id';
         $payload['content'] = $payload;
 
-        LlmDriverFacade::shouldReceive('driver->onQueue')
-            ->once()->andReturn('default');
-
-        LlmDriverFacade::shouldReceive('driver->completion')
-            ->times(1)->andReturn(
-                CompletionResponse::from([
-                    'content' => 'Foo Bar',
-                ])
-            );
+        LlmDriverFacade::shouldReceive('driver->setToolType->chat')->once()->andReturn(
+            CompletionResponse::from([
+                'content' => 'foo bar',
+            ])
+        );
 
         $source = Source::factory()->create();
 
@@ -131,7 +112,6 @@ class WebhookSourceTest extends TestCase
             ->handle($source);
 
         $this->assertDatabaseCount('documents', 1);
-        $this->assertDatabaseCount('document_chunks', 1);
 
         Bus::assertBatchCount(1);
 
