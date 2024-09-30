@@ -6,6 +6,7 @@ use App\Domains\Events\EventTypes;
 use Carbon\Carbon;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -38,6 +39,11 @@ class Event extends Model
                 ->columns(1)
                 ->schema([
                     TextInput::make('title')->required(),
+                    Select::make('collection_id')
+                        ->searchable()
+                        ->preload()
+                        ->relationship(name: 'collection', titleAttribute: 'name')
+                        ->label('Collection'),
                     TextInput::make('description')->required(),
                     TextInput::make('location'),
                 ]),
@@ -46,8 +52,12 @@ class Event extends Model
 
                 ->columns(2)
                 ->schema([
-                    DateTimePicker::make('start_date')->required(),
-                    DateTimePicker::make('end_date')->required(),
+                    DateTimePicker::make('start_date')
+                        ->native(false)
+                        ->required(),
+                    DateTimePicker::make('end_date')
+                        ->native(false)
+                        ->required(),
                 ]),
         ];
     }
