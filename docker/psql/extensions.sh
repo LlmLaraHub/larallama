@@ -7,11 +7,16 @@ export PGUSER="$POSTGRES_USER"
 
 # Create the 'laralamma' template db
 "${psql[@]}" <<- 'EOSQL'
-CREATE DATABASE laralamma IS_TEMPLATE true;
+DO $$
+BEGIN
+    IF NOT EXISTS (SELECT 1 FROM pg_database WHERE datname = 'larallama') THEN
+        CREATE DATABASE larallama IS_TEMPLATE true;
+    END IF;
+END $$;
 EOSQL
 
 # Load PostGIS into both template_database and $POSTGRES_DB
-for DB in laralamma "$POSTGRES_DB"; do
+for DB in larallama "$POSTGRES_DB"; do
 	echo "Loading PostGIS extensions into $DB"
 	"${psql[@]}" --dbname="$DB" <<-'EOSQL'
 		CREATE EXTENSION IF NOT EXISTS postgis;
