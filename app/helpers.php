@@ -327,6 +327,6 @@ if (! function_exists('get_embedding_size')) {
             return 'embedding_'.$size;
         }
 
-        return 'embeding_3072';
+        return 'embedding_3072';
     }
 }
